@@ -1,0 +1,206 @@
+<?php
+
+/**
+ * Ajax Class
+ */
+class WeDocs_Ajax {
+
+    /**
+     * Bind actions
+     */
+    function __construct() {
+        add_action( 'wp_ajax_wedocs_create_doc', array( $this, 'create_doc' ) );
+        add_action( 'wp_ajax_wedocs_remove_doc', array( $this, 'remove_doc' ) );
+        add_action( 'wp_ajax_wedocs_admin_get_docs', array( $this, 'get_docs' ) );
+        add_action( 'wp_ajax_wedocs_sortable_docs', array( $this, 'sort_docs' ) );
+
+        add_action( 'wp_ajax_wedocs_ajax_feedback', array( $this, 'handle_feedback' ) );
+        add_action( 'wp_ajax_nopriv_wedocs_ajax_feedback', array( $this, 'handle_feedback' ) );
+    }
+
+    /**
+     * Create a new doc
+     *
+     * @return void
+     */
+    public function create_doc() {
+        check_ajax_referer( 'wedocs-admin-nonce' );
+
+        $title  = isset( $_POST['title'] ) ? sanitize_text_field( $_POST['title'] ) : '';
+        $status = isset( $_POST['status'] ) ? sanitize_text_field( $_POST['status'] ) : 'draft';
+        $parent = isset( $_POST['parent'] ) ? absint( $_POST['parent'] ) : 0;
+
+        $post_id = wp_insert_post( array(
+            'post_title'  => $title,
+            'post_type'   => 'docs',
+            'post_status' => $status,
+            'post_parent' => $parent,
+            'post_author' => get_current_user_id()
+        ) );
+
+        if ( is_wp_error( $post_id ) ) {
+            wp_send_json_error();
+        }
+
+        wp_send_json_success( array(
+            'post' => array(
+                'id'     => $post_id,
+                'title'  => $title,
+                'status' => 'draft'
+            ),
+            'child' => array()
+        ) );
+    }
+
+    /**
+     * Delete a doc
+     *
+     * @return void
+     */
+    public function remove_doc() {
+        check_ajax_referer( 'wedocs-admin-nonce' );
+
+        $force_delete = false;
+        $post_id      = isset( $_POST['id'] ) ? absint( $_POST['id'] ) : 0;
+
+        if ( $post_id ) {
+            // delete childrens first if found
+            $childrens = get_children( array( 'post_parent' => $post_id ) );
+
+            if ( $childrens ) {
+                foreach ($childrens as $child_post) {
+                    wp_delete_post( $child_post->ID, $force_delete );
+                }
+            }
+
+            // delete main doc
+            wp_delete_post( $post_id, $force_delete );
+        }
+
+        wp_send_json_success();
+    }
+
+    /**
+     * Get all docs
+     *
+     * @return void
+     */
+    public function get_docs() {
+        check_ajax_referer( 'wedocs-admin-nonce' );
+
+        $docs = get_pages( array(
+            'post_type'      => 'docs',
+            'post_status'    => array( 'publish', 'draft' ),
+            'posts_per_page' => '-1',
+            'orderby'        => 'menu_order',
+            'order'          => 'ASC'
+        ) );
+
+        $arranged = $this->build_tree( $docs );
+        usort( $arranged, array( $this, 'sort_callback' ) );
+        wp_send_json_success( $arranged );
+    }
+
+    function handle_feedback() {
+        check_ajax_referer( 'wedocs-ajax' );
+
+        $template = '<div class="wedocs-alert wedocs-alert-%s">%s</div>';
+        $previous = isset( $_COOKIE['wedocs_response'] ) ? explode( ',', $_COOKIE['wedocs_response'] ) : array();
+        $post_id  = intval( $_POST['post_id'] );
+        $type     = in_array( $_POST['type'], array( 'positive', 'negative' ) ) ? $_POST['type'] : false;
+
+        // check previous response
+        if ( in_array( $post_id, $previous ) ) {
+            $message = sprintf( $template, 'danger', __( 'Sorry, you\'ve already recorded your feedback!', 'wedocs' ) );
+            wp_send_json_error( $message );
+        }
+
+        // seems new
+        if ( $type ) {
+            $count = (int) get_post_meta( $post_id, $type, true );
+            update_post_meta( $post_id, $type, $count + 1 );
+
+            array_push( $previous, $post_id );
+            $cookie_val = implode( ',',  $previous);
+
+            $val = setcookie( 'wedocs_response', $cookie_val, time() + WEEK_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
+        }
+
+        $message = sprintf( $template, 'success', __( 'Thanks for your feedback!', 'wedocs' ) );
+        wp_send_json_success( $message );
+    }
+
+    /**
+     * Sort docs
+     *
+     * @return void
+     */
+    public function sort_docs() {
+        check_ajax_referer( 'wedocs-admin-nonce' );
+
+        $doc_ids = isset( $_POST['ids'] ) ? array_map( 'absint', $_POST['ids'] ) : array();
+
+        if ( $doc_ids ) {
+            foreach ($doc_ids as $order => $id) {
+                wp_update_post( array(
+                    'ID'         => $id,
+                    'menu_order' => $order
+                ) );
+            }
+        }
+
+        exit;
+    }
+
+    /**
+     * Build a tree of docs with parent-child relation
+     *
+     * @param  array   $docs
+     * @param  integer  $parent
+     *
+     * @return array
+     */
+    public function build_tree( $docs, $parent = 0 ) {
+        $result = array();
+
+        if ( ! $docs ) {
+            return $result;
+        }
+
+        foreach ($docs as $key => $doc) {
+            if ( $doc->post_parent == $parent ) {
+                unset( $docs[ $key ] );
+
+                // build tree and sort
+                $child = $this->build_tree( $docs, $doc->ID );
+                usort( $child, array( $this, 'sort_callback' ) );
+
+                $result[] = array(
+                    'post' => array(
+                        'id'     => $doc->ID,
+                        'title'  => $doc->post_title,
+                        'status' => $doc->post_status,
+                        'order'  => $doc->menu_order
+                    ),
+                    'child' => $child
+                );
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Sort callback for sorting posts with their menu order
+     *
+     * @param  array  $a
+     * @param  array  $b
+     *
+     * @return int
+     */
+    public function sort_callback( $a, $b ) {
+        return $a['post']['order'] - $b['post']['order'];
+    }
+}
+
+new WeDocs_Ajax();

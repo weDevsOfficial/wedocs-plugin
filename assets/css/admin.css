@@ -1,0 +1,177 @@
+.single-doc.ui-sortable-placeholder {
+    border: 1px dashed #ccc;
+    visibility: visible !important;
+    background-color: transparent;
+}
+
+.wedocs-row-actions {
+    visibility: hidden;
+}
+
+.docs.not-loaded {
+    display: none;
+}
+
+.doc-status {
+    background-color: #eee;
+    font-size: 11px;
+    margin-left: 5px;
+    color: #999;
+    padding: 1px 3px;
+    border-radius: 3px;
+}
+
+.docs {
+    width: 100%;
+    margin: 20px 0;
+    overflow: hidden;
+    display: block;
+    list-style: none;
+}
+
+.single-doc {
+    width: 31%;
+    float: left;
+    margin-right: 2%;
+    margin-bottom: 2%;
+    position: relative;
+    min-width: 215px;
+    border: 1px solid #e5e5e5;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    background: #fff;
+}
+
+.single-doc:nth-child(3n+1) {
+    clear: both;
+}
+
+.single-doc h3 {
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.single-doc h3 a {
+    text-decoration: none;
+}
+
+.single-doc h3 .wedocs-btn-reorder {
+    float: right;
+    color: #ccc;
+}
+
+.single-doc:hover h3 .wedocs-btn-reorder {
+    visibility: visible;
+}
+
+.single-doc .add-section {
+    text-align: center;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+    background-color: #f7f7f7;
+}
+
+.single-doc .inside {
+    padding: 15px;
+    min-height: 60px;
+}
+
+.single-doc .inside ul.sections {
+    padding: 0;
+    list-style: none;
+}
+
+.single-doc .inside ul.sections > li {
+    margin-bottom: 10px;
+}
+
+.single-doc .inside ul.sections > li.ui-sortable-placeholder {
+    border: 1px dashed #ccc;
+    visibility: visible !important;
+}
+
+.single-doc .inside ul.sections .section-title {
+    display: block;
+    padding: 7px 10px;
+    background-color: #f7f7f7;
+    border: 1px solid #eee;
+    cursor: pointer;
+}
+
+ul.sections .section-title .count {
+    background-color: #ddd;
+    border-radius: 50%;
+    color: #999;
+    padding: 0px;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    text-align: center;
+    font-size: 10px;
+}
+
+.sections .actions {
+    float: right;
+}
+
+.sections .actions > span {
+    padding: 0px 7px;
+}
+
+.wedocs-btn-reorder {
+    cursor: move;
+}
+
+.wedocs-btn-remove {
+    background-color: #d9534f;
+    color: #fff;
+    cursor: pointer;
+}
+
+.section-title:hover .wedocs-row-actions{
+    visibility: visible;
+}
+
+.section-title .add-article {
+    background-color: #fff;
+    border: 1px solid #eee;
+    margin-top: -1px;
+}
+
+.single-doc .inside ul.articles {
+    padding: 0;
+    margin: 10px 0 10px 15px;
+    list-style: none;
+    border-left: 1px solid #eee;
+}
+
+.single-doc .inside ul.articles.collapsed {
+    display: none;
+}
+
+.single-doc .inside ul.articles li.article {
+    padding: 5px 0;
+}
+
+.single-doc .inside ul.articles li.article:hover .wedocs-row-actions {
+    visibility: visible;
+}
+
+.single-doc .inside a {
+    text-decoration: none;
+    width: auto;
+}
+
+.single-doc .inside ul.articles li::before {
+    content: ' ';
+    border-top: 1px solid #eee;
+    color: #eee;
+    vertical-align: middle;
+    height: 0;
+    width: 15px;
+    display: inline-block;
+    margin-right: 5px;
+}
