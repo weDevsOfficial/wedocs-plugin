@@ -92,7 +92,10 @@ class WeDocs {
 
         // Localize our plugin
         add_action( 'init', array( $this, 'localization_setup' ) );
+
+        // custom post types and taxonomies
         add_action( 'init', array( $this, 'register_post_type' ) );
+        add_action( 'init', array( $this, 'register_taxonomy' ) );
 
         // filter the search result
         add_action( 'pre_get_posts', array( $this, 'docs_search_filter' ) );
@@ -202,10 +205,9 @@ class WeDocs {
         $args = array(
             'labels'              => $labels,
             'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', ),
-            'taxonomies'          => array( 'wedocs_category' ),
             'hierarchical'        => true,
             'public'              => true,
-            'show_ui'             => false,
+            'show_ui'             => true,
             'show_in_menu'        => false,
             'show_in_nav_menus'   => true,
             'show_in_admin_bar'   => true,
@@ -220,6 +222,57 @@ class WeDocs {
         );
 
         register_post_type( $this->post_type, $args );
+    }
+
+    /**
+     * Register doc tags taxonomy
+     *
+     * @return void
+     */
+    function register_taxonomy() {
+
+        $labels = array(
+            'name'                       => _x( 'Tags', 'Taxonomy General Name', 'wedocs' ),
+            'singular_name'              => _x( 'Tag', 'Taxonomy Singular Name', 'wedocs' ),
+            'menu_name'                  => __( 'Tags', 'wedocs' ),
+            'all_items'                  => __( 'All Tags', 'wedocs' ),
+            'parent_item'                => __( 'Parent Tag', 'wedocs' ),
+            'parent_item_colon'          => __( 'Parent Tag:', 'wedocs' ),
+            'new_item_name'              => __( 'New Tag Tag', 'wedocs' ),
+            'add_new_item'               => __( 'Add New Item', 'wedocs' ),
+            'edit_item'                  => __( 'Edit Tag', 'wedocs' ),
+            'update_item'                => __( 'Update Tag', 'wedocs' ),
+            'view_item'                  => __( 'View Tag', 'wedocs' ),
+            'separate_items_with_commas' => __( 'Separate items with commas', 'wedocs' ),
+            'add_or_remove_items'        => __( 'Add or remove items', 'wedocs' ),
+            'choose_from_most_used'      => __( 'Choose from the most used', 'wedocs' ),
+            'popular_items'              => __( 'Popular Tags', 'wedocs' ),
+            'search_items'               => __( 'Search Tags', 'wedocs' ),
+            'not_found'                  => __( 'Not Found', 'wedocs' ),
+            'no_terms'                   => __( 'No items', 'wedocs' ),
+            'items_list'                 => __( 'Tags list', 'wedocs' ),
+            'items_list_navigation'      => __( 'Tags list navigation', 'wedocs' ),
+        );
+
+        $rewrite = array(
+            'slug'                       => 'doc-tag',
+            'with_front'                 => true,
+            'hierarchical'               => false,
+        );
+
+        $args = array(
+            'labels'                     => $labels,
+            'hierarchical'               => false,
+            'public'                     => true,
+            'show_ui'                    => true,
+            'show_admin_column'          => true,
+            'show_in_nav_menus'          => true,
+            'show_tagcloud'              => true,
+            'rewrite'                    => $rewrite
+        );
+
+        register_taxonomy( 'doc_tag', array( 'docs' ), $args );
+
     }
 
     /**

@@ -76,6 +76,15 @@ get_header(); ?>
                                     'before' => '<div class="page-links">' . esc_html__( 'Docs:', 'wedocs' ),
                                     'after'  => '</div>',
                                 ) );
+
+                                $tags_list = wedocs_get_the_doc_tags( $post->ID, '', ', ' );
+
+                                if ( $tags_list ) {
+                                    printf( '<span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span>',
+                                        _x( 'Tags', 'Used before tag names.', 'wedocs' ),
+                                        $tags_list
+                                    );
+                                }
                             ?>
                         </div><!-- .entry-content -->
 

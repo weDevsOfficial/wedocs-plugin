@@ -1,0 +1,292 @@
+.docs {
+    width: 100%;
+    margin: 20px 0;
+    overflow: hidden;
+    display: block;
+    list-style: none;
+
+    &.not-loaded {
+        display: none;
+    }
+}
+
+.no-docs {
+    text-align: center;
+    padding: 60px;
+    color: #777;
+
+    &.not-loaded {
+        display: none;
+    }
+
+    &:before {
+        content: "\f322";
+        display: block;
+        font-family: Dashicons;
+        font-size: 50px;
+        padding-bottom: 30px;
+        color: #ccc;
+    }
+}
+
+.single-doc {
+    width: 31%;
+    float: left;
+    margin-right: 2%;
+    margin-bottom: 2%;
+    position: relative;
+    min-width: 215px;
+    border: 1px solid #e5e5e5;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    background: #fff;
+
+    &.ui-sortable-placeholder {
+        border: 1px dashed #ccc;
+        visibility: visible !important;
+        background-color: transparent;
+    }
+
+    &:nth-child(3n+1) {
+        clear: both;
+    }
+
+    h3 {
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+        padding: 8px 12px;
+        margin: 0;
+        line-height: 1.4;
+        a {
+            text-decoration: none;
+        }
+
+        .wedocs-row-actions {
+            float: right;
+        }
+    }
+
+    &:hover {
+        h3 {
+            .wedocs-row-actions {
+                visibility: visible;
+            }
+        }
+    }
+
+    .add-section {
+        text-align: center;
+        padding: 10px 0;
+        border-top: 1px solid #eee;
+        background-color: #f7f7f7;
+    }
+
+    .inside {
+        padding: 15px;
+        min-height: 60px;
+        ul {
+            &.sections {
+                padding: 0;
+                list-style: none;
+                & > li {
+                    margin-bottom: 10px;
+                    &.ui-sortable-placeholder {
+                        border: 1px dashed #ccc;
+                        visibility: visible !important;
+                    }
+                }
+                .section-title {
+                    display: block;
+                    padding: 7px 10px;
+                    background-color: #f7f7f7;
+                    border: 1px solid #eee;
+                    cursor: pointer;
+                }
+            }
+            &.articles {
+                padding: 0;
+                margin: 10px 0 10px 15px;
+                list-style: none;
+                border-left: 1px solid #eee;
+                &.collapsed {
+                    display: none;
+                }
+                li {
+                    &.article {
+                        padding: 5px 0;
+                        &:hover {
+                            .wedocs-row-actions {
+                                visibility: visible;
+                            }
+                        }
+                    }
+                    &::before {
+                        content: ' ';
+                        border-top: 1px solid #eee;
+                        color: #eee;
+                        vertical-align: middle;
+                        height: 0;
+                        width: 15px;
+                        display: inline-block;
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+        a {
+            text-decoration: none;
+            width: auto;
+        }
+    }
+}
+
+.wedocs-row-actions {
+    visibility: hidden;
+    color: #999;
+
+    a {
+        color: #999;
+    }
+
+    .dashicons {
+        height: 18px;
+        width: 18px;
+        font-size: 18px;
+    }
+
+    .dashicons:hover {
+        color: #555;
+    }
+}
+
+.doc-status {
+    background-color: #eee;
+    font-size: 11px;
+    margin-left: 5px;
+    color: #999;
+    padding: 1px 3px;
+    border-radius: 3px;
+}
+
+ul.sections {
+    .section-title {
+        .count {
+            background-color: #ddd;
+            border-radius: 50%;
+            color: #999;
+            padding: 0px;
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        &:hover {
+            .wedocs-row-actions {
+                visibility: visible;
+            }
+        }
+    }
+
+    .actions {
+        float: right;
+    }
+}
+
+.wedocs-btn-reorder {
+    cursor: move;
+}
+
+.wedocs-btn-remove {
+    cursor: pointer;
+}
+
+.sweet-alert {
+    padding: 0;
+    border-radius: 0;
+
+    h2 {
+        padding: 0;
+        margin: 0;
+        font-size: 20px;
+        font-weight: bold;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 20px;
+        text-align: left;
+        padding-left: 15px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    fieldset {
+        padding: 0 20px;
+    }
+
+    input {
+        border-radius: 0;
+        height: 35px;
+
+        &:focus {
+            border-color: #5b9dd9;
+            -webkit-box-shadow: 0 0 2px rgba( 30, 140, 190, 0.8 );
+            box-shadow: 0 0 2px rgba( 30, 140, 190, 0.8 );
+        }
+    }
+
+    .sa-button-container {
+        padding: 15px;
+        text-align: right;
+    }
+
+    button {
+        display: inline-block;
+        text-decoration: none;
+        font-size: 13px;
+        margin: 0;
+        cursor: pointer;
+        border-width: 1px;
+        border-style: solid;
+        -webkit-appearance: none;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        height: 30px;
+        line-height: 28px;
+        padding: 0 12px 2px;
+
+        &.confirm {
+            background: #0085ba !important;
+            border-color: #0073aa #006799 #006799 !important;
+            -webkit-box-shadow: 0 1px 0 #006799;
+            box-shadow: 0 1px 0 #006799 !important;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
+
+            &:hover, &:focus {
+                background: #008ec2;
+                border-color: #006799;
+                color: #fff;
+            }
+        }
+
+        &.cancel {
+            color: #555;
+            border-color: #cccccc;
+            background: #f7f7f7;
+            -webkit-box-shadow: 0 1px 0 #cccccc;
+            box-shadow: 0 1px 0 #cccccc;
+            vertical-align: top;
+
+            &:hover, &:focus {
+                background: #fafafa;
+                border-color: #999;
+                color: #23282d;
+            }
+        }
+    }
+}
+

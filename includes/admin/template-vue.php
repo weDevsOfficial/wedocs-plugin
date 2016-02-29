@@ -1,31 +1,34 @@
 <div class="wrap" id="wedocs-app">
 
-    <h1><?php _e( 'Documentations', 'wedocs' ); ?></h1>
+    <h1><?php _e( 'Documentations', 'wedocs' ); ?> <a class="page-title-action" href="#" v-on:click.prevent="addDoc"><?php _e( 'Add Doc', 'wedocs' ); ?></a></h1>
 
     <!-- <pre>@{{ $data | json }}</pre> -->
-
-    <form action="" method="post" v-on:submit.prevent="addDoc">
-        <input type="text" name="section-title" autocomplete="off" class="regular-text" v-model="newSection">
-        <input type="submit" name="submit" class="button button-primary" value="Add Doc">
-    </form>
 
     <span class="spinner is-active" style="float: none;"></span>
 
     <ul class="docs not-loaded" v-sortable>
         <li class="single-doc" v-for="doc in docs" data-id="{{ doc.post.id }}">
-            <h3><a target="_blank" href="{{ editurl }}{{ doc.post.id }}">{{ doc.post.title }}</a> <span class="wedocs-btn-reorder">&#8801;</span></h3>
+            <h3>
+                <a target="_blank" href="{{ editurl }}{{ doc.post.id }}">{{ doc.post.title }}<span v-if="doc.post.status != 'publish'" class="doc-status">{{ doc.post.status }}</span></a>
+
+                <span class="wedocs-row-actions">
+                    <a target="_blank" href="{{ viewurl }}{{doc.post.id }}" title="<?php esc_attr_e( 'Preview the doc', 'wedocs' ); ?>"><span class="dashicons dashicons-external"></span></a>
+                    <span class="wedocs-btn-remove" v-on:click="removeDoc(doc, docs)" title="<?php esc_attr_e( 'Delete this doc', 'wedocs' ); ?>"><span class="dashicons dashicons-trash"></span></span>
+                    <span class="wedocs-btn-reorder"><span class="dashicons dashicons-menu"></span></span>
+                </span>
+            </h3>
 
             <div class="inside">
                 <ul class="sections" v-sortable>
                     <li v-for="section in doc.child" data-id="{{ section.post.id }}">
                         <span class="section-title" v-on:click="toggleCollapse">
-                            <a target="_blank" href="{{ editurl }}{{section.post.id }}">{{ section.post.title }} <span v-if="section.child.length > 0" class="count">{{ section.child.length }}</span></a>
+                            <a target="_blank" href="{{ editurl }}{{section.post.id }}">{{ section.post.title }}<span v-if="section.post.status != 'publish'" class="doc-status">{{ section.post.status }}</span> <span v-if="section.child.length > 0" class="count">{{ section.child.length }}</span></a>
 
                             <span class="actions wedocs-row-actions">
-                                <span class="wedocs-btn-reorder" title="<?php esc_attr_e( 'Re-order this section', 'wedocs' ); ?>">&#8801;</span>
-                                <a target="_blank" href="{{ viewurl }}{{section.post.id }}" title="<?php esc_attr_e( 'Preview the doc', 'wedocs' ); ?>">#</a>
-                                <span class="wedocs-btn-remove" v-on:click="removeSection(section, doc.child)" title="<?php esc_attr_e( 'Delete this section', 'wedocs' ); ?>">-</span>
-                                <span class="add-article" v-on:click="addArticle(section)" title="<?php esc_attr_e( 'Add new article', 'wedocs' ); ?>">+</span>
+                                <span class="wedocs-btn-reorder" title="<?php esc_attr_e( 'Re-order this section', 'wedocs' ); ?>"><span class="dashicons dashicons-menu"></span></span>
+                                <a target="_blank" href="{{ viewurl }}{{section.post.id }}" title="<?php esc_attr_e( 'Preview the section', 'wedocs' ); ?>"><span class="dashicons dashicons-external"></span></a>
+                                <span class="wedocs-btn-remove" v-on:click="removeSection(section, doc.child)" title="<?php esc_attr_e( 'Delete this section', 'wedocs' ); ?>"><span class="dashicons dashicons-trash"></span></span>
+                                <span class="add-article" v-on:click="addArticle(section)" title="<?php esc_attr_e( 'Add a new article', 'wedocs' ); ?>"><span class="dashicons dashicons-plus-alt"></span></span>
                             </span>
                         </span>
 
@@ -34,9 +37,9 @@
                                 <a target="_blank" href="{{ editurl }}{{ article.post.id }}">{{ article.post.title }}<span v-if="article.post.status != 'publish'" class="doc-status">{{ article.post.status }}</span></a>
 
                                 <span class="actions wedocs-row-actions">
-                                    <span class="wedocs-btn-reorder">&#8801;</span>
-                                    <a target="_blank" href="{{ viewurl }}{{article.post.id }}" title="<?php esc_attr_e( 'Preview the doc', 'wedocs' ); ?>">#</a>
-                                    <span class="wedocs-btn-remove" v-on:click="removeArticle(article, section.child)">-</span>
+                                    <span class="wedocs-btn-reorder"><span class="dashicons dashicons-menu"></span></span>
+                                    <a target="_blank" href="{{ viewurl }}{{article.post.id }}" title="<?php esc_attr_e( 'Preview the article', 'wedocs' ); ?>"><span class="dashicons dashicons-external"></span></a>
+                                    <span class="wedocs-btn-remove" v-on:click="removeArticle(article, section.child)" title="<?php esc_attr_e( 'Delete this article', 'wedocs' ); ?>"><span class="dashicons dashicons-trash"></span></span>
                                 </span>
                             </li>
                         </ul>
@@ -49,4 +52,12 @@
             </div>
         </li>
     </ul>
+
+    <div class="no-docs not-loaded" v-show="!docs.length">
+        <?php printf( __( 'No docs has been found. Perhaps %s?', 'wedocs' ), '<a href="#" v-on:click.prevent="addDoc">' . __( 'create one', 'wedocs' ) . '</a>' ); ?>
+    </div>
+
+    <div class="docs-credits">
+        <?php //printf( __( 'A plugin by %s', 'wedocs' ), '<a href="https://tareq.co" target="_blank">Tareq Hasan</a>' ); ?>
+    </div>
 </div>

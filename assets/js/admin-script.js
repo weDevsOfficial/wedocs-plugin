@@ -1,8 +1,13 @@
+/* jshint devel:true */
+/* global Vue */
+/* global weDocs */
+/* global wp */
+/* global swal */
+/* global ajaxurl */
+
 Vue.directive('sortable', {
     bind: function() {
-        var vm  = this.vm;
         var $el = jQuery(this.el);
-        var self = this;
 
         $el.sortable({
             handle: '.wedocs-btn-reorder',
@@ -17,7 +22,7 @@ Vue.directive('sortable', {
                     action: 'wedocs_sortable_docs',
                     ids: ids,
                     _wpnonce: weDocs.nonce
-                })
+                });
             },
             cursor: 'move'
         });
@@ -29,7 +34,6 @@ new Vue({
     data: {
         editurl: '',
         viewurl: '',
-        newSection: '',
         docs: []
     },
 
@@ -45,6 +49,8 @@ new Vue({
             _wpnonce: weDocs.nonce
         }, function(data) {
             jQuery( self.$el ).find('.spinner').removeClass('is-active');
+            jQuery( self.$el ).find('.no-docs').removeClass('not-loaded');
+
             self.docs = data.data;
         });
     },
@@ -56,22 +62,52 @@ new Vue({
         },
 
         addDoc: function() {
-            var text = this.newSection.trim()
 
-            if ( text ) {
-                this.docs.unshift( {
-                    post: {
-                        id: '',
-                        title: text,
-                        status: 'publish',
+            var that = this;
+            this.docs = this.docs || [];
+
+            swal({
+                title: "Enter doc title",
+                type: "input",
+                showCancelButton: true,
+                closeOnConfirm: true,
+                animation: "slide-from-top",
+                inputPlaceholder: "Write something"
+            }, function(inputValue){
+                if (inputValue === false) {
+                    return false;
+                }
+
+                wp.ajax.send( {
+                    data: {
+                        action: 'wedocs_create_doc',
+                        title: inputValue,
+                        parent: 0,
+                        _wpnonce: weDocs.nonce
                     },
-                    child: []
+                    success: function(res) {
+                        that.docs.unshift( res );
+                    },
+                    error: this.onError
                 });
 
-                this.newSection = '';
-            } else {
-                alert( 'Please enter a title' );
-            }
+            });
+        },
+
+        removeDoc: function(doc, docs) {
+            var self = this;
+
+            swal({
+                title: "Are you sure?",
+                text: "Are you sure to delete the entire documentation? Sections and articles inside this doc will be deleted too!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, function() {
+                self.removePost(doc, docs);
+            });
         },
 
         addSection: function(doc) {
@@ -95,6 +131,7 @@ new Vue({
                             action: 'wedocs_create_doc',
                             title: inputValue,
                             parent: doc.post.id,
+                            order: doc.child.length,
                             _wpnonce: weDocs.nonce
                         },
                         success: function(res) {
@@ -107,6 +144,8 @@ new Vue({
         },
 
         removeSection: function(section, sections) {
+            var self = this;
+
             swal({
                 title: "Are you sure?",
                 text: "Are you sure to delete the entire section? Articles inside this section will be deleted too!",
@@ -116,15 +155,42 @@ new Vue({
                 confirmButtonText: "Yes, delete it!",
                 closeOnConfirm: false
             }, function() {
+                self.removePost(section, sections);
+            });
+        },
+
+        addArticle: function(section) {
+            var parentEvent = event;
+
+            swal({
+                title: "Enter doc title",
+                type: "input",
+                showCancelButton: true,
+                closeOnConfirm: true,
+                animation: "slide-from-top",
+                inputPlaceholder: "Write something"
+            }, function(inputValue){
+                if (inputValue === false) {
+                    return false;
+                }
+
                 wp.ajax.send( {
                     data: {
-                        action: 'wedocs_remove_doc',
-                        id: section.post.id,
+                        action: 'wedocs_create_doc',
+                        title: inputValue,
+                        parent: section.post.id,
+                        status: 'draft',
+                        order: section.child.length,
                         _wpnonce: weDocs.nonce
                     },
                     success: function(res) {
-                        sections.$remove(section);
-                        swal("Deleted!", "The section has been deleted.", "success");
+                        section.child.push( res );
+
+                        var articles = jQuery( parentEvent.target ).closest('.section-title').next();
+
+                        if ( articles.hasClass('collapsed') ) {
+                            articles.removeClass('collapsed');
+                        }
                     },
                     error: function(error) {
                         alert( error );
@@ -133,31 +199,9 @@ new Vue({
             });
         },
 
-        addArticle: function(section) {
-            var article = prompt( 'Enter article title' );
-
-            if ( article ) {
-                article = article.trim();
-
-                wp.ajax.send( {
-                    data: {
-                        action: 'wedocs_create_doc',
-                        title: article,
-                        parent: section.post.id,
-                        status: 'draft',
-                        _wpnonce: weDocs.nonce
-                    },
-                    success: function(res) {
-                        section.child.push( res );
-                    },
-                    error: function(error) {
-                        alert( error );
-                    }
-                });
-            }
-        },
-
         removeArticle: function(article, articles) {
+            var self = this;
+
             swal({
                 title: "Are you sure?",
                 text: "Are you sure to delete the article?",
@@ -167,8 +211,26 @@ new Vue({
                 confirmButtonText: "Yes, delete it!",
                 closeOnConfirm: false
             }, function(){
-                articles.$remove(article);
-                swal("Deleted!", "The article has been deleted.", "success");
+                self.removePost(article, articles);
+            });
+        },
+
+        removePost: function(item, items, message) {
+            message = message || 'This post has been deleted';
+
+            wp.ajax.send( {
+                data: {
+                    action: 'wedocs_remove_doc',
+                    id: item.post.id,
+                    _wpnonce: weDocs.nonce
+                },
+                success: function() {
+                    items.$remove(item);
+                    swal( 'Deleted!', message, 'success' );
+                },
+                error: function(error) {
+                    alert( error );
+                }
             });
         },
 

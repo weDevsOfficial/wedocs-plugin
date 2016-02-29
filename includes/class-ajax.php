@@ -14,6 +14,8 @@ class WeDocs_Ajax {
         add_action( 'wp_ajax_wedocs_admin_get_docs', array( $this, 'get_docs' ) );
         add_action( 'wp_ajax_wedocs_sortable_docs', array( $this, 'sort_docs' ) );
 
+        add_action( 'wp_ajax_wedocs_rated', array( $this, 'hide_wedocs_rating' ) );
+
         add_action( 'wp_ajax_wedocs_ajax_feedback', array( $this, 'handle_feedback' ) );
         add_action( 'wp_ajax_nopriv_wedocs_ajax_feedback', array( $this, 'handle_feedback' ) );
     }
@@ -29,13 +31,17 @@ class WeDocs_Ajax {
         $title  = isset( $_POST['title'] ) ? sanitize_text_field( $_POST['title'] ) : '';
         $status = isset( $_POST['status'] ) ? sanitize_text_field( $_POST['status'] ) : 'draft';
         $parent = isset( $_POST['parent'] ) ? absint( $_POST['parent'] ) : 0;
+        $order  = isset( $_POST['order'] ) ? absint( $_POST['order'] ) : 0;
+
+        $status = 'publish';
 
         $post_id = wp_insert_post( array(
             'post_title'  => $title,
             'post_type'   => 'docs',
             'post_status' => $status,
             'post_parent' => $parent,
-            'post_author' => get_current_user_id()
+            'post_author' => get_current_user_id(),
+            'menu_order'  => $order
         ) );
 
         if ( is_wp_error( $post_id ) ) {
@@ -46,7 +52,7 @@ class WeDocs_Ajax {
             'post' => array(
                 'id'     => $post_id,
                 'title'  => $title,
-                'status' => 'draft'
+                'status' => $status
             ),
             'child' => array()
         ) );
@@ -65,19 +71,33 @@ class WeDocs_Ajax {
 
         if ( $post_id ) {
             // delete childrens first if found
-            $childrens = get_children( array( 'post_parent' => $post_id ) );
-
-            if ( $childrens ) {
-                foreach ($childrens as $child_post) {
-                    wp_delete_post( $child_post->ID, $force_delete );
-                }
-            }
+            $this->remove_child_docs( $post_id, $force_delete );
 
             // delete main doc
             wp_delete_post( $post_id, $force_delete );
         }
 
         wp_send_json_success();
+    }
+
+    /**
+     * Remove child docs
+     *
+     * @param  integer  $parent_id
+     *
+     * @return void
+     */
+    public function remove_child_docs( $parent_id = 0, $force_delete ) {
+        $childrens = get_children( array( 'post_parent' => $parent_id ) );
+
+        if ( $childrens ) {
+            foreach ($childrens as $child_post) {
+                // recursively delete
+                $this->remove_child_docs( $child_post->ID, $force_delete );
+
+                wp_delete_post( $child_post->ID, $force_delete );
+            }
+        }
     }
 
     /**
@@ -101,6 +121,23 @@ class WeDocs_Ajax {
         wp_send_json_success( $arranged );
     }
 
+    /**
+     * Assume the user rated weDocs
+     *
+     * @return void
+     */
+    public function hide_wedocs_rating() {
+        check_ajax_referer( 'wedocs-admin-nonce' );
+
+        update_option( 'wedocs_admin_footer_text_rated', 'yes' );
+        wp_send_json_success();
+    }
+
+    /**
+     * Store feedback for an article
+     *
+     * @return void
+     */
     function handle_feedback() {
         check_ajax_referer( 'wedocs-ajax' );
 

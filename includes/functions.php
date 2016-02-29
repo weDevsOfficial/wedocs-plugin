@@ -138,18 +138,21 @@ function wedocs_doc_nav() {
     $next_post_id = (int) $wpdb->get_var( $next_query );
     $prev_post_id = (int) $wpdb->get_var( $prev_query );
 
-    echo '<nav class="wedocs-doc-nav">';
-    echo '<h3 class="assistive-text screen-reader-text">'. __( 'Doc navigation', 'wedocs' ) . '</h3>';
+    if ( $next_post_id || $prev_post_id ) {
 
-    if ( $prev_post_id ) {
-        echo '<span class="nav-prev"><a href="' . get_permalink( $prev_post_id ) . '">&larr; ' . get_post( $prev_post_id )->post_title . '</a></span>';
+        echo '<nav class="wedocs-doc-nav">';
+        echo '<h3 class="assistive-text screen-reader-text">'. __( 'Doc navigation', 'wedocs' ) . '</h3>';
+
+        if ( $prev_post_id ) {
+            echo '<span class="nav-prev"><a href="' . get_permalink( $prev_post_id ) . '">&larr; ' . get_post( $prev_post_id )->post_title . '</a></span>';
+        }
+
+        if ( $next_post_id ) {
+            echo '<span class="nav-next"><a href="' . get_permalink( $next_post_id ) . '">' . get_post( $next_post_id )->post_title . ' &rarr;</a></span>';
+        }
+
+        echo '</nav>';
     }
-
-    if ( $next_post_id ) {
-        echo '<span class="nav-next"><a href="' . get_permalink( $next_post_id ) . '">' . get_post( $next_post_id )->post_title . ' &rarr;</a></span>';
-    }
-
-    echo '</nav>';
 }
 
 /**
@@ -186,4 +189,18 @@ function wedocs_get_posts_children( $parent_id, $post_type = 'page' ){
     // merge in the direct descendants we found earlier
     $children = array_merge($children,$posts);
     return $children;
+}
+
+/**
+ * Retrieve the tags for a doc formatted as a string.
+ *
+ * @param string $before Optional. Before tags.
+ * @param string $sep Optional. Between tags.
+ * @param string $after Optional. After tags.
+ * @param int $id Optional. Post ID. Defaults to the current post.
+ *
+ * @return string|false|WP_Error A list of tags on success, false if there are no terms, WP_Error on failure.
+ */
+function wedocs_get_the_doc_tags( $post_id, $before = '', $sep = '', $after = '' ) {
+    return get_the_term_list( $post_id, 'doc_tag', $before, $sep, $after );
 }
