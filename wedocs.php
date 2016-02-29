@@ -2,10 +2,10 @@
 /*
 Plugin Name: weDocs
 Plugin URI: http://wedevs.com/
-Description: Documentation plugin for WordPress
+Description: A documentation plugin for WordPress
 Version: 0.1
 Author: Tareq Hasan
-Author URI: http://tareq.wedevs.com/
+Author URI: https://tareq.co/
 License: GPL2
 */
 
@@ -52,22 +52,6 @@ class WeDocs {
     private $post_type = 'docs';
 
     /**
-     * Constructor for the WeDocs class
-     *
-     * Sets up all the appropriate hooks and actions
-     * within our plugin.
-     *
-     * @uses register_activation_hook()
-     * @uses register_deactivation_hook()
-     * @uses is_admin()
-     * @uses add_action()
-     */
-    public function __construct() {
-        register_activation_hook( __FILE__, array( $this, 'activate' ) );
-        register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
-    }
-
-    /**
      * Initializes the WeDocs() class
      *
      * Checks for an existing WeDocs() instance
@@ -111,23 +95,10 @@ class WeDocs {
     }
 
     /**
-     * Placeholder for activation function
+     * Load the required files
      *
-     * Nothing being called here yet.
+     * @return void
      */
-    public function activate() {
-
-    }
-
-    /**
-     * Placeholder for deactivation function
-     *
-     * Nothing being called here yet.
-     */
-    public function deactivate() {
-
-    }
-
     function file_includes() {
         include_once dirname( __FILE__ ) . '/includes/functions.php';
         include_once dirname( __FILE__ ) . '/includes/class-walker-docs.php';
@@ -179,6 +150,11 @@ class WeDocs {
         ) );
     }
 
+    /**
+     * Register the post type
+     *
+     * @return void
+     */
     function register_post_type() {
 
         $labels = array(
@@ -321,6 +297,14 @@ class WeDocs {
         return $this->plugin_path() . '/templates/';
     }
 
+    /**
+     * If the theme doesn't have any single doc handler, load that from
+     * the plugin
+     *
+     * @param  string  $template
+     *
+     * @return string
+     */
     function template_loader( $template ) {
         $find = array( $this->post_type . '.php' );
         $file = '';
@@ -343,6 +327,13 @@ class WeDocs {
         return $template;
     }
 
+    /**
+     * Handle the search filtering in search page
+     *
+     * @param  \WP_Query  $query
+     *
+     * @return \WP_Query
+     */
     function docs_search_filter( $query ) {
 
         if ( ! is_admin() && is_search() && $query->is_main_query() ) {
@@ -369,8 +360,14 @@ class WeDocs {
 
 } // WeDocs
 
+/**
+ * Initialize the plugin
+ *
+ * @return \WeDocs
+ */
 function wedocs() {
     return WeDocs::init();
 }
 
-add_action( 'plugins_loaded', 'wedocs' );
+// kick it off
+wedocs();
