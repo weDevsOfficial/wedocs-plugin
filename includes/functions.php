@@ -155,6 +155,8 @@ function wedocs_doc_nav() {
     }
 }
 
+if ( ! function_exists( 'wedocs_get_posts_children' ) ) :
+
 /**
  * Recursively fetch child posts
  *
@@ -190,6 +192,8 @@ function wedocs_get_posts_children( $parent_id, $post_type = 'page' ){
     $children = array_merge($children,$posts);
     return $children;
 }
+
+endif;
 
 /**
  * Retrieve the tags for a doc formatted as a string.
