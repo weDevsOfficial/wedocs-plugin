@@ -38,18 +38,20 @@ new Vue({
     },
 
     ready: function() {
-        var self = this;
+        var self = this,
+            dom = jQuery( self.$el );
+
         this.editurl = weDocs.editurl;
         this.viewurl = weDocs.viewurl;
 
-        jQuery( this.$el ).find('ul.docs').removeClass('not-loaded').addClass('loaded');
+        dom.find('ul.docs').removeClass('not-loaded').addClass('loaded');
 
         jQuery.get(ajaxurl, {
             action: 'wedocs_admin_get_docs',
             _wpnonce: weDocs.nonce
         }, function(data) {
-            jQuery( self.$el ).find('.spinner').removeClass('is-active');
-            jQuery( self.$el ).find('.no-docs').removeClass('not-loaded');
+            dom.find('.spinner').removeClass('is-active');
+            dom.find('.no-docs').removeClass('not-loaded');
 
             self.docs = data.data;
         });

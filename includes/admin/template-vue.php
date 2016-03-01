@@ -57,7 +57,4 @@
         <?php printf( __( 'No docs has been found. Perhaps %s?', 'wedocs' ), '<a href="#" v-on:click.prevent="addDoc">' . __( 'create one', 'wedocs' ) . '</a>' ); ?>
     </div>
 
-    <div class="docs-credits">
-        <?php //printf( __( 'A plugin by %s', 'wedocs' ), '<a href="https://tareq.co" target="_blank">Tareq Hasan</a>' ); ?>
-    </div>
 </div>
