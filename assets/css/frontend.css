@@ -1,6 +1,13 @@
 body.single.single-docs .content-area {
   width: 100%;
 }
+.screen-reader-text {
+  clip: rect(1px, 1px, 1px, 1px);
+  overflow: hidden;
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+}
 .wedocs-single-wrap {
   width: 100%;
   display: -ms-flex;
@@ -90,26 +97,26 @@ body.single.single-docs .content-area {
   background: #F9F9F9;
   display: block;
 }
-.wedocs-single-wrap .wedocs-single-content .wedocs-doc-nav {
+.wedocs-doc-nav {
   width: 100%;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
-  margin: 30px 0;
+  margin: 60px 0 30px 0;
   padding: 25px 0;
 }
-.wedocs-single-wrap .wedocs-single-content .wedocs-doc-nav:before,
-.wedocs-single-wrap .wedocs-single-content .wedocs-doc-nav:after {
+.wedocs-doc-nav:before,
+.wedocs-doc-nav:after {
   content: " ";
   display: table;
 }
-.wedocs-single-wrap .wedocs-single-content .wedocs-doc-nav:after {
+.wedocs-doc-nav:after {
   clear: both;
 }
-.wedocs-single-wrap .wedocs-single-content .wedocs-doc-nav .nav-previous {
+.wedocs-doc-nav .nav-previous {
   float: left;
   width: 50%;
 }
-.wedocs-single-wrap .wedocs-single-content .wedocs-doc-nav .nav-next {
+.wedocs-doc-nav .nav-next {
   float: right;
   width: 50%;
   text-align: right;
@@ -146,7 +153,8 @@ body.single.single-docs .content-area {
 }
 .wedocs-shortcode-wrap ul.wedocs-docs-list li.wedocs-docs-single h3 {
   border-bottom: 1px solid #eee;
-  font-size: 14px;
+  font-size: 18px;
+  font-weight: bold;
   padding: 8px 12px;
   margin: 0;
   line-height: 1.4;
@@ -166,6 +174,8 @@ body.single.single-docs .content-area {
 }
 .wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections {
   margin-left: 20px;
+  padding: 0;
+  list-style-type: disc;
 }
 .wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections li {
   margin: 0;
@@ -224,6 +234,9 @@ body.single.single-docs .content-area {
   display: inline-block;
   margin-left: 5px;
   line-height: 150%;
+}
+.wedocs-feedback-wrap a:hover {
+  text-decoration: none;
 }
 .wedocs-feedback-wrap a.positive {
   background: #6a9c1f;

@@ -17,6 +17,14 @@ body.single.single-docs .content-area {
     width: 100%;
 }
 
+.screen-reader-text {
+    clip: rect(1px, 1px, 1px, 1px);
+    overflow: hidden;
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+}
+
 .wedocs-single-wrap {
     width: 100%;
     display: -ms-flex;
@@ -112,27 +120,27 @@ body.single.single-docs .content-area {
                     display: block;
                 }
         }
+    }
+}
 
-        .wedocs-doc-nav {
-            .clearfix();
+.wedocs-doc-nav {
+    .clearfix();
 
-            width: 100%;
-            border-top: 1px solid @borderColor;
-            border-bottom: 1px solid @borderColor;
-            margin: 30px 0;
-            padding: 25px 0;
+    width: 100%;
+    border-top: 1px solid @borderColor;
+    border-bottom: 1px solid @borderColor;
+    margin: 60px 0 30px 0;
+    padding: 25px 0;
 
-            .nav-previous {
-                float: left;
-                width: 50%;
-            }
+    .nav-previous {
+        float: left;
+        width: 50%;
+    }
 
-            .nav-next {
-                float: right;
-                width: 50%;
-                text-align: right;
-            }
-        }
+    .nav-next {
+        float: right;
+        width: 50%;
+        text-align: right;
     }
 }
 
@@ -156,7 +164,8 @@ body.single.single-docs .content-area {
 
             h3 {
                 border-bottom: 1px solid #eee;
-                font-size: 14px;
+                font-size: 18px;
+                font-weight: bold;
                 padding: 8px 12px;
                 margin: 0;
                 line-height: 1.4;
@@ -181,6 +190,8 @@ body.single.single-docs .content-area {
 
         ul.wedocs-doc-sections {
             margin-left: 20px;
+            padding: 0;
+            list-style-type: disc;
 
             li {
                 margin: 0;
@@ -243,6 +254,10 @@ body.single.single-docs .content-area {
             display: inline-block;
             margin-left: 5px;
             line-height: 150%;
+        }
+
+        &:hover {
+            text-decoration: none;
         }
     }
 
