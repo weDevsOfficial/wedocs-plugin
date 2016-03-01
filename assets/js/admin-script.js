@@ -50,7 +50,7 @@ new Vue({
             action: 'wedocs_admin_get_docs',
             _wpnonce: weDocs.nonce
         }, function(data) {
-            dom.find('.spinner').removeClass('is-active');
+            dom.find('.spinner').remove();
             dom.find('.no-docs').removeClass('not-loaded');
 
             self.docs = data.data;
