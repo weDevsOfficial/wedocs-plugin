@@ -35,9 +35,10 @@ class WeDocs_Shortcode_Handler {
      */
     public static function wedocs( $args = array() ) {
         $defaults = array(
-            'col'  => '2',
-            'id'   => 'any',
-            'more' => __( 'View Details', 'wedocs' )
+            'col'     => '2',
+            'include' => 'any',
+            'exclude' => '',
+            'more'    => __( 'View Details', 'wedocs' )
         );
 
         $args     = wp_parse_args( $args, $defaults );
@@ -49,8 +50,12 @@ class WeDocs_Shortcode_Handler {
             'sort_column' => 'menu_order'
         );
 
-        if ( 'any' != $args['id'] ) {
-            $parent_args['include'] = $args['id'];
+        if ( 'any' != $args['include'] ) {
+            $parent_args['include'] = $args['include'];
+        }
+
+        if ( !empty( $args['exclude'] ) ) {
+            $parent_args['exclude'] = $args['exclude'];
         }
 
         $parent_docs = get_pages( $parent_args );
