@@ -19,6 +19,8 @@ Create great looking documentation for your products. Organize your product docu
 
 Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
+[Usage Documentation](https://github.com/tareq1988/wedocs-plugin/wiki)
+
 == Frequently Asked Questions ==
 
 Nothing here yet
