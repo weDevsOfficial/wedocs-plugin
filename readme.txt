@@ -12,14 +12,23 @@ Create great looking documentation for your products.
 
 == Description ==
 
+* [Documentation](https://github.com/tareq1988/wedocs-plugin/wiki)
+* [Github](https://github.com/tareq1988/wedocs-plugin/)
+
 Create great looking documentation for your products. Organize your product documentation in your site, beautifully!
+
+Fetch your documents from inside WordPress.
+
+You can host docs inside your WordPress, create/add new docs, organize with ordering, tags and even fetch docs from external sites using this plugin.
+
+This plugin is extremely handy for delivering long and detailed documentation of your WordPress product / plugin by bundling this with it.
+
+weDocs makes browsing and creating documentation a fresh and streamlined experience within the familiarity of your WP environment.
 
 
 == Installation ==
 
 Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
-
-[Usage Documentation](https://github.com/tareq1988/wedocs-plugin/wiki)
 
 == Frequently Asked Questions ==
 
