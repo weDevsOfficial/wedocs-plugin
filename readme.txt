@@ -1,7 +1,7 @@
 === weDocs - the documentation plugin ===
 Contributors: tareq1988, wedevs
 Donate link: https://tareq.co/donate/
-Tags: document, documentation, help
+Tags: document, documentation, help, support, note
 Requires at least: 3.6
 Tested up to: 4.4.2
 Stable tag: trunk
@@ -24,6 +24,12 @@ You can host docs inside your WordPress, create/add new docs, organize with orde
 This plugin is extremely handy for delivering long and detailed documentation of your WordPress product / plugin by bundling this with it.
 
 weDocs makes browsing and creating documentation a fresh and streamlined experience within the familiarity of your WP environment.
+
+### Contribute ###
+This may have bugs and lack of many features. If you want to contribute on this project, you are more than welcome. Please fork the repository from [Github](https://github.com/tareq1988/wedocs-plugin).
+
+### Author ###
+Brought to you by [Tareq Hasan](https://tareq.co) from [weDevs](https://wedevs.com)
 
 
 == Installation ==
