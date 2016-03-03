@@ -12,12 +12,10 @@ Create great looking documentation for your products.
 
 == Description ==
 
-* [Documentation](https://github.com/tareq1988/wedocs-plugin/wiki)
-* [Github](https://github.com/tareq1988/wedocs-plugin/)
-
 Create great looking documentation for your products. Organize your product documentation in your site, beautifully!
 
-Fetch your documents from inside WordPress.
+* [Documentation](https://github.com/tareq1988/wedocs-plugin/wiki)
+* [Github](https://github.com/tareq1988/wedocs-plugin/)
 
 You can host docs inside your WordPress, create/add new docs, organize with ordering, tags and even fetch docs from external sites using this plugin.
 
