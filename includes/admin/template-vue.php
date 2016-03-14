@@ -12,6 +12,7 @@
                 <a target="_blank" href="{{ editurl }}{{ doc.post.id }}">{{ doc.post.title }}<span v-if="doc.post.status != 'publish'" class="doc-status">{{ doc.post.status }}</span></a>
 
                 <span class="wedocs-row-actions">
+                    <a target="_blank" href="{{ editurl }}{{ doc.post.id }}" title="<?php esc_attr_e( 'Edit the doc', 'wedocs' ); ?>"><span class="dashicons dashicons-edit"></span></a>
                     <a target="_blank" href="{{ viewurl }}{{doc.post.id }}" title="<?php esc_attr_e( 'Preview the doc', 'wedocs' ); ?>"><span class="dashicons dashicons-external"></span></a>
                     <span class="wedocs-btn-remove" v-on:click="removeDoc(doc, docs)" title="<?php esc_attr_e( 'Delete this doc', 'wedocs' ); ?>"><span class="dashicons dashicons-trash"></span></span>
                     <span class="wedocs-btn-reorder"><span class="dashicons dashicons-menu"></span></span>
@@ -26,6 +27,7 @@
 
                             <span class="actions wedocs-row-actions">
                                 <span class="wedocs-btn-reorder" title="<?php esc_attr_e( 'Re-order this section', 'wedocs' ); ?>"><span class="dashicons dashicons-menu"></span></span>
+                                <a target="_blank" href="{{ editurl }}{{section.post.id }}" title="<?php esc_attr_e( 'Edit the section', 'wedocs' ); ?>"><span class="dashicons dashicons-edit"></span></a>
                                 <a target="_blank" href="{{ viewurl }}{{section.post.id }}" title="<?php esc_attr_e( 'Preview the section', 'wedocs' ); ?>"><span class="dashicons dashicons-external"></span></a>
                                 <span class="wedocs-btn-remove" v-on:click="removeSection(section, doc.child)" title="<?php esc_attr_e( 'Delete this section', 'wedocs' ); ?>"><span class="dashicons dashicons-trash"></span></span>
                                 <span class="add-article" v-on:click="addArticle(section)" title="<?php esc_attr_e( 'Add a new article', 'wedocs' ); ?>"><span class="dashicons dashicons-plus-alt"></span></span>
@@ -39,6 +41,7 @@
                                 <span class="actions wedocs-row-actions">
                                     <span class="wedocs-btn-reorder"><span class="dashicons dashicons-menu"></span></span>
                                     <a target="_blank" href="{{ viewurl }}{{article.post.id }}" title="<?php esc_attr_e( 'Preview the article', 'wedocs' ); ?>"><span class="dashicons dashicons-external"></span></a>
+                                    <a target="_blank" href="{{ editurl }}{{article.post.id }}" title="<?php esc_attr_e( 'Edit the section', 'wedocs' ); ?>"><span class="dashicons dashicons-edit"></span></a>
                                     <span class="wedocs-btn-remove" v-on:click="removeArticle(article, section.child)" title="<?php esc_attr_e( 'Delete this article', 'wedocs' ); ?>"><span class="dashicons dashicons-trash"></span></span>
                                 </span>
                             </li>
