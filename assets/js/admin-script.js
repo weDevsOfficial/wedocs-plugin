@@ -69,12 +69,12 @@ new Vue({
             this.docs = this.docs || [];
 
             swal({
-                title: "Enter doc title",
+                title: weDocs.enter_doc_title,
                 type: "input",
                 showCancelButton: true,
                 closeOnConfirm: true,
                 animation: "slide-from-top",
-                inputPlaceholder: "Write something"
+                inputPlaceholder: weDocs.write_something
             }, function(inputValue){
                 if (inputValue === false) {
                     return false;
@@ -114,12 +114,12 @@ new Vue({
 
         addSection: function(doc) {
             swal({
-                title: "Enter section title",
+                title: weDocs.enter_section_title,
                 type: "input",
                 showCancelButton: true,
                 closeOnConfirm: true,
                 animation: "slide-from-top",
-                inputPlaceholder: "Write something"
+                inputPlaceholder: weDocs.write_something
             }, function(inputValue){
                 if (inputValue === false) {
                     return false;
@@ -165,12 +165,12 @@ new Vue({
             var parentEvent = event;
 
             swal({
-                title: "Enter doc title",
+                title: weDocs.enter_doc_title,
                 type: "input",
                 showCancelButton: true,
                 closeOnConfirm: true,
                 animation: "slide-from-top",
-                inputPlaceholder: "Write something"
+                inputPlaceholder: weDocs.write_something
             }, function(inputValue){
                 if (inputValue === false) {
                     return false;

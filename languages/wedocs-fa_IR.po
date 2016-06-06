@@ -1,56 +1,68 @@
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=1; plural=0;\n"
 "Project-Id-Version: weDocs\n"
-"POT-Creation-Date: 2016-06-06 15:19+0430\n"
-"PO-Revision-Date: 2016-06-06 17:50+0430\n"
+"POT-Creation-Date: 2016-06-06 18:12+0430\n"
+"PO-Revision-Date: 2016-06-06 18:12+0430\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 1.8.6\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: wedocs.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;"
-"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;"
-"esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"Last-Translator: \n"
-"Language: fa_IR\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
+#: includes/admin/class-admin.php:48
+msgid "Enter doc title"
+msgstr "عنوان سند را وارد کنید"
+
+#: includes/admin/class-admin.php:49
+msgid "Write something"
+msgstr "چیزی بنویسید"
+
+#: includes/admin/class-admin.php:50
+msgid "Enter section title"
+msgstr "عنوان بخش را وارد کنید"
+
 #. Plugin Name of the plugin/theme
-#: includes/admin/class-admin.php:70
+#: includes/admin/class-admin.php:74
 msgid "weDocs"
 msgstr "مستندات ما"
 
-#: includes/admin/class-admin.php:71
+#: includes/admin/class-admin.php:75
 msgid "Docs"
 msgstr "مستندات"
 
-#: includes/admin/class-admin.php:72 wedocs.php:215
+#: includes/admin/class-admin.php:76 wedocs.php:215
 msgid "Tags"
 msgstr "برچسب ها"
 
-#: includes/admin/class-admin.php:122
+#: includes/admin/class-admin.php:126
 #, php-format
 msgid ""
 "Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;"
 "&#9733;&#9733;&#9733;&#9733;%s rating."
 msgstr ""
-"به خاطر استفاده از افزونه <strong>مستندات ما</strong> از شما متشکرم. "
-"لطفا با رای خود %s&#9733;&#9733;&#9733;&#9733;&#9733;%s ما رایاری کنید."
+"به خاطر استفاده از افزونه <strong>مستندات ما</strong> از شما متشکرم. لطفا با "
+"رای خود %s&#9733;&#9733;&#9733;&#9733;&#9733;%s ما رایاری کنید."
 
-#: includes/admin/class-admin.php:122
+#: includes/admin/class-admin.php:126
 msgid "Thanks :)"
 msgstr "متشکرم :)"
 
-#: includes/admin/class-admin.php:133
+#: includes/admin/class-admin.php:137
 msgid "Thank you for using <strong>weDocs</strong>."
 msgstr "بخاطر استفاده شما از <strong>weDocs</strong> متشکرم."
 
-#: includes/admin/class-admin.php:136
+#: includes/admin/class-admin.php:140
 #, php-format
 msgid "Use the <a href=\"%s\">classic UI</a>."
 msgstr "از <a href=\"%s\">رابط کاربری کلاسیک</a> استفاده کنید."
