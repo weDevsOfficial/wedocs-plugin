@@ -1,0 +1,366 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: weDocs\n"
+"POT-Creation-Date: 2016-06-06 18:12+0430\n"
+"PO-Revision-Date: 2016-06-06 18:12+0430\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: wedocs.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: includes/admin/class-admin.php:48
+msgid "Enter doc title"
+msgstr "عنوان سند را وارد کنید"
+
+#: includes/admin/class-admin.php:49
+msgid "Write something"
+msgstr "چیزی بنویسید"
+
+#: includes/admin/class-admin.php:50
+msgid "Enter section title"
+msgstr "عنوان بخش را وارد کنید"
+
+#. Plugin Name of the plugin/theme
+#: includes/admin/class-admin.php:74
+msgid "weDocs"
+msgstr "مستندات ما"
+
+#: includes/admin/class-admin.php:75
+msgid "Docs"
+msgstr "مستندات"
+
+#: includes/admin/class-admin.php:76 wedocs.php:215
+msgid "Tags"
+msgstr "برچسب ها"
+
+#: includes/admin/class-admin.php:126
+#, php-format
+msgid ""
+"Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;"
+"&#9733;&#9733;&#9733;&#9733;%s rating."
+msgstr ""
+"به خاطر استفاده از افزونه <strong>مستندات ما</strong> از شما متشکرم. لطفا با "
+"رای خود %s&#9733;&#9733;&#9733;&#9733;&#9733;%s ما رایاری کنید."
+
+#: includes/admin/class-admin.php:126
+msgid "Thanks :)"
+msgstr "متشکرم :)"
+
+#: includes/admin/class-admin.php:137
+msgid "Thank you for using <strong>weDocs</strong>."
+msgstr "بخاطر استفاده شما از <strong>weDocs</strong> متشکرم."
+
+#: includes/admin/class-admin.php:140
+#, php-format
+msgid "Use the <a href=\"%s\">classic UI</a>."
+msgstr "از <a href=\"%s\">رابط کاربری کلاسیک</a> استفاده کنید."
+
+#: includes/admin/template-vue.php:3
+msgid "Documentations"
+msgstr "مستندات"
+
+#: includes/admin/template-vue.php:3
+msgid "Add Doc"
+msgstr "افزودن سند"
+
+#: includes/admin/template-vue.php:15
+msgid "Preview the doc"
+msgstr "پیش نمایش سند"
+
+#: includes/admin/template-vue.php:16
+msgid "Delete this doc"
+msgstr "حذف این سند"
+
+#: includes/admin/template-vue.php:28
+msgid "Re-order this section"
+msgstr "مرتب سازی مجدد این قسمت"
+
+#: includes/admin/template-vue.php:29
+msgid "Preview the section"
+msgstr "پیش نمایش این قسمت"
+
+#: includes/admin/template-vue.php:30
+msgid "Delete this section"
+msgstr "حذف این قسمت"
+
+#: includes/admin/template-vue.php:31
+msgid "Add a new article"
+msgstr "افزودن مقاله جدید"
+
+#: includes/admin/template-vue.php:41
+msgid "Preview the article"
+msgstr "پیش نمایش مقاله"
+
+#: includes/admin/template-vue.php:42
+msgid "Delete this article"
+msgstr "حذف این مقاله"
+
+#: includes/admin/template-vue.php:51
+msgid "Add Section"
+msgstr "افزودن بخش"
+
+#: includes/admin/template-vue.php:57
+#, php-format
+msgid "No docs has been found. Perhaps %s?"
+msgstr "سندی یافت نشد. شاید %s؟"
+
+#: includes/admin/template-vue.php:57
+msgid "create one"
+msgstr "ایجاد کردن"
+
+#: includes/class-ajax.php:151
+msgid "Sorry, you've already recorded your feedback!"
+msgstr "متاسفم، شما قبلا نظر خود را ثبت کرده اید!"
+
+#: includes/class-ajax.php:166
+msgid "Thanks for your feedback!"
+msgstr "به خاطر نظرتان ممنونم"
+
+#: includes/class-search-widget.php:11
+msgid "Document Search Widget"
+msgstr "ابزارک جستجوی سند"
+
+#: includes/class-search-widget.php:14
+msgid "weDocs Document Search"
+msgstr "جستجوی سند weDocs"
+
+#: includes/class-search-widget.php:34
+msgid "All Docs"
+msgstr "تمام مستندات"
+
+#: includes/class-search-widget.php:45 includes/class-search-widget.php:46
+msgctxt "label"
+msgid "Search for:"
+msgstr "جستجو برای:[label]"
+
+#: includes/class-search-widget.php:46
+msgctxt "placeholder"
+msgid "Documentation Search &hellip;"
+msgstr "جستجوی مستندات &hellip;"
+
+#: includes/class-search-widget.php:52
+msgctxt "submit button"
+msgid "Search"
+msgstr "جستجو"
+
+#: includes/class-search-widget.php:66
+msgid "Documentation Search"
+msgstr "جستجوی مستندات"
+
+#: includes/class-search-widget.php:69
+msgid "Title:"
+msgstr "عنوان:"
+
+#: includes/class-shortcode.php:41
+msgid "View Details"
+msgstr "مشاهده جزئیات"
+
+#: includes/functions.php:84
+msgid "Home"
+msgstr "خانه"
+
+#: includes/functions.php:144
+msgid "Doc navigation"
+msgstr "ناوبری سند"
+
+#: templates/content-feedback.php:8
+#, php-format
+msgid "%d person found this useful"
+msgid_plural "%d persons found this useful"
+msgstr[0] "%d نفر این را مفید دانسته اند"
+
+#: templates/content-feedback.php:8 templates/content-feedback.php:9
+msgid "No votes yet"
+msgstr "هنوز کسی رای نداده"
+
+#: templates/content-feedback.php:9
+#, php-format
+msgid "%d person found this not useful"
+msgid_plural "%d persons found this not useful"
+msgstr[0] "%d نفر این را غیر مفید دانسته اند"
+
+#: templates/content-feedback.php:12
+msgid "Was this article helpful to you?"
+msgstr "آیا این مقاله برای شما مفید بود؟"
+
+#: templates/content-feedback.php:16
+msgid "Yes"
+msgstr "بله"
+
+#: templates/content-feedback.php:23
+msgid "No"
+msgstr "خیر"
+
+#: templates/single-docs.php:38
+#, php-format
+msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "ادامه خواندن %s <span class=\"meta-nav\">&rarr;</span>"
+
+#: templates/single-docs.php:43
+msgid "Docs:"
+msgstr "مستندات:"
+
+#: templates/single-docs.php:51
+msgctxt "Used before tag names."
+msgid "Tags"
+msgstr "برچسب ها"
+
+#: wedocs.php:163
+msgctxt "Post Type General Name"
+msgid "Docs"
+msgstr "مستندات"
+
+#: wedocs.php:164
+msgctxt "Post Type Singular Name"
+msgid "Doc"
+msgstr "سند"
+
+#: wedocs.php:165
+msgid "Documentation"
+msgstr "مستندات"
+
+#: wedocs.php:166
+msgid "Parent Doc"
+msgstr "سند والد"
+
+#: wedocs.php:167
+msgid "All Documentations"
+msgstr "تمام مستندات"
+
+#: wedocs.php:168
+msgid "View Documentation"
+msgstr "نمایش مستندات"
+
+#: wedocs.php:169
+msgid "Add Documentation"
+msgstr "مستندات جدید"
+
+#: wedocs.php:170
+msgid "Add New"
+msgstr "افزودن مورد جدید"
+
+#: wedocs.php:171
+msgid "Edit Documentation"
+msgstr "ویرایش مستندات"
+
+#: wedocs.php:172
+msgid "Update Documentation"
+msgstr "بروزرسانی مستندات"
+
+#: wedocs.php:173
+msgid "Search Documentation"
+msgstr "جستجوی مستندات"
+
+#: wedocs.php:174
+msgid "Not documentation found"
+msgstr "سندی یافت نشد"
+
+#: wedocs.php:175
+msgid "Not found in Trash"
+msgstr "در زباله دان چیزی نیست"
+
+#: wedocs.php:213
+msgctxt "Taxonomy General Name"
+msgid "Tags"
+msgstr "برچسب ها"
+
+#: wedocs.php:214
+msgctxt "Taxonomy Singular Name"
+msgid "Tag"
+msgstr "برچسب"
+
+#: wedocs.php:216
+msgid "All Tags"
+msgstr "تمام برچسب ها"
+
+#: wedocs.php:217
+msgid "Parent Tag"
+msgstr "برچسب والد"
+
+#: wedocs.php:218
+msgid "Parent Tag:"
+msgstr "برچسب والد:"
+
+#: wedocs.php:219
+msgid "New Tag Tag"
+msgstr "برچسب جدید"
+
+#: wedocs.php:220
+msgid "Add New Item"
+msgstr "افزودن مورد جدید"
+
+#: wedocs.php:221
+msgid "Edit Tag"
+msgstr "ویرایش برچسب"
+
+#: wedocs.php:222
+msgid "Update Tag"
+msgstr "بروز کردن برچسب"
+
+#: wedocs.php:223
+msgid "View Tag"
+msgstr "مشاهده برچسب"
+
+#: wedocs.php:224
+msgid "Separate items with commas"
+msgstr "موارد را با کاما از هم جدا کنید"
+
+#: wedocs.php:225
+msgid "Add or remove items"
+msgstr "افزودن یا حذف مورد"
+
+#: wedocs.php:226
+msgid "Choose from the most used"
+msgstr "از مواردی که بیشتر استفاده شده است انتخاب کنید"
+
+#: wedocs.php:227
+msgid "Popular Tags"
+msgstr "برچسب های رایج"
+
+#: wedocs.php:228
+msgid "Search Tags"
+msgstr "جستجوی برچسب"
+
+#: wedocs.php:229
+msgid "Not Found"
+msgstr "یافت نشد"
+
+#: wedocs.php:230
+msgid "No items"
+msgstr "بدون مورد"
+
+#: wedocs.php:231
+msgid "Tags list"
+msgstr "لیست برچسب ها"
+
+#: wedocs.php:232
+msgid "Tags list navigation"
+msgstr "ناوبری لیست برچسب ها"
+
+#. Plugin URI of the plugin/theme
+msgid "http://wedevs.com/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "A documentation plugin for WordPress"
+msgstr "یک افزونه مستند سازی برای وردپرس"
+
+#. Author of the plugin/theme
+msgid "Tareq Hasan"
+msgstr "طارق حسن"
+
+#. Author URI of the plugin/theme
+msgid "https://tareq.co/"
+msgstr ""

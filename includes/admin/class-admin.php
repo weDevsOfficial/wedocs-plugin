@@ -42,9 +42,13 @@ class WeDocs_Admin {
         wp_enqueue_script( 'sweetalert', $assets_url . '/js/sweetalert.min.js', array( 'jquery' ) );
         wp_enqueue_script( 'wedocs-admin-script', $assets_url . "/js/admin-script.js", array( 'jquery', 'jquery-ui-sortable', 'wp-util' ), time(), true );
         wp_localize_script( 'wedocs-admin-script', 'weDocs', array(
-            'nonce'   => wp_create_nonce( 'wedocs-admin-nonce' ),
-            'editurl' => admin_url( 'post.php?action=edit&post=' ),
-            'viewurl' => home_url( '/?p=' )
+            'nonce'                 => wp_create_nonce( 'wedocs-admin-nonce' ),
+            'editurl'               => admin_url( 'post.php?action=edit&post=' ),
+            'viewurl'               => home_url( '/?p=' ),
+            'enter_doc_title'       => __( 'Enter doc title', 'wedocs' ),
+            'write_something'       => __( 'Write something', 'wedocs' ),
+            'enter_section_title'   => __( 'Enter section title', 'wedocs' ),
+            
         ) );
 
         wp_enqueue_style( 'sweetalert', $assets_url . '/css/sweetalert.css', false, date( 'Ymd' ) );

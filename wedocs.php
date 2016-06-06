@@ -7,6 +7,8 @@ Version: 0.1
 Author: Tareq Hasan
 Author URI: https://tareq.co/
 License: GPL2
+Text Domain: wedocs
+Domain Path: /languages
 */
 
 /**
