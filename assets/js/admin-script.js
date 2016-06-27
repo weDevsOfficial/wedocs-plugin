@@ -161,7 +161,7 @@ new Vue({
             });
         },
 
-        addArticle: function(section) {
+        addArticle: function(section, event) {
             var parentEvent = event;
 
             swal({
