@@ -1,0 +1,356 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: weDocs\n"
+"POT-Creation-Date: 2016-09-11 15:11+0200\n"
+"PO-Revision-Date: 2016-09-11 15:38+0200\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: wedocs.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;"
+"esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Last-Translator: \n"
+"Language: fr_FR\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#. Plugin Name of the plugin/theme
+#: includes/admin/class-admin.php:70
+msgid "weDocs"
+msgstr ""
+
+#: includes/admin/class-admin.php:71
+msgid "Docs"
+msgstr "Docs"
+
+#: includes/admin/class-admin.php:72 wedocs.php:215
+msgid "Tags"
+msgstr "Étiquettes"
+
+#: includes/admin/class-admin.php:122
+#, php-format
+msgid ""
+"Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;"
+"&#9733;&#9733;&#9733;&#9733;%s rating."
+msgstr ""
+"Merci d'utiliser <strong>weDocs</strong>. S'il vous plaît, laissez-nous "
+"une note de %s&#9733;&#9733;&#9733;&#9733;&#9733;%s."
+
+#: includes/admin/class-admin.php:122
+msgid "Thanks :)"
+msgstr "Merci :)"
+
+#: includes/admin/class-admin.php:133
+msgid "Thank you for using <strong>weDocs</strong>."
+msgstr "Merci d'utiliser <strong>weDocs</strong>."
+
+#: includes/admin/class-admin.php:136
+#, php-format
+msgid "Use the <a href=\"%s\">classic UI</a>."
+msgstr "Utiliser <a href=\"%s\">l'interface classique</a>."
+
+#: includes/admin/template-vue.php:3
+msgid "Documentations"
+msgstr "Documentations"
+
+#: includes/admin/template-vue.php:3
+msgid "Add Doc"
+msgstr "Ajouter une doc"
+
+#: includes/admin/template-vue.php:15
+msgid "Preview the doc"
+msgstr "Prévisualiser la doc"
+
+#: includes/admin/template-vue.php:16
+msgid "Delete this doc"
+msgstr "Supprimer la doc"
+
+#: includes/admin/template-vue.php:28
+msgid "Re-order this section"
+msgstr "Réordonner cette section"
+
+#: includes/admin/template-vue.php:29
+msgid "Preview the section"
+msgstr "Prévisualiser la section"
+
+#: includes/admin/template-vue.php:30
+msgid "Delete this section"
+msgstr "Supprimer cette section"
+
+#: includes/admin/template-vue.php:31
+msgid "Add a new article"
+msgstr "Ajouter un nouvel article"
+
+#: includes/admin/template-vue.php:41
+msgid "Preview the article"
+msgstr "Prévisualiser l'article"
+
+#: includes/admin/template-vue.php:42
+msgid "Delete this article"
+msgstr "Supprimer cet article"
+
+#: includes/admin/template-vue.php:51
+msgid "Add Section"
+msgstr "Ajouter une section"
+
+#: includes/admin/template-vue.php:57
+#, php-format
+msgid "No docs has been found. Perhaps %s?"
+msgstr "Aucune documentations n'a été trouvées. Voulez-vous en %s ?"
+
+#: includes/admin/template-vue.php:57
+msgid "create one"
+msgstr "créer une"
+
+#: includes/class-ajax.php:151
+msgid "Sorry, you've already recorded your feedback!"
+msgstr "Désolé, vous avez déjà voté !"
+
+#: includes/class-ajax.php:166
+msgid "Thanks for your feedback!"
+msgstr "Merci pour votre retour !"
+
+#: includes/class-search-widget.php:11
+msgid "Document Search Widget"
+msgstr "Widget de recherche de documentation"
+
+#: includes/class-search-widget.php:14
+msgid "weDocs Document Search"
+msgstr "Recherche de documentation weDocs"
+
+#: includes/class-search-widget.php:34
+msgid "All Docs"
+msgstr "Toutes les docs"
+
+#: includes/class-search-widget.php:45 includes/class-search-widget.php:46
+msgctxt "label"
+msgid "Search for:"
+msgstr "Rechercher :"
+
+#: includes/class-search-widget.php:46
+msgctxt "placeholder"
+msgid "Documentation Search &hellip;"
+msgstr "Recherche de documentation &hellip;"
+
+#: includes/class-search-widget.php:52
+msgctxt "submit button"
+msgid "Search"
+msgstr "Rechercher"
+
+#: includes/class-search-widget.php:66
+msgid "Documentation Search"
+msgstr "Recherche de documentation"
+
+#: includes/class-search-widget.php:69
+msgid "Title:"
+msgstr "Titre :"
+
+#: includes/class-shortcode.php:41
+msgid "View Details"
+msgstr "Voir plus"
+
+#: includes/functions.php:84
+msgid "Home"
+msgstr "Accueil"
+
+#: includes/functions.php:144
+msgid "Doc navigation"
+msgstr "Navigation dans la documentation"
+
+#: templates/content-feedback.php:8
+#, php-format
+msgid "%d person found this useful"
+msgid_plural "%d persons found this useful"
+msgstr[0] "%d personne trouve cela utile"
+msgstr[1] "%d personnes trouvent cela utile"
+
+#: templates/content-feedback.php:8 templates/content-feedback.php:9
+msgid "No votes yet"
+msgstr "Aucun vote pour le moment"
+
+#: templates/content-feedback.php:9
+#, php-format
+msgid "%d person found this not useful"
+msgid_plural "%d persons found this not useful"
+msgstr[0] "%d personne ne trouve pas cela utile"
+msgstr[1] "%d personnes ne trouvent pas cela utile"
+
+#: templates/content-feedback.php:12
+msgid "Was this article helpful to you?"
+msgstr "Cet article vous a-t-il été utile ?"
+
+#: templates/content-feedback.php:16
+msgid "Yes"
+msgstr "Oui"
+
+#: templates/content-feedback.php:23
+msgid "No"
+msgstr "Non"
+
+#: templates/single-docs.php:38
+#, php-format
+msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Continuer à lire %s <span class=\"meta-nav\">&rarr;</span>"
+
+#: templates/single-docs.php:43
+msgid "Docs:"
+msgstr "Docs :"
+
+#: templates/single-docs.php:51
+msgctxt "Used before tag names."
+msgid "Tags"
+msgstr "Étiquettes"
+
+#: wedocs.php:163
+msgctxt "Post Type General Name"
+msgid "Docs"
+msgstr "Docs"
+
+#: wedocs.php:164
+msgctxt "Post Type Singular Name"
+msgid "Doc"
+msgstr "Doc"
+
+#: wedocs.php:165
+msgid "Documentation"
+msgstr "Documentation"
+
+#: wedocs.php:166
+msgid "Parent Doc"
+msgstr "Doc parente"
+
+#: wedocs.php:167
+msgid "All Documentations"
+msgstr "Toutes les documentations"
+
+#: wedocs.php:168
+msgid "View Documentation"
+msgstr "Voir la documentation"
+
+#: wedocs.php:169
+msgid "Add Documentation"
+msgstr "Ajouter une documentation"
+
+#: wedocs.php:170
+msgid "Add New"
+msgstr "Ajouter nouvelle"
+
+#: wedocs.php:171
+msgid "Edit Documentation"
+msgstr "Modifier la documentation"
+
+#: wedocs.php:172
+msgid "Update Documentation"
+msgstr "Mettre à jour la documentation"
+
+#: wedocs.php:173
+msgid "Search Documentation"
+msgstr "Rechercher une documentation"
+
+#: wedocs.php:174
+msgid "Not documentation found"
+msgstr "Aucune documentation trouvée"
+
+#: wedocs.php:175
+msgid "Not found in Trash"
+msgstr "Aucun résultat dans la corbeille"
+
+#: wedocs.php:213
+msgctxt "Taxonomy General Name"
+msgid "Tags"
+msgstr "Étiquettes"
+
+#: wedocs.php:214
+msgctxt "Taxonomy Singular Name"
+msgid "Tag"
+msgstr "Étiquette"
+
+#: wedocs.php:216
+msgid "All Tags"
+msgstr "Toutes les étiquettes"
+
+#: wedocs.php:217
+msgid "Parent Tag"
+msgstr "Étiquette parente"
+
+#: wedocs.php:218
+msgid "Parent Tag:"
+msgstr "Étiquette parente :"
+
+#: wedocs.php:219
+msgid "New Tag Tag"
+msgstr "Nouvelle étiquette"
+
+#: wedocs.php:220
+msgid "Add New Item"
+msgstr "Ajouter un nouvel objet"
+
+#: wedocs.php:221
+msgid "Edit Tag"
+msgstr "Modifier l'étiquette"
+
+#: wedocs.php:222
+msgid "Update Tag"
+msgstr "Mettre à jour l'étiquette"
+
+#: wedocs.php:223
+msgid "View Tag"
+msgstr "Voir l'étiquette"
+
+#: wedocs.php:224
+msgid "Separate items with commas"
+msgstr "Séparer les objets avec des virgules"
+
+#: wedocs.php:225
+msgid "Add or remove items"
+msgstr "Ajouter ou retirer des objets"
+
+#: wedocs.php:226
+msgid "Choose from the most used"
+msgstr "Choisir parmi les plus utilisées"
+
+#: wedocs.php:227
+msgid "Popular Tags"
+msgstr "Étiquettes populaires"
+
+#: wedocs.php:228
+msgid "Search Tags"
+msgstr "Rechercher les étiquettes"
+
+#: wedocs.php:229
+msgid "Not Found"
+msgstr "Aucun résultat"
+
+#: wedocs.php:230
+msgid "No items"
+msgstr "Pas d'objet"
+
+#: wedocs.php:231
+msgid "Tags list"
+msgstr "Liste d'étiquette"
+
+#: wedocs.php:232
+msgid "Tags list navigation"
+msgstr "Navigation dans la liste d'étiquette"
+
+#. Plugin URI of the plugin/theme
+msgid "http://wedevs.com/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "A documentation plugin for WordPress"
+msgstr "Un plugin WordPress pour vos documentations"
+
+#. Author of the plugin/theme
+msgid "Tareq Hasan"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://tareq.co/"
+msgstr ""
