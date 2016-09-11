@@ -144,11 +144,11 @@ function wedocs_doc_nav() {
         echo '<h3 class="assistive-text screen-reader-text">'. __( 'Doc navigation', 'wedocs' ) . '</h3>';
 
         if ( $prev_post_id ) {
-            echo '<span class="nav-prev"><a href="' . get_permalink( $prev_post_id ) . '">&larr; ' . get_post( $prev_post_id )->post_title . '</a></span>';
+            echo '<span class="nav-prev"><a href="' . get_permalink( $prev_post_id ) . '">&larr; ' . apply_filters( 'wedocs_translate_text', get_post( $prev_post_id )->post_title ) . '</a></span>';
         }
 
         if ( $next_post_id ) {
-            echo '<span class="nav-next"><a href="' . get_permalink( $next_post_id ) . '">' . get_post( $next_post_id )->post_title . ' &rarr;</a></span>';
+            echo '<span class="nav-next"><a href="' . get_permalink( $next_post_id ) . '">' . apply_filters( 'wedocs_translate_text', get_post( $next_post_id )->post_title ) . ' &rarr;</a></span>';
         }
 
         echo '</nav>';
@@ -207,4 +207,36 @@ endif;
  */
 function wedocs_get_the_doc_tags( $post_id, $before = '', $sep = '', $after = '' ) {
     return get_the_term_list( $post_id, 'doc_tag', $before, $sep, $after );
+}
+
+// Check if QTranslate plugin is active before function declaration
+$is_qtranslate	= wedocs_is_plugin_active( 'qtranslate-x/qtranslate.php' );
+if( $is_qtranslate ) {
+	/**
+	 * Translate dynamic text with QTranslate X plugin
+	 *
+	 * @param string $text The multilingual text.
+	 * 
+	 * @return string The translated text.
+	 */
+	function wedocs_translate_text_with_qtranslate( $text ){
+		return apply_filters( 'translate_text', $text );
+	}
+	add_filter( 'wedocs_translate_text', 'wedocs_translate_text_with_qtranslate', 10, 1 );
+}
+
+/**
+ * Check if a plugin is active
+ *
+ * @param string $plugin_path_and_name The plugin relative path and filename of the plugin main file.
+ * 
+ * @return bool Whether the plugin is active or not.
+ */
+function wedocs_is_plugin_active( $plugin_path_and_name ) {
+	
+	if( ! function_exists( 'is_plugin_active' ) ) {
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	}
+	
+	return is_plugin_active( $plugin_path_and_name );
 }
