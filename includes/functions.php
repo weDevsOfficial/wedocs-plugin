@@ -83,7 +83,7 @@ function wedocs_breadcrumbs() {
         'delimiter' => '&rarr;',
         'home'      => __( 'Home', 'wedocs' ),
         'before'    => '<span class="current">',
-        'afeter'    => '</span>'
+        'after'    => '</span>'
     ) );
 
     echo '<div class="wedocs-breadcrumb">';
