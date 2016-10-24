@@ -52,8 +52,16 @@ Nothing here yet
 
 == Changelog ==
 
-= 1.0 (2 march, 2016) =
-* Initial release
+= 1.0 (24 October, 2016) =
+
+ * [new] Added Persian language
+ * [new] Add french translation, responsiveness and QtranslateX full support
+ * [fix] Attach $event object to addArticle method
+ * [fix] Typo in the key name (causes a PHP notice on line 111 `$args['after']`).
+
+= 0.1 (2 march, 2016) =
+
+ * Initial release
 
 == Upgrade Notice ==
 
