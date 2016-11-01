@@ -52,6 +52,10 @@ Nothing here yet
 
 == Changelog ==
 
+= 1.2.1 (1 November, 2016) =
+
+ * [fix] Auto print dialog missed
+
 = 1.2 (1 November, 2016) =
 
  * [new] Added print option

@@ -70,8 +70,8 @@
             mywindow.document.close(); // necessary for IE >= 10
             mywindow.focus(); // necessary for IE >= 10
 
-            // mywindow.print();
-            // mywindow.close();
+            mywindow.print();
+            mywindow.close();
 
             return true;
         },
