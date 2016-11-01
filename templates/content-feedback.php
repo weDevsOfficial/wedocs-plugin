@@ -1,6 +1,6 @@
 <?php global $post; ?>
 
-<div class="wedocs-feedback-wrap">
+<div class="wedocs-feedback-wrap wedocs-hide-print">
     <?php
     $positive = (int) get_post_meta( $post->ID, 'positive', true );
     $negative = (int) get_post_meta( $post->ID, 'negative', true );

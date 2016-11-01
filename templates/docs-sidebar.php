@@ -1,4 +1,4 @@
-<div class="wedocs-sidebar">
+<div class="wedocs-sidebar wedocs-hide-mobile">
     <?php
     $ancestors = array();
     $root      = $parent = false;

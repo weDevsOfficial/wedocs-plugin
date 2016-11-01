@@ -3,7 +3,7 @@ Contributors: tareq1988, wedevs
 Donate link: https://tareq.co/donate/
 Tags: document, documentation, help, support, note
 Requires at least: 3.6
-Tested up to: 4.4.2
+Tested up to: 4.6.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -51,6 +51,19 @@ Nothing here yet
 9. Search widget in frontend
 
 == Changelog ==
+
+= 1.2 (1 November, 2016) =
+
+ * [new] Added print option
+ * [new] Contact modal
+ * [new] Responsiveness
+ * [new] Microdata implementation (schema.org)
+ * [new] Last updated date
+ * [new] Settings page
+
+= 1.1 (24 October, 2016) =
+
+ * SKIPPED VERSION due to release mistake
 
 = 1.0 (24 October, 2016) =
 

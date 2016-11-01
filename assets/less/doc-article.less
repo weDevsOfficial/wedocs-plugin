@@ -1,0 +1,144 @@
+
+a.wedocs-print-article {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #777;
+
+    &:hover {
+        color: #555;
+    }
+}
+
+.entry-content {
+    width: 100% !important;
+    float: none !important;
+    display: block;
+
+    img {
+        max-width: 100%;
+        border: 1px solid @borderColor;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        padding: 25px;
+        height: auto;
+        background: #F9F9F9;
+        display: block;
+    }
+
+    pre {
+        font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+        display: block;
+        padding: 8.5px;
+        margin: 0 0 9px;
+        word-break: break-all;
+        word-wrap: break-word;
+        white-space: pre;
+        white-space: pre-wrap;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0,0,0,.15);
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+
+    dl {
+        margin-bottom: 1em;
+
+        dt {
+            float: left;
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            padding: 4px 9px;
+            margin-bottom: 1em;
+            font-size: 18px;
+            line-height: 1.2em;
+            border-radius: 50px;
+            color: #fff;
+            background: #3197d1;
+            vertical-align: baseline;
+            white-space: nowrap;
+            font-size: 15px;
+            min-width: 9px;
+            position: relative;
+            top: 2px;
+        }
+
+        dd {
+            padding-top: 3px;
+            margin: 0 0 5px 45px;
+
+            &:before,
+            &:after {
+                display: table;
+                content: "";
+                line-height: 0;
+            }
+
+            &:after {
+                clear: both;
+            }
+        }
+    }
+
+    .wedocs-callout {
+        border-left: 5px solid;
+        color: #333;
+        font-size: 14px;
+        margin-bottom: 2em;
+        padding: 16px 25px 16px 20px;
+        background: #f1f1f1;
+        border-color: #cfcfcf;
+
+        &.callout-yellow {
+            background: #fffcd5;
+            border-color: #e7dca4;
+        }
+
+        &.callout-blue {
+            background: #e8f4ff;
+            border-color: #bed1e6;
+        }
+
+        &.callout-green {
+            background: #e5fadc;
+            border-color: #bbdaaf;
+        }
+
+        &.callout-red {
+            background: #fde8e8;
+            border-color: #e7aaaa;
+        }
+
+    }
+}
+
+footer.entry-footer.wedocs-entry-footer {
+    .clearfix();
+    margin-top: 60px;
+    float: none;
+    width: 100%;
+    display: block;
+
+    .wedocs-article-author {
+        display: none;
+    }
+
+    .wedocs-help-link a {
+        border-bottom: 1px dotted #C5C5C5;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: none;
+            border-bottom: 1px dotted #999;
+        }
+    }
+
+    time {
+        float: right;
+        font-weight: normal;
+        font-style: italic;
+    }
+}

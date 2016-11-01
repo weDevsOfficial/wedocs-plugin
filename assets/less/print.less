@@ -1,0 +1,52 @@
+@import "variables";
+@import "doc-article";
+
+.wedocs-hide-print {
+    display: none;
+}
+
+.entry-header {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+table,
+th,
+td {
+    border: 1px solid #d1d1d1;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-width: 1px 0 0 1px;
+    margin: 0 0 1.75em;
+    table-layout: fixed;
+    /* Prevents HTML tables from becoming too wide */
+    width: 100%;
+
+    th,
+    td {
+        font-weight: normal;
+        text-align: left;
+        padding: 0.4375em;
+    }
+
+    th {
+        border-width: 0 1px 1px 0;
+        font-weight: 700;
+    }
+
+    td {
+        border-width: 0 1px 1px 0;
+    }
+}
+
+
+.powered-by {
+    text-align: center;
+    margin-top: 50px;
+    border-top: 1px solid #ccc;
+    padding-top: 30px;
+}

@@ -16,8 +16,13 @@ class WeDocs_Ajax {
 
         add_action( 'wp_ajax_wedocs_rated', array( $this, 'hide_wedocs_rating' ) );
 
+        // feedback
         add_action( 'wp_ajax_wedocs_ajax_feedback', array( $this, 'handle_feedback' ) );
         add_action( 'wp_ajax_nopriv_wedocs_ajax_feedback', array( $this, 'handle_feedback' ) );
+
+        // contact
+        add_action( 'wp_ajax_wedocs_contact_feedback', array( $this, 'handle_contact' ) );
+        add_action( 'wp_ajax_nopriv_wedocs_contact_feedback', array( $this, 'handle_contact' ) );
     }
 
     /**
@@ -165,6 +170,42 @@ class WeDocs_Ajax {
 
         $message = sprintf( $template, 'success', __( 'Thanks for your feedback!', 'wedocs' ) );
         wp_send_json_success( $message );
+    }
+
+    /**
+     * Send email feedback
+     *
+     * @return void
+     */
+    public function handle_contact() {
+        check_ajax_referer( 'wedocs-ajax' );
+
+        $name    = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : '';
+        $subject = isset( $_POST['subject'] ) ? sanitize_text_field( $_POST['subject'] ) : '';
+        $message = isset( $_POST['message'] ) ? strip_tags( $_POST['message'] ) : '';
+        $doc_id  = isset( $_POST['doc_id'] ) ? intval( $_POST['doc_id'] ) : 0;
+
+        if ( !is_user_logged_in() ) {
+            $email = isset( $_POST['email'] ) ? filter_var( $_POST['email'], FILTER_VALIDATE_EMAIL ) : false;
+
+            if ( !$email ) {
+                wp_send_json_error( __( 'Please enter a valid email address.', 'wedocs' ) );
+            }
+        } else {
+            $email = wp_get_current_user()->user_email;
+        }
+
+        if ( empty( $subject ) ) {
+            wp_send_json_error( __( 'Please provide a subject line.', 'wedocs' ) );
+        }
+
+        if ( empty( $message ) ) {
+            wp_send_json_error( __( 'Please provide the message details.', 'wedocs' ) );
+        }
+
+        wedocs_doc_feedback_email( $doc_id, $name, $email, $subject, $message );
+
+        wp_send_json_success( __( 'Thanks for your feedback.', 'wedocs' ) );
     }
 
     /**

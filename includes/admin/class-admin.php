@@ -6,7 +6,15 @@
 class WeDocs_Admin {
 
     function __construct() {
+        $this->includes();
         $this->init_actions();
+        $this->init_classes();
+    }
+
+    public function includes() {
+        require_once dirname( dirname( __FILE__ ) ) . '/class-settings-api.php';
+        require_once dirname( __FILE__ ) . '/class-settings.php';
+        require_once dirname( __FILE__ ) . '/class-docs-list-table.php';
     }
 
     /**
@@ -21,6 +29,11 @@ class WeDocs_Admin {
         add_filter( 'parent_file', array($this, 'fix_tag_menu' ) );
 
         add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
+    }
+
+    public function init_classes() {
+        new weDocs_Settings();
+        new weDocs_Docs_List_Table();
     }
 
     /**
@@ -48,7 +61,7 @@ class WeDocs_Admin {
             'enter_doc_title'       => __( 'Enter doc title', 'wedocs' ),
             'write_something'       => __( 'Write something', 'wedocs' ),
             'enter_section_title'   => __( 'Enter section title', 'wedocs' ),
-            
+
         ) );
 
         wp_enqueue_style( 'sweetalert', $assets_url . '/css/sweetalert.css', false, date( 'Ymd' ) );
@@ -142,6 +155,7 @@ class WeDocs_Admin {
 
         return $footer_text;
     }
+
 }
 
 return new WeDocs_Admin();

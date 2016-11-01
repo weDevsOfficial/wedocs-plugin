@@ -26,12 +26,16 @@ get_header(); ?>
                 <div class="wedocs-single-content">
                     <?php wedocs_breadcrumbs(); ?>
 
-                    <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                    <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope itemtype="http://schema.org/Article">
                         <header class="entry-header">
-                            <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+                            <?php the_title( '<h1 class="entry-title" itemprop="headline">', '</h1>' ); ?>
+
+                            <?php if ( wedocs_get_option( 'print', 'wedocs_settings', 'on' ) == 'on' ): ?>
+                                <a href="#" class="wedocs-print-article wedocs-hide-print wedocs-hide-mobile" title="<?php echo esc_attr( __( 'Print this article', 'wedocs' ) ); ?>"><i class="wedocs-icon wedocs-icon-print"></i></a>
+                            <?php endif; ?>
                         </header><!-- .entry-header -->
 
-                        <div class="entry-content">
+                        <div class="entry-content" itemprop="articleBody">
                             <?php
                                 the_content( sprintf(
                                     /* translators: %s: Name of current post. */
@@ -55,9 +59,32 @@ get_header(); ?>
                             ?>
                         </div><!-- .entry-content -->
 
+                        <footer class="entry-footer wedocs-entry-footer">
+                            <?php if ( wedocs_get_option( 'email', 'wedocs_settings', 'on' ) == 'on' ): ?>
+                                <span class="wedocs-help-link wedocs-hide-print wedocs-hide-mobile">
+                                    <i class="wedocs-icon wedocs-icon-envelope"></i>
+                                    <?php printf( '%s <a id="wedocs-stuck-modal" href="%s">%s</a>', __( 'Still stuck?', 'wedocs' ), '#', __( 'How can we help?', 'wedocs' ) ); ?>
+                                </span>
+                            <?php endif; ?>
+
+                            <div class="wedocs-article-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                                <meta itemprop="name" content="<?php echo get_the_author(); ?>" />
+                                <meta itemprop="url" content="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>" />
+                            </div>
+
+                            <meta itemprop="datePublished" content="<?php echo get_the_time( 'c' ); ?>"/>
+                            <time itemprop="dateModified" datetime="<?php echo esc_attr( get_the_modified_date( 'c' ) ); ?>"><?php printf( __( 'Updated on %s', 'wedocs' ), get_the_modified_date() ); ?></time>
+                        </footer>
+
                         <?php wedocs_doc_nav(); ?>
 
-                        <?php wedocs_get_template_part( 'content', 'feedback' ); ?>
+                        <?php if ( wedocs_get_option( 'helpful', 'wedocs_settings', 'on' ) == 'on' ): ?>
+                            <?php wedocs_get_template_part( 'content', 'feedback' ); ?>
+                        <?php endif; ?>
+
+                        <?php if ( wedocs_get_option( 'email', 'wedocs_settings', 'on' ) == 'on' ): ?>
+                            <?php wedocs_get_template_part( 'content', 'modal' ); ?>
+                        <?php endif; ?>
 
                     </article><!-- #post-## -->
                 </div><!-- .wedocs-single-content -->
