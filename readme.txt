@@ -52,6 +52,19 @@ Nothing here yet
 
 == Changelog ==
 
+= 1.2 (1 November, 2016) =
+
+ * [new] Added print option
+ * [new] Contact modal
+ * [new] Responsiveness
+ * [new] Microdata implementation (schema.org)
+ * [new] Last updated date
+ * [new] Settings page
+
+= 1.1 (24 October, 2016) =
+
+ * SKIPPED VERSION due to release mistake
+
 = 1.0 (24 October, 2016) =
 
  * [new] Added Persian language
