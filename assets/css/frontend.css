@@ -133,6 +133,7 @@ body.single.single-docs .content-area {
   margin-bottom: 30px;
   list-style: none;
   margin-left: 0;
+  padding-left: 0;
 }
 .wedocs-single-wrap .wedocs-single-content ol.wedocs-breadcrumb li {
   display: inline;
