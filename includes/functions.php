@@ -80,22 +80,28 @@ function wedocs_breadcrumbs() {
     global $post;
 
     $args = apply_filters( 'wedocs_breadcrumbs', array(
-        'delimiter' => '&rarr;',
+        'delimiter' => '<li class="delimiter"><i class="wedocs-icon wedocs-icon-angle-right"></i></li>',
         'home'      => __( 'Home', 'wedocs' ),
-        'before'    => '<span class="current">',
-        'after'    => '</span>'
+        'before'    => '<li><span class="current">',
+        'after'     => '</span></li>'
     ) );
 
-    echo '<div class="wedocs-breadcrumb">';
-    echo '<a href="' . home_url( '/' ) . '">' . $args['home'] . '</a> ' . $args['delimiter'] . ' ';
+    $breadcrumb_position = 1;
+
+    echo '<ol class="wedocs-breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">';
+    echo '<li><i class="wedocs-icon wedocs-icon-home"></i></li>';
+    echo wedocs_get_breadcrumb_item( $args['home'], home_url( '/' ), $breadcrumb_position );
+    echo $args['delimiter'];
 
     if ( $post->post_type == 'docs' && $post->post_parent ) {
         $parent_id   = $post->post_parent;
         $breadcrumbs = array();
 
         while ($parent_id) {
+            $breadcrumb_position++;
+
             $page          = get_post($parent_id);
-            $breadcrumbs[] = '<a href="' . get_permalink($page->ID) . '">' . get_the_title($page->ID) . '</a>';
+            $breadcrumbs[] = wedocs_get_breadcrumb_item( get_the_title( $page->ID ), get_permalink( $page->ID ), $breadcrumb_position );
             $parent_id     = $page->post_parent;
         }
 
@@ -112,7 +118,28 @@ function wedocs_breadcrumbs() {
 
     }
 
-    echo '</div>';
+    echo '</ol>';
+}
+
+endif;
+
+if ( ! function_exists( 'wedocs_get_breadcrumb_item' ) ) :
+
+/**
+ * Schema.org breadcrumb item wrapper for a link
+ *
+ * @param  string  $label
+ * @param  string  $permalink
+ * @param  integer $position
+ *
+ * @return string
+ */
+function wedocs_get_breadcrumb_item( $label, $permalink, $position = 1 ) {
+    return '<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        <a itemprop="item" href="' . esc_attr( $permalink ) . '">
+        <span itemprop="name">' . esc_html( $label ) . '</span></a>
+        <meta itemprop="position" content="' . $position . '" />
+    </li>';
 }
 
 endif;
@@ -140,7 +167,7 @@ function wedocs_doc_nav() {
 
     if ( $next_post_id || $prev_post_id ) {
 
-        echo '<nav class="wedocs-doc-nav">';
+        echo '<nav class="wedocs-doc-nav wedocs-hide-print">';
         echo '<h3 class="assistive-text screen-reader-text">'. __( 'Doc navigation', 'wedocs' ) . '</h3>';
 
         if ( $prev_post_id ) {
@@ -211,17 +238,20 @@ function wedocs_get_the_doc_tags( $post_id, $before = '', $sep = '', $after = ''
 
 // Check if QTranslate plugin is active before function declaration
 $is_qtranslate	= wedocs_is_plugin_active( 'qtranslate-x/qtranslate.php' );
-if( $is_qtranslate ) {
+
+if ( $is_qtranslate ) {
+
 	/**
 	 * Translate dynamic text with QTranslate X plugin
 	 *
 	 * @param string $text The multilingual text.
-	 * 
+	 *
 	 * @return string The translated text.
 	 */
 	function wedocs_translate_text_with_qtranslate( $text ){
 		return apply_filters( 'translate_text', $text );
 	}
+
 	add_filter( 'wedocs_translate_text', 'wedocs_translate_text_with_qtranslate', 10, 1 );
 }
 
@@ -229,14 +259,103 @@ if( $is_qtranslate ) {
  * Check if a plugin is active
  *
  * @param string $plugin_path_and_name The plugin relative path and filename of the plugin main file.
- * 
+ *
  * @return bool Whether the plugin is active or not.
  */
 function wedocs_is_plugin_active( $plugin_path_and_name ) {
-	
-	if( ! function_exists( 'is_plugin_active' ) ) {
+
+	if ( ! function_exists( 'is_plugin_active' ) ) {
 		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	}
-	
+
 	return is_plugin_active( $plugin_path_and_name );
+}
+
+/**
+ * Get the value of a settings field
+ *
+ * @param string $option settings field name
+ * @param string $section the section name this field belongs to
+ * @param string $default default text if it's not found
+ *
+ * @return mixed
+ */
+function wedocs_get_option( $option, $section, $default = '' ) {
+
+    $options = get_option( $section );
+
+    if ( isset( $options[$option] ) ) {
+        return $options[$option];
+    }
+
+    return $default;
+}
+
+/**
+ * Get a clients IP address
+ *
+ * @return string
+ */
+function wedocs_get_ip_address() {
+    $ipaddress = '';
+
+    if ( isset($_SERVER['HTTP_CLIENT_IP'] ) ) {
+        $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+    } else if( isset($_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else if ( isset($_SERVER['HTTP_X_FORWARDED'] ) ) {
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+    } else if ( isset($_SERVER['HTTP_FORWARDED_FOR'] ) ) {
+        $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+    } else if ( isset($_SERVER['HTTP_FORWARDED'] ) ) {
+        $ipaddress = $_SERVER['HTTP_FORWARDED'];
+    } else if ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
+        $ipaddress = $_SERVER['REMOTE_ADDR'];
+    } else {
+        $ipaddress = 'UNKNOWN';
+    }
+
+    return $ipaddress;
+}
+
+/**
+ * Send email feedback on a document
+ *
+ * @param  integer $doc_id
+ * @param  string $author
+ * @param  string $email
+ * @param  string $subject
+ * @param  string $message
+ *
+ * @since 1.2
+ *
+ * @return void
+ */
+function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message ) {
+    $wp_email   = 'wordpress@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME']));
+    $blogname   = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
+    $document   = get_post( $doc_id );
+
+    $email_to   = wedocs_get_option( 'email_to', 'wedocs_settings', get_option( 'admin_email' ) );
+    $subject    = sprintf( __('[%1$s] New Doc Feedback: "%2$s"'), $blogname, $subject );
+
+    $email_body = sprintf( __( 'New feedback on your doc "%s"' ), $document->post_title ) . "\r\n";
+    $email_body .= sprintf( __( 'Author: %1$s (IP: %2$s)' ), $author, wedocs_get_ip_address() ) . "\r\n";
+    $email_body .= sprintf( __( 'Email: %s' ), $email ) . "\r\n";
+    $email_body .= sprintf( __( 'Feedback: %s' ), "\r\n" . $message ) . "\r\n\r\n";
+    $email_body .= sprintf( __( 'Doc Permalink: %s'), get_permalink( $document ) ) . "\r\n";
+    $email_body .= sprintf( __( 'Edit Doc: %s'), admin_url( 'post.php?action=edit&post=' . $doc_id ) ) . "\r\n";
+
+    $from            = "From: \"$author\" <$wp_email>";
+    $reply_to        = "Reply-To: \"$email\" <$email>";
+
+    $message_headers = "$from\n"
+            . "Content-Type: text/plain; charset =\"" . get_option( 'blog_charset' ) . "\"\n";
+    $message_headers .= $reply_to . "\n";
+
+    $subject         = apply_filters( 'wedocs_email_feedback_subject', $subject, $doc_id, $document, $_POST );
+    $email_body      = apply_filters( 'wedocs_email_feedback_body', $email_body, $doc_id, $document, $_POST );
+    $message_headers = apply_filters( 'wedocs_email_feedback_headers', $message_headers, $doc_id, $document, $_POST );
+
+    @wp_mail( $email_to, wp_specialchars_decode( $subject ), $email_body, $message_headers );
 }

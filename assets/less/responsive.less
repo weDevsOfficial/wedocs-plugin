@@ -1,0 +1,72 @@
+@media screen and (max-width: 768px) {
+    .wedocs-single-wrap {
+        display: block;
+
+        .wedocs-sidebar,
+        .wedocs-single-content {
+            width: 100%;
+        }
+
+        .wedocs-single-content {
+            padding-left: 0;
+            border-left: 0;
+        }
+    }
+
+    .wedocs-shortcode-wrap {
+        ul.wedocs-docs-list {
+            &.col-3 > li,
+            &.col-2 > li {
+                width: 48%;
+            }
+
+            &.col-3 > li:nth-child(3n+1) {
+                clear: none;
+            }
+
+            &.col-3 > li:nth-child(2n+1) {
+                clear: both;
+                margin-right: 2%;
+            }
+
+            &.col-3 > li:nth-child(2n+2) {
+                margin-right: 0;
+            }
+
+        }
+    }
+}
+
+@media screen and (max-width: 425px) {
+
+    .wedocs-hide-mobile {
+        display: none;
+    }
+
+    .wedocs-single-wrap {
+
+        .wedocs-single-content {
+            footer.entry-footer.wedocs-entry-footer {
+                time {
+                    float: none;
+                }
+            }
+        }
+    }
+
+    .wedocs-shortcode-wrap {
+        ul.wedocs-docs-list {
+            &.col-3 > li,
+            &.col-2 > li {
+                width: 100%;
+                float: none;
+                margin-right: 0;
+            }
+        }
+    }
+
+    .wedocs-feedback-wrap .vote-link-wrap {
+        display: block;
+        margin-top: 15px;
+    }
+}
