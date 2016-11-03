@@ -346,14 +346,14 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
     $document   = get_post( $doc_id );
 
     $email_to   = wedocs_get_option( 'email_to', 'wedocs_settings', get_option( 'admin_email' ) );
-    $subject    = sprintf( __('[%1$s] New Doc Feedback: "%2$s"'), $blogname, $subject );
+    $subject    = sprintf( __('[%1$s] New Doc Feedback: "%2$s"', 'wedocs' ), $blogname, $subject );
 
-    $email_body = sprintf( __( 'New feedback on your doc "%s"' ), $document->post_title ) . "\r\n";
-    $email_body .= sprintf( __( 'Author: %1$s (IP: %2$s)' ), $author, wedocs_get_ip_address() ) . "\r\n";
-    $email_body .= sprintf( __( 'Email: %s' ), $email ) . "\r\n";
-    $email_body .= sprintf( __( 'Feedback: %s' ), "\r\n" . $message ) . "\r\n\r\n";
-    $email_body .= sprintf( __( 'Doc Permalink: %s'), get_permalink( $document ) ) . "\r\n";
-    $email_body .= sprintf( __( 'Edit Doc: %s'), admin_url( 'post.php?action=edit&post=' . $doc_id ) ) . "\r\n";
+    $email_body = sprintf( __( 'New feedback on your doc "%s"', 'wedocs' ), apply_filters( 'wedocs_translate_text', $document->post_title ) ) . "\r\n";
+    $email_body .= sprintf( __( 'Author: %1$s (IP: %2$s)', 'wedocs' ), $author, wedocs_get_ip_address() ) . "\r\n";
+    $email_body .= sprintf( __( 'Email: %s', 'wedocs' ), $email ) . "\r\n";
+    $email_body .= sprintf( __( 'Feedback: %s', 'wedocs' ), "\r\n" . $message ) . "\r\n\r\n";
+    $email_body .= sprintf( __( 'Doc Permalink: %s', 'wedocs' ), get_permalink( $document ) ) . "\r\n";
+    $email_body .= sprintf( __( 'Edit Doc: %s', 'wedocs' ), admin_url( 'post.php?action=edit&post=' . $doc_id ) ) . "\r\n";
 
     $from            = "From: \"$author\" <$wp_email>";
     $reply_to        = "Reply-To: \"$email\" <$email>";
