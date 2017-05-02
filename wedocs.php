@@ -201,7 +201,7 @@ class WeDocs {
             'capability_type'     => 'page',
         );
 
-        register_post_type( $this->post_type, $args );
+        register_post_type( $this->post_type, apply_filters( 'wedocs_post_type', $args ) );
     }
 
     /**
