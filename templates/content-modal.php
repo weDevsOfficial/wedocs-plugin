@@ -51,7 +51,7 @@ if ( is_user_logged_in() ) {
             </div>
 
             <div class="wedocs-form-action">
-                <input type="submit" name="submit" value="<?php echo esc_attr( 'Send', 'wedocs' ); ?>">
+                <input type="submit" name="submit" value="<?php echo esc_attr_e( 'Send', 'wedocs' ); ?>">
                 <input type="hidden" name="doc_id" value="<?php the_ID(); ?>">
                 <input type="hidden" name="action" value="wedocs_contact_feedback">
             </div>
