@@ -108,15 +108,12 @@ function wedocs_breadcrumbs() {
         $breadcrumbs = array_reverse($breadcrumbs);
         for ($i = 0; $i < count($breadcrumbs); $i++) {
             echo $breadcrumbs[$i];
-
-            if ( $i != count($breadcrumbs) - 1) {
-                echo ' ' . $args['delimiter'] . ' ';
-            }
+            echo ' ' . $args['delimiter'] . ' ';
         }
 
-        echo ' ' . $args['delimiter'] . ' ' . $args['before'] . get_the_title() . $args['after'];
-
     }
+
+    echo ' ' . $args['before'] . get_the_title() . $args['after'];
 
     echo '</ol>';
 }
