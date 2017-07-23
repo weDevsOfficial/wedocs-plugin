@@ -83,6 +83,9 @@
 
             $('#wedocs-modal-backdrop').show();
             $('#wedocs-contact-modal').show();
+            
+            //Make the modal appears in the viewport (with a 20px margin from the top of screen)
+			$('#wedocs-contact-modal').css( 'top', $(document).scrollTop() - $('#wedocs-contact-modal').parent().offset().top + 20 );
         },
 
         closeModal: function(e) {
