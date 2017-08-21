@@ -55,8 +55,6 @@
         printArticle: function(e) {
             e.preventDefault();
 
-            console.log('print article');
-
             var article = $(this).closest('article');
 
             var mywindow = window.open('', 'my div', 'height=600,width=800');
@@ -73,7 +71,7 @@
             setTimeout(function() {
                 mywindow.print();
                 mywindow.close();
-            }, 500);
+            }, 2000);
 
             return true;
         },
