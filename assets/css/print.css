@@ -136,6 +136,10 @@ footer.entry-footer.wedocs-entry-footer time {
   padding-bottom: 20px;
   margin-bottom: 20px;
 }
+a:link:after,
+a:visited:after {
+  content: " (" attr(href) ")";
+}
 table,
 th,
 td {

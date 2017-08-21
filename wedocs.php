@@ -3,7 +3,7 @@
 Plugin Name: weDocs
 Plugin URI: http://wedevs.com/
 Description: A documentation plugin for WordPress
-Version: 1.2.1
+Version: 1.3.0
 Author: Tareq Hasan
 Author URI: https://tareq.co/
 License: GPL2
@@ -12,7 +12,7 @@ Domain Path: /languages
 */
 
 /**
- * Copyright (c) 2016 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
+ * Copyright (c) 2017 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
@@ -47,10 +47,39 @@ if ( !defined( 'ABSPATH' ) ) exit;
  */
 class WeDocs {
 
+    /**
+     * Plugin version
+     *
+     * @var string
+     */
+    public $version = '1.3.0';
+
+    /**
+     * The plugin url
+     *
+     * @var string
+     */
     public $plugin_url;
+
+    /**
+     * The plugin path
+     *
+     * @var string
+     */
     public $plugin_path;
+
+    /**
+     * The theme directory path
+     *
+     * @var string
+     */
     public $theme_dir_path;
 
+    /**
+     * The post type name
+     *
+     * @var string
+     */
     private $post_type = 'docs';
 
     /**
@@ -71,6 +100,11 @@ class WeDocs {
         return $instance;
     }
 
+    /**
+     * Initialize the plugin
+     *
+     * @return void
+     */
     function plugin_init() {
         $this->theme_dir_path = apply_filters( 'wedocs_theme_dir_path', 'wedocs/' );
 
@@ -94,6 +128,23 @@ class WeDocs {
 
         // Loads frontend scripts and styles
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+        register_activation_hook( __FILE__, array( $this, 'activate' ) );
+    }
+
+    /**
+     * The plugin activation function
+     *
+     * @since 1.3
+     *
+     * @return void
+     */
+    public function activate() {
+
+        $this->maybe_create_docs_page();
+
+        update_option( 'wedocs_installed', time() );
+        update_option( 'wedocs_version', $this->version );
     }
 
     /**
@@ -140,12 +191,12 @@ class WeDocs {
         /**
          * All styles goes here
          */
-        wp_enqueue_style( 'wedocs-styles', plugins_url( 'assets/css/frontend.css', __FILE__ ), false, date( 'Ymd' ) );
+        wp_enqueue_style( 'wedocs-styles', plugins_url( 'assets/css/frontend.css', __FILE__ ), $this->version, date( 'Ymd' ) );
 
         /**
          * All scripts goes here
          */
-        wp_enqueue_script( 'wedocs-scripts', plugins_url( 'assets/js/frontend.js', __FILE__ ), array( 'jquery' ), false, true );
+        wp_enqueue_script( 'wedocs-scripts', plugins_url( 'assets/js/frontend.js', __FILE__ ), array( 'jquery' ), $this->version, true );
         wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', array(
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'nonce'   => wp_create_nonce( 'wedocs-ajax' ),
@@ -194,14 +245,15 @@ class WeDocs {
             'menu_position'       => 5,
             'menu_icon'           => 'dashicons-portfolio',
             'can_export'          => true,
-            'has_archive'         => true,
+            'has_archive'         => false,
             'exclude_from_search' => false,
             'publicly_queryable'  => true,
             'rewrite'             => $rewrite,
-            'capability_type'     => 'page',
+            'capability_type'     => 'post',
+            'taxonomies'          => array( 'doc_tag' )
         );
 
-        register_post_type( $this->post_type, $args );
+        register_post_type( $this->post_type, apply_filters( 'wedocs_post_type', $args ) );
     }
 
     /**
@@ -267,7 +319,6 @@ class WeDocs {
     /**
      * Get the plugin url.
      *
-     * @access public
      * @return string
      */
     public function plugin_url() {
@@ -282,7 +333,6 @@ class WeDocs {
     /**
      * Get the plugin path.
      *
-     * @access public
      * @return string
      */
     public function plugin_path() {
@@ -294,7 +344,6 @@ class WeDocs {
     /**
      * Get the template path.
      *
-     * @access public
      * @return string
      */
     public function template_path() {
@@ -360,6 +409,51 @@ class WeDocs {
         }
 
         return $query;
+    }
+
+    /**
+     * Maybe create docs page if not found
+     *
+     * @since 1.3
+     *
+     * @return void
+     */
+    public function maybe_create_docs_page() {
+        $version = get_option( 'wedocs_version' );
+
+        // seems like it's already installed
+        if ( $version ) {
+            return;
+        }
+
+        // skip if there's a page already with [wedocs] shortcode
+        $pages_query = new WP_Query( array(
+            'post_type'      => 'page',
+            'posts_per_page' => -1,
+            's'              => '[wedocs'
+        ) );
+
+        if ( $pages_query->found_posts ) {
+            return;
+        }
+
+        $docs_page = wp_insert_post( array(
+            'post_type'      => 'page',
+            'post_title'     => 'Documentation',
+            'post_author'    => get_current_user_id(),
+            'post_content'   => '[wedocs]',
+            'post_status'    => 'publish',
+            'comment_status' => 'closed',
+            'ping_status'    => 'closed',
+            'post_name'      => 'docs',
+        ) );
+
+        if ( ! is_wp_error( $docs_page ) ) {
+            $settings = get_option( 'wedocs_settings', array() );
+            $settings['docs_home'] = $docs_page;
+
+            update_option( 'wedocs_settings', $settings );
+        }
     }
 
 } // WeDocs

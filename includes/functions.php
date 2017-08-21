@@ -79,6 +79,7 @@ if ( ! function_exists( 'wedocs_breadcrumbs' ) ) :
 function wedocs_breadcrumbs() {
     global $post;
 
+    $html = '';
     $args = apply_filters( 'wedocs_breadcrumbs', array(
         'delimiter' => '<li class="delimiter"><i class="wedocs-icon wedocs-icon-angle-right"></i></li>',
         'home'      => __( 'Home', 'wedocs' ),
@@ -88,10 +89,19 @@ function wedocs_breadcrumbs() {
 
     $breadcrumb_position = 1;
 
-    echo '<ol class="wedocs-breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">';
-    echo '<li><i class="wedocs-icon wedocs-icon-home"></i></li>';
-    echo wedocs_get_breadcrumb_item( $args['home'], home_url( '/' ), $breadcrumb_position );
-    echo $args['delimiter'];
+    $html .= '<ol class="wedocs-breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">';
+    $html .= '<li><i class="wedocs-icon wedocs-icon-home"></i></li>';
+    $html .= wedocs_get_breadcrumb_item( $args['home'], home_url( '/' ), $breadcrumb_position );
+    $html .= $args['delimiter'];
+
+    $docs_home = wedocs_get_option( 'docs_home', 'wedocs_settings' );
+
+    if ( $docs_home ) {
+        $breadcrumb_position++;
+
+        $html .= wedocs_get_breadcrumb_item( __( 'Docs', 'wedocs' ), get_permalink( $docs_home ), $breadcrumb_position );
+        $html .= $args['delimiter'];
+    }
 
     if ( $post->post_type == 'docs' && $post->post_parent ) {
         $parent_id   = $post->post_parent;
@@ -107,18 +117,17 @@ function wedocs_breadcrumbs() {
 
         $breadcrumbs = array_reverse($breadcrumbs);
         for ($i = 0; $i < count($breadcrumbs); $i++) {
-            echo $breadcrumbs[$i];
-
-            if ( $i != count($breadcrumbs) - 1) {
-                echo ' ' . $args['delimiter'] . ' ';
-            }
+            $html .= $breadcrumbs[$i];
+            $html .= ' ' . $args['delimiter'] . ' ';
         }
-
-        echo ' ' . $args['delimiter'] . ' ' . $args['before'] . get_the_title() . $args['after'];
 
     }
 
-    echo '</ol>';
+    $html .= ' ' . $args['before'] . get_the_title() . $args['after'];
+
+    $html .= '</ol>';
+
+    echo apply_filters( 'wedocs_breadcrumbs_html', $html, $args );
 }
 
 endif;
@@ -337,14 +346,14 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
     $document   = get_post( $doc_id );
 
     $email_to   = wedocs_get_option( 'email_to', 'wedocs_settings', get_option( 'admin_email' ) );
-    $subject    = sprintf( __('[%1$s] New Doc Feedback: "%2$s"'), $blogname, $subject );
+    $subject    = sprintf( __('[%1$s] New Doc Feedback: "%2$s"', 'wedocs' ), $blogname, $subject );
 
-    $email_body = sprintf( __( 'New feedback on your doc "%s"' ), $document->post_title ) . "\r\n";
-    $email_body .= sprintf( __( 'Author: %1$s (IP: %2$s)' ), $author, wedocs_get_ip_address() ) . "\r\n";
-    $email_body .= sprintf( __( 'Email: %s' ), $email ) . "\r\n";
-    $email_body .= sprintf( __( 'Feedback: %s' ), "\r\n" . $message ) . "\r\n\r\n";
-    $email_body .= sprintf( __( 'Doc Permalink: %s'), get_permalink( $document ) ) . "\r\n";
-    $email_body .= sprintf( __( 'Edit Doc: %s'), admin_url( 'post.php?action=edit&post=' . $doc_id ) ) . "\r\n";
+    $email_body = sprintf( __( 'New feedback on your doc "%s"', 'wedocs' ), apply_filters( 'wedocs_translate_text', $document->post_title ) ) . "\r\n";
+    $email_body .= sprintf( __( 'Author: %1$s (IP: %2$s)', 'wedocs' ), $author, wedocs_get_ip_address() ) . "\r\n";
+    $email_body .= sprintf( __( 'Email: %s', 'wedocs' ), $email ) . "\r\n";
+    $email_body .= sprintf( __( 'Feedback: %s', 'wedocs' ), "\r\n" . $message ) . "\r\n\r\n";
+    $email_body .= sprintf( __( 'Doc Permalink: %s', 'wedocs' ), get_permalink( $document ) ) . "\r\n";
+    $email_body .= sprintf( __( 'Edit Doc: %s', 'wedocs' ), admin_url( 'post.php?action=edit&post=' . $doc_id ) ) . "\r\n";
 
     $from            = "From: \"$author\" <$wp_email>";
     $reply_to        = "Reply-To: \"$email\" <$email>";
@@ -358,4 +367,15 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
     $message_headers = apply_filters( 'wedocs_email_feedback_headers', $message_headers, $doc_id, $document, $_POST );
 
     @wp_mail( $email_to, wp_specialchars_decode( $subject ), $email_body, $message_headers );
+}
+
+/**
+ * Get the publishing capability for weDocs admin
+ *
+ * @since 1.3
+ *
+ * @return string
+ */
+function wedocs_get_publish_cap() {
+    return apply_filters( 'wedocs_publish_cap', 'publish_posts' );
 }
