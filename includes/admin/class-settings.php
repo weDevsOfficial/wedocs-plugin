@@ -126,7 +126,7 @@ class weDocs_Settings {
      * @return array page names with key value pairs
      */
     function get_pages() {
-        $pages_options = array();
+        $pages_options = array( '' => __( '&mdash; Select Page &mdash;', 'wedocs' ) );
         $pages         = get_pages( array(
             'numberposts'  => -1
         ) );
