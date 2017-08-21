@@ -78,8 +78,8 @@ class weDocs_Settings {
                 ),
                 array(
                     'name'              => 'email_to',
-                    'label'             => __( 'Email Address', 'wedevs' ),
-                    'desc'              => __( 'The email address where the feedbacks should sent to', 'wedevs' ),
+                    'label'             => __( 'Email Address', 'wedocs' ),
+                    'desc'              => __( 'The email address where the feedbacks should sent to', 'wedocs' ),
                     'type'              => 'text',
                     'default'           => get_option( 'admin_email' ),
                     'sanitize_callback' => 'sanitize_text_field'
