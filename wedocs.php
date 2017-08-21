@@ -250,6 +250,7 @@ class WeDocs {
             'publicly_queryable'  => true,
             'rewrite'             => $rewrite,
             'capability_type'     => 'post',
+            'taxonomies'          => array( 'doc_tag' )
         );
 
         register_post_type( $this->post_type, apply_filters( 'wedocs_post_type', $args ) );
