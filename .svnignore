@@ -1,0 +1,12 @@
+nbproject
+Gruntfile.js
+package.json
+node_modules
+.gitignore
+.svnignore
+config.codekit
+readme.md
+plugin-deploy.sh
+npm-debug.log
+secret.json
+log.txt
