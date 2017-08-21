@@ -93,6 +93,15 @@ function wedocs_breadcrumbs() {
     echo wedocs_get_breadcrumb_item( $args['home'], home_url( '/' ), $breadcrumb_position );
     echo $args['delimiter'];
 
+    $docs_home = wedocs_get_option( 'docs_home', 'wedocs_settings' );
+
+    if ( $docs_home ) {
+        $breadcrumb_position++;
+
+        echo wedocs_get_breadcrumb_item( __( 'Docs', 'wedocs' ), get_permalink( $docs_home ), $breadcrumb_position );
+        echo $args['delimiter'];
+    }
+
     if ( $post->post_type == 'docs' && $post->post_parent ) {
         $parent_id   = $post->post_parent;
         $breadcrumbs = array();

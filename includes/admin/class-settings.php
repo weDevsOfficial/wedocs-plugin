@@ -63,6 +63,13 @@ class weDocs_Settings {
         $settings_fields = array(
             'wedocs_settings' => array(
                 array(
+                    'name'    => 'docs_home',
+                    'label'   => __( 'Docs Home', 'wedocs' ),
+                    'desc'    => sprintf( __( 'Home page for docs page. Preferably use <code>[wedocs]</code> <a href="%s" target="_blank">shortcode</a> or design your own.', 'wedocs' ), 'https://github.com/tareq1988/wedocs-plugin/wiki/Using-Shortcodes' ),
+                    'type'    => 'select',
+                    'options' => $this->get_pages()
+                ),
+                array(
                     'name'    => 'email',
                     'label'   => __( 'Email feedback', 'wedocs' ),
                     'desc'    => __( 'Enable Email feedback form', 'wedocs' ),
@@ -111,6 +118,25 @@ class weDocs_Settings {
         $this->scripts();
 
         echo '</div>';
+    }
+
+    /**
+     * Get all the pages
+     *
+     * @return array page names with key value pairs
+     */
+    function get_pages() {
+        $pages_options = array();
+        $pages         = get_pages( array(
+            'numberposts'  => -1
+        ) );
+
+        if ( $pages ) {
+            foreach ($pages as $page) {
+                $pages_options[$page->ID] = $page->post_title;
+            }
+        }
+        return $pages_options;
     }
 
     /**
