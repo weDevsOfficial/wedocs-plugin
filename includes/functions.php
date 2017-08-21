@@ -368,3 +368,14 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
 
     @wp_mail( $email_to, wp_specialchars_decode( $subject ), $email_body, $message_headers );
 }
+
+/**
+ * Get the publishing capability for weDocs admin
+ *
+ * @since 1.3
+ *
+ * @return string
+ */
+function wedocs_get_publish_cap() {
+    return apply_filters( 'wedocs_publish_cap', 'publish_posts' );
+}

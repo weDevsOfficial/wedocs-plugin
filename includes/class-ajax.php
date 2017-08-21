@@ -115,7 +115,7 @@ class WeDocs_Ajax {
 
         $docs = get_pages( array(
             'post_type'      => 'docs',
-            'post_status'    => array( 'publish', 'draft' ),
+            'post_status'    => array( 'publish', 'draft', 'pending' ),
             'posts_per_page' => '-1',
             'orderby'        => 'menu_order',
             'order'          => 'ASC'

@@ -249,7 +249,7 @@ class WeDocs {
             'exclude_from_search' => false,
             'publicly_queryable'  => true,
             'rewrite'             => $rewrite,
-            'capability_type'     => 'page',
+            'capability_type'     => 'post',
         );
 
         register_post_type( $this->post_type, apply_filters( 'wedocs_post_type', $args ) );
