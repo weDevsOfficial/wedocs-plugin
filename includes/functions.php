@@ -79,6 +79,7 @@ if ( ! function_exists( 'wedocs_breadcrumbs' ) ) :
 function wedocs_breadcrumbs() {
     global $post;
 
+    $html = '';
     $args = apply_filters( 'wedocs_breadcrumbs', array(
         'delimiter' => '<li class="delimiter"><i class="wedocs-icon wedocs-icon-angle-right"></i></li>',
         'home'      => __( 'Home', 'wedocs' ),
@@ -88,18 +89,18 @@ function wedocs_breadcrumbs() {
 
     $breadcrumb_position = 1;
 
-    echo '<ol class="wedocs-breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">';
-    echo '<li><i class="wedocs-icon wedocs-icon-home"></i></li>';
-    echo wedocs_get_breadcrumb_item( $args['home'], home_url( '/' ), $breadcrumb_position );
-    echo $args['delimiter'];
+    $html .= '<ol class="wedocs-breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">';
+    $html .= '<li><i class="wedocs-icon wedocs-icon-home"></i></li>';
+    $html .= wedocs_get_breadcrumb_item( $args['home'], home_url( '/' ), $breadcrumb_position );
+    $html .= $args['delimiter'];
 
     $docs_home = wedocs_get_option( 'docs_home', 'wedocs_settings' );
 
     if ( $docs_home ) {
         $breadcrumb_position++;
 
-        echo wedocs_get_breadcrumb_item( __( 'Docs', 'wedocs' ), get_permalink( $docs_home ), $breadcrumb_position );
-        echo $args['delimiter'];
+        $html .= wedocs_get_breadcrumb_item( __( 'Docs', 'wedocs' ), get_permalink( $docs_home ), $breadcrumb_position );
+        $html .= $args['delimiter'];
     }
 
     if ( $post->post_type == 'docs' && $post->post_parent ) {
@@ -116,15 +117,17 @@ function wedocs_breadcrumbs() {
 
         $breadcrumbs = array_reverse($breadcrumbs);
         for ($i = 0; $i < count($breadcrumbs); $i++) {
-            echo $breadcrumbs[$i];
-            echo ' ' . $args['delimiter'] . ' ';
+            $html .= $breadcrumbs[$i];
+            $html .= ' ' . $args['delimiter'] . ' ';
         }
 
     }
 
-    echo ' ' . $args['before'] . get_the_title() . $args['after'];
+    $html .= ' ' . $args['before'] . get_the_title() . $args['after'];
 
-    echo '</ol>';
+    $html .= '</ol>';
+
+    echo apply_filters( 'wedocs_breadcrumbs_html', $html, $args );
 }
 
 endif;
