@@ -52,6 +52,10 @@ Nothing here yet
 
 == Changelog ==
 
+= v1.3.1 (24 August, 2017) =
+
+ * [improve] Added weForms reference
+
 = v1.3 (21 August, 2017) =
 
  * [fix] Add missing text domains and Qtranslate support on doc feedback email
