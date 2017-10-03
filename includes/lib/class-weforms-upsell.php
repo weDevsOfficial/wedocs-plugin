@@ -277,7 +277,7 @@ class WeForms_Upsell {
                     modal.addClass('show');
                     modalBackdrop.addClass('show');
 
-                    iframe.attr( 'src', 'https://www.youtube.com/embed/NJvjy9WFyAM?rel=0&amp;controls=0&amp;showinfo=0&amp;autoplay=1' );
+                    iframe.attr( 'src', 'https://www.youtube.com/embed/sqP-nvyqUdQ?rel=0&amp;controls=0&amp;showinfo=0&amp;autoplay=1' );
                 });
 
                 $('body').on('click', '.weforms-upsell-modal a.close', function(e) {
@@ -351,12 +351,6 @@ class WeForms_Upsell {
 
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_send_json_error( __( 'You don\'t have permission to install the plugins' ) );
-        }
-
-        if ( ! class_exists( 'WP_User_Frontend' ) ) {
-            $wpuf_status = $this->install_plugin( 'wp-user-frontend', 'wpuf.php' );
-
-            $this->fail_on_error( $wpuf_status );
         }
 
         $weforms_status = $this->install_plugin( 'weforms', 'weforms.php' );
