@@ -218,17 +218,17 @@ new Vue({
             });
         },
 
-        removePost: function(item, items, message) {
+        removePost: function(index, items, message) {
             message = message || 'This post has been deleted';
 
             wp.ajax.send( {
                 data: {
                     action: 'wedocs_remove_doc',
-                    id: item.post.id,
+                    id: items[index].post.id,
                     _wpnonce: weDocs.nonce
                 },
                 success: function() {
-                    items.$remove(item);
+                    Vue.delete(items, index);
                     swal( 'Deleted!', message, 'success' );
                 },
                 error: function(error) {
