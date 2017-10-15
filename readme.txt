@@ -4,7 +4,7 @@ Donate link: https://tareq.co/donate/
 Tags: document, documentation, help, support, note
 Requires at least: 3.6
 Tested up to: 4.8.1
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,6 +51,15 @@ Nothing here yet
 9. Search widget in frontend
 
 == Changelog ==
+
+= v1.3.2 (15 October, 2017) =
+
+* **Fix:** Remove WPUF dependency on weForms upsell
+* **New:** Show docs and taxonomy in REST API. Fixes #44
+* **New:** List child articles if present in single doc. Fixes #34
+* **New:** Added page-atrribute support for the Docs post type. Now you can change the doc parent from the single docs edit page.
+* **Improved:** Upgrade Vue to 2.5.1 from 1.0.16
+* **Improved:** Every user should see the switch to classic UI url
 
 = v1.3.1 (24 August, 2017) =
 
