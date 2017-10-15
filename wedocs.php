@@ -251,6 +251,7 @@ class WeDocs {
             'has_archive'         => false,
             'exclude_from_search' => false,
             'publicly_queryable'  => true,
+            'show_in_rest'        => true,
             'rewrite'             => $rewrite,
             'capability_type'     => 'post',
             'taxonomies'          => array( 'doc_tag' )
@@ -303,6 +304,7 @@ class WeDocs {
             'show_admin_column'          => true,
             'show_in_nav_menus'          => true,
             'show_tagcloud'              => true,
+            'show_in_rest'               => true,
             'rewrite'                    => $rewrite
         );
 
