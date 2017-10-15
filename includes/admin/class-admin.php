@@ -51,7 +51,7 @@ class WeDocs_Admin {
         $suffix     = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ? '' : '.min';
         $assets_url = wedocs()->plugin_url() . '/assets';
 
-        wp_enqueue_script( 'vuejs', $assets_url . '/js/vue.js' );
+        wp_enqueue_script( 'vuejs', $assets_url . '/js/vue' . $suffix . '.js' );
         wp_enqueue_script( 'sweetalert', $assets_url . '/js/sweetalert.min.js', array( 'jquery' ) );
         wp_enqueue_script( 'wedocs-admin-script', $assets_url . "/js/admin-script.js", array( 'jquery', 'jquery-ui-sortable', 'wp-util' ), time(), true );
         wp_localize_script( 'wedocs-admin-script', 'weDocs', array(

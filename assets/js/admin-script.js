@@ -6,8 +6,8 @@
 /* global ajaxurl */
 
 Vue.directive('sortable', {
-    bind: function() {
-        var $el = jQuery(this.el);
+    bind: function(el, binding) {
+        var $el = jQuery(el);
 
         $el.sortable({
             handle: '.wedocs-btn-reorder',
@@ -24,7 +24,8 @@ Vue.directive('sortable', {
                     _wpnonce: weDocs.nonce
                 });
             },
-            cursor: 'move'
+            cursor: 'move',
+            // connectWith: ".connectedSortable"
         });
     }
 });
@@ -37,7 +38,7 @@ new Vue({
         docs: []
     },
 
-    ready: function() {
+    mounted: function() {
         var self = this,
             dom = jQuery( self.$el );
 
