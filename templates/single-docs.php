@@ -48,6 +48,17 @@ get_header(); ?>
                                     'after'  => '</div>',
                                 ) );
 
+                                $children = wp_list_pages("title_li=&order=menu_order&child_of=". $post->ID ."&echo=0&post_type=" . $post->post_type);
+
+                                if ( $children ) {
+                                    echo '<div class="article-child well">';
+                                        echo '<h3>' . __( 'Articles', 'wedocs' ) . '</h3>';
+                                        echo '<ul>';
+                                            echo $children;
+                                        echo '</ul>';
+                                    echo '</div>';
+                                }
+
                                 $tags_list = wedocs_get_the_doc_tags( $post->ID, '', ', ' );
 
                                 if ( $tags_list ) {
