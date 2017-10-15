@@ -126,10 +126,11 @@ class WeDocs_Admin {
      * @return string
      */
     public function admin_footer_text( $footer_text ) {
-        if ( ! current_user_can( wedocs_get_publish_cap() ) ) {
-            return;
-        }
+        // if ( ! current_user_can( wedocs_get_publish_cap() ) ) {
+        //     return;
+        // }
 
+        $footer_text    = '';
         $current_screen = get_current_screen();
         $pages          = array( 'toplevel_page_wedocs', 'edit-docs' );
 
