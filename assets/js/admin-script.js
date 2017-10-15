@@ -6,8 +6,8 @@
 /* global ajaxurl */
 
 Vue.directive('sortable', {
-    bind: function() {
-        var $el = jQuery(this.el);
+    bind: function(el, binding) {
+        var $el = jQuery(el);
 
         $el.sortable({
             handle: '.wedocs-btn-reorder',
@@ -24,7 +24,8 @@ Vue.directive('sortable', {
                     _wpnonce: weDocs.nonce
                 });
             },
-            cursor: 'move'
+            cursor: 'move',
+            // connectWith: ".connectedSortable"
         });
     }
 });
@@ -37,7 +38,7 @@ new Vue({
         docs: []
     },
 
-    ready: function() {
+    mounted: function() {
         var self = this,
             dom = jQuery( self.$el );
 
@@ -217,17 +218,17 @@ new Vue({
             });
         },
 
-        removePost: function(item, items, message) {
+        removePost: function(index, items, message) {
             message = message || 'This post has been deleted';
 
             wp.ajax.send( {
                 data: {
                     action: 'wedocs_remove_doc',
-                    id: item.post.id,
+                    id: items[index].post.id,
                     _wpnonce: weDocs.nonce
                 },
                 success: function() {
-                    items.$remove(item);
+                    Vue.delete(items, index);
                     swal( 'Deleted!', message, 'success' );
                 },
                 error: function(error) {

@@ -51,7 +51,7 @@ class WeDocs_Admin {
         $suffix     = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ? '' : '.min';
         $assets_url = wedocs()->plugin_url() . '/assets';
 
-        wp_enqueue_script( 'vuejs', $assets_url . '/js/vue.js' );
+        wp_enqueue_script( 'vuejs', $assets_url . '/js/vue' . $suffix . '.js' );
         wp_enqueue_script( 'sweetalert', $assets_url . '/js/sweetalert.min.js', array( 'jquery' ) );
         wp_enqueue_script( 'wedocs-admin-script', $assets_url . "/js/admin-script.js", array( 'jquery', 'jquery-ui-sortable', 'wp-util' ), time(), true );
         wp_localize_script( 'wedocs-admin-script', 'weDocs', array(
@@ -126,10 +126,11 @@ class WeDocs_Admin {
      * @return string
      */
     public function admin_footer_text( $footer_text ) {
-        if ( ! current_user_can( wedocs_get_publish_cap() ) ) {
-            return;
-        }
+        // if ( ! current_user_can( wedocs_get_publish_cap() ) ) {
+        //     return;
+        // }
 
+        $footer_text    = '';
         $current_screen = get_current_screen();
         $pages          = array( 'toplevel_page_wedocs', 'edit-docs' );
 
