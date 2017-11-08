@@ -4,7 +4,7 @@ Donate link: https://tareq.co/donate/
 Tags: document, documentation, help, support, note
 Requires at least: 3.6
 Tested up to: 4.8.1
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,6 +51,10 @@ Nothing here yet
 9. Search widget in frontend
 
 == Changelog ==
+
+= v1.3.3 (8 November, 2017) =
+
+ * **Improved:** Proper user roles/permission checking when creating and deleting a doc. Previously, everyone who could access the UI, could create and delete any doc. No user capability checking was done previously, this version fixes the issue.
 
 = v1.3.2 (15 October, 2017) =
 
