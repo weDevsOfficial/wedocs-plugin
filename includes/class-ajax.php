@@ -39,6 +39,11 @@ class WeDocs_Ajax {
         $order  = isset( $_POST['order'] ) ? absint( $_POST['order'] ) : 0;
 
         $status = 'publish';
+        $post_type_object = get_post_type_object( 'docs' );
+
+        if ( ! current_user_can( $post_type_object->cap->publish_posts ) ) {
+            $status = 'pending';
+        }
 
         $post_id = wp_insert_post( array(
             'post_title'  => $title,
@@ -57,7 +62,11 @@ class WeDocs_Ajax {
             'post' => array(
                 'id'     => $post_id,
                 'title'  => $title,
-                'status' => $status
+                'status' => $status,
+                'caps'   => array(
+                    'edit'   => current_user_can( $post_type_object->cap->edit_post, $post_id ),
+                    'delete' => current_user_can( $post_type_object->cap->delete_post, $post_id )
+                )
             ),
             'child' => array()
         ) );
@@ -73,6 +82,10 @@ class WeDocs_Ajax {
 
         $force_delete = false;
         $post_id      = isset( $_POST['id'] ) ? absint( $_POST['id'] ) : 0;
+
+        if ( ! current_user_can( 'delete_post', $post_id ) ) {
+            wp_send_json_error( __( 'You are not allowed to delete this item.' ) );
+        }
 
         if ( $post_id ) {
             // delete childrens first if found
@@ -245,6 +258,8 @@ class WeDocs_Ajax {
             return $result;
         }
 
+        $post_type_object = get_post_type_object( 'docs' );
+
         foreach ($docs as $key => $doc) {
             if ( $doc->post_parent == $parent ) {
                 unset( $docs[ $key ] );
@@ -258,7 +273,11 @@ class WeDocs_Ajax {
                         'id'     => $doc->ID,
                         'title'  => $doc->post_title,
                         'status' => $doc->post_status,
-                        'order'  => $doc->menu_order
+                        'order'  => $doc->menu_order,
+                        'caps'   => array(
+                            'edit'   => current_user_can( $post_type_object->cap->edit_post, $doc->ID ),
+                            'delete' => current_user_can( $post_type_object->cap->delete_post, $doc->ID )
+                        )
                     ),
                     'child' => $child
                 );
