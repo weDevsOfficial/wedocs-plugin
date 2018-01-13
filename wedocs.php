@@ -94,7 +94,7 @@ class WeDocs {
         if ( ! $instance ) {
             $instance = new WeDocs();
 
-            $instance->plugin_init();
+            add_action('after_setup_theme', array($instance, 'plugin_init'));
         }
 
         return $instance;
@@ -106,7 +106,7 @@ class WeDocs {
      * @return void
      */
     function plugin_init() {
-        $this->theme_dir_path = apply_filters( 'wedocs_theme_dir_path', 'wedocs/' );
+		$this->theme_dir_path = apply_filters( 'wedocs_theme_dir_path', 'wedocs/' );
 
         $this->file_includes();
 
