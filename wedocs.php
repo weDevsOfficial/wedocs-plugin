@@ -95,6 +95,8 @@ class WeDocs {
             $instance = new WeDocs();
 
             add_action('after_setup_theme', array($instance, 'plugin_init'));
+
+			register_activation_hook( __FILE__, array($instance, 'activate' ) );
         }
 
         return $instance;
@@ -128,8 +130,6 @@ class WeDocs {
 
         // Loads frontend scripts and styles
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-
-        register_activation_hook( __FILE__, array( $this, 'activate' ) );
     }
 
     /**
