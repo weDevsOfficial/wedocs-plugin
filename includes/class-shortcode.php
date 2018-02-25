@@ -38,7 +38,7 @@ class WeDocs_Shortcode_Handler {
             'col'     => '2',
             'include' => 'any',
             'exclude' => '',
-	        'items' => -1,
+            'items'   => -1,
             'more'    => __( 'View Details', 'wedocs' )
         );
 
