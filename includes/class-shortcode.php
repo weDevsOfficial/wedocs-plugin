@@ -38,6 +38,7 @@ class WeDocs_Shortcode_Handler {
             'col'     => '2',
             'include' => 'any',
             'exclude' => '',
+            'items'   => 10,
             'more'    => __( 'View Details', 'wedocs' )
         );
 
@@ -64,11 +65,12 @@ class WeDocs_Shortcode_Handler {
         if ( $parent_docs ) {
             foreach ($parent_docs as $root) {
                 $sections = get_children( array(
-                    'post_parent' => $root->ID,
-                    'post_type'   => 'docs',
-                    'post_status' => 'publish',
-                    'orderby'     => 'menu_order',
-                    'order'       => 'ASC'
+                    'post_parent'    => $root->ID,
+                    'post_type'      => 'docs',
+                    'post_status'    => 'publish',
+                    'orderby'        => 'menu_order',
+                    'order'          => 'ASC',
+                    'posts_per_page' => (int) $args['items'],
                 ) );
 
                 $arranged[] = array(
