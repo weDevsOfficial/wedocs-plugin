@@ -34,7 +34,7 @@
                             </span>
                         </span>
 
-                        <ul class="articles collapsed connectedSortable" v-if="section.child" v-sortable>
+                        <ul class="articles connectedSortable" v-if="section.child" v-sortable>
                             <li class="article" v-for="(article, index) in section.child" :data-id="article.post.id">
                                 <a v-if="article.post.caps.edit" target="_blank" :href="editurl + article.post.id">{{ article.post.title }}<span v-if="article.post.status != 'publish'" class="doc-status">{{ article.post.status }}</span></a>
                                 <span v-else>{{ article.post.title }}</span>
