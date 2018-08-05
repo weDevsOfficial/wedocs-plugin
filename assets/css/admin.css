@@ -118,7 +118,7 @@
   width: auto;
 }
 .wedocs-row-actions {
-  visibility: hidden;
+  visibility: visible;
   color: #999;
 }
 .wedocs-row-actions a {
