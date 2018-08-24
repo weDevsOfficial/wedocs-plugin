@@ -143,6 +143,12 @@ class WeDocs {
 
         $this->maybe_create_docs_page();
 
+        // rewrite rules problem, register and flush
+        $this->register_post_type();
+        $this->register_taxonomy();
+
+        flush_rewrite_rules();
+
         update_option( 'wedocs_installed', time() );
         update_option( 'wedocs_version', $this->version );
     }
