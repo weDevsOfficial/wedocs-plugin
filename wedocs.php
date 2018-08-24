@@ -172,9 +172,6 @@ class WeDocs {
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
             include_once dirname( __FILE__ ) . '/includes/class-ajax.php';
         }
-
-        include_once dirname( __FILE__ ) . '/includes/lib/class-weforms-upsell.php';
-        new WeForms_Upsell( 'wedocs' );
     }
 
     /**
