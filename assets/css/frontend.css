@@ -165,6 +165,10 @@ body.single.single-docs .content-area {
   float: none !important;
   display: block;
 }
+.wedocs-single-wrap .wedocs-single-content article .entry-content a.anchorjs-link {
+  text-decoration: none;
+  box-shadow: none !important;
+}
 .wedocs-single-wrap .wedocs-single-content article .entry-content img {
   max-width: 100%;
   border: 1px solid #eeeeee;

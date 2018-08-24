@@ -117,4 +117,10 @@
         weDocs.initialize();
     });
 
+    // initialize anchor.js
+    anchors.options = {
+        icon: '#'
+    };
+    anchors.add('.wedocs-single-content .entry-content > h2, .wedocs-single-content .entry-content > h3')
+
 })(jQuery);
