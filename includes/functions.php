@@ -380,3 +380,38 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
 function wedocs_get_publish_cap() {
     return apply_filters( 'wedocs_publish_cap', 'publish_posts' );
 }
+
+if ( ! function_exists( 'wedocs_template_wrapper_start' ) ) :
+
+    /**
+     * Template start wrapper
+     *
+     * @since 1.4
+     *
+     * @return void
+     */
+    function wedocs_template_wrapper_start() {
+        echo '<div id="primary" class="content-area">';
+        echo '<main id="main" class="site-main" role="main">';
+    }
+
+endif;
+
+if ( ! function_exists( 'wedocs_template_wrapper_end' ) ) :
+
+    /**
+     * Template end wrapper
+     *
+     * @since 1.4
+     *
+     * @return void
+     */
+    function wedocs_template_wrapper_end() {
+        echo '</main><!-- .site-main -->';
+        echo '</div><!-- .content-area -->';
+    }
+
+endif;
+
+add_action( 'wedocs_before_main_content', 'wedocs_template_wrapper_start', 10 );
+add_action( 'wedocs_after_main_content', 'wedocs_template_wrapper_end', 10 );

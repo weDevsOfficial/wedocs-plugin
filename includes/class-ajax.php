@@ -299,5 +299,3 @@ class WeDocs_Ajax {
         return $a['post']['order'] - $b['post']['order'];
     }
 }
-
-new WeDocs_Ajax();

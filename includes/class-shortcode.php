@@ -88,5 +88,3 @@ class WeDocs_Shortcode_Handler {
         ) );
     }
 }
-
-new WeDocs_Shortcode_Handler();

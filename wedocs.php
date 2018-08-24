@@ -12,7 +12,7 @@ Domain Path: /languages
 */
 
 /**
- * Copyright (c) 2017 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
+ * Copyright (c) 2018 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
@@ -109,6 +109,7 @@ class WeDocs {
         $this->theme_dir_path = apply_filters( 'wedocs_theme_dir_path', 'wedocs/' );
 
         $this->file_includes();
+        $this->init_classes();
 
         // Localize our plugin
         add_action( 'init', array( $this, 'localization_setup' ) );
@@ -162,6 +163,7 @@ class WeDocs {
         include_once dirname( __FILE__ ) . '/includes/functions.php';
         include_once dirname( __FILE__ ) . '/includes/class-walker-docs.php';
         include_once dirname( __FILE__ ) . '/includes/class-search-widget.php';
+        include_once dirname( __FILE__ ) . '/includes/class-theme-support.php';
 
         if ( is_admin() ) {
             include_once dirname( __FILE__ ) . '/includes/admin/class-admin.php';
@@ -171,6 +173,28 @@ class WeDocs {
 
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
             include_once dirname( __FILE__ ) . '/includes/class-ajax.php';
+        }
+    }
+
+    /**
+     * Initialize the classes
+     *
+     * @since 1.4
+     *
+     * @return void
+     */
+    public function init_classes() {
+
+        new WeDocs_Theme_Support();
+
+        if ( is_admin() ) {
+            new WeDocs_Admin();
+        } else {
+            new WeDocs_Shortcode_Handler();
+        }
+
+        if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+            new WeDocs_Ajax();
         }
     }
 
