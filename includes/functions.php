@@ -362,6 +362,7 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
             . "Content-Type: text/plain; charset =\"" . get_option( 'blog_charset' ) . "\"\n";
     $message_headers .= $reply_to . "\n";
 
+    $email_to        = apply_filters( 'wedocs_email_feedback_to', $email_to, $doc_id, $document );
     $subject         = apply_filters( 'wedocs_email_feedback_subject', $subject, $doc_id, $document, $_POST );
     $email_body      = apply_filters( 'wedocs_email_feedback_body', $email_body, $doc_id, $document, $_POST );
     $message_headers = apply_filters( 'wedocs_email_feedback_headers', $message_headers, $doc_id, $document, $_POST );
