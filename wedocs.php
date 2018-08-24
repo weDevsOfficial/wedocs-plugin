@@ -221,7 +221,7 @@ class WeDocs {
         /**
          * All styles goes here
          */
-        wp_enqueue_style( 'wedocs-styles', plugins_url( 'assets/css/frontend.css', __FILE__ ), $this->version, date( 'Ymd' ) );
+        wp_enqueue_style( 'wedocs-styles', plugins_url( 'assets/css/frontend.css', __FILE__ ), array(), $this->version );
 
         /**
          * All scripts goes here

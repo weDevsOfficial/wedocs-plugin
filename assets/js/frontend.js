@@ -81,6 +81,7 @@
 
             $('#wedocs-modal-backdrop').show();
             $('#wedocs-contact-modal').show();
+            $('body').addClass('wedocs-overflow-hidden');
         },
 
         closeModal: function(e) {
@@ -88,6 +89,7 @@
 
             $('#wedocs-modal-backdrop').hide();
             $('#wedocs-contact-modal').hide();
+            $('body').removeClass('wedocs-overflow-hidden');
         },
 
         contactHelp: function(e) {
