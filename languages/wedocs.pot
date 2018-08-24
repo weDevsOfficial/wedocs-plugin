@@ -1,14 +1,14 @@
-# Copyright (C) 2017 Tareq Hasan
+# Copyright (C) 2018 Tareq Hasan
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 1.3.3\n"
+"Project-Id-Version: weDocs 1.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
-"POT-Creation-Date: 2017-11-08 11:26:32+00:00\n"
+"POT-Creation-Date: 2018-08-24 20:10:26+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "X-Generator: grunt-wp-i18n 0.5.4\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Docs"
 msgstr ""
 
-#: includes/admin/class-admin.php:90 wedocs.php:273
+#: includes/admin/class-admin.php:90 wedocs.php:301
 msgid "Tags"
 msgstr ""
 
@@ -153,23 +153,23 @@ msgstr ""
 msgid "Add a new article"
 msgstr ""
 
-#: includes/admin/template-vue.php:44
+#: includes/admin/template-vue.php:46 includes/admin/template-vue.php:57
 msgid "Preview the article"
 msgstr ""
 
-#: includes/admin/template-vue.php:45
+#: includes/admin/template-vue.php:47 includes/admin/template-vue.php:58
 msgid "Delete this article"
 msgstr ""
 
-#: includes/admin/template-vue.php:54
+#: includes/admin/template-vue.php:69
 msgid "Add Section"
 msgstr ""
 
-#: includes/admin/template-vue.php:60
+#: includes/admin/template-vue.php:75
 msgid "No docs has been found. Perhaps %s?"
 msgstr ""
 
-#: includes/admin/template-vue.php:60
+#: includes/admin/template-vue.php:75
 msgid "create one"
 msgstr ""
 
@@ -225,7 +225,7 @@ msgstr ""
 msgid "Choose File"
 msgstr ""
 
-#: includes/class-shortcode.php:41
+#: includes/class-shortcode.php:42
 msgid "View Details"
 msgstr ""
 
@@ -265,19 +265,6 @@ msgstr ""
 msgid "Edit Doc: %s"
 msgstr ""
 
-#: includes/lib/class-weforms-upsell.php:77
-msgid "Install Now"
-msgstr ""
-
-#: includes/lib/class-weforms-upsell.php:80
-#: includes/lib/class-weforms-upsell.php:81
-msgid "Dismiss this notice."
-msgstr ""
-
-#: includes/lib/class-weforms-upsell.php:353
-msgid "You don't have permission to install the plugins"
-msgstr ""
-
 #: templates/content-feedback.php:8
 msgid "%d person found this useful"
 msgid_plural "%d persons found this useful"
@@ -306,7 +293,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/content-modal.php:14 templates/single-docs.php:77
+#: templates/content-modal.php:14 templates/single-docs.php:84
 msgid "How can we help?"
 msgstr ""
 
@@ -330,144 +317,144 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: templates/single-docs.php:34
+#: templates/single-docs.php:41
 msgid "Print this article"
 msgstr ""
 
-#: templates/single-docs.php:42
+#: templates/single-docs.php:49
 #. translators: %s: Name of current post.
 msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
-#: templates/single-docs.php:47
+#: templates/single-docs.php:54
 msgid "Docs:"
 msgstr ""
 
-#: templates/single-docs.php:55
+#: templates/single-docs.php:62
 msgid "Articles"
 msgstr ""
 
-#: templates/single-docs.php:77
+#: templates/single-docs.php:84
 msgid "Still stuck?"
 msgstr ""
 
-#: templates/single-docs.php:87
+#: templates/single-docs.php:94
 msgid "Updated on %s"
 msgstr ""
 
-#: wedocs.php:207
+#: wedocs.php:235
 msgid "Powered by weDocs"
 msgstr ""
 
-#: wedocs.php:221
+#: wedocs.php:249
 msgid "Documentation"
 msgstr ""
 
-#: wedocs.php:222
+#: wedocs.php:250
 msgid "Parent Doc"
 msgstr ""
 
-#: wedocs.php:223
+#: wedocs.php:251
 msgid "All Documentations"
 msgstr ""
 
-#: wedocs.php:224
+#: wedocs.php:252
 msgid "View Documentation"
 msgstr ""
 
-#: wedocs.php:225
+#: wedocs.php:253
 msgid "Add Documentation"
 msgstr ""
 
-#: wedocs.php:226
+#: wedocs.php:254
 msgid "Add New"
 msgstr ""
 
-#: wedocs.php:227
+#: wedocs.php:255
 msgid "Edit Documentation"
 msgstr ""
 
-#: wedocs.php:228
+#: wedocs.php:256
 msgid "Update Documentation"
 msgstr ""
 
-#: wedocs.php:229
+#: wedocs.php:257
 msgid "Search Documentation"
 msgstr ""
 
-#: wedocs.php:230
+#: wedocs.php:258
 msgid "Not documentation found"
 msgstr ""
 
-#: wedocs.php:231
+#: wedocs.php:259
 msgid "Not found in Trash"
 msgstr ""
 
-#: wedocs.php:274
+#: wedocs.php:302
 msgid "All Tags"
 msgstr ""
 
-#: wedocs.php:275
+#: wedocs.php:303
 msgid "Parent Tag"
 msgstr ""
 
-#: wedocs.php:276
+#: wedocs.php:304
 msgid "Parent Tag:"
 msgstr ""
 
-#: wedocs.php:277
+#: wedocs.php:305
 msgid "New Tag Tag"
 msgstr ""
 
-#: wedocs.php:278
+#: wedocs.php:306
 msgid "Add New Item"
 msgstr ""
 
-#: wedocs.php:279
+#: wedocs.php:307
 msgid "Edit Tag"
 msgstr ""
 
-#: wedocs.php:280
+#: wedocs.php:308
 msgid "Update Tag"
 msgstr ""
 
-#: wedocs.php:281
+#: wedocs.php:309
 msgid "View Tag"
 msgstr ""
 
-#: wedocs.php:282
+#: wedocs.php:310
 msgid "Separate items with commas"
 msgstr ""
 
-#: wedocs.php:283
+#: wedocs.php:311
 msgid "Add or remove items"
 msgstr ""
 
-#: wedocs.php:284
+#: wedocs.php:312
 msgid "Choose from the most used"
 msgstr ""
 
-#: wedocs.php:285
+#: wedocs.php:313
 msgid "Popular Tags"
 msgstr ""
 
-#: wedocs.php:286
+#: wedocs.php:314
 msgid "Search Tags"
 msgstr ""
 
-#: wedocs.php:287
+#: wedocs.php:315
 msgid "Not Found"
 msgstr ""
 
-#: wedocs.php:288
+#: wedocs.php:316
 msgid "No items"
 msgstr ""
 
-#: wedocs.php:289
+#: wedocs.php:317
 msgid "Tags list"
 msgstr ""
 
-#: wedocs.php:290
+#: wedocs.php:318
 msgid "Tags list navigation"
 msgstr ""
 
@@ -502,27 +489,27 @@ msgctxt "submit button"
 msgid "Search"
 msgstr ""
 
-#: templates/single-docs.php:66
+#: templates/single-docs.php:73
 msgctxt "Used before tag names."
 msgid "Tags"
 msgstr ""
 
-#: wedocs.php:219
+#: wedocs.php:247
 msgctxt "Post Type General Name"
 msgid "Docs"
 msgstr ""
 
-#: wedocs.php:220
+#: wedocs.php:248
 msgctxt "Post Type Singular Name"
 msgid "Doc"
 msgstr ""
 
-#: wedocs.php:271
+#: wedocs.php:299
 msgctxt "Taxonomy General Name"
 msgid "Tags"
 msgstr ""
 
-#: wedocs.php:272
+#: wedocs.php:300
 msgctxt "Taxonomy Singular Name"
 msgid "Tag"
 msgstr ""

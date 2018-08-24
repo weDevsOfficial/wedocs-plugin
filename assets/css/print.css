@@ -12,6 +12,10 @@ a.wedocs-print-article:hover {
   float: none !important;
   display: block;
 }
+.entry-content a.anchorjs-link {
+  text-decoration: none;
+  box-shadow: none !important;
+}
 .entry-content img {
   max-width: 100%;
   border: 1px solid #eeeeee;

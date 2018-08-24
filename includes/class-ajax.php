@@ -61,7 +61,7 @@ class WeDocs_Ajax {
         wp_send_json_success( array(
             'post' => array(
                 'id'     => $post_id,
-                'title'  => $title,
+                'title'  => stripslashes( $title ),
                 'status' => $status,
                 'caps'   => array(
                     'edit'   => current_user_can( $post_type_object->cap->edit_post, $post_id ),
@@ -299,5 +299,3 @@ class WeDocs_Ajax {
         return $a['post']['order'] - $b['post']['order'];
     }
 }
-
-new WeDocs_Ajax();

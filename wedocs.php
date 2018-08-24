@@ -3,7 +3,7 @@
 Plugin Name: weDocs
 Plugin URI: http://wedevs.com/
 Description: A documentation plugin for WordPress
-Version: 1.3.3
+Version: 1.4
 Author: Tareq Hasan
 Author URI: https://tareq.co/
 License: GPL2
@@ -12,7 +12,7 @@ Domain Path: /languages
 */
 
 /**
- * Copyright (c) 2017 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
+ * Copyright (c) 2018 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
@@ -52,7 +52,7 @@ class WeDocs {
      *
      * @var string
      */
-    public $version = '1.3.3';
+    public $version = '1.4';
 
     /**
      * The plugin url
@@ -109,6 +109,7 @@ class WeDocs {
         $this->theme_dir_path = apply_filters( 'wedocs_theme_dir_path', 'wedocs/' );
 
         $this->file_includes();
+        $this->init_classes();
 
         // Localize our plugin
         add_action( 'init', array( $this, 'localization_setup' ) );
@@ -143,6 +144,12 @@ class WeDocs {
 
         $this->maybe_create_docs_page();
 
+        // rewrite rules problem, register and flush
+        $this->register_post_type();
+        $this->register_taxonomy();
+
+        flush_rewrite_rules();
+
         update_option( 'wedocs_installed', time() );
         update_option( 'wedocs_version', $this->version );
     }
@@ -156,6 +163,7 @@ class WeDocs {
         include_once dirname( __FILE__ ) . '/includes/functions.php';
         include_once dirname( __FILE__ ) . '/includes/class-walker-docs.php';
         include_once dirname( __FILE__ ) . '/includes/class-search-widget.php';
+        include_once dirname( __FILE__ ) . '/includes/class-theme-support.php';
 
         if ( is_admin() ) {
             include_once dirname( __FILE__ ) . '/includes/admin/class-admin.php';
@@ -166,9 +174,28 @@ class WeDocs {
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
             include_once dirname( __FILE__ ) . '/includes/class-ajax.php';
         }
+    }
 
-        include_once dirname( __FILE__ ) . '/includes/lib/class-weforms-upsell.php';
-        new WeForms_Upsell( 'wedocs' );
+    /**
+     * Initialize the classes
+     *
+     * @since 1.4
+     *
+     * @return void
+     */
+    public function init_classes() {
+
+        new WeDocs_Theme_Support();
+
+        if ( is_admin() ) {
+            new WeDocs_Admin();
+        } else {
+            new WeDocs_Shortcode_Handler();
+        }
+
+        if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+            new WeDocs_Ajax();
+        }
     }
 
     /**
@@ -194,12 +221,13 @@ class WeDocs {
         /**
          * All styles goes here
          */
-        wp_enqueue_style( 'wedocs-styles', plugins_url( 'assets/css/frontend.css', __FILE__ ), $this->version, date( 'Ymd' ) );
+        wp_enqueue_style( 'wedocs-styles', plugins_url( 'assets/css/frontend.css', __FILE__ ), array(), $this->version );
 
         /**
          * All scripts goes here
          */
-        wp_enqueue_script( 'wedocs-scripts', plugins_url( 'assets/js/frontend.js', __FILE__ ), array( 'jquery' ), $this->version, true );
+        wp_enqueue_script( 'wedocs-anchorjs', plugins_url( 'assets/js/anchor.min.js', __FILE__ ), array( 'jquery' ), $this->version, true );
+        wp_enqueue_script( 'wedocs-scripts', plugins_url( 'assets/js/frontend.js', __FILE__ ), array( 'jquery', 'wedocs-anchorjs' ), $this->version, true );
         wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', array(
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'nonce'   => wp_create_nonce( 'wedocs-ajax' ),

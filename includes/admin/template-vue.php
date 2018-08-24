@@ -36,14 +36,29 @@
 
                         <ul class="articles collapsed connectedSortable" v-if="section.child" v-sortable>
                             <li class="article" v-for="(article, index) in section.child" :data-id="article.post.id">
-                                <a v-if="article.post.caps.edit" target="_blank" :href="editurl + article.post.id">{{ article.post.title }}<span v-if="article.post.status != 'publish'" class="doc-status">{{ article.post.status }}</span></a>
-                                <span v-else>{{ article.post.title }}</span>
 
-                                <span class="actions wedocs-row-actions">
-                                    <span class="wedocs-btn-reorder"><span class="dashicons dashicons-menu"></span></span>
-                                    <a target="_blank" :href="viewurl + article.post.id" title="<?php esc_attr_e( 'Preview the article', 'wedocs' ); ?>"><span class="dashicons dashicons-external"></span></a>
-                                    <span class="wedocs-btn-remove" v-if="article.post.caps.delete" v-on:click="removeArticle(index, section.child)" title="<?php esc_attr_e( 'Delete this article', 'wedocs' ); ?>"><span class="dashicons dashicons-trash"></span></span>
+                                <span>
+                                    <a v-if="article.post.caps.edit" target="_blank" :href="editurl + article.post.id">{{ article.post.title }}<span v-if="article.post.status != 'publish'" class="doc-status">{{ article.post.status }}</span></a>
+                                    <span v-else>{{ article.post.title }}</span>
+
+                                    <span class="actions wedocs-row-actions">
+                                        <span class="wedocs-btn-reorder"><span class="dashicons dashicons-menu"></span></span>
+                                        <a target="_blank" :href="viewurl + article.post.id" title="<?php esc_attr_e( 'Preview the article', 'wedocs' ); ?>"><span class="dashicons dashicons-external"></span></a>
+                                        <span class="wedocs-btn-remove" v-if="article.post.caps.delete" v-on:click="removeArticle(index, section.child)" title="<?php esc_attr_e( 'Delete this article', 'wedocs' ); ?>"><span class="dashicons dashicons-trash"></span></span>
+                                    </span>
                                 </span>
+
+                                <ul class="articles" v-if="article.child.length">
+                                    <li v-for="(art, index) in article.child">
+                                        <a v-if="art.post.caps.edit" target="_blank" :href="editurl + art.post.id">{{ art.post.title }}<span v-if="art.post.status != 'publish'" class="doc-status">{{ art.post.status }}</span></a>
+                                        <span v-else>{{ art.post.title }}</span>
+
+                                        <span class="actions wedocs-row-actions">
+                                            <a target="_blank" :href="viewurl + article.post.id" title="<?php esc_attr_e( 'Preview the article', 'wedocs' ); ?>"><span class="dashicons dashicons-external"></span></a>
+                                            <span class="wedocs-btn-remove" v-if="art.post.caps.delete" v-on:click="removeArticle(index, article.child)" title="<?php esc_attr_e( 'Delete this article', 'wedocs' ); ?>"><span class="dashicons dashicons-trash"></span></span>
+                                        </span>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>

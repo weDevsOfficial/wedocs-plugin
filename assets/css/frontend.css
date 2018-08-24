@@ -61,6 +61,9 @@ body.single.single-docs .content-area {
   height: 1px;
   width: 1px;
 }
+.wedocs-overflow-hidden {
+  overflow: hidden;
+}
 .wedocs-single-wrap {
   width: 100%;
   display: -ms-flex;
@@ -161,6 +164,10 @@ body.single.single-docs .content-area {
   width: 100% !important;
   float: none !important;
   display: block;
+}
+.wedocs-single-wrap .wedocs-single-content article .entry-content a.anchorjs-link {
+  text-decoration: none;
+  box-shadow: none !important;
 }
 .wedocs-single-wrap .wedocs-single-content article .entry-content img {
   max-width: 100%;

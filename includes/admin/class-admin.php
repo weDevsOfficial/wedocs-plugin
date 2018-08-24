@@ -159,5 +159,3 @@ class WeDocs_Admin {
     }
 
 }
-
-return new WeDocs_Admin();
