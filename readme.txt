@@ -5,7 +5,7 @@ Tags: document, documentation, help, support, note
 Requires at least: 3.6
 Tested up to: 4.9.1
 Requires PHP: 5.4
-Stable tag: 1.3.3
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,17 @@ Nothing here yet
 9. Search widget in frontend
 
 == Changelog ==
+
+= v1.4 (25 August, 2018) =
+
+ * **New:** Added new shortcode attribute (<code>items</code>) to limit no. of items shown. [#59](https://github.com/tareq1988/wedocs-plugin/pull/59/files)
+ * **New:** Added a new filter <code>wedocs_email_feedback_to</code> for outgoing mail to address. [#63](https://github.com/tareq1988/wedocs-plugin/issues/63)
+ * **New:** Added theme wrapper support. Now developers will be able to put dynamic start and end divs and tags in the <code>single-docs.php</code> template.
+ * **New:** Show 3rd level doc in the admin UI builder.
+ * **New:** Added automatic anchor tags in docs for <code>h2</code> and <code>h3</code> tags. Bookmarking is now very easy! Thanks to [anchorjs](https://github.com/bryanbraun/anchorjs/).
+ * **Fix:** Bug with quotes in the doc title. [#66](https://github.com/tareq1988/wedocs-plugin/issues/66)
+ * **Improved:** Flush rewrite rules after plugin activates. Fixes the long time permalink issues with 404.
+ * **Improved:** Disable page scrolling when the feedback modal is open.
 
 = v1.3.3 (8 November, 2017) =
 
