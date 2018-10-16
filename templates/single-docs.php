@@ -90,8 +90,11 @@ get_header(); ?>
                             <meta itemprop="url" content="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>" />
                         </div>
 
-                        <meta itemprop="datePublished" content="<?php echo get_the_time( 'c' ); ?>"/>
-                        <time itemprop="dateModified" datetime="<?php echo esc_attr( get_the_modified_date( 'c' ) ); ?>"><?php printf( __( 'Updated on %s', 'wedocs' ), get_the_modified_date() ); ?></time>
+	                    <?php if ( ! empty( get_the_modified_date() ) ) { ?>
+		                    <meta itemprop="datePublished" content="<?php echo get_the_time( 'c' ); ?>"/>
+		                    <time itemprop="dateModified"
+		                          datetime="<?php echo esc_attr( get_the_modified_date( 'c' ) ); ?>"><?php printf( __( 'Updated on %s', 'wedocs' ), get_the_modified_date() ); ?></time>
+	                    <?php } ?>
                     </footer>
 
                     <?php wedocs_doc_nav(); ?>
