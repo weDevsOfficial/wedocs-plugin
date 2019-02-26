@@ -2,7 +2,6 @@
 
 <div class="wedocs-shortcode-wrap">
     <ul class="wedocs-docs-list col-<?php echo $col; ?>">
-
         <?php foreach ($docs as $main_doc) : ?>
             <li class="wedocs-docs-single">
                 <h3><a href="<?php echo get_permalink( $main_doc['doc']->ID ); ?>"><?php echo $main_doc['doc']->post_title; ?></a></h3>
@@ -11,7 +10,7 @@
 
                     <div class="inside">
                         <ul class="wedocs-doc-sections">
-                            <?php foreach ($main_doc['sections'] as $section) : ?>
+                            <?php foreach(array_slice($main_doc['sections'], 0, 5) as $section ): ?>
                                 <li><a href="<?php echo get_permalink( $section->ID ); ?>"><?php echo $section->post_title; ?></a></li>
                             <?php endforeach; ?>
                         </ul>
