@@ -422,21 +422,23 @@ class WeDocs {
      */
     function docs_search_filter( $query ) {
 
-        if ( ! is_admin() && is_search() && $query->is_main_query() ) {
-            $param = isset( $_GET['search_in_doc'] ) ? sanitize_text_field( $_GET['search_in_doc'] ) : false;
+        if ( ! is_admin() && $query->is_main_query() ) {
+            if( is_search() ) {
+                $param = isset( $_GET['search_in_doc'] ) ? sanitize_text_field( $_GET['search_in_doc'] ) : false;
 
-            if ( $param ) {
+                if ( $param ) {
 
-                if ( $param != 'all' ) {
-                    $parent_doc_id = intval( $param );
-                    $post__in      = array( $parent_doc_id => $parent_doc_id );
-                    $children_docs = wedocs_get_posts_children( $parent_doc_id, 'docs' );
+                    if ( $param != 'all' ) {
+                        $parent_doc_id = intval( $param );
+                        $post__in      = array( $parent_doc_id => $parent_doc_id );
+                        $children_docs = wedocs_get_posts_children( $parent_doc_id, 'docs' );
 
-                    if ( $children_docs ) {
-                        $post__in = array_merge( $post__in, wp_list_pluck( $children_docs, 'ID' ) );
+                        if ( $children_docs ) {
+                            $post__in = array_merge( $post__in, wp_list_pluck( $children_docs, 'ID' ) );
+                        }
+
+                        $query->set( 'post__in', $post__in );
                     }
-
-                    $query->set( 'post__in', $post__in );
                 }
             }
         }
