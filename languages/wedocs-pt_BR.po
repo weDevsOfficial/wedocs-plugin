@@ -1,0 +1,492 @@
+# Copyright (C) 2016 Tareq Hasan
+# This file is distributed under the GPL2.
+msgid ""
+msgstr ""
+"Project-Id-Version: weDocs 1.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
+"POT-Creation-Date: 2017-02-24 07:43+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2017-02-24 08:58+0100\n"
+"Language-Team: arthur@arthurmolina.com\n"
+"Last-Translator: Arthur Molina <arthur@arthurmolina.com>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: pt_BR\n"
+
+#: includes/admin/class-admin.php:61
+msgid "Enter doc title"
+msgstr "Digite o título do documento"
+
+#: includes/admin/class-admin.php:62
+msgid "Write something"
+msgstr "Escreva algo"
+
+#: includes/admin/class-admin.php:63
+msgid "Enter section title"
+msgstr "Digite o título da seção"
+
+#. Plugin Name of the plugin/theme
+msgid "weDocs"
+msgstr "weDocs"
+
+#: includes/admin/class-admin.php:88
+msgid "Docs"
+msgstr "Documentos"
+
+#: includes/admin/class-admin.php:89 wedocs.php:217
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: includes/admin/class-admin.php:139
+msgid ""
+"Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;"
+"&#9733;&#9733;&#9733;&#9733;%s rating."
+msgstr ""
+"Obrigado por usar <strong>weDocs</strong>. Por favor deixe uma %s&#9733;"
+"&#9733;&#9733;&#9733;&#9733;%s classificação."
+
+#: includes/admin/class-admin.php:139
+msgid "Thanks :)"
+msgstr "Obrigado :)"
+
+#: includes/admin/class-admin.php:150
+msgid "Thank you for using <strong>weDocs</strong>."
+msgstr "Obrigado por usar <strong>weDocs</strong>."
+
+#: includes/admin/class-admin.php:153
+msgid "Use the <a href=\"%s\">classic UI</a>."
+msgstr "Use a <a href=\"%s\">interface de usuario clásica</a>."
+
+#: includes/admin/class-docs-list-table.php:23
+msgid "Helpfulness"
+msgstr "Utilidade"
+
+#: includes/admin/class-docs-list-table.php:66
+msgid "Votes"
+msgstr "Votos"
+
+#: includes/admin/class-settings.php:38
+msgid "weDocs Settings"
+msgstr "Ajustes weDocs"
+
+#: includes/admin/class-settings.php:38
+msgid "Settings"
+msgstr "Ajustes"
+
+#: includes/admin/class-settings.php:50
+msgid "Plugin Settings"
+msgstr "Ajustes Plugin"
+
+#: includes/admin/class-settings.php:67
+msgid "Email feedback"
+msgstr "comentários por e-mail"
+
+#: includes/admin/class-settings.php:68
+msgid "Enable Email feedback form"
+msgstr "Habilitar formulário de comentários por email"
+
+#: includes/admin/class-settings.php:74
+msgid "Email Address"
+msgstr "Endereço de E-mail"
+
+#: includes/admin/class-settings.php:75
+msgid "The email address where the feedbacks should sent to"
+msgstr "O endereço de email onde os feedbacks devem ser enviados"
+
+#: includes/admin/class-settings.php:82
+msgid "Helpful feedback"
+msgstr "Comentários úteis"
+
+#: includes/admin/class-settings.php:83
+msgid "Enable helpful feedback links"
+msgstr "Habilitar links de comentários úteiss"
+
+#: includes/admin/class-settings.php:89
+msgid "Print article"
+msgstr "Imprimir artigo"
+
+#: includes/admin/class-settings.php:90
+msgid "Enable article printing"
+msgstr "Habilitar impressão de artígo"
+
+#: includes/admin/template-vue.php:3
+msgid "Documentations"
+msgstr "Documentações"
+
+#: includes/admin/template-vue.php:3
+msgid "Add Doc"
+msgstr "Adicionar Documento"
+
+#: includes/admin/template-vue.php:15
+msgid "Preview the doc"
+msgstr "Visualizar documento"
+
+#: includes/admin/template-vue.php:16
+msgid "Delete this doc"
+msgstr "Apagar este documento"
+
+#: includes/admin/template-vue.php:28
+msgid "Re-order this section"
+msgstr "Reordenar seção"
+
+#: includes/admin/template-vue.php:29
+msgid "Preview the section"
+msgstr "Visualizar seção"
+
+#: includes/admin/template-vue.php:30
+msgid "Delete this section"
+msgstr "apagar seção"
+
+#: includes/admin/template-vue.php:31
+msgid "Add a new article"
+msgstr "Adicionar novo artigo"
+
+#: includes/admin/template-vue.php:41
+msgid "Preview the article"
+msgstr "Visualizar artigo"
+
+#: includes/admin/template-vue.php:42
+msgid "Delete this article"
+msgstr "Apagar artigo"
+
+#: includes/admin/template-vue.php:51
+msgid "Add Section"
+msgstr "Adicionar seção"
+
+#: includes/admin/template-vue.php:57
+msgid "No docs has been found. Perhaps %s?"
+msgstr "Nenhum documento encontrado. Talvêz %s?"
+
+#: includes/admin/template-vue.php:57
+msgid "create one"
+msgstr "criar um"
+
+#: includes/class-ajax.php:156
+msgid "Sorry, you've already recorded your feedback!"
+msgstr "Desculpe, seu comentário já havia sido registrado!"
+
+#: includes/class-ajax.php:171
+msgid "Thanks for your feedback!"
+msgstr "Obrigado por seu comentário!"
+
+#: includes/class-ajax.php:192
+msgid "Please enter a valid email address."
+msgstr "Por favor, digite um endereço de email válido."
+
+#: includes/class-ajax.php:199
+msgid "Please provide a subject line."
+msgstr "Por favor digite um assunto."
+
+#: includes/class-ajax.php:203
+msgid "Please provide the message details."
+msgstr "Por favor digite os detalhes da mensagem"
+
+#: includes/class-ajax.php:208
+msgid "Thanks for your feedback."
+msgstr "Obrigado por seu comentário."
+
+#: includes/class-search-widget.php:11
+msgid "Document Search Widget"
+msgstr "Widget Buscador de Documentos"
+
+#: includes/class-search-widget.php:14
+msgid "weDocs Document Search"
+msgstr "Buscador de Documentos weDocs "
+
+#: includes/class-search-widget.php:34
+msgid "All Docs"
+msgstr "Todos os Documentos"
+
+#: includes/class-search-widget.php:66
+msgid "Documentation Search"
+msgstr "Buscar Documentação"
+
+#: includes/class-search-widget.php:69
+msgid "Title:"
+msgstr "Título"
+
+#: includes/class-settings-api.php:368
+msgid "Choose File"
+msgstr "Escolha o arquivo"
+
+#: includes/class-shortcode.php:41
+msgid "View Details"
+msgstr "Ver detalhes"
+
+#: includes/functions.php:84
+msgid "Home"
+msgstr "Inicio"
+
+#: includes/functions.php:171
+msgid "Doc navigation"
+msgstr "Navegação Doc"
+
+#: includes/functions.php:340
+msgid "[%1$s] New Doc Feedback: \"%2$s\""
+msgstr "[%1$s] Novo : \"%2$s\""
+
+#: includes/functions.php:342
+msgid "New feedback on your doc \"%s\""
+msgstr "Novo comentário sobre seu documento \"%s\""
+
+#: includes/functions.php:343
+msgid "Author: %1$s (IP: %2$s)"
+msgstr "Autor: %1$s (IP: %2$s)"
+
+#: includes/functions.php:344
+msgid "Email: %s"
+msgstr "Email: %s"
+
+#: includes/functions.php:345
+msgid "Feedback: %s"
+msgstr "Comentário: %s"
+
+#: includes/functions.php:346
+msgid "Doc Permalink: %s"
+msgstr "Link permanente do documento: %s"
+
+#: includes/functions.php:347
+msgid "Edit Doc: %s"
+msgstr "Editar Documento: %s"
+
+#: templates/content-feedback.php:8
+msgid "%d person found this useful"
+msgid_plural "%d persons found this useful"
+msgstr[0] "%d pessoa achou isto útil"
+msgstr[1] "%d pesoas acharam isto útil"
+
+#: templates/content-feedback.php:8 templates/content-feedback.php:9
+msgid "No votes yet"
+msgstr "Ainda não há votos"
+
+#: templates/content-feedback.php:9
+msgid "%d person found this not useful"
+msgid_plural "%d persons found this not useful"
+msgstr[0] "%d pessoa não achou isto útil"
+msgstr[1] "%d pessoas não acharam isto útil"
+
+#: templates/content-feedback.php:12
+msgid "Was this article helpful to you?"
+msgstr "Este artigo foi útil para você?"
+
+#: templates/content-feedback.php:16
+msgid "Yes"
+msgstr "Sim"
+
+#: templates/content-feedback.php:23
+msgid "No"
+msgstr "Não"
+
+#: templates/content-modal.php:14 templates/single-docs.php:66
+msgid "How can we help?"
+msgstr "Como podemos ajudar?"
+
+#: templates/content-modal.php:22
+msgid "Name"
+msgstr "Nome"
+
+#: templates/content-modal.php:30
+msgid "Email"
+msgstr "Email"
+
+#: templates/content-modal.php:38
+msgid "subject"
+msgstr "assunto"
+
+#: templates/content-modal.php:46
+msgid "message"
+msgstr "mensagem"
+
+#: templates/single-docs.php:34
+msgid "Print this article"
+msgstr "Imprimir artigo"
+
+#. translators: %s: Name of current post.
+#: templates/single-docs.php:42
+msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Continuar lendo %s <span class=\"meta-nav\">&rarr;</span>"
+
+#: templates/single-docs.php:47
+msgid "Docs:"
+msgstr "Documentos:"
+
+#: templates/single-docs.php:66
+msgid "Still stuck?"
+msgstr "Ainda preso?"
+
+#: templates/single-docs.php:76
+msgid "Updated on %s"
+msgstr "Atualizado em %s"
+
+#: wedocs.php:153
+msgid "Powered by weDocs"
+msgstr "Provido por weDocs"
+
+#: wedocs.php:167
+msgid "Documentation"
+msgstr "Documentação"
+
+#: wedocs.php:168
+msgid "Parent Doc"
+msgstr "Documento pai"
+
+#: wedocs.php:169
+msgid "All Documentations"
+msgstr "Todos os Documentos"
+
+#: wedocs.php:170
+msgid "View Documentation"
+msgstr "Ver Documentação"
+
+#: wedocs.php:171
+msgid "Add Documentation"
+msgstr "Adicionar Documentação"
+
+#: wedocs.php:172
+msgid "Add New"
+msgstr "Adicionar Novo"
+
+#: wedocs.php:173
+msgid "Edit Documentation"
+msgstr "Editar Documentação"
+
+#: wedocs.php:174
+msgid "Update Documentation"
+msgstr "Atualizar Documentação"
+
+#: wedocs.php:175
+msgid "Search Documentation"
+msgstr "Buscar Documentação"
+
+#: wedocs.php:176
+msgid "Not documentation found"
+msgstr "Nenhuma documentação encontrada"
+
+#: wedocs.php:177
+msgid "Not found in Trash"
+msgstr "Não encontrado na Lixeira"
+
+#: wedocs.php:218
+msgid "All Tags"
+msgstr "Todas as Etiquetas"
+
+#: wedocs.php:219
+msgid "Parent Tag"
+msgstr "Etiquete Pai"
+
+#: wedocs.php:220
+msgid "Parent Tag:"
+msgstr "Etiqueta Pai:"
+
+#: wedocs.php:221
+msgid "New Tag Tag"
+msgstr "Nova Etiqueta de Etiqueta"
+
+#: wedocs.php:222
+msgid "Add New Item"
+msgstr "Adicionar Novo Item"
+
+#: wedocs.php:223
+msgid "Edit Tag"
+msgstr "Editar Etiqueta"
+
+#: wedocs.php:224
+msgid "Update Tag"
+msgstr "Atualizar Etiqueta"
+
+#: wedocs.php:225
+msgid "View Tag"
+msgstr "Ver Etiqueta"
+
+#: wedocs.php:226
+msgid "Separate items with commas"
+msgstr "Separar ítems com vírgulas"
+
+#: wedocs.php:227
+msgid "Add or remove items"
+msgstr "Adicionar ou eliminar items"
+
+#: wedocs.php:228
+msgid "Choose from the most used"
+msgstr "Escolher entre os mais utilizados"
+
+#: wedocs.php:229
+msgid "Popular Tags"
+msgstr "Etiquetas Populares"
+
+#: wedocs.php:230
+msgid "Search Tags"
+msgstr "Buscar Etiquetas"
+
+#: wedocs.php:231
+msgid "Not Found"
+msgstr "Não Encontrado"
+
+#: wedocs.php:232
+msgid "No items"
+msgstr "Sem items"
+
+#: wedocs.php:233
+msgid "Tags list"
+msgstr "Lista Etiquetas"
+
+#: wedocs.php:234
+msgid "Tags list navigation"
+msgstr "Navegação da lista de etiquetas"
+
+#. Plugin URI of the plugin/theme
+msgid "http://wedevs.com/"
+msgstr "http://wedevs.com/"
+
+#. Description of the plugin/theme
+msgid "A documentation plugin for WordPress"
+msgstr "Um plugin de documentação para WordPress"
+
+#. Author of the plugin/theme
+msgid "Tareq Hasan"
+msgstr "Tareq Hasan"
+
+#. Author URI of the plugin/theme
+msgid "https://tareq.co/"
+msgstr "https://tareq.co/"
+
+#: includes/class-search-widget.php:45 includes/class-search-widget.php:46
+msgctxt "label"
+msgid "Search for:"
+msgstr "Buscar por:"
+
+#: includes/class-search-widget.php:46
+msgctxt "placeholder"
+msgid "Documentation Search &hellip;"
+msgstr "Buscar Documentação"
+
+#: includes/class-search-widget.php:52
+msgctxt "submit button"
+msgid "Search"
+msgstr "Buscar"
+
+#: templates/single-docs.php:55
+msgctxt "Used before tag names."
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: wedocs.php:165
+msgctxt "Post Type General Name"
+msgid "Docs"
+msgstr "Documentos"
+
+#: wedocs.php:166
+msgctxt "Post Type Singular Name"
+msgid "Doc"
+msgstr "Documento"
+
+#: wedocs.php:215
+msgctxt "Taxonomy General Name"
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: wedocs.php:216
+msgctxt "Taxonomy Singular Name"
+msgid "Tag"
+msgstr "Etiqueta"
