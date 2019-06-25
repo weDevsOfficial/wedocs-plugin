@@ -302,7 +302,7 @@ class WeDocs {
             'all_items'                  => __( 'All Tags', 'wedocs' ),
             'parent_item'                => __( 'Parent Tag', 'wedocs' ),
             'parent_item_colon'          => __( 'Parent Tag:', 'wedocs' ),
-            'new_item_name'              => __( 'New Tag Tag', 'wedocs' ),
+            'new_item_name'              => __( 'New Tag', 'wedocs' ),
             'add_new_item'               => __( 'Add New Item', 'wedocs' ),
             'edit_item'                  => __( 'Edit Tag', 'wedocs' ),
             'update_item'                => __( 'Update Tag', 'wedocs' ),
