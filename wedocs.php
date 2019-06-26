@@ -217,6 +217,11 @@ class WeDocs {
      * @uses wp_enqueue_style
      */
     public function enqueue_scripts() {
+        global $post;
+
+        if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wedocs')) {
+            return;
+        }
 
         /**
          * All styles goes here
