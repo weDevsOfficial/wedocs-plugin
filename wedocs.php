@@ -131,6 +131,8 @@ class WeDocs {
 
         // Loads frontend scripts and styles
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+        add_action( 'rest_api_init', array( $this, 'init_rest_api' ) );
     }
 
     /**
@@ -164,6 +166,7 @@ class WeDocs {
         include_once dirname( __FILE__ ) . '/includes/class-walker-docs.php';
         include_once dirname( __FILE__ ) . '/includes/class-search-widget.php';
         include_once dirname( __FILE__ ) . '/includes/class-theme-support.php';
+        include_once dirname( __FILE__ ) . '/includes/rest-api/class-rest-api.php';
 
         if ( is_admin() ) {
             include_once dirname( __FILE__ ) . '/includes/admin/class-admin.php';
@@ -196,6 +199,16 @@ class WeDocs {
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
             new WeDocs_Ajax();
         }
+    }
+
+    /**
+     * Initialize REST API
+     *
+     * @return void
+     */
+    public function init_rest_api() {
+        $api = new WeDocs_REST_API();
+        $api->register_routes();
     }
 
     /**
