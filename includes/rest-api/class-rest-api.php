@@ -66,6 +66,46 @@ class WeDocs_REST_API extends WP_REST_Controller {
                 'callback' => [ $this, 'get_parents' ],
             ]
         ] );
+
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/search', [
+            [
+                'methods'  => WP_REST_Server::READABLE,
+                'callback' => [ $this, 'search_docs' ],
+                'args'     => [
+                    'query' => [
+                        'required'          => true,
+                        'type'              => 'string',
+                        'description'       => __( 'Limit results to those matching a string.', 'wedocs' ),
+                        'sanitize_callback' => 'sanitize_text_field',
+                        'validate_callback' => 'rest_validate_request_arg',
+                    ],
+                    'in' => [
+                        'required'          => false,
+                        'type'              => 'integer',
+                        'description'       => __( 'The ID for the parent of the object.', 'wedocs' ),
+                        'sanitize_callback' => 'absint',
+                        'validate_callback' => 'rest_validate_request_arg',
+                    ],
+                    'page'     => array(
+                        'description'       => __( 'Current page of the collection.', 'wedocs' ),
+                        'type'              => 'integer',
+                        'default'           => 1,
+                        'sanitize_callback' => 'absint',
+                        'validate_callback' => 'rest_validate_request_arg',
+                        'minimum'           => 1,
+                    ),
+                    'per_page' => array(
+                        'description'       => __( 'Maximum number of items to be returned in result set.', 'wedocs' ),
+                        'type'              => 'integer',
+                        'default'           => 10,
+                        'minimum'           => 1,
+                        'maximum'           => 100,
+                        'sanitize_callback' => 'absint',
+                        'validate_callback' => 'rest_validate_request_arg',
+                    ),
+                ],
+            ]
+        ] );
     }
 
     /**
@@ -184,14 +224,23 @@ class WeDocs_REST_API extends WP_REST_Controller {
             return $valid_check;
         }
 
+        $type  = $request['type'];
         $count = (int) get_post_meta( $request['id'], $type, true );
-        update_post_meta( $post_id, $type, $count + 1 );
+
+        update_post_meta( $request['id'], $type, $count + 1 );
 
         return rest_ensure_response([
             'success' => true
         ]);
     }
 
+    /**
+     * Get parents of a document
+     *
+     * @param  \WP_REST_Request $request
+     *
+     * @return \WP_REST_Response
+     */
     public function get_parents( $request ) {
         $doc = $this->get_doc( $request['id'] );
 
@@ -199,40 +248,43 @@ class WeDocs_REST_API extends WP_REST_Controller {
             return $doc;
         }
 
-        $docs    = [];
-        $result  = [];
-        $parents = get_post_ancestors( $doc );
+        // forcefully set the context
+        $request['context'] = 'sidebar';
 
-        foreach ( $parents as $doc_id ) {
-            $temp = get_children( $doc_id, OBJECT );
+        $ancestors = [];
+        $root      = $parent = false;
 
-            $docs = array_merge( $docs, $temp );
+        if ( $doc->post_parent ) {
+            $ancestors = get_post_ancestors($doc->ID);
+            $root      = count($ancestors) - 1;
+            $parent    = $ancestors[$root];
+        } else {
+            $parent = $doc->ID;
         }
+
+        $docs = get_pages( [
+            'order'     => 'menu_order',
+            'child_of'  => $parent,
+            'post_type' => 'docs',
+        ] );
 
         foreach ( $docs as $key => $doc ) {
-            $result[] = [
-                'id'           => $doc->ID,
-                'date'         => mysql_to_rfc3339( $doc->post_date ),
-                'date_gmt'     => mysql_to_rfc3339( $doc->post_date_gmt ),
-                'modified'     => mysql_to_rfc3339( $doc->post_modified ),
-                'modified_gmt' => mysql_to_rfc3339( $doc->post_modified_gmt ),
-                'slug'         => $doc->post_name,
-                'content'      => [
-                    'raw'      => $doc->post_content,
-                    'rendered' => post_password_required( $doc ) ? '' : apply_filters( 'the_content', $doc->post_content ),
-                ],
-                'title'        => [
-                    'raw'      => $doc->post_title,
-                    'rendered' => get_the_title( $doc->ID )
-                ],
-                'parent'       => $doc->post_parent,
-                'menu_order'   => $doc->menu_order,
-            ];
+            $data     = $this->prepare_item_for_response( $doc, $request );
+            $result[] = $this->prepare_response_for_collection( $data );
         }
 
-        return $result;
+        $response = rest_ensure_response( $result );
+
+        return $response;
     }
 
+    /**
+     * Delete child posts
+     *
+     * @param  \WP_Post $doc
+     *
+     * @return void
+     */
     public function delete_child_docs( $doc ) {
         $childrens = get_children( [ 'post_parent' => $doc->ID ] );
 
@@ -244,6 +296,131 @@ class WeDocs_REST_API extends WP_REST_Controller {
                 wp_delete_post( $child_post->ID );
             }
         }
+    }
+
+    /**
+     * Search docs
+     *
+     * @param  \WP_REST_Request $request
+     *
+     * @return \WP_REST_Response
+     */
+    public function search_docs( $request ) {
+
+        $args = [
+            'post_type'      => 'docs',
+            'posts_per_page' => $request['per_page'],
+            'paged'          => $request['page'],
+            's'              => $request['query'],
+        ];
+
+        if ( $request['in'] ) {
+            $post__in      = array( $request['in'] => $request['in'] );
+            $children_docs = wedocs_get_posts_children( $request['in'], 'docs' );
+
+            if ( $children_docs ) {
+                $post__in = array_merge( $post__in, wp_list_pluck( $children_docs, 'ID' ) );
+
+                $args['post__in'] = $post__in;
+            }
+        }
+
+        $query  = new WP_Query( $args );
+        $docs   = $query->get_posts();
+        $result = [];
+
+        foreach ( $docs as $doc ) {
+            $data     = $this->prepare_item_for_response( $doc, $request );
+            $result[] = $this->prepare_response_for_collection( $data );
+        }
+
+        $page        = (int) $args['paged'];
+        $total_posts = $query->found_posts;
+
+        if ( $total_posts < 1 ) {
+            // Out-of-bounds, run the query again without LIMIT for total count.
+            unset( $args['paged'] );
+
+            $count_query = new WP_Query();
+            $count_query->query( $args );
+            $total_posts = $count_query->found_posts;
+        }
+
+        $max_pages = ceil( $total_posts / (int) $query->query_vars['posts_per_page'] );
+
+        if ( $page > $max_pages && $total_posts > 0 ) {
+            return new WP_Error( 'rest_docs_invalid_page_number', __( 'The page number requested is larger than the number of pages available.', 'wedocs' ), array( 'status' => 400 ) );
+        }
+
+        $response = rest_ensure_response( $result );
+
+        $response->header( 'X-WP-Total', (int) $total_posts );
+        $response->header( 'X-WP-TotalPages', (int) $max_pages );
+
+        return $response;
+    }
+
+    /**
+     * Prepares a single doc output for response.
+     *
+     * @param WP_Post         $post    Post object.
+     * @param WP_REST_Request $request Request object.
+     *
+     * @return WP_REST_Response Response object.
+     */
+    public function prepare_item_for_response( $doc, $request ) {
+        $data = [
+            'id'           => $doc->ID,
+            'date'         => mysql_to_rfc3339( $doc->post_date ),
+            'date_gmt'     => mysql_to_rfc3339( $doc->post_date_gmt ),
+            'modified'     => mysql_to_rfc3339( $doc->post_modified ),
+            'modified_gmt' => mysql_to_rfc3339( $doc->post_modified_gmt ),
+            'slug'         => $doc->post_name,
+            'permalink'    => get_permalink( $doc ),
+            'title'        => [
+                'rendered' => get_the_title( $doc->ID )
+            ],
+            'parent'       => $doc->post_parent,
+            'menu_order'   => $doc->menu_order,
+        ];
+
+        if ( $request['context'] == 'edit' ) {
+            $data['title']['raw']   = $doc->post_title;
+            $data['content']['raw'] = $doc->post_content;
+        }
+
+        if ( $request['context'] != 'sidebar' ) {
+            $data['content']['rendered'] = post_password_required( $doc ) ? '' : apply_filters( 'the_content', $doc->post_content );
+        }
+
+        $response = rest_ensure_response( $data );
+
+        $links = $this->prepare_links( $doc );
+        $response->add_links( $links );
+
+        return $response;
+    }
+
+    /**
+     * Prepares links for the request.
+     *
+     * @param WP_Post $post Post object.
+     *
+     * @return array Links for the given post.
+     */
+    protected function prepare_links( $doc ) {
+        $base = sprintf( '%s/%s', $this->namespace, $this->rest_base );
+
+        $links = array(
+            'self'       => array(
+                'href' => rest_url( trailingslashit( $base ) . $doc->ID ),
+            ),
+            'collection' => array(
+                'href' => rest_url( $base ),
+            ),
+        );
+
+        return $links;
     }
 
     /**
