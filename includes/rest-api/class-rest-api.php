@@ -144,18 +144,20 @@ class WeDocs_REST_API extends WP_REST_Controller {
             ORDER BY menu_order DESC
             LIMIT 0, 1";
 
-        $next_post_id = $wpdb->get_row( $next_query );
-        $prev_post_id = $wpdb->get_row( $prev_query );
+        $next_post = $wpdb->get_row( $next_query );
+        $prev_post = $wpdb->get_row( $prev_query );
 
-        if ( $next_post_id ) {
-            $response->add_link( 'next', rest_url( "/wp/v2/docs/{$next_post_id->ID}" ), [
-                'title' => $next_post_id->post_title
+        if ( $next_post ) {
+            $response->add_link( 'next', rest_url( "/wp/v2/docs/{$next_post->ID}" ), [
+                'title' => $next_post->post_title,
+                'link'  => get_permalink( $next_post->ID ),
             ] );
         }
 
-        if ( $prev_post_id ) {
-            $response->add_link( 'prev', rest_url( "/wp/v2/docs/{$prev_post_id->ID}" ), [
-                'title' => $prev_post_id->post_title
+        if ( $prev_post ) {
+            $response->add_link( 'prev', rest_url( "/wp/v2/docs/{$prev_post->ID}" ), [
+                'title' => $prev_post->post_title,
+                'link'  => get_permalink( $prev_post->ID ),
             ] );
         }
 
