@@ -268,6 +268,17 @@ class WeDocs_REST_API extends WP_REST_Controller {
             'post_type' => 'docs',
         ] );
 
+        $result = [];
+
+        // add the parent by-default as the first element
+        $parent_doc = ( $parent == $doc->ID ) ? $doc : get_post( $parent );
+
+        if ( $parent_doc ) {
+            $data     = $this->prepare_item_for_response( $parent_doc, $request );
+            $result[] = $this->prepare_response_for_collection( $data );
+        }
+
+        // now, process the child
         foreach ( $docs as $key => $doc ) {
             $data     = $this->prepare_item_for_response( $doc, $request );
             $result[] = $this->prepare_response_for_collection( $data );
@@ -381,7 +392,7 @@ class WeDocs_REST_API extends WP_REST_Controller {
                 'rendered' => get_the_title( $doc->ID )
             ],
             'parent'       => $doc->post_parent,
-            'menu_order'   => $doc->menu_order,
+            'order'        => $doc->menu_order,
         ];
 
         if ( $request['context'] == 'edit' ) {
