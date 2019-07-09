@@ -126,7 +126,7 @@ class WeDocs_REST_API extends WP_REST_Controller {
         // is it a single request?
         $single = false;
 
-        if ( isset( $request['id'] ) || $request['slug'] ) {
+        if ( isset( $request['id'] ) || $request['slug'] || $request['context'] == 'sidebar' ) {
             $single = true;
         }
 
@@ -282,7 +282,9 @@ class WeDocs_REST_API extends WP_REST_Controller {
 
         // now, process the child
         foreach ( $docs as $key => $doc ) {
-            $data     = $this->prepare_item_for_response( $doc, $request );
+            $data = $this->prepare_item_for_response( $doc, $request );
+            $data = $this->set_pagination( $data, $doc, $request );
+
             $result[] = $this->prepare_response_for_collection( $data );
         }
 
@@ -393,6 +395,9 @@ class WeDocs_REST_API extends WP_REST_Controller {
             'title'        => [
                 'rendered' => get_the_title( $doc->ID )
             ],
+            'content'      => [
+                'rendered' => post_password_required( $doc ) ? '' : apply_filters( 'the_content', $doc->post_content ),
+            ],
             'parent'       => $doc->post_parent,
             'order'        => $doc->menu_order,
         ];
@@ -400,10 +405,6 @@ class WeDocs_REST_API extends WP_REST_Controller {
         if ( $request['context'] == 'edit' ) {
             $data['title']['raw']   = $doc->post_title;
             $data['content']['raw'] = $doc->post_content;
-        }
-
-        if ( $request['context'] != 'sidebar' ) {
-            $data['content']['rendered'] = post_password_required( $doc ) ? '' : apply_filters( 'the_content', $doc->post_content );
         }
 
         $response = rest_ensure_response( $data );
