@@ -2,8 +2,8 @@
 Contributors: tareq1988, wedevs
 Donate link: https://tareq.co/donate/
 Tags: document, documentation, help, support, note
-Requires at least: 3.6
-Tested up to: 4.9.1
+Requires at least: 4.6
+Tested up to: 5.2.2
 Requires PHP: 5.4
 Stable tag: 1.5
 License: GPLv2 or later
