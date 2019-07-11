@@ -1,17 +1,17 @@
-# Copyright (C) 2018 Tareq Hasan
+# Copyright (C) 2019 Tareq Hasan
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 1.4.1\n"
+"Project-Id-Version: weDocs 1.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
-"POT-Creation-Date: 2018-08-26 11:44:56+00:00\n"
+"POT-Creation-Date: 2019-07-11 05:20:54+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"X-Generator: grunt-wp-i18n 0.5.4\n"
+"X-Generator: grunt-wp-i18n 1.0.3\n"
 
 #: includes/admin/class-admin.php:61
 msgid "Enter doc title"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Docs"
 msgstr ""
 
-#: includes/admin/class-admin.php:90 wedocs.php:301
+#: includes/admin/class-admin.php:90 wedocs.php:314
 msgid "Tags"
 msgstr ""
 
@@ -110,14 +110,22 @@ msgid "Enable helpful feedback links"
 msgstr ""
 
 #: includes/admin/class-settings.php:96
-msgid "Print article"
+msgid "Comments"
 msgstr ""
 
 #: includes/admin/class-settings.php:97
+msgid "Allow Comments"
+msgstr ""
+
+#: includes/admin/class-settings.php:103
+msgid "Print article"
+msgstr ""
+
+#: includes/admin/class-settings.php:104
 msgid "Enable article printing"
 msgstr ""
 
-#: includes/admin/class-settings.php:129
+#: includes/admin/class-settings.php:136
 msgid "&mdash; Select Page &mdash;"
 msgstr ""
 
@@ -265,6 +273,42 @@ msgstr ""
 msgid "Edit Doc: %s"
 msgstr ""
 
+#: includes/rest-api/class-rest-api.php:31
+msgid "Email address of the author."
+msgstr ""
+
+#: includes/rest-api/class-rest-api.php:78
+msgid "Limit results to those matching a string."
+msgstr ""
+
+#: includes/rest-api/class-rest-api.php:85
+msgid "The ID for the parent of the object."
+msgstr ""
+
+#: includes/rest-api/class-rest-api.php:90
+msgid "Current page of the collection."
+msgstr ""
+
+#: includes/rest-api/class-rest-api.php:98
+msgid "Maximum number of items to be returned in result set."
+msgstr ""
+
+#: includes/rest-api/class-rest-api.php:367
+msgid "The page number requested is larger than the number of pages available."
+msgstr ""
+
+#: includes/rest-api/class-rest-api.php:453
+msgid "No name given"
+msgstr ""
+
+#: includes/rest-api/class-rest-api.php:457
+msgid "No email given"
+msgstr ""
+
+#: includes/rest-api/class-rest-api.php:471
+msgid "Invalid doc ID."
+msgstr ""
+
 #: templates/content-feedback.php:8
 msgid "%d person found this useful"
 msgid_plural "%d persons found this useful"
@@ -342,119 +386,119 @@ msgstr ""
 msgid "Updated on %s"
 msgstr ""
 
-#: wedocs.php:235
+#: wedocs.php:248
 msgid "Powered by weDocs"
 msgstr ""
 
-#: wedocs.php:249
+#: wedocs.php:262
 msgid "Documentation"
 msgstr ""
 
-#: wedocs.php:250
+#: wedocs.php:263
 msgid "Parent Doc"
 msgstr ""
 
-#: wedocs.php:251
+#: wedocs.php:264
 msgid "All Documentations"
 msgstr ""
 
-#: wedocs.php:252
+#: wedocs.php:265
 msgid "View Documentation"
 msgstr ""
 
-#: wedocs.php:253
+#: wedocs.php:266
 msgid "Add Documentation"
 msgstr ""
 
-#: wedocs.php:254
+#: wedocs.php:267
 msgid "Add New"
 msgstr ""
 
-#: wedocs.php:255
+#: wedocs.php:268
 msgid "Edit Documentation"
 msgstr ""
 
-#: wedocs.php:256
+#: wedocs.php:269
 msgid "Update Documentation"
 msgstr ""
 
-#: wedocs.php:257
+#: wedocs.php:270
 msgid "Search Documentation"
 msgstr ""
 
-#: wedocs.php:258
+#: wedocs.php:271
 msgid "Not documentation found"
 msgstr ""
 
-#: wedocs.php:259
+#: wedocs.php:272
 msgid "Not found in Trash"
 msgstr ""
 
-#: wedocs.php:302
+#: wedocs.php:315
 msgid "All Tags"
 msgstr ""
 
-#: wedocs.php:303
+#: wedocs.php:316
 msgid "Parent Tag"
 msgstr ""
 
-#: wedocs.php:304
+#: wedocs.php:317
 msgid "Parent Tag:"
 msgstr ""
 
-#: wedocs.php:305
-msgid "New Tag Tag"
+#: wedocs.php:318
+msgid "New Tag"
 msgstr ""
 
-#: wedocs.php:306
+#: wedocs.php:319
 msgid "Add New Item"
 msgstr ""
 
-#: wedocs.php:307
+#: wedocs.php:320
 msgid "Edit Tag"
 msgstr ""
 
-#: wedocs.php:308
+#: wedocs.php:321
 msgid "Update Tag"
 msgstr ""
 
-#: wedocs.php:309
+#: wedocs.php:322
 msgid "View Tag"
 msgstr ""
 
-#: wedocs.php:310
+#: wedocs.php:323
 msgid "Separate items with commas"
 msgstr ""
 
-#: wedocs.php:311
+#: wedocs.php:324
 msgid "Add or remove items"
 msgstr ""
 
-#: wedocs.php:312
+#: wedocs.php:325
 msgid "Choose from the most used"
 msgstr ""
 
-#: wedocs.php:313
+#: wedocs.php:326
 msgid "Popular Tags"
 msgstr ""
 
-#: wedocs.php:314
+#: wedocs.php:327
 msgid "Search Tags"
 msgstr ""
 
-#: wedocs.php:315
+#: wedocs.php:328
 msgid "Not Found"
 msgstr ""
 
-#: wedocs.php:316
+#: wedocs.php:329
 msgid "No items"
 msgstr ""
 
-#: wedocs.php:317
+#: wedocs.php:330
 msgid "Tags list"
 msgstr ""
 
-#: wedocs.php:318
+#: wedocs.php:331
 msgid "Tags list navigation"
 msgstr ""
 
@@ -494,22 +538,22 @@ msgctxt "Used before tag names."
 msgid "Tags"
 msgstr ""
 
-#: wedocs.php:247
+#: wedocs.php:260
 msgctxt "Post Type General Name"
 msgid "Docs"
 msgstr ""
 
-#: wedocs.php:248
+#: wedocs.php:261
 msgctxt "Post Type Singular Name"
 msgid "Doc"
 msgstr ""
 
-#: wedocs.php:299
+#: wedocs.php:312
 msgctxt "Taxonomy General Name"
 msgid "Tags"
 msgstr ""
 
-#: wedocs.php:300
+#: wedocs.php:313
 msgctxt "Taxonomy Singular Name"
 msgid "Tag"
 msgstr ""

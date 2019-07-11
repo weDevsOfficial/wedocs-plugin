@@ -104,6 +104,14 @@ get_header(); ?>
                         <?php wedocs_get_template_part( 'content', 'modal' ); ?>
                     <?php endif; ?>
 
+                    <?php if ( wedocs_get_option( 'comments', 'wedocs_settings', 'off' ) == 'on' ): ?>
+                        <?php if ( comments_open() || get_comments_number() ) : ?>
+                            <div class="wedocs-comments-wrap">
+                                <?php comments_template(); ?>
+                            </div>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
                 </article><!-- #post-## -->
             </div><!-- .wedocs-single-content -->
         </div><!-- .wedocs-single-wrap -->

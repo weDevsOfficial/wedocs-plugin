@@ -92,6 +92,13 @@ class weDocs_Settings {
                     'default' => 'on'
                 ),
                 array(
+                    'name'    => 'comments',
+                    'label'   => __( 'Comments', 'wedocs' ),
+                    'desc'    => __( 'Allow Comments', 'wedocs' ),
+                    'type'    => 'checkbox',
+                    'default' => 'off'
+                ),
+                array(
                     'name'    => 'print',
                     'label'   => __( 'Print article', 'wedocs' ),
                     'desc'    => __( 'Enable article printing', 'wedocs' ),
