@@ -3,7 +3,7 @@
 Plugin Name: weDocs
 Plugin URI: http://wedevs.com/
 Description: A documentation plugin for WordPress
-Version: 1.4.1
+Version: 1.5
 Author: Tareq Hasan
 Author URI: https://tareq.co/
 License: GPL2
@@ -12,7 +12,7 @@ Domain Path: /languages
 */
 
 /**
- * Copyright (c) 2018 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
+ * Copyright (c) 2019 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
@@ -94,7 +94,9 @@ class WeDocs {
         if ( ! $instance ) {
             $instance = new WeDocs();
 
-            $instance->plugin_init();
+            add_action('after_setup_theme', array($instance, 'plugin_init'));
+
+            register_activation_hook( __FILE__, array($instance, 'activate' ) );
         }
 
         return $instance;
@@ -130,7 +132,7 @@ class WeDocs {
         // Loads frontend scripts and styles
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-        register_activation_hook( __FILE__, array( $this, 'activate' ) );
+        add_action( 'rest_api_init', array( $this, 'init_rest_api' ) );
     }
 
     /**
@@ -164,6 +166,7 @@ class WeDocs {
         include_once dirname( __FILE__ ) . '/includes/class-walker-docs.php';
         include_once dirname( __FILE__ ) . '/includes/class-search-widget.php';
         include_once dirname( __FILE__ ) . '/includes/class-theme-support.php';
+        include_once dirname( __FILE__ ) . '/includes/rest-api/class-rest-api.php';
 
         if ( is_admin() ) {
             include_once dirname( __FILE__ ) . '/includes/admin/class-admin.php';
@@ -196,6 +199,16 @@ class WeDocs {
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
             new WeDocs_Ajax();
         }
+    }
+
+    /**
+     * Initialize REST API
+     *
+     * @return void
+     */
+    public function init_rest_api() {
+        $api = new WeDocs_REST_API();
+        $api->register_routes();
     }
 
     /**
@@ -266,7 +279,7 @@ class WeDocs {
         );
         $args = array(
             'labels'              => $labels,
-            'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes' ),
+            'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'comments' ),
             'hierarchical'        => true,
             'public'              => true,
             'show_ui'             => true,
@@ -302,7 +315,7 @@ class WeDocs {
             'all_items'                  => __( 'All Tags', 'wedocs' ),
             'parent_item'                => __( 'Parent Tag', 'wedocs' ),
             'parent_item_colon'          => __( 'Parent Tag:', 'wedocs' ),
-            'new_item_name'              => __( 'New Tag Tag', 'wedocs' ),
+            'new_item_name'              => __( 'New Tag', 'wedocs' ),
             'add_new_item'               => __( 'Add New Item', 'wedocs' ),
             'edit_item'                  => __( 'Edit Tag', 'wedocs' ),
             'update_item'                => __( 'Update Tag', 'wedocs' ),
@@ -422,21 +435,23 @@ class WeDocs {
      */
     function docs_search_filter( $query ) {
 
-        if ( ! is_admin() && is_search() && $query->is_main_query() ) {
-            $param = isset( $_GET['search_in_doc'] ) ? sanitize_text_field( $_GET['search_in_doc'] ) : false;
+        if ( ! is_admin() && $query->is_main_query() ) {
+            if( is_search() ) {
+                $param = isset( $_GET['search_in_doc'] ) ? sanitize_text_field( $_GET['search_in_doc'] ) : false;
 
-            if ( $param ) {
+                if ( $param ) {
 
-                if ( $param != 'all' ) {
-                    $parent_doc_id = intval( $param );
-                    $post__in      = array( $parent_doc_id => $parent_doc_id );
-                    $children_docs = wedocs_get_posts_children( $parent_doc_id, 'docs' );
+                    if ( $param != 'all' ) {
+                        $parent_doc_id = intval( $param );
+                        $post__in      = array( $parent_doc_id => $parent_doc_id );
+                        $children_docs = wedocs_get_posts_children( $parent_doc_id, 'docs' );
 
-                    if ( $children_docs ) {
-                        $post__in = array_merge( $post__in, wp_list_pluck( $children_docs, 'ID' ) );
+                        if ( $children_docs ) {
+                            $post__in = array_merge( $post__in, wp_list_pluck( $children_docs, 'ID' ) );
+                        }
+
+                        $query->set( 'post__in', $post__in );
                     }
-
-                    $query->set( 'post__in', $post__in );
                 }
             }
         }

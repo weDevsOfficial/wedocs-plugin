@@ -1,0 +1,89 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('node_modules')
+    ->exclude('vendors')
+    ->exclude('assets')
+    ->exclude('languages')
+    ->exclude('templates')
+    ->in(__DIR__)
+;
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@Symfony' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'align_multiline_comment' => ['comment_type' => 'phpdocs_only'],
+        'blank_line_after_opening_tag' => true,
+        'blank_line_before_statement' => [
+            'statements' => [
+                'case',
+                'default',
+                'do',
+                'for',
+                'foreach',
+                'if',
+                'return',
+                'switch',
+                'throw',
+                'try',
+                'while'
+            ]
+        ],
+        'braces' => [
+            'allow_single_line_closure'                   => false,
+            'position_after_anonymous_constructs'         => 'same',
+            'position_after_control_structures'           => 'same',
+            'position_after_functions_and_oop_constructs' => 'same'
+        ],
+        'class_attributes_separation' => [
+            'elements' => [ "const", "method", "property" ]
+        ],
+        'cast_spaces' => [
+            'space' => 'single'
+        ],
+        'concat_space' => [ 'spacing' => 'one' ],
+        'declare_equal_normalize' => ['space' => 'single'],
+        'explicit_string_variable' => true,
+        'full_opening_tag' => true,
+        'function_declaration' => false,
+        'method_argument_space' => [
+            'on_multiline' => 'ensure_fully_multiline'
+        ],
+        // 'method_chaining_indentation' => true,
+        'multiline_comment_opening_closing' => true,
+        'no_extra_blank_lines' => true,
+        'no_blank_lines_after_class_opening' => false,
+        'no_extra_blank_lines' => [
+            'tokens' => [
+                'continue',
+                'curly_brace_block',
+                'extra',
+                'parenthesis_brace_block',
+                'return',
+                'square_brace_block',
+                'throw',
+                'use',
+                'use_trait',
+            ]
+        ],
+        'no_short_echo_tag' => true,
+        'no_spaces_around_offset' => [
+            'positions' => ['outside']
+        ],
+        'no_spaces_inside_parenthesis' => false,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'not_operator_with_space' => true,
+        'phpdoc_trim_consecutive_blank_line_separation' => true,
+        'single_line_comment_style' => [
+            'comment_types' => [ 'asterisk', 'hash' ]
+        ],
+        'space_after_semicolon' => [
+            'remove_in_empty_for_expressions' => true
+        ],
+        'trim_array_spaces' => false,
+    ])
+    ->setFinder($finder)
+    ->setUsingCache(false)
+;
