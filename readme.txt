@@ -5,7 +5,7 @@ Tags: document, documentation, help, support, note
 Requires at least: 3.6
 Tested up to: 4.9.1
 Requires PHP: 5.4
-Stable tag: 1.4.1
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,11 @@ Nothing here yet
 9. Search widget in frontend
 
 == Changelog ==
+
+= v1.5 (11 July, 2019) =
+
+ * **New:** Added REST API support
+ * **New:** Added comment support in single docs
 
 = v1.4.1 (26 August, 2018) =
 
