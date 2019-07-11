@@ -83,7 +83,7 @@ body.single.single-docs .content-area {
 }
 .wedocs-single-wrap .wedocs-sidebar h3.widget-title {
   font-weight: bold;
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid #eee;
   margin: 0 0 15px 0;
   padding: 0 0 15px 0;
 }
@@ -112,13 +112,13 @@ body.single.single-docs .content-area {
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_parent > a,
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_item > a,
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_ancestor > a {
-  background: #3598db;
+  background: #3598DB;
   color: #fff;
 }
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_parent li.current_page_item > a,
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_item li.current_page_item > a,
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_ancestor li.current_page_item > a {
-  border-left: 2px solid #3598db;
+  border-left: 2px solid #3598DB;
   color: #191919;
   font-weight: bold;
 }
@@ -129,7 +129,7 @@ body.single.single-docs .content-area {
 }
 .wedocs-single-wrap .wedocs-single-content {
   width: 75%;
-  border-left: 1px solid #eeeeee;
+  border-left: 1px solid #eee;
   padding-left: 25px;
 }
 .wedocs-single-wrap .wedocs-single-content ol.wedocs-breadcrumb {
@@ -171,7 +171,7 @@ body.single.single-docs .content-area {
 }
 .wedocs-single-wrap .wedocs-single-content article .entry-content img {
   max-width: 100%;
-  border: 1px solid #eeeeee;
+  border: 1px solid #eee;
   margin-top: 20px;
   margin-bottom: 30px;
   padding: 25px;
@@ -285,10 +285,13 @@ body.single.single-docs .content-area {
   font-weight: normal;
   font-style: italic;
 }
+.wedocs-single-wrap .wedocs-single-content .wedocs-comments-wrap {
+  position: relative;
+}
 .wedocs-doc-nav {
   width: 100%;
-  border-top: 1px solid #eeeeee;
-  border-bottom: 1px solid #eeeeee;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
   margin: 20px 0 30px 0;
   padding: 25px 0;
 }
@@ -466,7 +469,7 @@ body.single.single-docs .content-area {
   left: 0;
   z-index: 9985;
   background-color: #000;
-  opacity: .5;
+  opacity: 0.5;
   display: none;
 }
 .wedocs-contact-modal {
@@ -542,7 +545,7 @@ body.single.single-docs .content-area {
 }
 .wedocs-contact-modal input[disabled] {
   cursor: default;
-  opacity: .5;
+  opacity: 0.5;
 }
 .wedocs-icon-spin {
   -webkit-animation: wedocs-spin 2s infinite linear;

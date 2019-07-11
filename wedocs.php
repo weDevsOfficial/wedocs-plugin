@@ -279,7 +279,7 @@ class WeDocs {
         );
         $args = array(
             'labels'              => $labels,
-            'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes' ),
+            'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'comments' ),
             'hierarchical'        => true,
             'public'              => true,
             'show_ui'             => true,
