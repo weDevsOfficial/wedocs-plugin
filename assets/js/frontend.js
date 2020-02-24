@@ -1,5 +1,4 @@
 +(function($) {
-
     var pending_ajax = false;
 
     var weDocs = {
@@ -7,6 +6,19 @@
             $('.wedocs-feedback-wrap').on('click', 'a', this.feedback);
             $('#top-search-form .dropdown-menu').on('click', 'a', this.searchForm);
             $('a.wedocs-print-article').on('click', this.printArticle);
+
+            // sidebar toggle
+            $('ul.doc-nav-list .page_item_has_children').on('click', '.wedocs-caret', function(event) {
+                event.preventDefault();
+                var self = $(this),
+                    parent = self.closest('.page_item');
+
+                if (parent.hasClass('wd-state-closed')) {
+                    parent.removeClass('wd-state-closed').addClass('wd-state-open');
+                } else {
+                    parent.removeClass('wd-state-open').addClass('wd-state-closed');
+                }
+            });
 
             // modal
             $('a#wedocs-stuck-modal').on('click', this.showModal);
@@ -19,7 +31,7 @@
             e.preventDefault();
 
             // return if any request is in process already
-            if ( pending_ajax ) {
+            if (pending_ajax) {
                 return;
             }
 
@@ -45,7 +57,9 @@
         searchForm: function(e) {
             e.preventDefault();
 
-            var param = $(this).attr("href").replace("#","");
+            var param = $(this)
+                .attr('href')
+                .replace('#', '');
             var concept = $(this).text();
 
             $('#top-search-form span#search_concept').text(concept);
@@ -59,7 +73,9 @@
 
             var mywindow = window.open('', 'my div', 'height=600,width=800');
             mywindow.document.write('<html><head><title>Print Article</title>');
-            mywindow.document.write('<link rel="stylesheet" href="' + weDocs_Vars.style + '" type="text/css" media="all" />');
+            mywindow.document.write(
+                '<link rel="stylesheet" href="' + weDocs_Vars.style + '" type="text/css" media="all" />'
+            );
             mywindow.document.write('</head><body >');
             mywindow.document.write(article.html());
             mywindow.document.write('<div class="powered-by">' + weDocs_Vars.powered + '</div>');
@@ -103,11 +119,13 @@
             submit.prop('disabled', true);
 
             $.post(weDocs_Vars.ajaxurl, data, function(resp) {
-                if ( resp.success === false ) {
+                if (resp.success === false) {
                     submit.prop('disabled', false);
-                    $('#wedocs-modal-errors', body).empty().append('<div class="wedocs-alert wedocs-alert-danger">' + resp.data + '</div>')
+                    $('#wedocs-modal-errors', body)
+                        .empty()
+                        .append('<div class="wedocs-alert wedocs-alert-danger">' + resp.data + '</div>');
                 } else {
-                    body.empty().append( '<div class="wedocs-alert wedocs-alert-success">' + resp.data + '</div>' );
+                    body.empty().append('<div class="wedocs-alert wedocs-alert-success">' + resp.data + '</div>');
                 }
             });
         }
@@ -121,6 +139,5 @@
     anchors.options = {
         icon: '#'
     };
-    anchors.add('.wedocs-single-content .entry-content > h2, .wedocs-single-content .entry-content > h3')
-
+    anchors.add('.wedocs-single-content .entry-content > h2, .wedocs-single-content .entry-content > h3');
 })(jQuery);

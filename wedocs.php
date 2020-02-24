@@ -234,13 +234,13 @@ class WeDocs {
         /**
          * All styles goes here
          */
-        wp_enqueue_style( 'wedocs-styles', plugins_url( 'assets/css/frontend.css', __FILE__ ), array(), $this->version );
+        wp_enqueue_style( 'wedocs-styles', plugins_url( 'assets/css/frontend.css', __FILE__ ), array(), filemtime( __DIR__ . '/assets/css/frontend.css' ) );
 
         /**
          * All scripts goes here
          */
         wp_enqueue_script( 'wedocs-anchorjs', plugins_url( 'assets/js/anchor.min.js', __FILE__ ), array( 'jquery' ), $this->version, true );
-        wp_enqueue_script( 'wedocs-scripts', plugins_url( 'assets/js/frontend.js', __FILE__ ), array( 'jquery', 'wedocs-anchorjs' ), $this->version, true );
+        wp_enqueue_script( 'wedocs-scripts', plugins_url( 'assets/js/frontend.js', __FILE__ ), array( 'jquery', 'wedocs-anchorjs' ), filemtime( __DIR__ . '/assets/js/frontend.js' ), true );
         wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', array(
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'nonce'   => wp_create_nonce( 'wedocs-ajax' ),
