@@ -415,3 +415,33 @@ endif;
 
 add_action( 'wedocs_before_main_content', 'wedocs_template_wrapper_start', 10 );
 add_action( 'wedocs_after_main_content', 'wedocs_template_wrapper_end', 10 );
+
+/**
+ * Sidebar open/closed status css classes
+ *
+ * @param  array $css_class
+ * @param  WP_Post $page
+ * @param  int $depth
+ * @param  array $args
+ * @param  int $current_page
+ *
+ * @return array
+ */
+function wedocs_sidebar_page_status_class( $css_class, $page, $depth, $args, $current_page ) {
+
+    if ( $page->post_type != 'docs' ) {
+        return $css_class;
+    }
+
+    if ( $depth == 0 ) {
+        if ( in_array( 'current_page_item', $css_class ) ) {
+            $css_class[] = 'wd-state-open';
+        } else {
+            $css_class[] = 'wd-state-closed';
+        }
+    }
+
+    return $css_class;
+}
+
+add_filter( 'page_css_class', 'wedocs_sidebar_page_status_class', 20, 5 );

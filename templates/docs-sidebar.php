@@ -19,7 +19,7 @@
         'child_of'  => $parent,
         'echo'      => false,
         'post_type' => 'docs',
-        'walker'    => $walker
+        'walker'    => $walker,
     ) );
     ?>
 

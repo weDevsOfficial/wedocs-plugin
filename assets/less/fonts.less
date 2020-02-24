@@ -1,15 +1,15 @@
 @font-face {
     font-family: 'wedocs';
-    src:  url('../fonts/wedocs.eot?eqifws');
-    src:  url('../fonts/wedocs.eot?eqifws#iefix') format('embedded-opentype'),
-        url('../fonts/wedocs.ttf?eqifws') format('truetype'),
-        url('../fonts/wedocs.woff?eqifws') format('woff'),
-        url('../fonts/wedocs.svg?eqifws#wedocs') format('svg');
+    src: url('../fonts/wedocs.ttf?7jluzu') format('truetype'), url('../fonts/wedocs.woff?7jluzu') format('woff'),
+        url('../fonts/wedocs.svg?7jluzu#wedocs') format('svg');
     font-weight: normal;
     font-style: normal;
+    font-display: block;
 }
 
-i.wedocs-icon {
+[class^='wedocs-icon-'],
+[class*=' wedocs-icon-'] {
+    /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'wedocs' !important;
     speak: none;
     font-style: normal;
@@ -17,7 +17,6 @@ i.wedocs-icon {
     font-variant: normal;
     text-transform: none;
     line-height: 1;
-    display: inline-block;
 
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
@@ -25,35 +24,47 @@ i.wedocs-icon {
 }
 
 .wedocs-icon-close:before {
-    content: "\f00d";
+    content: '\f00d';
 }
 .wedocs-icon-remove:before {
-    content: "\f00d";
+    content: '\f00d';
 }
 .wedocs-icon-times:before {
-    content: "\f00d";
+    content: '\f00d';
 }
 .wedocs-icon-home:before {
-    content: "\f015";
+    content: '\f015';
 }
 .wedocs-icon-refresh:before {
-    content: "\f021";
+    content: '\f021';
 }
 .wedocs-icon-print:before {
-    content: "\f02f";
+    content: '\f02f';
+}
+.wedocs-icon-folder-open:before {
+    content: '\f07c';
 }
 .wedocs-icon-envelope:before {
-    content: "\f0e0";
+    content: '\f0e0';
+}
+.wedocs-icon-file-text-o:before {
+    content: '\f0f6';
 }
 .wedocs-icon-angle-left:before {
-    content: "\f104";
+    content: '\f104';
 }
 .wedocs-icon-angle-right:before {
-    content: "\f105";
+    content: '\f105';
+}
+.wedocs-icon-angle-up:before {
+    content: '\f106';
+}
+.wedocs-icon-angle-down:before {
+    content: '\f107';
 }
 .wedocs-icon-smile-o:before {
-    content: "\f118";
+    content: '\f118';
 }
 .wedocs-icon-frown-o:before {
-    content: "\f119";
+    content: '\f119';
 }

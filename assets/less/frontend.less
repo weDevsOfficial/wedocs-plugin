@@ -1,5 +1,5 @@
-@import "variables";
-@import "fonts";
+@import 'variables';
+@import 'fonts';
 
 body.single.single-docs .content-area {
     width: 100%;
@@ -36,14 +36,50 @@ body.single.single-docs .content-area {
 
         ul.doc-nav-list {
             list-style: none;
-            margin: 0;
+            margin: 0 12px 0 0;
             padding: 0;
 
+            > li > a:before {
+                content: '\f07c';
+                margin-right: 10px;
+                font-family: 'wedocs';
+            }
+
             li {
+                &.wd-state-open > a > .wedocs-caret,
+                &.wd-state-closed > a > .wedocs-caret {
+                    float: right;
+                    line-height: inherit;
+                    padding: 0 10px;
+                    border: 1px solid #fff;
+                    border-radius: 3px;
+                    color: #999;
+
+                    &:hover {
+                        border: 1px solid #eee;
+                        color: #ccc;
+                    }
+
+                    &::before {
+                        font-family: 'wedocs' !important;
+                    }
+                }
+
+                &.wd-state-open > a > .wedocs-caret::before {
+                    content: '\f106';
+                }
+
+                &.wd-state-closed > a > .wedocs-caret::before {
+                    content: '\f107';
+                }
+
+                &.wd-state-closed ul.children {
+                    display: none;
+                }
 
                 a {
                     display: block;
-                    padding: 8px 20px;
+                    padding: 8px 10px 8px 20px;
                     text-decoration: none;
                 }
 
@@ -53,7 +89,6 @@ body.single.single-docs .content-area {
                     padding: 0;
                     border: none;
                     border-left: 1px solid #ddd;
-                    display: none;
 
                     a {
                         color: #333333;
@@ -64,10 +99,16 @@ body.single.single-docs .content-area {
 
             > li.current_page_parent,
             > li.current_page_item,
-            > li.current_page_ancestor, {
+            > li.current_page_ancestor {
                 > a {
                     background: @mainColor;
                     color: #fff;
+                    border-radius: 5px;
+
+                    .wedocs-caret {
+                        color: #fff;
+                        display: none;
+                    }
                 }
 
                 li.current_page_item > a {
@@ -111,7 +152,7 @@ body.single.single-docs .content-area {
         article {
             position: relative;
 
-            @import "doc-article";
+            @import 'doc-article';
         }
 
         .wedocs-comments-wrap {
@@ -156,8 +197,8 @@ body.single.single-docs .content-area {
             margin-bottom: 20px;
             position: relative;
             border: 1px solid #e5e5e5;
-            -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.04);
-            box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 
             h3 {
                 border-bottom: 1px solid #eee;
@@ -199,7 +240,7 @@ body.single.single-docs .content-area {
             float: left;
             width: 48%;
 
-            &:nth-child(2n+1) {
+            &:nth-child(2n + 1) {
                 clear: both;
                 margin-right: 3%;
             }
@@ -210,11 +251,11 @@ body.single.single-docs .content-area {
             width: 31%;
             margin-right: 3%;
 
-            &:nth-child(3n+1) {
+            &:nth-child(3n + 1) {
                 clear: both;
             }
 
-            &:nth-child(3n+3) {
+            &:nth-child(3n + 3) {
                 margin-right: 0;
             }
         }
@@ -234,11 +275,11 @@ body.single.single-docs .content-area {
 
     a {
         font-weight: normal;
-        padding: 2px 10px 2px 10px;
+        padding: 2px 15px 2px 15px;
         color: #fff;
         text-decoration: none;
         line-height: 150%;
-        border-radius: 2px;
+        border-radius: 3px;
 
         .count {
             background-color: #fff;
@@ -260,22 +301,22 @@ body.single.single-docs .content-area {
     }
 
     a.positive {
-        background: #6a9c1f;
-        border: 1px solid darken(#6a9c1f, 1%);
+        background: #27ae60;
+        border: 1px solid darken(#27ae60, 1%);
         margin-right: 10px;
 
         &:hover {
-            background-color: darken(#6a9c1f, 5%);
+            background-color: darken(#27ae60, 5%);
             color: #fff;
         }
     }
 
     a.negative {
-        background: #ac2d22;
-        border: 1px solid darken(#ac2d22, 1%);
+        background: #e74c3c;
+        border: 1px solid darken(#e74c3c, 1%);
 
         &:hover {
-            background-color: darken(#ac2d22, 5%);
+            background-color: darken(#e74c3c, 5%);
             color: #fff;
         }
     }
@@ -306,7 +347,7 @@ body.single.single-docs .content-area {
     left: 0;
     z-index: 9985;
     background-color: #000;
-    opacity: .5;
+    opacity: 0.5;
     display: none;
 }
 
@@ -371,8 +412,8 @@ body.single.single-docs .content-area {
         }
     }
 
-    input[type="text"],
-    input[type="email"],
+    input[type='text'],
+    input[type='email'],
     textarea {
         background: #f7f7f7;
         background-image: -webkit-linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
@@ -392,7 +433,7 @@ body.single.single-docs .content-area {
 
     input[disabled] {
         cursor: default;
-        opacity: .5;
+        opacity: 0.5;
     }
 }
 
@@ -422,4 +463,4 @@ body.single.single-docs .content-area {
     }
 }
 
-@import "responsive";
+@import 'responsive';
