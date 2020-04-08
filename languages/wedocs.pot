@@ -1,27 +1,63 @@
-# Copyright (C) 2019 Tareq Hasan
+# Copyright (C) 2020 Tareq Hasan
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 1.5\n"
+"Project-Id-Version: weDocs 1.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
-"POT-Creation-Date: 2019-12-28 09:46:38+00:00\n"
+"POT-Creation-Date: 2020-04-08 13:51:32+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: includes/admin/class-admin.php:61
+#: includes/API/API.php:49
+msgid "Email address of the author."
+msgstr ""
+
+#: includes/API/API.php:96
+msgid "Limit results to those matching a string."
+msgstr ""
+
+#: includes/API/API.php:103
+msgid "The ID for the parent of the object."
+msgstr ""
+
+#: includes/API/API.php:108
+msgid "Current page of the collection."
+msgstr ""
+
+#: includes/API/API.php:116
+msgid "Maximum number of items to be returned in result set."
+msgstr ""
+
+#: includes/API/API.php:288
+msgid "The page number requested is larger than the number of pages available."
+msgstr ""
+
+#: includes/API/API.php:374
+msgid "No name given"
+msgstr ""
+
+#: includes/API/API.php:378
+msgid "No email given"
+msgstr ""
+
+#: includes/API/API.php:392
+msgid "Invalid doc ID."
+msgstr ""
+
+#: includes/Admin/Admin.php:46
 msgid "Enter doc title"
 msgstr ""
 
-#: includes/admin/class-admin.php:62
+#: includes/Admin/Admin.php:47
 msgid "Write something"
 msgstr ""
 
-#: includes/admin/class-admin.php:63
+#: includes/Admin/Admin.php:48
 msgid "Enter section title"
 msgstr ""
 
@@ -29,284 +65,360 @@ msgstr ""
 msgid "weDocs"
 msgstr ""
 
-#: includes/admin/class-admin.php:89 includes/functions.php:102
+#: includes/Admin/Admin.php:73 includes/functions.php:102
 msgid "Docs"
 msgstr ""
 
-#: includes/admin/class-admin.php:90 wedocs.php:314
+#: includes/Admin/Admin.php:74 includes/Post_Types.php:85
 msgid "Tags"
 msgstr ""
 
-#: includes/admin/class-admin.php:141
+#: includes/Admin/Admin.php:122
 msgid ""
 "Thank you for using <strong>weDocs</strong>. Please leave us a "
 "%s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
 msgstr ""
 
-#: includes/admin/class-admin.php:141
+#: includes/Admin/Admin.php:122
 msgid "Thanks :)"
 msgstr ""
 
-#: includes/admin/class-admin.php:152
+#: includes/Admin/Admin.php:133
 msgid "Thank you for using <strong>weDocs</strong>."
 msgstr ""
 
-#: includes/admin/class-admin.php:155
+#: includes/Admin/Admin.php:136
 msgid "Use the <a href=\"%s\">classic UI</a>."
 msgstr ""
 
-#: includes/admin/class-docs-list-table.php:23
+#: includes/Admin/Docs_List_Table.php:27
 msgid "Helpfulness"
 msgstr ""
 
-#: includes/admin/class-docs-list-table.php:66
+#: includes/Admin/Docs_List_Table.php:67
 msgid "Votes"
 msgstr ""
 
-#: includes/admin/class-settings.php:38
+#: includes/Admin/Settings.php:44
 msgid "weDocs Settings"
 msgstr ""
 
-#: includes/admin/class-settings.php:38
+#: includes/Admin/Settings.php:44
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/class-settings.php:50
+#: includes/Admin/Settings.php:56
 msgid "Plugin Settings"
 msgstr ""
 
-#: includes/admin/class-settings.php:67
+#: includes/Admin/Settings.php:73
 msgid "Docs Home"
 msgstr ""
 
-#: includes/admin/class-settings.php:68
+#: includes/Admin/Settings.php:74
 msgid ""
 "Home page for docs page. Preferably use <code>[wedocs]</code> <a "
 "href=\"%s\" target=\"_blank\">shortcode</a> or design your own."
 msgstr ""
 
-#: includes/admin/class-settings.php:74
+#: includes/Admin/Settings.php:80
 msgid "Email feedback"
 msgstr ""
 
-#: includes/admin/class-settings.php:75
+#: includes/Admin/Settings.php:81
 msgid "Enable Email feedback form"
 msgstr ""
 
-#: includes/admin/class-settings.php:81
+#: includes/Admin/Settings.php:87
 msgid "Email Address"
 msgstr ""
 
-#: includes/admin/class-settings.php:82
+#: includes/Admin/Settings.php:88
 msgid "The email address where the feedbacks should sent to"
 msgstr ""
 
-#: includes/admin/class-settings.php:89
+#: includes/Admin/Settings.php:95
 msgid "Helpful feedback"
 msgstr ""
 
-#: includes/admin/class-settings.php:90
+#: includes/Admin/Settings.php:96
 msgid "Enable helpful feedback links"
 msgstr ""
 
-#: includes/admin/class-settings.php:96
+#: includes/Admin/Settings.php:102
 msgid "Comments"
 msgstr ""
 
-#: includes/admin/class-settings.php:97
+#: includes/Admin/Settings.php:103
 msgid "Allow Comments"
 msgstr ""
 
-#: includes/admin/class-settings.php:103
+#: includes/Admin/Settings.php:109
 msgid "Print article"
 msgstr ""
 
-#: includes/admin/class-settings.php:104
+#: includes/Admin/Settings.php:110
 msgid "Enable article printing"
 msgstr ""
 
-#: includes/admin/class-settings.php:136
+#: includes/Admin/Settings.php:142
 msgid "&mdash; Select Page &mdash;"
 msgstr ""
 
-#: includes/admin/template-vue.php:3
+#: includes/Admin/views/admin.php:3
 msgid "Documentations"
 msgstr ""
 
-#: includes/admin/template-vue.php:3
+#: includes/Admin/views/admin.php:3
 msgid "Add Doc"
 msgstr ""
 
-#: includes/admin/template-vue.php:16
+#: includes/Admin/views/admin.php:16
 msgid "Preview the doc"
 msgstr ""
 
-#: includes/admin/template-vue.php:17
+#: includes/Admin/views/admin.php:17
 msgid "Delete this doc"
 msgstr ""
 
-#: includes/admin/template-vue.php:30
+#: includes/Admin/views/admin.php:30
 msgid "Re-order this section"
 msgstr ""
 
-#: includes/admin/template-vue.php:31
+#: includes/Admin/views/admin.php:31
 msgid "Preview the section"
 msgstr ""
 
-#: includes/admin/template-vue.php:32
+#: includes/Admin/views/admin.php:32
 msgid "Delete this section"
 msgstr ""
 
-#: includes/admin/template-vue.php:33
+#: includes/Admin/views/admin.php:33
 msgid "Add a new article"
 msgstr ""
 
-#: includes/admin/template-vue.php:46 includes/admin/template-vue.php:57
+#: includes/Admin/views/admin.php:46 includes/Admin/views/admin.php:57
 msgid "Preview the article"
 msgstr ""
 
-#: includes/admin/template-vue.php:47 includes/admin/template-vue.php:58
+#: includes/Admin/views/admin.php:47 includes/Admin/views/admin.php:58
 msgid "Delete this article"
 msgstr ""
 
-#: includes/admin/template-vue.php:69
+#: includes/Admin/views/admin.php:69
 msgid "Add Section"
 msgstr ""
 
-#: includes/admin/template-vue.php:75
+#: includes/Admin/views/admin.php:75
 msgid "No docs has been found. Perhaps %s?"
 msgstr ""
 
-#: includes/admin/template-vue.php:75
+#: includes/Admin/views/admin.php:75
 msgid "create one"
 msgstr ""
 
-#: includes/class-ajax.php:87
+#: includes/Ajax.php:89
 msgid "You are not allowed to delete this item."
 msgstr ""
 
-#: includes/class-ajax.php:169
+#: includes/Ajax.php:171
 msgid "Sorry, you've already recorded your feedback!"
 msgstr ""
 
-#: includes/class-ajax.php:184
+#: includes/Ajax.php:186
 msgid "Thanks for your feedback!"
 msgstr ""
 
-#: includes/class-ajax.php:205
+#: includes/Ajax.php:207
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: includes/class-ajax.php:212
+#: includes/Ajax.php:214
 msgid "Please provide a subject line."
 msgstr ""
 
-#: includes/class-ajax.php:216
+#: includes/Ajax.php:218
 msgid "Please provide the message details."
 msgstr ""
 
-#: includes/class-ajax.php:221
+#: includes/Ajax.php:223
 msgid "Thanks for your feedback."
 msgstr ""
 
-#: includes/class-search-widget.php:11
+#: includes/Frontend.php:71
+msgid "Powered by weDocs"
+msgstr ""
+
+#: includes/Post_Types.php:34
+msgid "Documentation"
+msgstr ""
+
+#: includes/Post_Types.php:35
+msgid "Parent Doc"
+msgstr ""
+
+#: includes/Post_Types.php:36
+msgid "All Documentations"
+msgstr ""
+
+#: includes/Post_Types.php:37
+msgid "View Documentation"
+msgstr ""
+
+#: includes/Post_Types.php:38
+msgid "Add Documentation"
+msgstr ""
+
+#: includes/Post_Types.php:39
+msgid "Add New"
+msgstr ""
+
+#: includes/Post_Types.php:40
+msgid "Edit Documentation"
+msgstr ""
+
+#: includes/Post_Types.php:41
+msgid "Update Documentation"
+msgstr ""
+
+#: includes/Post_Types.php:42
+msgid "Search Documentation"
+msgstr ""
+
+#: includes/Post_Types.php:43
+msgid "Not documentation found"
+msgstr ""
+
+#: includes/Post_Types.php:44
+msgid "Not found in Trash"
+msgstr ""
+
+#: includes/Post_Types.php:86
+msgid "All Tags"
+msgstr ""
+
+#: includes/Post_Types.php:87
+msgid "Parent Tag"
+msgstr ""
+
+#: includes/Post_Types.php:88
+msgid "Parent Tag:"
+msgstr ""
+
+#: includes/Post_Types.php:89
+msgid "New Tag"
+msgstr ""
+
+#: includes/Post_Types.php:90
+msgid "Add New Item"
+msgstr ""
+
+#: includes/Post_Types.php:91
+msgid "Edit Tag"
+msgstr ""
+
+#: includes/Post_Types.php:92
+msgid "Update Tag"
+msgstr ""
+
+#: includes/Post_Types.php:93
+msgid "View Tag"
+msgstr ""
+
+#: includes/Post_Types.php:94
+msgid "Separate items with commas"
+msgstr ""
+
+#: includes/Post_Types.php:95
+msgid "Add or remove items"
+msgstr ""
+
+#: includes/Post_Types.php:96
+msgid "Choose from the most used"
+msgstr ""
+
+#: includes/Post_Types.php:97
+msgid "Popular Tags"
+msgstr ""
+
+#: includes/Post_Types.php:98
+msgid "Search Tags"
+msgstr ""
+
+#: includes/Post_Types.php:99
+msgid "Not Found"
+msgstr ""
+
+#: includes/Post_Types.php:100
+msgid "No items"
+msgstr ""
+
+#: includes/Post_Types.php:101
+msgid "Tags list"
+msgstr ""
+
+#: includes/Post_Types.php:102
+msgid "Tags list navigation"
+msgstr ""
+
+#: includes/Shortcode.php:46
+msgid "View Details"
+msgstr ""
+
+#: includes/Widget.php:13
 msgid "Document Search Widget"
 msgstr ""
 
-#: includes/class-search-widget.php:14
+#: includes/Widget.php:16
 msgid "weDocs Document Search"
 msgstr ""
 
-#: includes/class-search-widget.php:34
+#: includes/Widget.php:36
 msgid "All Docs"
 msgstr ""
 
-#: includes/class-search-widget.php:66
+#: includes/Widget.php:68
 msgid "Documentation Search"
 msgstr ""
 
-#: includes/class-search-widget.php:69
+#: includes/Widget.php:70
 msgid "Title:"
-msgstr ""
-
-#: includes/class-settings-api.php:368
-msgid "Choose File"
-msgstr ""
-
-#: includes/class-shortcode.php:42
-msgid "View Details"
 msgstr ""
 
 #: includes/functions.php:85
 msgid "Home"
 msgstr ""
 
-#: includes/functions.php:180
+#: includes/functions.php:177
 msgid "Doc navigation"
 msgstr ""
 
-#: includes/functions.php:349
+#: includes/functions.php:343
 msgid "[%1$s] New Doc Feedback: \"%2$s\""
 msgstr ""
 
-#: includes/functions.php:351
+#: includes/functions.php:345
 msgid "New feedback on your doc \"%s\""
 msgstr ""
 
-#: includes/functions.php:352
+#: includes/functions.php:346
 msgid "Author: %1$s (IP: %2$s)"
 msgstr ""
 
-#: includes/functions.php:353
+#: includes/functions.php:347
 msgid "Email: %s"
 msgstr ""
 
-#: includes/functions.php:354
+#: includes/functions.php:348
 msgid "Feedback: %s"
 msgstr ""
 
-#: includes/functions.php:355
+#: includes/functions.php:349
 msgid "Doc Permalink: %s"
 msgstr ""
 
-#: includes/functions.php:356
+#: includes/functions.php:350
 msgid "Edit Doc: %s"
-msgstr ""
-
-#: includes/rest-api/class-rest-api.php:31
-msgid "Email address of the author."
-msgstr ""
-
-#: includes/rest-api/class-rest-api.php:78
-msgid "Limit results to those matching a string."
-msgstr ""
-
-#: includes/rest-api/class-rest-api.php:85
-msgid "The ID for the parent of the object."
-msgstr ""
-
-#: includes/rest-api/class-rest-api.php:90
-msgid "Current page of the collection."
-msgstr ""
-
-#: includes/rest-api/class-rest-api.php:98
-msgid "Maximum number of items to be returned in result set."
-msgstr ""
-
-#: includes/rest-api/class-rest-api.php:367
-msgid "The page number requested is larger than the number of pages available."
-msgstr ""
-
-#: includes/rest-api/class-rest-api.php:453
-msgid "No name given"
-msgstr ""
-
-#: includes/rest-api/class-rest-api.php:457
-msgid "No email given"
-msgstr ""
-
-#: includes/rest-api/class-rest-api.php:471
-msgid "Invalid doc ID."
 msgstr ""
 
 #: templates/content-feedback.php:8
@@ -337,7 +449,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/content-modal.php:14 templates/single-docs.php:84
+#: templates/content-modal.php:14 templates/single-docs.php:81
 msgid "How can we help?"
 msgstr ""
 
@@ -361,145 +473,243 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: templates/single-docs.php:41
+#: templates/single-docs.php:39
 msgid "Print this article"
 msgstr ""
 
-#: templates/single-docs.php:49
+#: templates/single-docs.php:47
 #. translators: %s: Name of current post.
 msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
-#: templates/single-docs.php:54
+#: templates/single-docs.php:52
 msgid "Docs:"
 msgstr ""
 
-#: templates/single-docs.php:62
+#: templates/single-docs.php:60
 msgid "Articles"
 msgstr ""
 
-#: templates/single-docs.php:84
+#: templates/single-docs.php:81
 msgid "Still stuck?"
 msgstr ""
 
-#: templates/single-docs.php:94
+#: templates/single-docs.php:91
 msgid "Updated on %s"
 msgstr ""
 
-#: wedocs.php:248
-msgid "Powered by weDocs"
+#: vendor/appsero/client/src/Insights.php:369
+msgid ""
+"Want to help make <strong>%1$s</strong> even more awesome? Allow %1$s to "
+"collect non-sensitive diagnostic data and usage information."
 msgstr ""
 
-#: wedocs.php:262
-msgid "Documentation"
+#: vendor/appsero/client/src/Insights.php:374
+msgid "what we collect"
 msgstr ""
 
-#: wedocs.php:263
-msgid "Parent Doc"
+#: vendor/appsero/client/src/Insights.php:381
+msgid "Allow"
 msgstr ""
 
-#: wedocs.php:264
-msgid "All Documentations"
+#: vendor/appsero/client/src/Insights.php:382
+msgid "No thanks"
 msgstr ""
 
-#: wedocs.php:265
-msgid "View Documentation"
+#: vendor/appsero/client/src/Insights.php:747
+msgid "If you have a moment, please let us know why you are deactivating:"
 msgstr ""
 
-#: wedocs.php:266
-msgid "Add Documentation"
+#: vendor/appsero/client/src/Insights.php:762
+msgid "I rather wouldn't say"
 msgstr ""
 
-#: wedocs.php:267
-msgid "Add New"
+#: vendor/appsero/client/src/Insights.php:763
+msgid "Submit & Deactivate"
 msgstr ""
 
-#: wedocs.php:268
-msgid "Edit Documentation"
+#: vendor/appsero/client/src/Insights.php:764
+msgid "Cancel"
 msgstr ""
 
-#: wedocs.php:269
-msgid "Update Documentation"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:38
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:20
+msgid "Basic Settings"
 msgstr ""
 
-#: wedocs.php:270
-msgid "Search Documentation"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:42
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:24
+msgid "Advanced Settings"
 msgstr ""
 
-#: wedocs.php:271
-msgid "Not documentation found"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:58
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:36
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:111
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:187
+msgid "Text Input"
 msgstr ""
 
-#: wedocs.php:272
-msgid "Not found in Trash"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:59
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:37
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:112
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:188
+msgid "Text input description"
 msgstr ""
 
-#: wedocs.php:315
-msgid "All Tags"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:60
+msgid "Text Input placeholder"
 msgstr ""
 
-#: wedocs.php:316
-msgid "Parent Tag"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:67
+msgid "Number Input"
 msgstr ""
 
-#: wedocs.php:317
-msgid "Parent Tag:"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:68
+msgid "Number field with validation callback `floatval`"
 msgstr ""
 
-#: wedocs.php:318
-msgid "New Tag"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:69
+msgid "1.99"
 msgstr ""
 
-#: wedocs.php:319
-msgid "Add New Item"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:79
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:43
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:118
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:194
+msgid "Textarea Input"
 msgstr ""
 
-#: wedocs.php:320
-msgid "Edit Tag"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:80
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:44
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:119
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:195
+msgid "Textarea description"
 msgstr ""
 
-#: wedocs.php:321
-msgid "Update Tag"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:81
+msgid "Textarea placeholder"
 msgstr ""
 
-#: wedocs.php:322
-msgid "View Tag"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:86
+msgid ""
+"HTML area description. You can use any <strong>bold</strong> or other HTML "
+"elements."
 msgstr ""
 
-#: wedocs.php:323
-msgid "Separate items with commas"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:91
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:49
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:124
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:200
+msgid "Checkbox"
 msgstr ""
 
-#: wedocs.php:324
-msgid "Add or remove items"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:92
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:50
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:125
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:201
+msgid "Checkbox Label"
 msgstr ""
 
-#: wedocs.php:325
-msgid "Choose from the most used"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:97
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:55
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:130
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:206
+msgid "Radio Button"
 msgstr ""
 
-#: wedocs.php:326
-msgid "Popular Tags"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:98
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:56
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:131
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:207
+msgid "A radio button"
 msgstr ""
 
-#: wedocs.php:327
-msgid "Search Tags"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:107
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:77
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:154
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:228
+msgid "A Dropdown"
 msgstr ""
 
-#: wedocs.php:328
-msgid "Not Found"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:108
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:78
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:155
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:229
+msgid "Dropdown description"
 msgstr ""
 
-#: wedocs.php:329
-msgid "No items"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:118
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:144
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:88
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:164
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:238
+msgid "Password"
 msgstr ""
 
-#: wedocs.php:330
-msgid "Tags list"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:119
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:145
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:89
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:165
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:239
+msgid "Password description"
 msgstr ""
 
-#: wedocs.php:331
-msgid "Tags list navigation"
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:125
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:95
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:171
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:245
+msgid "File"
+msgstr ""
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:126
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:96
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:172
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:246
+msgid "File description"
+msgstr ""
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:137
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:102
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:178
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:252
+msgid "Color"
+msgstr ""
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:138
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:103
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:179
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:253
+msgid "Color description"
+msgstr ""
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:151
+msgid "Advanced Editor"
+msgstr ""
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:152
+msgid "WP_Editor description"
+msgstr ""
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:158
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:65
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:141
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:216
+msgid "Multile checkbox"
+msgstr ""
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:159
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:66
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:142
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:217
+msgid "Multi checkbox description"
+msgstr ""
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:28
+msgid "Other Settings"
+msgstr ""
+
+#: vendor/tareq1988/wordpress-settings-api-class/src/class.settings-api.php:370
+msgid "Choose File"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
@@ -518,42 +728,42 @@ msgstr ""
 msgid "https://tareq.co/"
 msgstr ""
 
-#: includes/class-search-widget.php:45 includes/class-search-widget.php:46
-msgctxt "label"
-msgid "Search for:"
-msgstr ""
-
-#: includes/class-search-widget.php:46
-msgctxt "placeholder"
-msgid "Documentation Search &hellip;"
-msgstr ""
-
-#: includes/class-search-widget.php:52
-msgctxt "submit button"
-msgid "Search"
-msgstr ""
-
-#: templates/single-docs.php:73
-msgctxt "Used before tag names."
-msgid "Tags"
-msgstr ""
-
-#: wedocs.php:260
+#: includes/Post_Types.php:32
 msgctxt "Post Type General Name"
 msgid "Docs"
 msgstr ""
 
-#: wedocs.php:261
+#: includes/Post_Types.php:33
 msgctxt "Post Type Singular Name"
 msgid "Doc"
 msgstr ""
 
-#: wedocs.php:312
+#: includes/Post_Types.php:83
 msgctxt "Taxonomy General Name"
 msgid "Tags"
 msgstr ""
 
-#: wedocs.php:313
+#: includes/Post_Types.php:84
 msgctxt "Taxonomy Singular Name"
 msgid "Tag"
+msgstr ""
+
+#: includes/Widget.php:47 includes/Widget.php:48
+msgctxt "label"
+msgid "Search for:"
+msgstr ""
+
+#: includes/Widget.php:48
+msgctxt "placeholder"
+msgid "Documentation Search &hellip;"
+msgstr ""
+
+#: includes/Widget.php:54
+msgctxt "submit button"
+msgid "Search"
+msgstr ""
+
+#: templates/single-docs.php:71
+msgctxt "Used before tag names."
+msgid "Tags"
 msgstr ""

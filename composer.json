@@ -2,7 +2,7 @@
   "name": "tareq1988/wedocs",
   "description": "A documentation plugin for WordPress",
   "type": "wordpress-plugin",
-  "license": "GPLv2",
+  "license": "GPL-2.0+",
   "authors": [
     {
       "name": "Tareq Hasan",
