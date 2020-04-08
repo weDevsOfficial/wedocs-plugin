@@ -1,9 +1,11 @@
 <?php
 
+namespace WeDevs\WeDocs;
+
 /**
  * Shortcode.
  */
-class WeDocs_Shortcode_Handler {
+class Shortcode {
 
     /**
      * Initialize the class

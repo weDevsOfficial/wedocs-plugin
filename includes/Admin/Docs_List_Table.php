@@ -1,9 +1,11 @@
 <?php
 
+namespace WeDevs\WeDocs\Admin;
+
 /**
  * Modifier functions in docs list table.
  */
-class weDocs_Docs_List_Table {
+class Docs_List_Table {
 
     /**
      * Constructor

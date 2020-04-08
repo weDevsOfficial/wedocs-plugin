@@ -1,11 +1,15 @@
 <?php
 
+namespace WeDevs\WeDocs\Admin;
+
+use WeDevs_Settings_API;
+
 /**
  * Settings Class.
  *
  * @since 1.1
  */
-class weDocs_Settings {
+class Settings {
 
     /**
      * Constructor

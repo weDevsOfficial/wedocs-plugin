@@ -12,7 +12,7 @@
     }
 
     // var_dump( $parent, $ancestors, $root );
-    $walker   = new WeDocs_Walker_Docs();
+    $walker   = new WeDevs\WeDocs\Walker();
     $children = wp_list_pages( [
         'title_li'  => '',
         'order'     => 'menu_order',

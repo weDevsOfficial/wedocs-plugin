@@ -1,11 +1,27 @@
 <?php
 
+namespace WeDevs\WeDocs;
+
 /**
  * Theme Support Class.
  *
  * @since 1.4
  */
-class WeDocs_Theme_Support {
+class Theme_Support {
+
+    /**
+     * Theme wrapper class
+     *
+     * @var \WeDevs\WeDocs\Theme_Support
+     */
+    public $twenty17;
+
+    /**
+     * Theme wrapper class
+     *
+     * @var \WeDevs\WeDocs\Theme_Support
+     */
+    public $twenty15;
 
     /**
      * Initialize the class
@@ -24,11 +40,11 @@ class WeDocs_Theme_Support {
 
         switch ( $current_theme ) {
             case 'twentyseventeen':
-                include_once __DIR__ . '/theme-support/twentyseventeen.php';
+                $this->twenty17 = new Theme\Twenty_Seventeen();
                 break;
 
             case 'twentyfifteen':
-                include_once __DIR__ . '/theme-support/twentyfifteen.php';
+                $this->twenty15 = new Theme\Twenty_Fifteen();
                 break;
         }
     }

@@ -12,3 +12,4 @@ plugin-deploy.sh
 ehthumbs.db
 Thumbs.db
 /node_modules
+/vendor/

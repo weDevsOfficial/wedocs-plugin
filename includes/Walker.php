@@ -1,13 +1,11 @@
 <?php
 
-if ( ! class_exists( 'WeDocs_Walker_Docs' ) ) {
-    return;
-}
+namespace WeDevs\WeDocs;
 
 /**
  * weDocs Docs Walker.
  */
-class WeDocs_Walker_Docs extends Walker_Page {
+class Walker extends \Walker_Page {
 
     /**
      * Initialize the class
