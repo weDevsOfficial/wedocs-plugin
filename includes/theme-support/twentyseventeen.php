@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Start wrapper
+ * Start wrapper.
  *
  * @return void
  */
@@ -12,7 +12,7 @@ function wedocs_twentyseventeen_wrapper_start() {
 }
 
 /**
- * End wrapper
+ * End wrapper.
  *
  * @return void
  */
@@ -23,14 +23,13 @@ function wedocs_twentyseventeen_wrapper_end() {
 }
 
 /**
- * Make twenty seventeen single docs full width
+ * Make twenty seventeen single docs full width.
  *
- * @param  array $classes
+ * @param array $classes
  *
  * @return array
  */
 function wedocs_twentyseventeen_body_classes( $classes ) {
-
     if ( is_singular( 'docs' ) && in_array( 'has-sidebar', $classes ) ) {
         $key = array_search( 'has-sidebar', $classes );
 
