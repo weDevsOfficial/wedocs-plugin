@@ -1,23 +1,20 @@
 <?php
 
+namespace WeDevs\WeDocs\Admin;
+
+use WeDevs_Settings_API;
+
 /**
  * Admin Class.
  */
-class WeDocs_Admin {
+class Admin {
 
     /**
      * Constructor
      */
     public function __construct() {
-        $this->includes();
         $this->init_actions();
         $this->init_classes();
-    }
-
-    public function includes() {
-        require_once dirname( __DIR__ ) . '/class-settings-api.php';
-        require_once __DIR__ . '/class-settings.php';
-        require_once __DIR__ . '/class-docs-list-table.php';
     }
 
     /**
@@ -35,8 +32,8 @@ class WeDocs_Admin {
     }
 
     public function init_classes() {
-        new weDocs_Settings();
-        new weDocs_Docs_List_Table();
+        new Settings();
+        new Docs_List_Table();
     }
 
     /**
@@ -119,7 +116,7 @@ class WeDocs_Admin {
      * @return void
      */
     public function page_index() {
-        include __DIR__ . '/template-vue.php';
+        include __DIR__ . '/views/admin.php';
     }
 
     /**
@@ -130,10 +127,6 @@ class WeDocs_Admin {
      * @return string
      */
     public function admin_footer_text( $footer_text ) {
-        // if ( ! current_user_can( wedocs_get_publish_cap() ) ) {
-        //     return;
-        // }
-
         $footer_text    = '';
         $current_screen = get_current_screen();
         $pages          = [ 'toplevel_page_wedocs', 'edit-docs' ];

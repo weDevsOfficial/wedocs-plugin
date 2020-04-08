@@ -1,6 +1,8 @@
 <?php
 
-class WeDocs_Search_Widget extends WP_Widget {
+namespace WeDevs\WeDocs;
+
+class Widget extends \WP_Widget {
 
     /**
      * Sets up the widgets name etc.

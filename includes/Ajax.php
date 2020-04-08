@@ -1,9 +1,11 @@
 <?php
 
+namespace WeDevs\WeDocs;
+
 /**
  * Ajax Class.
  */
-class WeDocs_Ajax {
+class Ajax {
 
     /**
      * Bind actions.

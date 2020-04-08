@@ -1,0 +1,22 @@
+{
+  "name": "tareq1988/wedocs",
+  "description": "A documentation plugin for WordPress",
+  "type": "wordpress-plugin",
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "Tareq Hasan",
+      "email": "tareq@wedevs.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "tareq1988/wordpress-settings-api-class": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "WeDevs\\WeDocs\\": "includes/"
+    },
+    "files": [ "includes/functions.php" ]
+  }
+}
