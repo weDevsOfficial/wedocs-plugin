@@ -4,8 +4,50 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3774f7b2b2818d77101b97ebd3241db7",
+    "content-hash": "f589cc6a0451336d600c30fd895b5a49",
     "packages": [
+        {
+            "name": "appsero/client",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AppSero/client.git",
+                "reference": "fd18acbe04bb4baedb4f5e5440c62ea10688fd66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AppSero/client/zipball/fd18acbe04bb4baedb4f5e5440c62ea10688fd66",
+                "reference": "fd18acbe04bb4baedb4f5e5440c62ea10688fd66",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Appsero\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tareq Hasan",
+                    "email": "tareq@appsero.com"
+                }
+            ],
+            "description": "Appsero Client",
+            "keywords": [
+                "analytics",
+                "plugin",
+                "theme",
+                "wordpress"
+            ],
+            "time": "2020-04-05T03:30:57+00:00"
+        },
         {
             "name": "tareq1988/wordpress-settings-api-class",
             "version": "dev-master",
@@ -55,7 +97,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "tareq1988/wordpress-settings-api-class": 20
+        "tareq1988/wordpress-settings-api-class": 20,
+        "appsero/client": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

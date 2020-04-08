@@ -13,27 +13,12 @@ class Admin {
      * Constructor
      */
     public function __construct() {
-        $this->init_actions();
-        $this->init_classes();
-    }
-
-    /**
-     * Initialize action hooks.
-     *
-     * @return void
-     */
-    public function init_actions() {
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ] );
 
         add_action( 'admin_menu', [ $this, 'admin_menu' ] );
         add_filter( 'parent_file', [$this, 'fix_tag_menu' ] );
 
         add_filter( 'admin_footer_text', [ $this, 'admin_footer_text' ], 1 );
-    }
-
-    public function init_classes() {
-        new Settings();
-        new Docs_List_Table();
     }
 
     /**
