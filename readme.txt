@@ -5,7 +5,7 @@ Tags: document, documentation, knowledge base, knowledgebase, support, faq
 Requires at least: 4.6
 Tested up to: 5.3
 Requires PHP: 5.4
-Stable tag: 1.5
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,12 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 9. Search widget in frontend
 
 == Changelog ==
+
+= v1.6 (8 April, 2020) =
+
+ * **New:** Added expanding functionality for nested docs in the frontend. From the single doc, you'll be able to see all documentation by clicking on the toggle icon from the sidebar.
+ * **Refactor:** The plugin has been refactored to use PHP Namespacing. Now the plugin code is more organized.
+ * Other: Added Appsero SDK to collect telemetry data.
 
 = v1.5 (11 July, 2019) =
 

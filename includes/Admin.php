@@ -23,6 +23,8 @@ class Admin {
     /**
      * Initialize the appsero tracker
      *
+     * @since 1.6.0
+     *
      * @return void
      */
     public function init_appsero() {
