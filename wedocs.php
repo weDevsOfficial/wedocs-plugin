@@ -3,7 +3,7 @@
 Plugin Name: weDocs
 Plugin URI: http://wedevs.com/
 Description: A documentation plugin for WordPress
-Version: 1.5
+Version: 1.6.0
 Author: Tareq Hasan
 Author URI: https://tareq.co/
 License: GPL2
@@ -12,7 +12,7 @@ Domain Path: /languages
 */
 
 /**
- * Copyright (c) 2019 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
+ * Copyright (c) 2020 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
@@ -38,52 +38,76 @@ Domain Path: /languages
  */
 
 // don't call the file directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+require_once __DIR__ . '/vendor/autoload.php';
 
 /**
- * WeDocs class
+ * WeDocs class.
  *
  * @class WeDocs The class that holds the entire WeDocs plugin
  */
-class WeDocs {
+final class WeDocs {
 
     /**
-     * Plugin version
+     * Plugin version.
      *
      * @var string
      */
-    public $version = '1.4.1';
+    const VERSION = '1.6.0';
 
     /**
-     * The plugin url
+     * The plugin url.
      *
      * @var string
      */
     public $plugin_url;
 
     /**
-     * The plugin path
+     * The plugin path.
      *
      * @var string
      */
     public $plugin_path;
 
     /**
-     * The theme directory path
+     * The theme directory path.
      *
      * @var string
      */
     public $theme_dir_path;
 
     /**
-     * The post type name
+     * The post type name.
      *
      * @var string
      */
     private $post_type = 'docs';
 
     /**
-     * Initializes the WeDocs() class
+     * Holds various class instances
+     *
+     * @var array
+     */
+    private $container = [];
+
+    /**
+     * Class construcotr
+     */
+    private function __construct() {
+        $this->define_constants();
+        $this->init_actions();
+
+        register_activation_hook( __FILE__, [ $this, 'activate' ] );
+
+        add_action( 'after_setup_theme', [ $this, 'init_classes' ] );
+    }
+
+
+    /**
+     * Initializes the WeDocs() class.
      *
      * Checks for an existing WeDocs() instance
      * and if it doesn't find one, creates it.
@@ -93,126 +117,91 @@ class WeDocs {
 
         if ( ! $instance ) {
             $instance = new WeDocs();
-
-            add_action('after_setup_theme', array($instance, 'plugin_init'));
-
-            register_activation_hook( __FILE__, array($instance, 'activate' ) );
         }
 
         return $instance;
     }
 
     /**
-     * Initialize the plugin
+     * Define the required plugin constants
      *
      * @return void
      */
-    function plugin_init() {
-        $this->theme_dir_path = apply_filters( 'wedocs_theme_dir_path', 'wedocs/' );
-
-        $this->file_includes();
-        $this->init_classes();
-
-        // Localize our plugin
-        add_action( 'init', array( $this, 'localization_setup' ) );
-
-        // custom post types and taxonomies
-        add_action( 'init', array( $this, 'register_post_type' ) );
-        add_action( 'init', array( $this, 'register_taxonomy' ) );
-
-        // filter the search result
-        add_action( 'pre_get_posts', array( $this, 'docs_search_filter' ) );
-
-        // registeer our widget
-        add_action( 'widgets_init', array( $this, 'register_widget' ) );
-
-        // override the theme template
-        add_filter( 'template_include', array( $this, 'template_loader' ), 20 );
-
-        // Loads frontend scripts and styles
-        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-
-        add_action( 'rest_api_init', array( $this, 'init_rest_api' ) );
+    public function define_constants() {
+        define( 'WEDOCS_VERSION', self::VERSION );
+        define( 'WEDOCS_FILE', __FILE__ );
+        define( 'WEDOCS_PATH', __DIR__ );
+        define( 'WEDOCS_URL', plugins_url( '', WEDOCS_FILE ) );
+        define( 'WEDOCS_ASSETS', WEDOCS_URL . '/assets' );
     }
 
     /**
-     * The plugin activation function
+     * Magic getter to bypass referencing plugin.
+     *
+     * @param $prop
+     *
+     * @return mixed
+     */
+    public function __get( $prop ) {
+        if ( array_key_exists( $prop, $this->container ) ) {
+            return $this->container[ $prop ];
+        }
+
+        return $this->{$prop};
+    }
+
+    /**
+     * Initialize the plugin.
+     *
+     * @return void
+     */
+    public function init_actions() {
+        $this->theme_dir_path = apply_filters( 'wedocs_theme_dir_path', 'wedocs/' );
+
+        // Localize our plugin
+        add_action( 'init', [ $this, 'localization_setup' ] );
+
+        // registeer our widget
+        add_action( 'widgets_init', [ $this, 'register_widget' ] );
+    }
+
+    /**
+     * The plugin activation function.
      *
      * @since 1.3
      *
      * @return void
      */
     public function activate() {
-
-        $this->maybe_create_docs_page();
-
-        // rewrite rules problem, register and flush
-        $this->register_post_type();
-        $this->register_taxonomy();
-
-        flush_rewrite_rules();
-
-        update_option( 'wedocs_installed', time() );
-        update_option( 'wedocs_version', $this->version );
+        $installer = new WeDevs\WeDocs\Installer();
+        $installer->run();
     }
 
     /**
-     * Load the required files
-     *
-     * @return void
-     */
-    function file_includes() {
-        include_once dirname( __FILE__ ) . '/includes/functions.php';
-        include_once dirname( __FILE__ ) . '/includes/class-walker-docs.php';
-        include_once dirname( __FILE__ ) . '/includes/class-search-widget.php';
-        include_once dirname( __FILE__ ) . '/includes/class-theme-support.php';
-        include_once dirname( __FILE__ ) . '/includes/rest-api/class-rest-api.php';
-
-        if ( is_admin() ) {
-            include_once dirname( __FILE__ ) . '/includes/admin/class-admin.php';
-        } else {
-            include_once dirname( __FILE__ ) . '/includes/class-shortcode.php';
-        }
-
-        if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-            include_once dirname( __FILE__ ) . '/includes/class-ajax.php';
-        }
-    }
-
-    /**
-     * Initialize the classes
+     * Initialize the classes.
      *
      * @since 1.4
      *
      * @return void
      */
     public function init_classes() {
-
-        new WeDocs_Theme_Support();
+        $this->container['post_type'] = new WeDevs\WeDocs\Post_Types();
 
         if ( is_admin() ) {
-            new WeDocs_Admin();
+            $this->container['admin'] =new WeDevs\WeDocs\Admin();
         } else {
-            new WeDocs_Shortcode_Handler();
+            $this->container['frontend'] =new WeDevs\WeDocs\Frontend();
         }
 
-        if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-            new WeDocs_Ajax();
+        if ( wp_doing_ajax() ) {
+            $this->container['ajax'] =new WeDevs\WeDocs\Ajax();
         }
+
+        $this->container['api'] =new WeDevs\WeDocs\API();
     }
 
     /**
-     * Initialize REST API
-     *
-     * @return void
-     */
-    public function init_rest_api() {
-        $api = new WeDocs_REST_API();
-        $api->register_routes();
-    }
-
-    /**
-     * Initialize plugin for localization
+     * Initialize plugin for localization.
      *
      * @uses load_plugin_textdomain()
      */
@@ -221,145 +210,12 @@ class WeDocs {
     }
 
     /**
-     * Enqueue admin scripts
-     *
-     * Allows plugin assets to be loaded.
-     *
-     * @uses wp_enqueue_script()
-     * @uses wp_localize_script()
-     * @uses wp_enqueue_style
-     */
-    public function enqueue_scripts() {
-
-        /**
-         * All styles goes here
-         */
-        wp_enqueue_style( 'wedocs-styles', plugins_url( 'assets/css/frontend.css', __FILE__ ), array(), $this->version );
-
-        /**
-         * All scripts goes here
-         */
-        wp_enqueue_script( 'wedocs-anchorjs', plugins_url( 'assets/js/anchor.min.js', __FILE__ ), array( 'jquery' ), $this->version, true );
-        wp_enqueue_script( 'wedocs-scripts', plugins_url( 'assets/js/frontend.js', __FILE__ ), array( 'jquery', 'wedocs-anchorjs' ), $this->version, true );
-        wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', array(
-            'ajaxurl' => admin_url( 'admin-ajax.php' ),
-            'nonce'   => wp_create_nonce( 'wedocs-ajax' ),
-            'style'   => plugins_url( 'assets/css/print.css', __FILE__ ),
-            'powered' => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs', 'wedocs' ), home_url() )
-        ) );
-    }
-
-    /**
-     * Register the post type
-     *
-     * @return void
-     */
-    function register_post_type() {
-
-        $labels = array(
-            'name'                => _x( 'Docs', 'Post Type General Name', 'wedocs' ),
-            'singular_name'       => _x( 'Doc', 'Post Type Singular Name', 'wedocs' ),
-            'menu_name'           => __( 'Documentation', 'wedocs' ),
-            'parent_item_colon'   => __( 'Parent Doc', 'wedocs' ),
-            'all_items'           => __( 'All Documentations', 'wedocs' ),
-            'view_item'           => __( 'View Documentation', 'wedocs' ),
-            'add_new_item'        => __( 'Add Documentation', 'wedocs' ),
-            'add_new'             => __( 'Add New', 'wedocs' ),
-            'edit_item'           => __( 'Edit Documentation', 'wedocs' ),
-            'update_item'         => __( 'Update Documentation', 'wedocs' ),
-            'search_items'        => __( 'Search Documentation', 'wedocs' ),
-            'not_found'           => __( 'Not documentation found', 'wedocs' ),
-            'not_found_in_trash'  => __( 'Not found in Trash', 'wedocs' ),
-        );
-        $rewrite = array(
-            'slug'                => 'docs',
-            'with_front'          => true,
-            'pages'               => true,
-            'feeds'               => true,
-        );
-        $args = array(
-            'labels'              => $labels,
-            'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'comments' ),
-            'hierarchical'        => true,
-            'public'              => true,
-            'show_ui'             => true,
-            'show_in_menu'        => false,
-            'show_in_nav_menus'   => true,
-            'show_in_admin_bar'   => true,
-            'menu_position'       => 5,
-            'menu_icon'           => 'dashicons-portfolio',
-            'can_export'          => true,
-            'has_archive'         => false,
-            'exclude_from_search' => false,
-            'publicly_queryable'  => true,
-            'show_in_rest'        => true,
-            'rewrite'             => $rewrite,
-            'capability_type'     => 'post',
-            'taxonomies'          => array( 'doc_tag' )
-        );
-
-        register_post_type( $this->post_type, apply_filters( 'wedocs_post_type', $args ) );
-    }
-
-    /**
-     * Register doc tags taxonomy
-     *
-     * @return void
-     */
-    function register_taxonomy() {
-
-        $labels = array(
-            'name'                       => _x( 'Tags', 'Taxonomy General Name', 'wedocs' ),
-            'singular_name'              => _x( 'Tag', 'Taxonomy Singular Name', 'wedocs' ),
-            'menu_name'                  => __( 'Tags', 'wedocs' ),
-            'all_items'                  => __( 'All Tags', 'wedocs' ),
-            'parent_item'                => __( 'Parent Tag', 'wedocs' ),
-            'parent_item_colon'          => __( 'Parent Tag:', 'wedocs' ),
-            'new_item_name'              => __( 'New Tag', 'wedocs' ),
-            'add_new_item'               => __( 'Add New Item', 'wedocs' ),
-            'edit_item'                  => __( 'Edit Tag', 'wedocs' ),
-            'update_item'                => __( 'Update Tag', 'wedocs' ),
-            'view_item'                  => __( 'View Tag', 'wedocs' ),
-            'separate_items_with_commas' => __( 'Separate items with commas', 'wedocs' ),
-            'add_or_remove_items'        => __( 'Add or remove items', 'wedocs' ),
-            'choose_from_most_used'      => __( 'Choose from the most used', 'wedocs' ),
-            'popular_items'              => __( 'Popular Tags', 'wedocs' ),
-            'search_items'               => __( 'Search Tags', 'wedocs' ),
-            'not_found'                  => __( 'Not Found', 'wedocs' ),
-            'no_terms'                   => __( 'No items', 'wedocs' ),
-            'items_list'                 => __( 'Tags list', 'wedocs' ),
-            'items_list_navigation'      => __( 'Tags list navigation', 'wedocs' ),
-        );
-
-        $rewrite = array(
-            'slug'                       => 'doc-tag',
-            'with_front'                 => true,
-            'hierarchical'               => false,
-        );
-
-        $args = array(
-            'labels'                     => $labels,
-            'hierarchical'               => false,
-            'public'                     => true,
-            'show_ui'                    => true,
-            'show_admin_column'          => true,
-            'show_in_nav_menus'          => true,
-            'show_tagcloud'              => true,
-            'show_in_rest'               => true,
-            'rewrite'                    => $rewrite
-        );
-
-        register_taxonomy( 'doc_tag', array( 'docs' ), $args );
-
-    }
-
-    /**
-     * Register the search widget
+     * Register the search widget.
      *
      * @return void
      */
     public function register_widget() {
-        register_widget( 'WeDocs_Search_Widget' );
+        register_widget( 'WeDevs\WeDocs\Widget' );
     }
 
     /**
@@ -375,14 +231,15 @@ class WeDocs {
         return $this->plugin_url = untrailingslashit( plugins_url( '/', __FILE__ ) );
     }
 
-
     /**
      * Get the plugin path.
      *
      * @return string
      */
     public function plugin_path() {
-        if ( $this->plugin_path ) return $this->plugin_path;
+        if ( $this->plugin_path ) {
+            return $this->plugin_path;
+        }
 
         return $this->plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
     }
@@ -397,117 +254,18 @@ class WeDocs {
     }
 
     /**
-     * If the theme doesn't have any single doc handler, load that from
-     * the plugin
-     *
-     * @param  string  $template
+     * Get the theme directory path.
      *
      * @return string
      */
-    function template_loader( $template ) {
-        $find = array( $this->post_type . '.php' );
-        $file = '';
-
-        if ( is_single() && get_post_type() == $this->post_type ) {
-            $file   = 'single-' . $this->post_type . '.php';
-            $find[] = $file;
-            $find[] = $this->theme_dir_path. $file;
-        }
-
-        if ( $file ) {
-
-            $template = locate_template( $find );
-
-            if ( ! $template ) {
-                $template = $this->template_path() . $file;
-            }
-        }
-
-        return $template;
-    }
-
-    /**
-     * Handle the search filtering in search page
-     *
-     * @param  \WP_Query  $query
-     *
-     * @return \WP_Query
-     */
-    function docs_search_filter( $query ) {
-
-        if ( ! is_admin() && $query->is_main_query() ) {
-            if( is_search() ) {
-                $param = isset( $_GET['search_in_doc'] ) ? sanitize_text_field( $_GET['search_in_doc'] ) : false;
-
-                if ( $param ) {
-
-                    if ( $param != 'all' ) {
-                        $parent_doc_id = intval( $param );
-                        $post__in      = array( $parent_doc_id => $parent_doc_id );
-                        $children_docs = wedocs_get_posts_children( $parent_doc_id, 'docs' );
-
-                        if ( $children_docs ) {
-                            $post__in = array_merge( $post__in, wp_list_pluck( $children_docs, 'ID' ) );
-                        }
-
-                        $query->set( 'post__in', $post__in );
-                    }
-                }
-            }
-        }
-
-        return $query;
-    }
-
-    /**
-     * Maybe create docs page if not found
-     *
-     * @since 1.3
-     *
-     * @return void
-     */
-    public function maybe_create_docs_page() {
-        $version = get_option( 'wedocs_version' );
-
-        // seems like it's already installed
-        if ( $version ) {
-            return;
-        }
-
-        // skip if there's a page already with [wedocs] shortcode
-        $pages_query = new WP_Query( array(
-            'post_type'      => 'page',
-            'posts_per_page' => -1,
-            's'              => '[wedocs'
-        ) );
-
-        if ( $pages_query->found_posts ) {
-            return;
-        }
-
-        $docs_page = wp_insert_post( array(
-            'post_type'      => 'page',
-            'post_title'     => 'Documentation',
-            'post_author'    => get_current_user_id(),
-            'post_content'   => '[wedocs]',
-            'post_status'    => 'publish',
-            'comment_status' => 'closed',
-            'ping_status'    => 'closed',
-            'post_name'      => 'docs',
-        ) );
-
-        if ( ! is_wp_error( $docs_page ) ) {
-            $settings = get_option( 'wedocs_settings', array() );
-            $settings['docs_home'] = $docs_page;
-
-            update_option( 'wedocs_settings', $settings );
-        }
+    public function theme_dir_path() {
+        return $this->theme_dir_path;
     }
 
 } // WeDocs
 
 /**
- * Initialize the plugin
+ * Initialize the plugin.
  *
  * @return \WeDocs
  */

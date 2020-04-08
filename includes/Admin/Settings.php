@@ -1,26 +1,32 @@
 <?php
 
+namespace WeDevs\WeDocs\Admin;
+
+use WeDevs_Settings_API;
+
 /**
- * Settings Class
+ * Settings Class.
  *
  * @since 1.1
  */
-class weDocs_Settings {
+class Settings {
 
+    /**
+     * Constructor
+     */
     public function __construct() {
         $this->settings_api = new WeDevs_Settings_API();
 
-        add_action( 'admin_init', array($this, 'admin_init') );
-        add_action( 'admin_menu', array($this, 'admin_menu') );
+        add_action( 'admin_init', [$this, 'admin_init'] );
+        add_action( 'admin_menu', [$this, 'admin_menu'] );
     }
 
     /**
-     * Initialize the settings
+     * Initialize the settings.
      *
      * @return void
      */
-    function admin_init() {
-
+    public function admin_init() {
         //set the settings
         $this->settings_api->set_sections( $this->get_settings_sections() );
         $this->settings_api->set_fields( $this->get_settings_fields() );
@@ -30,93 +36,93 @@ class weDocs_Settings {
     }
 
     /**
-     * Register the admin settings menu
+     * Register the admin settings menu.
      *
      * @return void
      */
-    function admin_menu() {
-        add_submenu_page( 'wedocs', __( 'weDocs Settings', 'wedocs' ), __( 'Settings', 'wedocs' ), 'manage_options', 'wedocs-settings', array( $this, 'plugin_page' ) );
+    public function admin_menu() {
+        add_submenu_page( 'wedocs', __( 'weDocs Settings', 'wedocs' ), __( 'Settings', 'wedocs' ), 'manage_options', 'wedocs-settings', [ $this, 'plugin_page' ] );
     }
 
     /**
-     * Plugin settings sections
+     * Plugin settings sections.
      *
      * @return array
      */
-    function get_settings_sections() {
-        $sections = array(
-            array(
+    public function get_settings_sections() {
+        $sections = [
+            [
                 'id'    => 'wedocs_settings',
-                'title' => __( 'Plugin Settings', 'wedocs' )
-            )
-        );
+                'title' => __( 'Plugin Settings', 'wedocs' ),
+            ],
+        ];
 
         return $sections;
     }
 
     /**
-     * Returns all the settings fields
+     * Returns all the settings fields.
      *
      * @return array settings fields
      */
-    function get_settings_fields() {
-        $settings_fields = array(
-            'wedocs_settings' => array(
-                array(
+    public function get_settings_fields() {
+        $settings_fields = [
+            'wedocs_settings' => [
+                [
                     'name'    => 'docs_home',
                     'label'   => __( 'Docs Home', 'wedocs' ),
                     'desc'    => sprintf( __( 'Home page for docs page. Preferably use <code>[wedocs]</code> <a href="%s" target="_blank">shortcode</a> or design your own.', 'wedocs' ), 'https://github.com/tareq1988/wedocs-plugin/wiki/Using-Shortcodes' ),
                     'type'    => 'select',
-                    'options' => $this->get_pages()
-                ),
-                array(
+                    'options' => $this->get_pages(),
+                ],
+                [
                     'name'    => 'email',
                     'label'   => __( 'Email feedback', 'wedocs' ),
                     'desc'    => __( 'Enable Email feedback form', 'wedocs' ),
                     'type'    => 'checkbox',
-                    'default' => 'on'
-                ),
-                array(
+                    'default' => 'on',
+                ],
+                [
                     'name'              => 'email_to',
                     'label'             => __( 'Email Address', 'wedocs' ),
                     'desc'              => __( 'The email address where the feedbacks should sent to', 'wedocs' ),
                     'type'              => 'text',
                     'default'           => get_option( 'admin_email' ),
-                    'sanitize_callback' => 'sanitize_text_field'
-                ),
-                array(
+                    'sanitize_callback' => 'sanitize_text_field',
+                ],
+                [
                     'name'    => 'helpful',
                     'label'   => __( 'Helpful feedback', 'wedocs' ),
                     'desc'    => __( 'Enable helpful feedback links', 'wedocs' ),
                     'type'    => 'checkbox',
-                    'default' => 'on'
-                ),
-                array(
+                    'default' => 'on',
+                ],
+                [
                     'name'    => 'comments',
                     'label'   => __( 'Comments', 'wedocs' ),
                     'desc'    => __( 'Allow Comments', 'wedocs' ),
                     'type'    => 'checkbox',
-                    'default' => 'off'
-                ),
-                array(
+                    'default' => 'off',
+                ],
+                [
                     'name'    => 'print',
                     'label'   => __( 'Print article', 'wedocs' ),
                     'desc'    => __( 'Enable article printing', 'wedocs' ),
                     'type'    => 'checkbox',
-                    'default' => 'on'
-                ),
-            ),
-        );
+                    'default' => 'on',
+                ],
+            ],
+        ];
 
         return $settings_fields;
     }
 
     /**
-     * The plguin page handler
+     * The plguin page handler.
      *
      * @return void
      */
-    function plugin_page() {
+    public function plugin_page() {
         echo '<div class="wrap">';
 
         $this->settings_api->show_navigation();
@@ -128,26 +134,27 @@ class weDocs_Settings {
     }
 
     /**
-     * Get all the pages
+     * Get all the pages.
      *
      * @return array page names with key value pairs
      */
-    function get_pages() {
-        $pages_options = array( '' => __( '&mdash; Select Page &mdash;', 'wedocs' ) );
-        $pages         = get_pages( array(
-            'numberposts'  => -1
-        ) );
+    public function get_pages() {
+        $pages_options = [ '' => __( '&mdash; Select Page &mdash;', 'wedocs' ) ];
+        $pages         = get_pages( [
+            'numberposts' => -1,
+        ] );
 
         if ( $pages ) {
-            foreach ($pages as $page) {
+            foreach ( $pages as $page ) {
                 $pages_options[$page->ID] = $page->post_title;
             }
         }
+
         return $pages_options;
     }
 
     /**
-     * JS snippets
+     * JS snippets.
      *
      * @return void
      */
@@ -168,5 +175,4 @@ class weDocs_Settings {
         </script>
         <?php
     }
-
 }
