@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Start wrapper
+ * Start wrapper.
  *
  * @return void
  */
@@ -12,7 +12,7 @@ function wedocs_twentyfifteen_wrapper_start() {
 }
 
 /**
- * End wrapper
+ * End wrapper.
  *
  * @return void
  */
