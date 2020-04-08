@@ -1,25 +1,28 @@
 <?php
 
 /**
- * Theme Support Class
+ * Theme Support Class.
  *
  * @since 1.4
  */
 class WeDocs_Theme_Support {
 
-    function __construct() {
+    /**
+     * Initialize the class
+     */
+    public function __construct() {
         $this->theme_support();
     }
 
     /**
-     * Loads theme compatibility wrappers
+     * Loads theme compatibility wrappers.
      *
      * @return void
      */
     public function theme_support() {
         $current_theme = get_template();
 
-        switch ($current_theme) {
+        switch ( $current_theme ) {
             case 'twentyseventeen':
                 include_once __DIR__ . '/theme-support/twentyseventeen.php';
                 break;
@@ -29,5 +32,4 @@ class WeDocs_Theme_Support {
                 break;
         }
     }
-
 }
