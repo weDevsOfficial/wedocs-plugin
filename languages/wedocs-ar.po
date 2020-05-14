@@ -1,0 +1,788 @@
+# Copyright (C) 2020 Tareq Hasan
+# This file is distributed under the GPL2.
+msgid ""
+msgstr ""
+"Project-Id-Version: weDocs 1.6.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
+"POT-Creation-Date: 2020-04-08 13:51:32+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2020-05-14 05:05+0300\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"X-Generator: Poedit 2.3.1\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100 >= 3 "
+"&& n%100<=10 ? 3 : n%100 >= 11 && n%100<=99 ? 4 : 5;\n"
+"X-Loco-Version: 2.3.3; wp-5.4.1\n"
+
+#: includes/API/API.php:49
+msgid "Email address of the author."
+msgstr "البريد الإلكتروني للكاتب."
+
+#: includes/API/API.php:96
+msgid "Limit results to those matching a string."
+msgstr "قصر النتائج على تلك المطابقة لسلسلة."
+
+#: includes/API/API.php:103
+msgid "The ID for the parent of the object."
+msgstr "معرف الأب للكائن."
+
+#: includes/API/API.php:108
+msgid "Current page of the collection."
+msgstr "الصفحة الحالية للمجموعة."
+
+#: includes/API/API.php:116
+msgid "Maximum number of items to be returned in result set."
+msgstr "الحد الأقصى لعدد العناصر المراد إرجاعها في مجموعة النتائج."
+
+#: includes/API/API.php:288
+msgid "The page number requested is larger than the number of pages available."
+msgstr "رقم الصفحة المطلوب أكبر من عدد الصفحات المتاحة."
+
+#: includes/API/API.php:374
+msgid "No name given"
+msgstr "لم يعط أي اسم"
+
+#: includes/API/API.php:378
+msgid "No email given"
+msgstr "لم يعط أي بريد إلكتروني"
+
+#: includes/API/API.php:392
+msgid "Invalid doc ID."
+msgstr "معرف وثيقة غير صالح."
+
+#: includes/Admin/Admin.php:46
+msgid "Enter doc title"
+msgstr "أضف عنوان التوثيق"
+
+#: includes/Admin/Admin.php:47
+msgid "Write something"
+msgstr "اكتب شيئاً"
+
+#: includes/Admin/Admin.php:48
+msgid "Enter section title"
+msgstr "أدخل عنوان القسم"
+
+#. Plugin Name of the plugin/theme
+msgid "weDocs"
+msgstr "weDocs"
+
+#: includes/Admin/Admin.php:73 includes/functions.php:102
+msgid "Docs"
+msgstr "وثائق"
+
+#: includes/Admin/Admin.php:74 includes/Post_Types.php:85
+msgid "Tags"
+msgstr "الوسوم"
+
+#: includes/Admin/Admin.php:122
+msgid ""
+"Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;"
+"&#9733;&#9733;&#9733;&#9733;%s rating."
+msgstr ""
+"شكراً على استخدامك <strong>weDocs</strong>. نرجو أن تترك لنا تصنيف %s&#9733;"
+"&#9733;&#9733;&#9733;&#9733;%s."
+
+#: includes/Admin/Admin.php:122
+msgid "Thanks :)"
+msgstr "شكراً :)"
+
+#: includes/Admin/Admin.php:133
+msgid "Thank you for using <strong>weDocs</strong>."
+msgstr "شكرًا لك على استخدام <strong>weDocs</strong>."
+
+#: includes/Admin/Admin.php:136
+msgid "Use the <a href=\"%s\">classic UI</a>."
+msgstr "استخدم <a href=\"%s\">واجهة المستخدم التقليدية</a>."
+
+#: includes/Admin/Docs_List_Table.php:27
+msgid "Helpfulness"
+msgstr "مدى الاستفادة"
+
+#: includes/Admin/Docs_List_Table.php:67
+msgid "Votes"
+msgstr "أصوات"
+
+#: includes/Admin/Settings.php:44
+msgid "weDocs Settings"
+msgstr "إعدادات weDocs"
+
+#: includes/Admin/Settings.php:44
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: includes/Admin/Settings.php:56
+msgid "Plugin Settings"
+msgstr "إعدادات الملحق"
+
+#: includes/Admin/Settings.php:73
+msgid "Docs Home"
+msgstr "الصفحة الرئيسية الوثائق"
+
+#: includes/Admin/Settings.php:74
+msgid ""
+"Home page for docs page. Preferably use <code>[wedocs]</code> <a href=\"%s\" "
+"target=\"_blank\">shortcode</a> or design your own."
+msgstr ""
+"الصفحة الرئيسية لصفحة المستندات. يفضل استخدام <code>[wedocs]</code> <a href="
+"\"%s\" target=\"_blank\">shortcode</a>  أو تصميم رمزك الخاص."
+
+#: includes/Admin/Settings.php:80
+msgid "Email feedback"
+msgstr "ملاحظات البريد الإلكتروني"
+
+#: includes/Admin/Settings.php:81
+msgid "Enable Email feedback form"
+msgstr "تمكين نموذج ملاحظات البريد الإلكتروني"
+
+#: includes/Admin/Settings.php:87
+msgid "Email Address"
+msgstr "عنوان البريد الإلكتروني"
+
+#: includes/Admin/Settings.php:88
+msgid "The email address where the feedbacks should sent to"
+msgstr "عنوان البريد الإلكتروني الذي ينبغي إرسال التعليقات إليه"
+
+#: includes/Admin/Settings.php:95
+msgid "Helpful feedback"
+msgstr "ملاحظات مفيدة"
+
+#: includes/Admin/Settings.php:96
+msgid "Enable helpful feedback links"
+msgstr "تمكين روابط التعليقات المفيدة"
+
+#: includes/Admin/Settings.php:102
+msgid "Comments"
+msgstr "التعليقات"
+
+#: includes/Admin/Settings.php:103
+msgid "Allow Comments"
+msgstr "السماح بالتعليقات"
+
+#: includes/Admin/Settings.php:109
+msgid "Print article"
+msgstr "اطبع المقالة"
+
+#: includes/Admin/Settings.php:110
+msgid "Enable article printing"
+msgstr "تمكين طباعة المقالة"
+
+#: includes/Admin/Settings.php:142
+msgid "&mdash; Select Page &mdash;"
+msgstr "&mdash; اختر صفحة &mdash;"
+
+#: includes/Admin/views/admin.php:3
+msgid "Documentations"
+msgstr "التوثيقات"
+
+#: includes/Admin/views/admin.php:3
+msgid "Add Doc"
+msgstr "أضف توثيق"
+
+#: includes/Admin/views/admin.php:16
+msgid "Preview the doc"
+msgstr "معاينة الوثيقة"
+
+#: includes/Admin/views/admin.php:17
+msgid "Delete this doc"
+msgstr "حذف هذا التوثيق"
+
+#: includes/Admin/views/admin.php:30
+msgid "Re-order this section"
+msgstr "أعد ترتيب هذا القسم"
+
+#: includes/Admin/views/admin.php:31
+msgid "Preview the section"
+msgstr "معاينة القسم"
+
+#: includes/Admin/views/admin.php:32
+msgid "Delete this section"
+msgstr "حذف هذا الجزء"
+
+#: includes/Admin/views/admin.php:33
+msgid "Add a new article"
+msgstr "أضف مقال جديد"
+
+#: includes/Admin/views/admin.php:46 includes/Admin/views/admin.php:57
+msgid "Preview the article"
+msgstr "معاينة المقال"
+
+#: includes/Admin/views/admin.php:47 includes/Admin/views/admin.php:58
+msgid "Delete this article"
+msgstr "حذف هذا المقال"
+
+#: includes/Admin/views/admin.php:69
+msgid "Add Section"
+msgstr "إضافة قسم"
+
+#: includes/Admin/views/admin.php:75
+msgid "No docs has been found. Perhaps %s?"
+msgstr "لم يتم العثور على وثائق. ربما %s؟"
+
+#: includes/Admin/views/admin.php:75
+msgid "create one"
+msgstr "أنشئ واحداً"
+
+#: includes/Ajax.php:89
+msgid "You are not allowed to delete this item."
+msgstr "لا يمكنك حذف هذا العنصر."
+
+#: includes/Ajax.php:171
+msgid "Sorry, you've already recorded your feedback!"
+msgstr "عذرًا ، لقد سجلت ملاحظاتك بالفعل!"
+
+#: includes/Ajax.php:186
+msgid "Thanks for your feedback!"
+msgstr "شكراً لملاحظاتك!"
+
+#: includes/Ajax.php:207
+msgid "Please enter a valid email address."
+msgstr "لطفاً، أدخل بريد إلكتروني صالح."
+
+#: includes/Ajax.php:214
+msgid "Please provide a subject line."
+msgstr "يرجى تقديم سطر الموضوع."
+
+#: includes/Ajax.php:218
+msgid "Please provide the message details."
+msgstr "يرجى تقديم تفاصيل الرسالة."
+
+#: includes/Ajax.php:223
+msgid "Thanks for your feedback."
+msgstr "شكراً لملاحظاتك."
+
+#: includes/Frontend.php:71
+msgid "Powered by weDocs"
+msgstr "مدعوم من weDocs"
+
+#: includes/Post_Types.php:34
+msgid "Documentation"
+msgstr "التوثيق"
+
+#: includes/Post_Types.php:35
+msgid "Parent Doc"
+msgstr "الوثيقة الأصل"
+
+#: includes/Post_Types.php:36
+msgid "All Documentations"
+msgstr "كل الوثائق"
+
+#: includes/Post_Types.php:37
+msgid "View Documentation"
+msgstr "عرض التوثيق"
+
+#: includes/Post_Types.php:38
+msgid "Add Documentation"
+msgstr "أضف توثيق"
+
+#: includes/Post_Types.php:39
+msgid "Add New"
+msgstr "إضافة جديد"
+
+#: includes/Post_Types.php:40
+msgid "Edit Documentation"
+msgstr "تعديل التوثيق"
+
+#: includes/Post_Types.php:41
+msgid "Update Documentation"
+msgstr "تحديث التوثيق"
+
+#: includes/Post_Types.php:42
+msgid "Search Documentation"
+msgstr "بحث الوثائق"
+
+#: includes/Post_Types.php:43
+msgid "Not documentation found"
+msgstr "لم يتم العثور على وثائق"
+
+#: includes/Post_Types.php:44
+msgid "Not found in Trash"
+msgstr "غير موجود في سلة المهملات"
+
+#: includes/Post_Types.php:86
+msgid "All Tags"
+msgstr "كل العلامات"
+
+#: includes/Post_Types.php:87
+msgid "Parent Tag"
+msgstr "الوسم الأصل"
+
+#: includes/Post_Types.php:88
+msgid "Parent Tag:"
+msgstr "الوسم الأصل:"
+
+#: includes/Post_Types.php:89
+msgid "New Tag"
+msgstr "وسم جديد"
+
+#: includes/Post_Types.php:90
+msgid "Add New Item"
+msgstr "إضافة عنصر جديد"
+
+#: includes/Post_Types.php:91
+msgid "Edit Tag"
+msgstr "تعديل الوسم"
+
+#: includes/Post_Types.php:92
+msgid "Update Tag"
+msgstr "تحديث العلامة"
+
+#: includes/Post_Types.php:93
+msgid "View Tag"
+msgstr "عرض العلامة"
+
+#: includes/Post_Types.php:94
+msgid "Separate items with commas"
+msgstr "افصل العناصر بفواصل"
+
+#: includes/Post_Types.php:95
+msgid "Add or remove items"
+msgstr "إضافة أو حذف العناصر"
+
+#: includes/Post_Types.php:96
+msgid "Choose from the most used"
+msgstr "اختر من بين الأكثر استخدامًا"
+
+#: includes/Post_Types.php:97
+msgid "Popular Tags"
+msgstr "الوسوم الشائعة"
+
+#: includes/Post_Types.php:98
+msgid "Search Tags"
+msgstr "بحث الوسوم"
+
+#: includes/Post_Types.php:99
+msgid "Not Found"
+msgstr "غير موجود"
+
+#: includes/Post_Types.php:100
+msgid "No items"
+msgstr "لا توجد عناصر"
+
+#: includes/Post_Types.php:101
+msgid "Tags list"
+msgstr "قائمة الوسوم"
+
+#: includes/Post_Types.php:102
+msgid "Tags list navigation"
+msgstr "تنقل قائمة الوسوم"
+
+#: includes/Shortcode.php:46
+msgid "View Details"
+msgstr "عرض التفاصيل"
+
+#: includes/Widget.php:13
+msgid "Document Search Widget"
+msgstr "أداة البحث عن الوثائق"
+
+#: includes/Widget.php:16
+msgid "weDocs Document Search"
+msgstr "بحث عن الوثائق weDocs"
+
+#: includes/Widget.php:36
+msgid "All Docs"
+msgstr "كل الوثائق"
+
+#: includes/Widget.php:68
+msgid "Documentation Search"
+msgstr "بحث التوثيق"
+
+#: includes/Widget.php:70
+msgid "Title:"
+msgstr "العنوان:"
+
+#: includes/functions.php:85
+msgid "Home"
+msgstr "الرئيسية"
+
+#: includes/functions.php:177
+msgid "Doc navigation"
+msgstr "التنقل بين التوثيقات"
+
+#: includes/functions.php:343
+msgid "[%1$s] New Doc Feedback: \"%2$s\""
+msgstr "[%1$s] ملاحظات توثيقية جديدة: \"%2$s\""
+
+#: includes/functions.php:345
+msgid "New feedback on your doc \"%s\""
+msgstr "ملاحظة جديدة على توثيقك \"%s\""
+
+#: includes/functions.php:346
+msgid "Author: %1$s (IP: %2$s)"
+msgstr "الكاتب: %1$s (IP: %2$s)"
+
+#: includes/functions.php:347
+msgid "Email: %s"
+msgstr "البريد الإلكتروني: %s"
+
+#: includes/functions.php:348
+msgid "Feedback: %s"
+msgstr "ردود الفعل: %s"
+
+#: includes/functions.php:349
+msgid "Doc Permalink: %s"
+msgstr "الرابط الثابت للوثيقة: %s"
+
+#: includes/functions.php:350
+msgid "Edit Doc: %s"
+msgstr "تعديل التوثيق: %s"
+
+#: templates/content-feedback.php:8
+msgid "%d person found this useful"
+msgid_plural "%d persons found this useful"
+msgstr[0] "%d شخصاً وجدوا هذا مفيداً"
+msgstr[1] "%d شخصاً وجدوا هذا مفيداً"
+msgstr[2] "%d شخصاً وجدوا هذا مفيداً"
+msgstr[3] "%d شخصاً وجدوا هذا مفيداً"
+msgstr[4] "%d شخصاً وجدوا هذا مفيداً"
+msgstr[5] "%d شخصاً وجدوا هذا مفيداً"
+
+#: templates/content-feedback.php:8 templates/content-feedback.php:9
+msgid "No votes yet"
+msgstr "لا توجد أصوات حتى الآن"
+
+#: templates/content-feedback.php:9
+msgid "%d person found this not useful"
+msgid_plural "%d persons found this not useful"
+msgstr[0] "%d شخصاً وجدوا هذا غير مفيد"
+msgstr[1] "%d شخصاً وجدوا هذا غير مفيد"
+msgstr[2] "%d شخصاً وجدوا هذا غير مفيد"
+msgstr[3] "%d شخصاً وجدوا هذا غير مفيد"
+msgstr[4] "%d شخصاً وجدوا هذا غير مفيد"
+msgstr[5] "%d شخصاً وجدوا هذا غير مفيد"
+
+#: templates/content-feedback.php:12
+msgid "Was this article helpful to you?"
+msgstr "هل كانت هذه المقالة مفيدة لك؟"
+
+#: templates/content-feedback.php:16
+msgid "Yes"
+msgstr "نعم"
+
+#: templates/content-feedback.php:23
+msgid "No"
+msgstr "لا"
+
+#: templates/content-modal.php:14 templates/single-docs.php:81
+msgid "How can we help?"
+msgstr "كيف يمكننا المساعدة؟"
+
+#: templates/content-modal.php:22
+msgid "Name"
+msgstr "الاسم"
+
+#: templates/content-modal.php:30
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: templates/content-modal.php:38
+msgid "subject"
+msgstr "موضوع"
+
+#: templates/content-modal.php:46
+msgid "message"
+msgstr "رسالة"
+
+#: templates/content-modal.php:54
+msgid "Send"
+msgstr "إرسال"
+
+#: templates/single-docs.php:39
+msgid "Print this article"
+msgstr "اطبع هذه المقالة"
+
+#. translators: %s: Name of current post.
+#: templates/single-docs.php:47
+msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "تابع القراءة %s <span class=\"meta-nav\">&larr;</span>"
+
+#: templates/single-docs.php:52
+msgid "Docs:"
+msgstr "الوثائق:"
+
+#: templates/single-docs.php:60
+msgid "Articles"
+msgstr "مقالات"
+
+#: templates/single-docs.php:81
+msgid "Still stuck?"
+msgstr "لا تزال عالقاً؟"
+
+#: templates/single-docs.php:91
+msgid "Updated on %s"
+msgstr "تم تحديثه في %s"
+
+#: vendor/appsero/client/src/Insights.php:369
+msgid ""
+"Want to help make <strong>%1$s</strong> even more awesome? Allow %1$s to "
+"collect non-sensitive diagnostic data and usage information."
+msgstr ""
+"تريد المساعدة في جعل <strong>%1$s</strong> أكثر روعة؟ اسمح %1$s بيانات "
+"التشخيص غير الحساسة ومعلومات الاستخدام."
+
+#: vendor/appsero/client/src/Insights.php:374
+msgid "what we collect"
+msgstr "ما نجمعه"
+
+#: vendor/appsero/client/src/Insights.php:381
+msgid "Allow"
+msgstr "السماح"
+
+#: vendor/appsero/client/src/Insights.php:382
+msgid "No thanks"
+msgstr "لا شكراً"
+
+#: vendor/appsero/client/src/Insights.php:747
+msgid "If you have a moment, please let us know why you are deactivating:"
+msgstr "إذا كان لديك بعض الوقت، فيرجى إخبارنا بسبب إلغاء التنشيط:"
+
+#: vendor/appsero/client/src/Insights.php:762
+msgid "I rather wouldn't say"
+msgstr "أفضل أن لا أقول"
+
+#: vendor/appsero/client/src/Insights.php:763
+msgid "Submit & Deactivate"
+msgstr "إرسال وإلغاء التفعيل"
+
+#: vendor/appsero/client/src/Insights.php:764
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:38
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:20
+msgid "Basic Settings"
+msgstr "الإعدادات الأساسية"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:42
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:24
+msgid "Advanced Settings"
+msgstr "إعدادات متقدمة"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:58
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:36
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:111
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:187
+msgid "Text Input"
+msgstr "حقل نص"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:59
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:37
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:112
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:188
+msgid "Text input description"
+msgstr "وصف إدخال النص"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:60
+msgid "Text Input placeholder"
+msgstr "عنصر نائب للحقل النصي"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:67
+msgid "Number Input"
+msgstr "إدخال رقم"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:68
+msgid "Number field with validation callback `floatval`"
+msgstr "حقل الرقم مع استدعاء التحقق من الصحة `floatval`"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:69
+msgid "1.99"
+msgstr "1.99"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:79
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:43
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:118
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:194
+msgid "Textarea Input"
+msgstr "إدخال Textarea"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:80
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:44
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:119
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:195
+msgid "Textarea description"
+msgstr "وصف Textarea"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:81
+msgid "Textarea placeholder"
+msgstr "عنصر نائب Textarea"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:86
+msgid ""
+"HTML area description. You can use any <strong>bold</strong> or other HTML "
+"elements."
+msgstr ""
+"وصف منطقة HTML. يمكنك استخدام أي <strong>bold</ strong> أو عناصر HTML أخرى."
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:91
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:49
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:124
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:200
+msgid "Checkbox"
+msgstr "خانة اختيار"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:92
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:50
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:125
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:201
+msgid "Checkbox Label"
+msgstr "تسمية خانة الاختيار"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:97
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:55
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:130
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:206
+msgid "Radio Button"
+msgstr "زر راديو"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:98
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:56
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:131
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:207
+msgid "A radio button"
+msgstr "زر اختيار"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:107
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:77
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:154
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:228
+msgid "A Dropdown"
+msgstr "قائمة منسدلة"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:108
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:78
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:155
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:229
+msgid "Dropdown description"
+msgstr "وصف القائمة المنسدلة"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:118
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:144
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:88
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:164
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:238
+msgid "Password"
+msgstr "كلمة المرور"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:119
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:145
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:89
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:165
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:239
+msgid "Password description"
+msgstr "وصف كلمة المرور"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:125
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:95
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:171
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:245
+msgid "File"
+msgstr "ملف"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:126
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:96
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:172
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:246
+msgid "File description"
+msgstr "وصف الملف"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:137
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:102
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:178
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:252
+msgid "Color"
+msgstr "لون"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:138
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:103
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:179
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:253
+msgid "Color description"
+msgstr "وصف اللون"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:151
+msgid "Advanced Editor"
+msgstr "محرر متقدم"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:152
+msgid "WP_Editor description"
+msgstr "وصف WP_Editor"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:158
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:65
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:141
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:216
+msgid "Multile checkbox"
+msgstr "مربع اختيار متعدد"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:159
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:66
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:142
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:217
+msgid "Multi checkbox description"
+msgstr "وصف مربع اختيار متعدد"
+
+#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:28
+msgid "Other Settings"
+msgstr "إعدادات أخرى"
+
+#: vendor/tareq1988/wordpress-settings-api-class/src/class.settings-api.php:370
+msgid "Choose File"
+msgstr "اختر ملف"
+
+#. Plugin URI of the plugin/theme
+msgid "http://wedevs.com/"
+msgstr "http://wedevs.com/"
+
+#. Description of the plugin/theme
+msgid "A documentation plugin for WordPress"
+msgstr "ملحق التوثيق لـ WordPress"
+
+#. Author of the plugin/theme
+msgid "Tareq Hasan"
+msgstr "طارق حسن"
+
+#. Author URI of the plugin/theme
+msgid "https://tareq.co/"
+msgstr "https://tareq.co/"
+
+#: includes/Post_Types.php:32
+msgctxt "Post Type General Name"
+msgid "Docs"
+msgstr "الوثائق"
+
+#: includes/Post_Types.php:33
+msgctxt "Post Type Singular Name"
+msgid "Doc"
+msgstr "توثيق"
+
+#: includes/Post_Types.php:83
+msgctxt "Taxonomy General Name"
+msgid "Tags"
+msgstr "الوسوم"
+
+#: includes/Post_Types.php:84
+msgctxt "Taxonomy Singular Name"
+msgid "Tag"
+msgstr "وسم"
+
+#: includes/Widget.php:47 includes/Widget.php:48
+msgctxt "label"
+msgid "Search for:"
+msgstr "البحث عن:"
+
+#: includes/Widget.php:48
+msgctxt "placeholder"
+msgid "Documentation Search &hellip;"
+msgstr "بحث التوثيق &hellip;"
+
+#: includes/Widget.php:54
+msgctxt "submit button"
+msgid "Search"
+msgstr "بحث"
+
+#: templates/single-docs.php:71
+msgctxt "Used before tag names."
+msgid "Tags"
+msgstr "الوسوم"
