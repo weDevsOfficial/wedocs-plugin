@@ -98,13 +98,13 @@ class Docs_List_Table {
         if ( isset( $vars['post_type'] ) && 'docs' == $vars['post_type'] ) {
             // Check if 'orderby' is set to 'duration'.
             if ( isset( $vars['orderby'] ) && 'votes' == $vars['orderby'] ) {
-                $vars = array_merge( 
+                $vars = array_merge(
                     $vars,
                     [
                         'meta_key' => 'positive',
                         'orderby'  => 'meta_value_num',
                     ]
-                  );
+                );
             }
         }
 

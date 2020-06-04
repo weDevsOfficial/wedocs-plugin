@@ -3,6 +3,7 @@
 namespace WeDevs\WeDocs\API;
 
 use WP_Error;
+use WP_Query;
 use WP_REST_Controller;
 use WP_REST_Server;
 
@@ -260,7 +261,7 @@ class API extends WP_REST_Controller {
             }
         }
 
-        $query  = new \WP_Query( $args );
+        $query  = new WP_Query( $args );
         $docs   = $query->get_posts();
         $result = [];
 
@@ -276,7 +277,7 @@ class API extends WP_REST_Controller {
             // Out-of-bounds, run the query again without LIMIT for total count.
             unset( $args['paged'] );
 
-            $count_query = new \WP_Query();
+            $count_query = new WP_Query();
             $count_query->query( $args );
             $total_posts = $count_query->found_posts;
         }

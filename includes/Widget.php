@@ -13,7 +13,7 @@ class Widget extends \WP_Widget {
             'description' => __( 'Document Search Widget', 'wedocs' ),
         ];
 
-        parent::__construct( 'wedocs-search-widget', __( 'weDocs Document Search' ), $widget_ops );
+        parent::__construct( 'wedocs-search-widget', __( 'weDocs Document Search', 'wedocs' ), $widget_ops );
     }
 
     /**
@@ -44,14 +44,14 @@ class Widget extends \WP_Widget {
 
         $form = '<form role="search" method="get" class="search-form wedocs-search-form" action="' . esc_url( home_url( '/' ) ) . '">
             <div class="wedocs-search-input">
-                <span class="screen-reader-text">' . _x( 'Search for:', 'label' ) . '</span>
-                <input type="search" class="search-field" placeholder="' . esc_attr_x( 'Documentation Search &hellip;', 'placeholder' ) . '" value="' . get_search_query() . '" name="s" title="' . esc_attr_x( 'Search for:', 'label' ) . '" />
+                <span class="screen-reader-text">' . _x( 'Search for:', 'label', 'wedocs' ) . '</span>
+                <input type="search" class="search-field" placeholder="' . esc_attr_x( 'Documentation Search &hellip;', 'placeholder', 'wedocs' ) . '" value="' . get_search_query() . '" name="s" title="' . esc_attr_x( 'Search for:', 'label', 'wedocs' ) . '" />
                 <input type="hidden" name="post_type" value="docs" />
             </div>
             <div class="wedocs-search-in">
             ' . wp_dropdown_pages( $dropdown_args ) . '
             </div>
-            <input type="submit" class="search-submit" value="' . esc_attr_x( 'Search', 'submit button' ) . '" />
+            <input type="submit" class="search-submit" value="' . esc_attr_x( 'Search', 'submit button', 'wedocs' ) . '" />
         </form>';
 
         echo $form;
