@@ -32,7 +32,8 @@ class Frontend {
         add_action( 'pre_get_posts', [ $this, 'docs_search_filter' ] );
 
         // Loads frontend scripts and styles
-        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+        add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ], 9 );
+        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_single_scripts' ], 9 );
 
         // override the theme template
         add_filter( 'template_include', [ $this, 'template_loader' ], 20 );
@@ -59,19 +60,46 @@ class Frontend {
      * @uses wp_localize_script()
      * @uses wp_enqueue_style
      */
-    public function enqueue_scripts() {
+    public function register_scripts() {
         // All styles goes here
-        wp_enqueue_style( 'wedocs-styles', WEDOCS_ASSETS . '/css/frontend.css', [], filemtime( WEDOCS_PATH . '/assets/css/frontend.css' ) );
+        wp_register_style( 'wedocs-styles', WEDOCS_ASSETS . '/css/frontend.css', [], filemtime( WEDOCS_PATH . '/assets/css/frontend.css' ) );
 
         // All scripts goes here
-        wp_enqueue_script( 'wedocs-anchorjs', WEDOCS_ASSETS . '/js/anchor.min.js', [ 'jquery' ], WEDOCS_VERSION, true );
-        wp_enqueue_script( 'wedocs-scripts', WEDOCS_ASSETS . '/js/frontend.js', [ 'jquery', 'wedocs-anchorjs' ], filemtime( WEDOCS_PATH . '/assets/js/frontend.js' ), true );
+        wp_register_script( 'wedocs-anchorjs', WEDOCS_ASSETS . '/js/anchor.min.js', [ 'jquery' ], WEDOCS_VERSION, true );
+        wp_register_script( 'wedocs-scripts', WEDOCS_ASSETS . '/js/frontend.js', [ 'jquery', 'wedocs-anchorjs' ], filemtime( WEDOCS_PATH . '/assets/js/frontend.js' ), true );
         wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', [
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'nonce'   => wp_create_nonce( 'wedocs-ajax' ),
             'style'   => WEDOCS_ASSETS . '/css/print.css',
             'powered' => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs', 'wedocs' ), home_url() ),
         ] );
+    }
+
+    /**
+     * Enqueue scripts only for singular docs
+     *
+     * @since 1.6.1
+     *
+     * @return void
+     */
+    public function enqueue_single_scripts() {
+        if ( is_singular( 'docs' ) ) {
+            self::enqueue_assets();
+        }
+    }
+
+    /**
+     * Enqueue the scripts and styles
+     *
+     * @since 1.6.1
+     *
+     * @return void
+     */
+    public static function enqueue_assets() {
+        wp_enqueue_style( 'wedocs-styles' );
+
+        wp_enqueue_script( 'wedocs-anchorjs' );
+        wp_enqueue_script( 'wedocs-scripts' );
     }
 
     /**
