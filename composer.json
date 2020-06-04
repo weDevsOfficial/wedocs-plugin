@@ -19,5 +19,9 @@
       "WeDevs\\WeDocs\\": "includes/"
     },
     "files": [ "includes/functions.php" ]
+  },
+  "require-dev": {
+    "phpunit/phpunit": "7.5.9",
+    "tareq1988/wp-php-cs-fixer": "dev-master"
   }
 }

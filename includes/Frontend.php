@@ -2,6 +2,8 @@
 
 namespace WeDevs\WeDocs;
 
+use WP_Query;
+
 /**
  * Frontend Handler Class
  */
@@ -24,7 +26,7 @@ class Frontend {
     /**
      * Class Constructor
      */
-    function __construct() {
+    public function __construct() {
 
         // filter the search result
         add_action( 'pre_get_posts', [ $this, 'docs_search_filter' ] );
@@ -75,7 +77,7 @@ class Frontend {
     /**
      * Handle the search filtering in search page.
      *
-     * @param \WP_Query $query
+     * @param WP_Query $query
      *
      * @return void
      */

@@ -17,7 +17,7 @@ class Post_Types {
     /**
      * Initialize the class
      */
-    function __construct() {
+    public function __construct() {
         add_action( 'init', [ $this, 'register_post_type' ] );
         add_action( 'init', [ $this, 'register_taxonomy' ] );
     }

@@ -46,7 +46,7 @@ get_header(); ?>
                                 /* translators: %s: Name of current post. */
                                 wp_kses( __( 'Continue reading %s <span class="meta-nav">&rarr;</span>', 'wedocs' ), [ 'span' => [ 'class' => [] ] ] ),
                                 the_title( '<span class="screen-reader-text">"', '"</span>', false )
-                             ) );
+                            ) );
 
                             wp_link_pages( [
                                 'before' => '<div class="page-links">' . esc_html__( 'Docs:', 'wedocs' ),
@@ -70,8 +70,9 @@ get_header(); ?>
                                 printf( '<span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span>',
                                     _x( 'Tags', 'Used before tag names.', 'wedocs' ),
                                     $tags_list
-                                 );
-                            } ?>
+                                );
+                            }
+                        ?>
                     </div><!-- .entry-content -->
 
                     <footer class="entry-footer wedocs-entry-footer">
