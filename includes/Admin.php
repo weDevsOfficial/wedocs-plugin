@@ -12,7 +12,7 @@ class Admin {
     /**
      * Initialize the class
      */
-    function __construct() {
+    public function __construct() {
         new Admin\Admin();
         new Admin\Settings();
         new Admin\Docs_List_Table();

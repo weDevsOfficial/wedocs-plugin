@@ -11,7 +11,7 @@ Text Domain: wedocs
 Domain Path: /languages
 */
 
-/**
+/*
  * Copyright (c) 2020 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
  *
  * Released under the GPL license
@@ -104,7 +104,6 @@ final class WeDocs {
 
         add_action( 'after_setup_theme', [ $this, 'init_classes' ] );
     }
-
 
     /**
      * Initializes the WeDocs() class.
@@ -261,7 +260,6 @@ final class WeDocs {
     public function theme_dir_path() {
         return $this->theme_dir_path;
     }
-
 } // WeDocs
 
 /**

@@ -2,8 +2,6 @@
 
 namespace WeDevs\WeDocs\Admin;
 
-use WeDevs_Settings_API;
-
 /**
  * Admin Class.
  */
