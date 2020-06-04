@@ -23,6 +23,8 @@ class Shortcode {
      * @return string
      */
     public function shortcode( $atts, $content = '' ) {
+        Frontend::enqueue_assets();
+
         ob_start();
         self::wedocs( $atts );
         $content .= ob_get_clean();
