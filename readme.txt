@@ -3,9 +3,9 @@ Contributors: tareq1988, wedevs
 Donate link: https://tareq.co/donate/
 Tags: document, documentation, knowledge base, knowledgebase, support, faq
 Requires at least: 4.6
-Tested up to: 5.3
+Tested up to: 5.4
 Requires PHP: 5.4
-Stable tag: 1.6
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,12 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 9. Search widget in frontend
 
 == Changelog ==
+
+= v1.6.1 (5th June, 2020) =
+
+ * **New:** Load CSS and JS files only for Docs. Fixes [#104](https://github.com/tareq1988/wedocs-plugin/issues/104)
+ * **Fix:** Added missing textdomains. Fixes [#105](https://github.com/tareq1988/wedocs-plugin/issues/105)
+ * **Fix:** Fix search API. Was breaking due to namespace issue with WP_Query. Fixes [#108](https://github.com/tareq1988/wedocs-plugin/issues/108)
 
 = v1.6 (8 April, 2020) =
 

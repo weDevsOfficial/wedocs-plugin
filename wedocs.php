@@ -3,7 +3,7 @@
 Plugin Name: weDocs
 Plugin URI: http://wedevs.com/
 Description: A documentation plugin for WordPress
-Version: 1.6.0
+Version: 1.6.1
 Author: Tareq Hasan
 Author URI: https://tareq.co/
 License: GPL2
@@ -56,7 +56,7 @@ final class WeDocs {
      *
      * @var string
      */
-    const VERSION = '1.6.0';
+    const VERSION = '1.6.1';
 
     /**
      * The plugin url.
