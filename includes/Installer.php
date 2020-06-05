@@ -2,6 +2,8 @@
 
 namespace WeDevs\WeDocs;
 
+use WP_Query;
+
 /**
  * Installer Class
  */
@@ -63,7 +65,7 @@ class Installer {
         }
 
         // skip if there's a page already with [wedocs] shortcode
-        $pages_query = new \WP_Query( [
+        $pages_query = new WP_Query( [
             'post_type'      => 'page',
             'posts_per_page' => -1,
             's'              => '[wedocs',

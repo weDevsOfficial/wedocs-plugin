@@ -2,10 +2,12 @@
 
 namespace WeDevs\WeDocs;
 
+use Walker_Page;
+
 /**
  * weDocs Docs Walker.
  */
-class Walker extends \Walker_Page {
+class Walker extends Walker_Page {
 
     /**
      * Initialize the class

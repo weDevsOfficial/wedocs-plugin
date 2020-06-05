@@ -10,7 +10,7 @@ class API {
     /**
      * Initialize the class
      */
-    function __construct() {
+    public function __construct() {
         add_action( 'rest_api_init', [ $this, 'init_api' ] );
 
         add_filter( 'rest_prepare_docs', [ $this, 'set_pagination' ], 10, 3 );
