@@ -1,0 +1,19 @@
+{
+  "exclude": [
+    ".gitignore",
+    ".editorconfig",
+    ".php_cs",
+    ".phpcs.xml.dist",
+    ".svnignore",
+    ".travis.yml",
+    "LICENSE",
+    "Gruntfile.js",
+    "readme.md",
+    "appsero.json",
+    "composer.json",
+    "composer.lock",
+    "package.json",
+    "package.lock",
+    "phpunit.xml.dist"
+  ]
+}

@@ -2,9 +2,9 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 1.6.0\n"
+"Project-Id-Version: weDocs 1.6.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
-"POT-Creation-Date: 2020-04-08 13:51:32+00:00\n"
+"POT-Creation-Date: 2020-06-05 00:03:12+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,23 +13,23 @@ msgstr ""
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: includes/API/API.php:49
+#: includes/API/API.php:51
 msgid "Email address of the author."
 msgstr ""
 
-#: includes/API/API.php:96
+#: includes/API/API.php:98
 msgid "Limit results to those matching a string."
 msgstr ""
 
-#: includes/API/API.php:103
+#: includes/API/API.php:105
 msgid "The ID for the parent of the object."
 msgstr ""
 
-#: includes/API/API.php:108
+#: includes/API/API.php:110
 msgid "Current page of the collection."
 msgstr ""
 
-#: includes/API/API.php:116
+#: includes/API/API.php:118
 msgid "Maximum number of items to be returned in result set."
 msgstr ""
 
@@ -47,174 +47,6 @@ msgstr ""
 
 #: includes/API/API.php:392
 msgid "Invalid doc ID."
-msgstr ""
-
-#: includes/Admin/Admin.php:46
-msgid "Enter doc title"
-msgstr ""
-
-#: includes/Admin/Admin.php:47
-msgid "Write something"
-msgstr ""
-
-#: includes/Admin/Admin.php:48
-msgid "Enter section title"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "weDocs"
-msgstr ""
-
-#: includes/Admin/Admin.php:73 includes/functions.php:102
-msgid "Docs"
-msgstr ""
-
-#: includes/Admin/Admin.php:74 includes/Post_Types.php:85
-msgid "Tags"
-msgstr ""
-
-#: includes/Admin/Admin.php:122
-msgid ""
-"Thank you for using <strong>weDocs</strong>. Please leave us a "
-"%s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
-msgstr ""
-
-#: includes/Admin/Admin.php:122
-msgid "Thanks :)"
-msgstr ""
-
-#: includes/Admin/Admin.php:133
-msgid "Thank you for using <strong>weDocs</strong>."
-msgstr ""
-
-#: includes/Admin/Admin.php:136
-msgid "Use the <a href=\"%s\">classic UI</a>."
-msgstr ""
-
-#: includes/Admin/Docs_List_Table.php:27
-msgid "Helpfulness"
-msgstr ""
-
-#: includes/Admin/Docs_List_Table.php:67
-msgid "Votes"
-msgstr ""
-
-#: includes/Admin/Settings.php:44
-msgid "weDocs Settings"
-msgstr ""
-
-#: includes/Admin/Settings.php:44
-msgid "Settings"
-msgstr ""
-
-#: includes/Admin/Settings.php:56
-msgid "Plugin Settings"
-msgstr ""
-
-#: includes/Admin/Settings.php:73
-msgid "Docs Home"
-msgstr ""
-
-#: includes/Admin/Settings.php:74
-msgid ""
-"Home page for docs page. Preferably use <code>[wedocs]</code> <a "
-"href=\"%s\" target=\"_blank\">shortcode</a> or design your own."
-msgstr ""
-
-#: includes/Admin/Settings.php:80
-msgid "Email feedback"
-msgstr ""
-
-#: includes/Admin/Settings.php:81
-msgid "Enable Email feedback form"
-msgstr ""
-
-#: includes/Admin/Settings.php:87
-msgid "Email Address"
-msgstr ""
-
-#: includes/Admin/Settings.php:88
-msgid "The email address where the feedbacks should sent to"
-msgstr ""
-
-#: includes/Admin/Settings.php:95
-msgid "Helpful feedback"
-msgstr ""
-
-#: includes/Admin/Settings.php:96
-msgid "Enable helpful feedback links"
-msgstr ""
-
-#: includes/Admin/Settings.php:102
-msgid "Comments"
-msgstr ""
-
-#: includes/Admin/Settings.php:103
-msgid "Allow Comments"
-msgstr ""
-
-#: includes/Admin/Settings.php:109
-msgid "Print article"
-msgstr ""
-
-#: includes/Admin/Settings.php:110
-msgid "Enable article printing"
-msgstr ""
-
-#: includes/Admin/Settings.php:142
-msgid "&mdash; Select Page &mdash;"
-msgstr ""
-
-#: includes/Admin/views/admin.php:3
-msgid "Documentations"
-msgstr ""
-
-#: includes/Admin/views/admin.php:3
-msgid "Add Doc"
-msgstr ""
-
-#: includes/Admin/views/admin.php:16
-msgid "Preview the doc"
-msgstr ""
-
-#: includes/Admin/views/admin.php:17
-msgid "Delete this doc"
-msgstr ""
-
-#: includes/Admin/views/admin.php:30
-msgid "Re-order this section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:31
-msgid "Preview the section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:32
-msgid "Delete this section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:33
-msgid "Add a new article"
-msgstr ""
-
-#: includes/Admin/views/admin.php:46 includes/Admin/views/admin.php:57
-msgid "Preview the article"
-msgstr ""
-
-#: includes/Admin/views/admin.php:47 includes/Admin/views/admin.php:58
-msgid "Delete this article"
-msgstr ""
-
-#: includes/Admin/views/admin.php:69
-msgid "Add Section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:75
-msgid "No docs has been found. Perhaps %s?"
-msgstr ""
-
-#: includes/Admin/views/admin.php:75
-msgid "create one"
 msgstr ""
 
 #: includes/Ajax.php:89
@@ -245,7 +77,7 @@ msgstr ""
 msgid "Thanks for your feedback."
 msgstr ""
 
-#: includes/Frontend.php:71
+#: includes/Frontend.php:74
 msgid "Powered by weDocs"
 msgstr ""
 
@@ -291,6 +123,10 @@ msgstr ""
 
 #: includes/Post_Types.php:44
 msgid "Not found in Trash"
+msgstr ""
+
+#: includes/Post_Types.php:85 includes/admin/Admin.php:72
+msgid "Tags"
 msgstr ""
 
 #: includes/Post_Types.php:86
@@ -361,7 +197,7 @@ msgstr ""
 msgid "Tags list navigation"
 msgstr ""
 
-#: includes/Shortcode.php:46
+#: includes/Shortcode.php:48
 msgid "View Details"
 msgstr ""
 
@@ -383,6 +219,170 @@ msgstr ""
 
 #: includes/Widget.php:70
 msgid "Title:"
+msgstr ""
+
+#: includes/admin/Admin.php:44
+msgid "Enter doc title"
+msgstr ""
+
+#: includes/admin/Admin.php:45
+msgid "Write something"
+msgstr ""
+
+#: includes/admin/Admin.php:46
+msgid "Enter section title"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "weDocs"
+msgstr ""
+
+#: includes/admin/Admin.php:71 includes/functions.php:102
+msgid "Docs"
+msgstr ""
+
+#: includes/admin/Admin.php:120
+msgid ""
+"Thank you for using <strong>weDocs</strong>. Please leave us a "
+"%s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
+msgstr ""
+
+#: includes/admin/Admin.php:120
+msgid "Thanks :)"
+msgstr ""
+
+#: includes/admin/Admin.php:131
+msgid "Thank you for using <strong>weDocs</strong>."
+msgstr ""
+
+#: includes/admin/Admin.php:134
+msgid "Use the <a href=\"%s\">classic UI</a>."
+msgstr ""
+
+#: includes/admin/Docs_List_Table.php:27
+msgid "Helpfulness"
+msgstr ""
+
+#: includes/admin/Docs_List_Table.php:67
+msgid "Votes"
+msgstr ""
+
+#: includes/admin/Settings.php:44
+msgid "weDocs Settings"
+msgstr ""
+
+#: includes/admin/Settings.php:44
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/Settings.php:56
+msgid "Plugin Settings"
+msgstr ""
+
+#: includes/admin/Settings.php:73
+msgid "Docs Home"
+msgstr ""
+
+#: includes/admin/Settings.php:74
+msgid ""
+"Home page for docs page. Preferably use <code>[wedocs]</code> <a "
+"href=\"%s\" target=\"_blank\">shortcode</a> or design your own."
+msgstr ""
+
+#: includes/admin/Settings.php:80
+msgid "Email feedback"
+msgstr ""
+
+#: includes/admin/Settings.php:81
+msgid "Enable Email feedback form"
+msgstr ""
+
+#: includes/admin/Settings.php:87
+msgid "Email Address"
+msgstr ""
+
+#: includes/admin/Settings.php:88
+msgid "The email address where the feedbacks should sent to"
+msgstr ""
+
+#: includes/admin/Settings.php:95
+msgid "Helpful feedback"
+msgstr ""
+
+#: includes/admin/Settings.php:96
+msgid "Enable helpful feedback links"
+msgstr ""
+
+#: includes/admin/Settings.php:102
+msgid "Comments"
+msgstr ""
+
+#: includes/admin/Settings.php:103
+msgid "Allow Comments"
+msgstr ""
+
+#: includes/admin/Settings.php:109
+msgid "Print article"
+msgstr ""
+
+#: includes/admin/Settings.php:110
+msgid "Enable article printing"
+msgstr ""
+
+#: includes/admin/Settings.php:142
+msgid "&mdash; Select Page &mdash;"
+msgstr ""
+
+#: includes/admin/views/admin.php:3
+msgid "Documentations"
+msgstr ""
+
+#: includes/admin/views/admin.php:3
+msgid "Add Doc"
+msgstr ""
+
+#: includes/admin/views/admin.php:16
+msgid "Preview the doc"
+msgstr ""
+
+#: includes/admin/views/admin.php:17
+msgid "Delete this doc"
+msgstr ""
+
+#: includes/admin/views/admin.php:30
+msgid "Re-order this section"
+msgstr ""
+
+#: includes/admin/views/admin.php:31
+msgid "Preview the section"
+msgstr ""
+
+#: includes/admin/views/admin.php:32
+msgid "Delete this section"
+msgstr ""
+
+#: includes/admin/views/admin.php:33
+msgid "Add a new article"
+msgstr ""
+
+#: includes/admin/views/admin.php:46 includes/admin/views/admin.php:57
+msgid "Preview the article"
+msgstr ""
+
+#: includes/admin/views/admin.php:47 includes/admin/views/admin.php:58
+msgid "Delete this article"
+msgstr ""
+
+#: includes/admin/views/admin.php:69
+msgid "Add Section"
+msgstr ""
+
+#: includes/admin/views/admin.php:75
+msgid "No docs has been found. Perhaps %s?"
+msgstr ""
+
+#: includes/admin/views/admin.php:75
+msgid "create one"
 msgstr ""
 
 #: includes/functions.php:85
@@ -449,7 +449,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/content-modal.php:14 templates/single-docs.php:81
+#: templates/content-modal.php:14 templates/single-docs.php:82
 msgid "How can we help?"
 msgstr ""
 
@@ -490,46 +490,12 @@ msgstr ""
 msgid "Articles"
 msgstr ""
 
-#: templates/single-docs.php:81
+#: templates/single-docs.php:82
 msgid "Still stuck?"
 msgstr ""
 
-#: templates/single-docs.php:91
+#: templates/single-docs.php:92
 msgid "Updated on %s"
-msgstr ""
-
-#: vendor/appsero/client/src/Insights.php:369
-msgid ""
-"Want to help make <strong>%1$s</strong> even more awesome? Allow %1$s to "
-"collect non-sensitive diagnostic data and usage information."
-msgstr ""
-
-#: vendor/appsero/client/src/Insights.php:374
-msgid "what we collect"
-msgstr ""
-
-#: vendor/appsero/client/src/Insights.php:381
-msgid "Allow"
-msgstr ""
-
-#: vendor/appsero/client/src/Insights.php:382
-msgid "No thanks"
-msgstr ""
-
-#: vendor/appsero/client/src/Insights.php:747
-msgid "If you have a moment, please let us know why you are deactivating:"
-msgstr ""
-
-#: vendor/appsero/client/src/Insights.php:762
-msgid "I rather wouldn't say"
-msgstr ""
-
-#: vendor/appsero/client/src/Insights.php:763
-msgid "Submit & Deactivate"
-msgstr ""
-
-#: vendor/appsero/client/src/Insights.php:764
-msgid "Cancel"
 msgstr ""
 
 #: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:38
