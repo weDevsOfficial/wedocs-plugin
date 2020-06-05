@@ -13,7 +13,9 @@
     "composer.json",
     "composer.lock",
     "package.json",
-    "package.lock",
-    "phpunit.xml.dist"
+    "package-lock.json",
+    "phpunit.xml.dist",
+    "bin",
+    "tests"
   ]
 }
