@@ -2,10 +2,12 @@
 
 namespace WeDevs\WeDocs\API;
 
-use WP_REST_Server;
 use WP_Error;
+use WP_Query;
+use WP_REST_Controller;
+use WP_REST_Server;
 
-class API extends \WP_REST_Controller {
+class API extends WP_REST_Controller {
 
     /**
      * Post type
@@ -125,8 +127,6 @@ class API extends \WP_REST_Controller {
             ],
         ] );
     }
-
-
 
     /**
      * [handle_feedback description].
@@ -371,11 +371,11 @@ class API extends \WP_REST_Controller {
         }
 
         if ( empty( $request['name'] ) ) {
-            return new \WP_Error( 'rest_doc_invalid_name', __( 'No name given', 'wedocs' ) );
+            return new WP_Error( 'rest_doc_invalid_name', __( 'No name given', 'wedocs' ) );
         }
 
         if ( empty( $request['email'] ) ) {
-            return new \WP_Error( 'rest_doc_invalid_email', __( 'No email given', 'wedocs' ) );
+            return new WP_Error( 'rest_doc_invalid_email', __( 'No email given', 'wedocs' ) );
         }
 
         return true;

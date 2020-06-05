@@ -104,7 +104,7 @@ class Docs_List_Table {
                         'meta_key' => 'positive',
                         'orderby'  => 'meta_value_num',
                     ]
-                 );
+                );
             }
         }
 

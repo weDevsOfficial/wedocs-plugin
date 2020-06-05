@@ -6,8 +6,7 @@ namespace WeDevs\WeDocs\Theme;
  * Twenty Seventeen Support
  */
 class Twenty_Seventeen {
-
-    function __construct() {
+    public function __construct() {
         add_filter( 'body_class', [ $this, 'body_classes' ], 99 );
 
         // remove main actions
@@ -24,7 +23,7 @@ class Twenty_Seventeen {
      *
      * @return void
      */
-    function wrapper_start() {
+    public function wrapper_start() {
         echo '<div class="wrap">';
         echo '<div id="primary" class="content-area">';
         echo '<main id="main" class="site-main" role="main">';
@@ -35,7 +34,7 @@ class Twenty_Seventeen {
      *
      * @return void
      */
-    function wrapper_end() {
+    public function wrapper_end() {
         echo '</main><!-- #main -->';
         echo '</div><!-- #primary -->';
         echo '</div><!-- .wrap -->';
@@ -48,7 +47,7 @@ class Twenty_Seventeen {
      *
      * @return array
      */
-    function body_classes( $classes ) {
+    public function body_classes( $classes ) {
         if ( is_singular( 'docs' ) && in_array( 'has-sidebar', $classes ) ) {
             $key = array_search( 'has-sidebar', $classes );
 
