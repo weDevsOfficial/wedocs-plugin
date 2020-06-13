@@ -76,7 +76,7 @@ class Shortcode {
                     'post_status'    => 'publish',
                     'orderby'        => 'menu_order',
                     'order'          => 'ASC',
-                    'posts_per_page' => (int) $args['items'],
+                    'numberposts'    => (int) $args['items'],
                 ] );
 
                 $arranged[] = [
