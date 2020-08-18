@@ -15,6 +15,7 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude('node_modules')
     ->exclude('vendors')
     ->exclude('assets')
+    ->exclude('templates')
     ->exclude('languages')
     ->in( __DIR__ )
 ;
