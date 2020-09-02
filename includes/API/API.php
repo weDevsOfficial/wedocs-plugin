@@ -68,9 +68,10 @@ class API extends WP_REST_Controller {
 
         register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)/helpfullness', [
             [
-                'methods'  => WP_REST_Server::EDITABLE,
-                'callback' => [ $this, 'update_helpfullness' ],
-                'args'     => [
+                'methods'             => WP_REST_Server::EDITABLE,
+                'callback'            => [ $this, 'update_helpfullness' ],
+                'permission_callback' => '__return_true',
+                'args'                => [
                     'type' => [
                         'required' => true,
                         'type'     => 'string',
@@ -82,16 +83,18 @@ class API extends WP_REST_Controller {
 
         register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)/parents', [
             [
-                'methods'  => WP_REST_Server::READABLE,
-                'callback' => [ $this, 'get_parents' ],
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => [ $this, 'get_parents' ],
+                'permission_callback' => '__return_true',
             ],
         ] );
 
         register_rest_route( $this->namespace, '/' . $this->rest_base . '/search', [
             [
-                'methods'  => WP_REST_Server::READABLE,
-                'callback' => [ $this, 'search_docs' ],
-                'args'     => [
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => [ $this, 'search_docs' ],
+                'permission_callback' => '__return_true',
+                'args'                => [
                     'query' => [
                         'required'          => true,
                         'type'              => 'string',
