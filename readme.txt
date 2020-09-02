@@ -5,7 +5,7 @@ Tags: document, documentation, knowledge base, knowledgebase, support, faq
 Requires at least: 4.6
 Tested up to: 5.5
 Requires PHP: 5.4
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,10 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 9. Search widget in frontend
 
 == Changelog ==
+
+= v1.6.2 (2nd Sep, 2020) =
+
+ * **Fix:** Fix REST API permission callback issue in WP 5.5.
 
 = v1.6.1 (5th June, 2020) =
 
