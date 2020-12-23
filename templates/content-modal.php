@@ -27,7 +27,7 @@ if ( is_user_logged_in() ) {
             </div>
 
             <div class="wedocs-form-row">
-                <label for="name"><?php _e( 'Email', 'wedocs' ); ?></label>
+                <label for="email"><?php _e( 'Email', 'wedocs' ); ?></label>
 
                 <div class="wedocs-form-field">
                     <input type="email" name="email" id="email" placeholder="you@example.com" value="<?php echo $email; ?>" <?php disabled( is_user_logged_in() ); ?> required />
@@ -35,7 +35,7 @@ if ( is_user_logged_in() ) {
             </div>
 
             <div class="wedocs-form-row">
-                <label for="name"><?php _e( 'subject', 'wedocs' ); ?></label>
+                <label for="subject"><?php _e( 'subject', 'wedocs' ); ?></label>
 
                 <div class="wedocs-form-field">
                     <input type="text" name="subject" id="subject" placeholder="" value="" required />
@@ -43,7 +43,7 @@ if ( is_user_logged_in() ) {
             </div>
 
             <div class="wedocs-form-row">
-                <label for="name"><?php _e( 'message', 'wedocs' ); ?></label>
+                <label for="message"><?php _e( 'message', 'wedocs' ); ?></label>
 
                 <div class="wedocs-form-field">
                     <textarea type="message" name="message" id="message" required></textarea>
