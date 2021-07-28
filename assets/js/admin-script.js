@@ -75,7 +75,9 @@ new Vue({
                 showCancelButton: true,
                 closeOnConfirm: true,
                 animation: "slide-from-top",
-                inputPlaceholder: weDocs.write_something
+                inputPlaceholder: weDocs.write_something,
+                confirmButtonText: weDocs.confirmBtn,
+                cancelButtonText: weDocs.cancelBtn
             }, function(inputValue){
                 if (inputValue === false) {
                     return false;
@@ -106,8 +108,9 @@ new Vue({
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: false
+                confirmButtonText: weDocs.delConfirmBtn,
+                closeOnConfirm: false,
+                cancelButtonText: weDocs.cancelBtn
             }, function() {
                 self.removePost(doc, docs);
             });
@@ -120,7 +123,9 @@ new Vue({
                 showCancelButton: true,
                 closeOnConfirm: true,
                 animation: "slide-from-top",
-                inputPlaceholder: weDocs.write_something
+                inputPlaceholder: weDocs.write_something,
+                confirmButtonText: weDocs.confirmBtn,
+                cancelButtonText: weDocs.cancelBtn
             }, function(inputValue){
                 if (inputValue === false) {
                     return false;
@@ -150,12 +155,13 @@ new Vue({
             var self = this;
 
             swal({
-                title: "Are you sure?",
-                text: "Are you sure to delete the entire section? Articles inside this section will be deleted too!",
+                title: weDocs.delConfirm,
+                text: weDocs.delConfirmTxt,
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: weDocs.delConfirmBtn,
+                cancelButtonText: weDocs.cancelBtn,
                 closeOnConfirm: false
             }, function() {
                 self.removePost(section, sections);
@@ -171,7 +177,9 @@ new Vue({
                 showCancelButton: true,
                 closeOnConfirm: true,
                 animation: "slide-from-top",
-                inputPlaceholder: weDocs.write_something
+                inputPlaceholder: weDocs.write_something,
+                confirmButtonText: weDocs.confirmBtn,
+                cancelButtonText: weDocs.cancelBtn
             }, function(inputValue){
                 if (inputValue === false) {
                     return false;
@@ -206,12 +214,13 @@ new Vue({
             var self = this;
 
             swal({
-                title: "Are you sure?",
-                text: "Are you sure to delete the article?",
+                title: weDocs.delConfirm,
+                text: weDocs.delConfirmTxt,
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: weDocs.delConfirmBtn,
+                cancelButtonText: weDocs.cancelBtn,
                 closeOnConfirm: false
             }, function(){
                 self.removePost(article, articles);
