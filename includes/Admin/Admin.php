@@ -44,6 +44,11 @@ class Admin {
             'enter_doc_title'     => __( 'Enter doc title', 'wedocs' ),
             'write_something'     => __( 'Write something', 'wedocs' ),
             'enter_section_title' => __( 'Enter section title', 'wedocs' ),
+            'confirmBtn'          => __( 'OK', 'wedocs' ),
+            'delConfirmBtn'       => __( 'Yes, delete it!', 'wedocs' ),
+            'cancelBtn'           => __( 'Cancel', 'wedocs' ),
+            'delConfirm'          => __( 'Are you sure?', 'wedocs' ),
+            'delConfirmTxt'       => __( 'Are you sure to delete the entire section? Articles inside this section will be deleted too!', 'wedocs' ),
         ] );
 
         wp_enqueue_style( 'sweetalert', $assets_url . '/css/sweetalert.css', false, date( 'Ymd' ) );
