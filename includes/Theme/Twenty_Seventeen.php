@@ -6,6 +6,10 @@ namespace WeDevs\WeDocs\Theme;
  * Twenty Seventeen Support
  */
 class Twenty_Seventeen {
+
+    /**
+     * Constructor
+     */
     public function __construct() {
         add_filter( 'body_class', [ $this, 'body_classes' ], 99 );
 
