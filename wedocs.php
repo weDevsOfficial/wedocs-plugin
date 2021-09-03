@@ -1,18 +1,18 @@
 <?php
 /*
 Plugin Name: weDocs
-Plugin URI: http://wedevs.com/
+Plugin URI: https://wedevs.com/
 Description: A documentation plugin for WordPress
-Version: 1.6.3
-Author: Tareq Hasan
-Author URI: https://tareq.co/
+Version: 1.7
+Author: weDevs
+Author URI: https://wedevs.com/
 License: GPL2
 Text Domain: wedocs
 Domain Path: /languages
 */
 
 /*
- * Copyright (c) 2020 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
+ * Copyright (c) 2021 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
@@ -56,7 +56,7 @@ final class WeDocs {
      *
      * @var string
      */
-    const VERSION = '1.6.3';
+    const VERSION = '1.7';
 
     /**
      * The plugin url.
