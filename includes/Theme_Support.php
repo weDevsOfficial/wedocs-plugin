@@ -12,16 +12,23 @@ class Theme_Support {
     /**
      * Theme wrapper class
      *
-     * @var \WeDevs\WeDocs\Theme_Support
+     * @var \WeDevs\WeDocs\Theme\Twenty_Seventeen
      */
     public $twenty17;
 
     /**
      * Theme wrapper class
      *
-     * @var \WeDevs\WeDocs\Theme_Support
+     * @var \WeDevs\WeDocs\Theme\Twenty_Fifteen
      */
     public $twenty15;
+
+    /**
+     * Theme wrapper class
+     *
+     * @var \WeDevs\WeDocs\Theme\Astra
+     */
+    public $astra;
 
     /**
      * Initialize the class
@@ -45,6 +52,10 @@ class Theme_Support {
 
             case 'twentyfifteen':
                 $this->twenty15 = new Theme\Twenty_Fifteen();
+                break;
+
+            case 'astra':
+                $this->astra = new Theme\Astra();
                 break;
         }
     }
