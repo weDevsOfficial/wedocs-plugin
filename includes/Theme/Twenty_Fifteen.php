@@ -6,6 +6,10 @@ namespace WeDevs\WeDocs\Theme;
  * 2015
  */
 class Twenty_Fifteen {
+
+    /**
+     * Constructor
+     */
     public function __construct() {
         // remove main actions
         remove_action( 'wedocs_before_main_content', 'wedocs_template_wrapper_start', 10 );

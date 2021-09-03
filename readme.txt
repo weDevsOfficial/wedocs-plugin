@@ -5,7 +5,7 @@ Tags: document, documentation, knowledge base, knowledgebase, support, faq
 Requires at least: 4.6
 Tested up to: 5.8
 Requires PHP: 5.4
-Stable tag: 1.6.3
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,10 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 9. Search widget in frontend
 
 == Changelog ==
+
+= v1.7 (3rd September, 2021) =
+
+ * **New:** Added Astra theme support. Single docs pages were narrow in width before, now it'll be full page width.
 
 = v1.6.3 (28th July, 2021) =
 
