@@ -35,13 +35,17 @@ class Ajax {
     public function create_doc() {
         check_ajax_referer( 'wedocs-admin-nonce' );
 
-        $title  = isset( $_POST['title'] ) ? sanitize_text_field( $_POST['title'] ) : '';
+        $title  = isset( $_POST['title'] ) ? trim( sanitize_text_field( $_POST['title'] ) ) : '';
         $status = isset( $_POST['status'] ) ? sanitize_text_field( $_POST['status'] ) : 'draft';
         $parent = isset( $_POST['parent'] ) ? absint( $_POST['parent'] ) : 0;
         $order  = isset( $_POST['order'] ) ? absint( $_POST['order'] ) : 0;
 
         $status           = 'publish';
         $post_type_object = get_post_type_object( 'docs' );
+
+        if ( '' === $title ) {
+            return wp_send_json_error();
+        }
 
         if ( ! current_user_can( $post_type_object->cap->publish_posts ) ) {
             $status = 'pending';
