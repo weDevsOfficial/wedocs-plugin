@@ -5,7 +5,7 @@ Tags: document, documentation, knowledge base, knowledgebase, support, faq
 Requires at least: 4.6
 Tested up to: 5.8
 Requires PHP: 5.4
-Stable tag: 1.7
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ Create great looking documentation for your products.
 
 Create great looking documentation for your products. Organize your product documentation in your site, beautifully!
 
-* [Documentation](https://github.com/tareq1988/wedocs-plugin/wiki)
+* [Documentation](https://wedocs.co/docs/wedocs/getting-started/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
 * [Github](https://github.com/tareq1988/wedocs-plugin/)
 
 You can host docs inside your WordPress, create/add new docs, organize with ordering, tags and even fetch docs from external sites using this plugin.
@@ -60,6 +60,11 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 9. Search widget in frontend
 
 == Changelog ==
+
+= v1.7.1 (15th November, 2021) =
+
+ * **Fix:** Upgraded to SweetAlert2 version 11.1.10
+ * **Fix:** Links in the heading (h1, h2, h3) are now hidden on printing mode
 
 = v1.7 (3rd September, 2021) =
 
