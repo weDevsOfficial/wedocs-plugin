@@ -140,9 +140,9 @@ footer.entry-footer.wedocs-entry-footer time {
   padding-bottom: 20px;
   margin-bottom: 20px;
 }
-a:link:after,
-a:visited:after {
-  content: " (" attr(href) ")";
+a:not(.anchorjs-link)::after,
+a:not(.anchorjs-link)::after {
+  content: ' (' attr(href) ')';
 }
 table,
 th,
@@ -176,4 +176,7 @@ table td {
   margin-top: 50px;
   border-top: 1px solid #ccc;
   padding-top: 30px;
+}
+.wedocs-comments-wrap {
+  display: none;
 }

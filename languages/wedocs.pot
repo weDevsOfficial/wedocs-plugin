@@ -1,10 +1,10 @@
-# Copyright (C) 2021 Tareq Hasan
+# Copyright (C) 2021 weDevs
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 1.7\n"
+"Project-Id-Version: weDocs 1.7.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
-"POT-Creation-Date: 2021-09-03 06:03:02+00:00\n"
+"POT-Creation-Date: 2021-11-15 06:30:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -239,36 +239,36 @@ msgstr ""
 msgid "create one"
 msgstr ""
 
-#: includes/Ajax.php:89
+#: includes/Ajax.php:93
 msgid "You are not allowed to delete this item."
 msgstr ""
 
-#: includes/Ajax.php:171
+#: includes/Ajax.php:175
 msgid "Sorry, you've already recorded your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:186
+#: includes/Ajax.php:190
 msgid "Thanks for your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:207
+#: includes/Ajax.php:211
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: includes/Ajax.php:214
+#: includes/Ajax.php:218
 msgid "Please provide a subject line."
 msgstr ""
 
-#: includes/Ajax.php:218
+#: includes/Ajax.php:222
 msgid "Please provide the message details."
 msgstr ""
 
-#: includes/Ajax.php:223
+#: includes/Ajax.php:227
 msgid "Thanks for your feedback."
 msgstr ""
 
 #: includes/Frontend.php:74
-msgid "Powered by weDocs"
+msgid "Powered by weDocs plugin for WordPress"
 msgstr ""
 
 #: includes/Post_Types.php:34
@@ -701,7 +701,7 @@ msgid "Choose File"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://wedevs.com/"
+msgid "https://wedocs.co/"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -709,11 +709,13 @@ msgid "A documentation plugin for WordPress"
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "Tareq Hasan"
+msgid "weDevs"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "https://tareq.co/"
+msgid ""
+"https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-"
+"uri"
 msgstr ""
 
 #: includes/Post_Types.php:32
