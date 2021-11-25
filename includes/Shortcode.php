@@ -47,9 +47,19 @@ class Shortcode {
             'items'   => 10,
             'more'    => __( 'View Details', 'wedocs' ),
         ];
+        
+        $defaults = apply_filters(
+            'wedocs/shortcode/defaults',
+            $defaults
+        );
 
         $args     = wp_parse_args( $args, $defaults );
-        $arranged = [];
+        $arranged = [];        
+        
+        $args = apply_filters(
+            'wedocs/shortcode/args',
+            $args
+        );
 
         $parent_args = [
             'post_type'   => 'docs',
@@ -64,20 +74,32 @@ class Shortcode {
         if ( !empty( $args['exclude'] ) ) {
             $parent_args['exclude'] = $args['exclude'];
         }
+        
+        $parent_args = apply_filters(
+            'wedocs/shortcode/parent_args',
+            $parent_args
+        );
 
         $parent_docs = get_pages( $parent_args );
 
         // arrange the docs
         if ( $parent_docs ) {
             foreach ( $parent_docs as $root ) {
-                $sections = get_children( [
-                    'post_parent'    => $root->ID,
-                    'post_type'      => 'docs',
-                    'post_status'    => 'publish',
-                    'orderby'        => 'menu_order',
-                    'order'          => 'ASC',
-                    'numberposts'    => (int) $args['items'],
-                ] );
+                $children_args = [
+                    'post_parent' => $root->ID,
+                    'post_type'   => 'docs',
+                    'post_status' => 'publish',
+                    'orderby'     => 'menu_order',
+                    'order'       => 'ASC',
+                    'numberposts' => (int) $args['items'],
+                ];
+                
+                $children_args = apply_filters(
+                    'wedocs/shortcode/children_args',
+                    $children_args
+                );
+                
+                $sections = get_children($children_args);
 
                 $arranged[] = [
                     'doc'      => $root,
@@ -85,12 +107,19 @@ class Shortcode {
                 ];
             }
         }
-
-        // call the template
-        wedocs_get_template( 'shortcode.php', [
+        
+        $template_args = [
             'docs' => $arranged,
             'col'  => (int) $args['col'],
             'more' => $args['more'],
-        ] );
+        ];
+        
+        $template_args = apply_filters(
+            'wedocs/shortcode/template_args',
+            $template_args
+        );
+
+        // call the template
+        wedocs_get_template( 'shortcode.php', $template_args );
     }
 }
