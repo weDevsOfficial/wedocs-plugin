@@ -75,6 +75,7 @@ class Admin {
         add_menu_page( __( 'weDocs', 'wedocs' ), __( 'weDocs', 'wedocs' ), $capability, 'wedocs', [ $this, 'page_index' ], 'dashicons-media-document', $this->get_menu_position() );
         add_submenu_page( 'wedocs', __( 'Docs', 'wedocs' ), __( 'Docs', 'wedocs' ), $capability, 'wedocs', [ $this, 'page_index' ] );
         add_submenu_page( 'wedocs', __( 'Tags', 'wedocs' ), __( 'Tags', 'wedocs' ), 'manage_categories', 'edit-tags.php?taxonomy=doc_tag&post_type=docs' );
+        add_submenu_page( 'wedocs', __( 'Latest', 'wedocs' ), __( 'Latest', 'wedocs' ), $capability, 'wedocs-latest', [ $this, 'latest_index' ] );
     }
 
     /**
@@ -105,6 +106,15 @@ class Admin {
      */
     public function page_index() {
         include __DIR__ . '/views/admin.php';
+    }
+
+    /**
+     * Latest Page handler.
+     *
+     * @return void
+     */
+    public function latest_index(){
+        include __DIR__ . '/views/latest.php';
     }
 
     /**
