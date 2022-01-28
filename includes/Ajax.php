@@ -111,7 +111,7 @@ class Ajax {
      *
      * @return void
      */
-    public function remove_child_docs( $parent_id = 0, $force_delete ) {
+    public function remove_child_docs( $parent_id, $force_delete ) {
         $childrens = get_children( [ 'post_parent' => $parent_id ] );
 
         if ( $childrens ) {
