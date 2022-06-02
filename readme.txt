@@ -3,7 +3,7 @@ Contributors: tareq1988, wedevs
 Donate link: https://tareq.co/donate/
 Tags: document, documentation, knowledge base, knowledgebase, support, faq
 Requires at least: 4.6
-Tested up to: 5.8
+Tested up to: 6.0
 Requires PHP: 5.4
 Stable tag: 1.7.1
 License: GPLv2 or later
