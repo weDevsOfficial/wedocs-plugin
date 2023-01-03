@@ -13,3 +13,6 @@ ehthumbs.db
 Thumbs.db
 /node_modules
 /vendor/
+
+.idea/
+build/
