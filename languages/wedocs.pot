@@ -1,14 +1,14 @@
-# Copyright (C) 2021 weDevs
+# Copyright (C) 2022 weDevs
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
 "Project-Id-Version: weDocs 1.7.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
-"POT-Creation-Date: 2021-11-15 06:30:07+00:00\n"
+"POT-Creation-Date: 2022-12-29 05:47:56+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
@@ -87,7 +87,7 @@ msgstr ""
 msgid "weDocs"
 msgstr ""
 
-#: includes/Admin/Admin.php:76 includes/functions.php:102
+#: includes/Admin/Admin.php:76 includes/functions.php:110
 msgid "Docs"
 msgstr ""
 
@@ -95,21 +95,21 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: includes/Admin/Admin.php:125
+#: includes/Admin/Admin.php:148
 msgid ""
 "Thank you for using <strong>weDocs</strong>. Please leave us a "
 "%s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
 msgstr ""
 
-#: includes/Admin/Admin.php:125
+#: includes/Admin/Admin.php:148
 msgid "Thanks :)"
 msgstr ""
 
-#: includes/Admin/Admin.php:136
+#: includes/Admin/Admin.php:159
 msgid "Thank you for using <strong>weDocs</strong>."
 msgstr ""
 
-#: includes/Admin/Admin.php:139
+#: includes/Admin/Admin.php:162
 msgid "Use the <a href=\"%s\">classic UI</a>."
 msgstr ""
 
@@ -185,58 +185,6 @@ msgstr ""
 
 #: includes/Admin/Settings.php:142
 msgid "&mdash; Select Page &mdash;"
-msgstr ""
-
-#: includes/Admin/views/admin.php:3
-msgid "Documentations"
-msgstr ""
-
-#: includes/Admin/views/admin.php:3
-msgid "Add Doc"
-msgstr ""
-
-#: includes/Admin/views/admin.php:16
-msgid "Preview the doc"
-msgstr ""
-
-#: includes/Admin/views/admin.php:17
-msgid "Delete this doc"
-msgstr ""
-
-#: includes/Admin/views/admin.php:30
-msgid "Re-order this section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:31
-msgid "Preview the section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:32
-msgid "Delete this section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:33
-msgid "Add a new article"
-msgstr ""
-
-#: includes/Admin/views/admin.php:46 includes/Admin/views/admin.php:57
-msgid "Preview the article"
-msgstr ""
-
-#: includes/Admin/views/admin.php:47 includes/Admin/views/admin.php:58
-msgid "Delete this article"
-msgstr ""
-
-#: includes/Admin/views/admin.php:69
-msgid "Add Section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:75
-msgid "No docs has been found. Perhaps %s?"
-msgstr ""
-
-#: includes/Admin/views/admin.php:75
-msgid "create one"
 msgstr ""
 
 #: includes/Ajax.php:93
@@ -407,40 +355,92 @@ msgstr ""
 msgid "Title:"
 msgstr ""
 
-#: includes/functions.php:85
+#: includes/functions.php:93
 msgid "Home"
 msgstr ""
 
-#: includes/functions.php:177
+#: includes/functions.php:185
 msgid "Doc navigation"
 msgstr ""
 
-#: includes/functions.php:343
+#: includes/functions.php:351
 msgid "[%1$s] New Doc Feedback: \"%2$s\""
 msgstr ""
 
-#: includes/functions.php:345
+#: includes/functions.php:353
 msgid "New feedback on your doc \"%s\""
 msgstr ""
 
-#: includes/functions.php:346
+#: includes/functions.php:354
 msgid "Author: %1$s (IP: %2$s)"
 msgstr ""
 
-#: includes/functions.php:347
+#: includes/functions.php:355
 msgid "Email: %s"
 msgstr ""
 
-#: includes/functions.php:348
+#: includes/functions.php:356
 msgid "Feedback: %s"
 msgstr ""
 
-#: includes/functions.php:349
+#: includes/functions.php:357
 msgid "Doc Permalink: %s"
 msgstr ""
 
-#: includes/functions.php:350
+#: includes/functions.php:358
 msgid "Edit Doc: %s"
+msgstr ""
+
+#: templates/admin/docs.php:3
+msgid "Documentations"
+msgstr ""
+
+#: templates/admin/docs.php:3
+msgid "Add Doc"
+msgstr ""
+
+#: templates/admin/docs.php:16
+msgid "Preview the doc"
+msgstr ""
+
+#: templates/admin/docs.php:17
+msgid "Delete this doc"
+msgstr ""
+
+#: templates/admin/docs.php:30
+msgid "Re-order this section"
+msgstr ""
+
+#: templates/admin/docs.php:31
+msgid "Preview the section"
+msgstr ""
+
+#: templates/admin/docs.php:32
+msgid "Delete this section"
+msgstr ""
+
+#: templates/admin/docs.php:33
+msgid "Add a new article"
+msgstr ""
+
+#: templates/admin/docs.php:46 templates/admin/docs.php:57
+msgid "Preview the article"
+msgstr ""
+
+#: templates/admin/docs.php:47 templates/admin/docs.php:58
+msgid "Delete this article"
+msgstr ""
+
+#: templates/admin/docs.php:69
+msgid "Add Section"
+msgstr ""
+
+#: templates/admin/docs.php:75
+msgid "No docs has been found. Perhaps %s?"
+msgstr ""
+
+#: templates/admin/docs.php:75
+msgid "create one"
 msgstr ""
 
 #: templates/content-feedback.php:8

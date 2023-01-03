@@ -27,9 +27,12 @@ class Admin {
      * @return void
      */
     public function admin_scripts( $hook ) {
-        if ( 'toplevel_page_wedocs' != $hook ) {
-            return;
-        }
+//        if ( 'toplevel_page_wedocs' != $hook  ) {
+//            return;
+//        }
+
+        $react_dir = require WEDOCS_PATH . '/build/index.asset.php';
+        wp_enqueue_script( 'wedocs-react-script', wedocs()->plugin_url() . '/build/index.js', $react_dir['dependencies'], time(), true );
 
         $suffix     = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
         $assets_url = wedocs()->plugin_url() . '/assets';
@@ -52,6 +55,7 @@ class Admin {
         ] );
 
         wp_enqueue_style( 'sweetalert', $assets_url . '/css/sweetalert.css', false, date( 'Ymd' ) );
+        wp_enqueue_style( 'wedocs-tailwind-styles', $assets_url . '/css/tailwind.css', false, date( 'Ymd' ) );
         wp_enqueue_style( 'wedocs-admin-styles', $assets_url . '/css/admin.css', false, date( 'Ymd' ) );
     }
 
@@ -104,7 +108,31 @@ class Admin {
      * @return void
      */
     public function page_index() {
-        include __DIR__ . '/views/admin.php';
+
+        /**
+         * Wedocs admin documentation preview location.
+         *
+         * @since 1.8.0
+         */
+        $location = apply_filters( 'wedocs_admin_docs_template', 'admin/docs' );
+//        $location = apply_filters( 'wedocs_admin_docs_template', 'admin/wedocs-template' );
+
+        /**
+         * Wedocs admin documentation preview arguments.
+         *
+         * @since 1.8.0
+         */
+        $args = apply_filters( 'wedocs_admin_docs_arguments', array() );
+
+        wedocs_get_template_part( $location, '', $args );
+    }
+
+    public function set_pro_docs_location( $location ) {
+        return 'adminn/docss';
+    }
+
+    public function set_pro_docs_arguments( $args ) {
+        return array_merge( array( 'pro' => true ), $args );
     }
 
     /**

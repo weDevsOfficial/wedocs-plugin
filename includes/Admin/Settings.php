@@ -42,6 +42,7 @@ class Settings {
      */
     public function admin_menu() {
         add_submenu_page( 'wedocs', __( 'weDocs Settings', 'wedocs' ), __( 'Settings', 'wedocs' ), 'manage_options', 'wedocs-settings', [ $this, 'plugin_page' ] );
+        add_submenu_page( 'wedocs', __( 'weDocs React', 'wedocs' ), __( 'weDocs React', 'wedocs' ), 'manage_options', 'wedocs-react', [ $this, 'plugin_page_react' ] );
     }
 
     /**
@@ -131,6 +132,10 @@ class Settings {
         $this->scripts();
 
         echo '</div>';
+    }
+
+    public function plugin_page_react() {
+        wedocs_get_template_part( 'admin/wedocs', 'template' );
     }
 
     /**

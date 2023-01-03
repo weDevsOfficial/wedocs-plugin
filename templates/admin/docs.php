@@ -4,7 +4,7 @@
 
     <!-- <pre>{{ $data | json }}</pre> -->
 
-    <span class="spinner is-active" style="float: none;"></span>
+    <span class="spinner is-active"></span>
 
     <ul class="docs not-loaded" v-sortable>
         <li class="single-doc" v-for="(doc, index) in docs" :data-id="doc.post.id">
