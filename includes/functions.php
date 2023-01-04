@@ -1,40 +1,48 @@
 <?php
 /**
  * Get template part implementation for wedocs.
+ * Looks at the theme directory first.
  *
- * Looks at the theme directory first
+ * @param string $slug
+ * @param string $name
+ * @param array  $args
+ *
+ * @return void
  */
-function wedocs_get_template_part( $slug, $name = '' ) {
-    $wedocs = WeDocs::init();
+function wedocs_get_template_part( $slug, $name = '', $args = array() ) {
+    $defaults = array(
+        'pro' => false,
+    );
 
-    $templates = [];
-    $name      = (string) $name;
+    $args = wp_parse_args( $args, $defaults );
 
-    // lookup at theme/slug-name.php or wedocs/slug-name.php
-    if ( '' !== $name ) {
-        $templates[] = "{$slug}-{$name}.php";
-        $templates[] = $wedocs->theme_dir_path . "{$slug}-{$name}.php";
+    if ( $args && is_array( $args ) ) {
+        extract( $args ); // phpcs:ignore
     }
 
-    $template = locate_template( $templates );
+    $wedocs   = ! empty( $args['pro'] ) && true === $args['pro'] ? WeDocs_Pro::init() : WeDocs::init();
+    $template = '';
 
-    // fallback to plugin default template
-    if ( !$template && $name && file_exists( $wedocs->template_path() . "{$slug}-{$name}.php" ) ) {
-        $template = $wedocs->template_path() . "{$slug}-{$name}.php";
+    // Look in yourtheme/wedocs/slug-name.php and yourtheme/wedocs/slug.php
+    $template_path = ! empty( $name ) ? "{$slug}-{$name}.php" : "{$slug}.php";
+    $template      = locate_template( [ $wedocs->template_path() . $template_path ] );
+
+    $template_path = apply_filters( 'wedocs_set_template_path', $wedocs->plugin_path() . '/templates', $template, $args );
+
+    // Get default slug-name.php
+    if ( ! $template && $name && file_exists( $template_path . "/{$slug}-{$name}.php" ) ) {
+        $template = $template_path . "/{$slug}-{$name}.php";
     }
 
-    // if not yet found, lookup in slug.php only
-    if ( !$template ) {
-        $templates = [
-            "{$slug}.php",
-            $wedocs->theme_dir_path . "{$slug}.php",
-        ];
-
-        $template = locate_template( $templates );
+    if ( ! $template && ! $name && file_exists( $template_path . "/{$slug}.php" ) ) {
+        $template = $template_path . "/{$slug}.php";
     }
+
+    // Allow 3rd party plugin filter template file from their plugin
+    $template = apply_filters( 'wedocs_get_template_part', $template, $slug, $name );
 
     if ( $template ) {
-        load_template( $template, false );
+        include $template;
     }
 }
 
