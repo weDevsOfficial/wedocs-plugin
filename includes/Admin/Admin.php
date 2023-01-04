@@ -104,7 +104,23 @@ class Admin {
      * @return void
      */
     public function page_index() {
-        include __DIR__ . '/views/admin.php';
+
+        /**
+         * Wedocs admin documentation preview location.
+         *
+         * @since 1.8.0
+         */
+        $location = apply_filters( 'wedocs_admin_docs_template', 'admin/docs' );
+//        $location = apply_filters( 'wedocs_admin_docs_template', 'admin/wedocs-template' );
+
+        /**
+         * Wedocs admin documentation preview arguments.
+         *
+         * @since 1.8.0
+         */
+        $args = apply_filters( 'wedocs_admin_docs_arguments', array() );
+
+        wedocs_get_template_part( $location, '', $args );
     }
 
     /**
