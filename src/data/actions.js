@@ -10,6 +10,10 @@ const actions = {
     setLoading(loading) {
         return { type: 'SET_LOADING', loading: loading };
     },
+
+    fetchDocsFromAPI( path ) {
+        return { type: 'FETCH_FROM_API', path };
+    },
 };
 
 export default actions;
