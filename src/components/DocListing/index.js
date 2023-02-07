@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useSelect } from '@wordpress/data';
 import docsStore from '../../data/docs';
 import BackToDocsPage from '../BackToDocsPage';
-import { __ } from '@wordpress/i18n';
 import ListingButtons from './ListingButtons';
 
 const ListingPage = () => {

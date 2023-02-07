@@ -7,7 +7,7 @@
   "private": true,
   "main": "src/index.js",
   "scripts": {
-    "build": "wp-scripts grunt build",
+    "build": "wp-scripts build",
     "check-engines": "wp-scripts check-engines",
     "check-licenses": "wp-scripts check-licenses",
     "format": "wp-scripts format",
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@wordpress/scripts": "^25.0.0",
+    "autoprefixer": "^10.4.13",
     "grunt": "^1.5.3",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-compress": "^1.5.0",
@@ -36,16 +37,21 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-phplint": "^0.1.0",
     "grunt-wp-i18n": "^1.0.3",
+    "postcss": "^8.4.21",
     "tailwindcss": "^3.2.4"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.7",
+    "@heroicons/react": "^2.0.14",
+    "@tailwindcss/forms": "^0.5.3",
     "@wordpress/api-fetch": "^6.21.0",
     "@wordpress/core-data": "^6.0.0",
-    "@wordpress/data": "^7.0.0",
+    "@wordpress/data": "^8.3.0",
     "@wordpress/element": "^5.0.0",
     "@wordpress/i18n": "^4.23.0",
+    "daisyui": "^2.49.0",
     "grunt-update": "^0.2.3",
-    "react-beautiful-dnd": "^13.1.1"
+    "react-beautiful-dnd": "^13.1.1",
+    "react-router-dom": "^6.6.2"
   }
 }

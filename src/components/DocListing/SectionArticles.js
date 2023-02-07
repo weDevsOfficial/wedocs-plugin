@@ -1,10 +1,18 @@
 import drag from '../../assets/img/drag.png';
 import { __, sprintf } from '@wordpress/i18n';
 import file from '../../assets/img/file.png';
-import PrivacyIcon from '../PrivacyIcon';
 import DocActions from '../DocActions';
 
 const SectionArticles = ( { article } ) => {
+    const formattedDateString = () => {
+        const date  = new Date( article.modified ),
+            options = { day: "numeric", month: "short", year: "numeric" };
+
+        return date.toLocaleDateString( "en-US", options );
+    };
+
+    console.log( article );
+
 	return (
 		<div className="flex items-center bg-white border-b border-[#D9D9D9] py-4">
 			<img src={ drag } alt={ __( 'Docs Link Icon', 'wedocs-pro' ) } />
@@ -67,7 +75,6 @@ const SectionArticles = ( { article } ) => {
 						</div>
 					</div>
 					<div className="flex items-center gap-5 flex-shrink-0 mt-4 sm:mt-0 sm:ml-5">
-						<PrivacyIcon />
 						<div className="flex items-center gap-10">
 							<div className="article-comments flex gap-2 items-center">
 								<svg
@@ -89,33 +96,9 @@ const SectionArticles = ( { article } ) => {
 									5
 								</p>
 							</div>
-							<div className="flex -space-x-1 overflow-hidden">
-								<img
-									className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-									src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-									alt="Dries Vincent"
-								/>
-								<img
-									className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-									src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-									alt="Lindsay Walton"
-								/>
-								<img
-									className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-									src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-									alt="Courtney Henry"
-								/>
-								<img
-									className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-									src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-									alt="Tom Cook"
-								/>
-							</div>
 							<div className="article-updated-date text-sm text-[#969696]">
-								{ __(
-									'Updated at 27th Aug, 2022',
-									'wedocs-pro'
-								) }
+                                {/* translators: %s: Formatted datetime string */}
+                                { sprintf( __( 'Updated at %s' , 'wedocs' ), formattedDateString ) }
 							</div>
 						</div>
 					</div>

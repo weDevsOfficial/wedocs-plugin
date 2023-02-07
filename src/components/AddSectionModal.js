@@ -39,13 +39,6 @@ const AddSectionModal = ( { parent, className, children, href } ) => {
 		setIsOpen( true );
 	};
 
-	// const filteredPeople =
-	// 	query === ''
-	// 		? people
-	// 		: people.filter( ( person ) => {
-	// 				return person.toLowerCase().includes( query.toLowerCase() );
-	// 		  } );
-
 	return (
 		<>
 			<a

@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n';
-import Button from './Button';
 import CreateImage from '../../assets/img/create.jpg';
 
 const EmptyDocs = () => {

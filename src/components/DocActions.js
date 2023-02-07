@@ -5,7 +5,6 @@ const DocActions = () => {
 	const documentationActions = [
 		{ name: 'Add article', href: '#', icon: 'add' },
 		{ name: 'Edit', href: '#' },
-		{ name: 'Copy shortcode', href: '#', icon: 'copy' },
 		{ name: 'Delete', href: '#' },
 	];
 
@@ -46,23 +45,6 @@ const DocActions = () => {
 												<span className="dashicons dashicons-plus text-xs mt-1.5"></span>
 											) }
 										{ action.name }
-										{ action.icon &&
-											action.icon === 'copy' && (
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													width="16"
-													height="16"
-													fill="none"
-													className="ml-4 group-hover:stroke-white stroke-gray-500"
-												>
-													<path
-														d="M4.666 11.229H3c-.92 0-1.667-.746-1.667-1.667V2.895c0-.92.746-1.667 1.667-1.667h6.667c.92 0 1.667.746 1.667 1.667v1.667m-5 10H13c.92 0 1.667-.746 1.667-1.667V6.229c0-.92-.746-1.667-1.667-1.667H6.333c-.92 0-1.667.746-1.667 1.667v6.667c0 .92.746 1.667 1.667 1.667z"
-														strokeWidth="2"
-														strokeLinecap="round"
-														strokeLinejoin="round"
-													/>
-												</svg>
-											) }
 									</a>
 								) }
 							</Menu.Item>

@@ -38,13 +38,6 @@ const AddArticleModal = ( { sections, className, children } ) => {
 		setIsOpen( true );
 	};
 
-	// const filteredPeople =
-	// 	query === ''
-	// 		? people
-	// 		: people.filter( ( person ) => {
-	// 				return person.toLowerCase().includes( query.toLowerCase() );
-	// 		  } );
-
 	return (
 		<>
 			<button type="button" onClick={ openModal } className={ className }>

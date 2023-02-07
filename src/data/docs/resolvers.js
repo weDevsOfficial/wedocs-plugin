@@ -1,27 +1,25 @@
 import actions from './actions';
-import { dispatch } from '@wordpress/data';
-import docsStore from './index';
 
 const resolvers = {
 	*getDocs() {
-		// dispatch( docsStore ).startResolution( 'getDocs' );
 		yield actions.setLoading( true );
 		const response = yield actions.fetchDocsFromAPI(
 			'/wp/v2/docs?per_page=-1'
 		);
 		yield actions.setDocs( response );
-		// dispatch( docsStore ).finishResolution( 'getDocs' );
 		return actions.setLoading( false );
 	},
 
 	*getDoc( id ) {
 		yield actions.setLoading( true );
-		const doc = yield actions.fetchDocsFromAPI( '/wp/v2/docs/' + id );
-		yield actions.setDoc( doc );
+        const response = yield actions.fetchDocsFromAPI(
+            '/wp/v2/docs?per_page=-1'
+        );
+        yield actions.setDocs( response );
 		return actions.setLoading( false );
 	},
 
-	*getParentOnlyDocs() {
+	*getParentDocs() {
 		yield actions.setLoading( true );
 		const docs = yield actions.fetchDocsFromAPI(
 			'/wp/v2/docs?per_page=-1'

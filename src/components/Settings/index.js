@@ -5,6 +5,8 @@ import { useEffect, useState } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
 import settingsStore from '../../data/settings';
 import GeneralSettings from './GeneralSettings';
+import docsStore from "../../data/docs";
+import {useParams} from "react-router-dom";
 
 const SettingsPage = () => {
 	const [ selectedIndex, setSelectedIndex ] = useState( 0 );

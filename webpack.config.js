@@ -9,7 +9,7 @@ const updatedConfig = {
 		index: './src/index',
 	},
 	output: {
-		path: path.resolve(__dirname, 'assets'),
+		path: path.resolve(__dirname, 'hot'),
 	},
 };
 
@@ -20,11 +20,11 @@ if ( ! isProduction ) {
 		},
 		allowedHosts: 'all',
 		host: 'localhost',
-		port: 8887,
+		port: 8886,
 		proxy: {
-			'/assets': {
+			'/hot': {
 				pathRewrite: {
-					'^/assets': '',
+					'^/hot': '',
 				},
 			},
 		},

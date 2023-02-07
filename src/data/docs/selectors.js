@@ -14,7 +14,7 @@ const selectors = {
 		return loading;
 	},
 
-	getParentOnlyDocs( state ) {
+	getParentDocs( state ) {
 		const { docs } = state;
 		return docs.filter( ( doc ) => ! doc.parent );
 	},

@@ -1,10 +1,5 @@
 import { Link } from 'react-router-dom';
-import PrivacyIcon from '../PrivacyIcon';
-import { Menu, Transition } from '@headlessui/react';
-import { Fragment } from '@wordpress/element';
 import DocActions from '../DocActions';
-import { useSelect } from '@wordpress/data';
-import docStore from '../../data/docs';
 
 const DocumenationHeader = ( { doc } ) => {
 	return (
@@ -42,7 +37,6 @@ const DocumenationHeader = ( { doc } ) => {
 				</div>
 			</div>
 			<div className="flex gap-5 items-center">
-				<PrivacyIcon />
 				<DocActions />
 			</div>
 		</div>

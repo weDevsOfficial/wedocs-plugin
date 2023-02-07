@@ -22,24 +22,27 @@ class Admin {
     /**
      * Load admin scripts and styles.
      *
-     * @param  string
+     * @param string $hook
      *
      * @return void
      */
     public function admin_scripts( $hook ) {
-//        if ( 'toplevel_page_wedocs' != $hook  ) {
-//            return;
-//        }
-
-        $react_dir = require WEDOCS_PATH . '/build/index.asset.php';
-        wp_enqueue_script( 'wedocs-react-script', wedocs()->plugin_url() . '/build/index.js', $react_dir['dependencies'], time(), true );
+        if ( 'toplevel_page_wedocs' !== $hook  ) {
+            return;
+        }
 
         $assets_url = wedocs()->plugin_url() . '/assets';
-        wp_enqueue_script( 'sweetalert', $assets_url . '/js/sweetalert.min.js', [ 'jquery' ] );
-
         wp_enqueue_style( 'sweetalert', $assets_url . '/css/sweetalert.css', false, date( 'Ymd' ) );
-        wp_enqueue_style( 'wedocs-tailwind-styles', $assets_url . '/css/tailwind.css', false, date( 'Ymd' ) );
         wp_enqueue_style( 'wedocs-admin-styles', $assets_url . '/css/admin.css', false, date( 'Ymd' ) );
+
+        wp_enqueue_script( 'sweetalert', $assets_url . '/js/sweetalert.min.js', [ 'jquery' ] );
+        if ( file_exists( WEDOCS_PATH . '/hot/index.asset.php' ) ) {
+            $react_dependencies = require WEDOCS_PATH . '/hot/index.asset.php';
+
+            // Adding wedocs necessary assets.
+            wp_enqueue_style( 'wedocs-app-style', WEDOCS_URL . '/hot/index.css', [], $react_dependencies['version'] );
+            wp_enqueue_script( 'wedocs-app-script', WEDOCS_URL . '/hot/index.js', $react_dependencies['dependencies'], $react_dependencies['version'], true );
+        }
     }
 
     /**
@@ -60,7 +63,7 @@ class Admin {
         $capability = wedocs_get_publish_cap();
 
         add_menu_page( __( 'weDocs', 'wedocs' ), __( 'weDocs', 'wedocs' ), $capability, 'wedocs', [ $this, 'page_index' ], 'dashicons-media-document', $this->get_menu_position() );
-        add_submenu_page( 'wedocs', __( 'Docs', 'wedocs' ), __( 'Docs', 'wedocs' ), $capability, 'wedocs', [ $this, 'page_index' ] );
+        add_submenu_page( 'wedocs', __( 'Docs', 'wedocs' ), __( 'Docs', 'wedocs' ), $capability, 'wedocs#/', [ $this, 'page_index' ] );
         add_submenu_page( 'wedocs', __( 'Tags', 'wedocs' ), __( 'Tags', 'wedocs' ), 'manage_categories', 'edit-tags.php?taxonomy=doc_tag&post_type=docs' );
     }
 
@@ -91,23 +94,7 @@ class Admin {
      * @return void
      */
     public function page_index() {
-
-        /**
-         * Wedocs admin documentation preview location.
-         *
-         * @since 1.8.0
-         */
-        $location = apply_filters( 'wedocs_admin_docs_template', 'admin/docs' );
-//        $location = apply_filters( 'wedocs_admin_docs_template', 'admin/wedocs-template' );
-
-        /**
-         * Wedocs admin documentation preview arguments.
-         *
-         * @since 1.8.0
-         */
-        $args = apply_filters( 'wedocs_admin_docs_arguments', array() );
-
-        wedocs_get_template_part( $location, '', $args );
+        wedocs_get_template_part( 'admin/docs' );
     }
 
     public function set_pro_docs_location( $location ) {
