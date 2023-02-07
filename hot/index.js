@@ -4689,9 +4689,9 @@ const AddArticleModal = _ref => {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_6__.Dialog.Title, {
     as: "h3",
     className: "text-lg font-bold text-gray-900 mb-2"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your article title', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your article title', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "text-gray-500 text-base"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Help text how to add section', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Help text how to add section', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mt-6 mb-5"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_ComboBox__WEBPACK_IMPORTED_MODULE_4__["default"], {
     sections: sections
@@ -4702,10 +4702,10 @@ const AddArticleModal = _ref => {
     onClick: () => {
       createDoc();
     }
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Create', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Create', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     className: "bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md",
     onClick: closeModal
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Cancel', 'wedocs-pro'))))))))));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Cancel', 'wedocs'))))))))));
 };
 _s(AddArticleModal, "0eN9SOPvNEopS84p3IIxUhmMoHY=");
 _c = AddArticleModal;
@@ -4866,9 +4866,9 @@ const AddPostModal = _ref => {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_5__.Dialog.Title, {
     as: "h3",
     className: "text-lg font-bold text-gray-900 mb-2"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your doc title', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your doc title', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "text-gray-500 text-base"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Help text how to add section', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Help text how to add section', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mt-6 mb-5"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "text",
@@ -4888,10 +4888,10 @@ const AddPostModal = _ref => {
     onClick: () => {
       createDoc();
     }
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Create', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Create', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     className: "bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md",
     onClick: closeModal
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Cancel', 'wedocs-pro'))))))))));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Cancel', 'wedocs'))))))))));
 };
 _s(AddPostModal, "0eN9SOPvNEopS84p3IIxUhmMoHY=");
 _c = AddPostModal;
@@ -5047,9 +5047,9 @@ const AddSectionModal = _ref => {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_5__.Dialog.Title, {
     as: "h3",
     className: "text-lg font-bold text-gray-900 mb-2"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your section title', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your section title', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "text-gray-500 text-base"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Help text how to add section', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Help text how to add section', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mt-6 mb-5"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "text",
@@ -5069,10 +5069,10 @@ const AddSectionModal = _ref => {
     onClick: () => {
       createDoc();
     }
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Create', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Create', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     className: "bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md",
     onClick: closeModal
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Cancel', 'wedocs-pro'))))))))));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Cancel', 'wedocs'))))))))));
 };
 _s(AddSectionModal, "F57uI6eYGq3fsgec+zhEPlBsDls=");
 _c = AddSectionModal;
@@ -5234,7 +5234,7 @@ const BackToDocsPage = () => {
     strokeWidth: "2",
     strokeLinecap: "round",
     strokeLinejoin: "round"
-  })), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('All Docs', 'wedocs-pro'));
+  })), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('All Docs', 'wedocs'));
 };
 _c = BackToDocsPage;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BackToDocsPage);
@@ -5377,7 +5377,7 @@ const ComboBox = _ref => {
     value: "custom"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "dashicons dashicons-plus text-xs mt-1.5"
-  }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Create new section', 'wedocs-pro'))))));
+  }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Create new section', 'wedocs'))))));
 };
 _s(ComboBox, "3RFCpYkrHzLKcLZiODMLLNV0flc=", false, function () {
   return [react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useParams];
@@ -5588,7 +5588,7 @@ const DocSections = _ref => {
     onClick: () => setShowArticles(!showArticles)
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: _assets_img_drag_png__WEBPACK_IMPORTED_MODULE_1__,
-    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Docs Link Icon', 'wedocs-pro')
+    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Docs Link Icon', 'wedocs')
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "flex items-center w-full"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -5600,13 +5600,13 @@ const DocSections = _ref => {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: _assets_img_folder_png__WEBPACK_IMPORTED_MODULE_3__,
     className: "w-full h-full px-3.5",
-    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Docs Link Icon', 'wedocs-pro')
+    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Docs Link Icon', 'wedocs')
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: `${window.location.origin}/?p=${id}`,
     className: "flex items-center flex-shrink-0 text-base font-medium text-black"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "hover:underline group-hover:text-black"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('%s', 'wedocs-pro'), title?.rendered)))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('%s', 'wedocs'), title?.rendered)))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "article-counter grid place-content-center text-white font-medium text-sm w-7 h-7 bg-[#00A1E4] rounded-full"
   }, sectionArticles.length), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: `${window.location.origin}/?p=${id}`,
@@ -5658,7 +5658,7 @@ const DocSections = _ref => {
     className: "py-2.5 px-4 mt-7 mb-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 text-sm text-white hover:text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-3 text-base flex items-center"
-  }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Add article', 'wedocs-pro'))))));
+  }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Add article', 'wedocs'))))));
 };
 _s(DocSections, "8tERFOaa/g/thHQyIVsFERoWNw4=", false, function () {
   return [_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect];
@@ -5734,12 +5734,12 @@ const ListingButtons = () => {
     className: "py-2.5 px-4 h-fit inline-flex items-center rounded-md border border-gray-300 bg-white text-gray-700 hover:text-white hover:bg-indigo-600 px-4 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-3 text-base flex items-center"
-  }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add section', 'wedocs-pro'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+  }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add section', 'wedocs'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     type: "button",
     className: "py-2.5 px-4 h-fit inline-flex items-center rounded-md border border-gray-300 bg-white text-gray-700 hover:text-white hover:bg-indigo-600 px-4 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-3 text-base flex items-center"
-  }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add article', 'wedocs-pro')));
+  }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add article', 'wedocs')));
 };
 _c = ListingButtons;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ListingButtons);
@@ -5833,7 +5833,7 @@ const ListingHeader = _ref => {
     className: "group-hover:underline"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)(
   // translators: %s: Section title
-  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('%s', 'wedocs-pro'), doc?.title?.rendered)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('%s', 'wedocs'), doc?.title?.rendered)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
     className: "ml-5 stroke-gray-500 group-hover:stroke-indigo-700",
     xmlns: "http://www.w3.org/2000/svg",
     width: "18",
@@ -5933,8 +5933,12 @@ const SectionArticles = _ref => {
   let {
     article
   } = _ref;
+  const {
+    modified: lastModifiedDate,
+    comment_count: commentCount
+  } = article;
   const formattedDateString = () => {
-    const date = new Date(article.modified),
+    const date = new Date(lastModifiedDate),
       options = {
         day: "numeric",
         month: "short",
@@ -5942,12 +5946,11 @@ const SectionArticles = _ref => {
       };
     return date.toLocaleDateString("en-US", options);
   };
-  console.log(article);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "flex items-center bg-white border-b border-[#D9D9D9] py-4"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: _assets_img_drag_png__WEBPACK_IMPORTED_MODULE_1__,
-    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Docs Link Icon', 'wedocs-pro')
+    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Docs Link Icon', 'wedocs')
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "flex items-center w-full group"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -5959,13 +5962,13 @@ const SectionArticles = _ref => {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: _assets_img_file_png__WEBPACK_IMPORTED_MODULE_3__,
     className: "w-full h-full px-3.5",
-    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Docs Link Icon', 'wedocs-pro')
+    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Docs Link Icon', 'wedocs')
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: `${window.location.origin}/?p=${article?.id}`,
     className: "flex items-center flex-shrink-0 text-base font-medium text-gray-700"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "hover:underline group-hover:text-black"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('%s', 'wedocs-pro'), article?.title?.rendered)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('%s', 'wedocs'), article?.title?.rendered)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
     className: "hidden group-hover:block ml-6 stroke-gray-500 hover:stroke-indigo-700",
     xmlns: "http://www.w3.org/2000/svg",
     width: "18",
@@ -6012,7 +6015,7 @@ const SectionArticles = _ref => {
     strokeLinejoin: "round"
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "comments-counter font-medium text-sm text-[#6B7280]"
-  }, "5")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, commentCount)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "article-updated-date text-sm text-[#969696]"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Updated at %s', 'wedocs'), formattedDateString))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "ml-8 flex-shrink-0"
@@ -6282,15 +6285,15 @@ const EmptyDocs = () => {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     className: "mx-auto",
     src: _assets_img_create_jpg__WEBPACK_IMPORTED_MODULE_2__,
-    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Docs Create Icon', 'wedocs-pro')
+    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Docs Create Icon', 'wedocs')
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "text-[#3B3F4A] font-bold text-2xl"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Get started by creating a new doc', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Get started by creating a new doc', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "text-[#666B79] text-lg"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: "src/components/EmptyDocs/EmptyDocs#",
     className: "text-[#0043FF]"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Learn More', 'wedocs-pro')), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('how to create a new doc', 'wedocs-pro'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Learn More', 'wedocs')), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('how to create a new doc', 'wedocs'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     type: "button",
     className: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-2.5 text-base text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
@@ -6397,12 +6400,12 @@ const ParentDocs = _ref => {
     className: "w-6 flex-none justify-center"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: _assets_img_folder_png__WEBPACK_IMPORTED_MODULE_1__,
-    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Docs Link Icon', 'wedocs-pro')
+    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Docs Link Icon', 'wedocs')
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "ml-2 flex-1 truncate"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.sprintf)(
   // translators: %d: Length of documentation sections
-  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('%d Sections', 'wedocs-pro'), sections.length)))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
+  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('%d Sections', 'wedocs'), sections.length)))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     className: "flex items-center justify-between mb-0 py-1.5 pl-3 pr-4 text-sm"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "flex w-0 flex-1 items-center"
@@ -6410,19 +6413,19 @@ const ParentDocs = _ref => {
     className: "w-6 flex justify-center"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: _assets_img_file_png__WEBPACK_IMPORTED_MODULE_3__,
-    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Docs Link Icon', 'wedocs-pro')
+    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Docs Link Icon', 'wedocs')
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "ml-2 w-0 flex-1 truncate"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.sprintf)(
   // translators: %d: Length of documentation articles
-  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('%d Articles', 'wedocs-pro'), articles.length)))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('%d Articles', 'wedocs'), articles.length)))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "border-t border-gray-200"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "-mt-px flex divide-x divide-gray-200"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "flex w-0 flex-1 justify-end items-center py-4 px-6"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_AddSectionModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    className: "py-2 inline-flex items-center bg-indigo-600 hover:bg-indigo-700 hover:text-white !text-white rounded-md border border-gray-200 ease-in-out duration-200 shadow-gray-100 px-4 text-sm shadow-sm",
+    className: "py-2 inline-flex items-center hover:bg-indigo-600 hover:text-white rounded-md border border-gray-200 ease-in-out duration-200 shadow-gray-100 px-4 text-sm text-gray shadow-sm",
     parent: doc.id
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-4 text-base flex items-center"
@@ -6490,6 +6493,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ParentDocs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ParentDocs */ "./src/components/Docs/ParentDocs.js");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _SearchFilter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../SearchFilter */ "./src/components/SearchFilter.js");
 /* provided dependency */ var __react_refresh_utils__ = __webpack_require__(/*! ./node_modules/@pmmmwh/react-refresh-webpack-plugin/lib/runtime/RefreshUtils.js */ "./node_modules/@pmmmwh/react-refresh-webpack-plugin/lib/runtime/RefreshUtils.js");
 /* provided dependency */ var __react_refresh_error_overlay__ = __webpack_require__(/*! ./node_modules/@pmmmwh/react-refresh-webpack-plugin/overlay/index.js */ "./node_modules/@pmmmwh/react-refresh-webpack-plugin/overlay/index.js");
 __webpack_require__.$Refresh$.runtime = __webpack_require__(/*! ./node_modules/react-refresh/runtime.js */ "react-refresh/runtime");
@@ -6502,28 +6506,45 @@ var _s = __webpack_require__.$Refresh$.signature();
 
 
 
+
+
 const Docs = () => {
   _s();
   const parentDocs = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_6__.useSelect)(select => select(_data_docs__WEBPACK_IMPORTED_MODULE_1__["default"]).getParentDocs(), []);
   const loading = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_6__.useSelect)(select => select(_data_docs__WEBPACK_IMPORTED_MODULE_1__["default"]).getLoading(), []);
+  const [searchValue, setSearchValue] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+  const handleChange = function (event) {
+    let reset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    if (reset) {
+      setSearchValue('');
+    } else {
+      setSearchValue(event.target.value);
+    }
+  };
+  const filteredDocs = parentDocs?.filter(doc => doc?.title?.rendered?.toLowerCase().includes(searchValue.toLowerCase()));
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "documentation-header flex justify-between items-center"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "flex items-center mt-5"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('All Docs', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_AddPostModal__WEBPACK_IMPORTED_MODULE_3__["default"], null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('All Docs', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_AddPostModal__WEBPACK_IMPORTED_MODULE_3__["default"], null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     type: "button",
     className: "ml-5 py-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 ease-in-out duration-200 px-4 text-sm text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-4 text-base flex items-center"
-  }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)(`Add doc`, 'wedocs-pro')))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)(`Add doc`, 'wedocs')))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_SearchFilter__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    handleChange: handleChange,
+    searchValue: searchValue
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     role: "list",
     className: "documentation mx-auto mt-7 grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3"
-  }, !loading && parentDocs && parentDocs?.map(doc => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_ParentDocs__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, !loading && parentDocs && filteredDocs?.map(doc => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_ParentDocs__WEBPACK_IMPORTED_MODULE_5__["default"], {
     key: doc.id,
     doc: doc
   }))), !loading && parentDocs && !parentDocs.length && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_EmptyDocs__WEBPACK_IMPORTED_MODULE_4__["default"], null), loading && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "spinner is-active float-left"
   }));
 };
-_s(Docs, "CUM7ClM5xvxUJikRHNi2Ln9t6lA=", false, function () {
+_s(Docs, "j2dZjJnk/kZtIK0cPAX7WTpUems=", false, function () {
   return [_wordpress_data__WEBPACK_IMPORTED_MODULE_6__.useSelect, _wordpress_data__WEBPACK_IMPORTED_MODULE_6__.useSelect];
 });
 _c = Docs;
@@ -6774,6 +6795,105 @@ if (typeof Promise !== 'undefined' && $ReactRefreshCurrentExports$ instanceof Pr
 
 /***/ }),
 
+/***/ "./src/components/SearchFilter.js":
+/*!****************************************!*\
+  !*** ./src/components/SearchFilter.js ***!
+  \****************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* provided dependency */ var __react_refresh_utils__ = __webpack_require__(/*! ./node_modules/@pmmmwh/react-refresh-webpack-plugin/lib/runtime/RefreshUtils.js */ "./node_modules/@pmmmwh/react-refresh-webpack-plugin/lib/runtime/RefreshUtils.js");
+/* provided dependency */ var __react_refresh_error_overlay__ = __webpack_require__(/*! ./node_modules/@pmmmwh/react-refresh-webpack-plugin/overlay/index.js */ "./node_modules/@pmmmwh/react-refresh-webpack-plugin/overlay/index.js");
+__webpack_require__.$Refresh$.runtime = __webpack_require__(/*! ./node_modules/react-refresh/runtime.js */ "react-refresh/runtime");
+
+
+
+const SearchFilter = _ref => {
+  let {
+    handleChange,
+    searchValue
+  } = _ref;
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "relative mt-5 rounded-md shadow-sm"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "text",
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Search your documentation', 'wedocs'),
+    value: searchValue,
+    onChange: handleChange,
+    className: "w-80 h-10 text-sm focus:!border-indigo-300 !pl-4 !rounded-md !border-gray-300"
+  }), searchValue && searchValue.length > 0 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    onClick: e => handleChange(e, true),
+    className: "cursor-pointer absolute inset-y-0 right-9 flex items-center pr-3"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    strokeWidth: 1.5,
+    className: "w-5 h-5 stroke-[#6b7280]"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    d: "M6 18L18 6M6 6l12 12"
+  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    strokeWidth: 1.5,
+    className: "w-6 h-6 stroke-[#6b7280]"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    d: "M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+  }))));
+};
+_c = SearchFilter;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SearchFilter);
+var _c;
+__webpack_require__.$Refresh$.register(_c, "SearchFilter");
+
+const $ReactRefreshModuleId$ = __webpack_require__.$Refresh$.moduleId;
+const $ReactRefreshCurrentExports$ = __react_refresh_utils__.getModuleExports(
+	$ReactRefreshModuleId$
+);
+
+function $ReactRefreshModuleRuntime$(exports) {
+	if (true) {
+		let errorOverlay;
+		if (typeof __react_refresh_error_overlay__ !== 'undefined') {
+			errorOverlay = __react_refresh_error_overlay__;
+		}
+		let testMode;
+		if (typeof __react_refresh_test__ !== 'undefined') {
+			testMode = __react_refresh_test__;
+		}
+		return __react_refresh_utils__.executeRuntime(
+			exports,
+			$ReactRefreshModuleId$,
+			module.hot,
+			errorOverlay,
+			testMode
+		);
+	}
+}
+
+if (typeof Promise !== 'undefined' && $ReactRefreshCurrentExports$ instanceof Promise) {
+	$ReactRefreshCurrentExports$.then($ReactRefreshModuleRuntime$);
+} else {
+	$ReactRefreshModuleRuntime$($ReactRefreshCurrentExports$);
+}
+
+/***/ }),
+
 /***/ "./src/components/Settings/GeneralSettings.js":
 /*!****************************************************!*\
   !*** ./src/components/Settings/GeneralSettings.js ***!
@@ -6809,13 +6929,13 @@ const GeneralSettings = _ref => {
     setSettings
   } = _ref;
   const docsHomeOptions = [{
-    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Documentation', 'wedocs-pro'),
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Documentation', 'wedocs'),
     value: 'documentation'
   }, {
-    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Home', 'wedocs-pro'),
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Home', 'wedocs'),
     value: 'home'
   }, {
-    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Blog', 'wedocs-pro'),
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Blog', 'wedocs'),
     value: 'blog'
   }];
   const [generalSettings, setGeneralSettings] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
@@ -6834,7 +6954,7 @@ const GeneralSettings = _ref => {
     className: "section-heading py-4 px-8 sm:px-8 sm:py-4"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
     className: "text-gray-900 font-medium text-lg"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('General', 'wedocs-pro'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('General', 'wedocs'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", {
     className: "h-px !bg-gray-200 border-0 dark:!bg-gray-200"
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "pt-6 pb-20 px-8 grid grid-cols-4 gap-5"
@@ -6848,7 +6968,7 @@ const GeneralSettings = _ref => {
     className: "block text-sm font-medium text-gray-700",
     id: "headlessui-listbox-label-15",
     "data-headlessui-state": "open"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('weDocs Home', 'wedocs-pro'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('weDocs Home', 'wedocs'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "settings-field w-full max-w-[490px] mt-1 ml-auto flex-2"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "relative"
@@ -6862,11 +6982,11 @@ const GeneralSettings = _ref => {
     className: "settings-description w-full max-w-[490px] ml-auto mt-1"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "text-sm text-[#6B7280]"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Home page for docs page. Preferably use [wedocs] ', 'wedocs-pro'), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Home page for docs page. Preferably use [wedocs] ', 'wedocs'), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: "#",
     target: "_blank",
     className: "text-indigo-700 underline underline-offset-2"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('shortcode', 'wedocs-pro')), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)(' or design your own.', 'wedocs-pro')))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('shortcode', 'wedocs')), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)(' or design your own.', 'wedocs')))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "col-span-4"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "settings-content flex items-center justify-between"
@@ -6876,9 +6996,9 @@ const GeneralSettings = _ref => {
     className: "block text-sm font-medium text-gray-700",
     id: "headlessui-listbox-label-15",
     "data-headlessui-state": "open"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Email Feedback on Article', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Email Feedback on Article', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "tooltip cursor-pointer ml-2",
-    "data-tip": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Invite readers to share their thoughts and suggestions through an email feedback form', 'wedocs-pro')
+    "data-tip": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Invite readers to share their thoughts and suggestions through an email feedback form', 'wedocs')
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     width: "18",
@@ -6907,9 +7027,9 @@ const GeneralSettings = _ref => {
     className: "block text-sm font-medium text-gray-700",
     id: "headlessui-listbox-label-15",
     "data-headlessui-state": "open"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Helpful Feedback on Article', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Helpful Feedback on Article', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "tooltip cursor-pointer ml-2",
-    "data-tip": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enabling helpful feedback on your article allows readers to provide opinions on your content', 'wedocs-pro')
+    "data-tip": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enabling helpful feedback on your article allows readers to provide opinions on your content', 'wedocs')
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     width: "18",
@@ -6938,9 +7058,9 @@ const GeneralSettings = _ref => {
     className: "block text-sm font-medium text-gray-700",
     id: "headlessui-listbox-label-15",
     "data-headlessui-state": "open"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Allow Comments on Article', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Allow Comments on Article', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "tooltip cursor-pointer ml-2",
-    "data-tip": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Increase reader engagement by turning on article comments', 'wedocs-pro')
+    "data-tip": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Increase reader engagement by turning on article comments', 'wedocs')
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     width: "18",
@@ -6969,9 +7089,9 @@ const GeneralSettings = _ref => {
     className: "block text-sm font-medium text-gray-700",
     id: "headlessui-listbox-label-15",
     "data-headlessui-state": "open"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Allow Article Printing', 'wedocs-pro')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Allow Article Printing', 'wedocs')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "tooltip cursor-pointer ml-2",
-    "data-tip": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enable this option to allow users to print articles directly from the website', 'wedocs-pro')
+    "data-tip": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enable this option to allow users to print articles directly from the website', 'wedocs')
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     width: "18",
@@ -7059,7 +7179,7 @@ var _s = __webpack_require__.$Refresh$.signature();
 const Menu = () => {
   _s();
   const menus = {
-    general: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('General', 'wedocs-pro')
+    general: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('General', 'wedocs')
   };
   const [iconPath, setIconPath] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('M1 10.512l2-2m0 0l7-7 7 7m-14 0v10a1 1 0 0 0 1 1h3m10-11l2 2m-2-2v10a1 1 0 0 1-1 1h-3m-6 0a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1m-6 0h6');
   const handleMenuIconPath = index => {
@@ -7165,7 +7285,7 @@ const SaveButton = _ref => {
     className: "-ml-1 mr-3 h-5 w-5"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
     d: "M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z"
-  })), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Save', 'wedocs-pro')));
+  })), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Save', 'wedocs')));
 };
 _c = SaveButton;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SaveButton);
@@ -7220,19 +7340,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Menu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Menu */ "./src/components/Settings/Menu.js");
 /* harmony import */ var _SaveButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SaveButton */ "./src/components/Settings/SaveButton.js");
-/* harmony import */ var _headlessui_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @headlessui/react */ "./node_modules/@headlessui/react/dist/components/tabs/tabs.js");
+/* harmony import */ var _headlessui_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @headlessui/react */ "./node_modules/@headlessui/react/dist/components/tabs/tabs.js");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _data_settings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../data/settings */ "./src/data/settings/index.js");
 /* harmony import */ var _GeneralSettings__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./GeneralSettings */ "./src/components/Settings/GeneralSettings.js");
-/* harmony import */ var _data_docs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../data/docs */ "./src/data/docs/index.js");
 /* provided dependency */ var __react_refresh_utils__ = __webpack_require__(/*! ./node_modules/@pmmmwh/react-refresh-webpack-plugin/lib/runtime/RefreshUtils.js */ "./node_modules/@pmmmwh/react-refresh-webpack-plugin/lib/runtime/RefreshUtils.js");
 /* provided dependency */ var __react_refresh_error_overlay__ = __webpack_require__(/*! ./node_modules/@pmmmwh/react-refresh-webpack-plugin/overlay/index.js */ "./node_modules/@pmmmwh/react-refresh-webpack-plugin/overlay/index.js");
 __webpack_require__.$Refresh$.runtime = __webpack_require__(/*! ./node_modules/react-refresh/runtime.js */ "react-refresh/runtime");
 
 var _s = __webpack_require__.$Refresh$.signature();
-
-
 
 
 
@@ -7265,9 +7382,7 @@ const SettingsPage = () => {
     // Update wedocs settings data.
     (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.dispatch)(_data_settings__WEBPACK_IMPORTED_MODULE_4__["default"]).updateSettings({
       settings: docSettings
-    }).then(result => {
-      console.log('result:', result);
-    }).catch(err => {
+    }).then(result => {}).catch(err => {
       console.log('error:', err);
     });
   };
@@ -7286,19 +7401,19 @@ const SettingsPage = () => {
     className: "h-full"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("main", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "lg:grid lg:grid-cols-12 lg:gap-x-6"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_7__.Tab.Group, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_6__.Tab.Group, {
     vertical: true,
     onChange: setSelectedIndex,
     selectedIndex: selectedIndex
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("aside", {
     className: "py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("nav", {
-    className: "py-[18px] bg-white rounded-md"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_7__.Tab.List, {
+    className: "py-[18px] min-h-[180px] bg-white rounded-md"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_6__.Tab.List, {
     className: "overflow-hidden px-2 space-y-0.5"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Menu__WEBPACK_IMPORTED_MODULE_1__["default"], null)))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "space-y-6 sm:px-6 lg:px-0 lg:col-span-9"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_7__.Tab.Panels, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_7__.Tab.Panel, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_GeneralSettings__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_6__.Tab.Panels, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_6__.Tab.Panel, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_GeneralSettings__WEBPACK_IMPORTED_MODULE_5__["default"], {
     settingsData: docSettings,
     generalSettingsData: docSettings.general,
     setSettings: setDocSettings
@@ -7418,7 +7533,7 @@ const Switcher = _ref => {
     className: "ml-3"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "text-sm text-gray-900"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)(enabled ? 'Enable' : 'Disable', 'wedocs-pro'))));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)(enabled ? 'Enable' : 'Disable', 'wedocs'))));
 };
 _s(Switcher, "AdpXreAjsFZBn284VGI0MLPkSQI=");
 _c = Switcher;
@@ -7481,11 +7596,6 @@ const actions = {
       docs
     };
   },
-  fetchDocs() {
-    return {
-      type: 'FETCH_DOCS'
-    };
-  },
   setDoc(doc) {
     return {
       type: 'SET_DOC',
@@ -7523,15 +7633,6 @@ const actions = {
       type: 'UPDATE_TO_API',
       path,
       data
-    };
-    return response;
-  },
-  *updateDocMeta(docId, meta) {
-    const path = '/wp/v2/docs/' + docId + '/meta';
-    const response = yield {
-      type: 'UPDATE_TO_API',
-      path,
-      data: meta
     };
     return response;
   }
@@ -7590,27 +7691,10 @@ __webpack_require__.$Refresh$.runtime = __webpack_require__(/*! ./node_modules/r
 
 
 const controls = {
-  FETCH_DOCS() {
-    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-      path: '/wp/v2/docs?per_page=-1'
-    });
-  },
   FETCH_FROM_API(action) {
     return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
       path: action.path
     });
-  },
-  FETCH_FROM_API_UNPARSED(action) {
-    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-      path: action.path,
-      parse: false
-    }).then(response => Promise.all([response.headers, response.json()]).then(_ref => {
-      let [headers, data] = _ref;
-      return {
-        headers,
-        data
-      };
-    }));
   },
   UPDATE_TO_API(action) {
     return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
@@ -7684,7 +7768,7 @@ __webpack_require__.$Refresh$.runtime = __webpack_require__(/*! ./node_modules/r
 
 
 
-const DOCS_STORE = 'wedocs-pro/docs';
+const DOCS_STORE = 'wedocs/docs';
 const docsStore = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.createReduxStore)(DOCS_STORE, {
   reducer: _reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   selectors: _selectors__WEBPACK_IMPORTED_MODULE_3__["default"],
@@ -8206,7 +8290,7 @@ __webpack_require__.$Refresh$.runtime = __webpack_require__(/*! ./node_modules/r
 
 
 
-const DOCS_SETTINGS_STORE = 'wedocs-pro/settings';
+const DOCS_SETTINGS_STORE = 'wedocs/settings';
 const settingsStore = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.createReduxStore)(DOCS_SETTINGS_STORE, {
   reducer: _reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   selectors: _selectors__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -14533,7 +14617,7 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
     if(true) {
-      // 1675754923741
+      // 1675798107780
       var cssReload = __webpack_require__(/*! ../../../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {"locals":false});
       module.hot.dispose(cssReload);
       module.hot.accept(undefined, cssReload);
@@ -22579,7 +22663,7 @@ const e=typeof window=="undefined"||typeof document=="undefined";
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("2a98facaf8df7636f2a0")
+/******/ 		__webpack_require__.h = () => ("4342e686f97ffd3ce281")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

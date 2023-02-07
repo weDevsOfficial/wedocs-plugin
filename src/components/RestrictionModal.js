@@ -78,13 +78,13 @@ const RestictionModal = ( { className, children, href } ) => {
 											>
 												{ __(
 													'Restrict Edit access for Admins only',
-													'wedocs-pro'
+													'wedocs'
 												) }
 											</Dialog.Title>
 											<p className="text-gray-500 text-base">
 												{ __(
 													'Are you sure to restrict the editing access for this doc to admin only? When restrictions are applied, only Admins can edit the article',
-													'wedocs-pro'
+													'wedocs'
 												) }
 											</p>
 
@@ -95,7 +95,7 @@ const RestictionModal = ( { className, children, href } ) => {
 												>
 													{ __(
 														'Cancel',
-														'wedocs-pro'
+														'wedocs'
 													) }
 												</button>
 												<button
@@ -104,7 +104,7 @@ const RestictionModal = ( { className, children, href } ) => {
 												>
 													{ __(
 														"I'm Sure",
-														'wedocs-pro'
+														'wedocs'
 													) }
 												</button>
 											</div>

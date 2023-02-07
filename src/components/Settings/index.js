@@ -5,8 +5,6 @@ import { useEffect, useState } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
 import settingsStore from '../../data/settings';
 import GeneralSettings from './GeneralSettings';
-import docsStore from "../../data/docs";
-import {useParams} from "react-router-dom";
 
 const SettingsPage = () => {
 	const [ selectedIndex, setSelectedIndex ] = useState( 0 );
@@ -37,7 +35,6 @@ const SettingsPage = () => {
 		dispatch( settingsStore )
 			.updateSettings( { settings: docSettings } )
 			.then( ( result ) => {
-				console.log( 'result:', result );
 			} )
 			.catch( ( err ) => {
 				console.log( 'error:', err );
@@ -64,7 +61,7 @@ const SettingsPage = () => {
 										selectedIndex={ selectedIndex }
 									>
 										<aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
-											<nav className="py-[18px] bg-white rounded-md">
+											<nav className="py-[18px] min-h-[180px] bg-white rounded-md">
 												<Tab.List className="overflow-hidden px-2 space-y-0.5">
 													<Menu />
 												</Tab.List>

@@ -102,7 +102,7 @@ const ComboBox = ( { sections } ) => {
 								value="custom"
 							>
 								<span className="dashicons dashicons-plus text-xs mt-1.5"></span>
-								{ __( 'Create new section', 'wedocs-pro' ) }
+								{ __( 'Create new section', 'wedocs' ) }
 							</Combobox.Option>
 						</AddSectionModal>
 					</Combobox.Options>

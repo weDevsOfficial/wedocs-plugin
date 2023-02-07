@@ -5,7 +5,7 @@ import selectors from './selectors';
 import controls from './controls';
 import resolvers from './resolvers';
 
-export const DOCS_STORE = 'wedocs-pro/docs';
+export const DOCS_STORE = 'wedocs/docs';
 
 const docsStore = createReduxStore( DOCS_STORE, {
 	reducer,

@@ -4,7 +4,7 @@ import { useState } from '@wordpress/element';
 
 const Menu = () => {
 	const menus = {
-		general: __( 'General', 'wedocs-pro' ),
+		general: __( 'General', 'wedocs' ),
 	};
 
 	const [ iconPath, setIconPath ] = useState(

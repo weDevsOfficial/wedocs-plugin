@@ -4,18 +4,18 @@ import file from '../../assets/img/file.png';
 import DocActions from '../DocActions';
 
 const SectionArticles = ( { article } ) => {
+    const { modified: lastModifiedDate, comment_count: commentCount } = article;
+
     const formattedDateString = () => {
-        const date  = new Date( article.modified ),
+        const date  = new Date( lastModifiedDate ),
             options = { day: "numeric", month: "short", year: "numeric" };
 
         return date.toLocaleDateString( "en-US", options );
     };
 
-    console.log( article );
-
 	return (
 		<div className="flex items-center bg-white border-b border-[#D9D9D9] py-4">
-			<img src={ drag } alt={ __( 'Docs Link Icon', 'wedocs-pro' ) } />
+			<img src={ drag } alt={ __( 'Docs Link Icon', 'wedocs' ) } />
 			<div className="flex items-center w-full group">
 				<div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
 					<div className="truncate flex items-center">
@@ -23,7 +23,7 @@ const SectionArticles = ( { article } ) => {
 							<img
 								src={ file }
 								className="w-full h-full px-3.5"
-								alt={ __( 'Docs Link Icon', 'wedocs-pro' ) }
+								alt={ __( 'Docs Link Icon', 'wedocs' ) }
 							/>
 							<a
 								href={ `${ window.location.origin }/?p=${ article?.id }` }
@@ -31,7 +31,7 @@ const SectionArticles = ( { article } ) => {
 							>
 								<span className="hover:underline group-hover:text-black">
 									{ sprintf(
-										__( '%s', 'wedocs-pro' ),
+										__( '%s', 'wedocs' ),
 										article?.title?.rendered
 									) }
 								</span>
@@ -93,7 +93,7 @@ const SectionArticles = ( { article } ) => {
 									/>
 								</svg>
 								<p className="comments-counter font-medium text-sm text-[#6B7280]">
-									5
+                                    { commentCount }
 								</p>
 							</div>
 							<div className="article-updated-date text-sm text-[#969696]">

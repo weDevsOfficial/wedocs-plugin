@@ -9,9 +9,9 @@ const GeneralSettings = ( {
 	setSettings,
 } ) => {
 	const docsHomeOptions = [
-		{ name: __( 'Documentation', 'wedocs-pro' ), value: 'documentation' },
-		{ name: __( 'Home', 'wedocs-pro' ), value: 'home' },
-		{ name: __( 'Blog', 'wedocs-pro' ), value: 'blog' },
+		{ name: __( 'Documentation', 'wedocs' ), value: 'documentation' },
+		{ name: __( 'Home', 'wedocs' ), value: 'home' },
+		{ name: __( 'Blog', 'wedocs' ), value: 'blog' },
 	];
 
 	const [ generalSettings, setGeneralSettings ] = useState( {
@@ -30,7 +30,7 @@ const GeneralSettings = ( {
 				<div className="bg-white">
 					<div className="section-heading py-4 px-8 sm:px-8 sm:py-4">
 						<h2 className="text-gray-900 font-medium text-lg">
-							{ __( 'General', 'wedocs-pro' ) }
+							{ __( 'General', 'wedocs' ) }
 						</h2>
 					</div>
 					<hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200" />
@@ -43,7 +43,7 @@ const GeneralSettings = ( {
 										id="headlessui-listbox-label-15"
 										data-headlessui-state="open"
 									>
-										{ __( 'weDocs Home', 'wedocs-pro' ) }
+										{ __( 'weDocs Home', 'wedocs' ) }
 									</label>
 								</div>
 								<div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
@@ -62,18 +62,18 @@ const GeneralSettings = ( {
 								<p className="text-sm text-[#6B7280]">
 									{ __(
 										'Home page for docs page. Preferably use [wedocs] ',
-										'wedocs-pro'
+										'wedocs'
 									) }
 									<a
 										href="#"
 										target="_blank"
 										className="text-indigo-700 underline underline-offset-2"
 									>
-										{ __( 'shortcode', 'wedocs-pro' ) }
+										{ __( 'shortcode', 'wedocs' ) }
 									</a>
 									{ __(
 										' or design your own.',
-										'wedocs-pro'
+										'wedocs'
 									) }
 								</p>
 							</div>
@@ -88,14 +88,14 @@ const GeneralSettings = ( {
 									>
 										{ __(
 											'Email Feedback on Article',
-											'wedocs-pro'
+											'wedocs'
 										) }
 									</label>
 									<div
 										className="tooltip cursor-pointer ml-2"
 										data-tip={ __(
 											'Invite readers to share their thoughts and suggestions through an email feedback form',
-											'wedocs-pro'
+											'wedocs'
 										) }
 									>
 										<svg
@@ -134,14 +134,14 @@ const GeneralSettings = ( {
 									>
 										{ __(
 											'Helpful Feedback on Article',
-											'wedocs-pro'
+											'wedocs'
 										) }
 									</label>
 									<div
 										className="tooltip cursor-pointer ml-2"
 										data-tip={ __(
 											'Enabling helpful feedback on your article allows readers to provide opinions on your content',
-											'wedocs-pro'
+											'wedocs'
 										) }
 									>
 										<svg
@@ -180,14 +180,14 @@ const GeneralSettings = ( {
 									>
 										{ __(
 											'Allow Comments on Article',
-											'wedocs-pro'
+											'wedocs'
 										) }
 									</label>
 									<div
 										className="tooltip cursor-pointer ml-2"
 										data-tip={ __(
 											'Increase reader engagement by turning on article comments',
-											'wedocs-pro'
+											'wedocs'
 										) }
 									>
 										<svg
@@ -226,14 +226,14 @@ const GeneralSettings = ( {
 									>
 										{ __(
 											'Allow Article Printing',
-											'wedocs-pro'
+											'wedocs'
 										) }
 									</label>
 									<div
 										className="tooltip cursor-pointer ml-2"
 										data-tip={ __(
 											'Enable this option to allow users to print articles directly from the website',
-											'wedocs-pro'
+											'wedocs'
 										) }
 									>
 										<svg

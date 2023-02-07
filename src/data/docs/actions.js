@@ -6,12 +6,6 @@ const actions = {
 		};
 	},
 
-	fetchDocs() {
-		return {
-			type: 'FETCH_DOCS',
-		};
-	},
-
 	setDoc( doc ) {
 		return { type: 'SET_DOC', doc };
 	},
@@ -38,12 +32,6 @@ const actions = {
 	*updateDoc( docId, data ) {
 		const path = '/wp/v2/docs/' + docId;
 		const response = yield { type: 'UPDATE_TO_API', path, data };
-		return response;
-	},
-
-	*updateDocMeta( docId, meta ) {
-		const path = '/wp/v2/docs/' + docId + '/meta';
-		const response = yield { type: 'UPDATE_TO_API', path, data: meta };
 		return response;
 	},
 };

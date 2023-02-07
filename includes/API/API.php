@@ -31,6 +31,10 @@ class API extends WP_REST_Controller {
         $this->rest_base = 'docs';
 
         $this->api = $api;
+
+        // Register settings api.
+        $settings_api = new SettingsApi( $api );
+        $settings_api->register_api();
     }
 
     /**

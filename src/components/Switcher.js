@@ -50,7 +50,7 @@ const Switcher = ( { name, generalSettings, settingsData, setSettings } ) => {
 			</Switch>
 			<span className="ml-3">
 				<span className="text-sm text-gray-900">
-					{ __( enabled ? 'Enable' : 'Disable', 'wedocs-pro' ) }
+					{ __( enabled ? 'Enable' : 'Disable', 'wedocs' ) }
 				</span>
 			</span>
 		</>

@@ -80,13 +80,13 @@ const AddArticleModal = ( { sections, className, children } ) => {
 									>
 										{ __(
 											'Enter your article title',
-											'wedocs-pro'
+											'wedocs'
 										) }
 									</Dialog.Title>
 									<p className="text-gray-500 text-base">
 										{ __(
 											'Help text how to add section',
-											'wedocs-pro'
+											'wedocs'
 										) }
 									</p>
 									{ /*<div className="mt-6 mb-5">*/ }
@@ -118,13 +118,13 @@ const AddArticleModal = ( { sections, className, children } ) => {
 												createDoc();
 											} }
 										>
-											{ __( 'Create', 'wedocs-pro' ) }
+											{ __( 'Create', 'wedocs' ) }
 										</button>
 										<button
 											className="bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md"
 											onClick={ closeModal }
 										>
-											{ __( 'Cancel', 'wedocs-pro' ) }
+											{ __( 'Cancel', 'wedocs' ) }
 										</button>
 									</div>
 								</Dialog.Panel>

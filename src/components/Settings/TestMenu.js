@@ -24,7 +24,7 @@ const TestMenu = () => {
 						/>
 					</svg>
 					<span className="truncate">
-						{ __( 'General', 'wedocs-pro' ) }
+						{ __( 'General', 'wedocs' ) }
 					</span>
 				</a>
 				<a
@@ -47,7 +47,7 @@ const TestMenu = () => {
 						/>
 					</svg>
 					<span className="truncate">
-						{ __( 'Permission Management', 'wedocs-pro' ) }
+						{ __( 'Permission Management', 'wedocs' ) }
 					</span>
 				</a>
 				<a
@@ -69,7 +69,7 @@ const TestMenu = () => {
 						/>
 					</svg>
 					<span className="truncate">
-						{ __( 'Assistant Widget', 'wedocs-pro' ) }
+						{ __( 'Assistant Widget', 'wedocs' ) }
 					</span>
 				</a>
 				<a
@@ -93,7 +93,7 @@ const TestMenu = () => {
 						/>
 					</svg>
 					<span className="truncate">
-						{ ( 'License', 'wedocs-pro' ) }
+						{ ( 'License', 'wedocs' ) }
 					</span>
 				</a>
 			</nav>

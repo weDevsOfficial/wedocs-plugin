@@ -22,7 +22,7 @@ const BackToDocsPage = () => {
 					strokeLinejoin="round"
 				/>
 			</svg>
-			{ __( 'All Docs', 'wedocs-pro' ) }
+			{ __( 'All Docs', 'wedocs' ) }
 		</Link>
 	);
 };

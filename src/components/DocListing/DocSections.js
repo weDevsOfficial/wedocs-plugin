@@ -26,7 +26,7 @@ const DocSections = ( { section, sections } ) => {
 					>
 						<img
 							src={ drag }
-							alt={ __( 'Docs Link Icon', 'wedocs-pro' ) }
+							alt={ __( 'Docs Link Icon', 'wedocs' ) }
 						/>
 						<div className="flex items-center w-full">
 							<div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
@@ -37,7 +37,7 @@ const DocSections = ( { section, sections } ) => {
 											className="w-full h-full px-3.5"
 											alt={ __(
 												'Docs Link Icon',
-												'wedocs-pro'
+												'wedocs'
 											) }
 										/>
 										<a
@@ -46,7 +46,7 @@ const DocSections = ( { section, sections } ) => {
 										>
 											<span className="hover:underline group-hover:text-black">
 												{ sprintf(
-													__( '%s', 'wedocs-pro' ),
+													__( '%s', 'wedocs' ),
 													title?.rendered
 												) }
 											</span>
@@ -134,7 +134,7 @@ const DocSections = ( { section, sections } ) => {
                             	className="py-2.5 px-4 mt-7 mb-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 text-sm text-white hover:text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             >
 								<span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-3 text-base flex items-center"></span>
-								{ __( 'Add article', 'wedocs-pro' ) }
+								{ __( 'Add article', 'wedocs' ) }
 							</AddArticleModal>
 						</div>
 					) }

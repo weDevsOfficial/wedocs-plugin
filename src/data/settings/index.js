@@ -5,7 +5,7 @@ import actions from './actions';
 import resolvers from './resolvers';
 import controls from './controls';
 
-export const DOCS_SETTINGS_STORE = 'wedocs-pro/settings';
+export const DOCS_SETTINGS_STORE = 'wedocs/settings';
 
 const settingsStore = createReduxStore( DOCS_SETTINGS_STORE, {
 	reducer,

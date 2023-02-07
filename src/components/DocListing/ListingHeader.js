@@ -27,7 +27,7 @@ const ListingHeader = ( { id } ) => {
 						<span className="group-hover:underline">
 							{ sprintf(
 								// translators: %s: Section title
-								__( '%s', 'wedocs-pro' ),
+								__( '%s', 'wedocs' ),
 								doc?.title?.rendered
 							) }
 						</span>

@@ -14,9 +14,11 @@ class API {
         add_action( 'rest_api_init', [ $this, 'init_api' ] );
 
         add_filter( 'rest_prepare_docs', [ $this, 'set_pagination' ], 10, 3 );
+        add_filter( 'rest_prepare_docs', [ $this, 'set_comment_count_to_docs_response' ], 10, 3 );
         add_filter( 'rest_prepare_docs', [ $this, 'set_caps' ], 10, 3 );
         add_filter( 'rest_delete_docs', [ $this, 'delete_child_docs' ], 10 );
     }
+
 
     /**
      * Initialize the API
@@ -25,6 +27,7 @@ class API {
      */
     public function init_api() {
         $api = new API\API( $this );
+        error_log( print_r( $api, 1 ) );
         $api->register_routes();
     }
 
@@ -85,6 +88,23 @@ class API {
     }
 
     /**
+     * Set next and previous pagination.
+     *
+     * @param \WP_REST_Response $response
+     * @param \WP_Post          $post
+     * @param \WP_REST_Request  $request  full data about the request
+     *
+     * @return \WP_REST_Response
+     */
+    public function set_comment_count_to_docs_response( $response, $post, $request ) {
+        $post_id                         = $post->ID;
+        $comments_count                  = wp_count_comments( $post_id );
+        $response->data['comment_count'] = $comments_count->approved;
+
+        return $response;
+    }
+
+    /**
      * Set capabilities.
      *
      * @param WP_REST_Response $response
@@ -92,7 +112,7 @@ class API {
      * @param WP_REST_Request  $request  full data about the request
      */
     public function set_caps( $response, $post, $request ) {
-        if ( 'edit' != $request['context'] ) {
+        if ( 'edit' !== $request['context'] ) {
             return $response;
         }
 

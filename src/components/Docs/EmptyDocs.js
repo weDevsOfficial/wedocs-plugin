@@ -14,13 +14,13 @@ const EmptyDocs = () => {
 									src={ CreateImage }
 									alt={ __(
 										'Docs Create Icon',
-										'wedocs-pro'
+										'wedocs'
 									) }
 								/>
 								<p className="text-[#3B3F4A] font-bold text-2xl">
 									{ __(
 										'Get started by creating a new doc',
-										'wedocs-pro'
+										'wedocs'
 									) }
 								</p>
 								<p className="text-[#666B79] text-lg">
@@ -28,11 +28,11 @@ const EmptyDocs = () => {
 										href="src/components/EmptyDocs/EmptyDocs#"
 										className="text-[#0043FF]"
 									>
-										{ __( 'Learn More', 'wedocs-pro' ) }
+										{ __( 'Learn More', 'wedocs' ) }
 									</a>
 									{ __(
 										'how to create a new doc',
-										'wedocs-pro'
+										'wedocs'
 									) }
 								</p>
 							</h2>
