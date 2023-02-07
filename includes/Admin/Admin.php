@@ -34,25 +34,8 @@ class Admin {
         $react_dir = require WEDOCS_PATH . '/build/index.asset.php';
         wp_enqueue_script( 'wedocs-react-script', wedocs()->plugin_url() . '/build/index.js', $react_dir['dependencies'], time(), true );
 
-        $suffix     = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
         $assets_url = wedocs()->plugin_url() . '/assets';
-
-        wp_enqueue_script( 'vuejs', $assets_url . '/js/vue' . $suffix . '.js' );
         wp_enqueue_script( 'sweetalert', $assets_url . '/js/sweetalert.min.js', [ 'jquery' ] );
-        wp_enqueue_script( 'wedocs-admin-script', $assets_url . '/js/admin-script.js', [ 'jquery', 'jquery-ui-sortable', 'wp-util' ], time(), true );
-        wp_localize_script( 'wedocs-admin-script', 'weDocs', [
-            'nonce'               => wp_create_nonce( 'wedocs-admin-nonce' ),
-            'editurl'             => admin_url( 'post.php?action=edit&post=' ),
-            'viewurl'             => home_url( '/?p=' ),
-            'enter_doc_title'     => __( 'Enter doc title', 'wedocs' ),
-            'write_something'     => __( 'Write something', 'wedocs' ),
-            'enter_section_title' => __( 'Enter section title', 'wedocs' ),
-            'confirmBtn'          => __( 'OK', 'wedocs' ),
-            'delConfirmBtn'       => __( 'Yes, delete it!', 'wedocs' ),
-            'cancelBtn'           => __( 'Cancel', 'wedocs' ),
-            'delConfirm'          => __( 'Are you sure?', 'wedocs' ),
-            'delConfirmTxt'       => __( 'Are you sure to delete the entire section? Articles inside this section will be deleted too!', 'wedocs' ),
-        ] );
 
         wp_enqueue_style( 'sweetalert', $assets_url . '/css/sweetalert.css', false, date( 'Ymd' ) );
         wp_enqueue_style( 'wedocs-tailwind-styles', $assets_url . '/css/tailwind.css', false, date( 'Ymd' ) );
