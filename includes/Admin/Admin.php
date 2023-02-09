@@ -13,7 +13,8 @@ class Admin {
     public function __construct() {
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ] );
 
-        add_action( 'admin_menu', [ $this, 'admin_menu' ] );
+        new Menu();
+//        add_action( 'admin_menu', [ $this, 'admin_menu' ] );
         add_filter( 'parent_file', [$this, 'fix_tag_menu' ] );
 
         add_filter( 'admin_footer_text', [ $this, 'admin_footer_text' ], 1 );

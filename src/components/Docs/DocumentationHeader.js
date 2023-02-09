@@ -1,20 +1,22 @@
 import { Link } from 'react-router-dom';
 import DocActions from '../DocActions';
 
-const DocumenationHeader = ( { doc } ) => {
+const DocumentationHeader = ( { doc } ) => {
+    const { id, title } = doc;
+
 	return (
 		<div className="flex w-full items-center justify-between space-x-6 p-6 pt-5">
 			<div className="flex-1 truncate">
 				<div className="inline-flex items-center space-x-3">
 					<div className="flex items-center space-x-3 flex-1 group">
-						<Link to={ `/section/${ doc.id }` }>
+						<Link to={ `/section/${ id }` }>
 							<h3 className="truncate hover:underline text-lg font-medium text-[#3B3F4A]">
-								{ doc?.title?.rendered }
+								{ title?.rendered }
 							</h3>
 						</Link>
 						<a
 							target="_blank"
-							href={ `${ window.location.origin }/?p=${ doc.id }` }
+							href={ `${ window.location.origin }/?p=${ id }` }
 							rel="noreferrer"
 							className="mt-[-2px] hidden group-hover:block"
 						>
@@ -37,10 +39,10 @@ const DocumenationHeader = ( { doc } ) => {
 				</div>
 			</div>
 			<div className="flex gap-5 items-center">
-				<DocActions />
+				<DocActions docId={ id } />
 			</div>
 		</div>
 	);
 };
 
-export default DocumenationHeader;
+export default DocumentationHeader;

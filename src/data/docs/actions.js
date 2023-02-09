@@ -29,11 +29,11 @@ const actions = {
 		return createdDoc;
 	},
 
-	*updateDoc( docId, data ) {
-		const path = '/wp/v2/docs/' + docId;
-		const response = yield { type: 'UPDATE_TO_API', path, data };
-		return response;
-	},
+    *deleteDoc( docId ) {
+        const path = '/wp/v2/docs/' + docId;
+        const response = yield { type: 'DELETE_TO_API', path };
+        return response;
+    },
 };
 
 export default actions;

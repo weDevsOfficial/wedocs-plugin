@@ -93,6 +93,19 @@ class API extends WP_REST_Controller {
             ],
         ] );
 
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)/', [
+            [
+                'methods'             => WP_REST_Server::DELETABLE,
+                'callback'            => array( $this, 'delete_item' ),
+                'permission_callback' => array( $this, 'delete_item_permissions_check' ),
+                'args'                => array(
+                    'force' => array(
+                        'default' => false,
+                    ),
+                ),
+            ]
+        ] );
+
         register_rest_route( $this->namespace, '/' . $this->rest_base . '/search', [
             [
                 'methods'             => WP_REST_Server::READABLE,
@@ -409,5 +422,43 @@ class API extends WP_REST_Controller {
         }
 
         return $post;
+    }
+
+    /**
+     * Check permissions for the documentation delete.
+     *
+     * @param WP_REST_Request $request Current request.
+     *
+     * @return bool|WP_Error
+     */
+    public function delete_item_permissions_check( $request ) {
+        if ( ! current_user_can( 'edit_posts' ) ) {
+            return new WP_Error( 'wedocs_permission_failure', esc_html__( 'You cannot delete the documentation resource.', 'wedocs' ) );
+        }
+
+        return true;
+    }
+
+    /**
+     * Delete a single documentation.
+     *
+     * @param WP_REST_Request $request Current request.
+     *
+     * @return WP_REST_Response|WP_Error
+     */
+    public function delete_item( $request ) {
+        $doc_id = absint( $request->get_param( 'id' ) );
+        $doc    = get_post( $doc_id );
+
+        if ( ! $doc ) {
+            return new WP_Error( 'rest_invalid_documentation', esc_html__( 'Invalid Documentation.', 'wedocs' ) );
+        }
+
+        wp_delete_post( $doc_id, true );
+
+        $response = new WP_REST_Response( array( 'message' => __( 'Documentation deleted successfully.', 'wedocs' ) ) );
+        $response->set_status( 204 );
+
+        return $response;
     }
 }

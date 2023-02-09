@@ -36,9 +36,7 @@ const SettingsPage = () => {
 			.updateSettings( { settings: docSettings } )
 			.then( ( result ) => {
 			} )
-			.catch( ( err ) => {
-				console.log( 'error:', err );
-			} );
+			.catch( ( err ) => {} );
 	};
 
 	useEffect( () => {

@@ -27,7 +27,6 @@ class API {
      */
     public function init_api() {
         $api = new API\API( $this );
-        error_log( print_r( $api, 1 ) );
         $api->register_routes();
     }
 

@@ -1,112 +1,146 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-// import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
-import { Combobox } from '@headlessui/react';
-import AddSectionModal from './AddSectionModal';
+import { CheckIcon, ChevronUpDownIcon, ExclamationCircleIcon } from '@heroicons/react/20/solid';
+import { Combobox, Dialog } from '@headlessui/react';
 import { useParams } from 'react-router-dom';
+import { dispatch } from "@wordpress/data";
+import docStore from "../data/docs";
 
-function classNames( ...classes ) {
-	return classes.filter( Boolean ).join( ' ' );
-}
-
-const ComboBox = ( { sections } ) => {
+const ComboBox = ( { sections, defaultSection, selectSectionId, isFormError, docId } ) => {
 	const { id } = useParams();
-	const [ query, setQuery ] = useState( '' );
-	const [ selectedPerson, setSelectedPerson ] = useState( null );
 
-	const filteredPeople = sections.map( ( section ) => ( {
-		id: section.id,
-		name: section.title.rendered,
-	} ) );
+    const classNames = ( ...classes ) => {
+        return classes.filter( Boolean ).join( ' ' );
+    }
 
-	// const filteredPeople =
-	// 	query === ''
-	// 		? sections
-	// 		: sections.filter( ( person ) => {
-	// 				return person.name
-	// 					.toLowerCase()
-	// 					.includes( query.toLowerCase() );
-	// 		  } );
+    const docSections = sections.map( ( section ) => ( {
+        id: section.id,
+        name: section?.title?.rendered,
+    } ) );
+
+    const [ newSection, setNewSection ] = useState( {
+        title: { raw: '' },
+        parent: parseInt( docId ? docId : id ),
+        status: 'publish',
+    } );
+
+    const [ selectedSection, setSelectedSection ] = useState( defaultSection || '' );
+    const [ sectionTitle, setSectionTitle ] = useState( '' );
+
+    const filteredSections =
+        sectionTitle === ''
+            ? docSections
+            : docSections.filter( ( section ) => {
+                return section?.name.toLowerCase().includes( sectionTitle.toLowerCase() );
+            } );
+
+    const handleArticleSection = () => {
+        if ( newSection?.title?.raw === '' ) {
+            return;
+        }
+
+        dispatch( docStore )
+            .createDoc( newSection )
+            .then( ( result ) => {
+                selectSectionId( result.id );
+                setNewSection( { ...newSection, title: { raw: '' } } );
+            } )
+            .catch( ( err ) => {} );
+    };
+
+    const handleOptionSet = ( sectionId ) => {
+        selectSectionId( sectionId );
+    };
+
+    const handleSectionTitle = ( e ) => {
+        setSectionTitle( e.target.value );
+        setNewSection( { ...newSection, title: { raw: e.target.value } } )
+    };
 
 	return (
 		<Combobox
 			as="div"
-			value={ selectedPerson }
-			onChange={ setSelectedPerson }
+			value={ selectedSection }
+			onChange={ setSelectedSection }
 		>
-			<div className="relative mt-1">
+			<div className="relative mb-5">
 				<Combobox.Input
-					// className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-					placeholder={ __( 'Type a section name', 'dokan-driver' ) }
+					placeholder={ __( 'Type a section name', 'wedocs' ) }
 					required
-					className="h-11 bg-gray-50 !border-gray-300 text-gray-900 text-base !rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-					onChange={ ( event ) => setQuery( event.target.value ) }
-					displayValue={ ( person ) => person?.name }
+					className={
+                        `${ isFormError ? '!border-red-500 focus:ring-red-500 focus:border-red-500' : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500' }
+                        h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white`
+                    }
+					onChange={ handleSectionTitle }
 				/>
-				<Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
-					{ /*<ChevronUpDownIcon*/ }
-					{ /*	className="h-5 w-5 text-gray-400"*/ }
-					{ /*	aria-hidden="true"*/ }
-					{ /*/>*/ }
-				</Combobox.Button>
 
-				{ filteredPeople.length > 0 && (
-					<Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white text-base text-left shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-						{ filteredPeople.map( ( person ) => (
-							<Combobox.Option
-								key={ person.id }
-								value={ person }
-								className={ ( { active } ) =>
-									classNames(
-										'relative cursor-default select-none py-2.5 pl-3 pr-9 mb-0',
-										active
-											? 'bg-indigo-600 text-white'
-											: 'text-gray-900'
-									)
-								}
-							>
-								{ ( { active, selected } ) => (
-									<>
-										<span
-											className={ classNames(
-												'block truncate',
-												selected && 'font-semibold'
-											) }
-										>
-											{ person.name }
-										</span>
+                { isFormError ? (
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                        <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div> ) : (
+                    <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+                        <ChevronUpDownIcon
+                            className="h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                        />
+                    </Combobox.Button>
+                ) }
 
-										{ selected && (
-											<span
-												className={ classNames(
-													'absolute inset-y-0 right-0 flex items-center pr-4',
-													active
-														? 'text-white'
-														: 'text-indigo-600'
-												) }
-											>
-												{ /*<CheckIcon*/ }
-												{ /*	className="h-5 w-5"*/ }
-												{ /*	aria-hidden="true"*/ }
-												{ /*/>*/ }
-											</span>
-										) }
-									</>
-								) }
-							</Combobox.Option>
-						) ) }
+                <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white text-base text-left shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    { filteredSections && filteredSections.length > 0 && filteredSections.map( ( section ) => (
+                        <Combobox.Option
+                            key={ section.id }
+                            value={ section.name }
+                            className={ ( { active } ) =>
+                                classNames(
+                                    'relative cursor-pointer select-none py-2.5 pl-3 pr-9 mb-0',
+                                    active
+                                        ? 'bg-indigo-600 text-white'
+                                        : 'text-gray-900'
+                                )
+                            }
+                            onClick={ () => handleOptionSet( section.id ) }
+                        >
+                            { ( { active, selected } ) => (
+                                <>
+                                    <span
+                                        className={ classNames(
+                                            'block truncate',
+                                            selected && 'font-semibold'
+                                        ) }
+                                    >
+                                        { sprintf( __( '%s', 'wedocs' ), section.name ) }
+                                    </span>
 
-						<AddSectionModal parent={ id }>
-							<Combobox.Option
-								className="flex items-center bg-gray-100 relative cursor-pointer text-base text-indigo-600 mb-0 select-none py-2 pl-3 pr-9"
-								value="custom"
-							>
-								<span className="dashicons dashicons-plus text-xs mt-1.5"></span>
-								{ __( 'Create new section', 'wedocs' ) }
-							</Combobox.Option>
-						</AddSectionModal>
-					</Combobox.Options>
-				) }
+                                    { selected && (
+                                        <span
+                                            className={ classNames(
+                                                'absolute inset-y-0 right-0 flex items-center pr-4',
+                                                active
+                                                    ? 'text-white'
+                                                    : 'text-indigo-600'
+                                            ) }
+                                        >
+                                            <CheckIcon
+                                                className="h-5 w-5"
+                                                aria-hidden="true"
+                                            />
+                                        </span>
+                                    ) }
+                                </>
+                            ) }
+                        </Combobox.Option>
+                    ) ) }
+
+                    <Combobox.Option
+                        className="flex items-center bg-gray-100 relative cursor-pointer text-base text-indigo-600 mb-0 select-none py-2 pl-3 pr-9"
+                        value={ newSection?.title?.raw }
+                        onClick={ handleArticleSection }
+                    >
+                        <span className="dashicons dashicons-plus text-xs mt-1.5"></span>
+                        { sprintf( __( 'Create "%s" as a new section', 'wedocs' ), sectionTitle ? sectionTitle : 'How to use' ) }
+                    </Combobox.Option>
+                </Combobox.Options>
 			</div>
 		</Combobox>
 	);

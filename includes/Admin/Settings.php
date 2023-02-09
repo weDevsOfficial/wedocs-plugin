@@ -18,7 +18,7 @@ class Settings {
         $this->settings_api = new WeDevs_Settings_API();
 
         add_action( 'admin_init', [$this, 'admin_init'] );
-        add_action( 'admin_menu', [$this, 'admin_menu'] );
+//        add_action( 'admin_menu', [$this, 'admin_menu'] );
     }
 
     /**

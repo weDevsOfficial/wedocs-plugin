@@ -1,30 +1,44 @@
 import { __ } from '@wordpress/i18n';
-import { Fragment, useState } from '@wordpress/element';
+import {Fragment, useEffect, useState} from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import { dispatch } from '@wordpress/data';
 import docStore from '../data/docs';
 import ComboBox from './ComboBox';
+import ComboBox2 from "./ComboBox2";
+import { ExclamationCircleIcon } from "@heroicons/react/20/solid";
 
-const AddArticleModal = ( { sections, className, children } ) => {
+const AddArticleModal = ( { sections, className, children, defaultSection, docId } ) => {
 	const [ isOpen, setIsOpen ] = useState( false );
-	const [ newDoc, setNewDoc ] = useState( {
-		title: { raw: '' },
-		status: 'publish',
-	} );
+    const [ sectionId, setSectionId ] = useState( defaultSection?.id || '' );
+    const [ newArticle, setNewArticle ] = useState( {
+        title: { raw: '' },
+        parent: sectionId ? parseInt( sectionId ) : '',
+        status: 'publish',
+    } );
+
+    const [ formError, setFormError ] = useState( { title: false, sectionId: false } );
 
 	const onTitleChange = ( e ) => {
-		setNewDoc( { ...newDoc, title: { raw: e.target.value } } );
+		setNewArticle( { ...newArticle, title: { raw: e.target.value } } );
+        setFormError( { ...formError, title: e.target.value.length === 0 } )
 	};
 
 	const createDoc = () => {
-		if ( newDoc.title.raw === '' ) {
+		if ( newArticle.title.raw === '' ) {
+            setFormError( { ...formError, title: true } );
 			return;
 		}
 
+        if ( ! sectionId ) {
+            setFormError( { ...formError, sectionId: true } );
+            return;
+        }
+
 		dispatch( docStore )
-			.createDoc( newDoc )
+			.createDoc( newArticle )
 			.then( ( result ) => {
-				setNewDoc( { ...newDoc, title: { raw: '' } } );
+				setNewArticle( { ...newArticle, title: { raw: '' } } );
+                setSectionId( defaultSection?.id || '' );
 				closeModal();
 			} )
 			.catch( ( err ) => {} );
@@ -37,6 +51,11 @@ const AddArticleModal = ( { sections, className, children } ) => {
 	const openModal = () => {
 		setIsOpen( true );
 	};
+
+    useEffect( () => {
+        setNewArticle( { ...newArticle, parent: sectionId } );
+        setFormError( { ...formError, sectionId: false } );
+    }, [ sectionId ] );
 
 	return (
 		<>
@@ -74,49 +93,62 @@ const AddArticleModal = ( { sections, className, children } ) => {
 								leaveTo="opacity-0 scale-95"
 							>
 								<Dialog.Panel className="w-full max-w-md transform rounded-2xl bg-white py-6 px-9 text-center align-middle shadow-xl transition-all">
-									<Dialog.Title
-										as="h3"
-										className="text-lg font-bold text-gray-900 mb-2"
-									>
-										{ __(
-											'Enter your article title',
-											'wedocs'
-										) }
-									</Dialog.Title>
-									<p className="text-gray-500 text-base">
-										{ __(
-											'Help text how to add section',
-											'wedocs'
-										) }
-									</p>
-									{ /*<div className="mt-6 mb-5">*/ }
-									{ /*	<input*/ }
-									{ /*		type="text"*/ }
-									{ /*		name="doc_title"*/ }
-									{ /*		id="doc-title"*/ }
-									{ /*		placeholder={ __(*/ }
-									{ /*			'Type a section name',*/ }
-									{ /*			'dokan-driver'*/ }
-									{ /*		) }*/ }
-									{ /*		required*/ }
-									{ /*		className="h-11 bg-gray-50 !border-gray-300 text-gray-900 text-base !rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"*/ }
-									{ /*		value={ newDoc.title.raw }*/ }
-									{ /*		onChange={ ( e ) => {*/ }
-									{ /*			onTitleChange( e );*/ }
-									{ /*		} }*/ }
-									{ /*	/>*/ }
-									{ /*</div>*/ }
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-bold text-gray-900 mb-2"
+                                    >
+                                        { __(
+                                            'Enter your article title',
+                                            'wedocs'
+                                        ) }
+                                    </Dialog.Title>
 
-									<div className="mt-6 mb-5">
-										<ComboBox sections={ sections } />
-									</div>
+                                    <p className="text-gray-500 text-base">
+                                        { __(
+                                            'Help text how to add article',
+                                            'wedocs'
+                                        ) }
+                                    </p>
+
+                                    <div className="relative mt-6 mb-4">
+                                        <input
+                                            type="text"
+                                            name="doc_title"
+                                            id="doc-title"
+                                            placeholder={ __(
+                                                'Write article name',
+                                                'wedocs'
+                                            ) }
+                                            required
+                                            className={
+                                                `${ formError.title ? '!border-red-500 focus:ring-red-500 focus:border-red-500' : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500' }
+                                                h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white`
+                                            }
+                                            value={ newArticle?.title?.raw }
+                                            onChange={ onTitleChange }
+                                        />
+
+                                        { formError.title &&
+                                            <div
+                                                className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                                <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true"/>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <ComboBox
+                                        sections={ sections }
+                                        defaultSection={ defaultSection?.title?.rendered }
+                                        selectSectionId={ setSectionId }
+                                        isFormError={ formError.sectionId }
+                                        docId={ docId }
+                                    />
+                                    {/*<ComboBox2 sections={ sections } />*/}
 
 									<div className="mt-6 space-x-3.5">
 										<button
 											className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md"
-											onClick={ () => {
-												createDoc();
-											} }
+											onClick={ createDoc }
 										>
 											{ __( 'Create', 'wedocs' ) }
 										</button>

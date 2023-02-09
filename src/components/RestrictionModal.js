@@ -1,11 +1,18 @@
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { Fragment, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
+import {dispatch} from "@wordpress/data";
+import docsStore from "../data/docs";
 
-const RestictionModal = ( { className, children, href } ) => {
+const RestictionModal = ( { className, children, docId } ) => {
 	const [ isOpen, setIsOpen ] = useState( false );
 
-	const closeModal = () => {
+	const removeDocumentation = () => {
+        dispatch( docsStore )
+            .deleteDoc( docId )
+            .then( ( result ) => {} )
+            .catch( ( err ) => {} );
+
 		setIsOpen( false );
 	};
 
@@ -15,19 +22,18 @@ const RestictionModal = ( { className, children, href } ) => {
 
 	return (
 		<>
-			<a
-				href={ href || '#' }
+			<button
 				onClick={ openModal }
 				className={ className }
 			>
 				{ children }
-			</a>
+			</button>
 
 			<Transition appear show={ isOpen } as={ Fragment }>
 				<Dialog
 					as="div"
 					className="relative z-10"
-					onClose={ closeModal }
+					onClose={ () => setIsOpen( false ) }
 				>
 					<Transition.Child
 						as={ Fragment }
@@ -52,7 +58,7 @@ const RestictionModal = ( { className, children, href } ) => {
 								leaveFrom="opacity-100 scale-100"
 								leaveTo="opacity-0 scale-95"
 							>
-								<Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white py-6 px-9 align-middle shadow-xl transition-all">
+								<Dialog.Panel className="w-[512px] transform overflow-hidden rounded-2xl bg-white py-6 px-9 align-middle shadow-xl transition-all">
 									<div className="sm:flex sm:items-start">
 										<div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
 											<svg
@@ -78,33 +84,33 @@ const RestictionModal = ( { className, children, href } ) => {
 											>
 												{ __(
 													'Restrict Edit access for Admins only',
-													'wedocs'
+													'wedocs-pro'
 												) }
 											</Dialog.Title>
 											<p className="text-gray-500 text-base">
 												{ __(
 													'Are you sure to restrict the editing access for this doc to admin only? When restrictions are applied, only Admins can edit the article',
-													'wedocs'
+													'wedocs-pro'
 												) }
 											</p>
 
 											<div className="mt-6 space-x-3.5 text-right">
 												<button
 													className="bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md"
-													onClick={ closeModal }
+													onClick={ () => setIsOpen( false ) }
 												>
 													{ __(
 														'Cancel',
-														'wedocs'
+														'wedocs-pro'
 													) }
 												</button>
 												<button
-													className="bg-red-600 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md"
-													onClick={ closeModal }
+													className="bg-red-600 hover:bg-red-700 text-white font-medium text-base py-2 px-5 rounded-md"
+													onClick={ removeDocumentation }
 												>
 													{ __(
 														"I'm Sure",
-														'wedocs'
+														'wedocs-pro'
 													) }
 												</button>
 											</div>

@@ -12,6 +12,13 @@ const controls = {
 			method: 'POST',
 		} );
 	},
+
+    DELETE_TO_API( action ) {
+        return apiFetch( {
+            path: action.path,
+            method: 'DELETE',
+        } );
+    },
 };
 
 export default controls;
