@@ -454,11 +454,38 @@ class API extends WP_REST_Controller {
             return new WP_Error( 'rest_invalid_documentation', esc_html__( 'Invalid Documentation.', 'wedocs' ) );
         }
 
+        $this->remove_child_docs( $doc_id );
         wp_delete_post( $doc_id, true );
 
-        $response = new WP_REST_Response( array( 'message' => __( 'Documentation deleted successfully.', 'wedocs' ) ) );
-        $response->set_status( 204 );
+        $args = [
+            'numberposts' => -1,
+            'post_type'   => 'docs',
+            'post_status' => 'publish',
+        ];
+
+        $data     = get_posts( $args );
+        $response = rest_ensure_response( $data );
 
         return $response;
+    }
+
+    /**
+     * Remove all children docs if exists.
+     *
+     * @param int $parent_id
+     *
+     * @return WP_REST_Response|WP_Error
+     */
+    public function remove_child_docs( $parent_id ) {
+        $childrens = get_children( [ 'post_parent' => $parent_id ] );
+
+        if ( $childrens ) {
+            foreach ( $childrens as $child_post ) {
+                // recursively delete
+                $this->remove_child_docs( $child_post->ID );
+
+                wp_delete_post( $child_post->ID );
+            }
+        }
     }
 }

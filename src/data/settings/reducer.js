@@ -19,8 +19,6 @@ const reducer = ( state = DEFAULT_SETTINGS_STATE, action ) => {
 					[ action.option ]: action.value,
 				},
 			};
-		case 'SET_ROLES':
-			return { ...state, roles: action.roles };
 		case 'SET_SAVING':
 			return { ...state, saving: action.saving };
 		default:

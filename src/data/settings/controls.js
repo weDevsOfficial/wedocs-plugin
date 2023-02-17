@@ -7,12 +7,6 @@ const controls = {
 		} );
 	},
 
-	FETCH_ROLES() {
-		return apiFetch( {
-			path: '/wp/v2/docs/settings?data=user_roles',
-		} );
-	},
-
 	UPDATE_TO_API( action ) {
 		return apiFetch( {
 			path: action.path,

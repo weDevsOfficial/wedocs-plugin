@@ -1,22 +1,45 @@
 import { __ } from '@wordpress/i18n';
 import Switcher from '../Switcher';
-import { useEffect, useState } from '@wordpress/element';
-import Listbox from '../Listbox';
+import {Fragment, useEffect, useState} from '@wordpress/element';
+import {useSelect} from "@wordpress/data";
+import docStore from "../../data/docs";
+import SelectBox from "../SelectBox";
+import docsStore from "../../data/docs";
+import {CheckIcon, ChevronDownIcon} from "@heroicons/react/20/solid";
+import {Transition} from "@headlessui/react";
+import settingsStore from "../../data/settings";
 
 const GeneralSettings = ( {
 	settingsData,
 	generalSettingsData,
 	setSettings,
 } ) => {
-	const docsHomeOptions = [
-		{ name: __( 'Documentation', 'wedocs' ), value: 'documentation' },
-		{ name: __( 'Home', 'wedocs' ), value: 'home' },
-		{ name: __( 'Blog', 'wedocs' ), value: 'blog' },
-	];
+    const pages = useSelect(
+        ( select ) => select( docsStore ).getPages(),
+        []
+    );
+
+    const [ docsPages, setDocsPages ] = useState( pages );
 
 	const [ generalSettings, setGeneralSettings ] = useState( {
 		...generalSettingsData,
 	} );
+
+    const handleEmailAddress = ( e ) => {
+        setSettings(
+            { ...settingsData, general: { ...generalSettingsData, email_to: e.target.value } }
+        );
+    };
+
+    useEffect( () => {
+        if ( Object.keys( pages ).length ) {
+            setDocsPages(
+                pages?.map( page => {
+                    return { id: page?.id, name: page?.title?.rendered }
+                } )
+            );
+        }
+    }, [ pages ] );
 
 	useEffect( () => {
 		setGeneralSettings( {
@@ -24,9 +47,22 @@ const GeneralSettings = ( {
 		} );
 	}, [ generalSettingsData ] );
 
+    // useEffect( () => {
+    //     setSettings(
+    //         { ...settingsData, general: { ...generalSettingsData, email_to: emailAddress } }
+    //     );
+    // }, [ emailAddress ] );
+
+    // useEffect( () => {
+    //
+    //     if ( settingsData?.general?.email_to ) {
+    //         setEmailAddress( settingsData?.general?.email_to );
+    //     }
+    // }, [ settingsData?.general?.email_to ] );
+
 	return (
 		<section>
-			<div className="shadow sm:rounded-md sm:overflow-x-hidden">
+			<div className="shadow sm:rounded-md">
 				<div className="bg-white">
 					<div className="section-heading py-4 px-8 sm:px-8 sm:py-4">
 						<h2 className="text-gray-900 font-medium text-lg">
@@ -48,13 +84,20 @@ const GeneralSettings = ( {
 								</div>
 								<div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
 									<div className="relative">
-										<Listbox
-											name="home"
-											options={ docsHomeOptions }
-											generalSettings={ generalSettings }
-											settingsData={ settingsData }
-											setSettings={ setSettings }
-										/>
+                                        { docsPages && Object.keys( docsPages ).length > 0 ? (
+                                            <SelectBox
+                                                name="docs_home"
+                                                options={ docsPages }
+                                                setSettings={ setSettings }
+                                                settingsData={ settingsData }
+                                                generalSettings={ generalSettings }
+                                            />
+                                        ) : (
+                                            <div className="relative mt-1">
+                                                <input className="relative !w-full cursor-pointer !rounded-md border !border-gray-300 bg-white !py-2 !pl-3 !pr-10 text-left shadow-sm sm:text-sm" placeholder={ 'loading...' } disabled />
+                                            </div>
+                                        ) }
+
 									</div>
 								</div>
 							</div>
@@ -65,7 +108,7 @@ const GeneralSettings = ( {
 										'wedocs'
 									) }
 									<a
-										href="#"
+										href="https://github.com/tareq1988/wedocs-plugin/wiki/Using-Shortcodes"
 										target="_blank"
 										className="text-indigo-700 underline underline-offset-2"
 									>
@@ -78,6 +121,68 @@ const GeneralSettings = ( {
 								</p>
 							</div>
 						</div>
+
+                        { generalSettingsData?.email === ( 'on' || '' ) && (
+                            <div className="col-span-4">
+                                <div className="settings-content flex items-center justify-between">
+                                    <div className="settings-field-heading flex items-center space-x-2 flex-1">
+                                        <label
+                                            className="block text-sm font-medium text-gray-700"
+                                            id="headlessui-listbox-label-15"
+                                            data-headlessui-state="open"
+                                        >
+                                            { __( 'Email Address', 'wedocs' ) }
+                                        </label>
+                                        <div
+                                            className="tooltip cursor-pointer ml-2"
+                                            data-tip={ __(
+                                                'The email address where the feedbacks should sent to.',
+                                                'wedocs'
+                                            ) }
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="18"
+                                                height="18"
+                                                fill="none"
+                                            >
+                                                <path
+                                                    d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                                                    stroke="#6b7280"
+                                                    strokeWidth="2"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+                                        <div className="relative">
+                                            <input
+                                                type="text"
+                                                name="doc_title"
+                                                id="doc-title"
+                                                placeholder={ __(
+                                                    'Write your email address',
+                                                    'wedocs'
+                                                ) }
+                                                className='w-full cursor-pointer !rounded-md !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
+                                                value={ generalSettingsData?.email_to }
+                                                onChange={ handleEmailAddress }
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
+                                    <p className="text-sm text-[#6B7280]">
+                                        { __(
+                                            'The email address where the feedbacks should sent to.',
+                                            'wedocs'
+                                        ) }
+                                    </p>
+                                </div>
+                            </div>
+                        ) }
 						<div className="col-span-4">
 							<div className="settings-content flex items-center justify-between">
 								<div className="settings-heading flex items-center space-x-2 flex-1">
@@ -116,7 +221,7 @@ const GeneralSettings = ( {
 								</div>
 								<div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
 									<Switcher
-										name="email_feedback"
+										name="email"
 										generalSettings={ generalSettings }
 										settingsData={ settingsData }
 										setSettings={ setSettings }
@@ -162,7 +267,7 @@ const GeneralSettings = ( {
 								</div>
 								<div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
 									<Switcher
-										name="helpful_feedback"
+										name="helpful"
 										generalSettings={ generalSettings }
 										settingsData={ settingsData }
 										setSettings={ setSettings }
@@ -208,7 +313,7 @@ const GeneralSettings = ( {
 								</div>
 								<div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
 									<Switcher
-										name="allow_comments"
+										name="comments"
 										generalSettings={ generalSettings }
 										settingsData={ settingsData }
 										setSettings={ setSettings }
@@ -254,7 +359,7 @@ const GeneralSettings = ( {
 								</div>
 								<div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
 									<Switcher
-										name="allow_article"
+										name="print"
 										generalSettings={ generalSettings }
 										settingsData={ settingsData }
 										setSettings={ setSettings }

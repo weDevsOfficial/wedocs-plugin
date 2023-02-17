@@ -4,27 +4,32 @@ const selectors = {
 		return docs;
 	},
 
-	getDoc( state, id ) {
+	getDoc: ( state, id ) => {
 		const { docs } = state;
 		return docs.find( ( doc ) => doc.id === id );
 	},
 
-	getLoading( state ) {
+    getPages: ( state ) => {
+        const { pages } = state;
+        return pages;
+    },
+
+	getLoading: ( state ) => {
 		const { loading } = state;
 		return loading;
 	},
 
-	getParentDocs( state ) {
+	getParentDocs: ( state ) => {
 		const { docs } = state;
 		return docs.filter( ( doc ) => ! doc.parent );
 	},
 
-	getSectionsDocs( state, id ) {
+	getSectionsDocs: ( state, id ) => {
 		const { docs } = state;
 		return docs.filter( ( doc ) => doc.parent === id );
 	},
 
-	getDocArticles( state, id ) {
+	getDocArticles: ( state, id ) => {
 		const { docs } = state;
 		const sections = docs.filter( ( doc ) => doc.parent === id );
 		const articles = [];
@@ -39,7 +44,7 @@ const selectors = {
 		return articles;
 	},
 
-	getSectionArticles( state, id ) {
+	getSectionArticles: ( state, id ) => {
 		const { docs } = state;
 		return docs.filter( ( doc ) => doc.parent === id );
 	},

@@ -3,6 +3,7 @@ import { Fragment, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import {dispatch} from "@wordpress/data";
 import docsStore from "../data/docs";
+import Swal from "sweetalert2";
 
 const RestictionModal = ( { className, children, docId } ) => {
 	const [ isOpen, setIsOpen ] = useState( false );
@@ -10,8 +11,31 @@ const RestictionModal = ( { className, children, docId } ) => {
 	const removeDocumentation = () => {
         dispatch( docsStore )
             .deleteDoc( docId )
-            .then( ( result ) => {} )
-            .catch( ( err ) => {} );
+            .then( ( result ) => {
+                Swal.fire( {
+                    title: __( 'Documentation Deleted', 'wedocs' ),
+                    text: __(
+                        'Documentation has been deleted successfully',
+                        'wedocs'
+                    ),
+                    icon: 'success',
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                } );
+            } )
+            .catch( ( err ) => {
+                Swal.fire( {
+                    title: __( 'Error', 'wedocs' ),
+                    text: err.message,
+                    icon: 'error',
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                } );
+            } );
 
 		setIsOpen( false );
 	};
@@ -101,7 +125,7 @@ const RestictionModal = ( { className, children, docId } ) => {
 												>
 													{ __(
 														'Cancel',
-														'wedocs-pro'
+														'wedocs'
 													) }
 												</button>
 												<button
@@ -110,7 +134,7 @@ const RestictionModal = ( { className, children, docId } ) => {
 												>
 													{ __(
 														"I'm Sure",
-														'wedocs-pro'
+														'wedocs'
 													) }
 												</button>
 											</div>

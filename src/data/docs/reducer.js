@@ -1,5 +1,6 @@
 const DEFAULT_STATE = {
 	docs: [],
+    pages: [],
 	loading: false,
 };
 
@@ -16,6 +17,12 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
 				...state,
 				docs: [ ...state.docs, action.doc ],
 			};
+
+        case 'SET_PAGES':
+            return {
+                ...state,
+                pages: [ ...action.pages ],
+            };
 
 		case 'SET_LOADING':
 			return {

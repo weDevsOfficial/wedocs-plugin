@@ -10,7 +10,7 @@ const Switcher = ( { name, generalSettings, settingsData, setSettings } ) => {
 	};
 
 	useEffect( () => {
-		if ( ! Boolean( generalSettings[ name ] ) ) {
+		if ( generalSettings[ name ] === 'off' ) {
 			setEnabled( false );
 		}
 	}, [ generalSettings[ name ] ] );
@@ -18,7 +18,7 @@ const Switcher = ( { name, generalSettings, settingsData, setSettings } ) => {
 	useEffect( () => {
 		setSettings( {
 			...settingsData,
-			general: { ...generalSettings, [ name ]: enabled },
+			general: { ...generalSettings, [ name ]: enabled ? 'on' : 'off' },
 		} );
 	}, [ enabled ] );
 

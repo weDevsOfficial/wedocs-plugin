@@ -6,6 +6,7 @@ import docStore from '../data/docs';
 import ComboBox from './ComboBox';
 import ComboBox2 from "./ComboBox2";
 import { ExclamationCircleIcon } from "@heroicons/react/20/solid";
+import Swal from "sweetalert2";
 
 const AddArticleModal = ( { sections, className, children, defaultSection, docId } ) => {
 	const [ isOpen, setIsOpen ] = useState( false );
@@ -39,9 +40,31 @@ const AddArticleModal = ( { sections, className, children, defaultSection, docId
 			.then( ( result ) => {
 				setNewArticle( { ...newArticle, title: { raw: '' } } );
                 setSectionId( defaultSection?.id || '' );
+                Swal.fire( {
+                    title: __( 'Section Article Created', 'wedocs' ),
+                    text: __(
+                        'Section article has been created successfully',
+                        'wedocs'
+                    ),
+                    icon: 'success',
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                } );
 				closeModal();
 			} )
-			.catch( ( err ) => {} );
+			.catch( ( err ) => {
+                Swal.fire( {
+                    title: __( 'Error', 'wedocs' ),
+                    text: err.message,
+                    icon: 'error',
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                } );
+            } );
 	};
 
 	const closeModal = () => {

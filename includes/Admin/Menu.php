@@ -46,8 +46,6 @@ class Menu {
 	/**
 	 * Add submenu to Admin Dashboard.
 	 *
-	 * @since DOKAN_DRIVER_SINCE
-	 *
 	 * @return void
 	 */
 	public function add_admin_submenu() {
@@ -92,10 +90,6 @@ class Menu {
 	 * @return void
 	 */
 	public function display_wedocs() {
-//		ob_start();
-//		include DOKAN_DRIVER_DIR . '/templates/admin/dashboard.php';
-//		echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
         wedocs_get_template_part( 'admin/docs' );
 	}
 

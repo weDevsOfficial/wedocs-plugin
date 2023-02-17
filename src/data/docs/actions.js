@@ -10,11 +10,18 @@ const actions = {
 		return { type: 'SET_DOC', doc };
 	},
 
+    setPages( pages ) {
+        return {
+            type: 'SET_PAGES',
+            pages,
+        };
+    },
+
 	setLoading( loading ) {
 		return { type: 'SET_LOADING', loading };
 	},
 
-	fetchDocsFromAPI( path ) {
+	fetchFromAPI( path ) {
 		return { type: 'FETCH_FROM_API', path };
 	},
 
@@ -29,10 +36,19 @@ const actions = {
 		return createdDoc;
 	},
 
+    *updateDoc( docId, data ) {
+        const path = '/wp/v2/docs/' + docId;
+        const response = yield { type: 'UPDATE_TO_API', path, data };
+        return response;
+    },
+
     *deleteDoc( docId ) {
         const path = '/wp/v2/docs/' + docId;
-        const response = yield { type: 'DELETE_TO_API', path };
-        return response;
+        yield { type: 'DELETE_TO_API', path };
+        const response = yield actions.fetchFromAPI(
+            '/wp/v2/docs?per_page=-1'
+        );
+        return actions.setDocs( response );
     },
 };
 

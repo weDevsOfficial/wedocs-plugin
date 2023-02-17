@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 
 const SearchFilter = ({ handleChange, searchValue }) => {
     return (
-        <div className="relative mt-5 rounded-md shadow-sm">
+        <div className="relative rounded-md shadow-sm">
             <input type="text" placeholder={ __( 'Search your documentation', 'wedocs' ) } value={searchValue} onChange={handleChange}
                 className="w-80 h-10 text-sm focus:!border-indigo-300 !pl-4 !rounded-md !border-gray-300" />
             { searchValue && searchValue.length > 0 &&

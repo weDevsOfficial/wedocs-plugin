@@ -68,7 +68,7 @@ class Installer {
         $pages_query = new WP_Query( [
             'post_type'      => 'page',
             'posts_per_page' => -1,
-            's'              => '[wedocs',
+            's'              => '[wedocs]',
         ] );
 
         if ( $pages_query->found_posts ) {
@@ -87,8 +87,15 @@ class Installer {
         ] );
 
         if ( ! is_wp_error( $docs_page ) ) {
-            $settings              = get_option( 'wedocs_settings', [] );
-            $settings['docs_home'] = $docs_page;
+            $settings                         = wedocs_get_general_settings();
+            $settings['general']['docs_home'] = $docs_page;
+
+            // default settings value.
+            $settings['general']['print']     = wedocs_get_general_settings( 'print', 'on' );
+            $settings['general']['email']     = wedocs_get_general_settings( 'email', 'on' );
+            $settings['general']['helpful']   = wedocs_get_general_settings( 'helpful', 'on' );
+            $settings['general']['comments']  = wedocs_get_general_settings( 'comments', 'on' );
+            $settings['general']['email_to']  = wedocs_get_general_settings( 'email_to', '' );
 
             update_option( 'wedocs_settings', $settings );
         }

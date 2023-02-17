@@ -102,7 +102,8 @@ if ( !function_exists( 'wedocs_breadcrumbs' ) ) {
         $html .= wedocs_get_breadcrumb_item( $args['home'], home_url( '/' ), $breadcrumb_position );
         $html .= $args['delimiter'];
 
-        $docs_home = wedocs_get_option( 'docs_home', 'wedocs_settings' );
+        // Collect documentation home page settings.
+        $docs_home = wedocs_get_general_settings( 'docs_home' );
 
         if ( $docs_home ) {
             ++$breadcrumb_position;
@@ -303,6 +304,27 @@ function wedocs_get_option( $option, $section, $default = '' ) {
 }
 
 /**
+ * Get the value of general settings.
+ *
+ * @param string $field_name general settings field name.
+ * @param string $default    default data if settings not found.
+ *
+ * @return mixed
+ */
+function wedocs_get_general_settings( $field_name = '', $default = '' ) {
+    $general_settings  = wedocs_get_option( 'general', 'wedocs_settings', [] );
+
+    if ( ! empty( $field_name ) ) {
+        $wedocs_field_data = wedocs_get_option( $field_name, 'wedocs_settings', $default );
+
+        // Check from general settings if not found then collect data from wedocs_settings.
+        return ! empty( $general_settings[ $field_name ] ) ? $general_settings[ $field_name ] : $wedocs_field_data;
+    }
+
+    return $general_settings;
+}
+
+/**
  * Get a clients IP address.
  *
  * @return string
@@ -347,7 +369,8 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
     $blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
     $document = get_post( $doc_id );
 
-    $email_to = wedocs_get_option( 'email_to', 'wedocs_settings', get_option( 'admin_email' ) );
+    // Collect feedback sending email address & prepare body.
+    $email_to = wedocs_get_general_settings( 'email_to', get_option( 'admin_email' ) );
     $subject  = sprintf( __( '[%1$s] New Doc Feedback: "%2$s"', 'wedocs' ), $blogname, $subject );
 
     $email_body = sprintf( __( 'New feedback on your doc "%s"', 'wedocs' ), apply_filters( 'wedocs_translate_text', $document->post_title ) ) . "\r\n";

@@ -7,13 +7,13 @@ import {
 } from 'react-router-dom';
 import ListingPage from './DocListing';
 import SettingsPage from './Settings';
-import Docs from './Docs';
+import Documentations from './Documentations';
 
 const App = () => {
 	const router = createHashRouter(
 		createRoutesFromElements(
 			<>
-				<Route path="/" element={ <Docs /> } />
+				<Route path="/" element={ <Documentations /> } />
 				<Route path="settings" element={ <SettingsPage /> } />
 				<Route path="section/:id" element={ <ListingPage /> } />
 			</>

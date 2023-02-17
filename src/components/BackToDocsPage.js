@@ -5,7 +5,7 @@ const BackToDocsPage = () => {
 	return (
 		<Link
 			to="/"
-			className="flex group items-center text-gray-700 hover:text-indigo-700 !font-medium !text-base"
+			className="inline-flex group items-center text-gray-700 hover:text-indigo-700 focus:shadow-none !font-medium !text-base"
 		>
 			<svg
 				width="35"

@@ -96,7 +96,7 @@ const SectionArticles = ( { article } ) => {
                                     { commentCount }
 								</p>
 							</div>
-							<div className="article-updated-date text-sm text-[#969696]">
+							<div className="article-updated-date w-40 text-sm text-[#969696]">
                                 {/* translators: %s: Formatted datetime string */}
                                 { sprintf( __( 'Updated at %s' , 'wedocs' ), formattedDateString ) }
 							</div>
@@ -104,7 +104,7 @@ const SectionArticles = ( { article } ) => {
 					</div>
 				</div>
 				<div className="ml-8 flex-shrink-0">
-					<DocActions />
+					<DocActions docId={ article?.id } />
 				</div>
 			</div>
 		</div>

@@ -7,10 +7,6 @@ const actions = {
 		return { type: 'SET_SETTINGS_OPTION', option, value };
 	},
 
-	setRoles( roles ) {
-		return { type: 'SET_ROLES', roles };
-	},
-
 	setLoading( loading ) {
 		return { type: 'SET_LOADING', loading };
 	},

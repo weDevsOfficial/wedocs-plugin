@@ -132,16 +132,29 @@ class SettingsApi extends \WP_REST_Controller {
         $get_data = $request->get_param( 'data' );
 
         if ( 'wedocs_settings' === $get_data ) {
-            $value = get_option( 'wedocs_settings', $value );
+            $value = (array) wedocs_get_option( 'wedocs_settings', $value );
         }
 
-        if ( 'user_roles' === $get_data ) {
-            $user_roles_with_caps = get_option( 'wp_user_roles', $value );
-            $user_roles           = array_keys( $user_roles_with_caps );
+        // Set default value if general data not found.
+        if ( empty( $value[ 'general' ] ) ) {
+            $value[ 'general' ] = [
+                'print'     => wedocs_get_general_settings( 'print', 'on' ),
+                'email'     => wedocs_get_general_settings( 'email', 'on' ),
+                'helpful'   => wedocs_get_general_settings( 'helpful', 'on' ),
+                'comments'  => wedocs_get_general_settings( 'comments', 'on' ),
+                'email_to'  => wedocs_get_general_settings( 'email_to' ),
+                'docs_home' => wedocs_get_general_settings( 'docs_home' ),
+            ];
 
-            foreach ( $user_roles as $role ) {
-                $value[ $role ] = ucfirst( $role );
-            }
+            unset( $value[0] );
+            unset( $value[ 'print' ] );
+            unset( $value[ 'email' ] );
+            unset( $value[ 'helpful' ] );
+            unset( $value[ 'comments' ] );
+            unset( $value[ 'email_to' ] );
+            unset( $value[ 'docs_home' ] );
+
+            update_option( 'wedocs_settings', $value );
         }
 
         return rest_ensure_response( $value );

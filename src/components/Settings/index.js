@@ -5,9 +5,11 @@ import { useEffect, useState } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
 import settingsStore from '../../data/settings';
 import GeneralSettings from './GeneralSettings';
+import Swal from "sweetalert2";
+import { __ } from "@wordpress/i18n";
 
 const SettingsPage = () => {
-	const [ selectedIndex, setSelectedIndex ] = useState( 0 );
+    const [ selectedIndex, setSelectedIndex ] = useState( 0 );
 
 	const settings = useSelect(
 		( select ) => select( settingsStore ).getSettings(),
@@ -16,15 +18,12 @@ const SettingsPage = () => {
 
 	const weDocsSettings = {
 		general: {
-			home: 'documentation',
-			email_feedback: true,
-			helpful_feedback: true,
-			allow_comments: true,
-			allow_article: true,
-		},
-		permission: {
-			global_permission: [],
-			role_wise_permission: [],
+            docs_home: '',
+            email: 'on',
+            email_to: '',
+            helpful: 'on',
+            comments: 'on',
+            print: 'on',
 		},
 	};
 
@@ -35,13 +34,36 @@ const SettingsPage = () => {
 		dispatch( settingsStore )
 			.updateSettings( { settings: docSettings } )
 			.then( ( result ) => {
+                setDocSettings( { ...docSettings, ...result } );
+                Swal.fire( {
+                    title: __( 'Save Settings Data', 'wedocs' ),
+                    text: __(
+                        'Settings data has been save successfully',
+                        'wedocs'
+                    ),
+                    icon: 'success',
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                } );
 			} )
-			.catch( ( err ) => {} );
+			.catch( ( err ) => {
+                Swal.fire( {
+                    title: __( 'Error', 'wedocs' ),
+                    text: err.message,
+                    icon: 'error',
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                } );
+            } );
 	};
 
 	useEffect( () => {
 		if ( settings && Object.keys( settings ).length ) {
-			setDocSettings( settings );
+			setDocSettings( { ...settings } );
 		}
 	}, [ settings ] );
 

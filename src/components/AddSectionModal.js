@@ -3,7 +3,8 @@ import { Fragment, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import { dispatch } from '@wordpress/data';
 import docStore from '../data/docs';
-import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
+import { ExclamationCircleIcon } from "@heroicons/react/20/solid";
+import Swal from "sweetalert2";
 
 const AddSectionModal = ( { parent, className, children } ) => {
 	const [ isOpen, setIsOpen ] = useState( false );
@@ -29,9 +30,31 @@ const AddSectionModal = ( { parent, className, children } ) => {
 			.createDoc( newDoc )
 			.then( ( result ) => {
 				setNewDoc( { ...newDoc, title: { raw: '' } } );
+                Swal.fire( {
+                    title: __( 'Documentation Section Created', 'wedocs' ),
+                    text: __(
+                        'Documentation section has been created successfully',
+                        'wedocs'
+                    ),
+                    icon: 'success',
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                } );
 				closeModal();
 			} )
-			.catch( ( err ) => {} );
+			.catch( ( err ) => {
+                Swal.fire( {
+                    title: __( 'Error', 'wedocs' ),
+                    text: err.message,
+                    icon: 'error',
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                } );
+            } );
 	};
 
 	const closeModal = () => {

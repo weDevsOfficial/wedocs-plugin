@@ -33,10 +33,7 @@ class Admin {
         }
 
         $assets_url = wedocs()->plugin_url() . '/assets';
-        wp_enqueue_style( 'sweetalert', $assets_url . '/css/sweetalert.css', false, date( 'Ymd' ) );
-        wp_enqueue_style( 'wedocs-admin-styles', $assets_url . '/css/admin.css', false, date( 'Ymd' ) );
 
-        wp_enqueue_script( 'sweetalert', $assets_url . '/js/sweetalert.min.js', [ 'jquery' ] );
         if ( file_exists( WEDOCS_PATH . '/hot/index.asset.php' ) ) {
             $react_dependencies = require WEDOCS_PATH . '/hot/index.asset.php';
 
