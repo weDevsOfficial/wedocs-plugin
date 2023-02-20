@@ -103,6 +103,7 @@ final class WeDocs {
         register_activation_hook( __FILE__, [ $this, 'activate' ] );
 
         add_action( 'after_setup_theme', [ $this, 'init_classes' ] );
+        $this->init_action_scheduler();
     }
 
     /**
@@ -241,6 +242,10 @@ final class WeDocs {
         }
 
         return $this->plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
+    }
+
+    public function init_action_scheduler() {
+        require_once( __DIR__ . '/vendor/woocommerce/action-scheduler/action-scheduler.php' );
     }
 
     /**

@@ -1,92 +1,102 @@
-import {useState} from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 
 import {
-    DndContext,
-    closestCenter,
-    KeyboardSensor,
-    PointerSensor,
-    useSensor,
-    useSensors,
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
 } from '@dnd-kit/core';
 
 import {
-    arrayMove,
-    SortableContext,
-    sortableKeyboardCoordinates,
-    rectSortingStrategy,
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  rectSortingStrategy,
 } from '@dnd-kit/sortable';
 
-import ParentDocs from "./Documentations/ParentDocs";
-import {dispatch} from "@wordpress/data";
-import docsStore from "../data/docs";
-import DocSections from "./DocListing/DocSections";
-import SectionArticles from "./DocListing/SectionArticles";
+import ParentDocs from './Documentations/ParentDocs';
+import { dispatch } from '@wordpress/data';
+import docsStore from '../data/docs';
+import DocSections from './DocListing/DocSections';
+import SectionArticles from './DocListing/SectionArticles';
 
-const DraggableDocs = ({docs, docType, searchValue}) => {
-    const [items, setItems] = useState(docs);
+const DraggableDocs = ( { docs, docType } ) => {
+  const [ items, setItems ] = useState( [ ...docs ] );
 
-    const sensors = useSensors(
-        useSensor(PointerSensor, {
-            // Require the mouse to move by 10 pixels before activating
-            activationConstraint: {
-                delay: 150,
-                tolerance: 5,
-            },
-        }),
+  console.log( 'nextFilter:', items, docs );
 
-        useSensor(KeyboardSensor, {
-            coordinateGetter: sortableKeyboardCoordinates,
-        })
-    );
+  const sensors = useSensors(
+    useSensor( PointerSensor, {
+      // Require the mouse to move by 10 pixels before activating
+      activationConstraint: {
+        delay: 150,
+        tolerance: 5,
+      },
+    } ),
 
-    const handleDragEnd = (event) => {
-        const {active, over} = event;
+    useSensor( KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    } )
+  );
 
-        if (active.id !== over.id) {
-            setItems((items) => {
-                const oldItem = items.find(item => item.id === active.id);
-                const newItem = items.find(item => item.id === over.id);
+  const handleDragEnd = ( event ) => {
+    const { active, over } = event;
 
-                const oldIndex = items.indexOf(oldItem);
-                const newIndex = items.indexOf(newItem);
+    if ( active.id !== over.id ) {
+      setItems( ( elements ) => {
+        const oldItem = elements.find(
+          ( element ) => element.id === active.id
+        );
+        const newItem = elements.find( ( element ) => element.id === over.id );
 
-                const updatedOrder = arrayMove(items, oldIndex, newIndex);
+        const oldIndex = elements.indexOf( oldItem );
+        const newIndex = elements.indexOf( newItem );
 
-                updatedOrder.forEach((item, index) => {
-                    dispatch(docsStore)
-                        .updateDoc(item.id, {menu_order: index})
-                        .then((result) => {
-                        })
-                        .catch((err) => {
-                        });
-                });
+        const updatedOrder = arrayMove( elements, oldIndex, newIndex );
 
-                return updatedOrder;
-            });
-        }
+        // const arr = [];
+        updatedOrder.forEach( ( doc, index ) => {
+          dispatch( docsStore )
+            .updateDoc( doc.id, { menu_order: index } )
+            .then( ( result ) => {
+              // arr.push( result );
+              // console.log( arr );
+              // setAllDocs( arr );
+            } )
+            .catch( ( err ) => {} );
+        } );
+
+        return updatedOrder;
+      } );
     }
+  };
 
-    return (
-        <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-        >
-            <SortableContext
-                items={items}
-                strategy={rectSortingStrategy}
-            >
-                {/*{ children }*/}
-                {/*{ items.map( item =>*/}
-                {/*    docType === 'Documentation' ? ( <ParentDocs key={ item.id } doc={ item } /> ) :*/}
-                {/*    ( docType === 'Section' ? ( <DocSections key={ item.id } sections={ items } section={ item } searchValue={ searchValue } /> ) :*/}
-                {/*    ( <SectionArticles key={ item.id } article={ item }/> )*/}
-                {/*) ) }*/}
+  useEffect( () => {
+    setItems( [ ...docs ] );
+  }, [ docs ] );
 
-                {items.map(item => <ParentDocs key={item.id} doc={item}/>)}
-            </SortableContext>
-        </DndContext>
-    );
+  return (
+    <DndContext
+      sensors={ sensors }
+      collisionDetection={ closestCenter }
+      onDragEnd={ handleDragEnd }
+    >
+      <SortableContext items={ items } strategy={ rectSortingStrategy }>
+        { /*{ children }*/ }
+        { /*{ items.map( item =>*/ }
+        { /*    docType === 'Documentation' ? ( <ParentDocs key={ item.id } doc={ item } /> ) :*/ }
+        { /*    ( docType === 'Section' ? ( <DocSections key={ item.id } sections={ items } section={ item } searchValue={ searchValue } /> ) :*/ }
+        { /*    ( <SectionArticles key={ item.id } article={ item }/> )*/ }
+        { /*) ) }*/ }
+
+        { items.map( ( item ) => (
+          <ParentDocs key={ item.id } doc={ item } />
+        ) ) }
+      </SortableContext>
+    </DndContext>
+  );
 };
 
 export default DraggableDocs;

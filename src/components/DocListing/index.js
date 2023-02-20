@@ -11,6 +11,7 @@ import { useState } from "@wordpress/element";
 import docStore from "../../data/docs";
 import DraggableDocs from "../DraggableDocs";
 import SearchFilter from "../SearchFilter";
+import Upgrade from "../Upgrade";
 
 const ListingPage = () => {
 	const { id } = useParams();
@@ -60,10 +61,12 @@ const ListingPage = () => {
 
 	return (
 		<div className="docs-section-listing wrap py-5">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mb-7">
                 <BackToDocsPage />
                 <SearchFilter handleChange={ handleChange } searchValue={ searchValue } />
             </div>
+
+            <Upgrade />
 
 			<ListingHeader id={ id } />
 

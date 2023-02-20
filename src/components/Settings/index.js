@@ -7,6 +7,7 @@ import settingsStore from '../../data/settings';
 import GeneralSettings from './GeneralSettings';
 import Swal from "sweetalert2";
 import { __ } from "@wordpress/i18n";
+import Upgrade from "../Upgrade";
 
 const SettingsPage = () => {
     const [ selectedIndex, setSelectedIndex ] = useState( 0 );
@@ -68,9 +69,11 @@ const SettingsPage = () => {
 	}, [ settings ] );
 
 	return (
-		<div className="min-h-full">
+		<div className="min-h-full pt-7">
+            <Upgrade />
+
 			<main>
-				<div className="py-10 sm:px-0">
+				<div className="pb-10 pt-3 sm:px-0">
 					<div className="h-100">
 						<div className="h-full">
 							<main>

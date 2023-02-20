@@ -10,9 +10,7 @@ const DocumentationHeader = ( { doc } ) => {
 				<div className="inline-flex items-center space-x-3">
 					<div className="flex items-center space-x-3 flex-1 group">
 						<Link to={ `/section/${ id }` }>
-							<h3 className="truncate hover:underline text-lg font-medium text-[#3B3F4A]">
-								{ title?.rendered }
-							</h3>
+							<h3 className="truncate hover:underline text-lg font-medium text-[#3B3F4A]" dangerouslySetInnerHTML={{__html:title?.rendered}}></h3>
 						</Link>
 						<a
 							target="_blank"
