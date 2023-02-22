@@ -1,377 +1,356 @@
 import { __ } from '@wordpress/i18n';
 import Switcher from '../Switcher';
-import {Fragment, useEffect, useState} from '@wordpress/element';
-import {useSelect} from "@wordpress/data";
-import docStore from "../../data/docs";
-import SelectBox from "../SelectBox";
-import docsStore from "../../data/docs";
-import {CheckIcon, ChevronDownIcon} from "@heroicons/react/20/solid";
-import {Transition} from "@headlessui/react";
-import settingsStore from "../../data/settings";
+import { Fragment, useEffect, useState } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import docStore from '../../data/docs';
+import SelectBox from '../SelectBox';
+import docsStore from '../../data/docs';
+import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
+import { Transition } from '@headlessui/react';
+import settingsStore from '../../data/settings';
 
 const GeneralSettings = ( {
-	settingsData,
-	generalSettingsData,
-	setSettings,
+  settingsData,
+  generalSettingsData,
+  setSettings,
 } ) => {
-    const pages = useSelect(
-        ( select ) => select( docsStore ).getPages(),
-        []
-    );
+  const pages = useSelect( ( select ) => select( docsStore ).getPages(), [] );
 
-    const [ docsPages, setDocsPages ] = useState( pages );
+  const [ docsPages, setDocsPages ] = useState( pages );
 
-	const [ generalSettings, setGeneralSettings ] = useState( {
-		...generalSettingsData,
-	} );
+  const [ generalSettings, setGeneralSettings ] = useState( {
+    ...generalSettingsData,
+  } );
 
-    const handleEmailAddress = ( e ) => {
-        setSettings(
-            { ...settingsData, general: { ...generalSettingsData, email_to: e.target.value } }
-        );
-    };
+  const handleEmailAddress = ( e ) => {
+    setSettings( {
+      ...settingsData,
+      general: { ...generalSettingsData, email_to: e.target.value },
+    } );
+  };
 
-    useEffect( () => {
-        if ( Object.keys( pages ).length ) {
-            setDocsPages(
-                pages?.map( page => {
-                    return { id: page?.id, name: page?.title?.rendered }
-                } )
-            );
-        }
-    }, [ pages ] );
+  useEffect( () => {
+    if ( Object.keys( pages ).length ) {
+      setDocsPages(
+        pages?.map( ( page ) => {
+          return { id: page?.id, name: page?.title?.rendered };
+        } )
+      );
+    }
+  }, [ pages ] );
 
-	useEffect( () => {
-		setGeneralSettings( {
-			...generalSettingsData,
-		} );
-	}, [ generalSettingsData ] );
+  useEffect( () => {
+    setGeneralSettings( {
+      ...generalSettingsData,
+    } );
+  }, [ generalSettingsData ] );
 
-    // useEffect( () => {
-    //     setSettings(
-    //         { ...settingsData, general: { ...generalSettingsData, email_to: emailAddress } }
-    //     );
-    // }, [ emailAddress ] );
+  // useEffect( () => {
+  //     setSettings(
+  //         { ...settingsData, general: { ...generalSettingsData, email_to: emailAddress } }
+  //     );
+  // }, [ emailAddress ] );
 
-    // useEffect( () => {
-    //
-    //     if ( settingsData?.general?.email_to ) {
-    //         setEmailAddress( settingsData?.general?.email_to );
-    //     }
-    // }, [ settingsData?.general?.email_to ] );
+  // useEffect( () => {
+  //
+  //     if ( settingsData?.general?.email_to ) {
+  //         setEmailAddress( settingsData?.general?.email_to );
+  //     }
+  // }, [ settingsData?.general?.email_to ] );
 
-	return (
-		<section>
-			<div className="shadow sm:rounded-md">
-				<div className="bg-white">
-					<div className="section-heading py-4 px-8 sm:px-8 sm:py-4">
-						<h2 className="text-gray-900 font-medium text-lg">
-							{ __( 'General', 'wedocs' ) }
-						</h2>
-					</div>
-					<hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200" />
-					<div className="pt-6 pb-20 px-8 grid grid-cols-4 gap-5">
-						<div className="col-span-4">
-							<div className="settings-content flex items-center justify-between">
-								<div className="settings-field-heading flex items-center space-x-2 flex-1">
-									<label
-										className="block text-sm font-medium text-gray-700"
-										id="headlessui-listbox-label-15"
-										data-headlessui-state="open"
-									>
-										{ __( 'weDocs Home', 'wedocs' ) }
-									</label>
-								</div>
-								<div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
-									<div className="relative">
-                                        { docsPages && Object.keys( docsPages ).length > 0 ? (
-                                            <SelectBox
-                                                name="docs_home"
-                                                options={ docsPages }
-                                                setSettings={ setSettings }
-                                                settingsData={ settingsData }
-                                                generalSettings={ generalSettings }
-                                            />
-                                        ) : (
-                                            <div className="relative mt-1">
-                                                <input className="relative !w-full cursor-pointer !rounded-md border !border-gray-300 bg-white !py-2 !pl-3 !pr-10 text-left shadow-sm sm:text-sm" placeholder={ 'loading...' } disabled />
-                                            </div>
-                                        ) }
+  return (
+    <section>
+      <div className="shadow sm:rounded-md">
+        <div className="bg-white">
+          <div className="section-heading py-4 px-8 sm:px-8 sm:py-4">
+            <h2 className="text-gray-900 font-medium text-lg">
+              { __( 'General', 'wedocs' ) }
+            </h2>
+          </div>
+          <hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200" />
+          <div className="pt-6 pb-20 px-8 grid grid-cols-4 gap-5">
+            <div className="col-span-4">
+              <div className="settings-content flex items-center justify-between">
+                <div className="settings-field-heading flex items-center space-x-2 flex-1">
+                  <label
+                    className="block text-sm font-medium text-gray-700"
+                    id="headlessui-listbox-label-15"
+                    data-headlessui-state="open"
+                  >
+                    { __( 'weDocs Home', 'wedocs' ) }
+                  </label>
+                </div>
+                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+                  <div className="relative">
+                    { docsPages && Object.keys( docsPages ).length > 0 ? (
+                      <SelectBox
+                        name="docs_home"
+                        options={ docsPages }
+                        setSettings={ setSettings }
+                        settingsData={ settingsData }
+                        generalSettings={ generalSettings }
+                      />
+                    ) : (
+                      <div className="relative mt-1">
+                        <input
+                          className="relative !w-full cursor-pointer !rounded-md border !border-gray-300 bg-white !py-2 !pl-3 !pr-10 text-left shadow-sm sm:text-sm"
+                          placeholder={ 'loading...' }
+                          disabled
+                        />
+                      </div>
+                    ) }
+                  </div>
+                </div>
+              </div>
+              <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
+                <p className="text-sm text-[#6B7280]">
+                  { __(
+                    'Home page for docs page. Preferably use [wedocs] ',
+                    'wedocs'
+                  ) }
+                  <a
+                    href="https://github.com/tareq1988/wedocs-plugin/wiki/Using-Shortcodes"
+                    target="_blank"
+                    className="text-indigo-700 underline underline-offset-2"
+                    rel="noreferrer"
+                  >
+                    { __( 'shortcode', 'wedocs' ) }
+                  </a>
+                  { __( ' or design your own.', 'wedocs' ) }
+                </p>
+              </div>
+            </div>
 
-									</div>
-								</div>
-							</div>
-							<div className="settings-description w-full max-w-[490px] ml-auto mt-1">
-								<p className="text-sm text-[#6B7280]">
-									{ __(
-										'Home page for docs page. Preferably use [wedocs] ',
-										'wedocs'
-									) }
-									<a
-										href="https://github.com/tareq1988/wedocs-plugin/wiki/Using-Shortcodes"
-										target="_blank"
-										className="text-indigo-700 underline underline-offset-2"
-									>
-										{ __( 'shortcode', 'wedocs' ) }
-									</a>
-									{ __(
-										' or design your own.',
-										'wedocs'
-									) }
-								</p>
-							</div>
-						</div>
-
-                        { generalSettingsData?.email === ( 'on' || '' ) && (
-                            <div className="col-span-4">
-                                <div className="settings-content flex items-center justify-between">
-                                    <div className="settings-field-heading flex items-center space-x-2 flex-1">
-                                        <label
-                                            className="block text-sm font-medium text-gray-700"
-                                            id="headlessui-listbox-label-15"
-                                            data-headlessui-state="open"
-                                        >
-                                            { __( 'Email Address', 'wedocs' ) }
-                                        </label>
-                                        <div
-                                            className="tooltip cursor-pointer ml-2"
-                                            data-tip={ __(
-                                                'The email address where the feedbacks should sent to.',
-                                                'wedocs'
-                                            ) }
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="18"
-                                                height="18"
-                                                fill="none"
-                                            >
-                                                <path
-                                                    d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
-                                                    stroke="#6b7280"
-                                                    strokeWidth="2"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
-                                        <div className="relative">
-                                            <input
-                                                type="text"
-                                                name="doc_title"
-                                                id="doc-title"
-                                                placeholder={ __(
-                                                    'Write your email address',
-                                                    'wedocs'
-                                                ) }
-                                                className='w-full cursor-pointer !rounded-md !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
-                                                value={ generalSettingsData?.email_to }
-                                                onChange={ handleEmailAddress }
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
-                                    <p className="text-sm text-[#6B7280]">
-                                        { __(
-                                            'The email address where the feedbacks should sent to.',
-                                            'wedocs'
-                                        ) }
-                                    </p>
-                                </div>
-                            </div>
+            { generalSettingsData?.email === ( 'on' || '' ) && (
+              <div className="col-span-4">
+                <div className="settings-content flex items-center justify-between">
+                  <div className="settings-field-heading flex items-center space-x-2 flex-1">
+                    <label
+                      className="block text-sm font-medium text-gray-700"
+                      id="headlessui-listbox-label-15"
+                      data-headlessui-state="open"
+                    >
+                      { __( 'Email Address', 'wedocs' ) }
+                    </label>
+                    <div
+                      className="tooltip cursor-pointer ml-2"
+                      data-tip={ __(
+                        'Enter the email address where you would like to receive feedback from users.',
+                        'wedocs'
+                      ) }
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        fill="none"
+                      >
+                        <path
+                          d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                          stroke="#6b7280"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+                    <div className="relative">
+                      <input
+                        type="text"
+                        name="doc_title"
+                        id="doc-title"
+                        placeholder={ __(
+                          'Write your email address',
+                          'wedocs'
                         ) }
-						<div className="col-span-4">
-							<div className="settings-content flex items-center justify-between">
-								<div className="settings-heading flex items-center space-x-2 flex-1">
-									<label
-										className="block text-sm font-medium text-gray-700"
-										id="headlessui-listbox-label-15"
-										data-headlessui-state="open"
-									>
-										{ __(
-											'Email Feedback on Article',
-											'wedocs'
-										) }
-									</label>
-									<div
-										className="tooltip cursor-pointer ml-2"
-										data-tip={ __(
-											'Invite readers to share their thoughts and suggestions through an email feedback form',
-											'wedocs'
-										) }
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width="18"
-											height="18"
-											fill="none"
-										>
-											<path
-												d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
-												stroke="#6b7280"
-												strokeWidth="2"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											/>
-										</svg>
-									</div>
-								</div>
-								<div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
-									<Switcher
-										name="email"
-										generalSettings={ generalSettings }
-										settingsData={ settingsData }
-										setSettings={ setSettings }
-									/>
-								</div>
-							</div>
-						</div>
-						<div className="col-span-4">
-							<div className="settings-content flex items-center justify-between">
-								<div className="settings-heading space-x-2 items-center flex flex-1">
-									<label
-										className="block text-sm font-medium text-gray-700"
-										id="headlessui-listbox-label-15"
-										data-headlessui-state="open"
-									>
-										{ __(
-											'Helpful Feedback on Article',
-											'wedocs'
-										) }
-									</label>
-									<div
-										className="tooltip cursor-pointer ml-2"
-										data-tip={ __(
-											'Enabling helpful feedback on your article allows readers to provide opinions on your content',
-											'wedocs'
-										) }
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width="18"
-											height="18"
-											fill="none"
-										>
-											<path
-												d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
-												stroke="#6b7280"
-												strokeWidth="2"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											/>
-										</svg>
-									</div>
-								</div>
-								<div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
-									<Switcher
-										name="helpful"
-										generalSettings={ generalSettings }
-										settingsData={ settingsData }
-										setSettings={ setSettings }
-									/>
-								</div>
-							</div>
-						</div>
-						<div className="col-span-4">
-							<div className="settings-content flex items-center justify-between">
-								<div className="settings-heading space-x-2 items-center flex flex-1">
-									<label
-										className="block text-sm font-medium text-gray-700"
-										id="headlessui-listbox-label-15"
-										data-headlessui-state="open"
-									>
-										{ __(
-											'Allow Comments on Article',
-											'wedocs'
-										) }
-									</label>
-									<div
-										className="tooltip cursor-pointer ml-2"
-										data-tip={ __(
-											'Increase reader engagement by turning on article comments',
-											'wedocs'
-										) }
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width="18"
-											height="18"
-											fill="none"
-										>
-											<path
-												d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
-												stroke="#6b7280"
-												strokeWidth="2"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											/>
-										</svg>
-									</div>
-								</div>
-								<div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
-									<Switcher
-										name="comments"
-										generalSettings={ generalSettings }
-										settingsData={ settingsData }
-										setSettings={ setSettings }
-									/>
-								</div>
-							</div>
-						</div>
-						<div className="col-span-4">
-							<div className="settings-content flex items-center justify-between">
-								<div className="settings-heading space-x-2 items-center flex flex-1">
-									<label
-										className="block text-sm font-medium text-gray-700"
-										id="headlessui-listbox-label-15"
-										data-headlessui-state="open"
-									>
-										{ __(
-											'Allow Article Printing',
-											'wedocs'
-										) }
-									</label>
-									<div
-										className="tooltip cursor-pointer ml-2"
-										data-tip={ __(
-											'Enable this option to allow users to print articles directly from the website',
-											'wedocs'
-										) }
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width="18"
-											height="18"
-											fill="none"
-										>
-											<path
-												d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
-												stroke="#6b7280"
-												strokeWidth="2"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											/>
-										</svg>
-									</div>
-								</div>
-								<div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
-									<Switcher
-										name="print"
-										generalSettings={ generalSettings }
-										settingsData={ settingsData }
-										setSettings={ setSettings }
-									/>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-	);
+                        className="w-full cursor-pointer !rounded-md !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                        value={ generalSettingsData?.email_to }
+                        onChange={ handleEmailAddress }
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) }
+            <div className="col-span-4">
+              <div className="settings-content flex items-center justify-between">
+                <div className="settings-heading flex items-center space-x-2 flex-1">
+                  <label
+                    className="block text-sm font-medium text-gray-700"
+                    id="headlessui-listbox-label-15"
+                    data-headlessui-state="open"
+                  >
+                    { __( 'Email Feedback on Article', 'wedocs' ) }
+                  </label>
+                  <div
+                    className="tooltip cursor-pointer ml-2"
+                    data-tip={ __(
+                      'Invite readers to share their thoughts and suggestions through an email feedback form',
+                      'wedocs'
+                    ) }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="none"
+                    >
+                      <path
+                        d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                        stroke="#6b7280"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
+                  <Switcher
+                    name="email"
+                    generalSettings={ generalSettings }
+                    settingsData={ settingsData }
+                    setSettings={ setSettings }
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-span-4">
+              <div className="settings-content flex items-center justify-between">
+                <div className="settings-heading space-x-2 items-center flex flex-1">
+                  <label
+                    className="block text-sm font-medium text-gray-700"
+                    id="headlessui-listbox-label-15"
+                    data-headlessui-state="open"
+                  >
+                    { __( 'Helpful Feedback on Article', 'wedocs' ) }
+                  </label>
+                  <div
+                    className="tooltip cursor-pointer ml-2"
+                    data-tip={ __(
+                      'Enabling helpful feedback on your article allows readers to provide opinions on your content',
+                      'wedocs'
+                    ) }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="none"
+                    >
+                      <path
+                        d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                        stroke="#6b7280"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
+                  <Switcher
+                    name="helpful"
+                    generalSettings={ generalSettings }
+                    settingsData={ settingsData }
+                    setSettings={ setSettings }
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-span-4">
+              <div className="settings-content flex items-center justify-between">
+                <div className="settings-heading space-x-2 items-center flex flex-1">
+                  <label
+                    className="block text-sm font-medium text-gray-700"
+                    id="headlessui-listbox-label-15"
+                    data-headlessui-state="open"
+                  >
+                    { __( 'Allow Comments on Article', 'wedocs' ) }
+                  </label>
+                  <div
+                    className="tooltip cursor-pointer ml-2"
+                    data-tip={ __(
+                      'Increase reader engagement by turning on article comments',
+                      'wedocs'
+                    ) }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="none"
+                    >
+                      <path
+                        d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                        stroke="#6b7280"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
+                  <Switcher
+                    name="comments"
+                    generalSettings={ generalSettings }
+                    settingsData={ settingsData }
+                    setSettings={ setSettings }
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-span-4">
+              <div className="settings-content flex items-center justify-between">
+                <div className="settings-heading space-x-2 items-center flex flex-1">
+                  <label
+                    className="block text-sm font-medium text-gray-700"
+                    id="headlessui-listbox-label-15"
+                    data-headlessui-state="open"
+                  >
+                    { __( 'Allow Article Printing', 'wedocs' ) }
+                  </label>
+                  <div
+                    className="tooltip cursor-pointer ml-2"
+                    data-tip={ __(
+                      'Enable this option to allow users to print articles directly from the website',
+                      'wedocs'
+                    ) }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="none"
+                    >
+                      <path
+                        d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                        stroke="#6b7280"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
+                  <Switcher
+                    name="print"
+                    generalSettings={ generalSettings }
+                    settingsData={ settingsData }
+                    setSettings={ setSettings }
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default GeneralSettings;

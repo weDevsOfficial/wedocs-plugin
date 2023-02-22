@@ -1,28 +1,38 @@
 const selectors = {
-	getSettings( state ) {
-		const { settings } = state;
-		return settings;
-	},
+  getSettings( state ) {
+    const { settings } = state;
+    return settings;
+  },
 
-	getSettingsOption( state, option ) {
-		const { settings } = state;
-		return settings[ option ];
-	},
+  getSettingsOption( state, option ) {
+    const { settings } = state;
+    return settings[ option ];
+  },
 
-	getRoles( state ) {
-		const { roles } = state;
-		return roles;
-	},
+  getRoles( state ) {
+    const { roles } = state;
+    return roles;
+  },
 
-	getLoading( state ) {
-		const { loading } = state;
-		return loading;
-	},
+  getLoading( state ) {
+    const { loading } = state;
+    return loading;
+  },
 
-	getSaving( state ) {
-		const { saving } = state;
-		return saving;
-	},
+  getWedocsVersion( state ) {
+    const { wedocsVersion } = state;
+    return wedocsVersion;
+  },
+
+  getUpgradeVersion( state ) {
+    const { upgradeVersion } = state;
+    return upgradeVersion;
+  },
+
+  getSaving( state ) {
+    const { saving } = state;
+    return saving;
+  },
 };
 
 export default selectors;

@@ -9,24 +9,12 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 
-import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  rectSortingStrategy,
-} from '@dnd-kit/sortable';
+import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 
-import ParentDocs from './Documentations/ParentDocs';
 import { dispatch } from '@wordpress/data';
 import docsStore from '../data/docs';
-import DocSections from './DocListing/DocSections';
-import SectionArticles from './DocListing/SectionArticles';
 
-const DraggableDocs = ( { docs, docType } ) => {
-  const [ items, setItems ] = useState( [ ...docs ] );
-
-  console.log( 'nextFilter:', items, docs );
-
+const DraggableDocs = ( { setItems, children } ) => {
   const sensors = useSensors(
     useSensor( PointerSensor, {
       // Require the mouse to move by 10 pixels before activating
@@ -56,15 +44,10 @@ const DraggableDocs = ( { docs, docType } ) => {
 
         const updatedOrder = arrayMove( elements, oldIndex, newIndex );
 
-        // const arr = [];
         updatedOrder.forEach( ( doc, index ) => {
           dispatch( docsStore )
             .updateDoc( doc.id, { menu_order: index } )
-            .then( ( result ) => {
-              // arr.push( result );
-              // console.log( arr );
-              // setAllDocs( arr );
-            } )
+            .then( ( result ) => {} )
             .catch( ( err ) => {} );
         } );
 
@@ -73,28 +56,13 @@ const DraggableDocs = ( { docs, docType } ) => {
     }
   };
 
-  useEffect( () => {
-    setItems( [ ...docs ] );
-  }, [ docs ] );
-
   return (
     <DndContext
       sensors={ sensors }
       collisionDetection={ closestCenter }
       onDragEnd={ handleDragEnd }
     >
-      <SortableContext items={ items } strategy={ rectSortingStrategy }>
-        { /*{ children }*/ }
-        { /*{ items.map( item =>*/ }
-        { /*    docType === 'Documentation' ? ( <ParentDocs key={ item.id } doc={ item } /> ) :*/ }
-        { /*    ( docType === 'Section' ? ( <DocSections key={ item.id } sections={ items } section={ item } searchValue={ searchValue } /> ) :*/ }
-        { /*    ( <SectionArticles key={ item.id } article={ item }/> )*/ }
-        { /*) ) }*/ }
-
-        { items.map( ( item ) => (
-          <ParentDocs key={ item.id } doc={ item } />
-        ) ) }
-      </SortableContext>
+      { children }
     </DndContext>
   );
 };

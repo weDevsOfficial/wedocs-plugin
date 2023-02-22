@@ -54,13 +54,18 @@ class SettingsApi extends \WP_REST_Controller {
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => array( $this, 'get_items' ),
                 'permission_callback' => array( $this, 'get_items_permissions_check' ),
-                'args'                => array(
-                    'data' => array(
-                        'type'        => 'string',
-                        'required'    => true,
-                        'description' => esc_html__( 'Settings value', 'wedocs' ),
-                    ),
-                ),
+//                'args'                => array(
+//                    'data' => array(
+//                        'type'        => 'string',
+////                        'required'    => true,
+//                        'description' => esc_html__( 'Settings value', 'wedocs' ),
+//                    ),
+//                    'datab' => array(
+//                        'type'        => 'string',
+//                        'required'    => true,
+//                        'description' => esc_html__( 'Settings value', 'wedocs' ),
+//                    ),
+//                ),
             ),
             array(
                 'methods'             => WP_REST_Server::CREATABLE,
@@ -69,13 +74,17 @@ class SettingsApi extends \WP_REST_Controller {
                 'args'                => array(
                     'settings' => array(
                         'type'        => 'object',
-                        'required'    => true,
+//                        'required'    => true,
                         'description' => esc_html__( 'Settings value', 'wedocs' ),
-                        'properties' => array(
-                            'name'  => array(
+                        'properties'  => array(
+                            'name' => array(
                                 'type' => 'string',
                             ),
                         ),
+                    ),
+                    'upgrade'  => array(
+                        'type'        => 'string',
+                        'description' => esc_html__( 'Upgrader version', 'wedocs' ),
                     ),
                 ),
             ),
@@ -113,8 +122,8 @@ class SettingsApi extends \WP_REST_Controller {
             return new \WP_Error( 'rest_invalid_authenication', __( 'Need to be an authenticate user', 'wedocs' ) );
         }
 
-        if ( empty( $request->get_param( 'settings' ) ) ) {
-            return new \WP_Error( 'rest_doc_invalid_settings', __( 'No settings data given', 'wedocs' ) );
+        if ( empty( $request->get_param( 'settings' ) ) && empty( $request->get_param( 'upgrade' ) ) ) {
+            return new \WP_Error( 'rest_invalid_settings_request', __( 'No settings request found', 'wedocs' ) );
         }
 
         return true;
@@ -127,36 +136,81 @@ class SettingsApi extends \WP_REST_Controller {
      *
      * @return mixed
      */
+//    public function get_items( $request ) {
+//        $value    = array();
+//        $get_data = $request->get_param( 'data' );
+//
+//        if ( 'wedocs_settings' === $get_data ) {
+//            $value = (array) wedocs_get_option( 'wedocs_settings', $value );
+//        }
+//
+//        // Set default value if general data not found.
+//        if ( empty( $value[ 'general' ] ) ) {
+//            $value[ 'general' ] = [
+//                'print'     => wedocs_get_general_settings( 'print', 'on' ),
+//                'email'     => wedocs_get_general_settings( 'email', 'on' ),
+//                'helpful'   => wedocs_get_general_settings( 'helpful', 'on' ),
+//                'comments'  => wedocs_get_general_settings( 'comments', 'on' ),
+//                'email_to'  => wedocs_get_general_settings( 'email_to' ),
+//                'docs_home' => wedocs_get_general_settings( 'docs_home' ),
+//            ];
+//
+//            unset( $value[0] );
+//            unset( $value[ 'print' ] );
+//            unset( $value[ 'email' ] );
+//            unset( $value[ 'helpful' ] );
+//            unset( $value[ 'comments' ] );
+//            unset( $value[ 'email_to' ] );
+//            unset( $value[ 'docs_home' ] );
+//
+//            update_option( 'wedocs_settings', $value );
+//        }
+//
+//        return rest_ensure_response( $value );
+//    }
+
     public function get_items( $request ) {
-        $value    = array();
         $get_data = $request->get_param( 'data' );
 
+
+//        $value = (array) wedocs_get_option( 'wedocs_settings', $value );
+//        $value    = array();
+//        $get_data = $request->get_param( 'data' );
+//
         if ( 'wedocs_settings' === $get_data ) {
-            $value = (array) wedocs_get_option( 'wedocs_settings', $value );
+            $value = wedocs_get_option( 'wedocs_settings', [] );
+        } elseif ( 'wedocs_version' === $get_data ) {
+            $value = get_option( 'wedocs_version', '1.7.1' );
+        } else {
+            $value = get_option( 'wedocs_upgrade_version', '2.0.0' );
         }
 
-        // Set default value if general data not found.
-        if ( empty( $value[ 'general' ] ) ) {
-            $value[ 'general' ] = [
-                'print'     => wedocs_get_general_settings( 'print', 'on' ),
-                'email'     => wedocs_get_general_settings( 'email', 'on' ),
-                'helpful'   => wedocs_get_general_settings( 'helpful', 'on' ),
-                'comments'  => wedocs_get_general_settings( 'comments', 'on' ),
-                'email_to'  => wedocs_get_general_settings( 'email_to' ),
-                'docs_home' => wedocs_get_general_settings( 'docs_home' ),
-            ];
+//        if ( 'wedocs_upgrade' === $get_data ) {
+//            $value = wedocs_get_option( 'wedocs_upgrade_version', '2.0' );
+//        }
+//
+//        // Set default value if general data not found.
+//        if ( empty( $value[ 'general' ] ) ) {
+//            $value[ 'general' ] = [
+//                'print'     => wedocs_get_general_settings( 'print', 'on' ),
+//                'email'     => wedocs_get_general_settings( 'email', 'on' ),
+//                'helpful'   => wedocs_get_general_settings( 'helpful', 'on' ),
+//                'comments'  => wedocs_get_general_settings( 'comments', 'on' ),
+//                'email_to'  => wedocs_get_general_settings( 'email_to' ),
+//                'docs_home' => wedocs_get_general_settings( 'docs_home' ),
+//            ];
+//
+//            unset( $value[0] );
+//            unset( $value[ 'print' ] );
+//            unset( $value[ 'email' ] );
+//            unset( $value[ 'helpful' ] );
+//            unset( $value[ 'comments' ] );
+//            unset( $value[ 'email_to' ] );
+//            unset( $value[ 'docs_home' ] );
 
-            unset( $value[0] );
-            unset( $value[ 'print' ] );
-            unset( $value[ 'email' ] );
-            unset( $value[ 'helpful' ] );
-            unset( $value[ 'comments' ] );
-            unset( $value[ 'email_to' ] );
-            unset( $value[ 'docs_home' ] );
-
-            update_option( 'wedocs_settings', $value );
-        }
-
+//            update_option( 'wedocs_settings', $value );
+//        }
+//
         return rest_ensure_response( $value );
     }
 
@@ -168,10 +222,51 @@ class SettingsApi extends \WP_REST_Controller {
      * @return mixed
      */
     public function create_item( $request ) {
-        $value           = $request->get_param( 'settings' );
-        $wedocs_settings = $this->get_items( $request );
+        if ( ! empty( $request->get_param( 'settings' ) ) ) {
+            $settings_data = $this->get_items( $request );
+        } else {
+            $settings_data = $request->get_param( 'upgrade' );
+            $this->upgrade_wedocs_settings( $settings_data );
+        }
 
-        update_option( 'wedocs_settings', $value );
-        return rest_ensure_response( $wedocs_settings );
+//        update_option( 'wedocs_settings', $value );
+        return rest_ensure_response( $settings_data );
     }
+
+    public function upgrade_wedocs_settings( $version ) {
+        $value = get_option( 'wedocs_settings', [] );
+
+        // Check if data already updated.
+        if ( empty( $value[ 'general' ] ) ) {
+            // Set default value if general data not found.
+            $value[ 'general' ] = [
+                'print'     => wedocs_get_general_settings( 'print', 'on' ),
+                'email'     => wedocs_get_general_settings( 'email', 'on' ),
+                'helpful'   => wedocs_get_general_settings( 'helpful', 'on' ),
+                'comments'  => wedocs_get_general_settings( 'comments', 'on' ),
+                'email_to'  => wedocs_get_general_settings( 'email_to' ),
+                'docs_home' => wedocs_get_general_settings( 'docs_home' ),
+            ];
+
+            // Remove all unnecessary data.
+            unset( $value[ 'print' ] );
+            unset( $value[ 'email' ] );
+            unset( $value[ 'helpful' ] );
+            unset( $value[ 'comments' ] );
+            unset( $value[ 'email_to' ] );
+            unset( $value[ 'docs_home' ] );
+        }
+
+        // Update settings data with plugin version.
+        update_option( 'wedocs_settings', $value );
+        update_option( 'wedocs_version', $version );
+    }
+
+//    public function create_item( $request ) {
+//        $value           = $request->get_param( 'settings' );
+//        $wedocs_settings = $this->get_items( $request );
+//
+//        update_option( 'wedocs_settings', $value );
+//        return rest_ensure_response( $wedocs_settings );
+//    }
 }

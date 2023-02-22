@@ -9,6 +9,8 @@ import { useState, useEffect } from '@wordpress/element';
 import DocsPlaceholder from './DocsPlaceholder';
 import DraggableDocs from '../DraggableDocs';
 import Upgrade from '../Upgrade';
+import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
+import settingsStore from '../../data/settings';
 
 const Documentations = () => {
   const parentDocs = useSelect(
@@ -18,6 +20,16 @@ const Documentations = () => {
 
   const loading = useSelect(
     ( select ) => select( docsStore ).getLoading(),
+    []
+  );
+
+  const wedocsVersion = useSelect(
+    ( select ) => select( settingsStore ).getWedocsVersion(),
+    []
+  );
+
+  const upgradeVersion = useSelect(
+    ( select ) => select( settingsStore ).getUpgradeVersion(),
     []
   );
 
@@ -38,7 +50,11 @@ const Documentations = () => {
     doc?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() )
   );
 
-  console.log( 'prevFilter:', filteredDocs );
+  const [ documentations, setDocumentations ] = useState( [] );
+
+  useEffect( () => {
+    setDocumentations( [ ...filteredDocs ] );
+  }, [ parentDocs, searchValue ] );
 
   return (
     <>
@@ -56,27 +72,29 @@ const Documentations = () => {
         />
       </div>
 
-      <Upgrade />
+      { ! loading && upgradeVersion > wedocsVersion && <Upgrade /> }
 
       <div
         role="list"
         className="documentation relative mx-auto grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3"
       >
-        { ! loading && filteredDocs.length > 0 && (
-          <DraggableDocs
-            docs={ [ ...filteredDocs ] }
-            docType={ 'Documentation' }
-          >
-            { /*{ filteredDocs?.map( ( doc ) => (*/ }
-            { /*    <ParentDocs key={ doc.id } doc={ doc } />*/ }
-            { /*) ) }*/ }
+        { ! loading && documentations.length > 0 && (
+          <DraggableDocs setItems={ setDocumentations }>
+            <SortableContext
+              items={ documentations }
+              strategy={ rectSortingStrategy }
+            >
+              { documentations?.map( ( doc ) => (
+                <ParentDocs key={ doc.id } doc={ doc } />
+              ) ) }
+            </SortableContext>
           </DraggableDocs>
         ) }
 
         { loading && <DocsPlaceholder /> }
       </div>
 
-      { ! loading && searchValue && filteredDocs.length === 0 && (
+      { ! loading && searchValue && documentations.length === 0 && (
         <h2 className="float-left text-lg mt-4">
           { __(
             'Your searching documentation not available at this moment…',

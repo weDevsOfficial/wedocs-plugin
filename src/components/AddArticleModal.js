@@ -13,8 +13,8 @@ const AddArticleModal = ( {
   className,
   children,
   defaultSection,
-  closeEllipsis,
   docId,
+  closeEllipsis,
 } ) => {
   const [ isOpen, setIsOpen ] = useState( false );
   const [ sectionId, setSectionId ] = useState( defaultSection?.id || '' );
@@ -76,10 +76,10 @@ const AddArticleModal = ( {
 
   const closeModal = () => {
     setIsOpen( false );
-    closeEllipsis();
+    // closeEllipsis();
   };
 
-  const openModal = () => {
+  const openModal = ( e ) => {
     setIsOpen( true );
     // closeEllipsis();
   };
@@ -98,8 +98,8 @@ const AddArticleModal = ( {
       <Transition appear show={ isOpen } as={ Fragment }>
         <Dialog
           as="div"
-          className="relative z-10"
-          static={ true }
+          className="relative z-50"
+          // static={ true }
           onClose={ closeModal }
         >
           <Transition.Child
@@ -148,8 +148,7 @@ const AddArticleModal = ( {
                         formError.title
                           ? '!border-red-500 focus:ring-red-500 focus:border-red-500'
                           : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500'
-                      }
-                                                h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white` }
+                      } h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white` }
                       value={ newArticle?.title?.raw }
                       onChange={ onTitleChange }
                     />
@@ -171,6 +170,7 @@ const AddArticleModal = ( {
                     isFormError={ formError.sectionId }
                     docId={ docId }
                   />
+
                   { /*<ComboBox2 sections={ sections } />*/ }
 
                   <div className="mt-6 space-x-3.5">
