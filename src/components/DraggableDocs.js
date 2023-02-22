@@ -22,10 +22,6 @@ const DraggableDocs = ( { setItems, children } ) => {
         delay: 150,
         tolerance: 5,
       },
-    } ),
-
-    useSensor( KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
     } )
   );
 
