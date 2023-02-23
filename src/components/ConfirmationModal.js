@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 
 const ConfirmationModal = ( { className, children } ) => {
   const [ openModal, setOpenModal ] = useState( false );
-  const cancelButtonRef = useRef( null );
 
   const upgradeVersion = useSelect(
     ( select ) => select( settingsStore ).getUpgradeVersion(),
@@ -27,6 +26,7 @@ const ConfirmationModal = ( { className, children } ) => {
           showConfirmButton: false,
           timer: 2000,
         } );
+        setOpenModal( false );
       } )
       .catch( ( err ) => {
         Swal.fire( {
@@ -99,27 +99,27 @@ const ConfirmationModal = ( { className, children } ) => {
                         as="h3"
                         className="text-lg font-medium text-gray-900 mb-2"
                       >
-                        { __( 'Upgrade Wedocs Database', 'wedocs' ) }
+                        { __( 'Are you sure?', 'wedocs' ) }
                       </Dialog.Title>
                       <p className="text-gray-500 text-base">
                         { __(
-                          'Are you sure to restrict the editing access for this doc to admin only? When restrictions are applied, only Admins can edit the article',
+                          'We recommend backing up your database before upgrading to ensure your data is safe. Are you sure you want to run the upgrade now?',
                           'wedocs'
                         ) }
                       </p>
 
                       <div className="mt-6 space-x-3.5 text-center">
                         <button
-                          className="bg-indigo-700 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md"
-                          onClick={ handleUpgraderClick }
-                        >
-                          { __( 'Update', 'wedocs' ) }
-                        </button>
-                        <button
                           className="bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md"
                           onClick={ () => setOpenModal( false ) }
                         >
                           { __( 'Cancel', 'wedocs' ) }
+                        </button>
+                        <button
+                          className="bg-indigo-700 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md"
+                          onClick={ handleUpgraderClick }
+                        >
+                          { __( 'Update', 'wedocs' ) }
                         </button>
                       </div>
                     </div>

@@ -2,6 +2,7 @@
 
 namespace WeDevs\WeDocs\API;
 
+use WeDevs\WeDocs\Upgrader\Upgrader;
 use WP_Error;
 use WP_REST_Server;
 use WP_REST_Controller;
@@ -178,7 +179,7 @@ class SettingsApi extends \WP_REST_Controller {
 //        $get_data = $request->get_param( 'data' );
 //
         if ( 'wedocs_settings' === $get_data ) {
-            $value = wedocs_get_option( 'wedocs_settings', [] );
+            $value = get_option( 'wedocs_settings', [] );
         } elseif ( 'wedocs_version' === $get_data ) {
             $value = get_option( 'wedocs_version', '1.7.1' );
         } else {
@@ -223,13 +224,15 @@ class SettingsApi extends \WP_REST_Controller {
      */
     public function create_item( $request ) {
         if ( ! empty( $request->get_param( 'settings' ) ) ) {
-            $settings_data = $this->get_items( $request );
+            $settings_data = $request->get_param( 'settings' );
+
+            // Update wedocs_settings from store.
+            update_option( 'wedocs_settings', $settings_data );
         } else {
             $settings_data = $request->get_param( 'upgrade' );
             $this->upgrade_wedocs_settings( $settings_data );
         }
 
-//        update_option( 'wedocs_settings', $value );
         return rest_ensure_response( $settings_data );
     }
 

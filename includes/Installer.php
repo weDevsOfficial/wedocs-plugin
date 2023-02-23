@@ -91,11 +91,11 @@ class Installer {
             $settings['general']['docs_home'] = $docs_page;
 
             // default settings value.
-            $settings['general']['print']     = wedocs_get_general_settings( 'print', 'on' );
-            $settings['general']['email']     = wedocs_get_general_settings( 'email', 'on' );
-            $settings['general']['helpful']   = wedocs_get_general_settings( 'helpful', 'on' );
-            $settings['general']['comments']  = wedocs_get_general_settings( 'comments', 'on' );
-            $settings['general']['email_to']  = wedocs_get_general_settings( 'email_to', '' );
+//            $settings['general']['print']     = wedocs_get_general_settings( 'print', 'on' );
+//            $settings['general']['email']     = wedocs_get_general_settings( 'email', 'on' );
+//            $settings['general']['helpful']   = wedocs_get_general_settings( 'helpful', 'on' );
+//            $settings['general']['comments']  = wedocs_get_general_settings( 'comments', 'on' );
+//            $settings['general']['email_to']  = wedocs_get_general_settings( 'email_to', '' );
 
             update_option( 'wedocs_settings', $settings );
         }

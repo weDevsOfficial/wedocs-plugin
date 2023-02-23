@@ -152,7 +152,7 @@ const DocActions = ( { docId, addArticle = false } ) => {
       </div>
       { showActions && (
         <div
-          className="backdrop absolute z-30 top-0 left-0 w-full h-full"
+          className="backdrop absolute z-[5] top-0 left-0 w-full h-full"
           onClick={ () => setShowActions( false ) }
         />
       ) }

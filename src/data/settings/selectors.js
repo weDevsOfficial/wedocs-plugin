@@ -9,6 +9,11 @@ const selectors = {
     return settings[ option ];
   },
 
+  getGeneralSettingsOption( state, option ) {
+    const { settings } = state;
+    return settings?.general?.[ option ];
+  },
+
   getRoles( state ) {
     const { roles } = state;
     return roles;

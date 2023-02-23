@@ -1,6 +1,15 @@
 const DEFAULT_SETTINGS_STATE = {
   roles: {},
-  settings: {},
+  settings: {
+    general: {
+      docs_home: '',
+      email: 'on',
+      email_to: '',
+      helpful: 'on',
+      comments: 'on',
+      print: 'on',
+    },
+  },
   loading: false,
   saving: false,
   wedocsVersion: '1.7.1',
@@ -10,7 +19,7 @@ const DEFAULT_SETTINGS_STATE = {
 const reducer = ( state = DEFAULT_SETTINGS_STATE, action ) => {
   switch ( action.type ) {
     case 'SET_SETTINGS':
-      return { ...state, settings: action.settings };
+      return { ...state, settings: { ...state.settings, ...action.settings } };
     case 'SET_LOADING':
       return { ...state, loading: action.loading };
     case 'SET_SETTINGS_OPTION':

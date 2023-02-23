@@ -34,12 +34,12 @@ class Admin {
 
         $assets_url = wedocs()->plugin_url() . '/assets';
 
-        if ( file_exists( WEDOCS_PATH . '/hot/index.asset.php' ) ) {
-            $react_dependencies = require WEDOCS_PATH . '/hot/index.asset.php';
+        if ( file_exists( WEDOCS_PATH . '/assets/build/index.asset.php' ) ) {
+            $react_dependencies = require WEDOCS_PATH . '/assets/build/index.asset.php';
 
             // Adding wedocs necessary assets.
-            wp_enqueue_style( 'wedocs-app-style', WEDOCS_URL . '/hot/index.css', [], $react_dependencies['version'] );
-            wp_enqueue_script( 'wedocs-app-script', WEDOCS_URL . '/hot/index.js', $react_dependencies['dependencies'], $react_dependencies['version'], true );
+            wp_enqueue_style( 'wedocs-app-style', WEDOCS_URL . '/assets/build/index.css', [], $react_dependencies['version'] );
+            wp_enqueue_script( 'wedocs-app-script', WEDOCS_URL . '/assets/build/index.js', $react_dependencies['dependencies'], $react_dependencies['version'], true );
         }
     }
 

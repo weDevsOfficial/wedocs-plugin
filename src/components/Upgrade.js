@@ -72,7 +72,7 @@ const Upgrade = () => {
             <div className="ml-3 w-full">
               <div className="flex justify-between items-center">
                 <h3 className="text-base font-semibold">
-                  { __( 'Run WeDocs Upgrader', 'wedocs' ) }
+                  { __( 'weDocs Data Update Required', 'wedocs' ) }
                 </h3>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -93,22 +93,13 @@ const Upgrade = () => {
               <div className="mt-2 text-base">
                 <p>
                   { __(
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum similique veniam.',
+                    "A database upgrade is required. If you don't upgrade, you may experience errors while using weDocs.",
                     'wedocs'
                   ) }
                 </p>
               </div>
               <div className="mt-4">
                 <div className="-mx-1 -mt-1 flex">
-                  { /*<RestictionModal className="px-2 py-1.5 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 ease-in-out duration-200 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">*/ }
-                  { /*    { __( 'Update', 'wedocs' ) }*/ }
-                  { /*</RestictionModal>*/ }
-                  { /*<button*/ }
-                  { /*    type="button"*/ }
-                  { /*    className="px-2 py-1.5 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 ease-in-out duration-200 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"*/ }
-                  { /*>*/ }
-                  { /*    { __( 'Update', 'wedocs' ) }*/ }
-                  { /*</button>*/ }
                   <ConfirmationModal className="px-2 py-1.5 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 ease-in-out duration-200 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                     { __( 'Update', 'wedocs' ) }
                   </ConfirmationModal>

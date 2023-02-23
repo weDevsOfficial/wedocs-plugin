@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "613e067a46c8d5a33f649a6f41c48644",
+    "content-hash": "33b082bf9b26470ae21f8b2044ba54d5",
     "packages": [
         {
             "name": "appsero/client",
@@ -101,6 +101,47 @@
                 "source": "https://github.com/tareq1988/wordpress-settings-api-class/tree/master"
             },
             "time": "2018-05-01T19:33:47+00:00"
+        },
+        {
+            "name": "woocommerce/action-scheduler",
+            "version": "dev-trunk",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/woocommerce/action-scheduler.git",
+                "reference": "51e2b9242519829a0601af552f2162de4380a117"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/51e2b9242519829a0601af552f2162de4380a117",
+                "reference": "51e2b9242519829a0601af552f2162de4380a117",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5",
+                "woocommerce/woocommerce-sniffs": "0.1.0",
+                "wp-cli/wp-cli": "~2.5.0",
+                "yoast/phpunit-polyfills": "^1.0"
+            },
+            "default-branch": true,
+            "type": "wordpress-plugin",
+            "extra": {
+                "scripts-description": {
+                    "test": "Run unit tests",
+                    "phpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
+                    "phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "Action Scheduler for WordPress and WooCommerce",
+            "homepage": "https://actionscheduler.org/",
+            "support": {
+                "issues": "https://github.com/woocommerce/action-scheduler/issues",
+                "source": "https://github.com/woocommerce/action-scheduler/tree/trunk"
+            },
+            "time": "2023-02-16T10:01:16+00:00"
         }
     ],
     "packages-dev": [

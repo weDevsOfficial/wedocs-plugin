@@ -14,10 +14,6 @@ const GeneralSettings = ( {
   generalSettingsData,
   setSettings,
 } ) => {
-  const pages = useSelect( ( select ) => select( docsStore ).getPages(), [] );
-
-  const [ docsPages, setDocsPages ] = useState( pages );
-
   const [ generalSettings, setGeneralSettings ] = useState( {
     ...generalSettingsData,
   } );
@@ -28,16 +24,6 @@ const GeneralSettings = ( {
       general: { ...generalSettingsData, email_to: e.target.value },
     } );
   };
-
-  useEffect( () => {
-    if ( Object.keys( pages ).length ) {
-      setDocsPages(
-        pages?.map( ( page ) => {
-          return { id: page?.id, name: page?.title?.rendered };
-        } )
-      );
-    }
-  }, [ pages ] );
 
   useEffect( () => {
     setGeneralSettings( {
@@ -82,23 +68,12 @@ const GeneralSettings = ( {
                 </div>
                 <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
                   <div className="relative">
-                    { docsPages && Object.keys( docsPages ).length > 0 ? (
-                      <SelectBox
-                        name="docs_home"
-                        options={ docsPages }
-                        setSettings={ setSettings }
-                        settingsData={ settingsData }
-                        generalSettings={ generalSettings }
-                      />
-                    ) : (
-                      <div className="relative mt-1">
-                        <input
-                          className="relative !w-full cursor-pointer !rounded-md border !border-gray-300 bg-white !py-2 !pl-3 !pr-10 text-left shadow-sm sm:text-sm"
-                          placeholder={ 'loading...' }
-                          disabled
-                        />
-                      </div>
-                    ) }
+                    <SelectBox
+                      name="docs_home"
+                      setSettings={ setSettings }
+                      settingsData={ settingsData }
+                      generalSettings={ generalSettings }
+                    />
                   </div>
                 </div>
               </div>
@@ -120,6 +95,8 @@ const GeneralSettings = ( {
                 </p>
               </div>
             </div>
+
+            { /*{ console.log( generalSettingsData, settingsData ) }*/ }
 
             { generalSettingsData?.email === ( 'on' || '' ) && (
               <div className="col-span-4">
@@ -158,7 +135,7 @@ const GeneralSettings = ( {
                   <div className="settings-field w-full max-w-[490px] ml-auto flex-2">
                     <div className="relative">
                       <input
-                        type="text"
+                        type="email"
                         name="doc_title"
                         id="doc-title"
                         placeholder={ __(
@@ -174,6 +151,7 @@ const GeneralSettings = ( {
                 </div>
               </div>
             ) }
+
             <div className="col-span-4">
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading flex items-center space-x-2 flex-1">
@@ -217,6 +195,7 @@ const GeneralSettings = ( {
                 </div>
               </div>
             </div>
+
             <div className="col-span-4">
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading space-x-2 items-center flex flex-1">
@@ -260,6 +239,7 @@ const GeneralSettings = ( {
                 </div>
               </div>
             </div>
+
             <div className="col-span-4">
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading space-x-2 items-center flex flex-1">
@@ -303,6 +283,7 @@ const GeneralSettings = ( {
                 </div>
               </div>
             </div>
+
             <div className="col-span-4">
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading space-x-2 items-center flex flex-1">

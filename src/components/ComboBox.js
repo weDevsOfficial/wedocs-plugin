@@ -73,10 +73,6 @@ const ComboBox = ( {
     setNewSection( { ...newSection, title: { raw: e.target.value } } );
   };
 
-  useEffect( () => {
-    return selectSectionId( '' );
-  }, [] );
-
   return (
     <Combobox
       as="div"

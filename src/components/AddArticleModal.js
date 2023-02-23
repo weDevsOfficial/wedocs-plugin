@@ -4,7 +4,6 @@ import { Dialog, Transition } from '@headlessui/react';
 import { dispatch } from '@wordpress/data';
 import docStore from '../data/docs';
 import ComboBox from './ComboBox';
-import ComboBox2 from './ComboBox2';
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 import Swal from 'sweetalert2';
 
@@ -14,7 +13,6 @@ const AddArticleModal = ( {
   children,
   defaultSection,
   docId,
-  closeEllipsis,
 } ) => {
   const [ isOpen, setIsOpen ] = useState( false );
   const [ sectionId, setSectionId ] = useState( defaultSection?.id || '' );
@@ -76,12 +74,10 @@ const AddArticleModal = ( {
 
   const closeModal = () => {
     setIsOpen( false );
-    // closeEllipsis();
   };
 
   const openModal = ( e ) => {
     setIsOpen( true );
-    // closeEllipsis();
   };
 
   useEffect( () => {
@@ -96,12 +92,7 @@ const AddArticleModal = ( {
       </button>
 
       <Transition appear show={ isOpen } as={ Fragment }>
-        <Dialog
-          as="div"
-          className="relative z-50"
-          // static={ true }
-          onClose={ closeModal }
-        >
+        <Dialog as="div" className="relative z-50" onClose={ closeModal }>
           <Transition.Child
             as={ Fragment }
             enter="ease-out duration-300"
@@ -170,8 +161,6 @@ const AddArticleModal = ( {
                     isFormError={ formError.sectionId }
                     docId={ docId }
                   />
-
-                  { /*<ComboBox2 sections={ sections } />*/ }
 
                   <div className="mt-6 space-x-3.5">
                     <button
