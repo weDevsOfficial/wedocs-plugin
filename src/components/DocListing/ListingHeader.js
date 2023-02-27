@@ -1,4 +1,3 @@
-import { __, sprintf } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import docsStore from '../../data/docs';
 
@@ -73,9 +72,9 @@ const ListingHeader = ( { id } ) => {
             </>
           ) : (
             <div className="flex items-center group space-x-4">
-              <span className="animate-pulse bg-[#94a3b8] rounded h-4 w-56 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"></span>
-              <span className="animate-pulse bg-[#cbd5e1] rounded h-4 w-6 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"></span>
-              <span className="animate-pulse bg-[#cbd5e1] rounded h-4 w-6 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"></span>
+              <span className="animate-pulse bg-[#94a3b8] rounded h-4 w-56 border-b hover:bg-gray-50"></span>
+              <span className="animate-pulse bg-[#cbd5e1] rounded h-4 w-6 border-b hover:bg-gray-50"></span>
+              <span className="animate-pulse bg-[#cbd5e1] rounded h-4 w-6 border-b hover:bg-gray-50"></span>
             </div>
           ) }
         </h1>

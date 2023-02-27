@@ -5,7 +5,7 @@ import AddPostModal from '../AddPostModal';
 const EmptyDocs = () => {
   return (
     <>
-      <div className="w-full mt-3.5">
+      <div className="w-full">
         <div className="shadow sm:overflow-hidden sm:rounded-md">
           <div className="space-y-6 h-screen flex justify-center align-center bg-white px-4 py-5 sm:p-6">
             <div className="w-[500px] text-center self-center mt-1 px-6 py-12">
@@ -19,7 +19,12 @@ const EmptyDocs = () => {
                   { __( 'Get started by creating a new doc', 'wedocs' ) }
                 </p>
                 <p className="text-[#666B79] text-lg">
-                  <a href="#" className="text-[#0043FF]">
+                  <a
+                    href="https://wedocs.co/docs/wedocs/how-to/how-to-create-a-doc/"
+                    className="text-[#0043FF]"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     { __( 'Learn More ', 'wedocs' ) }
                   </a>
                   { __( 'how to create a new doc', 'wedocs' ) }
