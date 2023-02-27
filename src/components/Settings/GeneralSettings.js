@@ -31,19 +31,6 @@ const GeneralSettings = ( {
     } );
   }, [ generalSettingsData ] );
 
-  // useEffect( () => {
-  //     setSettings(
-  //         { ...settingsData, general: { ...generalSettingsData, email_to: emailAddress } }
-  //     );
-  // }, [ emailAddress ] );
-
-  // useEffect( () => {
-  //
-  //     if ( settingsData?.general?.email_to ) {
-  //         setEmailAddress( settingsData?.general?.email_to );
-  //     }
-  // }, [ settingsData?.general?.email_to ] );
-
   return (
     <section>
       <div className="shadow sm:rounded-md">
@@ -96,9 +83,8 @@ const GeneralSettings = ( {
               </div>
             </div>
 
-            { /*{ console.log( generalSettingsData, settingsData ) }*/ }
-
-            { generalSettingsData?.email === ( 'on' || '' ) && (
+            { ( generalSettingsData?.email === 'on' ||
+              ! Boolean( generalSettingsData?.email ) ) && (
               <div className="col-span-4">
                 <div className="settings-content flex items-center justify-between">
                   <div className="settings-field-heading flex items-center space-x-2 flex-1">

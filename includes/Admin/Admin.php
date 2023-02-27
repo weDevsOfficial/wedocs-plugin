@@ -14,9 +14,8 @@ class Admin {
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ] );
 
         new Menu();
-//        add_action( 'admin_menu', [ $this, 'admin_menu' ] );
-        add_filter( 'parent_file', [$this, 'fix_tag_menu' ] );
 
+        add_filter( 'parent_file', [$this, 'fix_tag_menu' ] );
         add_filter( 'admin_footer_text', [ $this, 'admin_footer_text' ], 1 );
     }
 
@@ -41,28 +40,6 @@ class Admin {
             wp_enqueue_style( 'wedocs-app-style', WEDOCS_URL . '/assets/build/index.css', [], $react_dependencies['version'] );
             wp_enqueue_script( 'wedocs-app-script', WEDOCS_URL . '/assets/build/index.js', $react_dependencies['dependencies'], $react_dependencies['version'], true );
         }
-    }
-
-    /**
-     * Get the admin menu position.
-     *
-     * @return int the position of the menu
-     */
-    public function get_menu_position() {
-        return apply_filters( 'wedocs_menu_position', 48 );
-    }
-
-    /**
-     * Add menu items.
-     *
-     * @return void
-     */
-    public function admin_menu() {
-        $capability = wedocs_get_publish_cap();
-
-        add_menu_page( __( 'weDocs', 'wedocs' ), __( 'weDocs', 'wedocs' ), $capability, 'wedocs', [ $this, 'page_index' ], 'dashicons-media-document', $this->get_menu_position() );
-        add_submenu_page( 'wedocs', __( 'Docs', 'wedocs' ), __( 'Docs', 'wedocs' ), $capability, 'wedocs#/', [ $this, 'page_index' ] );
-        add_submenu_page( 'wedocs', __( 'Tags', 'wedocs' ), __( 'Tags', 'wedocs' ), 'manage_categories', 'edit-tags.php?taxonomy=doc_tag&post_type=docs' );
     }
 
     /**

@@ -2,19 +2,103 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 1.7.1\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
-"POT-Creation-Date: 2023-02-22 11:35:10+00:00\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2023-MO-DA HO:MI+ZONE\n"
+"Project-Id-Version: weDocs 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"X-Generator: grunt-wp-i18n 1.0.3\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-02-27T05:13:49+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Domain: wedocs\n"
 
-#: includes/API/API.php:55
-msgid "Email address of the author."
+#. Plugin Name of the plugin
+#: includes/Admin/Admin.php:63
+#: includes/Admin/Menu.php:36
+#: includes/Admin/Menu.php:37
+msgid "weDocs"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://wedocs.co/"
+msgstr ""
+
+#. Description of the plugin
+msgid "A documentation plugin for WordPress"
+msgstr ""
+
+#. Author of the plugin
+msgid "weDevs"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri"
+msgstr ""
+
+#: includes/Admin/Admin.php:64
+#: includes/Admin/Menu.php:57
+#: includes/functions.php:111
+msgid "Docs"
+msgstr ""
+
+#: includes/Admin/Admin.php:65
+#: includes/Admin/Menu.php:62
+#: includes/Post_Types.php:85
+msgid "Tags"
+msgstr ""
+
+#: includes/Admin/Admin.php:121
+msgid "Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
+msgstr ""
+
+#: includes/Admin/Admin.php:121
+msgid "Thanks :)"
+msgstr ""
+
+#: includes/Admin/Admin.php:132
+msgid "Thank you for using <strong>weDocs</strong>."
+msgstr ""
+
+#: includes/Admin/Admin.php:135
+msgid "Use the <a href=\"%s\">classic UI</a>."
+msgstr ""
+
+#: includes/Admin/Docs_List_Table.php:27
+msgid "Helpfulness"
+msgstr ""
+
+#: includes/Admin/Docs_List_Table.php:67
+msgid "Votes"
+msgstr ""
+
+#: includes/Admin/Menu.php:67
+msgid "Settings"
+msgstr ""
+
+#: includes/Ajax.php:175
+msgid "Sorry, you've already recorded your feedback!"
+msgstr ""
+
+#: includes/Ajax.php:190
+msgid "Thanks for your feedback!"
+msgstr ""
+
+#: includes/Ajax.php:211
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: includes/Ajax.php:218
+msgid "Please provide a subject line."
+msgstr ""
+
+#: includes/Ajax.php:222
+msgid "Please provide the message details."
+msgstr ""
+
+#: includes/Ajax.php:227
+msgid "Thanks for your feedback."
 msgstr ""
 
 #: includes/API/API.php:118
@@ -43,10 +127,6 @@ msgstr ""
 
 #: includes/API/API.php:398
 msgid "No email given"
-msgstr ""
-
-#: includes/API/API.php:412
-msgid "Invalid doc ID."
 msgstr ""
 
 #: includes/API/API.php:436
@@ -81,80 +161,54 @@ msgstr ""
 msgid "No settings request found"
 msgstr ""
 
-#. Plugin Name of the plugin/theme
-msgid "weDocs"
+#: includes/Frontend.php:74
+msgid "Powered by weDocs plugin for WordPress"
 msgstr ""
 
-#: includes/Admin/Admin.php:64 includes/Admin/Menu.php:57
-#: includes/functions.php:111
+#: includes/functions.php:93
+msgid "Home"
+msgstr ""
+
+#: includes/functions.php:186
+msgid "Doc navigation"
+msgstr ""
+
+#: includes/functions.php:374
+msgid "[%1$s] New Doc Feedback: \"%2$s\""
+msgstr ""
+
+#: includes/functions.php:376
+msgid "New feedback on your doc \"%s\""
+msgstr ""
+
+#: includes/functions.php:377
+msgid "Author: %1$s (IP: %2$s)"
+msgstr ""
+
+#: includes/functions.php:378
+msgid "Email: %s"
+msgstr ""
+
+#: includes/functions.php:379
+msgid "Feedback: %s"
+msgstr ""
+
+#: includes/functions.php:380
+msgid "Doc Permalink: %s"
+msgstr ""
+
+#: includes/functions.php:381
+msgid "Edit Doc: %s"
+msgstr ""
+
+#: includes/Post_Types.php:32
+msgctxt "Post Type General Name"
 msgid "Docs"
 msgstr ""
 
-#: includes/Admin/Admin.php:65 includes/Admin/Menu.php:62
-#: includes/Post_Types.php:85
-msgid "Tags"
-msgstr ""
-
-#: includes/Admin/Admin.php:121
-msgid ""
-"Thank you for using <strong>weDocs</strong>. Please leave us a "
-"%s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
-msgstr ""
-
-#: includes/Admin/Admin.php:121
-msgid "Thanks :)"
-msgstr ""
-
-#: includes/Admin/Admin.php:132
-msgid "Thank you for using <strong>weDocs</strong>."
-msgstr ""
-
-#: includes/Admin/Admin.php:135
-msgid "Use the <a href=\"%s\">classic UI</a>."
-msgstr ""
-
-#: includes/Admin/Docs_List_Table.php:27
-msgid "Helpfulness"
-msgstr ""
-
-#: includes/Admin/Docs_List_Table.php:67
-msgid "Votes"
-msgstr ""
-
-#: includes/Admin/Menu.php:67
-msgid "Settings"
-msgstr ""
-
-#: includes/Ajax.php:93
-msgid "You are not allowed to delete this item."
-msgstr ""
-
-#: includes/Ajax.php:175
-msgid "Sorry, you've already recorded your feedback!"
-msgstr ""
-
-#: includes/Ajax.php:190
-msgid "Thanks for your feedback!"
-msgstr ""
-
-#: includes/Ajax.php:211
-msgid "Please enter a valid email address."
-msgstr ""
-
-#: includes/Ajax.php:218
-msgid "Please provide a subject line."
-msgstr ""
-
-#: includes/Ajax.php:222
-msgid "Please provide the message details."
-msgstr ""
-
-#: includes/Ajax.php:227
-msgid "Thanks for your feedback."
-msgstr ""
-
-#: includes/Frontend.php:74
-msgid "Powered by weDocs plugin for WordPress"
+#: includes/Post_Types.php:33
+msgctxt "Post Type Singular Name"
+msgid "Doc"
 msgstr ""
 
 #: includes/Post_Types.php:34
@@ -199,6 +253,16 @@ msgstr ""
 
 #: includes/Post_Types.php:44
 msgid "Not found in Trash"
+msgstr ""
+
+#: includes/Post_Types.php:83
+msgctxt "Taxonomy General Name"
+msgid "Tags"
+msgstr ""
+
+#: includes/Post_Types.php:84
+msgctxt "Taxonomy Singular Name"
+msgid "Tag"
 msgstr ""
 
 #: includes/Post_Types.php:86
@@ -282,51 +346,31 @@ msgid "weDocs Document Search"
 msgstr ""
 
 #: includes/Widget.php:36
+#: assets/build/index.js:1
+#: assets/build/index.js:5
+#: src/components/BackToDocsPage.js:25
+#: src/components/Documentations/index.js:58
 msgid "All Docs"
+msgstr ""
+
+#: includes/Widget.php:47
+#: includes/Widget.php:48
+msgctxt "label"
+msgid "Search for:"
+msgstr ""
+
+#: includes/Widget.php:48
+msgctxt "placeholder"
+msgid "Documentation Search &hellip;"
+msgstr ""
+
+#: includes/Widget.php:54
+msgctxt "submit button"
+msgid "Search"
 msgstr ""
 
 #: includes/Widget.php:68
 msgid "Documentation Search"
-msgstr ""
-
-#: includes/Widget.php:70
-msgid "Title:"
-msgstr ""
-
-#: includes/functions.php:93
-msgid "Home"
-msgstr ""
-
-#: includes/functions.php:186
-msgid "Doc navigation"
-msgstr ""
-
-#: includes/functions.php:374
-msgid "[%1$s] New Doc Feedback: \"%2$s\""
-msgstr ""
-
-#: includes/functions.php:376
-msgid "New feedback on your doc \"%s\""
-msgstr ""
-
-#: includes/functions.php:377
-msgid "Author: %1$s (IP: %2$s)"
-msgstr ""
-
-#: includes/functions.php:378
-msgid "Email: %s"
-msgstr ""
-
-#: includes/functions.php:379
-msgid "Feedback: %s"
-msgstr ""
-
-#: includes/functions.php:380
-msgid "Doc Permalink: %s"
-msgstr ""
-
-#: includes/functions.php:381
-msgid "Edit Doc: %s"
 msgstr ""
 
 #: templates/content-feedback.php:8
@@ -335,7 +379,8 @@ msgid_plural "%d persons found this useful"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/content-feedback.php:8 templates/content-feedback.php:9
+#: templates/content-feedback.php:8
+#: templates/content-feedback.php:9
 msgid "No votes yet"
 msgstr ""
 
@@ -357,7 +402,8 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/content-modal.php:14 templates/single-docs.php:82
+#: templates/content-modal.php:14
+#: templates/single-docs.php:82
 msgid "How can we help?"
 msgstr ""
 
@@ -385,8 +431,8 @@ msgstr ""
 msgid "Print this article"
 msgstr ""
 
-#: templates/single-docs.php:47
 #. translators: %s: Name of current post.
+#: templates/single-docs.php:47
 msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
@@ -398,6 +444,11 @@ msgstr ""
 msgid "Articles"
 msgstr ""
 
+#: templates/single-docs.php:71
+msgctxt "Used before tag names."
+msgid "Tags"
+msgstr ""
+
 #: templates/single-docs.php:82
 msgid "Still stuck?"
 msgstr ""
@@ -406,1002 +457,376 @@ msgstr ""
 msgid "Updated on %s"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:38
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:20
-msgid "Basic Settings"
+#: assets/build/index.js:1
+#: src/components/AddPostModal.js:111
+#: src/components/AddSectionModal.js:117
+#: src/components/ComboBox.js:82
+msgid "Type a section name"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:42
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:24
-msgid "Advanced Settings"
+#: assets/build/index.js:1
+#: src/components/ComboBox.js:157
+msgid "Create \"%s\" as a new section"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:58
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:36
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:111
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:187
-msgid "Text Input"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:124
+msgid "Enter your article title"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:59
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:37
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:112
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:188
-msgid "Text input description"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:128
+msgid "Help text how to add article"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:60
-msgid "Text Input placeholder"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:136
+msgid "Write article name"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:67
-msgid "Number Input"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:52
+msgid "Section Article Created"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:68
-msgid "Number field with validation callback `floatval`"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:53
+msgid "Section article has been created successfully"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:69
-msgid "1.99"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:64
+#: src/components/AddPostModal.js:46
+#: src/components/AddSectionModal.js:50
+#: src/components/ConfirmationModal.js:33
+#: src/components/RestrictionModal.js:27
+#: src/components/Settings/index.js:45
+msgid "Error"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:79
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:43
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:118
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:194
-msgid "Textarea Input"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:170
+#: src/components/AddPostModal.js:142
+#: src/components/AddSectionModal.js:144
+msgid "Create"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:80
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:44
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:119
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:195
-msgid "Textarea description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:81
-msgid "Textarea placeholder"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:86
-msgid ""
-"HTML area description. You can use any <strong>bold</strong> or other HTML "
-"elements."
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:91
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:49
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:124
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:200
-msgid "Checkbox"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:92
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:50
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:125
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:201
-msgid "Checkbox Label"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:97
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:55
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:130
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:206
-msgid "Radio Button"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:98
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:56
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:131
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:207
-msgid "A radio button"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:107
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:77
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:154
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:228
-msgid "A Dropdown"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:108
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:78
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:155
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:229
-msgid "Dropdown description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:118
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:144
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:88
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:164
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:238
-msgid "Password"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:119
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:145
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:89
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:165
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:239
-msgid "Password description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:125
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:95
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:171
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:245
-msgid "File"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:126
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:96
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:172
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:246
-msgid "File description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:137
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:102
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:178
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:252
-msgid "Color"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:138
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:103
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:179
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:253
-msgid "Color description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:151
-msgid "Advanced Editor"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:152
-msgid "WP_Editor description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:158
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:65
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:141
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:216
-msgid "Multile checkbox"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:159
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:66
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:142
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:217
-msgid "Multi checkbox description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:28
-msgid "Other Settings"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/src/class.settings-api.php:370
-msgid "Choose File"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ActionFactory.php:226
-msgid "Invalid action - must be a recurring action."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:60
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:75
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:76
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:89
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:19
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:30
-msgid "Scheduled Actions"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:225
-#. translators: 1) is the number of affected actions, 2) is a link to an admin
-#. screen.
-msgid "About"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:227
-msgid "About Action Scheduler %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:229
-msgid ""
-"Action Scheduler is a scalable, traceable job queue for background "
-"processing large sets of actions. Action Scheduler works by triggering an "
-"action hook to run at some time in the future. Scheduled actions can also "
-"be scheduled to run on a recurring schedule."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:237
-msgid "Columns"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:239
-msgid "Scheduled Action Columns"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:241
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:96
-msgid "Hook"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:241
-msgid "Name of the action hook that will be triggered."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:242
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:97
-msgid "Status"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:242
-msgid "Action statuses are Pending, Complete, Canceled, Failed"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:243
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:98
-msgid "Arguments"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:243
-msgid "Optional data array passed to the action hook."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:244
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:99
-msgid "Group"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:244
-msgid "Optional action group."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:245
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:100
-msgid "Recurrence"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:245
-msgid "The action's schedule frequency."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:246
-msgid "Scheduled"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:246
-msgid "The date/time the action is/was scheduled to run."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:247
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:102
-msgid "Log"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:247
-msgid "Activity log for the action."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_DataController.php:133
-#. translators: %d: amount of time
-msgid "Stopped the insanity for %d second"
-msgid_plural "Stopped the insanity for %d seconds"
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_DataController.php:137
-msgid "Attempting to reduce used memory..."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_InvalidActionException.php:21
-#. translators: 1: action ID 2: schedule
-msgid "Action [%1$s] has an invalid schedule: %2$s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_InvalidActionException.php:40
-#. translators: 1: action ID 2: arguments
-msgid ""
-"Action [%1$s] has invalid arguments. It cannot be JSON decoded to an array. "
-"$args = %2$s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:92
-msgid "Delete"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:101
-msgid "Scheduled Date"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:122
-msgid "Claim ID"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:129
-msgid "Run"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:130
-msgid "Process the action now as if it were run as part of a queue"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:133
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:176
+#: src/components/AddPostModal.js:148
+#: src/components/AddSectionModal.js:150
+#: src/components/ConfirmationModal.js:149
+#: src/components/RestrictionModal.js:120
 msgid "Cancel"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:134
-msgid "Cancel the action now to avoid it being run in future"
+#: assets/build/index.js:1
+#: src/components/RestrictionModal.js:103
+msgid "Are you sure you want to delete this document?"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:144
-#. translators: %s: amount of time
-msgid "%s year"
-msgid_plural "%s years"
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:149
-#. translators: %s: amount of time
-msgid "%s month"
-msgid_plural "%s months"
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:154
-#. translators: %s: amount of time
-msgid "%s week"
-msgid_plural "%s weeks"
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:159
-#. translators: %s: amount of time
-msgid "%s day"
-msgid_plural "%s days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:164
-#. translators: %s: amount of time
-msgid "%s hour"
-msgid_plural "%s hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:169
-#. translators: %s: amount of time
-msgid "%s minute"
-msgid_plural "%s minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:174
-#. translators: %s: amount of time
-msgid "%s second"
-msgid_plural "%s seconds"
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:224
-msgid "Now!"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:260
-#. translators: %s: time interval
-msgid "Every %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:266
-msgid "Non-repeating"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:364
-msgid ""
-"It appears one or more database tables were missing. Attempting to "
-"re-create the missing table(s)."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:380
-#. translators: %s: amount of claims
-msgid ""
-"Maximum simultaneous queues already in progress (%s queue). No additional "
-"queues will begin processing until the current queues are complete."
-msgid_plural ""
-"Maximum simultaneous queues already in progress (%s queues). No additional "
-"queues will begin processing until the current queues are complete."
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:397
-#. translators: %s: process URL
-msgid ""
-"A new queue has begun processing. <a href=\"%s\">View actions in-progress "
-"&raquo;</a>"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:400
-#. translators: %d: seconds
-msgid "The next queue will begin processing in approximately %d seconds."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:421
-#. translators: %s: action HTML
-msgid "Successfully executed action: %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:425
-#. translators: %s: action HTML
-msgid "Successfully canceled action: %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:429
-#. translators: %s: action HTML
-msgid "Successfully processed change for action: %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:435
-#. translators: 1: action HTML 2: action ID 3: error message
-msgid "Could not process change for action: \"%1$s\" (ID: %2$d). Error: %3$s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:471
-msgid "async"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:485
-#. translators: %s: date interval
-msgid " (%s ago)"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:488
-#. translators: %s: date interval
-msgid " (%s)"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:648
-msgid "Search hook, args and claim ID"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_QueueRunner.php:215
-msgid "Every minute"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_WPCommentCleaner.php:103
-#. translators: %s: date interval
-msgid "This data will be deleted in %s."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_WPCommentCleaner.php:108
-#. translators: 1: next cleanup message 2: github issue URL
-msgid ""
-"Action Scheduler has migrated data to custom tables; however, orphaned log "
-"entries exist in the WordPress Comments table. %1$s <a href=\"%2$s\">Learn "
-"more &raquo;</a>"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:111
-msgid "Action Scheduler"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:111
-msgid "This section shows details of Action Scheduler."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:114
-msgid "Version:"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:118
-msgid "Data store:"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:122
-msgid "Action Status"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:124
-msgid "Count"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:125
-msgid "Oldest Scheduled Date"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:126
-msgid "Newest Scheduled Date"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:33
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ProgressBar.php:47
-#. translators: %s php class name
-msgid "The %s class can only be run within WP CLI."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:59
-msgid "There are too many concurrent batches, but the run is forced to continue."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:61
-msgid "There are too many concurrent batches."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:93
-#. translators: %d: amount of actions
-msgid "Running %d action"
-msgid_plural "Running %d actions"
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:113
-msgid "The claim has been lost. Aborting current batch."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:138
-#. translators: %s refers to the action ID
-msgid "Started processing action %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:155
-#. translators: 1: action ID 2: hook name
-msgid "Completed processing action %1$s with hook: %2$s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:170
-#. translators: 1: action ID 2: exception message
-msgid "Error processing action %1$s: %2$s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_Scheduler_command.php:30
-#. translators: %s refers to the schema name
-msgid "Registered schema for %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_Scheduler_command.php:139
-#. translators: %d refers to how many scheduled taks were found to run
-msgid "Found %d scheduled task"
-msgid_plural "Found %d scheduled tasks"
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_Scheduler_command.php:156
-#. translators: %d refers to the total number of batches executed
-msgid "%d batch executed."
-msgid_plural "%d batches executed."
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_Scheduler_command.php:175
-#. translators: %s refers to the exception error message
-msgid "There was an error running the action scheduler: %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_Scheduler_command.php:192
-#. translators: %d refers to the total number of taskes completed
-msgid "%d scheduled task completed."
-msgid_plural "%d scheduled tasks completed."
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler.php:195
-msgid "%s() was called before the Action Scheduler data store was initialized"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Abstract_ListTable.php:523
-msgid "Filter"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Abstract_ListTable.php:650
-#. translators: %s: search query
-msgid "Search results for \"%s\""
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Abstract_ListTable.php:755
-msgid "Search"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Abstract_QueueRunner.php:96
-msgid ""
-"This action appears to be consistently failing. A new instance will not be "
-"scheduled."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:72
-msgid "action created"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:76
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBLogger.php:142
-msgid "action canceled"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:82
-#. translators: %s: context
-msgid "action started via %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:84
-msgid "action started"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:92
-#. translators: %s: context
-msgid "action complete via %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:94
-msgid "action complete"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:102
-#. translators: 1: context 2: exception message
-msgid "action failed via %1$s: %2$s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:105
-#. translators: %s: exception message
-msgid "action failed: %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:112
-#. translators: %s: amount of time
-msgid ""
-"action marked as failed after %s seconds. Unknown error occurred. Check "
-"server, PHP and database error logs to diagnose cause."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:118
-#. translators: 1: error message 2: filename 3: line
-msgid "unexpected shutdown: PHP Fatal error %1$s in %2$s on line %3$s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:123
-msgid "action reset"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:129
-#. translators: %s: context
-msgid "action ignored via %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:131
-msgid "action ignored"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:146
-#. translators: %s: exception message
-msgid "There was a failure fetching this action: %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:148
-msgid "There was a failure fetching this action"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:156
-#. translators: %s: exception message
-msgid "There was a failure scheduling the next instance of this action: %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Store.php:329
-msgid ""
-"ActionScheduler_Action::$args too long. To ensure the args column can be "
-"indexed, action args should not be more than %d characters when encoded as "
-"JSON."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Store.php:405
-msgid "Complete"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Store.php:406
-msgid "Pending"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Store.php:407
-msgid "In-progress"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Store.php:408
-msgid "Failed"
+#: assets/build/index.js:1
+#: src/components/RestrictionModal.js:109
+msgid "If you delete it, the document will be lost forever, and you won't be able to recover it."
 msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Store.php:409
-msgid "Canceled"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/actions/ActionScheduler_Action.php:37
-#. translators: 1: action hook.
-msgid ""
-"Scheduled action for %1$s will not be executed as no callbacks are "
-"registered."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:117
-msgid "Database error."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:125
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:49
-#: vendor/woocommerce/action-scheduler/classes/migration/ActionScheduler_DBStoreMigrator.php:44
-#. translators: %s: error message
-#. translators: %s: action error message
-msgid "Error saving action: %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:382
-msgid "Invalid value for select or count parameter. Cannot query actions."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:440
-msgid ""
-"JSON partial matching not supported in your environment. Please check your "
-"MySQL/MariaDB version."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:457
-#. translators: %s: provided value type
-msgid ""
-"The value type for the JSON partial matching is not supported. Must be "
-"either integer, boolean, double or string. %s type provided."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:478
-msgid "Unknown partial args matching value."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:639
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:731
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:762
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:1052
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:1110
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:515
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:534
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:564
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:987
-#. translators: %s: action ID
-#. translators: %s is the action ID
-msgid "Unidentified action %s"
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:895
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:717
-#. translators: %s: group name
-#. translators: %s is the group name
-msgid "The group \"%s\" does not exist."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:915
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:696
-msgid "Unable to claim actions. Database error."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:1009
-msgid "Unable to release actions from claim id %d."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:1079
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:967
-#. translators: 1: action ID. 2: status slug.
-msgid "Unable to update the status of action %1$d to %2$s."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:1140
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:904
-msgid "Invalid action ID. No status found."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:1142
-msgid "Unknown status found for action."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:101
-msgid "Unable to save action."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:318
-msgid "Invalid schedule. Cannot save action."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:824
-#. translators: %s: claim ID
-msgid "Unable to unlock claim %s. Database error."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:852
-#. translators: %s: action ID
-msgid "Unable to unlock claim on action %s. Database error."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:878
-#. translators: %s: action ID
-msgid "Unable to mark failure on action %s. Database error."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:1068
-#. translators: %s is the error message
-msgid "%s Support for strings longer than this will be removed in a future version."
-msgstr ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostStatusRegistrar.php:38
-#. translators: %s: count
-msgid "Failed <span class=\"count\">(%s)</span>"
-msgid_plural "Failed <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostStatusRegistrar.php:53
-#. translators: %s: count
-msgid "In-Progress <span class=\"count\">(%s)</span>"
-msgid_plural "In-Progress <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:20
-msgid "Scheduled actions are hooks triggered on a cetain date and time."
+#: assets/build/index.js:1
+#: src/components/RestrictionModal.js:16
+msgid "Documentation Deleted"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:31
-msgid "Scheduled Action"
+#: assets/build/index.js:1
+#: src/components/RestrictionModal.js:17
+msgid "Documentation has been deleted successfully"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:33
-msgid "Add"
+#: assets/build/index.js:1
+#: src/components/RestrictionModal.js:126
+msgid "I'm Sure"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:34
-msgid "Add New Scheduled Action"
+#: assets/build/index.js:1
+#: src/components/DocActions.js:66
+#: src/components/DocListing/DocSections.js:196
+#: src/components/DocListing/ListingButtons.js:21
+msgid "Add article"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:35
+#: assets/build/index.js:1
+#: src/components/DocActions.js:76
 msgid "Edit"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:36
-msgid "Edit Scheduled Action"
+#: assets/build/index.js:1
+#: src/components/DocActions.js:83
+msgid "Delete"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:37
-msgid "New Scheduled Action"
+#: assets/build/index.js:1
+#: assets/build/index.js:3
+#: src/components/DocListing/DocSections.js:70
+#: src/components/DocListing/DocSections.js:78
+#: src/components/DocListing/SectionArticles.js:34
+#: src/components/DocListing/SectionArticles.js:42
+#: src/components/Documentations/ParentDocs.js:52
+#: src/components/Documentations/ParentDocs.js:69
+msgid "Docs Link Icon"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:38
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:39
-msgid "View Action"
+#: assets/build/index.js:1
+#: src/components/DocListing/SectionArticles.js:118
+msgid "Updated at %s"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:40
-msgid "Search Scheduled Actions"
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:105
+msgid "Enter your section title"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:41
-msgid "No actions found"
+#: assets/build/index.js:1
+#: src/components/AddPostModal.js:104
+#: src/components/AddSectionModal.js:109
+msgid "Help text how to add section"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:42
-msgid "No actions found in trash"
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:35
+msgid "Documentation Section Created"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_TaxonomyRegistrar.php:14
-msgid "Action Group"
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:36
+msgid "Documentation section has been created successfully"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/migration/ActionMigrator.php:95
-msgid "Unable to remove source migrated action %s"
+#: assets/build/index.js:1
+#: src/components/DocListing/ListingButtons.js:13
+msgid "Add section"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/migration/Config.php:52
-msgid "Source store must be configured before running a migration"
+#: assets/build/index.js:1
+#: src/components/SearchFilter.js:6
+msgid "Search your documentation"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/migration/Config.php:74
-msgid "Source logger must be configured before running a migration"
+#: assets/build/index.js:1
+#: src/components/ConfirmationModal.js:135
+msgid "Are you sure?"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/migration/Config.php:96
-msgid "Destination store must be configured before running a migration"
+#: assets/build/index.js:1
+#: src/components/ConfirmationModal.js:138
+msgid "We recommend backing up your database before upgrading to ensure your data is safe. Are you sure you want to run the upgrade now?"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/migration/Config.php:118
-msgid "Destination logger must be configured before running a migration"
+#: assets/build/index.js:1
+#: src/components/ConfirmationModal.js:21
+msgid "Database Upgraded"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/migration/Controller.php:162
-msgid ""
-"Action Scheduler migration in progress. The list of scheduled actions may "
-"be incomplete."
+#: assets/build/index.js:1
+#: src/components/ConfirmationModal.js:22
+msgid "Wedocs database has been upgrade successfully"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/migration/Runner.php:82
-#. translators: %d: amount of actions
-msgid "Migrating %d action"
-msgid_plural "Migrating %d actions"
-msgstr[0] ""
-msgstr[1] ""
-
-#: vendor/woocommerce/action-scheduler/classes/migration/Runner.php:107
-#. translators: 1: source action ID 2: source store class 3: destination action
-#. ID 4: destination store class
-msgid "Migrated action with ID %1$d in %2$s to ID %3$d in %4$s"
+#: assets/build/index.js:1
+#: src/components/ConfirmationModal.js:155
+msgid "I'm sure"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/functions.php:219
-#. translators: %s is the name of the hook to be cancelled.
-msgid "Caught exception while cancelling action: %s"
+#: assets/build/index.js:1
+#: src/components/Upgrade.js:26
+msgid "Wedocs Logo"
 msgstr ""
 
-#. Plugin URI of the plugin/theme
-msgid "https://wedocs.co/"
+#: assets/build/index.js:1
+#: src/components/Upgrade.js:33
+msgid "weDocs Data Update Required"
 msgstr ""
 
-#. Description of the plugin/theme
-msgid "A documentation plugin for WordPress"
+#: assets/build/index.js:1
+#: src/components/Upgrade.js:53
+msgid "A database upgrade is required. If you don't upgrade, you may experience errors while using weDocs."
 msgstr ""
 
-#. Author of the plugin/theme
-msgid "weDevs"
+#: assets/build/index.js:1
+#: src/components/Upgrade.js:62
+msgid "Update"
 msgstr ""
 
-#. Author URI of the plugin/theme
-msgid ""
-"https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-"
-"uri"
+#: assets/build/index.js:1
+#: src/components/DocListing/index.js:135
+msgid "No section found for this documentation"
 msgstr ""
 
-#: includes/Post_Types.php:32
-msgctxt "Post Type General Name"
-msgid "Docs"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:53
+#: src/components/Settings/Menu.js:7
+#: src/components/Settings/TestMenu.js:27
+msgid "General"
 msgstr ""
 
-#: includes/Post_Types.php:33
-msgctxt "Post Type Singular Name"
-msgid "Doc"
+#: assets/build/index.js:1
+#: src/components/Settings/SaveButton.js:20
+msgid "Save"
 msgstr ""
 
-#: includes/Post_Types.php:83
-msgctxt "Taxonomy General Name"
-msgid "Tags"
+#: assets/build/index.js:1
+#: src/components/SelectBox.js:113
+msgid "loading…"
 msgstr ""
 
-#: includes/Post_Types.php:84
-msgctxt "Taxonomy Singular Name"
-msgid "Tag"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:66
+msgid "weDocs Home"
 msgstr ""
 
-#: includes/Widget.php:47 includes/Widget.php:48
-msgctxt "label"
-msgid "Search for:"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:82
+msgid "Home page for docs page. Preferably use [wedocs] "
 msgstr ""
 
-#: includes/Widget.php:48
-msgctxt "placeholder"
-msgid "Documentation Search &hellip;"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:92
+msgid "shortcode"
 msgstr ""
 
-#: includes/Widget.php:54
-msgctxt "submit button"
-msgid "Search"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:94
+msgid " or design your own."
 msgstr ""
 
-#: templates/single-docs.php:71
-msgctxt "Used before tag names."
-msgid "Tags"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:110
+msgid "Email Address"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostStatusRegistrar.php:36
-msgctxt "post"
-msgid "Failed"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:114
+msgid "Enter the email address where you would like to receive feedback from users."
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostStatusRegistrar.php:51
-msgctxt "post"
-msgid "In-Progress"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:141
+msgid "Write your email address"
 msgstr ""
 
-#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:32
-msgctxt "Admin menu name"
-msgid "Scheduled Actions"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:163
+msgid "Email Feedback on Article"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:167
+msgid "Invite readers to share their thoughts and suggestions through an email feedback form"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:207
+msgid "Helpful Feedback on Article"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:211
+msgid "Enabling helpful feedback on your article allows readers to provide opinions on your content"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:251
+msgid "Allow Comments on Article"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:255
+msgid "Increase reader engagement by turning on article comments"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:295
+msgid "Allow Article Printing"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:299
+msgid "Enable this option to allow users to print articles directly from the website"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/index.js:34
+msgid "Save Settings Data"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/index.js:35
+msgid "Settings data has been save successfully"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddPostModal.js:101
+msgid "Enter your doc title"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddPostModal.js:34
+msgid "Documentation Created"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddPostModal.js:35
+msgid "Documentation has been created successfully"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:16
+msgid "Docs Create Icon"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:19
+msgid "Get started by creating a new doc"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:23
+msgid "Learn More "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:25
+msgid "how to create a new doc"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:30
+msgid "Create a new doc"
+msgstr ""
+
+#. translators: %d: Length of documentation sections
+#: assets/build/index.js:3
+#: src/components/Documentations/ParentDocs.js:58
+msgid "%d Sections"
+msgstr ""
+
+#. translators: %d: Length of documentation articles
+#: assets/build/index.js:5
+#: src/components/Documentations/ParentDocs.js:75
+msgid "%d Articles"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Documentations/index.js:61
+msgid "Add doc"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Documentations/index.js:94
+msgid "Your searching documentation not available at this moment…"
+msgstr ""
+
+#: src/components/Settings/TestMenu.js:50
+msgid "Permission Management"
+msgstr ""
+
+#: src/components/Settings/TestMenu.js:72
+msgid "Assistant Widget"
 msgstr ""

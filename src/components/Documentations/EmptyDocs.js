@@ -5,7 +5,7 @@ import AddPostModal from '../AddPostModal';
 const EmptyDocs = () => {
   return (
     <>
-      <div className="w-full mt-7">
+      <div className="w-full mt-3.5">
         <div className="shadow sm:overflow-hidden sm:rounded-md">
           <div className="space-y-6 h-screen flex justify-center align-center bg-white px-4 py-5 sm:p-6">
             <div className="w-[500px] text-center self-center mt-1 px-6 py-12">

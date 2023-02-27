@@ -1,15 +1,12 @@
-import { useState, useEffect } from '@wordpress/element';
-
 import {
   DndContext,
   closestCenter,
-  KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
 
-import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+import { arrayMove } from '@dnd-kit/sortable';
 
 import { dispatch } from '@wordpress/data';
 import docsStore from '../data/docs';
