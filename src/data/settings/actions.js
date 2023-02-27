@@ -11,12 +11,8 @@ const actions = {
     return { type: 'SET_LOADING', loading };
   },
 
-  setWedocsVersion( wedocsVersion ) {
-    return { type: 'SET_WEDOCS_VERSION', wedocsVersion };
-  },
-
-  setUpgradeVersion( upgradeVersion ) {
-    return { type: 'SET_UPGRADE_VERSION', upgradeVersion };
+  setUpgradeInfo( needUpgrade ) {
+    return { type: 'SET_UPGRADE_INFO', needUpgrade };
   },
 
   setSaving( saving ) {
@@ -33,7 +29,7 @@ const actions = {
   *wedocsUpgrade( data ) {
     const path = '/wp/v2/docs/settings';
     const response = yield { type: 'UPDATE_TO_API', path, data };
-    yield actions.setWedocsVersion( response );
+    yield actions.setUpgradeInfo( response );
     return response;
   },
 };

@@ -7,10 +7,21 @@ const updatedConfig = {
   entry: {
     ...defaultConfig.entry,
     index: './src/index',
+    // '../css/frontend.css': './assets/css/frontend.less',
+    // '../css/print.css': './assets/css/print.less',
+    // '../css/admin.css': './assets/css/admin.less',
   },
   output: {
     path: path.resolve( __dirname, 'assets/build' ),
   },
+  // module: {
+  //   rules: [
+  //     {
+  //       test: /\.less$/,
+  //       use: [ 'style-loader', 'css-loader' ],
+  //     },
+  //   ],
+  // },
 };
 
 if ( ! isProduction ) {

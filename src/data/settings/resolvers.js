@@ -8,17 +8,10 @@ const resolvers = {
     return actions.setLoading( false );
   },
 
-  *getWedocsVersion() {
+  *getUpgradeInfo() {
     yield actions.setLoading( true );
-    const wedocsVersion = yield { type: 'FETCH_WEDOCS_VERSION' };
-    yield actions.setWedocsVersion( wedocsVersion );
-    return actions.setLoading( false );
-  },
-
-  *getUpgradeVersion() {
-    yield actions.setLoading( true );
-    const upgradeVersion = yield { type: 'FETCH_UPGRADE_VERSION' };
-    yield actions.setUpgradeVersion( upgradeVersion );
+    const needUpgrade = yield { type: 'FETCH_UPGRADE_INFO' };
+    yield actions.setUpgradeInfo( needUpgrade );
     return actions.setLoading( false );
   },
 };

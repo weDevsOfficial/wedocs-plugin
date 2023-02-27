@@ -12,8 +12,7 @@ const DEFAULT_SETTINGS_STATE = {
   },
   loading: false,
   saving: false,
-  wedocsVersion: '1.7.1',
-  upgradeVersion: '2.0.0',
+  needUpgrade: false,
 };
 
 const reducer = ( state = DEFAULT_SETTINGS_STATE, action ) => {
@@ -30,10 +29,8 @@ const reducer = ( state = DEFAULT_SETTINGS_STATE, action ) => {
           [ action.option ]: action.value,
         },
       };
-    case 'SET_WEDOCS_VERSION':
-      return { ...state, wedocsVersion: action.wedocsVersion };
-    case 'SET_UPGRADE_VERSION':
-      return { ...state, upgradeVersion: action.upgradeVersion };
+    case 'SET_UPGRADE_INFO':
+      return { ...state, needUpgrade: action.needUpgrade };
     case 'SET_SAVING':
       return { ...state, saving: action.saving };
     default:

@@ -7,15 +7,9 @@ const controls = {
     } );
   },
 
-  FETCH_WEDOCS_VERSION() {
+  FETCH_UPGRADE_INFO() {
     return apiFetch( {
-      path: '/wp/v2/docs/settings?data=wedocs_version',
-    } );
-  },
-
-  FETCH_UPGRADE_VERSION() {
-    return apiFetch( {
-      path: '/wp/v2/docs/settings?data=wedocs_upgrade',
+      path: '/wp/v2/docs/settings?data=upgrade',
     } );
   },
 

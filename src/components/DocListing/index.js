@@ -16,6 +16,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import settingsStore from '../../data/settings';
 
 const ListingPage = () => {
   const { id } = useParams();
@@ -46,6 +47,11 @@ const ListingPage = () => {
 
   const filteredArticles = docArticles?.filter( ( doc ) =>
     doc?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() )
+  );
+
+  const needUpgrade = useSelect(
+    ( select ) => select( settingsStore ).getUpgradeInfo(),
+    []
   );
 
   const searchFilter = ( section ) => {
@@ -86,7 +92,7 @@ const ListingPage = () => {
         />
       </div>
 
-      <Upgrade />
+      { ! loading && needUpgrade && <Upgrade /> }
 
       <ListingHeader id={ id } />
 

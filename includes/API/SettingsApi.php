@@ -75,7 +75,6 @@ class SettingsApi extends \WP_REST_Controller {
                 'args'                => array(
                     'settings' => array(
                         'type'        => 'object',
-//                        'required'    => true,
                         'description' => esc_html__( 'Settings value', 'wedocs' ),
                         'properties'  => array(
                             'name' => array(
@@ -84,7 +83,7 @@ class SettingsApi extends \WP_REST_Controller {
                         ),
                     ),
                     'upgrade'  => array(
-                        'type'        => 'string',
+                        'type'        => 'boolean',
                         'description' => esc_html__( 'Upgrader version', 'wedocs' ),
                     ),
                 ),
@@ -137,81 +136,19 @@ class SettingsApi extends \WP_REST_Controller {
      *
      * @return mixed
      */
-//    public function get_items( $request ) {
-//        $value    = array();
-//        $get_data = $request->get_param( 'data' );
-//
-//        if ( 'wedocs_settings' === $get_data ) {
-//            $value = (array) wedocs_get_option( 'wedocs_settings', $value );
-//        }
-//
-//        // Set default value if general data not found.
-//        if ( empty( $value[ 'general' ] ) ) {
-//            $value[ 'general' ] = [
-//                'print'     => wedocs_get_general_settings( 'print', 'on' ),
-//                'email'     => wedocs_get_general_settings( 'email', 'on' ),
-//                'helpful'   => wedocs_get_general_settings( 'helpful', 'on' ),
-//                'comments'  => wedocs_get_general_settings( 'comments', 'on' ),
-//                'email_to'  => wedocs_get_general_settings( 'email_to' ),
-//                'docs_home' => wedocs_get_general_settings( 'docs_home' ),
-//            ];
-//
-//            unset( $value[0] );
-//            unset( $value[ 'print' ] );
-//            unset( $value[ 'email' ] );
-//            unset( $value[ 'helpful' ] );
-//            unset( $value[ 'comments' ] );
-//            unset( $value[ 'email_to' ] );
-//            unset( $value[ 'docs_home' ] );
-//
-//            update_option( 'wedocs_settings', $value );
-//        }
-//
-//        return rest_ensure_response( $value );
-//    }
-
     public function get_items( $request ) {
         $get_data = $request->get_param( 'data' );
 
-
-//        $value = (array) wedocs_get_option( 'wedocs_settings', $value );
-//        $value    = array();
-//        $get_data = $request->get_param( 'data' );
-//
         if ( 'wedocs_settings' === $get_data ) {
             $value = get_option( 'wedocs_settings', [] );
-        } elseif ( 'wedocs_version' === $get_data ) {
-            $value = get_option( 'wedocs_version', '1.7.1' );
         } else {
-            $value = get_option( 'wedocs_upgrade_version', '2.0.0' );
+            $wedocs_version  = get_option( 'wedocs_version' );
+            $upgrade_version = get_option( 'wedocs_upgrade_version' );
+
+            empty( $upgrade_version ) ? update_option( 'wedocs_upgrade_version', '2.0.0' ) : '';
+            $value = $upgrade_version > $wedocs_version;
         }
 
-//        if ( 'wedocs_upgrade' === $get_data ) {
-//            $value = wedocs_get_option( 'wedocs_upgrade_version', '2.0' );
-//        }
-//
-//        // Set default value if general data not found.
-//        if ( empty( $value[ 'general' ] ) ) {
-//            $value[ 'general' ] = [
-//                'print'     => wedocs_get_general_settings( 'print', 'on' ),
-//                'email'     => wedocs_get_general_settings( 'email', 'on' ),
-//                'helpful'   => wedocs_get_general_settings( 'helpful', 'on' ),
-//                'comments'  => wedocs_get_general_settings( 'comments', 'on' ),
-//                'email_to'  => wedocs_get_general_settings( 'email_to' ),
-//                'docs_home' => wedocs_get_general_settings( 'docs_home' ),
-//            ];
-//
-//            unset( $value[0] );
-//            unset( $value[ 'print' ] );
-//            unset( $value[ 'email' ] );
-//            unset( $value[ 'helpful' ] );
-//            unset( $value[ 'comments' ] );
-//            unset( $value[ 'email_to' ] );
-//            unset( $value[ 'docs_home' ] );
-
-//            update_option( 'wedocs_settings', $value );
-//        }
-//
         return rest_ensure_response( $value );
     }
 
@@ -229,14 +166,22 @@ class SettingsApi extends \WP_REST_Controller {
             // Update wedocs_settings from store.
             update_option( 'wedocs_settings', $settings_data );
         } else {
-            $settings_data = $request->get_param( 'upgrade' );
-            $this->upgrade_wedocs_settings( $settings_data );
+            $updated_version = get_option( 'wedocs_upgrade_version' );
+            $request->get_param( 'upgrade' ) ? $this->upgrade_wedocs_settings( $updated_version ) : '';
+
+            $wedocs_version = get_option( 'wedocs_version' );
+            $settings_data  = $updated_version > $wedocs_version;
         }
 
         return rest_ensure_response( $settings_data );
     }
 
-    public function upgrade_wedocs_settings( $version ) {
+    /**
+     * Update wedocs settings data.
+     *
+     * @return mixed
+     */
+    public function upgrade_wedocs_settings( $updated_version ) {
         $value = get_option( 'wedocs_settings', [] );
 
         // Check if data already updated.
@@ -262,7 +207,7 @@ class SettingsApi extends \WP_REST_Controller {
 
         // Update settings data with plugin version.
         update_option( 'wedocs_settings', $value );
-        update_option( 'wedocs_version', $version );
+        update_option( 'wedocs_version', $updated_version );
     }
 
 //    public function create_item( $request ) {

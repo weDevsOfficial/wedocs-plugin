@@ -23,13 +23,8 @@ const Documentations = () => {
     []
   );
 
-  const wedocsVersion = useSelect(
-    ( select ) => select( settingsStore ).getWedocsVersion(),
-    []
-  );
-
-  const upgradeVersion = useSelect(
-    ( select ) => select( settingsStore ).getUpgradeVersion(),
+  const needUpgrade = useSelect(
+    ( select ) => select( settingsStore ).getUpgradeInfo(),
     []
   );
 
@@ -72,7 +67,7 @@ const Documentations = () => {
         />
       </div>
 
-      { ! loading && upgradeVersion > wedocsVersion && <Upgrade /> }
+      { ! loading && needUpgrade && <Upgrade /> }
 
       <div
         role="list"

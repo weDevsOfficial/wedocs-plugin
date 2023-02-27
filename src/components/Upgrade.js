@@ -1,54 +1,15 @@
-import Swal from 'sweetalert2';
+import logo from '../assets/img/wedocs.svg';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import RestictionModal from './RestrictionModal';
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
 import ConfirmationModal from './ConfirmationModal';
-import { dispatch } from '@wordpress/data';
+import { dispatch, useSelect } from '@wordpress/data';
 import settingsStore from '../data/settings';
+import drag from '../assets/img/drag.png';
 
 const Upgrade = () => {
   const [ showUpgrader, setShowUpgrader ] = useState( true );
-
-  // const handleUpgraderClick = () => {
-  // Swal({
-  //     title: "Submit or Cancel",
-  //     text: "Are you sure you want to submit this form?",
-  //     icon: "info",
-  //     buttons: ["Cancel", "Submit"],
-  // })
-  // .then((willSubmit) => {
-  //     if (willSubmit) {
-  //         swal("Success!", "Your form has been submitted.", "success");
-  //     } else {
-  //         swal("Cancelled", "Your form has not been submitted.", "error");
-  //     }
-  // });
-  // Swal.fire( {
-  //     title: __( 'Error', 'wedocs' ),
-  //     text: 'Hello World',
-  //     icon: 'info',
-  //     toast: true,
-  //     position: 'bottom-end',
-  //     showConfirmButton: false,
-  //     timer: 3000,
-  //     buttons: ["Cancel", "Submit"],
-  // });
-  // Swal.fire({
-  //     title: __( 'Error', 'wedocs' ),
-  //     text: 'Hello World',
-  //     icon: 'info',
-  //     showCancelButton: true,
-  //     confirmButtonText: __( 'Update', 'wedocs' ),
-  //     cancelButtonText: __( 'Cancel', 'wedocs' ),
-  // }).then((result) => {});
-  // .then((willSubmit) => {
-  //     if (willSubmit) {
-  //         swal("Success!", "Your form has been submitted.", "success");
-  //     } else {
-  //         swal("Cancelled", "Your form has not been submitted.", "error");
-  //     };
-  // };
 
   return (
     <>
@@ -62,10 +23,7 @@ const Upgrade = () => {
               />
               <div className="avatar">
                 <div className="w-24 h-24 mask mask-squircle">
-                  <img
-                    src="https://ps.w.org/wedocs/assets/icon-256x256.png?rev=2281297"
-                    alt=""
-                  />
+                  <img src={ logo } alt={ __( 'Wedocs Logo', 'wedocs' ) } />
                 </div>
               </div>
             </div>

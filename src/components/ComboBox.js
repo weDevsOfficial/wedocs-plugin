@@ -19,8 +19,6 @@ const ComboBox = ( {
 } ) => {
   const { id } = useParams();
 
-  // console.log( sections, defaultSection, selectSectionId, isFormError, docId );
-
   const classNames = ( ...classes ) => {
     return classes.filter( Boolean ).join( ' ' );
   };

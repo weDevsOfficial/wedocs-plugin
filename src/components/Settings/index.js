@@ -17,18 +17,12 @@ const SettingsPage = () => {
     []
   );
 
-  // const weDocsSettings = {
-  //   general: {
-  //     docs_home: '',
-  //     email: 'on',
-  //     email_to: '',
-  //     helpful: 'on',
-  //     comments: 'on',
-  //     print: 'on',
-  //   },
-  // };
-
   const [ docSettings, setDocSettings ] = useState( { ...settings } );
+
+  const needUpgrade = useSelect(
+    ( select ) => select( settingsStore ).getUpgradeInfo(),
+    []
+  );
 
   const handleSettingsSave = () => {
     // Update wedocs settings data.
@@ -61,61 +55,34 @@ const SettingsPage = () => {
 
   useEffect( () => {
     if ( settings?.docs_home && ! Boolean( settings?.general?.docs_home ) ) {
+      const email = settings?.email;
+      const print = settings?.print;
+      const helpful = settings?.helpful;
+      const emailTo = settings?.email_to;
+      const comments = settings?.comments;
       const docsPageId = settings?.docs_home;
+
+      delete settings?.email;
+      delete settings?.print;
+      delete settings?.helpful;
+      delete settings?.comments;
+      delete settings?.email_to;
       delete settings?.docs_home;
 
+      settings.general.email = email;
+      settings.general.print = print;
+      settings.general.helpful = helpful;
+      settings.general.email_to = emailTo;
+      settings.general.comments = comments;
       settings.general.docs_home = docsPageId;
     }
 
     setDocSettings( { ...docSettings, ...settings } );
   }, [ settings ] );
 
-  // useEffect( () => {
-  //   if ( settings?.docs_home && ! Boolean( settings?.general?.docs_home ) ) {
-  //     const docsPageId = settings?.docs_home;
-  //
-  //     // delete settings?.docs_home;
-  //     // settings.general.docs_home = docsPageId;
-  //     // docSettings.general.docs_home = docsPageId;
-  //
-  //     setDocSettings( {
-  //       ...docSettings,
-  //       general: { ...docSettings.general, docs_home: docsPageId },
-  //     } );
-  //
-  //     console.log( settings, docsPageId, docSettings );
-  //   }
-  // }, [ settings ] );
-
-  // useEffect( () => {
-  //   // if ( settings && Object.keys( settings ).length ) {
-  //   //   setDocSettings( { ...settings } );
-  //   // }
-  //
-  //   if ( ! Boolean( settings?.general?.docs_home ) ) {
-  //     console.log( 'before: ', settings?.docs_home, docSettings );
-  //     setDocSettings( {
-  //       ...docSettings,
-  //       general: { ...docSettings.general, docs_home: settings?.docs_home },
-  //     } );
-  //     console.log( 'after: ', docSettings );
-  //   }
-  //
-  //   // if (
-  //   //   settings &&
-  //   //   Boolean( settings?.docs_home ) &&
-  //   //   ! Boolean( settings?.general?.docs_home )
-  //   // ) {
-  //   //   setDocSettings( {
-  //   //     ...docSettings,
-  //   //     general: { ...docSettings.general, docs_home: settings?.docs_home },
-  //   //   } );
-  //   // }
-  // }, [ settings ] );
-
   return (
     <div className="min-h-full pt-7">
-      <Upgrade />
+      { needUpgrade && <Upgrade /> }
 
       <main>
         <div className="pb-10 pt-3 sm:px-0">

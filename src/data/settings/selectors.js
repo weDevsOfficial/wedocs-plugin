@@ -24,14 +24,9 @@ const selectors = {
     return loading;
   },
 
-  getWedocsVersion( state ) {
-    const { wedocsVersion } = state;
-    return wedocsVersion;
-  },
-
-  getUpgradeVersion( state ) {
-    const { upgradeVersion } = state;
-    return upgradeVersion;
+  getUpgradeInfo( state ) {
+    const { needUpgrade } = state;
+    return needUpgrade;
   },
 
   getSaving( state ) {
