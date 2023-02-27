@@ -60,10 +60,12 @@ const Documentations = () => {
             <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-4 text-base flex items-center"></span>
             { __( `Add doc`, 'wedocs' ) }
           </AddPostModal>
-          <SearchFilter
-            handleChange={ handleChange }
-            searchValue={ searchValue }
-          />
+          { parentDocs && parentDocs.length > 0 && (
+            <SearchFilter
+              handleChange={ handleChange }
+              searchValue={ searchValue }
+            />
+          ) }
         </h1>
       </div>
 
