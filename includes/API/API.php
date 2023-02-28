@@ -427,13 +427,18 @@ class API extends WP_REST_Controller {
     /**
      * Check permissions for the documentation delete.
      *
+     * @since 2.0.0
+     *
      * @param WP_REST_Request $request Current request.
      *
      * @return bool|WP_Error
      */
     public function delete_item_permissions_check( $request ) {
         if ( ! current_user_can( 'edit_posts' ) ) {
-            return new WP_Error( 'wedocs_permission_failure', esc_html__( 'You cannot delete the documentation resource.', 'wedocs' ) );
+            return new WP_Error(
+                'wedocs_permission_failure',
+                esc_html__( 'You cannot delete the documentation resource.', 'wedocs' )
+            );
         }
 
         return true;
@@ -441,6 +446,8 @@ class API extends WP_REST_Controller {
 
     /**
      * Delete a single documentation.
+     *
+     * @since 2.0.0
      *
      * @param WP_REST_Request $request Current request.
      *
@@ -472,6 +479,8 @@ class API extends WP_REST_Controller {
     /**
      * Remove all children docs if exists.
      *
+     * @since 2.0.0
+     *
      * @param int $parent_id
      *
      * @return WP_REST_Response|WP_Error
@@ -481,7 +490,7 @@ class API extends WP_REST_Controller {
 
         if ( $childrens ) {
             foreach ( $childrens as $child_post ) {
-                // recursively delete
+                // Recursively delete.
                 $this->remove_child_docs( $child_post->ID );
 
                 wp_delete_post( $child_post->ID );

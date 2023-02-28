@@ -1,6 +1,4 @@
-import drag from '../../assets/img/drag.png';
-import { __, sprintf } from '@wordpress/i18n';
-import folder from '../../assets/img/folder.png';
+import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import docStore from '../../data/docs';
 import SectionArticles from './SectionArticles';
@@ -15,6 +13,8 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import DraggableDocs from '../DraggableDocs';
+import extractedTitle from '../../utils/extractedTitle';
+import settingsStore from '../../data/settings';
 
 const DocSections = ( { section, sections, searchValue } ) => {
   const { id, title } = section;
@@ -53,6 +53,15 @@ const DocSections = ( { section, sections, searchValue } ) => {
     setArticles( [ ...filteredArticles ] );
   }, [ sectionArticles, searchValue ] );
 
+  const settings = useSelect(
+    ( select ) => select( settingsStore ).getSettings(),
+    []
+  );
+
+  const {
+    general: { comments: isCommentsAllowed },
+  } = settings;
+
   return (
     <div
       className="space-y-4 mb-3"
@@ -67,27 +76,55 @@ const DocSections = ( { section, sections, searchValue } ) => {
             className="flex items-center group"
             onClick={ () => setShowArticles( ! showArticles ) }
           >
-            <img src={ drag } alt={ __( 'Docs Link Icon', 'wedocs' ) } />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="21"
+              fill="none"
+            >
+              <path
+                fillRule="evenodd"
+                d="M8.5 7.498c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 8.573 8.5 7.498zm0 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 15.467 8.5 14.392zm3-6.894c0-1.075.871-1.947 1.947-1.947s1.947.872 1.947 1.947-.872 1.947-1.947 1.947S11.5 8.573 11.5 7.498zm3.893 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.871 1.947 1.947 1.947 1.947-.872 1.947-1.947z"
+                fill="#d9d9d9"
+              />
+            </svg>
             <div className="flex items-center w-full">
               <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                 <div className="truncate flex items-center">
                   <div className="flex items-center text-sm pr-5">
-                    <img
-                      src={ folder }
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
                       className="w-full h-full px-3.5"
-                      alt={ __( 'Docs Link Icon', 'wedocs' ) }
-                    />
+                      width="20"
+                      height="17"
+                      fill="none"
+                    >
+                      <path
+                        d="M1 3.945v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-6l-2-2H3a2 2 0 0 0-2 2z"
+                        stroke="#6b7280"
+                        strokeWidth="2"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
                     <a
+                      target="_blank"
                       href={ `${ window.location.origin }/?p=${ id }` }
                       className="flex items-center flex-shrink-0 text-base font-medium text-black"
+                      rel="noreferrer"
                     >
                       <span
                         className="hover:underline group-hover:text-black"
-                        dangerouslySetInnerHTML={ { __html: title?.rendered } }
+                        dangerouslySetInnerHTML={ {
+                          __html: extractedTitle( title?.rendered ),
+                        } }
                       ></span>
                     </a>
                   </div>
-                  <div className="article-counter grid place-content-center text-white font-medium text-sm w-7 h-7 bg-[#00A1E4] rounded-full">
+                  <div
+                    className={ `${
+                      showArticles ? 'bg-[#00A1E4]' : 'bg-gray-400'
+                    } article-counter grid place-content-center text-white font-medium text-sm w-7 h-7 group-hover:bg-[#00A1E4] rounded-full` }
+                  >
                     { filteredArticles.length }
                   </div>
                   <a
@@ -95,7 +132,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                     className="flex items-center flex-shrink-0 text-base font-medium text-black"
                   >
                     <svg
-                      className="hidden group-hover:block ml-6 stroke-gray-500 hover:stroke-indigo-700"
+                      className="hidden group-hover:block ml-6 stroke-gray-300 hover:stroke-indigo-700"
                       xmlns="http://www.w3.org/2000/svg"
                       width="18"
                       height="18"
@@ -120,7 +157,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                       width="18"
                       height="18"
                       fill="none"
-                      className="stroke-gray-500 hover:stroke-indigo-700"
+                      className="stroke-gray-300 hover:stroke-indigo-700"
                     >
                       <path
                         d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
@@ -141,7 +178,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
                       stroke="currentColor"
-                      className="w-5 h-5 stroke-gray-500 hover:stroke-red-700"
+                      className="w-5 h-5 stroke-gray-300 hover:stroke-red-700"
                     >
                       <path
                         strokeWidth="2"
@@ -181,7 +218,11 @@ const DocSections = ( { section, sections, searchValue } ) => {
                     strategy={ verticalListSortingStrategy }
                   >
                     { articles?.map( ( article ) => (
-                      <SectionArticles key={ article.id } article={ article } />
+                      <SectionArticles
+                        key={ article.id }
+                        article={ article }
+                        isAllowComments={ isCommentsAllowed }
+                      />
                     ) ) }
                   </SortableContext>
                 </DraggableDocs>

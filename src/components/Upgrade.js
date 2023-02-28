@@ -1,12 +1,8 @@
 import logo from '../assets/img/wedocs.svg';
 import { __ } from '@wordpress/i18n';
-import { useEffect, useState } from '@wordpress/element';
-import RestictionModal from './RestrictionModal';
+import { useState } from '@wordpress/element';
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
 import ConfirmationModal from './ConfirmationModal';
-import { dispatch, useSelect } from '@wordpress/data';
-import settingsStore from '../data/settings';
-import drag from '../assets/img/drag.png';
 
 const Upgrade = () => {
   const [ showUpgrader, setShowUpgrader ] = useState( true );

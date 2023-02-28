@@ -125,7 +125,10 @@ const AddArticleModal = ( {
                   </Dialog.Title>
 
                   <p className="text-gray-500 text-base">
-                    { __( 'Help text how to add article', 'wedocs' ) }
+                    { __(
+                      'Describe what the article is about your title',
+                      'wedocs'
+                    ) }
                   </p>
 
                   <div className="relative mt-6 mb-4">
@@ -133,7 +136,7 @@ const AddArticleModal = ( {
                       type="text"
                       name="doc_title"
                       id="doc-title"
-                      placeholder={ __( 'Write article name', 'wedocs' ) }
+                      placeholder={ __( 'Type an article name', 'wedocs' ) }
                       required
                       className={ `${
                         formError.title

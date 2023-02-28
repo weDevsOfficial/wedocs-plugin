@@ -31,7 +31,7 @@ if ( ! isProduction ) {
     },
     allowedHosts: 'all',
     host: 'localhost',
-    port: 8890,
+    port: 8886,
     proxy: {
       '/assets/build': {
         pathRewrite: {

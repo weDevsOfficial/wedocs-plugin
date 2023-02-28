@@ -1,5 +1,6 @@
 import { useSelect } from '@wordpress/data';
 import docsStore from '../../data/docs';
+import extractedTitle from '../../utils/extractedTitle';
 
 const ListingHeader = ( { id } ) => {
   if ( ! id ) {
@@ -25,16 +26,17 @@ const ListingHeader = ( { id } ) => {
               <a
                 target="_blank"
                 rel="noreferrer"
-                // href={ `${ window.location.origin }/wp-admin/post.php?action=edit&post=${ id }` }
                 href={ `${ window.location.origin }/?p=${ id }` }
                 className="flex items-center group hover:text-black"
               >
                 <span
                   className="group-hover:underline"
-                  dangerouslySetInnerHTML={ { __html: doc?.title?.rendered } }
+                  dangerouslySetInnerHTML={ {
+                    __html: extractedTitle( doc?.title?.rendered ),
+                  } }
                 ></span>
                 <svg
-                  className="ml-5 stroke-gray-500 group-hover:stroke-indigo-700"
+                  className="ml-5 stroke-gray-400 group-hover:stroke-indigo-700"
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
                   height="18"
@@ -62,7 +64,7 @@ const ListingHeader = ( { id } ) => {
                 >
                   <path
                     d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
-                    className="stroke-gray-500 hover:stroke-indigo-700"
+                    className="stroke-gray-400 hover:stroke-indigo-700"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"

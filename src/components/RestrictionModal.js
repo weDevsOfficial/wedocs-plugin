@@ -101,13 +101,13 @@ const RestictionModal = ( { className, children, docId } ) => {
                         className="text-lg font-medium text-gray-900 mb-2"
                       >
                         { __(
-                          'Are you sure you want to delete this document?',
+                          'Are you sure you want to delete this?',
                           'wedocs'
                         ) }
                       </Dialog.Title>
                       <p className="text-gray-500 text-base">
                         { __(
-                          "If you delete it, the document will be lost forever, and you won't be able to recover it.",
+                          'If you delete this, it will be lost forever and you will not be able to recover it anymore.',
                           'wedocs'
                         ) }
                       </p>

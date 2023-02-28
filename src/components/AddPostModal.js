@@ -101,14 +101,17 @@ const AddPostModal = ( { className, children } ) => {
                     { __( 'Enter your doc title', 'wedocs' ) }
                   </Dialog.Title>
                   <p className="text-gray-500 text-base">
-                    { __( 'Help text how to add section', 'wedocs' ) }
+                    { __( 'Start writing your doc from scratch', 'wedocs' ) }
                   </p>
                   <div className="relative mt-6 mb-5">
                     <input
                       type="text"
                       name="doc_title"
                       id="doc-title"
-                      placeholder={ __( 'Type a section name', 'wedocs' ) }
+                      placeholder={ __(
+                        'Type a title for your document',
+                        'wedocs'
+                      ) }
                       required
                       className={ `${
                         formError

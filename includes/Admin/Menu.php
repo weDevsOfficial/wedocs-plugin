@@ -12,6 +12,8 @@ class Menu {
     /**
      * Menu Capability
      *
+     * @since WEDOCS_SINCE
+     *
      * @var string
      */
     protected $capability;
@@ -24,10 +26,13 @@ class Menu {
 
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 		add_action( 'admin_menu', array( $this, 'add_admin_submenu' ) );
+        add_action( 'admin_head', array( $this, 'cleanup_admin_notices' ), 1 );
 	}
 
 	/**
 	 * Add menu to Admin Dashboard.
+     *
+     * @since WEDOCS_SINCE
 	 *
 	 * @return void
 	 */
@@ -45,6 +50,8 @@ class Menu {
 
 	/**
 	 * Add submenu to Admin Dashboard.
+     *
+     * @since WEDOCS_SINCE
 	 *
 	 * @return void
 	 */
@@ -85,7 +92,7 @@ class Menu {
 	/**
 	 * Display Dokan Driver Dashboard.
 	 *
-	 * @since DOKAN_DRIVER_SINCE
+     * @since WEDOCS_SINCE
 	 *
 	 * @return void
 	 */
@@ -96,9 +103,24 @@ class Menu {
     /**
      * Get the admin menu position.
      *
+     * @since WEDOCS_SINCE
+     *
      * @return int the position of the menu
      */
     public function get_menu_position() {
         return apply_filters( 'wedocs_menu_position', 48 );
+    }
+
+    /**
+     * Cleans admin notice.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function cleanup_admin_notices() {
+        if ( 'toplevel_page_wedocs' === get_current_screen()->id ) {
+            remove_all_actions( 'admin_notices' );
+        }
     }
 }

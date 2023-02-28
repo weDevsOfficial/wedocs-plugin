@@ -106,7 +106,10 @@ const AddSectionModal = ( { parent, className, children } ) => {
                   </Dialog.Title>
 
                   <p className="text-gray-500 text-base">
-                    { __( 'Help text how to add section', 'wedocs' ) }
+                    { __(
+                      'Use concise section titles for better navigation',
+                      'wedocs'
+                    ) }
                   </p>
 
                   <div className="relative mt-6 mb-5">

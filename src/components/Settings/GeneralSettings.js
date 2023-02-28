@@ -1,13 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import Switcher from '../Switcher';
-import { Fragment, useEffect, useState } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
-import docStore from '../../data/docs';
+import { useEffect, useState } from '@wordpress/element';
 import SelectBox from '../SelectBox';
-import docsStore from '../../data/docs';
-import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
-import { Transition } from '@headlessui/react';
-import settingsStore from '../../data/settings';
 
 const GeneralSettings = ( {
   settingsData,
@@ -67,7 +61,7 @@ const GeneralSettings = ( {
               <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
                 <p className="text-sm text-[#6B7280]">
                   { __(
-                    'Home page for docs page. Preferably use [wedocs] ',
+                    'Select the documentation Home page, where the shortcode [wedocs] ',
                     'wedocs'
                   ) }
                   <a
@@ -78,7 +72,7 @@ const GeneralSettings = ( {
                   >
                     { __( 'shortcode', 'wedocs' ) }
                   </a>
-                  { __( ' or design your own.', 'wedocs' ) }
+                  { __( ' is used.', 'wedocs' ) }
                 </p>
               </div>
             </div>

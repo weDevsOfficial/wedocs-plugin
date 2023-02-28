@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import DocActions from '../DocActions';
+import extractedTitle from '../../utils/extractedTitle';
 
 const DocumentationHeader = ( { doc } ) => {
   const { id, title } = doc;
@@ -12,7 +13,9 @@ const DocumentationHeader = ( { doc } ) => {
             <Link to={ `/section/${ id }` }>
               <h3
                 className="truncate hover:underline text-lg font-medium text-[#3B3F4A]"
-                dangerouslySetInnerHTML={ { __html: title?.rendered } }
+                dangerouslySetInnerHTML={ {
+                  __html: extractedTitle( title?.rendered ),
+                } }
               ></h3>
             </Link>
             <a
@@ -40,14 +43,7 @@ const DocumentationHeader = ( { doc } ) => {
         </div>
       </div>
       <div className="flex gap-5 items-center">
-        { /*<DragOverlay*/ }
-        { /*    className="my-drag-overlay"*/ }
-        { /*    style={{*/ }
-        { /*        width: 500,*/ }
-        { /*    }}*/ }
-        { /*>*/ }
         <DocActions docId={ id } addArticle={ true } disabled />
-        { /*</DragOverlay>*/ }
       </div>
     </div>
   );

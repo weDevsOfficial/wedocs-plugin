@@ -24,7 +24,7 @@
     "make-pot:local": "wp i18n make-pot . languages/wedocs.pot",
     "zip:create": "node bin/zip",
     "version:replace": "node bin/version-replace",
-    "release": "wp-scripts build make-pot:local version:replace zip:create"
+    "release": "npm run version:replace && npm run build && npm run make-pot:local && npm run zip:create"
   },
   "devDependencies": {
     "@wordpress/scripts": "^25.0.0",

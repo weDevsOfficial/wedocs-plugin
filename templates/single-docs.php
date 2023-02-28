@@ -102,7 +102,7 @@ get_header(); ?>
                         <?php wedocs_get_template_part( 'content', 'modal' ); ?>
                     <?php } ?>
 
-                    <?php if ( wedocs_get_general_settings( 'comments', 'off' ) === 'on' ) { ?>
+                    <?php if ( wedocs_get_general_settings( 'comments', 'on' ) === 'on' ) { ?>
                         <?php if ( comments_open() || get_comments_number() ) { ?>
                             <div class="wedocs-comments-wrap">
                                 <?php comments_template(); ?>

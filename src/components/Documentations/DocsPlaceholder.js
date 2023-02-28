@@ -11,7 +11,7 @@ const DocsPlaceholder = () => {
               <div className="inline-flex items-center space-x-3">
                 <div className="flex items-center space-x-3 flex-1 group">
                   <a href="#" className="mt-1.5">
-                    <h3 className="animate-pulse bg-slate-200 rounded h-4 w-64 border-b hover:bg-gray-50"></h3>
+                    <h3 className="animate-pulse bg-slate-200 rounded h-4 w-64 border-b hover:bg-slate-300"></h3>
                   </a>
                   <a
                     target="_blank"
@@ -39,7 +39,7 @@ const DocsPlaceholder = () => {
             </div>
             <div className="flex gap-5 items-center">
               <div className="documentation-ellipsis-actions relative h-4 w-8">
-                <span className="animate-pulse bg-slate-200 w-full h-full rounded absolute border-b hover:bg-gray-50"></span>
+                <span className="animate-pulse bg-slate-200 w-full h-full rounded absolute border-b hover:bg-slate-300"></span>
               </div>
             </div>
           </div>
@@ -48,17 +48,17 @@ const DocsPlaceholder = () => {
               <li className="flex items-center justify-between mb-0 py-1.5 pl-3 pr-4 text-sm">
                 <div className="w-full inline-flex items-center">
                   <div className="w-6 flex justify-center">
-                    <span className="mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-8 border-b hover:bg-gray-50"></span>
+                    <span className="mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-8 border-b hover:bg-slate-300"></span>
                   </div>
-                  <span className="ml-2 mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-52 border-b hover:bg-gray-50"></span>
+                  <span className="ml-2 mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-52 border-b hover:bg-slate-300"></span>
                 </div>
               </li>
               <li className="flex items-center justify-between mb-0 py-1.5 pl-3 pr-4 text-sm">
                 <div className="flex w-0 flex-1 items-center">
                   <div className="w-6 flex justify-center">
-                    <span className="mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-8 border-b hover:bg-gray-50"></span>
+                    <span className="mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-8 border-b hover:bg-slate-300"></span>
                   </div>
-                  <span className="ml-2 mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-52 border-b hover:bg-gray-50"></span>
+                  <span className="ml-2 mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-52 border-b hover:bg-slate-300"></span>
                 </div>
               </li>
             </ul>
@@ -67,7 +67,7 @@ const DocsPlaceholder = () => {
             <div className="-mt-px flex divide-x divide-gray-200">
               <div className="flex w-0 flex-1 justify-end items-center py-4 px-6">
                 <button className="py-2 inline-flex items-center h-8 w-16 hover:text-white rounded-md border border-gray-200 ease-in-out duration-200 shadow-gray-100 px-4 text-sm text-gray shadow-sm">
-                  <span className="animate-pulse bg-slate-200 w-10 h-4 rounded absolute border-b hover:bg-gray-50"></span>
+                  <span className="animate-pulse bg-slate-200 w-10 h-4 rounded absolute border-b hover:bg-slate-300"></span>
                 </button>
               </div>
             </div>
