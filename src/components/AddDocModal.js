@@ -1,12 +1,12 @@
-import { __ } from '@wordpress/i18n';
-import { Fragment, useState } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
+import { Fragment, useCallback, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import { dispatch } from '@wordpress/data';
 import docStore from '../data/docs';
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 import Swal from 'sweetalert2';
 
-const AddPostModal = ( { className, children } ) => {
+const AddDocModal = ( { className, children } ) => {
   const [ isOpen, setIsOpen ] = useState( false );
   const [ newDoc, setNewDoc ] = useState( {
     title: { raw: '' },
@@ -20,19 +20,24 @@ const AddPostModal = ( { className, children } ) => {
     setFormError( e.target.value.length === 0 );
   };
 
+  const [ disabled, setDisabled ] = useState( false );
+
   const createDoc = () => {
     if ( newDoc.title.raw === '' ) {
       setFormError( true );
       return;
     }
 
+    // Make it disabled for creating a doc.
+    setDisabled( true );
+
     dispatch( docStore )
       .createDoc( newDoc )
       .then( ( result ) => {
         setNewDoc( { ...newDoc, title: { raw: '' } } );
         Swal.fire( {
-          title: __( 'Documentation Created', 'wedocs' ),
-          text: __( 'Documentation has been created successfully', 'wedocs' ),
+          title: __( 'New doc added!', 'wedocs' ),
+          text: __( 'New doc has been added successfully', 'wedocs' ),
           icon: 'success',
           toast: true,
           position: 'bottom-end',
@@ -51,7 +56,8 @@ const AddPostModal = ( { className, children } ) => {
           showConfirmButton: false,
           timer: 3000,
         } );
-      } );
+      } )
+      .finally( () => setDisabled( false ) );
   };
 
   const closeModal = () => {
@@ -117,8 +123,7 @@ const AddPostModal = ( { className, children } ) => {
                         formError
                           ? '!border-red-500 focus:ring-red-500 focus:border-red-500'
                           : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500'
-                      }
-                                                h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white` }
+                      } h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white` }
                       value={ newDoc?.title?.raw }
                       onChange={ ( e ) => {
                         onTitleChange( e );
@@ -138,11 +143,13 @@ const AddPostModal = ( { className, children } ) => {
                   <div className="mt-6 space-x-3.5">
                     <button
                       className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md"
-                      onClick={ () => {
-                        createDoc();
-                      } }
+                      disabled={ disabled }
+                      onClick={ createDoc }
                     >
-                      { __( 'Create', 'wedocs' ) }
+                      { sprintf(
+                        __( '%s', 'wedocs' ),
+                        disabled ? 'Creating...' : 'Create'
+                      ) }
                     </button>
                     <button
                       className="bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md"
@@ -161,4 +168,4 @@ const AddPostModal = ( { className, children } ) => {
   );
 };
 
-export default AddPostModal;
+export default AddDocModal;

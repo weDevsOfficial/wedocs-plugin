@@ -90,7 +90,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
             </svg>
             <div className="flex items-center w-full">
               <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-                <div className="truncate flex items-center">
+                <div className="flex items-center">
                   <div className="flex items-center text-sm pr-5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +109,8 @@ const DocSections = ( { section, sections, searchValue } ) => {
                     <a
                       target="_blank"
                       href={ `${ window.location.origin }/?p=${ id }` }
-                      className="flex items-center flex-shrink-0 text-base font-medium text-black"
+                      className="tooltip cursor-pointer before:max-w-xl flex items-center flex-shrink-0 text-base font-medium text-black !shadow-none"
+                      data-tip={ __( title?.rendered, 'wedocs' ) }
                       rel="noreferrer"
                     >
                       <span
@@ -128,8 +129,10 @@ const DocSections = ( { section, sections, searchValue } ) => {
                     { filteredArticles.length }
                   </div>
                   <a
+                    target="_blank"
+                    rel="noreferrer"
                     href={ `${ window.location.origin }/?p=${ id }` }
-                    className="flex items-center flex-shrink-0 text-base font-medium text-black"
+                    className="flex items-center flex-shrink-0 text-base font-medium text-black !shadow-none"
                   >
                     <svg
                       className="hidden group-hover:block ml-6 stroke-gray-300 hover:stroke-indigo-700"
@@ -148,7 +151,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                   </a>
                   <a
                     target="_blank"
-                    className="ml-4 hidden group-hover:block"
+                    className="ml-4 hidden group-hover:block !shadow-none"
                     rel="noreferrer"
                     href={ `${ window.location.origin }/wp-admin/post.php?post=${ id }&action=edit` }
                   >

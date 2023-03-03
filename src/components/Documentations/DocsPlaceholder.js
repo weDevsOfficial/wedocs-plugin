@@ -10,14 +10,14 @@ const DocsPlaceholder = () => {
             <div className="flex-1 truncate">
               <div className="inline-flex items-center space-x-3">
                 <div className="flex items-center space-x-3 flex-1 group">
-                  <a href="#" className="mt-1.5">
+                  <a href="#" className="mt-1.5 !shadow-none">
                     <h3 className="animate-pulse bg-slate-200 rounded h-4 w-64 border-b hover:bg-slate-300"></h3>
                   </a>
                   <a
                     target="_blank"
                     href="http://wedocs.test/?p=87"
                     rel="noreferrer"
-                    className="mt-[-2px] hidden group-hover:block"
+                    className="mt-[-2px] hidden group-hover:block !shadow-none"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

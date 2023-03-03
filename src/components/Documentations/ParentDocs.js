@@ -2,10 +2,10 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import docsStore from '../../data/docs';
 import DocumentationHeader from './DocumentationHeader';
-import AddSectionModal from '../AddSectionModal';
 
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import AddChildrens from './AddChildrens';
 
 const ParentDocs = ( { doc } ) => {
   if ( ! doc ) {
@@ -106,13 +106,14 @@ const ParentDocs = ( { doc } ) => {
       <div className="border-t border-gray-200">
         <div className="-mt-px flex divide-x divide-gray-200">
           <div className="flex w-0 flex-1 justify-end items-center py-4 px-6">
-            <AddSectionModal
-              parent={ doc.id }
+            <AddChildrens
+              docId={ doc?.id }
+              sections={ sections }
               className="py-2 inline-flex items-center hover:bg-indigo-600 hover:text-white rounded-md border border-gray-200 ease-in-out duration-200 shadow-gray-100 px-4 text-sm text-gray shadow-sm"
             >
-              <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-4 text-base flex items-center"></span>
-              { __( 'Add', 'wedocs-pro' ) }
-            </AddSectionModal>
+              <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-2 text-base flex items-center"></span>
+              { __( 'Add', 'wedocs' ) }
+            </AddChildrens>
           </div>
         </div>
       </div>

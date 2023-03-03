@@ -1,7 +1,7 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
-import { dispatch } from '@wordpress/data';
+import { dispatch, useSelect } from '@wordpress/data';
 import docStore from '../data/docs';
 import ComboBox from './ComboBox';
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
@@ -27,10 +27,18 @@ const AddArticleModal = ( {
     sectionId: false,
   } );
 
+  const articles = useSelect(
+    ( select ) =>
+      select( docStore ).getSectionArticles( parseInt( sectionId ) ),
+    []
+  );
+
   const onTitleChange = ( e ) => {
     setNewArticle( { ...newArticle, title: { raw: e.target.value } } );
     setFormError( { ...formError, title: e.target.value.length === 0 } );
   };
+
+  const [ disabled, setDisabled ] = useState( false );
 
   const createDoc = () => {
     if ( newArticle.title.raw === '' ) {
@@ -43,14 +51,17 @@ const AddArticleModal = ( {
       return;
     }
 
+    // Make it disabled for creating a article.
+    setDisabled( true );
+
     dispatch( docStore )
       .createDoc( newArticle )
       .then( ( result ) => {
         setNewArticle( { ...newArticle, title: { raw: '' } } );
         setSectionId( defaultSection?.id || '' );
         Swal.fire( {
-          title: __( 'Section Article Created', 'wedocs' ),
-          text: __( 'Section article has been created successfully', 'wedocs' ),
+          title: __( 'New article added!', 'wedocs' ),
+          text: __( 'New article has been added successfully', 'wedocs' ),
           icon: 'success',
           toast: true,
           position: 'bottom-end',
@@ -69,7 +80,8 @@ const AddArticleModal = ( {
           showConfirmButton: false,
           timer: 3000,
         } );
-      } );
+      } )
+      .finally( () => setDisabled( false ) );
   };
 
   const closeModal = () => {
@@ -81,9 +93,16 @@ const AddArticleModal = ( {
   };
 
   useEffect( () => {
-    setNewArticle( { ...newArticle, parent: sectionId } );
+    setNewArticle( {
+      ...newArticle,
+      parent: sectionId,
+    } );
     setFormError( { ...formError, sectionId: false } );
   }, [ sectionId ] );
+
+  useEffect( () => {
+    setNewArticle( { ...newArticle, menu_order: articles?.length } );
+  }, [ articles ] );
 
   return (
     <>
@@ -125,10 +144,7 @@ const AddArticleModal = ( {
                   </Dialog.Title>
 
                   <p className="text-gray-500 text-base">
-                    { __(
-                      'Describe what the article is about your title',
-                      'wedocs'
-                    ) }
+                    { __( 'Describe what the article is about', 'wedocs' ) }
                   </p>
 
                   <div className="relative mt-6 mb-4">
@@ -168,9 +184,13 @@ const AddArticleModal = ( {
                   <div className="mt-6 space-x-3.5">
                     <button
                       className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md"
+                      disabled={ disabled }
                       onClick={ createDoc }
                     >
-                      { __( 'Create', 'wedocs' ) }
+                      { sprintf(
+                        __( '%s', 'wedocs' ),
+                        disabled ? 'Creating...' : 'Create'
+                      ) }
                     </button>
                     <button
                       className="bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md"

@@ -13,8 +13,8 @@ const RestictionModal = ( { className, children, docId } ) => {
       .deleteDoc( docId )
       .then( ( result ) => {
         Swal.fire( {
-          title: __( 'Documentation Deleted', 'wedocs' ),
-          text: __( 'Documentation has been deleted successfully', 'wedocs' ),
+          title: __( 'Doc deleted!', 'wedocs' ),
+          text: __( 'Doc has been deleted successfully', 'wedocs' ),
           icon: 'success',
           toast: true,
           position: 'bottom-end',

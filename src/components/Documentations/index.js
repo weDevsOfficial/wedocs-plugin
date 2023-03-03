@@ -1,6 +1,6 @@
 import docsStore from '../../data/docs';
 import { __ } from '@wordpress/i18n';
-import AddPostModal from '../AddPostModal';
+import AddDocModal from '../AddDocModal';
 import EmptyDocs from './EmptyDocs';
 import ParentDocs from './ParentDocs';
 import { useSelect } from '@wordpress/data';
@@ -56,10 +56,10 @@ const Documentations = () => {
       <div className="documentation-header my-7">
         <h1 className="w-full flex items-center">
           { __( 'All Docs', 'wedocs' ) }
-          <AddPostModal className="ml-5 mr-auto py-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 ease-in-out duration-200 px-4 text-sm text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-            <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-4 text-base flex items-center"></span>
-            { __( `Add doc`, 'wedocs' ) }
-          </AddPostModal>
+          <AddDocModal className="ml-5 mr-auto py-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 ease-in-out duration-200 px-4 text-sm text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-2 text-base flex items-center"></span>
+            { __( `New doc`, 'wedocs' ) }
+          </AddDocModal>
           { parentDocs && parentDocs.length > 0 && (
             <SearchFilter
               handleChange={ handleChange }
@@ -73,7 +73,7 @@ const Documentations = () => {
 
       <div
         role="list"
-        className="documentation relative mx-auto grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3"
+        className="documentation relative mx-auto grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
       >
         { ! loading && documentations.length > 0 && (
           <DraggableDocs setItems={ setDocumentations }>

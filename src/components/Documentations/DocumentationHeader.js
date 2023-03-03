@@ -1,28 +1,34 @@
 import { Link } from 'react-router-dom';
 import DocActions from '../DocActions';
 import extractedTitle from '../../utils/extractedTitle';
+import { __ } from '@wordpress/i18n';
 
 const DocumentationHeader = ( { doc } ) => {
   const { id, title } = doc;
 
   return (
     <div className="flex w-full items-center justify-between space-x-6 p-6 pt-5">
-      <div className="flex-1 truncate">
+      <div className="flex-1">
         <div className="inline-flex items-center space-x-3">
           <div className="flex items-center space-x-3 flex-1 group">
-            <Link to={ `/section/${ id }` }>
-              <h3
-                className="truncate hover:underline text-lg font-medium text-[#3B3F4A]"
-                dangerouslySetInnerHTML={ {
-                  __html: extractedTitle( title?.rendered ),
-                } }
-              ></h3>
-            </Link>
+            <div
+              className="tooltip cursor-pointer before:max-w-xl"
+              data-tip={ __( title?.rendered, 'wedocs' ) }
+            >
+              <Link to={ `/section/${ id }` }>
+                <h3
+                  className="truncate hover:underline text-lg font-medium text-[#3B3F4A]"
+                  dangerouslySetInnerHTML={ {
+                    __html: extractedTitle( title?.rendered, 25 ),
+                  } }
+                ></h3>
+              </Link>
+            </div>
             <a
               target="_blank"
               href={ `${ window.location.origin }/?p=${ id }` }
               rel="noreferrer"
-              className="mt-[-2px] hidden group-hover:block"
+              className="mt-[-2px] hidden group-hover:block !shadow-none"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

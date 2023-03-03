@@ -38,6 +38,8 @@ Domain Path: /languages
  */
 
 // don't call the file directly
+use Appsero\Client;
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
@@ -103,7 +105,9 @@ final class WeDocs {
         register_activation_hook( __FILE__, [ $this, 'activate' ] );
 
         add_action( 'after_setup_theme', [ $this, 'init_classes' ] );
+
         $this->init_action_scheduler();
+        $this->initiate_appsero();
     }
 
     /**
@@ -246,6 +250,23 @@ final class WeDocs {
 
     public function init_action_scheduler() {
         require_once( __DIR__ . '/vendor/woocommerce/action-scheduler/action-scheduler.php' );
+    }
+
+    /**
+     * Initiate Appsero telemetry.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    private function initiate_appsero() {
+        $client = new Client(
+            '4cfb2667-a600-494c-a33a-a37799dd46c5',
+            'weDocs',
+            WEDOCS_FILE
+        );
+
+        $client->insights()->add_plugin_data()->init();
     }
 
     /**

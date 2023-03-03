@@ -35,22 +35,20 @@ const Menu = () => {
       { Object.entries( menus ).map( ( value, index ) => (
         <Tab
           key={ index }
-          className="w-full focus:outline-0 text-gray-600 aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium"
+          className="w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
-            height="21"
-            fill="currentColor"
-            className="text-gray-400 flex-shrink-0 -ml-1 mr-4 h-6 w-6"
+            height="20"
+            fill="none"
+            stroke="#6b7280"
+            strokeWidth="2"
+            strokeLinejoin="round"
+            className="-ml-1 mr-4"
           >
-            <path
-              d="M1 10.512l2-2m0 0l7-7 7 7m-14 0v10a1 1 0 0 0 1 1h3m10-11l2 2m-2-2v10a1 1 0 0 1-1 1h-3m-6 0a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1m-6 0h6"
-              stroke="#9ca3af"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path d="M8.325 2.317c.426-1.756 2.924-1.756 3.351 0 .275 1.135 1.575 1.673 2.572 1.066 1.543-.94 3.31.826 2.369 2.369-.608.997-.069 2.297 1.066 2.572 1.756.426 1.756 2.924 0 3.351-1.135.275-1.673 1.575-1.065 2.572.94 1.543-.826 3.31-2.369 2.369-.997-.608-2.297-.069-2.572 1.066-.426 1.756-2.924 1.756-3.351 0-.275-1.135-1.575-1.673-2.572-1.065-1.543.94-3.31-.826-2.369-2.369.608-.997.069-2.297-1.066-2.572-1.756-.426-1.756-2.924 0-3.351 1.135-.275 1.673-1.575 1.066-2.572-.94-1.543.826-3.31 2.369-2.369.997.608 2.297.069 2.572-1.066z" />
+            <path d="M13 10a3 3 0 1 1-6 0 3 3 0 1 1 6 0z" />
           </svg>
           <span className="truncate">{ value[ 1 ] }</span>
         </Tab>

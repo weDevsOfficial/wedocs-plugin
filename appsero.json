@@ -7,7 +7,6 @@
     ".svnignore",
     ".travis.yml",
     "LICENSE",
-    "Gruntfile.js",
     "readme.md",
     "appsero.json",
     "composer.json",

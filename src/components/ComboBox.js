@@ -9,6 +9,7 @@ import { Combobox, Dialog } from '@headlessui/react';
 import { useParams } from 'react-router-dom';
 import { dispatch } from '@wordpress/data';
 import docStore from '../data/docs';
+import he from 'he';
 
 const ComboBox = ( {
   sections,
@@ -71,6 +72,10 @@ const ComboBox = ( {
     setNewSection( { ...newSection, title: { raw: e.target.value } } );
   };
 
+  useEffect( () => {
+    setNewSection( { ...newSection, menu_order: sections?.length } );
+  }, [ sections ] );
+
   return (
     <Combobox
       as="div"
@@ -87,6 +92,7 @@ const ComboBox = ( {
               : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500'
           } h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white` }
           onChange={ handleSectionTitle }
+          displayValue={ ( title ) => he.decode( title ) }
         />
 
         { isFormError ? (

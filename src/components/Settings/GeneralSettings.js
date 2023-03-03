@@ -40,7 +40,7 @@ const GeneralSettings = ( {
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-field-heading flex items-center space-x-2 flex-1">
                   <label
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-600"
                     id="headlessui-listbox-label-15"
                     data-headlessui-state="open"
                   >
@@ -67,7 +67,7 @@ const GeneralSettings = ( {
                   <a
                     href="https://github.com/tareq1988/wedocs-plugin/wiki/Using-Shortcodes"
                     target="_blank"
-                    className="text-indigo-700 underline underline-offset-2"
+                    className="text-indigo-700 underline underline-offset-2 !shadow-none"
                     rel="noreferrer"
                   >
                     { __( 'shortcode', 'wedocs' ) }
@@ -83,7 +83,7 @@ const GeneralSettings = ( {
                 <div className="settings-content flex items-center justify-between">
                   <div className="settings-field-heading flex items-center space-x-2 flex-1">
                     <label
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-gray-600"
                       id="headlessui-listbox-label-15"
                       data-headlessui-state="open"
                     >
@@ -122,8 +122,8 @@ const GeneralSettings = ( {
                           'Write your email address',
                           'wedocs'
                         ) }
-                        className="w-full cursor-pointer !rounded-md !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-                        value={ generalSettingsData?.email_to }
+                        className="w-full !rounded-md !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                        value={ generalSettingsData?.email_to || '' }
                         onChange={ handleEmailAddress }
                       />
                     </div>
@@ -136,7 +136,7 @@ const GeneralSettings = ( {
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading flex items-center space-x-2 flex-1">
                   <label
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-600"
                     id="headlessui-listbox-label-15"
                     data-headlessui-state="open"
                   >
@@ -180,7 +180,7 @@ const GeneralSettings = ( {
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading space-x-2 items-center flex flex-1">
                   <label
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-600"
                     id="headlessui-listbox-label-15"
                     data-headlessui-state="open"
                   >
@@ -224,7 +224,7 @@ const GeneralSettings = ( {
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading space-x-2 items-center flex flex-1">
                   <label
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-600"
                     id="headlessui-listbox-label-15"
                     data-headlessui-state="open"
                   >
@@ -268,7 +268,7 @@ const GeneralSettings = ( {
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading space-x-2 items-center flex flex-1">
                   <label
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-600"
                     id="headlessui-listbox-label-15"
                     data-headlessui-state="open"
                   >

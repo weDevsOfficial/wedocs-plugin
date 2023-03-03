@@ -1,53 +1,53 @@
 const selectors = {
-	getDocs: ( state ) => {
-		const { docs } = state;
-		return docs;
-	},
+  getDocs: ( state ) => {
+    const { docs } = state;
+    return docs;
+  },
 
-	getDoc: ( state, id ) => {
-		const { docs } = state;
-		return docs.find( ( doc ) => doc.id === id );
-	},
+  getDoc: ( state, id ) => {
+    const { docs } = state;
+    return docs.find( ( doc ) => doc.id === id );
+  },
 
-    getPages: ( state ) => {
-        const { pages } = state;
-        return pages;
-    },
+  getPages: ( state ) => {
+    const { pages } = state;
+    return pages;
+  },
 
-	getLoading: ( state ) => {
-		const { loading } = state;
-		return loading;
-	},
+  getLoading: ( state ) => {
+    const { loading } = state;
+    return loading;
+  },
 
-	getParentDocs: ( state ) => {
-		const { docs } = state;
-		return docs.filter( ( doc ) => ! doc.parent );
-	},
+  getParentDocs: ( state ) => {
+    const { docs } = state;
+    return docs.filter( ( doc ) => ! doc.parent );
+  },
 
-	getSectionsDocs: ( state, id ) => {
-		const { docs } = state;
-		return docs.filter( ( doc ) => doc.parent === id );
-	},
+  getSectionsDocs: ( state, id ) => {
+    const { docs } = state;
+    return docs.filter( ( doc ) => doc.parent === id );
+  },
 
-	getDocArticles: ( state, id ) => {
-		const { docs } = state;
-		const sections = docs.filter( ( doc ) => doc.parent === id );
-		const articles = [];
-		sections.forEach( ( article ) => {
-			const collection = docs.filter( ( doc ) => {
-				return doc.parent === article.id;
-			} );
+  getDocArticles: ( state, id ) => {
+    const { docs } = state;
+    const sections = docs.filter( ( doc ) => doc.parent === id );
+    const articles = [];
+    sections.forEach( ( article ) => {
+      const collection = docs.filter( ( doc ) => {
+        return doc.parent === article.id;
+      } );
 
-			articles.push( ...collection );
-		} );
+      articles.push( ...collection );
+    } );
 
-		return articles;
-	},
+    return articles;
+  },
 
-	getSectionArticles: ( state, id ) => {
-		const { docs } = state;
-		return docs.filter( ( doc ) => doc.parent === id );
-	},
+  getSectionArticles: ( state, id ) => {
+    const { docs } = state;
+    return docs.filter( ( doc ) => doc.parent === id );
+  },
 };
 
 export default selectors;

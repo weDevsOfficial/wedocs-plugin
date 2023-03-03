@@ -44,7 +44,7 @@ const SectionArticles = ( { article, isAllowComments } ) => {
       </svg>
       <div className="flex items-center w-full group">
         <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-          <div className="truncate flex items-center">
+          <div className="flex items-center">
             <div className="flex items-center pr-5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -67,12 +67,17 @@ const SectionArticles = ( { article, isAllowComments } ) => {
                 className="flex items-center flex-shrink-0 text-base font-medium text-gray-700"
                 rel="noreferrer"
               >
-                <span
-                  className="hover:underline group-hover:text-black"
-                  dangerouslySetInnerHTML={ {
-                    __html: extractedTitle( article?.title?.rendered ),
-                  } }
-                ></span>
+                <div
+                  className="tooltip cursor-pointer before:max-w-xl flex items-center flex-shrink-0 text-base font-medium text-gray-700 !shadow-none"
+                  data-tip={ __( article?.title?.rendered, 'wedocs' ) }
+                >
+                  <span
+                    className="hover:underline group-hover:text-black"
+                    dangerouslySetInnerHTML={ {
+                      __html: extractedTitle( article?.title?.rendered ),
+                    } }
+                  ></span>
+                </div>
 
                 <svg
                   className="hidden group-hover:block ml-6 stroke-gray-300 hover:stroke-indigo-700"
@@ -91,7 +96,7 @@ const SectionArticles = ( { article, isAllowComments } ) => {
               </a>
               <a
                 target="_blank"
-                className="ml-4 hidden group-hover:block"
+                className="ml-4 hidden group-hover:block !shadow-none"
                 rel="noreferrer"
                 href={ `${ window.location.origin }/wp-admin/post.php?post=${ article?.id }&action=edit` }
               >

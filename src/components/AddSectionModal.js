@@ -1,12 +1,12 @@
-import { __ } from '@wordpress/i18n';
-import { Fragment, useState } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
+import { Fragment, useEffect, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import { dispatch } from '@wordpress/data';
 import docStore from '../data/docs';
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 import Swal from 'sweetalert2';
 
-const AddSectionModal = ( { parent, className, children } ) => {
+const AddSectionModal = ( { parent, order, className, children } ) => {
   const [ isOpen, setIsOpen ] = useState( false );
   const [ newDoc, setNewDoc ] = useState( {
     title: { raw: '' },
@@ -21,22 +21,24 @@ const AddSectionModal = ( { parent, className, children } ) => {
     setFormError( e.target.value.length === 0 );
   };
 
+  const [ disabled, setDisabled ] = useState( false );
+
   const createDoc = () => {
     if ( newDoc.title.raw === '' ) {
       setFormError( true );
       return;
     }
 
+    // Make it disabled for creating a section.
+    setDisabled( true );
+
     dispatch( docStore )
       .createDoc( newDoc )
       .then( ( result ) => {
         setNewDoc( { ...newDoc, title: { raw: '' } } );
         Swal.fire( {
-          title: __( 'Documentation Section Created', 'wedocs' ),
-          text: __(
-            'Documentation section has been created successfully',
-            'wedocs'
-          ),
+          title: __( 'New section added!', 'wedocs' ),
+          text: __( 'New section has been added successfully', 'wedocs' ),
           icon: 'success',
           toast: true,
           position: 'bottom-end',
@@ -55,7 +57,8 @@ const AddSectionModal = ( { parent, className, children } ) => {
           showConfirmButton: false,
           timer: 3000,
         } );
-      } );
+      } )
+      .finally( () => setDisabled( false ) );
   };
 
   const closeModal = () => {
@@ -66,6 +69,10 @@ const AddSectionModal = ( { parent, className, children } ) => {
     setIsOpen( true );
   };
 
+  useEffect( () => {
+    setNewDoc( { ...newDoc, menu_order: order } );
+  }, [ order ] );
+
   return (
     <>
       <button onClick={ openModal } className={ className }>
@@ -73,7 +80,7 @@ const AddSectionModal = ( { parent, className, children } ) => {
       </button>
 
       <Transition appear show={ isOpen } as={ Fragment }>
-        <Dialog as="div" className="relative z-100" onClose={ closeModal }>
+        <Dialog as="div" className="relative z-50" onClose={ closeModal }>
           <Transition.Child
             as={ Fragment }
             enter="ease-out duration-300"
@@ -142,9 +149,13 @@ const AddSectionModal = ( { parent, className, children } ) => {
                   <div className="mt-6 space-x-3.5">
                     <button
                       className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md"
+                      disabled={ disabled }
                       onClick={ createDoc }
                     >
-                      { __( 'Create', 'wedocs' ) }
+                      { sprintf(
+                        __( '%s', 'wedocs' ),
+                        disabled ? 'Creating...' : 'Create'
+                      ) }
                     </button>
                     <button
                       className="bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md"

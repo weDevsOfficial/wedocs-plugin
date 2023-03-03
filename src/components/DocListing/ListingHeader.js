@@ -1,6 +1,7 @@
 import { useSelect } from '@wordpress/data';
 import docsStore from '../../data/docs';
 import extractedTitle from '../../utils/extractedTitle';
+import { __ } from '@wordpress/i18n';
 
 const ListingHeader = ( { id } ) => {
   if ( ! id ) {
@@ -27,12 +28,13 @@ const ListingHeader = ( { id } ) => {
                 target="_blank"
                 rel="noreferrer"
                 href={ `${ window.location.origin }/?p=${ id }` }
-                className="flex items-center group hover:text-black"
+                className="flex tooltip cursor-pointer items-center group hover:text-black !shadow-none before:max-w-xl"
+                data-tip={ __( doc?.title?.rendered, 'wedocs' ) }
               >
                 <span
                   className="group-hover:underline"
                   dangerouslySetInnerHTML={ {
-                    __html: extractedTitle( doc?.title?.rendered ),
+                    __html: extractedTitle( doc?.title?.rendered, 75 ),
                   } }
                 ></span>
                 <svg
