@@ -3,6 +3,7 @@ import DocActions from '../DocActions';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import extractedTitle from '../../utils/extractedTitle';
+import he from 'he';
 
 const SectionArticles = ( { article, isAllowComments } ) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -68,8 +69,10 @@ const SectionArticles = ( { article, isAllowComments } ) => {
                 rel="noreferrer"
               >
                 <div
-                  className="tooltip cursor-pointer before:max-w-xl flex items-center flex-shrink-0 text-base font-medium text-gray-700 !shadow-none"
-                  data-tip={ __( article?.title?.rendered, 'wedocs' ) }
+                  className="tooltip cursor-pointer before:max-w-xl flex items-center flex-shrink-0 text-base font-medium text-gray-700 !shadow-none z-[9999]"
+                  data-tip={ he.decode(
+                    __( article?.title?.rendered, 'wedocs' )
+                  ) }
                 >
                   <span
                     className="hover:underline group-hover:text-black"

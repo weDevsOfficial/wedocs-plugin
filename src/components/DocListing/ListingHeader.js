@@ -2,6 +2,7 @@ import { useSelect } from '@wordpress/data';
 import docsStore from '../../data/docs';
 import extractedTitle from '../../utils/extractedTitle';
 import { __ } from '@wordpress/i18n';
+import he from 'he';
 
 const ListingHeader = ( { id } ) => {
   if ( ! id ) {
@@ -28,8 +29,8 @@ const ListingHeader = ( { id } ) => {
                 target="_blank"
                 rel="noreferrer"
                 href={ `${ window.location.origin }/?p=${ id }` }
-                className="flex tooltip cursor-pointer items-center group hover:text-black !shadow-none before:max-w-xl"
-                data-tip={ __( doc?.title?.rendered, 'wedocs' ) }
+                className="flex tooltip cursor-pointer items-center group hover:text-black !shadow-none before:max-w-xl z-[9999]"
+                data-tip={ he.decode( __( doc?.title?.rendered, 'wedocs' ) ) }
               >
                 <span
                   className="group-hover:underline"

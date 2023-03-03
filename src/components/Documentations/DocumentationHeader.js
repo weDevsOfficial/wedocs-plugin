@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import DocActions from '../DocActions';
 import extractedTitle from '../../utils/extractedTitle';
 import { __ } from '@wordpress/i18n';
+import he from 'he';
 
 const DocumentationHeader = ( { doc } ) => {
   const { id, title } = doc;
@@ -12,8 +13,8 @@ const DocumentationHeader = ( { doc } ) => {
         <div className="inline-flex items-center space-x-3">
           <div className="flex items-center space-x-3 flex-1 group">
             <div
-              className="tooltip cursor-pointer before:max-w-xl"
-              data-tip={ __( title?.rendered, 'wedocs' ) }
+              className="tooltip cursor-pointer before:max-w-xl z-[9999]"
+              data-tip={ he.decode( __( title?.rendered, 'wedocs' ) ) }
             >
               <Link to={ `/section/${ id }` }>
                 <h3

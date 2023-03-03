@@ -23,7 +23,7 @@ const AddChildrens = ( { docId, sections, className, children } ) => {
         { showActions && (
           <div
             id="action-menus"
-            className="w-40 bg-white border border-[#DBDBDB] absolute z-10 shadow right-0 py-1 rounded-md mt-2.5"
+            className="w-40 bg-white border border-[#DBDBDB] absolute z-10 shadow right-0 py-1 rounded-md mt-1.5"
           >
             { /* Add article */ }
             <AddArticleModal

@@ -90,7 +90,7 @@ const GeneralSettings = ( {
                       { __( 'Email Address', 'wedocs' ) }
                     </label>
                     <div
-                      className="tooltip cursor-pointer ml-2"
+                      className="tooltip cursor-pointer ml-2 z-[9999]"
                       data-tip={ __(
                         'Enter the email address where you would like to receive feedback from users.',
                         'wedocs'
@@ -143,7 +143,7 @@ const GeneralSettings = ( {
                     { __( 'Email Feedback on Article', 'wedocs' ) }
                   </label>
                   <div
-                    className="tooltip cursor-pointer ml-2"
+                    className="tooltip cursor-pointer ml-2 z-[9999]"
                     data-tip={ __(
                       'Invite readers to share their thoughts and suggestions through an email feedback form',
                       'wedocs'
@@ -187,7 +187,7 @@ const GeneralSettings = ( {
                     { __( 'Helpful Feedback on Article', 'wedocs' ) }
                   </label>
                   <div
-                    className="tooltip cursor-pointer ml-2"
+                    className="tooltip cursor-pointer ml-2 z-[9999]"
                     data-tip={ __(
                       'Enabling helpful feedback on your article allows readers to provide opinions on your content',
                       'wedocs'
@@ -231,7 +231,7 @@ const GeneralSettings = ( {
                     { __( 'Allow Comments on Article', 'wedocs' ) }
                   </label>
                   <div
-                    className="tooltip cursor-pointer ml-2"
+                    className="tooltip cursor-pointer ml-2 z-[9999]"
                     data-tip={ __(
                       'Increase reader engagement by turning on article comments',
                       'wedocs'
@@ -275,7 +275,7 @@ const GeneralSettings = ( {
                     { __( 'Allow Article Printing', 'wedocs' ) }
                   </label>
                   <div
-                    className="tooltip cursor-pointer ml-2"
+                    className="tooltip cursor-pointer ml-2 z-[9999]"
                     data-tip={ __(
                       'Enable this option to allow users to print articles directly from the website',
                       'wedocs'

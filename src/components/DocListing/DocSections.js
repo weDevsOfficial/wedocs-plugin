@@ -15,6 +15,7 @@ import { CSS } from '@dnd-kit/utilities';
 import DraggableDocs from '../DraggableDocs';
 import extractedTitle from '../../utils/extractedTitle';
 import settingsStore from '../../data/settings';
+import he from 'he';
 
 const DocSections = ( { section, sections, searchValue } ) => {
   const { id, title } = section;
@@ -109,8 +110,8 @@ const DocSections = ( { section, sections, searchValue } ) => {
                     <a
                       target="_blank"
                       href={ `${ window.location.origin }/?p=${ id }` }
-                      className="tooltip cursor-pointer before:max-w-xl flex items-center flex-shrink-0 text-base font-medium text-black !shadow-none"
-                      data-tip={ __( title?.rendered, 'wedocs' ) }
+                      className="tooltip cursor-pointer before:max-w-xl flex items-center flex-shrink-0 text-base font-medium text-black !shadow-none z-[9999]"
+                      data-tip={ he.decode( __( title?.rendered, 'wedocs' ) ) }
                       rel="noreferrer"
                     >
                       <span
