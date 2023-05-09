@@ -19,6 +19,10 @@ const actions = {
     return { type: 'SET_SAVING', saving };
   },
 
+  setRoles( roles ) {
+    return { type: 'SET_ROLES', roles };
+  },
+
   *updateSettings( data ) {
     const path = '/wp/v2/docs/settings';
     const response = yield { type: 'UPDATE_TO_API', path, data };
@@ -27,9 +31,9 @@ const actions = {
   },
 
   *wedocsUpgrade( data ) {
-    const path = '/wp/v2/docs/settings';
+    const path = '/wp/v2/docs/upgrade';
     const response = yield { type: 'UPDATE_TO_API', path, data };
-    yield actions.setUpgradeInfo( response );
+    yield actions.setUpgradeInfo( false );
     return response;
   },
 };

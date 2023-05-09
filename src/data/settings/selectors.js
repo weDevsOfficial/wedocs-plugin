@@ -14,6 +14,16 @@ const selectors = {
     return settings?.general?.[ option ];
   },
 
+  getPermissionSettingsOption( state, option ) {
+    const { settings } = state;
+    return settings?.permission?.[ option ];
+  },
+
+  getAssistantSettingsOption( state, option ) {
+    const { settings } = state;
+    return settings?.assistant?.[ option ];
+  },
+
   getRoles( state ) {
     const { roles } = state;
     return roles;

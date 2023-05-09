@@ -10,6 +10,7 @@ const updatedConfig = {
     index: './src/index',
     frontend: './src/assets/less/frontend.less',
     print: './src/assets/less/print.less',
+    store: './src/data/store.js',
   },
   output: {
     path: path.resolve( __dirname, 'assets/build' ),

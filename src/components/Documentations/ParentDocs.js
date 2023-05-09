@@ -32,6 +32,20 @@ const ParentDocs = ( { doc } ) => {
       []
     ) || [];
 
+  const footerLeft = wp.hooks.applyFilters(
+    'wedocs_documentation_footer_left',
+    [],
+    doc?.id
+  );
+
+  const contributors = wp.hooks.applyFilters(
+    'wedocs_documentation_contributors',
+    '',
+    doc?.id,
+    sections,
+    articles
+  );
+
   return (
     <div
       className="col-span-1 rounded bg-white shadow"
@@ -99,13 +113,20 @@ const ParentDocs = ( { doc } ) => {
             </div>
           </li>
         </ul>
+        { /* Render documentation contributors list. */ }
+        { contributors }
       </div>
       { /* Documentation Section End */ }
 
       { /* Documentation Footer Start */ }
       <div className="border-t border-gray-200">
         <div className="-mt-px flex divide-x divide-gray-200">
-          <div className="flex w-0 flex-1 justify-end items-center py-4 px-6">
+          <div
+            className={ `${
+              footerLeft[ 0 ] ? 'justify-between' : 'justify-end'
+            } flex w-0 flex-1 items-center py-4 px-6` }
+          >
+            { footerLeft }
             <AddChildrens
               docId={ doc?.id }
               sections={ sections }

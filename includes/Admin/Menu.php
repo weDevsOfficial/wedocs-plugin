@@ -7,14 +7,14 @@ namespace WeDevs\WeDocs\Admin;
  *
  * We are setting admin page and submenu from here.
  *
- * @since WEDOCS_SINCE
+ * @since 2.0.0
  */
 class Menu {
 
     /**
      * Menu Capability
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.0
      *
      * @var string
      */
@@ -23,7 +23,7 @@ class Menu {
     /**
      * WeDocs Admin menu Constructor.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.0
      */
     public function __construct() {
         $this->capability = wedocs_get_publish_cap();
@@ -36,7 +36,7 @@ class Menu {
     /**
      * Add menu to Admin Dashboard.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.0
      *
      * @return void
      */
@@ -56,13 +56,17 @@ class Menu {
      * Add submenu to Admin Dashboard.
      *
      * @return void
-     * @since WEDOCS_SINCE
+     * @since 2.0.0
      *
      */
     public function add_admin_submenu() {
         global $submenu;
-        $base = admin_url( 'admin.php?page=wedocs' );
 
+        if ( ! ( current_user_can( 'manage_options' ) || current_user_can( wedocs_get_publish_cap() ) ) )  {
+            return;
+        }
+
+        $base         = admin_url( 'admin.php?page=wedocs' );
         $all_submenus = array(
             array(
                 __( 'Docs', 'wedocs' ),
@@ -76,7 +80,7 @@ class Menu {
             ),
             array(
                 __( 'Settings', 'wedocs' ),
-                'manage_options',
+                apply_filters( 'wedocs_settings_management_capabilities', $this->capability ),
                 $base . '#/settings',
             ),
         );
@@ -96,7 +100,7 @@ class Menu {
     /**
      * Display Dokan Driver Dashboard.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.0
      *
      * @return void
      */
@@ -107,7 +111,7 @@ class Menu {
     /**
      * Get the admin menu position.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.0
      *
      * @return int the position of the menu
      */
@@ -118,7 +122,7 @@ class Menu {
     /**
      * Cleans admin notice.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.0
      *
      * @return void
      */

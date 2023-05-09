@@ -5,6 +5,13 @@ import RestictionModal from './RestrictionModal';
 const DocActions = ( { docId, type } ) => {
   const [ showActions, setShowActions ] = useState( false );
 
+  const restrictionAction = wp.hooks.applyFilters(
+    'wedocs_admin_article_restriction_action',
+    '',
+    docId,
+    type
+  );
+
   useEffect( () => {
     return setShowActions( false );
   }, [] );
@@ -19,7 +26,9 @@ const DocActions = ( { docId, type } ) => {
         { showActions && (
           <div
             id="action-menus"
-            className="w-40 z-40 bg-white border border-[#DBDBDB] absolute z-10 shadow right-0 py-1 rounded-md mt-1.5"
+            className={ `${
+              type === 'article' ? 'w-60' : 'w-40'
+            } z-40 bg-white border border-[#DBDBDB] absolute z-10 shadow right-0 py-1 rounded-md mt-2.5` }
           >
             { /* Edit documentation */ }
             <a
@@ -30,6 +39,10 @@ const DocActions = ( { docId, type } ) => {
             >
               { __( 'Edit', 'wedocs' ) }
             </a>
+
+            { /* Add external actions */ }
+            { restrictionAction }
+
             { /* Delete documentation */ }
             <RestictionModal
               docId={ docId }

@@ -105,7 +105,7 @@ class Ajax {
     /**
      * Remove child docs.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.0
      *
      * @param int  $parent_id
      * @param bool $force_delete

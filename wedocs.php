@@ -192,16 +192,17 @@ final class WeDocs {
         $this->container['post_type'] = new WeDevs\WeDocs\Post_Types();
 
         if ( is_admin() ) {
-            $this->container['admin'] =new WeDevs\WeDocs\Admin();
+            $this->container['admin'] = new WeDevs\WeDocs\Admin();
         } else {
-            $this->container['frontend'] =new WeDevs\WeDocs\Frontend();
+            $this->container['frontend'] = new WeDevs\WeDocs\Frontend();
         }
 
         if ( wp_doing_ajax() ) {
-            $this->container['ajax'] =new WeDevs\WeDocs\Ajax();
+            $this->container['ajax'] = new WeDevs\WeDocs\Ajax();
         }
 
-        $this->container['api'] =new WeDevs\WeDocs\API();
+        $this->container['api'] = new WeDevs\WeDocs\API();
+        $this->container['upgrader'] =new WeDevs\WeDocs\Upgrader\Upgrader();
     }
 
     /**
@@ -255,7 +256,7 @@ final class WeDocs {
     /**
      * Initiate Appsero telemetry.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.0
      *
      * @return void
      */

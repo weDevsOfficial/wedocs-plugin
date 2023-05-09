@@ -27,4 +27,5 @@ const BackToDocsPage = () => {
   );
 };
 
+window.backDocPage = BackToDocsPage;
 export default BackToDocsPage;

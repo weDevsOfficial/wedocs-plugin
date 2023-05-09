@@ -53,7 +53,7 @@ const GeneralSettings = ( {
                       name="docs_home"
                       setSettings={ setSettings }
                       settingsData={ settingsData }
-                      generalSettings={ generalSettings }
+                      settingsPanel={ generalSettings }
                     />
                   </div>
                 </div>
@@ -165,12 +165,13 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
                   <Switcher
                     name="email"
-                    generalSettings={ generalSettings }
+                    settingsPanel={ generalSettings }
                     settingsData={ settingsData }
                     setSettings={ setSettings }
+                    panelName={ `general` }
                   />
                 </div>
               </div>
@@ -209,19 +210,20 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
                   <Switcher
                     name="helpful"
-                    generalSettings={ generalSettings }
+                    settingsPanel={ generalSettings }
                     settingsData={ settingsData }
                     setSettings={ setSettings }
+                    panelName={ `general` }
                   />
                 </div>
               </div>
             </div>
 
             <div className="col-span-4">
-              <div className="settings-content flex items-center justify-between">
+              <div className="settings-content flex items-center justify-between mt-1">
                 <div className="settings-heading space-x-2 items-center flex flex-1">
                   <label
                     className="block text-sm font-medium text-gray-600"
@@ -253,12 +255,13 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
                   <Switcher
                     name="comments"
-                    generalSettings={ generalSettings }
+                    settingsPanel={ generalSettings }
                     settingsData={ settingsData }
                     setSettings={ setSettings }
+                    panelName={ `general` }
                   />
                 </div>
               </div>
@@ -297,12 +300,13 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] mt-1 ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
                   <Switcher
                     name="print"
-                    generalSettings={ generalSettings }
+                    settingsPanel={ generalSettings }
                     settingsData={ settingsData }
                     setSettings={ setSettings }
+                    panelName={ `general` }
                   />
                 </div>
               </div>

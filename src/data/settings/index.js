@@ -8,11 +8,11 @@ import controls from './controls';
 export const DOCS_SETTINGS_STORE = 'wedocs/settings';
 
 const settingsStore = createReduxStore( DOCS_SETTINGS_STORE, {
-	reducer,
-	selectors,
-	actions,
-	resolvers,
-	controls,
+  reducer,
+  selectors,
+  actions,
+  resolvers,
+  controls,
 } );
 
 export default settingsStore;

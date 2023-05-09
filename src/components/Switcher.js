@@ -2,7 +2,13 @@ import { useEffect, useState } from '@wordpress/element';
 import { Switch } from '@headlessui/react';
 import { __ } from '@wordpress/i18n';
 
-const Switcher = ( { name, generalSettings, settingsData, setSettings } ) => {
+const Switcher = ( {
+  name,
+  settingsPanel,
+  settingsData,
+  setSettings,
+  panelName,
+} ) => {
   const [ enabled, setEnabled ] = useState( true );
 
   const classNames = ( ...classes ) => {
@@ -10,15 +16,15 @@ const Switcher = ( { name, generalSettings, settingsData, setSettings } ) => {
   };
 
   useEffect( () => {
-    if ( generalSettings[ name ] === 'off' ) {
+    if ( settingsPanel[ name ] === 'off' ) {
       setEnabled( false );
     }
-  }, [ generalSettings[ name ] ] );
+  }, [ settingsPanel[ name ] ] );
 
   useEffect( () => {
     setSettings( {
       ...settingsData,
-      general: { ...generalSettings, [ name ]: enabled ? 'on' : 'off' },
+      [ panelName ]: { ...settingsPanel, [ name ]: enabled ? 'on' : 'off' },
     } );
   }, [ enabled ] );
 
@@ -48,7 +54,7 @@ const Switcher = ( { name, generalSettings, settingsData, setSettings } ) => {
           ) }
         />
       </Switch>
-      <span className="ml-3">
+      <span className={ `${ name === 'assist_enable' ? 'mt-0.5' : '' } ml-3` }>
         <span className="text-sm text-gray-900">
           { __( enabled ? 'Enable' : 'Disable', 'wedocs' ) }
         </span>
@@ -57,4 +63,5 @@ const Switcher = ( { name, generalSettings, settingsData, setSettings } ) => {
   );
 };
 
+window.switchComponent = Switcher;
 export default Switcher;

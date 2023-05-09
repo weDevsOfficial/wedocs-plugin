@@ -6,7 +6,7 @@ import settingsStore from '../data/settings';
 import { __ } from '@wordpress/i18n';
 import docsStore from '../data/docs';
 
-const SelectBox = ( { name, setSettings, settingsData, generalSettings } ) => {
+const SelectBox = ( { name, setSettings, settingsData, settingsPanel } ) => {
   const docPageId = useSelect(
     ( select ) =>
       select( settingsStore ).getGeneralSettingsOption( 'docs_home' ),
@@ -21,7 +21,7 @@ const SelectBox = ( { name, setSettings, settingsData, generalSettings } ) => {
   useEffect( () => {
     setSettings( {
       ...settingsData,
-      general: { ...generalSettings, [ name ]: selectedPage?.id },
+      general: { ...settingsPanel, [ name ]: selectedPage?.id },
     } );
   }, [ selectedPage ] );
 
@@ -46,7 +46,7 @@ const SelectBox = ( { name, setSettings, settingsData, generalSettings } ) => {
 
     setSettings( {
       ...settingsData,
-      general: { ...generalSettings, docs_home: selectedPage?.id },
+      general: { ...settingsPanel, docs_home: selectedPage?.id },
     } );
   }, [ pages ] );
 

@@ -2,10 +2,10 @@
 
 namespace WeDevs\WeDocs\API;
 
-use WP_Error;
+use WeDevs\WeDocs\Upgrader\Upgrader;
 use WP_REST_Server;
 
-class SettingsApi extends \WP_REST_Controller {
+class UpgraderApi extends \WP_REST_Controller {
 
     /**
      * Post Type Base.
@@ -14,7 +14,7 @@ class SettingsApi extends \WP_REST_Controller {
      *
      * @var string
      */
-    protected $base = 'docs/settings';
+    protected $base = 'docs/upgrade';
 
     /**
      * WP Version Number.
@@ -44,7 +44,7 @@ class SettingsApi extends \WP_REST_Controller {
     protected $api;
 
     /**
-     * Initialize the class.
+     * Initialize the class
      *
      * @since 2.0.0
      *
@@ -55,7 +55,7 @@ class SettingsApi extends \WP_REST_Controller {
     }
 
     /**
-     * Register settings API.
+     * Register the API
      *
      * @since 2.0.0
      *
@@ -72,29 +72,14 @@ class SettingsApi extends \WP_REST_Controller {
                 array(
                     'methods'             => WP_REST_Server::CREATABLE,
                     'callback'            => array( $this, 'create_item' ),
-                    'permission_callback' => array( $this, 'create_item_permissions_check' ),
-                    'args'                => array(
-                        'settings' => array(
-                            'type'        => 'object',
-                            'description' => esc_html__( 'Settings value', 'wedocs' ),
-                            'properties'  => array(
-                                'name' => array(
-                                    'type' => 'string',
-                                ),
-                            ),
-                        ),
-                        'upgrade'  => array(
-                            'type'        => 'boolean',
-                            'description' => esc_html__( 'Upgrader version', 'wedocs' ),
-                        ),
-                    ),
+                    'permission_callback' => array( $this, 'create_items_permissions_check' ),
                 ),
             )
         );
     }
 
     /**
-     * Check settings data getting permission.
+     * Check upgrade data getting permission.
      *
      * @since 2.0.0
      *
@@ -103,40 +88,15 @@ class SettingsApi extends \WP_REST_Controller {
      * @return bool|\WP_Error
      */
     public function get_items_permissions_check( $request ) {
-        if ( empty( $request->get_param( 'data' ) ) ) {
-            return new \WP_Error( 'rest_doc_invalid_arg', __( 'No settings request given', 'wedocs' ) );
-        }
-
         if ( current_user_can( 'read' ) ) {
             return true;
         }
 
-        return new \WP_Error( 'wedocs_permission_failure', __( "You don't have permission to get settings data", 'wedocs' ) );
+        return new \WP_Error( 'wedocs_permission_failure', __( "You don't have permission to get upgrader data", 'wedocs' ) );
     }
 
     /**
-     * Check settings data creation permission.
-     *
-     * @since 2.0.0
-     *
-     * @param \WP_REST_Request $request
-     *
-     * @return bool|WP_Error
-     */
-    public function create_item_permissions_check( $request ) {
-        if ( ! is_user_logged_in() ) {
-            return new \WP_Error( 'rest_invalid_authenication', __( 'Need to be an authenticate user', 'wedocs' ) );
-        }
-
-        if ( empty( $request->get_param( 'settings' ) ) ) {
-            return new \WP_Error( 'rest_invalid_settings_request', __( 'No settings request found', 'wedocs' ) );
-        }
-
-        return true;
-    }
-
-    /**
-     * Collect settings data.
+     * Collect upgrader data.
      *
      * @since 2.0.0
      *
@@ -145,23 +105,38 @@ class SettingsApi extends \WP_REST_Controller {
      * @return mixed
      */
     public function get_items( $request ) {
-        $get_data = $request->get_param( 'data' );
 
-        if ( 'wedocs_settings' === $get_data ) {
-            $value = get_option( 'wedocs_settings', [] );
-        } else {
-            $wedocs_version  = get_option( 'wedocs_version' );
-            $upgrade_version = get_option( 'wedocs_upgrade_version' );
+        /**
+         * @var $upgrader Upgrader
+         */
+        $upgrader = wedocs()->upgrader;
 
-            empty( $upgrade_version ) ? update_option( 'wedocs_upgrade_version', '2.0.0' ) : '';
-            $value = $upgrade_version > $wedocs_version;
-        }
-
-        return rest_ensure_response( $value );
+        return rest_ensure_response( $upgrader->calculate()->need_upgrade() );
     }
 
     /**
-     * Create settings data.
+     * Check upgrade data writing permission.
+     *
+     * @since 2.0.0
+     *
+     * @param \WP_REST_Request $request
+     *
+     * @return bool|\WP_Error
+     */
+    public function create_items_permissions_check( $request ) {
+        if ( ! is_user_logged_in() ) {
+            return new \WP_Error( 'rest_invalid_authenication', __( 'Need to be an authenticate user', 'wedocs' ) );
+        }
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return new \WP_Error( 'rest_invalid_permission', __( 'Need to be an administrator user', 'wedocs' ) );
+        }
+
+        return true;
+    }
+
+    /**
+     * Handle upgrader data.
      *
      * @since 2.0.0
      *
@@ -170,20 +145,8 @@ class SettingsApi extends \WP_REST_Controller {
      * @return mixed
      */
     public function create_item( $request ) {
-        if ( ! empty( $request->get_param( 'settings' ) ) ) {
-            $settings_data = $request->get_param( 'settings' );
-
-            // Update wedocs_settings from store.
-            update_option( 'wedocs_settings', $settings_data );
-        } else {
-            $updated_version = get_option( 'wedocs_upgrade_version' );
-            $request->get_param( 'upgrade' ) ? $this->upgrade_wedocs_settings( $updated_version ) : '';
-
-            $wedocs_version = get_option( 'wedocs_version' );
-            $settings_data  = $updated_version > $wedocs_version;
-        }
-
-        return rest_ensure_response( $settings_data );
+        as_enqueue_async_action( 'wedocs_upgrader_runner', array(), 'wedocs_upgrader' );
+        return rest_ensure_response( array( 'message' => __( 'Processing Upgrade in the background.', 'wedocs' ) ) );
     }
 
     /**

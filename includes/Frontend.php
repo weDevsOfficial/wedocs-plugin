@@ -73,6 +73,9 @@ class Frontend {
             'style'   => WEDOCS_ASSETS . '/build/print.css?v=10',
             'powered' => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs plugin for WordPress', 'wedocs' ), home_url() ),
         ] );
+
+        $store_dependencies = require WEDOCS_PATH . '/assets/build/store.asset.php';
+        wp_register_script( 'wedocs-store-js', WEDOCS_ASSETS . '/build/store.js', $store_dependencies['dependencies'], $store_dependencies['version'], true );
     }
 
     /**

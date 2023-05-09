@@ -7,9 +7,15 @@ const controls = {
     } );
   },
 
+  FETCH_ROLES() {
+    return apiFetch( {
+      path: '/wp/v2/docs/users',
+    } );
+  },
+
   FETCH_UPGRADE_INFO() {
     return apiFetch( {
-      path: '/wp/v2/docs/settings?data=upgrade',
+      path: '/wp/v2/docs/upgrade',
     } );
   },
 

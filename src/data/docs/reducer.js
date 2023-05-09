@@ -1,38 +1,52 @@
 const DEFAULT_STATE = {
-	docs: [],
-    pages: [],
-	loading: false,
+  docs: [],
+  pages: [],
+  loading: false,
+  helpfulDocs: [],
+  // contributors: {},
 };
 
 const reducer = ( state = DEFAULT_STATE, action ) => {
-	switch ( action.type ) {
-		case 'SET_DOCS':
-			return {
-				...state,
-				docs: [ ...action.docs ],
-			};
+  switch ( action.type ) {
+    case 'SET_DOCS':
+      return {
+        ...state,
+        docs: [ ...action.docs ],
+      };
 
-		case 'SET_DOC':
-			return {
-				...state,
-				docs: [ ...state.docs, action.doc ],
-			};
+    case 'SET_DOC':
+      return {
+        ...state,
+        docs: [ ...state.docs, action.doc ],
+      };
 
-        case 'SET_PAGES':
-            return {
-                ...state,
-                pages: [ ...action.pages ],
-            };
+    case 'SET_PAGES':
+      return {
+        ...state,
+        pages: [ ...action.pages ],
+      };
 
-		case 'SET_LOADING':
-			return {
-				...state,
-				loading: action.loading,
-			};
+    // case 'SET_CONTRIBUTORS':
+    //   return {
+    //     ...state,
+    //     contributors: { ...state.contributors, ...action.contributors },
+    //   };
 
-		default:
-			return state;
-	}
+    case 'SET_LOADING':
+      return {
+        ...state,
+        loading: action.loading,
+      };
+
+    case 'SET_HELPFUL_DOCS':
+      return {
+        ...state,
+        helpfulDocs: action.helpfulDocs,
+      };
+
+    default:
+      return state;
+  }
 };
 
 export default reducer;

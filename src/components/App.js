@@ -10,12 +10,24 @@ import SettingsPage from './Settings';
 import Documentations from './Documentations';
 
 const App = () => {
+  let routes = [
+    { path: '/', component: Documentations },
+    { path: 'settings', component: SettingsPage },
+    { path: 'section/:id', component: ListingPage },
+  ];
+
+  routes = wp.hooks.applyFilters( 'wedocs_register_menu_routes', routes );
   const router = createHashRouter(
     createRoutesFromElements(
       <>
-        <Route path="/" element={ <Documentations /> } />
-        <Route path="settings" element={ <SettingsPage /> } />
-        <Route path="section/:id" element={ <ListingPage /> } />
+        { routes &&
+          routes.map( ( route, index ) => (
+            <Route
+              key={ index }
+              path={ route.path }
+              element={ <route.component /> }
+            />
+          ) ) }
       </>
     )
   );

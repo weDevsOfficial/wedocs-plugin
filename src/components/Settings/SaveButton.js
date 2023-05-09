@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 
 const SaveButton = ( { settingsSaveHandler } ) => {
   return (
-    <div className="sticky flex justify-end bottom-0 mt-5 p-5 pr-1.5">
+    <div className="flex justify-end mt-5 p-5 pr-0">
       <button
         type="button"
         onClick={ settingsSaveHandler }

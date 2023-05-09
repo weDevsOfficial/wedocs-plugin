@@ -14,6 +14,13 @@ const resolvers = {
     yield actions.setUpgradeInfo( needUpgrade );
     return actions.setLoading( false );
   },
+
+  *getRoles() {
+    yield actions.setLoading( true );
+    const roles = yield { type: 'FETCH_ROLES' };
+    yield actions.setRoles( roles );
+    return actions.setLoading( false );
+  },
 };
 
 export default resolvers;

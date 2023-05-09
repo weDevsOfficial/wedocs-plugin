@@ -89,7 +89,7 @@ class API {
     /**
      * Set next and previous pagination.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.0
      *
      * @param \WP_REST_Response $response
      * @param \WP_Post          $post

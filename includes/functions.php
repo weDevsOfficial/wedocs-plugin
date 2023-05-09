@@ -3,7 +3,7 @@
  * Get template part implementation for wedocs.
  * Looks at the theme directory first.
  *
- * @since WEDOCS_SINCE
+ * @since 2.0.0
  *
  * @param string $slug
  * @param string $name
@@ -297,8 +297,8 @@ function wedocs_is_plugin_active( $plugin_path_and_name ) {
 function wedocs_get_option( $option, $section, $default = '' ) {
     $options = get_option( $section );
 
-    if ( isset( $options[$option] ) ) {
-        return $options[$option];
+    if ( isset( $options[ $option ] ) ) {
+        return $options[ $option ];
     }
 
     return $default;
@@ -307,7 +307,7 @@ function wedocs_get_option( $option, $section, $default = '' ) {
 /**
  * Get the value of general settings.
  *
- * @since WEDOCS_SINCE
+ * @since 2.0.0
  *
  * @param string $field_name general settings field name.
  * @param string $default    default data if settings not found.

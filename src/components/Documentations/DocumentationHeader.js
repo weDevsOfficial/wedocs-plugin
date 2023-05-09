@@ -7,6 +7,12 @@ import he from 'he';
 const DocumentationHeader = ( { doc } ) => {
   const { id, title } = doc;
 
+  const privacyIcon = wp.hooks.applyFilters(
+    'wedocs_documentation_privacy_action',
+    [],
+    id
+  );
+
   return (
     <div className="flex w-full items-center justify-between space-x-6 p-6 pt-5">
       <div className="flex-1">
@@ -50,6 +56,8 @@ const DocumentationHeader = ( { doc } ) => {
         </div>
       </div>
       <div className="flex gap-5 items-center">
+        { /* Render private documentation icon */ }
+        { privacyIcon }
         <DocActions docId={ id } type="doc" disabled />
       </div>
     </div>

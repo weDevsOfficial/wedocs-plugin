@@ -58,7 +58,6 @@ const ListingHeader = ( { id } ) => {
                   />
                 </svg>
               </a>
-
               <a
                 target="_blank"
                 rel="noreferrer"

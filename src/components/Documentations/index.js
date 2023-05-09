@@ -69,7 +69,7 @@ const Documentations = () => {
 
       <div
         role="list"
-        className="documentation relative mx-auto grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 z-[99]"
+        className="documentation relative mx-auto grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
       >
         { ! loading && documentations.length > 0 && (
           <DraggableDocs setItems={ setDocumentations }>

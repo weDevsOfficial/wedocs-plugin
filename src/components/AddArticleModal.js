@@ -190,7 +190,9 @@ const AddArticleModal = ( {
                     >
                       { sprintf(
                         __( '%s', 'wedocs' ),
-                        disabled ? 'Creating...' : 'Create'
+                        disabled
+                          ? __( 'Creating…', 'wedocs' )
+                          : __( 'Create', 'wedocs' )
                       ) }
                     </button>
                     <button
