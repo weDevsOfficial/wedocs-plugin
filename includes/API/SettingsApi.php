@@ -2,10 +2,8 @@
 
 namespace WeDevs\WeDocs\API;
 
-use WeDevs\WeDocs\Upgrader\Upgrader;
 use WP_Error;
 use WP_REST_Server;
-use WP_REST_Controller;
 
 class SettingsApi extends \WP_REST_Controller {
 
@@ -46,7 +44,7 @@ class SettingsApi extends \WP_REST_Controller {
     protected $api;
 
     /**
-     * Initialize the class
+     * Initialize the class.
      *
      * @since WEDOCS_SINCE
      *
@@ -57,7 +55,7 @@ class SettingsApi extends \WP_REST_Controller {
     }
 
     /**
-     * Register the API
+     * Register settings API.
      *
      * @since WEDOCS_SINCE
      *

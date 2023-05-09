@@ -14,7 +14,7 @@ const Upgrade = () => {
           <div className="flex space-x-8">
             <div className="flex flex-shrink-0 relative items-center">
               <InformationCircleIcon
-                className="h-5 w-5 mt-0.5 text-indigo-600 bg-white absolute -right-1 -top-1 rounded-full z-10"
+                className="h-5 w-5 mt-0.5 text-indigo-600 bg-white absolute -right-1 -top-1 rounded-full z-[1]"
                 aria-hidden="true"
               />
               <div className="avatar">

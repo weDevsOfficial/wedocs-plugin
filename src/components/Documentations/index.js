@@ -29,6 +29,7 @@ const Documentations = () => {
   );
 
   const [ searchValue, setSearchValue ] = useState( '' );
+  const [ documentations, setDocumentations ] = useState( [] );
 
   const handleChange = ( event, reset = false ) => {
     if ( reset ) {
@@ -38,14 +39,9 @@ const Documentations = () => {
     }
   };
 
-  const sortableDocs =
-    parentDocs?.sort( ( a, b ) => a.menu_order - b.menu_order ) || [];
-
-  const filteredDocs = sortableDocs?.filter( ( doc ) =>
-    doc?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() )
+  const filteredDocs = parentDocs?.filter( ( doc ) =>
+    doc?.title?.rendered?.toLowerCase().includes( searchValue?.toLowerCase() )
   );
-
-  const [ documentations, setDocumentations ] = useState( [] );
 
   useEffect( () => {
     setDocumentations( [ ...filteredDocs ] );
@@ -71,27 +67,25 @@ const Documentations = () => {
 
       { ! loading && needUpgrade && <Upgrade /> }
 
-      <EmptyDocs />
+      <div
+        role="list"
+        className="documentation relative mx-auto grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 z-[99]"
+      >
+        { ! loading && documentations.length > 0 && (
+          <DraggableDocs setItems={ setDocumentations }>
+            <SortableContext
+              items={ documentations }
+              strategy={ rectSortingStrategy }
+            >
+              { documentations?.map( ( doc ) => (
+                <ParentDocs key={ doc.id } doc={ doc } />
+              ) ) }
+            </SortableContext>
+          </DraggableDocs>
+        ) }
 
-      { /*<div*/ }
-      { /*  role="list"*/ }
-      { /*  className="documentation relative mx-auto grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"*/ }
-      { /*>*/ }
-      { /*  { ! loading && documentations.length > 0 && (*/ }
-      { /*    <DraggableDocs setItems={ setDocumentations }>*/ }
-      { /*      <SortableContext*/ }
-      { /*        items={ documentations }*/ }
-      { /*        strategy={ rectSortingStrategy }*/ }
-      { /*      >*/ }
-      { /*        { documentations?.map( ( doc ) => (*/ }
-      { /*          <ParentDocs key={ doc.id } doc={ doc } />*/ }
-      { /*        ) ) }*/ }
-      { /*      </SortableContext>*/ }
-      { /*    </DraggableDocs>*/ }
-      { /*  ) }*/ }
-
-      { /*  { loading && <DocsPlaceholder /> }*/ }
-      { /*</div>*/ }
+        { loading && <DocsPlaceholder /> }
+      </div>
 
       { ! loading && searchValue && documentations.length === 0 && (
         <h2 className="float-left text-lg mt-4">

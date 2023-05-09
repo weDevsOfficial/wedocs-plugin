@@ -156,7 +156,7 @@ const SectionArticles = ( { article, isAllowComments } ) => {
           </div>
         </div>
         <div className="ml-8 flex-shrink-0">
-          <DocActions docId={ article?.id } />
+          <DocActions docId={ article?.id } type="article" />
         </div>
       </div>
     </div>

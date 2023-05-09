@@ -29,8 +29,13 @@ const ListingHeader = ( { id } ) => {
                 target="_blank"
                 rel="noreferrer"
                 href={ `${ window.location.origin }/?p=${ id }` }
-                className="flex tooltip cursor-pointer items-center group hover:text-black !shadow-none before:max-w-xl z-[9999]"
-                data-tip={ he.decode( __( doc?.title?.rendered, 'wedocs' ) ) }
+                className="flex tooltip cursor-pointer items-center group hover:text-black !shadow-none before:max-w-xl z-[90]"
+                data-tip={ he?.decode(
+                  __(
+                    doc?.title?.rendered ? doc?.title?.rendered : '',
+                    'wedocs'
+                  )
+                ) }
               >
                 <span
                   className="group-hover:underline"

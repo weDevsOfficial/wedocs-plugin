@@ -15,7 +15,7 @@ const DocsPlaceholder = () => {
                   </a>
                   <a
                     target="_blank"
-                    href="http://wedocs.test/?p=87"
+                    href="#"
                     rel="noreferrer"
                     className="mt-[-2px] hidden group-hover:block !shadow-none"
                   >

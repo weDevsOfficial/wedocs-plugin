@@ -14,7 +14,6 @@ import docsStore from '../data/docs';
 const DraggableDocs = ( { setItems, children } ) => {
   const sensors = useSensors(
     useSensor( PointerSensor, {
-      // Require the mouse to move by 10 pixels before activating
       activationConstraint: {
         delay: 150,
         tolerance: 5,
@@ -30,11 +29,10 @@ const DraggableDocs = ( { setItems, children } ) => {
         const oldItem = elements.find(
           ( element ) => element.id === active.id
         );
-        const newItem = elements.find( ( element ) => element.id === over.id );
 
+        const newItem = elements.find( ( element ) => element.id === over.id );
         const oldIndex = elements.indexOf( oldItem );
         const newIndex = elements.indexOf( newItem );
-
         const updatedOrder = arrayMove( elements, oldIndex, newIndex );
 
         updatedOrder.forEach( ( doc, index ) => {
@@ -54,6 +52,7 @@ const DraggableDocs = ( { setItems, children } ) => {
       sensors={ sensors }
       collisionDetection={ closestCenter }
       onDragEnd={ handleDragEnd }
+      class="z-10"
     >
       { children }
     </DndContext>

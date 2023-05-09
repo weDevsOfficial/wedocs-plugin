@@ -31,7 +31,7 @@ const SettingsPage = () => {
       .then( ( result ) => {
         setDocSettings( { ...docSettings, ...result } );
         Swal.fire( {
-          title: __( 'Save Settings Data Saved!', 'wedocs' ),
+          title: __( 'Settings Data Saved!', 'wedocs' ),
           text: __( 'Settings data has been saved successfully', 'wedocs' ),
           icon: 'success',
           toast: true,

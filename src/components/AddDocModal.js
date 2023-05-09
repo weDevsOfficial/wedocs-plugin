@@ -1,5 +1,5 @@
 import { __, sprintf } from '@wordpress/i18n';
-import { Fragment, useCallback, useState } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import { dispatch } from '@wordpress/data';
 import docStore from '../data/docs';
@@ -43,6 +43,9 @@ const AddDocModal = ( { className, children } ) => {
           position: 'bottom-end',
           showConfirmButton: false,
           timer: 2000,
+          customClass: {
+            container: '!z-[9999]',
+          },
         } );
         closeModal();
       } )
@@ -55,6 +58,9 @@ const AddDocModal = ( { className, children } ) => {
           position: 'bottom-end',
           showConfirmButton: false,
           timer: 3000,
+          customClass: {
+            container: '!z-[9999]',
+          },
         } );
       } )
       .finally( () => setDisabled( false ) );
@@ -75,7 +81,7 @@ const AddDocModal = ( { className, children } ) => {
       </button>
 
       <Transition appear show={ isOpen } as={ Fragment }>
-        <Dialog as="div" className="relative z-50" onClose={ closeModal }>
+        <Dialog as="div" className="relative z-[9999]" onClose={ closeModal }>
           <Transition.Child
             as={ Fragment }
             enter="ease-out duration-300"

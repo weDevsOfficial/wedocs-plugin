@@ -3,6 +3,8 @@
  * Get template part implementation for wedocs.
  * Looks at the theme directory first.
  *
+ * @since WEDOCS_SINCE
+ *
  * @param string $slug
  * @param string $name
  * @param array  $args
@@ -15,7 +17,6 @@ function wedocs_get_template_part( $slug, $name = '', $args = array() ) {
     );
 
     $args = wp_parse_args( $args, $defaults );
-
     if ( $args && is_array( $args ) ) {
         extract( $args ); // phpcs:ignore
     }
@@ -23,13 +24,13 @@ function wedocs_get_template_part( $slug, $name = '', $args = array() ) {
     $wedocs   = ! empty( $args['pro'] ) && true === $args['pro'] ? WeDocs_Pro::init() : WeDocs::init();
     $template = '';
 
-    // Look in yourtheme/wedocs/slug-name.php and yourtheme/wedocs/slug.php
+    // Look in yourtheme/wedocs/slug-name.php and yourtheme/wedocs/slug.php.
     $template_path = ! empty( $name ) ? "{$slug}-{$name}.php" : "{$slug}.php";
     $template      = locate_template( [ $wedocs->template_path() . $template_path ] );
 
     $template_path = apply_filters( 'wedocs_set_template_path', $wedocs->plugin_path() . '/templates', $template, $args );
 
-    // Get default slug-name.php
+    // Get default slug-name.php.
     if ( ! $template && $name && file_exists( $template_path . "/{$slug}-{$name}.php" ) ) {
         $template = $template_path . "/{$slug}-{$name}.php";
     }
@@ -305,6 +306,8 @@ function wedocs_get_option( $option, $section, $default = '' ) {
 
 /**
  * Get the value of general settings.
+ *
+ * @since WEDOCS_SINCE
  *
  * @param string $field_name general settings field name.
  * @param string $default    default data if settings not found.

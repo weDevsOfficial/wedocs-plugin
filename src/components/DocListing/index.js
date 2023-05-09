@@ -8,7 +8,6 @@ import BackToDocsPage from '../BackToDocsPage';
 import ListingButtons from './ListingButtons';
 import DocsListingPlaceholder from './DocsListingPlaceholder';
 import { useEffect, useState } from '@wordpress/element';
-import docStore from '../../data/docs';
 import DraggableDocs from '../DraggableDocs';
 import SearchFilter from '../SearchFilter';
 import Upgrade from '../Upgrade';
@@ -41,7 +40,7 @@ const ListingPage = () => {
   };
 
   const docArticles = useSelect(
-    ( select ) => select( docStore ).getDocArticles( parseInt( id ) ),
+    ( select ) => select( docsStore ).getDocArticles( parseInt( id ) ),
     []
   );
 
@@ -71,11 +70,7 @@ const ListingPage = () => {
       .includes( searchValue.toLowerCase() );
   };
 
-  const sortableSections =
-    sectionsData?.sort( ( a, b ) => a.menu_order - b.menu_order ) || [];
-
-  const filteredSections = sortableSections?.filter( searchFilter ) || [];
-
+  const filteredSections = sectionsData?.filter( searchFilter ) || [];
   const [ sections, setSections ] = useState( [] );
 
   useEffect( () => {
@@ -89,6 +84,7 @@ const ListingPage = () => {
         <SearchFilter
           handleChange={ handleChange }
           searchValue={ searchValue }
+          listing={ true }
         />
       </div>
 
@@ -132,7 +128,10 @@ const ListingPage = () => {
                   d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
                 />
               </svg>
-              { __( 'No section found for this documentation', 'wedocs' ) }
+              { __(
+                'No section or article found for this documentation',
+                'wedocs'
+              ) }
             </div>
           </div>
         </div>

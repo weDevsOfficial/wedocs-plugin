@@ -1,7 +1,6 @@
-import { useEffect, Fragment, useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import AddArticleModal from '../AddArticleModal';
 import { __ } from '@wordpress/i18n';
-import RestictionModal from '../RestrictionModal';
 import AddSectionModal from '../AddSectionModal';
 
 const AddChildrens = ( { docId, sections, className, children } ) => {

@@ -56,28 +56,11 @@ class Admin {
     public function fix_tag_menu( $parent_file ) {
         global $current_screen;
 
-        if ( 'doc_tag' == $current_screen->taxonomy || 'docs' == $current_screen->post_type ) {
+        if ( 'doc_tag' === $current_screen->taxonomy || 'docs' === $current_screen->post_type ) {
             $parent_file = 'wedocs';
         }
 
         return $parent_file;
-    }
-
-    /**
-     * UI Page handler.
-     *
-     * @return void
-     */
-    public function page_index() {
-        wedocs_get_template_part( 'admin/docs' );
-    }
-
-    public function set_pro_docs_location( $location ) {
-        return 'adminn/docss';
-    }
-
-    public function set_pro_docs_arguments( $args ) {
-        return array_merge( array( 'pro' => true ), $args );
     }
 
     /**

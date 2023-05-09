@@ -16,6 +16,7 @@ const AddArticleModal = ( {
 } ) => {
   const [ isOpen, setIsOpen ] = useState( false );
   const [ sectionId, setSectionId ] = useState( defaultSection?.id || '' );
+
   const [ newArticle, setNewArticle ] = useState( {
     title: { raw: '' },
     parent: sectionId ? parseInt( sectionId ) : '',
@@ -111,7 +112,7 @@ const AddArticleModal = ( {
       </button>
 
       <Transition appear show={ isOpen } as={ Fragment }>
-        <Dialog as="div" className="relative z-50" onClose={ closeModal }>
+        <Dialog as="div" className="relative z-[9999]" onClose={ closeModal }>
           <Transition.Child
             as={ Fragment }
             enter="ease-out duration-300"

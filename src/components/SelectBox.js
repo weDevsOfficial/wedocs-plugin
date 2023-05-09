@@ -43,6 +43,7 @@ const SelectBox = ( { name, setSettings, settingsData, generalSettings } ) => {
 
     setPageOptions( [ ...options ] );
     setSelectedPage( { ...selectedPageObj } );
+
     setSettings( {
       ...settingsData,
       general: { ...generalSettings, docs_home: selectedPage?.id },

@@ -427,7 +427,7 @@ class API extends WP_REST_Controller {
     /**
      * Check permissions for the documentation delete.
      *
-     * @since 2.0.0
+     * @since WEDOCS_SINCE
      *
      * @param WP_REST_Request $request Current request.
      *
@@ -447,7 +447,7 @@ class API extends WP_REST_Controller {
     /**
      * Delete a single documentation.
      *
-     * @since 2.0.0
+     * @since WEDOCS_SINCE
      *
      * @param WP_REST_Request $request Current request.
      *
@@ -470,16 +470,14 @@ class API extends WP_REST_Controller {
             'post_status' => 'publish',
         ];
 
-        $data     = get_posts( $args );
-        $response = rest_ensure_response( $data );
-
-        return $response;
+        $data = get_posts( $args );
+        return rest_ensure_response( $data );
     }
 
     /**
      * Remove all children docs if exists.
      *
-     * @since 2.0.0
+     * @since WEDOCS_SINCE
      *
      * @param int $parent_id
      *
@@ -492,7 +490,6 @@ class API extends WP_REST_Controller {
             foreach ( $childrens as $child_post ) {
                 // Recursively delete.
                 $this->remove_child_docs( $child_post->ID );
-
                 wp_delete_post( $child_post->ID );
             }
         }

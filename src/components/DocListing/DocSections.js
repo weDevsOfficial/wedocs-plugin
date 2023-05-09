@@ -40,12 +40,9 @@ const DocSections = ( { section, sections, searchValue } ) => {
     []
   );
 
-  const sortableArticles =
-    sectionArticles?.sort( ( a, b ) => a.menu_order - b.menu_order ) || [];
-
   const filteredArticles =
-    sortableArticles?.filter( ( doc ) =>
-      doc?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() )
+    sectionArticles?.filter( ( doc ) =>
+      doc?.title?.rendered?.toLowerCase().includes( searchValue?.toLowerCase() )
     ) || [];
 
   const [ articles, setArticles ] = useState( [] );
@@ -65,7 +62,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
 
   return (
     <div
-      className="space-y-4 mb-3"
+      className="space-y-4 mb-3 relative z-[99]"
       ref={ setNodeRef }
       style={ style }
       { ...attributes }
@@ -174,7 +171,8 @@ const DocSections = ( { section, sections, searchValue } ) => {
 
                   <RestictionModal
                     docId={ section.id }
-                    className="ml-4 hidden group-hover:block"
+                    type="section"
+                    classes="ml-4 hidden group-hover:block"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

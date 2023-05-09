@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { Fragment, useState, useRef } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import { dispatch, useSelect } from '@wordpress/data';
 import settingsStore from '../data/settings';
@@ -50,7 +50,7 @@ const ConfirmationModal = ( { className, children } ) => {
       <Transition appear show={ openModal } as={ Fragment }>
         <Dialog
           as="div"
-          className="relative z-50"
+          className="relative z-[9999]"
           onClose={ () => setOpenModal( false ) }
         >
           <Transition.Child

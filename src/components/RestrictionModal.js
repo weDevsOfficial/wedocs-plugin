@@ -1,26 +1,39 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { Fragment, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import { dispatch } from '@wordpress/data';
 import docsStore from '../data/docs';
 import Swal from 'sweetalert2';
 
-const RestictionModal = ( { className, children, docId } ) => {
+const RestictionModal = ( { classes, children, docId, type } ) => {
   const [ isOpen, setIsOpen ] = useState( false );
+  const [ disabled, setDisabled ] = useState( false );
 
   const removeDocumentation = () => {
+    const deletedType = type.charAt( 0 ).toUpperCase() + type.slice( 1 );
+
+    // Make it disabled for removing a doc.
+    setDisabled( true );
+
     dispatch( docsStore )
       .deleteDoc( docId )
       .then( ( result ) => {
         Swal.fire( {
-          title: __( 'Doc deleted!', 'wedocs' ),
-          text: __( 'Doc has been deleted successfully', 'wedocs' ),
+          title: __( `${ deletedType } deleted!`, 'wedocs' ),
+          text: __(
+            `${ deletedType } has been deleted successfully`,
+            'wedocs'
+          ),
           icon: 'success',
           toast: true,
           position: 'bottom-end',
           showConfirmButton: false,
           timer: 2000,
+          customClass: {
+            container: '!z-[9999]',
+          },
         } );
+        setIsOpen( false );
       } )
       .catch( ( err ) => {
         Swal.fire( {
@@ -31,10 +44,12 @@ const RestictionModal = ( { className, children, docId } ) => {
           position: 'bottom-end',
           showConfirmButton: false,
           timer: 3000,
+          customClass: {
+            container: '!z-[9999]',
+          },
         } );
-      } );
-
-    setIsOpen( false );
+      } )
+      .finally( () => setDisabled( false ) );
   };
 
   const openModal = () => {
@@ -43,14 +58,14 @@ const RestictionModal = ( { className, children, docId } ) => {
 
   return (
     <>
-      <button onClick={ openModal } className={ className }>
+      <button onClick={ openModal } className={ classes }>
         { children }
       </button>
 
       <Transition appear show={ isOpen } as={ Fragment }>
         <Dialog
           as="div"
-          className="relative z-50"
+          className="relative z-[9999]"
           onClose={ () => setIsOpen( false ) }
         >
           <Transition.Child
@@ -122,8 +137,12 @@ const RestictionModal = ( { className, children, docId } ) => {
                         <button
                           className="bg-red-600 hover:bg-red-700 text-white font-medium text-base py-2 px-5 rounded-md"
                           onClick={ removeDocumentation }
+                          disabled={ disabled }
                         >
-                          { __( "I'm Sure", 'wedocs' ) }
+                          { sprintf(
+                            __( '%s', 'wedocs' ),
+                            disabled ? 'Removing...' : "I'm Sure"
+                          ) }
                         </button>
                       </div>
                     </div>

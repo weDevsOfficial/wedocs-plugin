@@ -13,7 +13,7 @@ const DocumentationHeader = ( { doc } ) => {
         <div className="inline-flex items-center space-x-3">
           <div className="flex items-center space-x-3 flex-1 group">
             <div
-              className="tooltip cursor-pointer before:max-w-xl z-[9999]"
+              className="tooltip cursor-pointer before:max-w-xl z-[9990]"
               data-tip={ he.decode( __( title?.rendered, 'wedocs' ) ) }
             >
               <Link to={ `/section/${ id }` }>
@@ -50,7 +50,7 @@ const DocumentationHeader = ( { doc } ) => {
         </div>
       </div>
       <div className="flex gap-5 items-center">
-        <DocActions docId={ id } addArticle={ true } disabled />
+        <DocActions docId={ id } type="doc" disabled />
       </div>
     </div>
   );

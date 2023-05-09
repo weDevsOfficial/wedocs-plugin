@@ -1,17 +1,9 @@
-import { useEffect, Fragment, useState } from '@wordpress/element';
-import AddArticleModal from './AddArticleModal';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import RestictionModal from './RestrictionModal';
-import { useSelect } from '@wordpress/data';
-import docsStore from '../data/docs';
 
-const DocActions = ( { docId, addArticle = false } ) => {
+const DocActions = ( { docId, type } ) => {
   const [ showActions, setShowActions ] = useState( false );
-
-  const sections = useSelect(
-    ( select ) => select( docsStore ).getSectionsDocs( parseInt( docId ) ),
-    []
-  );
 
   useEffect( () => {
     return setShowActions( false );
@@ -41,7 +33,8 @@ const DocActions = ( { docId, addArticle = false } ) => {
             { /* Delete documentation */ }
             <RestictionModal
               docId={ docId }
-              className="w-full group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white"
+              type={ type }
+              classes="w-full group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white"
             >
               { __( 'Delete', 'wedocs' ) }
             </RestictionModal>
