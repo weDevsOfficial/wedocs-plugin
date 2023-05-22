@@ -4,7 +4,7 @@ const DocsPlaceholder = () => {
       { [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ].map( ( value, index ) => (
         <div
           key={ index }
-          className="animate-pulse bg-white border-b hover:bg-gray-50"
+          className="animate-pulse bg-white border-b hover:bg-gray-50 font-extrabold"
         >
           <div className="flex w-full items-center justify-between space-x-6 p-6 pt-5">
             <div className="flex-1 truncate">

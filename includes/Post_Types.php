@@ -28,7 +28,7 @@ class Post_Types {
      * @return void
      */
     public function register_post_type() {
-        $labels = [
+        $labels = array(
             'name'               => _x( 'Docs', 'Post Type General Name', 'wedocs' ),
             'singular_name'      => _x( 'Doc', 'Post Type Singular Name', 'wedocs' ),
             'menu_name'          => __( 'Documentation', 'wedocs' ),
@@ -42,16 +42,28 @@ class Post_Types {
             'search_items'       => __( 'Search Documentation', 'wedocs' ),
             'not_found'          => __( 'Not documentation found', 'wedocs' ),
             'not_found_in_trash' => __( 'Not found in Trash', 'wedocs' ),
-        ];
-        $rewrite = [
+        );
+
+        $rewrite = array(
             'slug'       => 'docs',
             'with_front' => true,
             'pages'      => true,
             'feeds'      => true,
-        ];
-        $args = [
+        );
+
+//        $capabilities = array(
+//            'edit_post'          => 'edit_doc',
+//            'read_post'          => 'read_doc',
+//            'edit_posts'         => 'edit_docs',
+//            'delete_post'        => 'delete_doc',
+//            'publish_posts'      => 'publish_docs',
+//            'edit_others_posts'  => 'edit_others_docs',
+//            'read_private_posts' => 'read_private_docs',
+//        );
+
+        $args = array(
             'labels'              => $labels,
-            'supports'            => [ 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'comments' ],
+            'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'comments' ),
             'hierarchical'        => true,
             'public'              => true,
             'show_ui'             => true,
@@ -66,9 +78,11 @@ class Post_Types {
             'publicly_queryable'  => true,
             'show_in_rest'        => true,
             'rewrite'             => $rewrite,
+//            'map_meta_cap'        => true,
+//            'capabilities'        => $capabilities,
             'capability_type'     => 'post',
-            'taxonomies'          => [ 'doc_tag' ],
-        ];
+            'taxonomies'          => array( 'doc_tag' ),
+        );
 
         register_post_type( $this->post_type, apply_filters( 'wedocs_post_type', $args ) );
     }

@@ -2,12 +2,14 @@ import { __, sprintf } from '@wordpress/i18n';
 
 const SearchFilter = ( { handleChange, searchValue, listing } ) => {
   return (
-    <div className="relative rounded-md shadow-sm">
+    <div className="relative rounded-md shadow-sm ml-auto">
       <input
         type="text"
         placeholder={ sprintf(
           __( 'Search by %s…', 'wedocs' ),
-          listing ? __( 'article name', 'wedocs' ) : __( 'document name', 'wedocs' )
+          listing
+            ? __( 'article name', 'wedocs' )
+            : __( 'document name', 'wedocs' )
         ) }
         value={ searchValue }
         onChange={ handleChange }

@@ -2,71 +2,73 @@
 
 namespace WeDevs\WeDocs\Upgrader;
 
-use WeDevs\WeDocs\Upgrader\Upgrades\V_2_0_0;
-use WeDevs\WeDocs\Upgrader\Upgrades\V_2_0_1;
-use WeDevs\WeDocs\Upgrader\Upgrades\V_2_0_2;
-use WeDevs\WeDocs\Upgrader\Upgrades\V_2_1_0;
+use WeDevs\WeDocs\Upgrader\Upgrades\Upgrades;
 
 class Upgrader {
 
+    /**
+     * Check upgrader version.
+     *
+     * @var bool $need_upgrade
+     *
+     * @since 2.0.0
+     */
     protected $need_upgrade = false;
 
     public function __construct() {
         add_action( 'wedocs_upgrader_runner', array( $this, 'do_upgrade' ) );
     }
 
+    /**
+     * Calculate upgrader version for run it.
+     *
+     * @since 2.0.0
+     *
+     * @return $this
+     */
     public function calculate() {
-        $wedocs_version  = get_option( 'wedocs_version' );
-        empty( $upgrade_version ) ? update_option( 'wedocs_upgrade_version', '2.0.0' ) : '';
-        $upgrade_version = get_option( 'wedocs_upgrade_version' );
+        $upgrades          = new Upgrades();
+        $installed_version = $upgrades->get_wedocs_installed_version();
+        $upgrader_version  = array_key_last( $upgrades->class_list );
 
-        $this->need_upgrade = $upgrade_version > $wedocs_version;
+        $this->need_upgrade = version_compare( $upgrader_version, $installed_version, '>' );
 
         return $this;
     }
 
+    /**
+     * Check if upgrader run is required.
+     *
+     * @since 2.0.0
+     *
+     * @return bool
+     */
     public function need_upgrade(): bool {
         return $this->need_upgrade;
     }
 
+    /**
+     * Upgrade necessary data.
+     *
+     * @since 2.0.0
+     *
+     * @return void
+     */
     public function do_upgrade() {
-        $v_2_0_0 = new V_2_0_0();
-        $v_2_0_1 = new V_2_0_1();
-        $v_2_0_2 = new V_2_0_2();
-        $v_2_1_0 = new V_2_1_0();
+        $upgrades   = new Upgrades();
+        $class_list = ( $upgrades )->class_list;
+        $class_list = array_reverse( $class_list );
 
-        $v_2_0_0->setUpgrade( $v_2_0_1 )->setUpgrade( $v_2_0_2 )->setUpgrade( $v_2_1_0 );
+        $upgrade_initiator = null;
+        foreach ( $class_list as $class_name ) {
+            $upgrade = new $class_name();
+            if ( ! is_null( $upgrade_initiator ) ) {
+                $upgrade->setUpgrade( $upgrade_initiator );
+            }
 
-        $v_2_0_0->check(  );
+            $upgrade_initiator = $upgrade;
+        }
+
+        $upgrade_initiator->check();
     }
-
-//    public function do_upgrade() {
-//        $value           = get_option( 'wedocs_settings', [] );
-//        $updated_version = get_option( 'wedocs_upgrade_version' );
-//
-//        // Check if data already updated.
-//        if ( empty( $value['general'] ) ) {
-//            // Set default value if general data not found.
-//            $value['general'] = [
-//                'print'     => wedocs_get_general_settings( 'print', 'on' ),
-//                'email'     => wedocs_get_general_settings( 'email', 'on' ),
-//                'helpful'   => wedocs_get_general_settings( 'helpful', 'on' ),
-//                'comments'  => wedocs_get_general_settings( 'comments', 'on' ),
-//                'email_to'  => wedocs_get_general_settings( 'email_to' ),
-//                'docs_home' => wedocs_get_general_settings( 'docs_home' ),
-//            ];
-//
-//            // Remove all unnecessary data.
-//            unset( $value['print'] );
-//            unset( $value['email'] );
-//            unset( $value['helpful'] );
-//            unset( $value['comments'] );
-//            unset( $value['email_to'] );
-//            unset( $value['docs_home'] );
-//        }
-//
-//        // Update settings data with plugin version.
-//        update_option( 'wedocs_settings', $value );
-//        update_option( 'wedocs_version', $updated_version );
-//    }
 }

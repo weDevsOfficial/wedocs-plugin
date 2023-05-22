@@ -24,20 +24,22 @@ const DraggableDocs = ( { setItems, children } ) => {
   const handleDragEnd = ( event ) => {
     const { active, over } = event;
 
-    if ( active.id !== over.id ) {
+    if ( active?.id !== over?.id ) {
       setItems( ( elements ) => {
         const oldItem = elements.find(
-          ( element ) => element.id === active.id
+          ( element ) => element?.id === active?.id
         );
 
-        const newItem = elements.find( ( element ) => element.id === over.id );
+        const newItem = elements.find(
+          ( element ) => element?.id === over?.id
+        );
         const oldIndex = elements.indexOf( oldItem );
         const newIndex = elements.indexOf( newItem );
         const updatedOrder = arrayMove( elements, oldIndex, newIndex );
 
         updatedOrder.forEach( ( doc, index ) => {
           dispatch( docsStore )
-            .updateDoc( doc.id, { menu_order: index } )
+            .updateDoc( doc?.id, { menu_order: index } )
             .then( ( result ) => {} )
             .catch( ( err ) => {} );
         } );

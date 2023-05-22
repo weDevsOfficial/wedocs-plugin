@@ -4,7 +4,7 @@ import extractedTitle from '../../utils/extractedTitle';
 import { __ } from '@wordpress/i18n';
 import he from 'he';
 
-const DocumentationHeader = ( { doc } ) => {
+const DocumentationHeader = ( { doc, showActions } ) => {
   const { id, title } = doc;
 
   const privacyIcon = wp.hooks.applyFilters(
@@ -58,7 +58,7 @@ const DocumentationHeader = ( { doc } ) => {
       <div className="flex gap-5 items-center">
         { /* Render private documentation icon */ }
         { privacyIcon }
-        <DocActions docId={ id } type="doc" disabled />
+        { showActions && <DocActions docId={ id } type="doc" disabled /> }
       </div>
     </div>
   );

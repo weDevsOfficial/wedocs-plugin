@@ -2,7 +2,7 @@
 
 namespace WeDevs\WeDocs\Upgrader\Abstracts;
 
-use WeDevs\WeDocs\Upgrader\Upgrades;
+use WeDevs\WeDocs\Upgrader\Upgrades\Upgrades;
 
 /**
  * The AbstractHandler class.
@@ -10,42 +10,54 @@ use WeDevs\WeDocs\Upgrader\Upgrades;
 abstract class UpgradeHandler {
 
     /**
-     * @var Upgrader
+     * @var UpgradeHandler
+     *
+     * @since 2.0.0
      */
     protected $upgrade;
-
-    /**
-     * Check upgrades handler for building the chain of handlers.
-     *
-     * @param Upgrades $update
-     *
-     * @return mixed
-     */
-    public abstract function check( Upgrades $update );
 
     /**
      * Set current upgrade object.
      *
      * @param UpgradeHandler $upgrade
      *
-     * @return void
+     * @return UpgradeHandler
      */
     public function setUpgrade( UpgradeHandler $upgrade ) {
         $this->upgrade = $upgrade;
 
-        return $upgrade;
+        return $this;
+    }
+
+    /**
+     * Check upgrader version & passed next upgrader class.
+     *
+     * @since 2.0.0
+     *
+     * @return mixed|void
+     */
+    public function check() {
+        $upgrades       = new Upgrades();
+        $wedocs_version = $upgrades->get_wedocs_installed_version();
+        $need_upgrade   = version_compare( $wedocs_version, $this->version, '<' );
+
+        if ( $need_upgrade ) {
+            $this->handle_upgrade();
+            update_option( 'wedocs_version', $this->version );
+            $this->next();
+        }
     }
 
     /**
      * Check upgrade handler & pass next handle.
      *
-     * @param Upgrades $update
+     * @since 2.0.0
      *
      * @return void
      */
-    public function next( Upgrades $update ) {
+    public function next() {
         if ( $this->upgrade ) {
-            $this->upgrade->check( $update );
+            $this->upgrade->check();
         }
     }
 }

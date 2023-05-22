@@ -398,7 +398,7 @@ class API extends WP_REST_Controller {
     /**
      * Prepares a single doc output for response.
      *
-     * @param WP_Post         $post    post object
+     * @param WP_Post         $doc    post object
      * @param WP_REST_Request $request request object
      *
      * @return WP_REST_Response response object
@@ -513,7 +513,7 @@ class API extends WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function delete_item_permissions_check( $request ) {
-        if ( ! current_user_can( 'edit_posts' ) ) {
+        if ( ! current_user_can( 'edit_docs' ) ) {
             return new WP_Error(
                 'wedocs_permission_failure',
                 esc_html__( 'You cannot delete the documentation resource.', 'wedocs' )

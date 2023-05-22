@@ -5,7 +5,7 @@ import { CSS } from '@dnd-kit/utilities';
 import extractedTitle from '../../utils/extractedTitle';
 import he from 'he';
 
-const SectionArticles = ( { article, isAllowComments } ) => {
+const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable( { id: article.id } );
 
@@ -49,18 +49,20 @@ const SectionArticles = ( { article, isAllowComments } ) => {
       { ...attributes }
       { ...listeners }
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="21"
-        fill="none"
-      >
-        <path
-          fillRule="evenodd"
-          d="M8.5 7.498c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 8.573 8.5 7.498zm0 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 15.467 8.5 14.392zm3-6.894c0-1.075.871-1.947 1.947-1.947s1.947.872 1.947 1.947-.872 1.947-1.947 1.947S11.5 8.573 11.5 7.498zm3.893 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.871 1.947 1.947 1.947 1.947-.872 1.947-1.947z"
-          fill="#d9d9d9"
-        />
-      </svg>
+      { isAdmin && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="21"
+          fill="none"
+        >
+          <path
+            fillRule="evenodd"
+            d="M8.5 7.498c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 8.573 8.5 7.498zm0 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 15.467 8.5 14.392zm3-6.894c0-1.075.871-1.947 1.947-1.947s1.947.872 1.947 1.947-.872 1.947-1.947 1.947S11.5 8.573 11.5 7.498zm3.893 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.871 1.947 1.947 1.947 1.947-.872 1.947-1.947z"
+            fill="#d9d9d9"
+          />
+        </svg>
+      ) }
       <div className="flex items-center w-full group">
         <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
           <div className="flex items-center">
@@ -181,7 +183,7 @@ const SectionArticles = ( { article, isAllowComments } ) => {
           </div>
         </div>
         <div className="ml-8 flex-shrink-0 w-5 h-5">
-          { ! Boolean( parseInt( isAdminRestricted ) ) && (
+          { isAdmin && ! Boolean( parseInt( isAdminRestricted ) ) && (
             <DocActions docId={ article?.id } type="article" />
           ) }
         </div>

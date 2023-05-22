@@ -2,6 +2,7 @@ const DEFAULT_STATE = {
   docs: [],
   pages: [],
   loading: false,
+  userDocIds: [],
   helpfulDocs: [],
   // contributors: {},
 };
@@ -18,6 +19,12 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
       return {
         ...state,
         docs: [ ...state.docs, action.doc ],
+      };
+
+    case 'SET_USER_DOC_IDS':
+      return {
+        ...state,
+        userDocIds: [ ...state.userDocIds, ...action.userDocIds ],
       };
 
     case 'SET_PAGES':

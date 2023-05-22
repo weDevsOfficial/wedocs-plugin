@@ -77,8 +77,17 @@ const ListingPage = () => {
     setSections( [ ...filteredSections ] );
   }, [ sectionsData, searchValue ] );
 
+  const showActions = wp.hooks.applyFilters(
+    'wedocs_show_documentation_actions',
+    true
+  );
+
+  const isAdmin = wp.hooks.applyFilters( 'wedocs_check_is_admin_user', true );
+
   return (
     <div className="docs-section-listing wrap py-5">
+      { ! loading && showActions && needUpgrade && <Upgrade /> }
+
       <div className="flex items-center justify-between mb-7">
         <BackToDocsPage />
         <SearchFilter
@@ -88,26 +97,39 @@ const ListingPage = () => {
         />
       </div>
 
-      { ! loading && needUpgrade && <Upgrade /> }
-
       <ListingHeader id={ id } />
 
       { ! loading && sections.length > 0 && (
-        <DraggableDocs setItems={ setSections }>
-          <SortableContext
-            items={ sections }
-            strategy={ verticalListSortingStrategy }
-          >
-            { sections?.map( ( section ) => (
-              <DocSections
-                key={ section.id }
-                sections={ sections }
-                section={ section }
-                searchValue={ searchValue }
-              />
-            ) ) }
-          </SortableContext>
-        </DraggableDocs>
+        <>
+          { isAdmin ? (
+            <DraggableDocs setItems={ setSections }>
+              <SortableContext
+                items={ sections }
+                strategy={ verticalListSortingStrategy }
+              >
+                { sections?.map( ( section ) => (
+                  <DocSections
+                    key={ section.id }
+                    sections={ sections }
+                    section={ section }
+                    searchValue={ searchValue }
+                  />
+                ) ) }
+              </SortableContext>
+            </DraggableDocs>
+          ) : (
+            <>
+              { sections?.map( ( section ) => (
+                <DocSections
+                  key={ section.id }
+                  sections={ sections }
+                  section={ section }
+                  searchValue={ searchValue }
+                />
+              ) ) }
+            </>
+          ) }
+        </>
       ) }
 
       { ! loading && sections.length === 0 && (

@@ -33,6 +33,11 @@ const selectors = {
     return sortableDocs;
   },
 
+  getUserDocIds: ( state ) => {
+    const { userDocIds } = state;
+    return userDocIds;
+  },
+
   getSectionsDocs: ( state, id ) => {
     const { docs } = state;
     const sections = docs.filter( ( doc ) => doc.parent === id );

@@ -47,7 +47,7 @@ class Ajax {
             return wp_send_json_error();
         }
 
-        if ( ! current_user_can( $post_type_object->cap->publish_posts ) ) {
+        if ( ! current_user_can( $post_type_object->cap->publish_docs ) ) {
             $status = 'pending';
         }
 

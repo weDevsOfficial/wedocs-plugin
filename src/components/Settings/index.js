@@ -78,6 +78,11 @@ const SettingsPage = () => {
     docSettings?.assistant
   );
 
+  const showActions = wp.hooks.applyFilters(
+    'wedocs_show_documentation_actions',
+    true
+  );
+
   useEffect( () => {
     if ( settings?.docs_home && ! Boolean( settings?.general?.docs_home ) ) {
       const email = settings?.email;
@@ -107,7 +112,7 @@ const SettingsPage = () => {
 
   return (
     <div className="min-h-full pt-7">
-      { needUpgrade && <Upgrade /> }
+      { showActions && needUpgrade && <Upgrade /> }
 
       <main>
         <div className="pb-10 pt-3 sm:px-0">

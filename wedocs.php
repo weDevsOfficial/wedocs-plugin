@@ -249,6 +249,13 @@ final class WeDocs {
         return $this->plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
     }
 
+    /**
+     * Initialize action scheduler.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
     public function init_action_scheduler() {
         require_once( __DIR__ . '/vendor/woocommerce/action-scheduler/action-scheduler.php' );
     }

@@ -28,6 +28,10 @@ const actions = {
     return { type: 'SET_LOADING', loading };
   },
 
+  setUserDocIds( userDocIds ) {
+    return { type: 'SET_USER_DOC_IDS', userDocIds };
+  },
+
   fetchFromAPI( path ) {
     return { type: 'FETCH_FROM_API', path };
   },
