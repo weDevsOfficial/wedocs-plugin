@@ -22,7 +22,7 @@ const SettingsPage = () => {
 
   const [ docSettings, setDocSettings ] = useState( { ...settings } );
 
-  const needUpgrade = useSelect(
+  const { need_upgrade, status } = useSelect(
     ( select ) => select( settingsStore ).getUpgradeInfo(),
     []
   );
@@ -110,9 +110,28 @@ const SettingsPage = () => {
     setDocSettings( { ...docSettings, ...settings } );
   }, [ settings ] );
 
+  if ( status === 'done' ) {
+    dispatch( settingsStore )
+      .makeUpdateDone()
+      .then( ( result ) => {
+        if ( result ) {
+          Swal.fire( {
+            icon: 'success',
+            text: __( 'weDocs database has been updated successfully', 'wedocs' ),
+            title: __( 'Database Updated!', 'wedocs' ),
+            toast: true,
+            timer: 3000,
+            position: 'bottom-end',
+            showConfirmButton: false,
+          } );
+        }
+      } )
+      .catch( ( err ) => {} );
+  }
+
   return (
     <div className="min-h-full pt-7">
-      { showActions && needUpgrade && <Upgrade /> }
+      { showActions && need_upgrade && <Upgrade status={ status } /> }
 
       <main>
         <div className="pb-10 pt-3 sm:px-0">

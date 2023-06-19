@@ -19,7 +19,7 @@ const DocumentationHeader = ( { doc, showActions } ) => {
         <div className="inline-flex items-center space-x-3">
           <div className="flex items-center space-x-3 flex-1 group">
             <div
-              className="tooltip cursor-pointer before:max-w-xl z-[9990]"
+              className="tooltip cursor-pointer before:max-w-xl z-[100]"
               data-tip={ he.decode( __( title?.rendered, 'wedocs' ) ) }
             >
               <Link to={ `/section/${ id }` }>

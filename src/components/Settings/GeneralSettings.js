@@ -77,6 +77,51 @@ const GeneralSettings = ( {
               </div>
             </div>
 
+            <div className="col-span-4">
+              <div className="settings-content flex items-center justify-between">
+                <div className="settings-heading flex items-center space-x-2 flex-1">
+                  <label
+                    className="block text-sm font-medium text-gray-600"
+                    id="headlessui-listbox-label-15"
+                    data-headlessui-state="open"
+                  >
+                    { __( 'Email Feedback on Article', 'wedocs' ) }
+                  </label>
+                  <div
+                    className="tooltip cursor-pointer ml-2 z-[9999]"
+                    data-tip={ __(
+                      'Invite readers to share their thoughts through an email feedback form',
+                      'wedocs'
+                    ) }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="none"
+                    >
+                      <path
+                        d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                        stroke="#6b7280"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                  <Switcher
+                    name="email"
+                    settingsPanel={ generalSettings }
+                    settingsData={ settingsData }
+                    setSettings={ setSettings }
+                    panelName={ `general` }
+                  />
+                </div>
+              </div>
+            </div>
+
             { ( generalSettingsData?.email === 'on' ||
               ! Boolean( generalSettingsData?.email ) ) && (
               <div className="col-span-4">
@@ -89,11 +134,12 @@ const GeneralSettings = ( {
                     >
                       { __( 'Email Address', 'wedocs' ) }
                     </label>
+
                     <div
                       className="tooltip cursor-pointer ml-2 z-[9999]"
                       data-tip={ __(
-                        'Enter the email address where you would like to receive feedback from users.',
-                        'wedocs'
+                            'Enter the email address where you would like to receive feedback',
+                            'wedocs'
                       ) }
                     >
                       <svg
@@ -131,51 +177,6 @@ const GeneralSettings = ( {
                 </div>
               </div>
             ) }
-
-            <div className="col-span-4">
-              <div className="settings-content flex items-center justify-between">
-                <div className="settings-heading flex items-center space-x-2 flex-1">
-                  <label
-                    className="block text-sm font-medium text-gray-600"
-                    id="headlessui-listbox-label-15"
-                    data-headlessui-state="open"
-                  >
-                    { __( 'Email Feedback on Article', 'wedocs' ) }
-                  </label>
-                  <div
-                    className="tooltip cursor-pointer ml-2 z-[9999]"
-                    data-tip={ __(
-                      'Invite readers to share their thoughts and suggestions through an email feedback form',
-                      'wedocs'
-                    ) }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      fill="none"
-                    >
-                      <path
-                        d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
-                        stroke="#6b7280"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
-                  <Switcher
-                    name="email"
-                    settingsPanel={ generalSettings }
-                    settingsData={ settingsData }
-                    setSettings={ setSettings }
-                    panelName={ `general` }
-                  />
-                </div>
-              </div>
-            </div>
 
             <div className="col-span-4">
               <div className="settings-content flex items-center justify-between">
@@ -235,7 +236,7 @@ const GeneralSettings = ( {
                   <div
                     className="tooltip cursor-pointer ml-2 z-[9999]"
                     data-tip={ __(
-                      'Increase reader engagement by turning on article comments',
+                      'Increase reader engagement by turning on comments',
                       'wedocs'
                     ) }
                   >
@@ -280,7 +281,7 @@ const GeneralSettings = ( {
                   <div
                     className="tooltip cursor-pointer ml-2 z-[9999]"
                     data-tip={ __(
-                      'Enable this option to allow users to print articles directly from the website',
+                      'Allow users to print articles directly from the website',
                       'wedocs'
                     ) }
                   >

@@ -1,7 +1,7 @@
 import ListingHeader from './ListingHeader';
 import DocSections from './DocSections';
 import { useParams } from 'react-router-dom';
-import { useSelect } from '@wordpress/data';
+import {dispatch, useSelect} from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import docsStore from '../../data/docs';
 import BackToDocsPage from '../BackToDocsPage';
@@ -16,6 +16,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import settingsStore from '../../data/settings';
+import Swal from "sweetalert2";
 
 const ListingPage = () => {
   const { id } = useParams();
@@ -48,7 +49,7 @@ const ListingPage = () => {
     doc?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() )
   );
 
-  const needUpgrade = useSelect(
+  const { need_upgrade, status } = useSelect(
     ( select ) => select( settingsStore ).getUpgradeInfo(),
     []
   );
@@ -84,9 +85,28 @@ const ListingPage = () => {
 
   const isAdmin = wp.hooks.applyFilters( 'wedocs_check_is_admin_user', true );
 
+  if ( status === 'done' ) {
+    dispatch( settingsStore )
+      .makeUpdateDone()
+      .then( ( result ) => {
+        if ( result ) {
+          Swal.fire( {
+            icon: 'success',
+            text: __( 'weDocs database has been updated successfully', 'wedocs' ),
+            title: __( 'Database Updated!', 'wedocs' ),
+            toast: true,
+            timer: 3000,
+            position: 'bottom-end',
+            showConfirmButton: false,
+          } );
+        }
+      } )
+      .catch( ( err ) => {} );
+  }
+
   return (
     <div className="docs-section-listing wrap py-5">
-      { ! loading && showActions && needUpgrade && <Upgrade /> }
+      { ! loading && showActions && need_upgrade && <Upgrade status={ status } /> }
 
       <div className="flex items-center justify-between mb-7">
         <BackToDocsPage />

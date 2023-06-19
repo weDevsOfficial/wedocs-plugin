@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-05-09T21:03:07+00:00\n"
+"POT-Creation-Date: 2023-06-19T05:16:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: wedocs\n"
@@ -66,7 +66,7 @@ msgid "Docs"
 msgstr ""
 
 #: includes/Admin/Menu.php:77
-#: includes/Post_Types.php:85
+#: includes/Post_Types.php:99
 msgid "Tags"
 msgstr ""
 
@@ -114,23 +114,23 @@ msgstr ""
 msgid "Maximum number of items to be returned in result set."
 msgstr ""
 
-#: includes/API/API.php:387
+#: includes/API/API.php:386
 msgid "The page number requested is larger than the number of pages available."
 msgstr ""
 
-#: includes/API/API.php:473
+#: includes/API/API.php:472
 msgid "No name given"
 msgstr ""
 
-#: includes/API/API.php:477
+#: includes/API/API.php:476
 msgid "No email given"
 msgstr ""
 
-#: includes/API/API.php:519
+#: includes/API/API.php:518
 msgid "You cannot delete the documentation resource."
 msgstr ""
 
-#: includes/API/API.php:540
+#: includes/API/API.php:539
 msgid "Invalid Documentation."
 msgstr ""
 
@@ -151,7 +151,7 @@ msgid "You don't have permission to get settings data"
 msgstr ""
 
 #: includes/API/SettingsApi.php:128
-#: includes/API/UpgraderApi.php:128
+#: includes/API/UpgraderApi.php:137
 msgid "Need to be an authenticate user"
 msgstr ""
 
@@ -159,15 +159,15 @@ msgstr ""
 msgid "No settings request found"
 msgstr ""
 
-#: includes/API/UpgraderApi.php:95
+#: includes/API/UpgraderApi.php:104
 msgid "You don't have permission to get upgrader data"
 msgstr ""
 
-#: includes/API/UpgraderApi.php:132
+#: includes/API/UpgraderApi.php:141
 msgid "Need to be an administrator user"
 msgstr ""
 
-#: includes/API/UpgraderApi.php:149
+#: includes/API/UpgraderApi.php:161
 msgid "Processing Upgrade in the background."
 msgstr ""
 
@@ -265,81 +265,81 @@ msgstr ""
 msgid "Not found in Trash"
 msgstr ""
 
-#: includes/Post_Types.php:83
+#: includes/Post_Types.php:97
 msgctxt "Taxonomy General Name"
 msgid "Tags"
 msgstr ""
 
-#: includes/Post_Types.php:84
+#: includes/Post_Types.php:98
 msgctxt "Taxonomy Singular Name"
 msgid "Tag"
 msgstr ""
 
-#: includes/Post_Types.php:86
+#: includes/Post_Types.php:100
 msgid "All Tags"
 msgstr ""
 
-#: includes/Post_Types.php:87
+#: includes/Post_Types.php:101
 msgid "Parent Tag"
 msgstr ""
 
-#: includes/Post_Types.php:88
+#: includes/Post_Types.php:102
 msgid "Parent Tag:"
 msgstr ""
 
-#: includes/Post_Types.php:89
+#: includes/Post_Types.php:103
 msgid "New Tag"
 msgstr ""
 
-#: includes/Post_Types.php:90
+#: includes/Post_Types.php:104
 msgid "Add New Item"
 msgstr ""
 
-#: includes/Post_Types.php:91
+#: includes/Post_Types.php:105
 msgid "Edit Tag"
 msgstr ""
 
-#: includes/Post_Types.php:92
+#: includes/Post_Types.php:106
 msgid "Update Tag"
 msgstr ""
 
-#: includes/Post_Types.php:93
+#: includes/Post_Types.php:107
 msgid "View Tag"
 msgstr ""
 
-#: includes/Post_Types.php:94
+#: includes/Post_Types.php:108
 msgid "Separate items with commas"
 msgstr ""
 
-#: includes/Post_Types.php:95
+#: includes/Post_Types.php:109
 msgid "Add or remove items"
 msgstr ""
 
-#: includes/Post_Types.php:96
+#: includes/Post_Types.php:110
 msgid "Choose from the most used"
 msgstr ""
 
-#: includes/Post_Types.php:97
+#: includes/Post_Types.php:111
 msgid "Popular Tags"
 msgstr ""
 
-#: includes/Post_Types.php:98
+#: includes/Post_Types.php:112
 msgid "Search Tags"
 msgstr ""
 
-#: includes/Post_Types.php:99
+#: includes/Post_Types.php:113
 msgid "Not Found"
 msgstr ""
 
-#: includes/Post_Types.php:100
+#: includes/Post_Types.php:114
 msgid "No items"
 msgstr ""
 
-#: includes/Post_Types.php:101
+#: includes/Post_Types.php:115
 msgid "Tags list"
 msgstr ""
 
-#: includes/Post_Types.php:102
+#: includes/Post_Types.php:116
 msgid "Tags list navigation"
 msgstr ""
 
@@ -359,7 +359,7 @@ msgstr ""
 #: assets/build/index.js:1
 #: assets/build/index.js:5
 #: src/components/BackToDocsPage.js:25
-#: src/components/Documentations/index.js:54
+#: src/components/Documentations/index.js:92
 msgid "All Docs"
 msgstr ""
 
@@ -468,21 +468,16 @@ msgid "Updated on %s"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/RestrictionModal.js:118
-msgid "Are you sure you want to delete this?"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/RestrictionModal.js:124
-msgid "If you delete this, it will be lost forever and you will not be able to recover it anymore."
+#: src/components/RestrictionModal.js:123
+msgid "Deleting it means it will be permanently lost, and you won't be able to retrieve it again."
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/AddArticleModal.js:202
 #: src/components/AddDocModal.js:164
 #: src/components/AddSectionModal.js:166
-#: src/components/ConfirmationModal.js:149
-#: src/components/RestrictionModal.js:135
+#: src/components/ConfirmationModal.js:140
+#: src/components/RestrictionModal.js:134
 msgid "Cancel"
 msgstr ""
 
@@ -490,8 +485,8 @@ msgstr ""
 #: src/components/AddArticleModal.js:76
 #: src/components/AddDocModal.js:54
 #: src/components/AddSectionModal.js:52
-#: src/components/ConfirmationModal.js:33
-#: src/components/RestrictionModal.js:40
+#: src/components/ConfirmationModal.js:24
+#: src/components/RestrictionModal.js:39
 #: src/components/Settings/index.js:48
 msgid "Error"
 msgstr ""
@@ -500,7 +495,7 @@ msgstr ""
 #: src/components/AddArticleModal.js:192
 #: src/components/AddDocModal.js:156
 #: src/components/AddSectionModal.js:156
-#: src/components/RestrictionModal.js:143
+#: src/components/RestrictionModal.js:142
 msgid "%s"
 msgstr ""
 
@@ -515,7 +510,7 @@ msgid "Delete"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/SectionArticles.js:176
+#: src/components/DocListing/SectionArticles.js:178
 msgid "Updated at %s"
 msgstr ""
 
@@ -568,8 +563,8 @@ msgid "Create"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:239
-#: src/components/DocListing/ListingButtons.js:25
+#: src/components/DocListing/DocSections.js:251
+#: src/components/DocListing/ListingButtons.js:32
 #: src/components/Documentations/AddChildrens.js:33
 msgid "Add article"
 msgstr ""
@@ -595,7 +590,7 @@ msgid "New section has been added successfully"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/ListingButtons.js:17
+#: src/components/DocListing/ListingButtons.js:24
 #: src/components/Documentations/AddChildrens.js:41
 msgid "Add section"
 msgstr ""
@@ -606,37 +601,27 @@ msgid "Search by %s…"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/SearchFilter.js:10
+#: src/components/SearchFilter.js:11
 msgid "article name"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/SearchFilter.js:10
+#: src/components/SearchFilter.js:12
 msgid "document name"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/ConfirmationModal.js:135
+#: src/components/ConfirmationModal.js:126
 msgid "Are you sure?"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/ConfirmationModal.js:138
+#: src/components/ConfirmationModal.js:129
 msgid "We recommend backing up your database before upgrading to ensure your data is safe. Are you sure you want to run the upgrade now?"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/ConfirmationModal.js:21
-msgid "Database Upgraded"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/ConfirmationModal.js:22
-msgid "Wedocs database has been upgrade successfully"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/ConfirmationModal.js:155
+#: src/components/ConfirmationModal.js:146
 msgid "I'm sure"
 msgstr ""
 
@@ -652,16 +637,27 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Upgrade.js:49
-msgid "A database upgrade is required. If you don't upgrade, you may experience errors while using weDocs."
+msgid "A database upgrade is required. If you don't upgrade, you may experience unexpected behaviour while using weDocs."
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Upgrade.js:58
-msgid "Update"
+#: assets/build/index.js:5
+#: src/components/DocListing/index.js:95
+#: src/components/Documentations/index.js:76
+#: src/components/Settings/index.js:120
+msgid "weDocs database has been updated successfully"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/index.js:131
+#: assets/build/index.js:5
+#: src/components/DocListing/index.js:96
+#: src/components/Documentations/index.js:77
+#: src/components/Settings/index.js:121
+msgid "Database Updated!"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/index.js:173
 msgid "No section or article found for this documentation"
 msgstr ""
 
@@ -702,58 +698,58 @@ msgid " is used."
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:90
-msgid "Email Address"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:94
-msgid "Enter the email address where you would like to receive feedback from users."
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:121
-msgid "Write your email address"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:143
+#: src/components/Settings/GeneralSettings.js:88
 msgid "Email Feedback on Article"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:147
-msgid "Invite readers to share their thoughts and suggestions through an email feedback form"
+#: src/components/Settings/GeneralSettings.js:92
+msgid "Invite readers to share their thoughts through an email feedback form"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:188
+#: src/components/Settings/GeneralSettings.js:135
+msgid "Email Address"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:140
+msgid "Enter the email address where you would like to receive feedback"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:167
+msgid "Write your email address"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:189
 msgid "Helpful Feedback on Article"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:192
+#: src/components/Settings/GeneralSettings.js:193
 msgid "Enabling helpful feedback on your article allows readers to provide opinions on your content"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:233
+#: src/components/Settings/GeneralSettings.js:234
 msgid "Allow Comments on Article"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:237
-msgid "Increase reader engagement by turning on article comments"
+#: src/components/Settings/GeneralSettings.js:238
+msgid "Increase reader engagement by turning on comments"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:278
+#: src/components/Settings/GeneralSettings.js:279
 msgid "Allow Article Printing"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:282
-msgid "Enable this option to allow users to print articles directly from the website"
+#: src/components/Settings/GeneralSettings.js:283
+msgid "Allow users to print articles directly from the website"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -813,27 +809,27 @@ msgstr ""
 
 #. translators: %d: Length of documentation sections
 #: assets/build/index.js:3
-#: src/components/Documentations/ParentDocs.js:82
+#: src/components/Documentations/ParentDocs.js:84
 msgid "%d Sections"
 msgstr ""
 
 #. translators: %d: Length of documentation articles
 #: assets/build/index.js:5
-#: src/components/Documentations/ParentDocs.js:109
+#: src/components/Documentations/ParentDocs.js:111
 msgid "%d Articles"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/ParentDocs.js:136
+#: src/components/Documentations/ParentDocs.js:139
 msgid "Add"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/index.js:57
+#: src/components/Documentations/index.js:96
 msgid "New doc"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/index.js:92
+#: src/components/Documentations/index.js:142
 msgid "Your searching documentation not available at this moment…"
 msgstr ""

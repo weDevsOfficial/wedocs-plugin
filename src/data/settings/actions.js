@@ -36,6 +36,10 @@ const actions = {
     yield actions.setUpgradeInfo( false );
     return response;
   },
+
+  *makeUpdateDone() {
+    return yield { type: 'UPDATE_TO_API', path: '/wp/v2/docs/upgrade/done' };
+  }
 };
 
 export default actions;

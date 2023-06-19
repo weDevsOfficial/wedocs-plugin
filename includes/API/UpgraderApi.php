@@ -2,7 +2,6 @@
 
 namespace WeDevs\WeDocs\API;
 
-use WeDevs\WeDocs\Upgrader\Upgrader;
 use WP_REST_Server;
 
 class UpgraderApi extends \WP_REST_Controller {
@@ -76,6 +75,16 @@ class UpgraderApi extends \WP_REST_Controller {
                 ),
             )
         );
+
+        register_rest_route( $this->namespace . $this->version, '/' . $this->base . '/done',
+            array(
+                array(
+                    'methods'             => WP_REST_Server::CREATABLE,
+                    'callback'            => array( $this, 'handle_upgrades_done' ),
+                    'permission_callback' => array( $this, 'create_items_permissions_check' ),
+                ),
+            )
+        );
     }
 
     /**
@@ -105,13 +114,15 @@ class UpgraderApi extends \WP_REST_Controller {
      * @return mixed
      */
     public function get_items( $request ) {
+        $need_upgrade = wedocs()->upgrader->calculate()->need_upgrade();
+        $runner_info  = get_option( 'wedocs_upgrader_runner' );
 
-        /**
-         * @var $upgrader Upgrader
-         */
-        $upgrader = wedocs()->upgrader;
-
-        return rest_ensure_response( $upgrader->calculate()->need_upgrade() );
+        return rest_ensure_response(
+            array(
+                'status'       => $runner_info,
+                'need_upgrade' => $need_upgrade,
+            )
+        );
     }
 
     /**
@@ -119,11 +130,9 @@ class UpgraderApi extends \WP_REST_Controller {
      *
      * @since 2.0.0
      *
-     * @param \WP_REST_Request $request
-     *
      * @return bool|\WP_Error
      */
-    public function create_items_permissions_check( $request ) {
+    public function create_items_permissions_check() {
         if ( ! is_user_logged_in() ) {
             return new \WP_Error( 'rest_invalid_authenication', __( 'Need to be an authenticate user', 'wedocs' ) );
         }
@@ -145,45 +154,22 @@ class UpgraderApi extends \WP_REST_Controller {
      * @return mixed
      */
     public function create_item( $request ) {
+        // Run wedocs db upgrade scheduler.
         as_enqueue_async_action( 'wedocs_upgrader_runner', array(), 'wedocs_upgrader' );
+        update_option( 'wedocs_upgrader_runner', 'running' );
+
         return rest_ensure_response( array( 'message' => __( 'Processing Upgrade in the background.', 'wedocs' ) ) );
     }
 
     /**
-     * Update wedocs settings data.
+     * Handle upgrades running complete action.
      *
      * @since 2.0.0
      *
-     * @param string $updated_version
-     *
-     * @return void
+     * @return \WP_Error|\WP_HTTP_Response|\WP_REST_Response
      */
-    public function upgrade_wedocs_settings( $updated_version ) {
-        $value = get_option( 'wedocs_settings', [] );
-
-        // Check if data already updated.
-        if ( empty( $value['general'] ) ) {
-            // Set default value if general data not found.
-            $value['general'] = [
-                'print'     => wedocs_get_general_settings( 'print', 'on' ),
-                'email'     => wedocs_get_general_settings( 'email', 'on' ),
-                'helpful'   => wedocs_get_general_settings( 'helpful', 'on' ),
-                'comments'  => wedocs_get_general_settings( 'comments', 'on' ),
-                'email_to'  => wedocs_get_general_settings( 'email_to' ),
-                'docs_home' => wedocs_get_general_settings( 'docs_home' ),
-            ];
-
-            // Remove all unnecessary data.
-            unset( $value['print'] );
-            unset( $value['email'] );
-            unset( $value['helpful'] );
-            unset( $value['comments'] );
-            unset( $value['email_to'] );
-            unset( $value['docs_home'] );
-        }
-
-        // Update settings data with plugin version.
-        update_option( 'wedocs_settings', $value );
-        update_option( 'wedocs_version', $updated_version );
+    public function handle_upgrades_done() {
+        $is_update = update_option( 'wedocs_upgrader_runner', 'close' );
+        return rest_ensure_response( $is_update );
     }
 }

@@ -4,7 +4,7 @@ import { useState } from '@wordpress/element';
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
 import ConfirmationModal from './ConfirmationModal';
 
-const Upgrade = () => {
+const Upgrade = ( { status } ) => {
   const [ showUpgrader, setShowUpgrader ] = useState( true );
 
   return (
@@ -47,15 +47,15 @@ const Upgrade = () => {
               <div className="mt-2 text-base">
                 <p>
                   { __(
-                    "A database upgrade is required. If you don't upgrade, you may experience errors while using weDocs.",
+                    "A database upgrade is required. If you don't upgrade, you may experience unexpected behaviour while using weDocs.",
                     'wedocs'
                   ) }
                 </p>
               </div>
               <div className="mt-4">
                 <div className="-mx-1 -mt-1 flex">
-                  <ConfirmationModal className="px-2 py-1.5 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 ease-in-out duration-200 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                    { __( 'Update', 'wedocs' ) }
+                  <ConfirmationModal className={ `px-2 py-1.5 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 ease-in-out duration-200 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-75 disabled:hover:bg-indigo-600` }>
+                    { __( `Updat${ status === 'running' ? 'ing...' : 'e' }`, 'wedocs' ) }
                   </ConfirmationModal>
                 </div>
               </div>

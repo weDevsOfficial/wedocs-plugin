@@ -2,7 +2,6 @@ import { __, sprintf } from '@wordpress/i18n';
 import { Fragment, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import { dispatch } from '@wordpress/data';
-import docsStore from '../data/docs';
 import Swal from 'sweetalert2';
 
 const RestictionModal = ( { classes, children, docId, type } ) => {
@@ -15,7 +14,7 @@ const RestictionModal = ( { classes, children, docId, type } ) => {
     // Make it disabled for removing a doc.
     setDisabled( true );
 
-    dispatch( docsStore )
+    dispatch( 'wedocs/docs' )
       .deleteDoc( docId )
       .then( ( result ) => {
         Swal.fire( {
@@ -116,13 +115,13 @@ const RestictionModal = ( { classes, children, docId, type } ) => {
                         className="text-lg font-medium text-gray-900 mb-2"
                       >
                         { __(
-                          'Are you sure you want to delete this?',
+                          `Are you sure you want to delete this ${type}?`,
                           'wedocs'
                         ) }
                       </Dialog.Title>
                       <p className="text-gray-500 text-base">
                         { __(
-                          'If you delete this, it will be lost forever and you will not be able to recover it anymore.',
+                          'Deleting it means it will be permanently lost, and you won\'t be able to retrieve it again.',
                           'wedocs'
                         ) }
                       </p>

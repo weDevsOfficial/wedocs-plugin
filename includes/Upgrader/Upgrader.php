@@ -70,5 +70,6 @@ class Upgrader {
         }
 
         $upgrade_initiator->check();
+        update_option( 'wedocs_upgrader_runner', 'done' );
     }
 }

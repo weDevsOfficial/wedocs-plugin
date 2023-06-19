@@ -175,7 +175,7 @@ const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
               <div className="article-updated-date w-44 text-sm text-[#969696]">
                 { /* translators: %s: Formatted datetime string */ }
                 { sprintf(
-                  __( 'Updated at %s', 'wedocs' ),
+                  __( 'Updated on %s', 'wedocs' ),
                   formattedDateString
                 ) }
               </div>

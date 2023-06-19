@@ -96,7 +96,7 @@ final class WeDocs {
     private $container = [];
 
     /**
-     * Class construcotr
+     * Class constructor.
      */
     private function __construct() {
         $this->define_constants();
@@ -107,7 +107,6 @@ final class WeDocs {
         add_action( 'after_setup_theme', [ $this, 'init_classes' ] );
 
         $this->init_action_scheduler();
-        $this->initiate_appsero();
     }
 
     /**
@@ -252,29 +251,12 @@ final class WeDocs {
     /**
      * Initialize action scheduler.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.0
      *
      * @return void
      */
     public function init_action_scheduler() {
         require_once( __DIR__ . '/vendor/woocommerce/action-scheduler/action-scheduler.php' );
-    }
-
-    /**
-     * Initiate Appsero telemetry.
-     *
-     * @since 2.0.0
-     *
-     * @return void
-     */
-    private function initiate_appsero() {
-        $client = new Client(
-            '4cfb2667-a600-494c-a33a-a37799dd46c5',
-            'weDocs',
-            WEDOCS_FILE
-        );
-
-        $client->insights()->add_plugin_data()->init();
     }
 
     /**

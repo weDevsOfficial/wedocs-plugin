@@ -11,7 +11,7 @@ class Upgrades {
      *
      * @since 2.0.0
      */
-    public $class_list = array( '2.0.0' => V_2_0_0::class, '2.0.1' => V_2_0_1::class );
+    public $class_list = array( '2.0.0' => V_2_0_0::class );
 
     /**
      * Get wedocs installed version number.

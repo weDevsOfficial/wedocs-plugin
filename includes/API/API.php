@@ -280,11 +280,9 @@ class API extends WP_REST_Controller {
      *
      * @since 2.0.0
      *
-     * @param \WP_REST_Request $request
-     *
      * @return mixed
      */
-    public function get_helpful_docs( $request ) {
+    public function get_helpful_docs() {
         $args = array(
             'posts_per_page' => 10,
             'post_type'      => 'docs',
@@ -296,6 +294,7 @@ class API extends WP_REST_Controller {
 
         $query   = new WP_Query( $args );
         $doc_ids = ! empty( $query->posts ) ? $query->posts : [];
+
         return rest_ensure_response( $doc_ids );
     }
 
@@ -513,7 +512,7 @@ class API extends WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function delete_item_permissions_check( $request ) {
-        if ( ! current_user_can( 'edit_docs' ) ) {
+        if ( ! current_user_can( 'manage_options' ) ) {
             return new WP_Error(
                 'wedocs_permission_failure',
                 esc_html__( 'You cannot delete the documentation resource.', 'wedocs' )

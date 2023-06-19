@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import AddDocModal from '../AddDocModal';
 import EmptyDocs from './EmptyDocs';
 import ParentDocs from './ParentDocs';
-import { select, useSelect } from '@wordpress/data';
+import {dispatch, useSelect} from '@wordpress/data';
 import SearchFilter from '../SearchFilter';
 import { useState, useEffect } from '@wordpress/element';
 import DocsPlaceholder from './DocsPlaceholder';
@@ -11,7 +11,7 @@ import DraggableDocs from '../DraggableDocs';
 import Upgrade from '../Upgrade';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import settingsStore from '../../data/settings';
-import { store as coreStore } from '@wordpress/core-data';
+import Swal from "sweetalert2";
 
 const Documentations = () => {
   const parentDocs = useSelect(
@@ -24,7 +24,7 @@ const Documentations = () => {
     []
   );
 
-  const needUpgrade = useSelect(
+  const { need_upgrade, status } = useSelect(
     ( select ) => select( settingsStore ).getUpgradeInfo(),
     []
   );
@@ -66,6 +66,25 @@ const Documentations = () => {
     setDocumentations( [ ...filteredDocs ] );
   }, [ parentDocs, searchValue ] );
 
+  if ( status === 'done' ) {
+    dispatch( settingsStore )
+      .makeUpdateDone()
+      .then( ( result ) => {
+        if ( result ) {
+          Swal.fire( {
+            icon: 'success',
+            text: __( 'weDocs database has been updated successfully', 'wedocs' ),
+            title: __( 'Database Updated!', 'wedocs' ),
+            toast: true,
+            timer: 3000,
+            position: 'bottom-end',
+            showConfirmButton: false,
+          } );
+        }
+      } )
+      .catch( ( err ) => {} );
+  }
+
   return (
     <>
       <div className="documentation-header my-7">
@@ -86,7 +105,7 @@ const Documentations = () => {
         </h1>
       </div>
 
-      { ! loading && showActions && needUpgrade && <Upgrade /> }
+      { ! loading && showActions && need_upgrade && <Upgrade status={ status } /> }
 
       <div
         role="list"
@@ -127,9 +146,10 @@ const Documentations = () => {
         </h2>
       ) }
 
-      { ! loading && isAdmin && parentDocs && ! parentDocs?.length && (
+      { ! loading && ! searchValue && isAdmin && documentations && documentations?.length === 0 && (
         <EmptyDocs />
       ) }
+
       { ! loading && showEmptyNotice }
     </>
   );

@@ -8,24 +8,15 @@ import Swal from 'sweetalert2';
 const ConfirmationModal = ( { className, children } ) => {
   const [ openModal, setOpenModal ] = useState( false );
 
-  const needUpgrade = useSelect(
+  const { need_upgrade, status } = useSelect(
     ( select ) => select( settingsStore ).getUpgradeInfo(),
     []
   );
 
   const handleUpgraderClick = () => {
     dispatch( settingsStore )
-      .wedocsUpgrade( { upgrade: needUpgrade } )
+      .wedocsUpgrade( { upgrade: need_upgrade } )
       .then( ( result ) => {
-        Swal.fire( {
-          title: __( 'Database Upgraded', 'wedocs' ),
-          text: __( 'Wedocs database has been upgrade successfully', 'wedocs' ),
-          icon: 'success',
-          toast: true,
-          position: 'bottom-end',
-          showConfirmButton: false,
-          timer: 2000,
-        } );
         setOpenModal( false );
       } )
       .catch( ( err ) => {
@@ -43,7 +34,7 @@ const ConfirmationModal = ( { className, children } ) => {
 
   return (
     <>
-      <button onClick={ () => setOpenModal( true ) } className={ className }>
+      <button disabled={ status === 'running' } onClick={ () => setOpenModal( true ) } className={ className }>
         { children }
       </button>
 
