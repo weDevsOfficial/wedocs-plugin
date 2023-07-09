@@ -33,7 +33,7 @@ const Switcher = ( {
       <Switch
         checked={ enabled }
         onChange={ setEnabled }
-        className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full"
+        className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer outline-0 items-center justify-center rounded-full"
       >
         <span
           aria-hidden="true"

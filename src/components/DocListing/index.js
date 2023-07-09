@@ -1,7 +1,7 @@
 import ListingHeader from './ListingHeader';
 import DocSections from './DocSections';
 import { useParams } from 'react-router-dom';
-import {dispatch, useSelect} from '@wordpress/data';
+import { dispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import docsStore from '../../data/docs';
 import BackToDocsPage from '../BackToDocsPage';
@@ -17,6 +17,7 @@ import {
 } from '@dnd-kit/sortable';
 import settingsStore from '../../data/settings';
 import Swal from "sweetalert2";
+import { isAdminUser } from "../../utils/helper";
 
 const ListingPage = () => {
   const { id } = useParams();
@@ -83,7 +84,7 @@ const ListingPage = () => {
     true
   );
 
-  const isAdmin = wp.hooks.applyFilters( 'wedocs_check_is_admin_user', true );
+  const isAdmin = isAdminUser();
 
   if ( status === 'done' ) {
     dispatch( settingsStore )

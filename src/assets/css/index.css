@@ -16,6 +16,10 @@ html.wp-toolbar {
     margin-right: 0;
 }
 
+#adminmenu .wp-menu-image img {
+    margin: 0 auto;
+}
+
 .docs-section-listing.wrap {
     margin: 0;
 }

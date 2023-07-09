@@ -16,6 +16,7 @@ import DraggableDocs from '../DraggableDocs';
 import extractedTitle from '../../utils/extractedTitle';
 import settingsStore from '../../data/settings';
 import he from 'he';
+import { isAdminUser } from "../../utils/helper";
 
 const DocSections = ( { section, sections, searchValue } ) => {
   const { id, title } = section;
@@ -45,7 +46,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
       doc?.title?.rendered?.toLowerCase().includes( searchValue?.toLowerCase() )
     ) || [];
 
-  const isAdmin = wp.hooks.applyFilters( 'wedocs_check_is_admin_user', true );
+  const isAdmin = isAdminUser();
 
   const [ articles, setArticles ] = useState( [] );
 

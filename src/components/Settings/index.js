@@ -13,12 +13,13 @@ import { useParams } from 'react-router-dom';
 const SettingsPage = () => {
   const { panel } = useParams();
 
-  const [ selectedIndex, setSelectedIndex ] = useState( panel || 0 );
-
   const settings = useSelect(
     ( select ) => select( settingsStore ).getSettings(),
     []
   );
+
+  const panelIndex = Object.keys( settings ).indexOf( panel );
+  const [ selectedIndex, setSelectedIndex ] = useState( panelIndex || 0 );
 
   const [ docSettings, setDocSettings ] = useState( { ...settings } );
 

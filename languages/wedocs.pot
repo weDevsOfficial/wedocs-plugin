@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-06-19T05:16:15+00:00\n"
+"POT-Creation-Date: 2023-07-06T06:19:02+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
 
 #. Plugin Name of the plugin
@@ -66,7 +66,7 @@ msgid "Docs"
 msgstr ""
 
 #: includes/Admin/Menu.php:77
-#: includes/Post_Types.php:99
+#: includes/Post_Types.php:88
 msgid "Tags"
 msgstr ""
 
@@ -265,81 +265,81 @@ msgstr ""
 msgid "Not found in Trash"
 msgstr ""
 
-#: includes/Post_Types.php:97
+#: includes/Post_Types.php:86
 msgctxt "Taxonomy General Name"
 msgid "Tags"
 msgstr ""
 
-#: includes/Post_Types.php:98
+#: includes/Post_Types.php:87
 msgctxt "Taxonomy Singular Name"
 msgid "Tag"
 msgstr ""
 
-#: includes/Post_Types.php:100
+#: includes/Post_Types.php:89
 msgid "All Tags"
 msgstr ""
 
-#: includes/Post_Types.php:101
+#: includes/Post_Types.php:90
 msgid "Parent Tag"
 msgstr ""
 
-#: includes/Post_Types.php:102
+#: includes/Post_Types.php:91
 msgid "Parent Tag:"
 msgstr ""
 
-#: includes/Post_Types.php:103
+#: includes/Post_Types.php:92
 msgid "New Tag"
 msgstr ""
 
-#: includes/Post_Types.php:104
+#: includes/Post_Types.php:93
 msgid "Add New Item"
 msgstr ""
 
-#: includes/Post_Types.php:105
+#: includes/Post_Types.php:94
 msgid "Edit Tag"
 msgstr ""
 
-#: includes/Post_Types.php:106
+#: includes/Post_Types.php:95
 msgid "Update Tag"
 msgstr ""
 
-#: includes/Post_Types.php:107
+#: includes/Post_Types.php:96
 msgid "View Tag"
 msgstr ""
 
-#: includes/Post_Types.php:108
+#: includes/Post_Types.php:97
 msgid "Separate items with commas"
 msgstr ""
 
-#: includes/Post_Types.php:109
+#: includes/Post_Types.php:98
 msgid "Add or remove items"
 msgstr ""
 
-#: includes/Post_Types.php:110
+#: includes/Post_Types.php:99
 msgid "Choose from the most used"
 msgstr ""
 
-#: includes/Post_Types.php:111
+#: includes/Post_Types.php:100
 msgid "Popular Tags"
 msgstr ""
 
-#: includes/Post_Types.php:112
+#: includes/Post_Types.php:101
 msgid "Search Tags"
 msgstr ""
 
-#: includes/Post_Types.php:113
+#: includes/Post_Types.php:102
 msgid "Not Found"
 msgstr ""
 
-#: includes/Post_Types.php:114
+#: includes/Post_Types.php:103
 msgid "No items"
 msgstr ""
 
-#: includes/Post_Types.php:115
+#: includes/Post_Types.php:104
 msgid "Tags list"
 msgstr ""
 
-#: includes/Post_Types.php:116
+#: includes/Post_Types.php:105
 msgid "Tags list navigation"
 msgstr ""
 
@@ -359,7 +359,7 @@ msgstr ""
 #: assets/build/index.js:1
 #: assets/build/index.js:5
 #: src/components/BackToDocsPage.js:25
-#: src/components/Documentations/index.js:92
+#: src/components/Documentations/index.js:93
 msgid "All Docs"
 msgstr ""
 
@@ -426,11 +426,11 @@ msgid "Email"
 msgstr ""
 
 #: templates/content-modal.php:38
-msgid "subject"
+msgid "Subject"
 msgstr ""
 
 #: templates/content-modal.php:46
-msgid "message"
+msgid "Message"
 msgstr ""
 
 #: templates/content-modal.php:54
@@ -464,6 +464,8 @@ msgid "Still stuck?"
 msgstr ""
 
 #: templates/single-docs.php:92
+#: assets/build/index.js:1
+#: src/components/DocListing/SectionArticles.js:178
 msgid "Updated on %s"
 msgstr ""
 
@@ -487,7 +489,7 @@ msgstr ""
 #: src/components/AddSectionModal.js:52
 #: src/components/ConfirmationModal.js:24
 #: src/components/RestrictionModal.js:39
-#: src/components/Settings/index.js:48
+#: src/components/Settings/index.js:49
 msgid "Error"
 msgstr ""
 
@@ -507,11 +509,6 @@ msgstr ""
 #: assets/build/index.js:1
 #: src/components/DocActions.js:52
 msgid "Delete"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocListing/SectionArticles.js:178
-msgid "Updated at %s"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -563,7 +560,7 @@ msgid "Create"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:251
+#: src/components/DocListing/DocSections.js:252
 #: src/components/DocListing/ListingButtons.js:32
 #: src/components/Documentations/AddChildrens.js:33
 msgid "Add article"
@@ -642,22 +639,22 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: assets/build/index.js:5
-#: src/components/DocListing/index.js:95
-#: src/components/Documentations/index.js:76
-#: src/components/Settings/index.js:120
+#: src/components/DocListing/index.js:96
+#: src/components/Documentations/index.js:77
+#: src/components/Settings/index.js:121
 msgid "weDocs database has been updated successfully"
 msgstr ""
 
 #: assets/build/index.js:1
 #: assets/build/index.js:5
-#: src/components/DocListing/index.js:96
-#: src/components/Documentations/index.js:77
-#: src/components/Settings/index.js:121
+#: src/components/DocListing/index.js:97
+#: src/components/Documentations/index.js:78
+#: src/components/Settings/index.js:122
 msgid "Database Updated!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/index.js:173
+#: src/components/DocListing/index.js:174
 msgid "No section or article found for this documentation"
 msgstr ""
 
@@ -753,12 +750,12 @@ msgid "Allow users to print articles directly from the website"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/index.js:37
+#: src/components/Settings/index.js:38
 msgid "Settings Data Saved!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/index.js:38
+#: src/components/Settings/index.js:39
 msgid "Settings data has been saved successfully"
 msgstr ""
 
@@ -825,11 +822,11 @@ msgid "Add"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/index.js:96
+#: src/components/Documentations/index.js:97
 msgid "New doc"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/index.js:142
-msgid "Your searching documentation not available at this moment…"
+#: src/components/Documentations/index.js:143
+msgid "Oops! It seems that your search did not match any existing documents. Please try again..."
 msgstr ""

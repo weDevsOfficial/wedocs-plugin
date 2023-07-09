@@ -55,9 +55,9 @@ class Menu {
     /**
      * Add submenu to Admin Dashboard.
      *
-     * @return void
      * @since 2.0.0
      *
+     * @return void
      */
     public function add_admin_submenu() {
         global $submenu;
@@ -86,7 +86,6 @@ class Menu {
         );
 
         $all_submenus = apply_filters( 'wedocs_submenu', $all_submenus );
-
         if ( empty( $submenu['wedocs'] ) ) {
             $submenu['wedocs'] = array(); // phpcs:ignore.
         }

@@ -4,7 +4,7 @@ import { store as coreStore } from '@wordpress/core-data';
 
 const getDocsPath = wp.hooks.applyFilters(
   'wedocs_documentation_fetching_path',
-  '/wp/v2/docs?per_page=-1&status=publish,private'
+  '/wp/v2/docs?per_page=-1&status=publish'
 );
 
 const resolvers = {

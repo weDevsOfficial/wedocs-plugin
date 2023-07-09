@@ -12,6 +12,7 @@ import Upgrade from '../Upgrade';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import settingsStore from '../../data/settings';
 import Swal from "sweetalert2";
+import { isAdminUser } from "../../utils/helper";
 
 const Documentations = () => {
   const parentDocs = useSelect(
@@ -60,7 +61,7 @@ const Documentations = () => {
     documentations?.length
   );
 
-  const isAdmin = wp.hooks.applyFilters( 'wedocs_check_is_admin_user', true );
+  const isAdmin = isAdminUser();
 
   useEffect( () => {
     setDocumentations( [ ...filteredDocs ] );
@@ -140,7 +141,7 @@ const Documentations = () => {
       { ! loading && searchValue && documentations.length === 0 && (
         <h2 className="float-left text-lg mt-4">
           { __(
-            'Your searching documentation not available at this moment…',
+            'Oops! It seems that your search did not match any existing documents. Please try again...',
             'wedocs'
           ) }
         </h2>
@@ -150,7 +151,7 @@ const Documentations = () => {
         <EmptyDocs />
       ) }
 
-      { ! loading && showEmptyNotice }
+      { ! loading && ! searchValue && showEmptyNotice }
     </>
   );
 };

@@ -27,9 +27,21 @@ class V_2_0_0 extends UpgradeHandler {
      *
      * @since 2.0.0
      *
-     * @return string|null
+     * @return void
      */
     public function handle_upgrade() {
+        $this->update_settings_db();
+        $this->add_documentation_handling_capabilities();
+    }
+
+    /**
+     * Update weDocs settings db.
+     *
+     * @since 2.0.0
+     *
+     * @return void
+     */
+    private function update_settings_db() {
         $value = get_option( 'wedocs_settings', [] );
 
         // Check if data already updated.
@@ -55,5 +67,29 @@ class V_2_0_0 extends UpgradeHandler {
 
         // Update settings data with plugin version.
         update_option( 'wedocs_settings', $value );
+    }
+
+    /**
+     * Add weDocs documentation handling capabilities for users.
+     *
+     * @since 2.0.0
+     *
+     * @return void
+     */
+    private function add_documentation_handling_capabilities() {
+        global $wp_roles;
+
+        if ( class_exists( 'WP_Roles' ) && ! isset( $wp_roles ) ) {
+            $wp_roles = new \WP_Roles(); // @codingStandardsIgnoreLine
+        }
+
+        // Set capabilities for give documentation handling access to users.
+        $roles        = $wp_roles->get_names();
+        $capabilities = array( 'edit_post', 'edit_docs', 'publish_docs', 'edit_others_docs', 'read_private_docs', 'edit_private_docs', 'edit_published_docs' );
+        foreach ( $capabilities as $capability ) {
+            foreach ( $roles as $role_key => $role ) {
+                $wp_roles->add_cap( $role_key, $capability );
+            }
+        }
     }
 }
