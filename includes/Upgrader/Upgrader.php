@@ -15,6 +15,9 @@ class Upgrader {
      */
     protected $need_upgrade = false;
 
+    /**
+     * Upgrader class constructor.
+     */
     public function __construct() {
         add_action( 'wedocs_upgrader_runner', array( $this, 'do_upgrade' ) );
     }

@@ -35,9 +35,7 @@ const ComboBox = ( {
     status: 'publish',
   } );
 
-  const [ selectedSection, setSelectedSection ] = useState(
-    defaultSection || ''
-  );
+  const [ selectedSection, setSelectedSection ] = useState( defaultSection || '' );
   const [ sectionTitle, setSectionTitle ] = useState( '' );
 
   const filteredSections =

@@ -4,8 +4,6 @@ namespace WeDevs\WeDocs\Upgrader\Upgrades;
 
 
 use WeDevs\WeDocs\Upgrader\Abstracts\UpgradeHandler;
-use WeDevs\WeDocs\Upgrader\Upgrader;
-use WeDevs\WeDocs\Upgrader\Upgrades\Upgrades;
 
 /**
  * Car handler class.
@@ -20,7 +18,6 @@ class V_2_0_0 extends UpgradeHandler {
      * @var string
      */
     protected $version = '2.0.0';
-
 
     /**
      * Upgrade necessary data in database.
@@ -83,9 +80,9 @@ class V_2_0_0 extends UpgradeHandler {
             $wp_roles = new \WP_Roles(); // @codingStandardsIgnoreLine
         }
 
-        // Set capabilities for give documentation handling access to users.
         $roles        = $wp_roles->get_names();
         $capabilities = array( 'edit_post', 'edit_docs', 'publish_docs', 'edit_others_docs', 'read_private_docs', 'edit_private_docs', 'edit_published_docs' );
+        // Push documentation handling access to users.
         foreach ( $capabilities as $capability ) {
             foreach ( $roles as $role_key => $role ) {
                 $wp_roles->add_cap( $role_key, $capability );

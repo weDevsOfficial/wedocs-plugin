@@ -19,6 +19,7 @@ import he from 'he';
 import { isAdminUser } from "../../utils/helper";
 
 const DocSections = ( { section, sections, searchValue } ) => {
+  const isAdmin = isAdminUser();
   const { id, title } = section;
   const [ showArticles, setShowArticles ] = useState( false );
 
@@ -45,8 +46,6 @@ const DocSections = ( { section, sections, searchValue } ) => {
     sectionArticles?.filter( ( doc ) =>
       doc?.title?.rendered?.toLowerCase().includes( searchValue?.toLowerCase() )
     ) || [];
-
-  const isAdmin = isAdminUser();
 
   const [ articles, setArticles ] = useState( [] );
 

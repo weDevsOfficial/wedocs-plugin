@@ -171,9 +171,8 @@ class SettingsApi extends \WP_REST_Controller {
 
         $settings_data = $request->get_param( 'settings' );
 
-        // Update wedocs_settings from store.
+        // Update wedocs_settings via docs store.
         update_option( 'wedocs_settings', $settings_data );
-
         return rest_ensure_response( $settings_data );
     }
 }

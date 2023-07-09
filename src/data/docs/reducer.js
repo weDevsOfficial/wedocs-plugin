@@ -4,7 +4,6 @@ const DEFAULT_STATE = {
   loading: false,
   userDocIds: [],
   helpfulDocs: [],
-  // contributors: {},
 };
 
 const reducer = ( state = DEFAULT_STATE, action ) => {

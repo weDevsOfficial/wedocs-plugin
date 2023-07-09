@@ -35,7 +35,7 @@
       $( 'form#wedocs-contact-modal-form' ).on( 'submit', this.contactHelp );
     },
 
-    feedback( e ) {
+    feedback ( e ) {
       e.preventDefault();
 
       // return if any request is in process already
@@ -64,7 +64,7 @@
       } );
     },
 
-    searchForm( e ) {
+    searchForm ( e ) {
       e.preventDefault();
 
       const param = $( this ).attr( 'href' ).replace( '#', '' );
@@ -74,7 +74,7 @@
       $( '.input-group #search_param' ).val( param );
     },
 
-    printArticle( e ) {
+    printArticle ( e ) {
       e.preventDefault();
 
       const article = $( this ).closest( 'article' );
@@ -96,15 +96,15 @@
       mywindow.document.close(); // necessary for IE >= 10
       mywindow.focus(); // necessary for IE >= 10
 
-      setTimeout( function () {
-        // mywindow.print();
-        // mywindow.close();
-      }, 2000 );
+      // setTimeout( function () {
+      //   mywindow.print();
+      //   mywindow.close();
+      // }, 2000 );
 
       return true;
     },
 
-    showModal( e ) {
+    showModal ( e ) {
       e.preventDefault();
 
       $( '#wedocs-modal-backdrop' ).show();
@@ -112,7 +112,7 @@
       $( 'body' ).addClass( 'wedocs-overflow-hidden' );
     },
 
-    closeModal( e ) {
+    closeModal ( e ) {
       e.preventDefault();
 
       $( '#wedocs-modal-backdrop' ).hide();
@@ -120,7 +120,7 @@
       $( 'body' ).removeClass( 'wedocs-overflow-hidden' );
     },
 
-    contactHelp( e ) {
+    contactHelp ( e ) {
       e.preventDefault();
 
       const self = $( this ),

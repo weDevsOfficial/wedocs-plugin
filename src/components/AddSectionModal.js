@@ -130,8 +130,7 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
                         formError
                           ? '!border-red-500 focus:ring-red-500 focus:border-red-500'
                           : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500'
-                      }
-                                                h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white` }
+                      } h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white` }
                       value={ newDoc.title.raw }
                       onChange={ onTitleChange }
                     />

@@ -10,10 +10,7 @@ const getDocsPath = wp.hooks.applyFilters(
 const resolvers = {
   *getDocs() {
     yield actions.setLoading( true );
-    const response = yield actions.fetchFromAPI(
-      getDocsPath
-      // '/wp/v2/docs?per_page=-1&status=publish,private&context=view'
-    );
+    const response = yield actions.fetchFromAPI( getDocsPath );
     yield actions.setDocs( response );
     return actions.setLoading( false );
   },
@@ -31,13 +28,6 @@ const resolvers = {
     yield actions.setPages( response );
     return actions.setLoading( false );
   },
-
-  // *getContributors() {
-  //   yield actions.setLoading( true );
-  //   const response = yield actions.fetchFromAPI( '/wp/v2/docs/contributors' );
-  //   yield actions.setContributors( response );
-  //   return actions.setLoading( false );
-  // },
 
   *getParentDocs() {
     yield actions.setLoading( true );

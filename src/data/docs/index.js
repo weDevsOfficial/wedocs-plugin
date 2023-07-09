@@ -8,11 +8,11 @@ import resolvers from './resolvers';
 export const DOCS_STORE = 'wedocs/docs';
 
 const docsStore = createReduxStore( DOCS_STORE, {
-	reducer,
-	selectors,
-	actions,
-	resolvers,
-	controls,
+  reducer,
+  selectors,
+  actions,
+  resolvers,
+  controls,
 } );
 
 export default docsStore;

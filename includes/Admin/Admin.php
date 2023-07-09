@@ -11,12 +11,12 @@ class Admin {
      * Constructor
      */
     public function __construct() {
-        add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ] );
-
         new Menu();
 
-        add_filter( 'parent_file', [$this, 'fix_tag_menu' ] );
-        add_filter( 'admin_footer_text', [ $this, 'admin_footer_text' ], 1 );
+        add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ] );
+
+        add_filter( 'parent_file', array( $this, 'fix_tag_menu' ) );
+        add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
     }
 
     /**

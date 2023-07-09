@@ -2,7 +2,6 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import docsStore from '../../data/docs';
 import DocumentationHeader from './DocumentationHeader';
-
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import AddChildrens from './AddChildrens';

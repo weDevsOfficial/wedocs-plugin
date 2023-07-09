@@ -324,7 +324,10 @@ class API extends WP_REST_Controller {
             $doc_contributors = (array) get_post_meta( $doc->ID, 'wedocs_contributors', true );
             foreach ( $doc_contributors as $contributor_id ) {
                 $user_data               = get_userdata( $contributor_id );
-                $data[ $contributor_id ] = array( 'name' => $user_data->user_login, 'src' => get_avatar_url( $contributor_id ) );
+                $data[ $contributor_id ] = array(
+                    'name' => $user_data->user_login,
+                    'src' => get_avatar_url( $contributor_id )
+                );
             }
 
             $contributors[ $doc->ID ] = $data;
@@ -542,11 +545,11 @@ class API extends WP_REST_Controller {
         $this->remove_child_docs( $doc_id );
         wp_delete_post( $doc_id, true );
 
-        $args = [
+        $args = array(
             'numberposts' => -1,
             'post_type'   => 'docs',
             'post_status' => 'publish',
-        ];
+        );
 
         $data = get_posts( $args );
         return rest_ensure_response( $data );
@@ -562,11 +565,11 @@ class API extends WP_REST_Controller {
      * @return WP_REST_Response|WP_Error
      */
     public function remove_child_docs( $parent_id ) {
-        $childrens = get_children( [ 'post_parent' => $parent_id ] );
+        $childrens = get_children( array( 'post_parent' => $parent_id ) );
 
         if ( $childrens ) {
             foreach ( $childrens as $child_post ) {
-                // Recursively delete.
+                // Recursively delete documentations.
                 $this->remove_child_docs( $child_post->ID );
                 wp_delete_post( $child_post->ID );
             }

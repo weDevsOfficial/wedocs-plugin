@@ -138,8 +138,8 @@ const GeneralSettings = ( {
                     <div
                       className="tooltip cursor-pointer ml-2 z-[9999]"
                       data-tip={ __(
-                            'Enter the email address where you would like to receive feedback',
-                            'wedocs'
+                        'Enter the email address where you would like to receive feedback',
+                        'wedocs'
                       ) }
                     >
                       <svg

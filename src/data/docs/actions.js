@@ -17,13 +17,6 @@ const actions = {
     };
   },
 
-  // setContributors( contributors ) {
-  //   return {
-  //     type: 'SET_CONTRIBUTORS',
-  //     contributors,
-  //   };
-  // },
-
   setLoading( loading ) {
     return { type: 'SET_LOADING', loading };
   },

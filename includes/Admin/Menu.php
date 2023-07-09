@@ -97,7 +97,7 @@ class Menu {
     }
 
     /**
-     * Display Dokan Driver Dashboard.
+     * Display documentations dashboard.
      *
      * @since 2.0.0
      *

@@ -14,11 +14,6 @@ const selectors = {
     return pages;
   },
 
-  // getContributors: ( state ) => {
-  //   const { contributors } = state;
-  //   return contributors;
-  // },
-
   getLoading: ( state ) => {
     const { loading } = state;
     return loading;
