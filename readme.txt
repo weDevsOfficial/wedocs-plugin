@@ -3,9 +3,9 @@ Contributors: tareq1988, wedevs
 Donate link: https://tareq.co/donate/
 Tags: document, documentation, knowledge base, knowledgebase, support, faq
 Requires at least: 4.6
-Tested up to: 6.0
-Requires PHP: 5.4
-Stable tag: 1.7.1
+Tested up to: 6.1
+Requires PHP: 7.4
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,19 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 9. Search widget in frontend
 
 == Changelog ==
+
+= v2.0.0 (1st March, 2023) =
+
+ * **Enhancement:** Update documentations page ui & separate documentation section page.
+ * **Enhancement:** Update weDocs settings page ui & added navigation menu page for settings.
+ * **Enhancement:** Use react with stores as per handling weDocs frontend & revert vue js.
+ * **Enhancement:** Setup version replacement regarding weDocs lite.
+
+ * **Feature:** Use react with stores as per handling weDocs frontend & revert vue js.
+ * **Feature:** Added upgrader with action scheduler background process.
+ * **Feature:** Added documentations searching filter for documentation & section page.
+
+ * **Fix:** Undefined post error on weDocs sidebar.
 
 = v1.7.1 (15th November, 2021) =
 

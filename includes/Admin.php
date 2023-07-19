@@ -14,7 +14,6 @@ class Admin {
      */
     public function __construct() {
         new Admin\Admin();
-        new Admin\Settings();
         new Admin\Docs_List_Table();
 
         add_action( 'admin_init', [ $this, 'init_appsero' ], 1 );

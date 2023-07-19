@@ -86,19 +86,17 @@ class Ajax {
     public function remove_doc() {
         check_ajax_referer( 'wedocs-admin-nonce' );
 
-        $force_delete = false;
-        $post_id      = isset( $_POST['id'] ) ? absint( $_POST['id'] ) : 0;
-
+        $post_id = ! empty( $_POST['id'] ) ? absint( $_POST['id'] ) : 0;
         if ( ! current_user_can( 'delete_post', $post_id ) ) {
             wp_send_json_error( __( 'You are not allowed to delete this item.' ) );
         }
 
         if ( $post_id ) {
-            // delete childrens first if found
-            $this->remove_child_docs( $post_id, $force_delete );
+            // Delete childrens first if found.
+            $this->remove_child_docs( $post_id );
 
-            // delete main doc
-            wp_delete_post( $post_id, $force_delete );
+            // Delete main doc.
+            wp_delete_post( $post_id, false );
         }
 
         wp_send_json_success();
@@ -107,16 +105,19 @@ class Ajax {
     /**
      * Remove child docs.
      *
-     * @param int $parent_id
+     * @since 2.0.0
+     *
+     * @param int  $parent_id
+     * @param bool $force_delete
      *
      * @return void
      */
-    public function remove_child_docs( $parent_id, $force_delete ) {
+    public function remove_child_docs( $parent_id, $force_delete = false ) {
         $childrens = get_children( [ 'post_parent' => $parent_id ] );
 
         if ( $childrens ) {
             foreach ( $childrens as $child_post ) {
-                // recursively delete
+                // Recursively delete.
                 $this->remove_child_docs( $child_post->ID, $force_delete );
 
                 wp_delete_post( $child_post->ID, $force_delete );
@@ -172,7 +173,7 @@ class Ajax {
 
         // check previous response
         if ( in_array( $post_id, $previous ) ) {
-            $message = sprintf( $template, 'danger', __( 'Sorry, you\'ve already recorded your feedback!', 'wedocs' ) );
+            $message = sprintf( $template, 'danger', __( 'Sorry, we have already recorded your feedback!', 'wedocs' ) );
             wp_send_json_error( $message );
         }
 

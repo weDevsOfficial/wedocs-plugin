@@ -35,7 +35,7 @@ get_header(); ?>
                     <header class="entry-header">
                         <?php the_title( '<h1 class="entry-title" itemprop="headline">', '</h1>' ); ?>
 
-                        <?php if ( wedocs_get_option( 'print', 'wedocs_settings', 'on' ) == 'on' ) { ?>
+                        <?php if ( wedocs_get_general_settings( 'print', 'on' ) === 'on' ) { ?>
                             <a href="#" class="wedocs-print-article wedocs-hide-print wedocs-hide-mobile" title="<?php echo esc_attr( __( 'Print this article', 'wedocs' ) ); ?>"><i class="wedocs-icon wedocs-icon-print"></i></a>
                         <?php } ?>
                     </header><!-- .entry-header -->
@@ -76,7 +76,7 @@ get_header(); ?>
                     </div><!-- .entry-content -->
 
                     <footer class="entry-footer wedocs-entry-footer">
-                        <?php if ( wedocs_get_option( 'email', 'wedocs_settings', 'on' ) == 'on' ) { ?>
+                        <?php if ( wedocs_get_general_settings( 'email', 'on' ) === 'on' ) { ?>
                             <span class="wedocs-help-link wedocs-hide-print wedocs-hide-mobile">
                                 <i class="wedocs-icon wedocs-icon-envelope"></i>
                                 <?php printf( '%s <a id="wedocs-stuck-modal" href="%s">%s</a>', __( 'Still stuck?', 'wedocs' ), '#', __( 'How can we help?', 'wedocs' ) ); ?>
@@ -94,15 +94,15 @@ get_header(); ?>
 
                     <?php wedocs_doc_nav(); ?>
 
-                    <?php if ( wedocs_get_option( 'helpful', 'wedocs_settings', 'on' ) == 'on' ) { ?>
+                    <?php if ( wedocs_get_general_settings( 'helpful', 'on' ) === 'on' ) { ?>
                         <?php wedocs_get_template_part( 'content', 'feedback' ); ?>
                     <?php } ?>
 
-                    <?php if ( wedocs_get_option( 'email', 'wedocs_settings', 'on' ) == 'on' ) { ?>
+                    <?php if ( wedocs_get_general_settings( 'email', 'on' ) === 'on' ) { ?>
                         <?php wedocs_get_template_part( 'content', 'modal' ); ?>
                     <?php } ?>
 
-                    <?php if ( wedocs_get_option( 'comments', 'wedocs_settings', 'off' ) == 'on' ) { ?>
+                    <?php if ( wedocs_get_general_settings( 'comments', 'on' ) === 'on' ) { ?>
                         <?php if ( comments_open() || get_comments_number() ) { ?>
                             <div class="wedocs-comments-wrap">
                                 <?php comments_template(); ?>

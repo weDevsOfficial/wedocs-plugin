@@ -31,6 +31,14 @@ class API extends WP_REST_Controller {
         $this->rest_base = 'docs';
 
         $this->api = $api;
+
+        // Register settings api.
+        $settings_api = new SettingsApi( $api );
+        $settings_api->register_api();
+
+        // Register upgrader api.
+        $upgrader_api = new UpgraderApi( $api );
+        $upgrader_api->register_api();
     }
 
     /**
@@ -81,10 +89,39 @@ class API extends WP_REST_Controller {
             ],
         ] );
 
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)/', [
+            [
+                'methods'             => WP_REST_Server::DELETABLE,
+                'callback'            => array( $this, 'delete_item' ),
+                'permission_callback' => array( $this, 'delete_item_permissions_check' ),
+                'args'                => array(
+                    'force' => array(
+                        'default' => false,
+                    ),
+                ),
+            ]
+        ] );
+
         register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)/parents', [
             [
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => [ $this, 'get_parents' ],
+                'permission_callback' => '__return_true',
+            ],
+        ] );
+
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/helpfulness', [
+            [
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => array( $this, 'get_helpful_docs' ),
+                'permission_callback' => '__return_true',
+            ],
+        ] );
+
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/contributors', [
+            [
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => array( $this, 'get_documentation_contributors' ),
                 'permission_callback' => '__return_true',
             ],
         ] );
@@ -239,6 +276,67 @@ class API extends WP_REST_Controller {
     }
 
     /**
+     * Get top helpful documentations.
+     *
+     * @since 2.0.0
+     *
+     * @return mixed
+     */
+    public function get_helpful_docs() {
+        $args = array(
+            'posts_per_page' => 10,
+            'post_type'      => 'docs',
+            'meta_key'       => 'positive',
+            'orderby'        => 'meta_value',
+            'fields'         => 'ids',
+            'order'          => 'DESC',
+        );
+
+        $query   = new WP_Query( $args );
+        $doc_ids = ! empty( $query->posts ) ? $query->posts : [];
+
+        return rest_ensure_response( $doc_ids );
+    }
+
+    /**
+     * Get documentation contributors.
+     *
+     * @since 2.0.0
+     *
+     * @param \WP_REST_Request $request
+     *
+     * @return mixed
+     */
+    public function get_documentation_contributors( $request ) {
+        $args = array(
+            'post_type'      => 'docs',
+            'post_status'    => 'publish',
+            'meta_key'       => 'wedocs_contributors',
+            'meta_value'     => '',
+            'meta_compare'   => '!=',
+            'posts_per_page' => -1,
+        );
+
+        $docs         = get_posts( $args );
+        $contributors = array();
+        foreach ( $docs as $doc ) {
+            $data             = array();
+            $doc_contributors = (array) get_post_meta( $doc->ID, 'wedocs_contributors', true );
+            foreach ( $doc_contributors as $contributor_id ) {
+                $user_data               = get_userdata( $contributor_id );
+                $data[ $contributor_id ] = array(
+                    'name' => $user_data->user_login,
+                    'src' => get_avatar_url( $contributor_id )
+                );
+            }
+
+            $contributors[ $doc->ID ] = $data;
+        }
+
+        return rest_ensure_response( $contributors );
+    }
+
+    /**
      * Search docs.
      *
      * @param \WP_REST_Request $request
@@ -302,7 +400,7 @@ class API extends WP_REST_Controller {
     /**
      * Prepares a single doc output for response.
      *
-     * @param WP_Post         $post    post object
+     * @param WP_Post         $doc    post object
      * @param WP_REST_Request $request request object
      *
      * @return WP_REST_Response response object
@@ -405,5 +503,76 @@ class API extends WP_REST_Controller {
         }
 
         return $post;
+    }
+
+    /**
+     * Check permissions for the documentation delete.
+     *
+     * @since 2.0.0
+     *
+     * @param WP_REST_Request $request Current request.
+     *
+     * @return bool|WP_Error
+     */
+    public function delete_item_permissions_check( $request ) {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return new WP_Error(
+                'wedocs_permission_failure',
+                esc_html__( 'You cannot delete the documentation resource.', 'wedocs' )
+            );
+        }
+
+        return true;
+    }
+
+    /**
+     * Delete a single documentation.
+     *
+     * @since 2.0.0
+     *
+     * @param WP_REST_Request $request Current request.
+     *
+     * @return WP_REST_Response|WP_Error
+     */
+    public function delete_item( $request ) {
+        $doc_id = absint( $request->get_param( 'id' ) );
+        $doc    = get_post( $doc_id );
+
+        if ( ! $doc ) {
+            return new WP_Error( 'rest_invalid_documentation', esc_html__( 'Invalid Documentation.', 'wedocs' ) );
+        }
+
+        $this->remove_child_docs( $doc_id );
+        wp_delete_post( $doc_id, true );
+
+        $args = array(
+            'numberposts' => -1,
+            'post_type'   => 'docs',
+            'post_status' => 'publish',
+        );
+
+        $data = get_posts( $args );
+        return rest_ensure_response( $data );
+    }
+
+    /**
+     * Remove all children docs if exists.
+     *
+     * @since 2.0.0
+     *
+     * @param int $parent_id
+     *
+     * @return WP_REST_Response|WP_Error
+     */
+    public function remove_child_docs( $parent_id ) {
+        $childrens = get_children( array( 'post_parent' => $parent_id ) );
+
+        if ( $childrens ) {
+            foreach ( $childrens as $child_post ) {
+                // Recursively delete documentations.
+                $this->remove_child_docs( $child_post->ID );
+                wp_delete_post( $child_post->ID );
+            }
+        }
     }
 }

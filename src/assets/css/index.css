@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* wp-generator */
+/* write or paste your code here */
+html.wp-toolbar {
+    background-color: #f0f0f1;
+}
+
+#wpcontent {
+    padding: 0 25px;
+}
+
+.wrap {
+    margin-right: 0;
+}
+
+#adminmenu .wp-menu-image img {
+    margin: 0 auto;
+}
+
+.docs-section-listing.wrap {
+    margin: 0;
+}
+
+@media screen and (max-width: 782px) {
+    #wpcontent {
+        padding: 0 25px !important;
+    }
+}

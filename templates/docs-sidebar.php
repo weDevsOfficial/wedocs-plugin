@@ -3,12 +3,12 @@
     $ancestors = [];
     $root      = $parent = false;
 
-    if ( $post->post_parent ) {
+    if ( ! empty( $post->post_parent ) ) {
         $ancestors = get_post_ancestors( $post->ID );
         $root      = count( $ancestors ) - 1;
         $parent    = $ancestors[$root];
     } else {
-        $parent = $post->ID;
+        $parent = ! empty( $post->ID ) ? $post->ID : '';
     }
 
     // var_dump( $parent, $ancestors, $root );

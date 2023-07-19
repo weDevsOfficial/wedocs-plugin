@@ -1,115 +1,54 @@
-# Copyright (C) 2021 weDevs
+# Copyright (C) 2023 weDevs
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 1.7.1\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
-"POT-Creation-Date: 2021-11-15 06:30:07+00:00\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
+"Project-Id-Version: weDocs 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"X-Generator: grunt-wp-i18n 1.0.3\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-07-14T10:29:22+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Domain: wedocs\n"
 
-#: includes/API/API.php:51
-msgid "Email address of the author."
-msgstr ""
-
-#: includes/API/API.php:101
-msgid "Limit results to those matching a string."
-msgstr ""
-
-#: includes/API/API.php:108
-msgid "The ID for the parent of the object."
-msgstr ""
-
-#: includes/API/API.php:113
-msgid "Current page of the collection."
-msgstr ""
-
-#: includes/API/API.php:121
-msgid "Maximum number of items to be returned in result set."
-msgstr ""
-
-#: includes/API/API.php:291
-msgid "The page number requested is larger than the number of pages available."
-msgstr ""
-
-#: includes/API/API.php:377
-msgid "No name given"
-msgstr ""
-
-#: includes/API/API.php:381
-msgid "No email given"
-msgstr ""
-
-#: includes/API/API.php:395
-msgid "Invalid doc ID."
-msgstr ""
-
-#: includes/Admin/Admin.php:44
-msgid "Enter doc title"
-msgstr ""
-
-#: includes/Admin/Admin.php:45
-msgid "Write something"
-msgstr ""
-
-#: includes/Admin/Admin.php:46
-msgid "Enter section title"
-msgstr ""
-
-#: includes/Admin/Admin.php:47
-msgid "OK"
-msgstr ""
-
-#: includes/Admin/Admin.php:48
-msgid "Yes, delete it!"
-msgstr ""
-
-#: includes/Admin/Admin.php:49
-msgid "Cancel"
-msgstr ""
-
-#: includes/Admin/Admin.php:50
-msgid "Are you sure?"
-msgstr ""
-
-#: includes/Admin/Admin.php:51
-msgid ""
-"Are you sure to delete the entire section? Articles inside this section "
-"will be deleted too!"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
+#. Plugin Name of the plugin
+#: includes/Admin/Menu.php:45
+#: includes/Admin/Menu.php:46
 msgid "weDocs"
 msgstr ""
 
-#: includes/Admin/Admin.php:76 includes/functions.php:102
-msgid "Docs"
+#. Plugin URI of the plugin
+msgid "https://wedocs.co/"
 msgstr ""
 
-#: includes/Admin/Admin.php:77 includes/Post_Types.php:85
-msgid "Tags"
+#. Description of the plugin
+msgid "A documentation plugin for WordPress"
 msgstr ""
 
-#: includes/Admin/Admin.php:125
-msgid ""
-"Thank you for using <strong>weDocs</strong>. Please leave us a "
-"%s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
+#. Author of the plugin
+msgid "weDevs"
 msgstr ""
 
-#: includes/Admin/Admin.php:125
+#. Author URI of the plugin
+msgid "https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri"
+msgstr ""
+
+#: includes/Admin/Admin.php:81
+msgid "Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
+msgstr ""
+
+#: includes/Admin/Admin.php:81
 msgid "Thanks :)"
 msgstr ""
 
-#: includes/Admin/Admin.php:136
+#: includes/Admin/Admin.php:92
 msgid "Thank you for using <strong>weDocs</strong>."
 msgstr ""
 
-#: includes/Admin/Admin.php:139
+#: includes/Admin/Admin.php:95
 msgid "Use the <a href=\"%s\">classic UI</a>."
 msgstr ""
 
@@ -121,154 +60,165 @@ msgstr ""
 msgid "Votes"
 msgstr ""
 
-#: includes/Admin/Settings.php:44
-msgid "weDocs Settings"
+#: includes/Admin/Menu.php:72
+#: includes/functions.php:112
+msgid "Docs"
 msgstr ""
 
-#: includes/Admin/Settings.php:44
+#: includes/Admin/Menu.php:77
+#: includes/Post_Types.php:88
+msgid "Tags"
+msgstr ""
+
+#: includes/Admin/Menu.php:82
 msgid "Settings"
 msgstr ""
 
-#: includes/Admin/Settings.php:56
-msgid "Plugin Settings"
+#: includes/Ajax.php:176
+msgid "Sorry, we have already recorded your feedback!"
 msgstr ""
 
-#: includes/Admin/Settings.php:73
-msgid "Docs Home"
-msgstr ""
-
-#: includes/Admin/Settings.php:74
-msgid ""
-"Home page for docs page. Preferably use <code>[wedocs]</code> <a "
-"href=\"%s\" target=\"_blank\">shortcode</a> or design your own."
-msgstr ""
-
-#: includes/Admin/Settings.php:80
-msgid "Email feedback"
-msgstr ""
-
-#: includes/Admin/Settings.php:81
-msgid "Enable Email feedback form"
-msgstr ""
-
-#: includes/Admin/Settings.php:87
-msgid "Email Address"
-msgstr ""
-
-#: includes/Admin/Settings.php:88
-msgid "The email address where the feedbacks should sent to"
-msgstr ""
-
-#: includes/Admin/Settings.php:95
-msgid "Helpful feedback"
-msgstr ""
-
-#: includes/Admin/Settings.php:96
-msgid "Enable helpful feedback links"
-msgstr ""
-
-#: includes/Admin/Settings.php:102
-msgid "Comments"
-msgstr ""
-
-#: includes/Admin/Settings.php:103
-msgid "Allow Comments"
-msgstr ""
-
-#: includes/Admin/Settings.php:109
-msgid "Print article"
-msgstr ""
-
-#: includes/Admin/Settings.php:110
-msgid "Enable article printing"
-msgstr ""
-
-#: includes/Admin/Settings.php:142
-msgid "&mdash; Select Page &mdash;"
-msgstr ""
-
-#: includes/Admin/views/admin.php:3
-msgid "Documentations"
-msgstr ""
-
-#: includes/Admin/views/admin.php:3
-msgid "Add Doc"
-msgstr ""
-
-#: includes/Admin/views/admin.php:16
-msgid "Preview the doc"
-msgstr ""
-
-#: includes/Admin/views/admin.php:17
-msgid "Delete this doc"
-msgstr ""
-
-#: includes/Admin/views/admin.php:30
-msgid "Re-order this section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:31
-msgid "Preview the section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:32
-msgid "Delete this section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:33
-msgid "Add a new article"
-msgstr ""
-
-#: includes/Admin/views/admin.php:46 includes/Admin/views/admin.php:57
-msgid "Preview the article"
-msgstr ""
-
-#: includes/Admin/views/admin.php:47 includes/Admin/views/admin.php:58
-msgid "Delete this article"
-msgstr ""
-
-#: includes/Admin/views/admin.php:69
-msgid "Add Section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:75
-msgid "No docs has been found. Perhaps %s?"
-msgstr ""
-
-#: includes/Admin/views/admin.php:75
-msgid "create one"
-msgstr ""
-
-#: includes/Ajax.php:93
-msgid "You are not allowed to delete this item."
-msgstr ""
-
-#: includes/Ajax.php:175
-msgid "Sorry, you've already recorded your feedback!"
-msgstr ""
-
-#: includes/Ajax.php:190
+#: includes/Ajax.php:191
 msgid "Thanks for your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:211
+#: includes/Ajax.php:212
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: includes/Ajax.php:218
+#: includes/Ajax.php:219
 msgid "Please provide a subject line."
 msgstr ""
 
-#: includes/Ajax.php:222
+#: includes/Ajax.php:223
 msgid "Please provide the message details."
 msgstr ""
 
-#: includes/Ajax.php:227
+#: includes/Ajax.php:228
 msgid "Thanks for your feedback."
+msgstr ""
+
+#: includes/API/API.php:138
+msgid "Limit results to those matching a string."
+msgstr ""
+
+#: includes/API/API.php:145
+msgid "The ID for the parent of the object."
+msgstr ""
+
+#: includes/API/API.php:150
+msgid "Current page of the collection."
+msgstr ""
+
+#: includes/API/API.php:158
+msgid "Maximum number of items to be returned in result set."
+msgstr ""
+
+#: includes/API/API.php:389
+msgid "The page number requested is larger than the number of pages available."
+msgstr ""
+
+#: includes/API/API.php:475
+msgid "No name given"
+msgstr ""
+
+#: includes/API/API.php:479
+msgid "No email given"
+msgstr ""
+
+#: includes/API/API.php:521
+msgid "You cannot delete the documentation resource."
+msgstr ""
+
+#: includes/API/API.php:542
+msgid "Invalid Documentation."
+msgstr ""
+
+#: includes/API/SettingsApi.php:79
+msgid "Settings value"
+msgstr ""
+
+#: includes/API/SettingsApi.php:88
+msgid "Upgrader version"
+msgstr ""
+
+#: includes/API/SettingsApi.php:107
+msgid "No settings request given"
+msgstr ""
+
+#: includes/API/SettingsApi.php:114
+msgid "You don't have permission to get settings data"
+msgstr ""
+
+#: includes/API/SettingsApi.php:128
+#: includes/API/UpgraderApi.php:137
+msgid "Need to be an authenticate user"
+msgstr ""
+
+#: includes/API/SettingsApi.php:132
+msgid "No settings request found"
+msgstr ""
+
+#: includes/API/UpgraderApi.php:104
+msgid "You don't have permission to get upgrader data"
+msgstr ""
+
+#: includes/API/UpgraderApi.php:141
+msgid "Need to be an administrator user"
+msgstr ""
+
+#: includes/API/UpgraderApi.php:161
+msgid "Processing Upgrade in the background."
 msgstr ""
 
 #: includes/Frontend.php:74
 msgid "Powered by weDocs plugin for WordPress"
+msgstr ""
+
+#: includes/functions.php:94
+msgid "Home"
+msgstr ""
+
+#: includes/functions.php:187
+msgid "Doc navigation"
+msgstr ""
+
+#: includes/functions.php:377
+msgid "[%1$s] New Doc Feedback: \"%2$s\""
+msgstr ""
+
+#: includes/functions.php:379
+msgid "New feedback on your doc \"%s\""
+msgstr ""
+
+#: includes/functions.php:380
+msgid "Author: %1$s (IP: %2$s)"
+msgstr ""
+
+#: includes/functions.php:381
+msgid "Email: %s"
+msgstr ""
+
+#: includes/functions.php:382
+msgid "Feedback: %s"
+msgstr ""
+
+#: includes/functions.php:383
+msgid "Doc Permalink: %s"
+msgstr ""
+
+#: includes/functions.php:384
+msgid "Edit Doc: %s"
+msgstr ""
+
+#: includes/Post_Types.php:32
+msgctxt "Post Type General Name"
+msgid "Docs"
+msgstr ""
+
+#: includes/Post_Types.php:33
+msgctxt "Post Type Singular Name"
+msgid "Doc"
 msgstr ""
 
 #: includes/Post_Types.php:34
@@ -316,70 +266,80 @@ msgid "Not found in Trash"
 msgstr ""
 
 #: includes/Post_Types.php:86
-msgid "All Tags"
+msgctxt "Taxonomy General Name"
+msgid "Tags"
 msgstr ""
 
 #: includes/Post_Types.php:87
-msgid "Parent Tag"
-msgstr ""
-
-#: includes/Post_Types.php:88
-msgid "Parent Tag:"
+msgctxt "Taxonomy Singular Name"
+msgid "Tag"
 msgstr ""
 
 #: includes/Post_Types.php:89
-msgid "New Tag"
+msgid "All Tags"
 msgstr ""
 
 #: includes/Post_Types.php:90
-msgid "Add New Item"
+msgid "Parent Tag"
 msgstr ""
 
 #: includes/Post_Types.php:91
-msgid "Edit Tag"
+msgid "Parent Tag:"
 msgstr ""
 
 #: includes/Post_Types.php:92
-msgid "Update Tag"
+msgid "New Tag"
 msgstr ""
 
 #: includes/Post_Types.php:93
-msgid "View Tag"
+msgid "Add New Item"
 msgstr ""
 
 #: includes/Post_Types.php:94
-msgid "Separate items with commas"
+msgid "Edit Tag"
 msgstr ""
 
 #: includes/Post_Types.php:95
-msgid "Add or remove items"
+msgid "Update Tag"
 msgstr ""
 
 #: includes/Post_Types.php:96
-msgid "Choose from the most used"
+msgid "View Tag"
 msgstr ""
 
 #: includes/Post_Types.php:97
-msgid "Popular Tags"
+msgid "Separate items with commas"
 msgstr ""
 
 #: includes/Post_Types.php:98
-msgid "Search Tags"
+msgid "Add or remove items"
 msgstr ""
 
 #: includes/Post_Types.php:99
-msgid "Not Found"
+msgid "Choose from the most used"
 msgstr ""
 
 #: includes/Post_Types.php:100
-msgid "No items"
+msgid "Popular Tags"
 msgstr ""
 
 #: includes/Post_Types.php:101
-msgid "Tags list"
+msgid "Search Tags"
 msgstr ""
 
 #: includes/Post_Types.php:102
+msgid "Not Found"
+msgstr ""
+
+#: includes/Post_Types.php:103
+msgid "No items"
+msgstr ""
+
+#: includes/Post_Types.php:104
+msgid "Tags list"
+msgstr ""
+
+#: includes/Post_Types.php:105
 msgid "Tags list navigation"
 msgstr ""
 
@@ -396,51 +356,31 @@ msgid "weDocs Document Search"
 msgstr ""
 
 #: includes/Widget.php:36
+#: assets/build/index.js:1
+#: assets/build/index.js:5
+#: src/components/BackToDocsPage.js:25
+#: src/components/Documentations/index.js:105
 msgid "All Docs"
+msgstr ""
+
+#: includes/Widget.php:47
+#: includes/Widget.php:48
+msgctxt "label"
+msgid "Search for:"
+msgstr ""
+
+#: includes/Widget.php:48
+msgctxt "placeholder"
+msgid "Documentation Search &hellip;"
+msgstr ""
+
+#: includes/Widget.php:54
+msgctxt "submit button"
+msgid "Search"
 msgstr ""
 
 #: includes/Widget.php:68
 msgid "Documentation Search"
-msgstr ""
-
-#: includes/Widget.php:70
-msgid "Title:"
-msgstr ""
-
-#: includes/functions.php:85
-msgid "Home"
-msgstr ""
-
-#: includes/functions.php:177
-msgid "Doc navigation"
-msgstr ""
-
-#: includes/functions.php:343
-msgid "[%1$s] New Doc Feedback: \"%2$s\""
-msgstr ""
-
-#: includes/functions.php:345
-msgid "New feedback on your doc \"%s\""
-msgstr ""
-
-#: includes/functions.php:346
-msgid "Author: %1$s (IP: %2$s)"
-msgstr ""
-
-#: includes/functions.php:347
-msgid "Email: %s"
-msgstr ""
-
-#: includes/functions.php:348
-msgid "Feedback: %s"
-msgstr ""
-
-#: includes/functions.php:349
-msgid "Doc Permalink: %s"
-msgstr ""
-
-#: includes/functions.php:350
-msgid "Edit Doc: %s"
 msgstr ""
 
 #: templates/content-feedback.php:8
@@ -449,7 +389,8 @@ msgid_plural "%d persons found this useful"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/content-feedback.php:8 templates/content-feedback.php:9
+#: templates/content-feedback.php:8
+#: templates/content-feedback.php:9
 msgid "No votes yet"
 msgstr ""
 
@@ -471,7 +412,8 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/content-modal.php:14 templates/single-docs.php:82
+#: templates/content-modal.php:14
+#: templates/single-docs.php:82
 msgid "How can we help?"
 msgstr ""
 
@@ -484,11 +426,11 @@ msgid "Email"
 msgstr ""
 
 #: templates/content-modal.php:38
-msgid "subject"
+msgid "Subject"
 msgstr ""
 
 #: templates/content-modal.php:46
-msgid "message"
+msgid "Message"
 msgstr ""
 
 #: templates/content-modal.php:54
@@ -499,8 +441,8 @@ msgstr ""
 msgid "Print this article"
 msgstr ""
 
-#: templates/single-docs.php:47
 #. translators: %s: Name of current post.
+#: templates/single-docs.php:47
 msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
@@ -512,248 +454,379 @@ msgstr ""
 msgid "Articles"
 msgstr ""
 
+#: templates/single-docs.php:71
+msgctxt "Used before tag names."
+msgid "Tags"
+msgstr ""
+
 #: templates/single-docs.php:82
 msgid "Still stuck?"
 msgstr ""
 
 #: templates/single-docs.php:92
+#: assets/build/index.js:1
+#: src/components/DocListing/SectionArticles.js:178
 msgid "Updated on %s"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:38
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:20
-msgid "Basic Settings"
+#: assets/build/index.js:1
+#: src/components/RestrictionModal.js:123
+msgid "Deleting it means it will be permanently lost, and you won't be able to retrieve it again."
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:42
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:24
-msgid "Advanced Settings"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:202
+#: src/components/AddDocModal.js:164
+#: src/components/AddSectionModal.js:165
+#: src/components/ConfirmationModal.js:140
+#: src/components/RestrictionModal.js:134
+msgid "Cancel"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:58
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:36
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:111
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:187
-msgid "Text Input"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:76
+#: src/components/AddDocModal.js:54
+#: src/components/AddSectionModal.js:52
+#: src/components/ConfirmationModal.js:24
+#: src/components/RestrictionModal.js:39
+#: src/components/Settings/index.js:49
+msgid "Error"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:59
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:37
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:112
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:188
-msgid "Text input description"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:192
+#: src/components/AddDocModal.js:156
+#: src/components/AddSectionModal.js:155
+#: src/components/RestrictionModal.js:142
+msgid "%s"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:60
-msgid "Text Input placeholder"
+#: assets/build/index.js:1
+#: src/components/DocActions.js:40
+msgid "Edit"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:67
-msgid "Number Input"
+#: assets/build/index.js:1
+#: src/components/DocActions.js:52
+msgid "Delete"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:68
-msgid "Number field with validation callback `floatval`"
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:127
+#: src/components/ComboBox.js:85
+msgid "Type a section name"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:69
-msgid "1.99"
+#: assets/build/index.js:1
+#: src/components/ComboBox.js:161
+msgid "Create \"%s\" as a new section"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:79
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:43
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:118
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:194
-msgid "Textarea Input"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:144
+msgid "Enter your article title"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:80
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:44
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:119
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:195
-msgid "Textarea description"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:148
+msgid "Describe what the article is about"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:81
-msgid "Textarea placeholder"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:156
+msgid "Type an article name"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:86
-msgid ""
-"HTML area description. You can use any <strong>bold</strong> or other HTML "
-"elements."
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:64
+msgid "New article added!"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:91
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:49
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:124
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:200
-msgid "Checkbox"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:65
+msgid "New article has been added successfully"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:92
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:50
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:125
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:201
-msgid "Checkbox Label"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:194
+#: src/components/AddSectionModal.js:157
+msgid "Creating…"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:97
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:55
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:130
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:206
-msgid "Radio Button"
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:195
+#: src/components/AddSectionModal.js:158
+msgid "Create"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:98
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:56
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:131
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:207
-msgid "A radio button"
+#: assets/build/index.js:1
+#: src/components/DocListing/DocSections.js:251
+#: src/components/DocListing/ListingButtons.js:32
+#: src/components/Documentations/AddChildrens.js:33
+msgid "Add article"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:107
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:77
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:154
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:228
-msgid "A Dropdown"
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:112
+msgid "Enter your section title"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:108
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:78
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:155
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:229
-msgid "Dropdown description"
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:116
+msgid "Use concise section titles for better navigation"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:118
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:144
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:88
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:164
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:238
-msgid "Password"
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:40
+msgid "New section added!"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:119
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:145
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:89
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:165
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:239
-msgid "Password description"
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:41
+msgid "New section has been added successfully"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:125
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:95
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:171
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:245
-msgid "File"
+#: assets/build/index.js:1
+#: src/components/DocListing/ListingButtons.js:24
+#: src/components/Documentations/AddChildrens.js:41
+msgid "Add section"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:126
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:96
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:172
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:246
-msgid "File description"
+#: assets/build/index.js:1
+#: src/components/SearchFilter.js:9
+msgid "Search by %s…"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:137
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:102
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:178
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:252
-msgid "Color"
+#: assets/build/index.js:1
+#: src/components/SearchFilter.js:11
+msgid "article name"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:138
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:103
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:179
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:253
-msgid "Color description"
+#: assets/build/index.js:1
+#: src/components/SearchFilter.js:12
+msgid "document name"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:151
-msgid "Advanced Editor"
+#: assets/build/index.js:1
+#: src/components/ConfirmationModal.js:126
+msgid "Are you sure?"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:152
-msgid "WP_Editor description"
+#: assets/build/index.js:1
+#: src/components/ConfirmationModal.js:129
+msgid "We recommend backing up your database before upgrading to ensure your data is safe. Are you sure you want to run the upgrade now?"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:158
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:65
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:141
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:216
-msgid "Multile checkbox"
+#: assets/build/index.js:1
+#: src/components/ConfirmationModal.js:146
+msgid "I'm sure"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:159
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:66
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:142
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:217
-msgid "Multi checkbox description"
+#: assets/build/index.js:1
+#: src/components/Upgrade.js:22
+msgid "Wedocs Logo"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:28
-msgid "Other Settings"
+#: assets/build/index.js:1
+#: src/components/Upgrade.js:29
+msgid "weDocs Data Update Required"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/src/class.settings-api.php:370
-msgid "Choose File"
+#: assets/build/index.js:1
+#: src/components/Upgrade.js:49
+msgid "A database upgrade is required. If you don't upgrade, you may experience unexpected behaviour while using weDocs."
 msgstr ""
 
-#. Plugin URI of the plugin/theme
-msgid "https://wedocs.co/"
+#: assets/build/index.js:1
+#: assets/build/index.js:5
+#: src/components/DocListing/index.js:96
+#: src/components/Documentations/index.js:89
+#: src/components/Settings/index.js:121
+msgid "weDocs database has been updated successfully"
 msgstr ""
 
-#. Description of the plugin/theme
-msgid "A documentation plugin for WordPress"
+#: assets/build/index.js:1
+#: assets/build/index.js:5
+#: src/components/DocListing/index.js:97
+#: src/components/Documentations/index.js:90
+#: src/components/Settings/index.js:122
+msgid "Database Updated!"
 msgstr ""
 
-#. Author of the plugin/theme
-msgid "weDevs"
+#: assets/build/index.js:1
+#: src/components/DocListing/index.js:174
+msgid "No section or article found for this documentation"
 msgstr ""
 
-#. Author URI of the plugin/theme
-msgid ""
-"https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-"
-"uri"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:34
+#: src/components/Settings/Menu.js:7
+msgid "General"
 msgstr ""
 
-#: includes/Post_Types.php:32
-msgctxt "Post Type General Name"
-msgid "Docs"
+#: assets/build/index.js:1
+#: src/components/Settings/SaveButton.js:11
+msgid "Save Settings"
 msgstr ""
 
-#: includes/Post_Types.php:33
-msgctxt "Post Type Singular Name"
-msgid "Doc"
+#: assets/build/index.js:1
+#: src/components/SelectBox.js:114
+msgid "loading…"
 msgstr ""
 
-#: includes/Post_Types.php:83
-msgctxt "Taxonomy General Name"
-msgid "Tags"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:47
+msgid "weDocs Home"
 msgstr ""
 
-#: includes/Post_Types.php:84
-msgctxt "Taxonomy Singular Name"
-msgid "Tag"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:63
+msgid "Select the documentation Home page, where the shortcode [wedocs] "
 msgstr ""
 
-#: includes/Widget.php:47 includes/Widget.php:48
-msgctxt "label"
-msgid "Search for:"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:73
+msgid "shortcode"
 msgstr ""
 
-#: includes/Widget.php:48
-msgctxt "placeholder"
-msgid "Documentation Search &hellip;"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:75
+msgid " is used."
 msgstr ""
 
-#: includes/Widget.php:54
-msgctxt "submit button"
-msgid "Search"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:88
+msgid "Email Feedback on Article"
 msgstr ""
 
-#: templates/single-docs.php:71
-msgctxt "Used before tag names."
-msgid "Tags"
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:92
+msgid "Invite readers to share their thoughts through an email feedback form"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:135
+msgid "Email Address"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:140
+msgid "Enter the email address where you would like to receive feedback"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:167
+msgid "Write your email address"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:189
+msgid "Helpful Feedback on Article"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:193
+msgid "Enabling helpful feedback on your article allows readers to provide opinions on your content"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:234
+msgid "Allow Comments on Article"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:238
+msgid "Increase reader engagement by turning on comments"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:279
+msgid "Allow Article Printing"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:283
+msgid "Allow users to print articles directly from the website"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/index.js:38
+msgid "Settings Data Saved!"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/index.js:39
+msgid "Settings data has been saved successfully"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:113
+msgid "Enter your doc title"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:116
+msgid "Start writing your doc from scratch"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:123
+msgid "Type a title for your document"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:39
+msgid "New doc added!"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:40
+msgid "New doc has been added successfully"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:75
+msgid "Get started by creating a new doc"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:84
+msgid "Learn More "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:86
+msgid "how to create a new doc"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:91
+msgid "Create a new doc"
+msgstr ""
+
+#. translators: %d: Length of documentation sections
+#: assets/build/index.js:3
+#: src/components/Documentations/ParentDocs.js:85
+msgid "%d Sections"
+msgstr ""
+
+#. translators: %d: Length of documentation articles
+#: assets/build/index.js:5
+#: src/components/Documentations/ParentDocs.js:112
+msgid "%d Articles"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Documentations/ParentDocs.js:140
+msgid "Add"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Documentations/index.js:109
+msgid "New doc"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Documentations/index.js:155
+msgid "Oops! It seems that your search did not match any existing documents. Please try again..."
 msgstr ""
