@@ -10,6 +10,13 @@ const actions = {
     return { type: 'SET_DOC', doc };
   },
 
+  setParentDocs( parents ) {
+    return {
+      type: 'SET_PARENT_DOCS',
+      parents,
+    };
+  },
+
   setPages( pages ) {
     return {
       type: 'SET_PAGES',
@@ -62,6 +69,11 @@ const actions = {
     const response = yield actions.fetchFromAPI(
       '/wp/v2/docs?per_page=-1&status=publish,private'
     );
+    const parentDocs = response.filter( ( doc ) => ! doc.parent );
+    const sortableDocs = parentDocs?.sort(
+      ( a, b ) => a.menu_order - b.menu_order
+    );
+    yield actions.setParentDocs( sortableDocs );
     return actions.setDocs( response );
   },
 

@@ -17,7 +17,7 @@ import {
 } from '@dnd-kit/sortable';
 import settingsStore from '../../data/settings';
 import Swal from "sweetalert2";
-import { isAdminUser } from "../../utils/helper";
+import { userIsAdmin } from "../../utils/helper";
 
 const ListingPage = () => {
   const { id } = useParams();
@@ -84,7 +84,7 @@ const ListingPage = () => {
     true
   );
 
-  const isAdmin = isAdminUser();
+  const isAdmin = userIsAdmin();
 
   if ( status === 'done' ) {
     dispatch( settingsStore )

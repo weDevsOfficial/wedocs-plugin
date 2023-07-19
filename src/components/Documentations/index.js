@@ -12,7 +12,7 @@ import Upgrade from '../Upgrade';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import settingsStore from '../../data/settings';
 import Swal from "sweetalert2";
-import { isAdminUser } from "../../utils/helper";
+import { userIsAdmin } from "../../utils/helper";
 
 const Documentations = () => {
   const parentDocs = useSelect(
@@ -34,22 +34,14 @@ const Documentations = () => {
   const [ documentations, setDocumentations ] = useState( [] );
 
   const handleChange = ( event, reset = false ) => {
-    if ( reset ) {
+    if ( reset ) {ß
       setSearchValue( '' );
     } else {
       setSearchValue( event.target.value );
     }
   };
 
-  let filteredDocs = parentDocs?.filter( ( doc ) =>
-    doc?.title?.rendered?.toLowerCase().includes( searchValue?.toLowerCase() )
-  );
-
-  filteredDocs = wp.hooks.applyFilters(
-    'wedocs_filter_parent_documentations',
-    filteredDocs
-  );
-
+  const isAdmin = userIsAdmin();
   const showActions = wp.hooks.applyFilters(
     'wedocs_show_documentation_actions',
     true
@@ -61,11 +53,31 @@ const Documentations = () => {
     documentations?.length
   );
 
-  const isAdmin = isAdminUser();
-
   useEffect( () => {
+    if (
+      typeof isAdmin === 'undefined'
+      || isAdmin === null
+      || typeof parentDocs === 'undefined'
+      || typeof searchValue === 'undefined'
+    ) {
+      return;
+    }
+
+    let filteredDocs = wp.hooks.applyFilters(
+      'wedocs_filter_parent_documentations',
+      parentDocs?.filter( ( doc ) =>
+        doc?.title?.rendered?.toLowerCase().includes( searchValue?.toLowerCase() )
+      )
+    );
+
+    wp.hooks.doAction(
+      'wedocs_after_filter_documentations',
+      filteredDocs,
+      isAdmin
+    );
+
     setDocumentations( [ ...filteredDocs ] );
-  }, [ parentDocs, searchValue ] );
+  }, [ parentDocs, searchValue, isAdmin ] );
 
   if ( status === 'done' ) {
     dispatch( settingsStore )

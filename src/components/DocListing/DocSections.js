@@ -16,10 +16,10 @@ import DraggableDocs from '../DraggableDocs';
 import extractedTitle from '../../utils/extractedTitle';
 import settingsStore from '../../data/settings';
 import he from 'he';
-import { isAdminUser } from "../../utils/helper";
+import { userIsAdmin } from "../../utils/helper";
 
 const DocSections = ( { section, sections, searchValue } ) => {
-  const isAdmin = isAdminUser();
+  const isAdmin = userIsAdmin();
   const { id, title } = section;
   const [ showArticles, setShowArticles ] = useState( false );
 

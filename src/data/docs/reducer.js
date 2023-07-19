@@ -1,6 +1,7 @@
 const DEFAULT_STATE = {
   docs: [],
   pages: [],
+  parents: [],
   loading: false,
   userDocIds: [],
   helpfulDocs: [],
@@ -15,10 +16,14 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
       };
 
     case 'SET_DOC':
-      return {
+      const setDocState = {
         ...state,
         docs: [ ...state.docs, action.doc ],
       };
+      if ( !action.doc.parent ) {
+        setDocState.parents = [ action.doc, ...state.parents ];
+      }
+      return setDocState;
 
     case 'SET_USER_DOC_IDS':
       return {
@@ -32,11 +37,11 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
         pages: [ ...action.pages ],
       };
 
-    // case 'SET_CONTRIBUTORS':
-    //   return {
-    //     ...state,
-    //     contributors: { ...state.contributors, ...action.contributors },
-    //   };
+    case 'SET_PARENT_DOCS':
+      return {
+        ...state,
+        parents: [ ...action.parents ],
+      };
 
     case 'SET_LOADING':
       return {

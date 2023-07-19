@@ -1,6 +1,4 @@
 import actions from './actions';
-import { select } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 
 const getDocsPath = wp.hooks.applyFilters(
   'wedocs_documentation_fetching_path',
@@ -15,6 +13,18 @@ const resolvers = {
     return actions.setLoading( false );
   },
 
+  *getParentDocs() {
+    yield actions.setLoading( true );
+    const response = yield actions.fetchFromAPI( getDocsPath );
+    yield actions.setDocs( response );
+    const parentDocs = response.filter( ( doc ) => ! doc.parent );
+    const sortableDocs = parentDocs?.sort(
+      ( a, b ) => a.menu_order - b.menu_order
+    );
+    yield actions.setParentDocs( sortableDocs );
+    return actions.setLoading( false );
+  },
+
   *getDoc( id ) {
     yield actions.setLoading( true );
     const response = yield actions.fetchFromAPI( getDocsPath );
@@ -26,13 +36,6 @@ const resolvers = {
     yield actions.setLoading( true );
     const response = yield actions.fetchFromAPI( '/wp/v2/pages' );
     yield actions.setPages( response );
-    return actions.setLoading( false );
-  },
-
-  *getParentDocs() {
-    yield actions.setLoading( true );
-    const docs = yield actions.fetchFromAPI( getDocsPath );
-    yield actions.setDocs( docs );
     return actions.setLoading( false );
   },
 

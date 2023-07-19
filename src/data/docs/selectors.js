@@ -4,6 +4,11 @@ const selectors = {
     return docs;
   },
 
+  getParentDocs: ( state ) => {
+    const { parents } = state;
+    return parents;
+  },
+
   getDoc: ( state, id ) => {
     const { docs } = state;
     return docs.find( ( doc ) => doc.id === id );
@@ -17,15 +22,6 @@ const selectors = {
   getLoading: ( state ) => {
     const { loading } = state;
     return loading;
-  },
-
-  getParentDocs: ( state ) => {
-    const { docs } = state;
-    const parentDocs = docs.filter( ( doc ) => ! doc.parent );
-    const sortableDocs = parentDocs?.sort(
-      ( a, b ) => a.menu_order - b.menu_order
-    );
-    return sortableDocs;
   },
 
   getUserDocIds: ( state ) => {
