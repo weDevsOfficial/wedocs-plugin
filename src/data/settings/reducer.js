@@ -29,6 +29,10 @@ const DEFAULT_SETTINGS_STATE = {
         },
       },
     },
+      integrate_ai: {
+        ai_enabled: 'off',
+        ai_response: {}
+      }
   },
   loading: false,
   saving: false,

@@ -26,8 +26,8 @@ const actions = {
   *updateSettings( data ) {
     const path = '/wp/v2/docs/settings';
     const response = yield { type: 'UPDATE_TO_API', path, data };
-    yield actions.setSettings( response );
-    return response;
+    yield actions.setSettings( response.data );
+    return response.data;
   },
 
   *wedocsUpgrade( data ) {
