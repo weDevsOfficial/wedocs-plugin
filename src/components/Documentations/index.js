@@ -34,7 +34,7 @@ const Documentations = () => {
   const [ documentations, setDocumentations ] = useState( [] );
 
   const handleChange = ( event, reset = false ) => {
-    if ( reset ) {ß
+    if ( reset ) {
       setSearchValue( '' );
     } else {
       setSearchValue( event.target.value );
