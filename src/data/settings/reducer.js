@@ -31,6 +31,7 @@ const DEFAULT_SETTINGS_STATE = {
     },
       integrate_ai: {
         ai_enabled: 'off',
+        sync_data: 'off',
         ai_response: {}
       }
   },
