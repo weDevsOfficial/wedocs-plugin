@@ -19,6 +19,12 @@ const controls = {
     } );
   },
 
+  FETCH_SITE_KEY() {
+    return apiFetch( {
+      path: '/wp/v2/docs/settings/turnstile-site-key',
+    } );
+  },
+
   UPDATE_TO_API( action ) {
     return apiFetch( {
       path: action.path,

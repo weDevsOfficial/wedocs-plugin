@@ -23,6 +23,10 @@ const actions = {
     return { type: 'SET_ROLES', roles };
   },
 
+  setTurnstileSiteKey( siteKey ) {
+    return { type: 'SET_TURNSTILE_SITE_KEY', siteKey }
+  },
+
   *updateSettings( data ) {
     const path = '/wp/v2/docs/settings';
     const response = yield { type: 'UPDATE_TO_API', path, data };

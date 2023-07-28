@@ -21,6 +21,13 @@ const resolvers = {
     yield actions.setRoles( roles );
     return actions.setLoading( false );
   },
+
+  *getTurnstileSiteKey() {
+    yield actions.setLoading( true );
+    const siteKey = yield { type: 'FETCH_SITE_KEY' };
+    yield actions.setTurnstileSiteKey( siteKey );
+    return actions.setLoading( false );
+  },
 };
 
 export default resolvers;

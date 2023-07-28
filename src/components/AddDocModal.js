@@ -1,12 +1,15 @@
 import { __, sprintf } from '@wordpress/i18n';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useEffect, useRef, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import { dispatch } from '@wordpress/data';
 import docStore from '../data/docs';
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 import Swal from 'sweetalert2';
+import { handleDocCreationByRef } from '../utils/helper';
 
 const AddDocModal = ( { className, children } ) => {
+  const docCreateBtnRef = useRef( null );
+
   const [ isOpen, setIsOpen ] = useState( false );
   const [ newDoc, setNewDoc ] = useState( {
     title: { raw: '' },
@@ -73,6 +76,9 @@ const AddDocModal = ( { className, children } ) => {
   const openModal = () => {
     setIsOpen( true );
   };
+
+  // Crete documentation on enter click.
+  handleDocCreationByRef( docCreateBtnRef );
 
   return (
     <>
@@ -149,6 +155,7 @@ const AddDocModal = ( { className, children } ) => {
                   <div className="mt-6 space-x-3.5">
                     <button
                       className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md"
+                      ref={ docCreateBtnRef }
                       disabled={ disabled }
                       onClick={ createDoc }
                     >

@@ -84,8 +84,12 @@ const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
               </svg>
               <a
                 target="_blank"
-                href={ `${ window.location.origin }/?p=${ article?.id }` }
-                className="flex items-center flex-shrink-0 text-base font-medium text-gray-700 !shadow-none"
+                href={
+                  ! Boolean( parseInt( isAdminRestricted ) ) ?
+                  `${ window.location.origin }/wp-admin/post.php?post=${ article?.id }&action=edit` :
+                  `${ window.location.origin }/?p=${ article?.id }`
+                }
+                className="flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none"
                 rel="noreferrer"
               >
                 <div
@@ -102,44 +106,48 @@ const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
                   ></span>
                 </div>
 
-                <svg
-                  className="hidden group-hover:block ml-6 stroke-gray-300 hover:stroke-indigo-700"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  fill="none"
-                >
-                  <path
-                    d="M7.118 3.5H3.452c-1.013 0-1.833.821-1.833 1.833V14.5c0 1.012.821 1.833 1.833 1.833h9.167c1.012 0 1.833-.821 1.833-1.833v-3.667m-3.667-9.167h5.5m0 0v5.5m0-5.5l-9.167 9.167"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                { ! Boolean( parseInt( isAdminRestricted ) ) && (
+                  <div data-tip={ __( 'Edit', 'wedocs' ) } >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="none"
+                      className="hidden group-hover:block stroke-gray-300 hover:stroke-indigo-700 ml-6"
+                    >
+                      <path
+                        d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                ) }
               </a>
-              { ! Boolean( parseInt( isAdminRestricted ) ) && (
+              <div data-tip={ __( 'View on Web', 'wedocs' ) } >
                 <a
                   target="_blank"
-                  className="ml-4 hidden group-hover:block !shadow-none"
+                  className="hidden group-hover:block !shadow-none"
                   rel="noreferrer"
-                  href={ `${ window.location.origin }/wp-admin/post.php?post=${ article?.id }&action=edit` }
+                  href={ `${ window.location.origin }/?p=${ article?.id }` }
                 >
                   <svg
+                    className="hidden group-hover:block ml-4 stroke-gray-300 hover:stroke-indigo-700"
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
                     height="18"
                     fill="none"
-                    className="stroke-gray-300 hover:stroke-indigo-700"
                   >
                     <path
-                      d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
+                      d="M7.118 3.5H3.452c-1.013 0-1.833.821-1.833 1.833V14.5c0 1.012.821 1.833 1.833 1.833h9.167c1.012 0 1.833-.821 1.833-1.833v-3.667m-3.667-9.167h5.5m0 0v5.5m0-5.5l-9.167 9.167"
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
                   </svg>
                 </a>
-              ) }
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-5 flex-shrink-0 mt-4 sm:mt-0 sm:ml-5">

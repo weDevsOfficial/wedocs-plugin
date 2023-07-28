@@ -40,6 +40,15 @@ const DocActions = ( { docId, type } ) => {
               { __( 'Edit', 'wedocs' ) }
             </a>
 
+            <a
+              target="_blank"
+              href={ `${ window.location.origin }/?p=${ docId }` }
+              rel="noreferrer"
+              className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
+            >
+              { __( 'View', 'wedocs' ) }
+            </a>
+
             { /* Add external actions */ }
             { restrictionAction }
 
@@ -47,7 +56,7 @@ const DocActions = ( { docId, type } ) => {
             <RestictionModal
               docId={ docId }
               type={ type }
-              classes="w-full group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white"
+              classes="w-full group flex items-center py-2 px-4 text-sm font-medium text-red-500 hover:bg-indigo-700 hover:text-white"
             >
               { __( 'Delete', 'wedocs' ) }
             </RestictionModal>

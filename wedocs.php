@@ -178,6 +178,9 @@ final class WeDocs {
     public function activate() {
         $installer = new WeDevs\WeDocs\Installer();
         $installer->run();
+
+        // Set the redirect option to true when the plugin is activated.
+        update_option( 'wedocs_activation_redirect', true );
     }
 
     /**

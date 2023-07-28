@@ -156,11 +156,12 @@ const ComboBox = ( {
             value={ newSection?.title?.raw }
             onClick={ handleArticleSection }
           >
-            <span className="dashicons dashicons-plus text-xs mt-1.5"></span>
-            { sprintf(
-              __( 'Create "%s" as a new section', 'wedocs' ),
-              sectionTitle ? sectionTitle : 'How to use'
-            ) }
+            { sectionTitle ? (
+              <>
+                <span className="dashicons dashicons-plus text-xs mt-1.5"></span>
+                { sectionTitle }
+              </>
+            ) : __( 'Type to write the name of new section', 'wedocs' ) }
           </Combobox.Option>
         </Combobox.Options>
       </div>
