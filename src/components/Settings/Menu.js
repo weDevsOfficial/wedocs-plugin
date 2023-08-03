@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { Tab } from '@headlessui/react';
+import Badge from '../ProPreviews/common/Badge';
 
 const Menu = () => {
   let menus = {
@@ -34,6 +35,7 @@ const Menu = () => {
         >
           { value[ 1 ]?.icon }
           <span className="truncate">{ value[ 1 ]?.text }</span>
+          { value[ 1 ]?.pro && <Badge /> }
         </Tab>
       ) ) }
     </>

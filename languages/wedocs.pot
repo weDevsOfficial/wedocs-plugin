@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-14T10:29:22+00:00\n"
+"POT-Creation-Date: 2023-08-03T10:28:01+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -142,20 +142,20 @@ msgstr ""
 msgid "Upgrader version"
 msgstr ""
 
-#: includes/API/SettingsApi.php:107
+#: includes/API/SettingsApi.php:117
 msgid "No settings request given"
 msgstr ""
 
-#: includes/API/SettingsApi.php:114
+#: includes/API/SettingsApi.php:124
 msgid "You don't have permission to get settings data"
 msgstr ""
 
-#: includes/API/SettingsApi.php:128
+#: includes/API/SettingsApi.php:138
 #: includes/API/UpgraderApi.php:137
 msgid "Need to be an authenticate user"
 msgstr ""
 
-#: includes/API/SettingsApi.php:132
+#: includes/API/SettingsApi.php:142
 msgid "No settings request found"
 msgstr ""
 
@@ -176,6 +176,8 @@ msgid "Powered by weDocs plugin for WordPress"
 msgstr ""
 
 #: includes/functions.php:94
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:31
 msgid "Home"
 msgstr ""
 
@@ -465,8 +467,646 @@ msgstr ""
 
 #: templates/single-docs.php:92
 #: assets/build/index.js:1
-#: src/components/DocListing/SectionArticles.js:178
+#: src/components/DocListing/SectionArticles.js:192
 msgid "Updated on %s"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:85
+msgid "Upgrade to"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:91
+msgid "to experience even more Powerful features 🎉"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:106
+msgid "Role based Permission management "
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:107
+msgid "or viewing, managing, and configuring permission settings."
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:121
+msgid "Arrange content automatically or manually "
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:122
+msgid "giving you full control over its presentation."
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:136
+msgid "Personalize messaging tab with custom titles "
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:137
+msgid "and messages for seamless communication."
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:151
+msgid "Customize with "
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:152
+msgid "design widgets, colors, and pre-built options "
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:153
+msgid "for an appealing interface."
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:167
+msgid "Get assisted by Ai Powered Chatbot "
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:168
+msgid "24/7 with updated information and support. (Upcoming)"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:201
+msgid "Pop-up slider first image"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:202
+msgid "Pop-up slider second image"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:203
+msgid "Pop-up slider third image"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:204
+msgid "Pop-up slider fourth image"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:215
+msgid "10,000+ successful businesses"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:225
+msgid "14 days no questions asked refund policy"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:235
+msgid "Industry leading 24x7 support"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/PermissionSettings.js:13
+msgid "Global doc permission settings"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/PermissionSettings.js:14
+msgid "By default, who will get edit access on all the documents?"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/PermissionSettings.js:22
+msgid "Who can manage weDocs Settings?"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/PermissionSettings.js:23
+msgid "Who will have the ability to alter the settings of the plugin?"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/index.js:14
+#: src/components/ProPreviews/PermissionSettings.js:35
+msgid "Permission Management"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/PermissionSettings.js:81
+msgid "5 roles selected"
+msgstr ""
+
+#: assets/build/769.js:1
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:204
+#: src/components/AddDocModal.js:163
+#: src/components/AddSectionModal.js:164
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:314
+#: src/components/ProPreviews/PermissionSettings.js:113
+#: src/components/RestrictionModal.js:142
+msgid "%s"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:10
+msgid "Helpful Content"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:11
+msgid "Top 10 contents that are found as most helpful by the visitors will be set automatically in descending order ( No helpful documentation available at this moment )"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:18
+msgid "Selected Content"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:19
+msgid "Manually select content that will appear in the Explore tab of the Assistant widget"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:32
+msgid "About"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:33
+msgid "Services"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:34
+msgid "Portfolio"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:35
+msgid "Contact Us"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:39
+msgid "Documentation Team 1"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:40
+msgid "Documentation Team 2"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:41
+msgid "Documentation Team 3"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:42
+msgid "Documentation Team 4"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:60
+msgid "Enable Explore Tab"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/AssistantWidgetSettings.js:61
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:97
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:53
+msgid "Enable"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:190
+msgid "Select Content"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:217
+msgid "Select Articles"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:242
+msgid "Selected Articles"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:271
+msgid "Parent Documentation"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:285
+msgid "Section Documentation"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:324
+msgid "Remove"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:366
+msgid "Hide from Pages"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:427
+msgid "Explore Tab Title"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:450
+msgid "Explore tab title"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:470
+msgid "Explore Tab Subtitle 1"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:496
+msgid "Explore tab subtitle 1"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:516
+msgid "Explore Tab Subtitle 2"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ExploreSettingsPanel.js:542
+msgid "Explore tab subtitle 2"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:16
+msgid "Enable Messaging Tab"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:72
+msgid "Cloudflare Turnstile Site Key"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:100
+msgid "Enter your cloudflare turnstile site key"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:113
+msgid "How to set up "
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:123
+msgid "Cloudflare Turnstile"
+msgstr ""
+
+#: assets/build/769.js:1
+#: assets/build/index.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:136
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:164
+#: src/components/Settings/GeneralSettings.js:135
+msgid "Email Address"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:184
+msgid "Messaging Tab Title"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:212
+msgid "Messaging tab title"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:232
+msgid "Messaging Tab Subtitle 1"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:260
+msgid "Messaging tab subtitle 1"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:280
+msgid "Messaging Tab Subtitle 2"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:308
+msgid "Messaging tab subtitle 2"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:328
+msgid "Success Message Title"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:356
+msgid "Messaging success title"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:376
+msgid "Success Message Text"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagingSettingsPanel.js:404
+msgid "Messaging success text"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/UploadButton.js:24
+msgid "Upload"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/FontSettings.js:6
+msgid "Normal"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/FontSettings.js:7
+msgid "Medium"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/FontSettings.js:8
+msgid "Semi bold"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/FontSettings.js:9
+msgid "Bold"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/FontSettings.js:10
+msgid "Extra bold"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/FontSettings.js:47
+msgid "Reset"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ColorPaletteSettings.js:7
+msgid "Default"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ColorPaletteSettings.js:31
+msgid "Watermelon"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ColorPaletteSettings.js:55
+msgid "Dark Slate Blue"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ColorPaletteSettings.js:79
+msgid "Azure"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ColorPaletteSettings.js:103
+msgid "Elephant"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ColorPaletteSettings.js:127
+msgid "Atomic Tangerine"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ColorPaletteSettings.js:151
+msgid "Meteorite"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/ColorPaletteSettings.js:202
+msgid "Widget Background"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagePreview.js:8
+msgid "How to Install"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagePreview.js:9
+msgid "Activating & Deactivating WPUF Modules"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/AssistantWidgetSettings.js:14
+#: src/components/ProPreviews/partials/MessagePreview.js:45
+msgid "Explore"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/AssistantWidgetSettings.js:15
+#: src/components/ProPreviews/partials/MessagePreview.js:68
+msgid "Messaging"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagePreview.js:168
+msgid "Explore Feature"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagePreview.js:191
+msgid "Search with keywords for quick answers"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagePreview.js:210
+msgid "Search"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagePreview.js:250
+msgid "WP User Frontend… > Getting Started"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/MessagePreview.js:259
+msgid "Here you will find everything about WP User Frontend, what it offers and its"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:15
+msgid "Pre-built Color Palette"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:16
+msgid "Choose a pre-built color palette for the colors of your assistant widget."
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:23
+msgid "Custom Color Palette"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:24
+msgid "Choose any colors that represents your brand or that you prefer."
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:67
+msgid "Widget Settings"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:80
+msgid "Tab First Sub-Title Font Size"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:120
+msgid "Tab Second Sub-Title Font Size"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:162
+msgid "Explore Settings"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:175
+msgid "Explore tab icon"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:206
+msgid "Messaging Settings"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:219
+msgid "Messaging tab icon"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:250
+msgid "Color Palette Settings"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:334
+msgid "Choose Color: "
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/partials/AppearanceSettingsPanel.js:340
+msgid "Reset All"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/AssistantWidgetSettings.js:16
+msgid "Appearance"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/AssistantWidgetSettings.js:25
+#: src/components/ProPreviews/index.js:32
+msgid "Assistant Widget"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/Contributors.js:12
+#: src/components/ProPreviews/common/Contributors.js:17
+#: src/components/ProPreviews/common/Contributors.js:22
+#: src/components/ProPreviews/common/Contributors.js:27
+msgid "Fourth Contributor"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/common/Contributors.js:40
+msgid "Upgrade"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/index.js:81
+msgid "Manage"
+msgstr ""
+
+#: assets/build/769.js:1
+#: src/components/ProPreviews/index.js:89
+msgid "Restrict editing for admin only"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeTooltip.js:6
+msgid "Role-based Permission Management"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeTooltip.js:7
+msgid "Auto & manual content arrangement"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeTooltip.js:8
+msgid "Customizable doc & messaging tab"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeTooltip.js:9
+msgid "Pre-built & Custom Colors"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeTooltip.js:10
+msgid "Assistant Widget and Ai Powered Chat Bot"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeTooltip.js:15
+msgid "Available in Pro. Unlock & enjoy:"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeButton.js:11
+msgid "Upgrade to PRO "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:43
+#: src/components/DocListing/DocSections.js:156
+#: src/components/DocListing/ListingHeader.js:48
+#: src/components/DocListing/SectionArticles.js:112
+msgid "Edit"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/DocSections.js:182
+#: src/components/DocListing/ListingHeader.js:72
+#: src/components/DocListing/SectionArticles.js:133
+msgid "View on Web"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -475,18 +1115,18 @@ msgid "Deleting it means it will be permanently lost, and you won't be able to r
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:202
-#: src/components/AddDocModal.js:164
-#: src/components/AddSectionModal.js:165
+#: src/components/AddArticleModal.js:214
+#: src/components/AddDocModal.js:171
+#: src/components/AddSectionModal.js:174
 #: src/components/ConfirmationModal.js:140
 #: src/components/RestrictionModal.js:134
 msgid "Cancel"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:76
-#: src/components/AddDocModal.js:54
-#: src/components/AddSectionModal.js:52
+#: src/components/AddArticleModal.js:81
+#: src/components/AddDocModal.js:57
+#: src/components/AddSectionModal.js:55
 #: src/components/ConfirmationModal.js:24
 #: src/components/RestrictionModal.js:39
 #: src/components/Settings/index.js:49
@@ -494,101 +1134,100 @@ msgid "Error"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:192
-#: src/components/AddDocModal.js:156
-#: src/components/AddSectionModal.js:155
-#: src/components/RestrictionModal.js:142
-msgid "%s"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocActions.js:40
-msgid "Edit"
-msgstr ""
-
-#: assets/build/index.js:1
 #: src/components/DocActions.js:52
+msgid "View"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:64
+#: src/components/DocListing/DocSections.js:209
 msgid "Delete"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:127
+#: src/components/AddSectionModal.js:135
 #: src/components/ComboBox.js:85
 msgid "Type a section name"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/ComboBox.js:161
-msgid "Create \"%s\" as a new section"
+#: src/components/ComboBox.js:164
+msgid "Type to write the name of new section"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:144
+#: src/components/AddArticleModal.js:153
 msgid "Enter your article title"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:148
+#: src/components/AddArticleModal.js:157
 msgid "Describe what the article is about"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:156
+#: src/components/AddArticleModal.js:165
 msgid "Type an article name"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:64
+#: src/components/AddArticleModal.js:69
 msgid "New article added!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:65
+#: src/components/AddArticleModal.js:70
 msgid "New article has been added successfully"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:194
-#: src/components/AddSectionModal.js:157
+#: src/components/AddArticleModal.js:206
+#: src/components/AddSectionModal.js:166
 msgid "Creating…"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:195
-#: src/components/AddSectionModal.js:158
+#: src/components/AddArticleModal.js:207
+#: src/components/AddSectionModal.js:167
+#: src/components/DocListing/DocSections.js:142
 msgid "Create"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:251
+#: src/components/DocListing/DocSections.js:282
 #: src/components/DocListing/ListingButtons.js:32
-#: src/components/Documentations/AddChildrens.js:33
+#: src/components/Documentations/AddChildrens.js:23
 msgid "Add article"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:112
+#: src/components/AddSectionModal.js:118
 msgid "Enter your section title"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:116
+#: src/components/AddSectionModal.js:122
 msgid "Use concise section titles for better navigation"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:40
+#: src/components/AddSectionModal.js:127
+msgid "E.g., Getting Started"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:43
 msgid "New section added!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:41
+#: src/components/AddSectionModal.js:44
 msgid "New section has been added successfully"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocListing/ListingButtons.js:24
-#: src/components/Documentations/AddChildrens.js:41
+#: src/components/Documentations/AddChildrens.js:31
 msgid "Add section"
 msgstr ""
 
@@ -660,7 +1299,7 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:34
-#: src/components/Settings/Menu.js:7
+#: src/components/Settings/Menu.js:8
 msgid "General"
 msgstr ""
 
@@ -702,11 +1341,6 @@ msgstr ""
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:92
 msgid "Invite readers to share their thoughts through an email feedback form"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:135
-msgid "Email Address"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -760,27 +1394,27 @@ msgid "Settings data has been saved successfully"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddDocModal.js:113
+#: src/components/AddDocModal.js:119
 msgid "Enter your doc title"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddDocModal.js:116
+#: src/components/AddDocModal.js:122
 msgid "Start writing your doc from scratch"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddDocModal.js:123
+#: src/components/AddDocModal.js:129
 msgid "Type a title for your document"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddDocModal.js:39
+#: src/components/AddDocModal.js:42
 msgid "New doc added!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddDocModal.js:40
+#: src/components/AddDocModal.js:43
 msgid "New doc has been added successfully"
 msgstr ""
 
@@ -817,7 +1451,7 @@ msgid "%d Articles"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/ParentDocs.js:140
+#: src/components/Documentations/ParentDocs.js:141
 msgid "Add"
 msgstr ""
 

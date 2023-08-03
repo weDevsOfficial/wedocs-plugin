@@ -29,7 +29,7 @@ const ListingHeader = ( { id } ) => {
                 target="_blank"
                 rel="noreferrer"
                 href={ `${ window.location.origin }/wp-admin/post.php?post=${ id }&action=edit` }
-                className="flex tooltip cursor-pointer items-center group hover:text-black !shadow-none before:max-w-xl z-[90]"
+                className="flex tooltip cursor-pointer items-center group hover:text-black !shadow-none before:max-w-xl z-[90] mr-1"
                 data-tip={ he?.decode(
                   __(
                     doc?.title?.rendered ? doc?.title?.rendered : '',
@@ -38,35 +38,41 @@ const ListingHeader = ( { id } ) => {
                 ) }
               >
                 <span
-                  className="group-hover:underline"
+                  className="group-hover:underline mr-5"
                   dangerouslySetInnerHTML={ {
                     __html: extractedTitle( doc?.title?.rendered, 75 ),
                   } }
                 ></span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  fill="none"
-                  className={ `ml-5 group` }
+                <div
+                  className="tooltip cursor-pointer flex items-center"
+                  data-tip={ __( 'Edit', 'wedocs' ) }
                 >
-                  <path
-                    d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
-                    className="stroke-gray-400 group-hover:stroke-indigo-700"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    className={ `group` }
+                  >
+                    <path
+                      d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
+                      className="stroke-gray-400 group-hover:stroke-indigo-700"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
               </a>
               <a
                 target="_blank"
                 rel="noreferrer"
-                className={ `group` }
+                className={ `group tooltip cursor-pointer` }
                 href={ `${ window.location.origin }/?p=${ id }` }
+                data-tip={ __( 'View on Web', 'wedocs' ) }
               >
                 <svg
-                  className="ml-1 stroke-gray-400 group-hover:stroke-indigo-700"
+                  className="stroke-gray-400 group-hover:stroke-indigo-700"
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
                   height="18"

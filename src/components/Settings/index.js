@@ -147,7 +147,7 @@ const SettingsPage = () => {
                   >
                     <aside className="px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
                       <nav className="py-[18px] min-h-[180px] bg-white rounded-md">
-                        <Tab.List className="overflow-hidden px-2 space-y-1">
+                        <Tab.List className="px-2 space-y-1">
                           <Menu />
                         </Tab.List>
                       </nav>

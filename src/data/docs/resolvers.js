@@ -48,12 +48,14 @@ const resolvers = {
 
   *getSectionsDocs( id ) {
     const response = yield actions.fetchFromAPI( getDocsPath );
-    return actions.setDocs( response );
+    yield actions.setDocs( response );
+    return actions.setLoading( false );
   },
 
   *getDocArticles( id ) {
     const docs = yield actions.fetchFromAPI( getDocsPath );
-    return actions.setDocs( docs );
+    yield actions.setDocs( docs );
+    return actions.setLoading( false );
   },
 
   *getHelpfulDocs() {

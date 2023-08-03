@@ -89,11 +89,11 @@ const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
                   `${ window.location.origin }/wp-admin/post.php?post=${ article?.id }&action=edit` :
                   `${ window.location.origin }/?p=${ article?.id }`
                 }
-                className="flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none"
+                className="flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none mr-4"
                 rel="noreferrer"
               >
                 <div
-                  className="tooltip cursor-pointer before:max-w-xl flex items-center flex-shrink-0 text-base font-medium text-gray-700 !shadow-none z-[9999]"
+                  className="tooltip mr-6 cursor-pointer before:max-w-xl flex items-center flex-shrink-0 text-base font-medium text-gray-700 !shadow-none z-[9999]"
                   data-tip={ he.decode(
                     __( article?.title?.rendered, 'wedocs' )
                   ) }
@@ -107,13 +107,16 @@ const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
                 </div>
 
                 { ! Boolean( parseInt( isAdminRestricted ) ) && (
-                  <div data-tip={ __( 'Edit', 'wedocs' ) } >
+                  <div
+                    className="tooltip cursor-pointer flex items-center"
+                    data-tip={ __( 'Edit', 'wedocs' ) }
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="18"
                       height="18"
                       fill="none"
-                      className="hidden group-hover:block stroke-gray-300 hover:stroke-indigo-700 ml-6"
+                      className="hidden group-hover:block stroke-gray-300 hover:stroke-indigo-700"
                     >
                       <path
                         d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
@@ -125,7 +128,10 @@ const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
                   </div>
                 ) }
               </a>
-              <div data-tip={ __( 'View on Web', 'wedocs' ) } >
+              <div
+                className="tooltip cursor-pointer flex items-center"
+                data-tip={ __( 'View on Web', 'wedocs' ) }
+              >
                 <a
                   target="_blank"
                   className="hidden group-hover:block !shadow-none"
@@ -133,7 +139,7 @@ const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
                   href={ `${ window.location.origin }/?p=${ article?.id }` }
                 >
                   <svg
-                    className="hidden group-hover:block ml-4 stroke-gray-300 hover:stroke-indigo-700"
+                    className="hidden group-hover:block stroke-gray-300 hover:stroke-indigo-700"
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
                     height="18"

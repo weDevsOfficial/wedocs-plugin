@@ -24,6 +24,14 @@ html.wp-toolbar {
     margin: 0;
 }
 
+.modal-body .diamond-img {
+    background: linear-gradient(220.03deg, #fff3dd 39.57%, #ffe3ad 97.5%);
+}
+
+.modal-body .carousel.carousel-slider {
+    padding-bottom: 40px;
+}
+
 @media screen and (max-width: 782px) {
     #wpcontent {
         padding: 0 25px !important;

@@ -22,7 +22,7 @@ class Admin {
     /**
      * Admin initialization hook.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.0
      *
      * @return void
      */
@@ -34,7 +34,7 @@ class Admin {
     /**
      * Handle redirection after activate wedocs.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.0
      *
      * @return void
      */

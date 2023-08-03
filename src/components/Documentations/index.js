@@ -118,7 +118,7 @@ const Documentations = () => {
         </h1>
       </div>
 
-      { ! loading && showActions && need_upgrade && <Upgrade status={ status } /> }
+      { !loading && showActions && need_upgrade && <Upgrade status={ status } /> }
 
       <div
         role="list"
@@ -150,7 +150,7 @@ const Documentations = () => {
         { loading && <DocsPlaceholder /> }
       </div>
 
-      { ! loading && searchValue && documentations.length === 0 && (
+      { !loading && searchValue && documentations.length === 0 && (
         <h2 className="float-left text-lg mt-4">
           { __(
             'Oops! It seems that your search did not match any existing documents. Please try again...',
@@ -159,11 +159,11 @@ const Documentations = () => {
         </h2>
       ) }
 
-      { ! loading && ! searchValue && isAdmin && documentations && documentations?.length === 0 && (
+      { !loading && !searchValue && isAdmin && documentations && documentations?.length === 0 && (
         <EmptyDocs />
       ) }
 
-      { ! loading && ! searchValue && showEmptyNotice }
+      { !loading && !searchValue && showEmptyNotice }
     </>
   );
 };
