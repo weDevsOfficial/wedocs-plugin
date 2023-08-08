@@ -30,6 +30,10 @@ const DEFAULT_SETTINGS_STATE = {
         },
       },
     },
+    layout: {
+      template: 'default',
+      right_bar: 'on',
+    }
   },
   loading: false,
   saving: false,
