@@ -9,8 +9,9 @@ const Switcher = ( {
   setSettings,
   panelName,
   onChange = () => {},
+  isEnabled = true,
 } ) => {
-  const [ enabled, setEnabled ] = useState( true );
+  const [ enabled, setEnabled ] = useState( isEnabled );
 
   const classNames = ( ...classes ) => {
     return classes.filter( Boolean ).join( ' ' );
