@@ -1,11 +1,12 @@
 import { __, sprintf } from '@wordpress/i18n';
-import { Fragment, useEffect, useState } from '@wordpress/element';
+import { Fragment, useEffect, useRef, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import { dispatch, useSelect } from '@wordpress/data';
 import docStore from '../data/docs';
 import ComboBox from './ComboBox';
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 import Swal from 'sweetalert2';
+import { handleDocCreationByRef } from '../utils/helper';
 
 const AddArticleModal = ( {
   sections,
@@ -13,7 +14,10 @@ const AddArticleModal = ( {
   children,
   defaultSection,
   docId,
+  setShowArticles,
 } ) => {
+  const docCreateBtnRef = useRef( null );
+
   const [ isOpen, setIsOpen ] = useState( false );
   const [ sectionId, setSectionId ] = useState( defaultSection?.id || '' );
 
@@ -52,7 +56,7 @@ const AddArticleModal = ( {
       return;
     }
 
-    // Make it disabled for creating a article.
+    // Make it disabled for creating an article.
     setDisabled( true );
 
     dispatch( docStore )
@@ -60,6 +64,7 @@ const AddArticleModal = ( {
       .then( ( result ) => {
         setNewArticle( { ...newArticle, title: { raw: '' } } );
         setSectionId( defaultSection?.id || '' );
+        if ( setShowArticles ) setShowArticles( true );
         Swal.fire( {
           title: __( 'New article added!', 'wedocs' ),
           text: __( 'New article has been added successfully', 'wedocs' ),
@@ -90,6 +95,7 @@ const AddArticleModal = ( {
   };
 
   const openModal = ( e ) => {
+    e.stopPropagation();
     setIsOpen( true );
   };
 
@@ -104,6 +110,9 @@ const AddArticleModal = ( {
   useEffect( () => {
     setNewArticle( { ...newArticle, menu_order: articles?.length } );
   }, [ articles ] );
+
+  // Crete article on enter click.
+  handleDocCreationByRef( docCreateBtnRef );
 
   return (
     <>
@@ -174,17 +183,20 @@ const AddArticleModal = ( {
                     ) }
                   </div>
 
-                  <ComboBox
-                    sections={ sections }
-                    defaultSection={ defaultSection?.title?.rendered }
-                    selectSectionId={ setSectionId }
-                    isFormError={ formError.sectionId }
-                    docId={ docId }
-                  />
+                  { typeof defaultSection === 'undefined' && (
+                    <ComboBox
+                      sections={ sections }
+                      selectSectionId={ setSectionId }
+                      defaultSection={ defaultSection?.title?.rendered }
+                      isFormError={ formError.sectionId }
+                      docId={ docId }
+                    />
+                  ) }
 
                   <div className="mt-6 space-x-3.5">
                     <button
                       className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md"
+                      ref={ docCreateBtnRef }
                       disabled={ disabled }
                       onClick={ createDoc }
                     >

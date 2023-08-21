@@ -6,7 +6,7 @@ const DEFAULT_SETTINGS_STATE = {
       email: 'on',
       email_to: '',
       helpful: 'on',
-      comments: 'on',
+      comments: 'off',
       print: 'on',
     },
     permission: {
@@ -14,6 +14,7 @@ const DEFAULT_SETTINGS_STATE = {
       role_wise_permission: [],
     },
     assistant: {
+      turnstile_site_key: '',
       color_settings: {
         preview_colors: {
           widgetBg: { r: 99, g: 102, b: 241, a: 1 },
@@ -34,6 +35,10 @@ const DEFAULT_SETTINGS_STATE = {
         sync_data: 'off',
         ai_response: {}
       }
+    layout: {
+      template: 'default',
+      right_bar: 'on',
+    }
   },
   loading: false,
   saving: false,
@@ -60,6 +65,17 @@ const reducer = ( state = DEFAULT_SETTINGS_STATE, action ) => {
       return { ...state, needUpgrade: action.needUpgrade };
     case 'SET_SAVING':
       return { ...state, saving: action.saving };
+    case 'SET_TURNSTILE_SITE_KEY':
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          assistant: {
+            ...state.settings.assistant,
+            turnstile_site_key: action.siteKey,
+          },
+        },
+      };
     default:
       return state;
   }

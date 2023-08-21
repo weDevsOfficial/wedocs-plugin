@@ -43,6 +43,11 @@ const selectors = {
     const { saving } = state;
     return saving;
   },
+
+  getTurnstileSiteKey( state ) {
+    const { settings } = state;
+    return settings?.assistant?.turnstile_site_key;
+  },
 };
 
 export default selectors;

@@ -91,6 +91,16 @@ class SettingsApi extends \WP_REST_Controller {
                 ),
             )
         );
+
+        register_rest_route( $this->namespace . $this->version, '/' . $this->base . '/turnstile-site-key',
+            array(
+                array(
+                    'methods'             => WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_turnstile_site_key' ),
+                    'permission_callback' => '__return_true',
+                ),
+            )
+        );
     }
 
     /**
@@ -153,6 +163,20 @@ class SettingsApi extends \WP_REST_Controller {
         }
 
         return rest_ensure_response( $value );
+    }
+
+    /**
+     * Collect turnstile site key settings data.
+     *
+     * @since 2.0.0
+     *
+     * @return mixed
+     */
+    public function get_turnstile_site_key() {
+        $assistant_settings = wedocs_get_option( 'assistant', 'wedocs_settings', '' );
+        $turnstile_site_key = ! empty( $assistant_settings[ 'turnstile_site_key' ] ) ? esc_html( $assistant_settings[ 'turnstile_site_key' ] ) : '';
+
+        return rest_ensure_response( $turnstile_site_key );
     }
 
     /**

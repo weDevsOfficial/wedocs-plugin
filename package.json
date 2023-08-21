@@ -51,6 +51,7 @@
     "daisyui": "^2.49.0",
     "he": "^1.2.0",
     "less-loader": "^11.1.0",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.6.2",
     "sweetalert2": "^11.7.1"
   }

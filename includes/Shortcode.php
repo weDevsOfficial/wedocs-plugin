@@ -86,11 +86,36 @@ class Shortcode {
             }
         }
 
-        // call the template
-        wedocs_get_template( 'shortcode.php', [
-            'docs' => $arranged,
-            'col'  => (int) $args['col'],
-            'more' => $args['more'],
-        ] );
+	    /**
+	     * Handle single docs template directory.
+	     *
+	     * @since WEDOCS_SINCE
+	     *
+	     * @param string $template_dir
+	     *
+	     * @return string
+	     */
+		$template_dir = apply_filters( 'wedocs_get_single_doc_template_dir', 'shortcode.php' );
+
+	    /**
+	     * Handle single doc template arguments.
+	     *
+	     * @since WEDOCS_SINCE
+	     *
+	     * @param array $template_args
+	     *
+	     * @return array
+	     */
+		$template_args = apply_filters(
+			'wedocs_get_single_doc_template_args',
+			array(
+				'docs' => $arranged,
+				'more' => $args['more'],
+				'col'  => (int) $args['col'],
+			)
+		);
+
+        // Render single documentation template.
+        wedocs_get_template( $template_dir, $template_args );
     }
 }

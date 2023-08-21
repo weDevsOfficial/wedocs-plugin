@@ -1,12 +1,15 @@
 import { __, sprintf } from '@wordpress/i18n';
-import { Fragment, useEffect, useState } from '@wordpress/element';
+import { Fragment, useEffect, useRef, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import { dispatch } from '@wordpress/data';
 import docStore from '../data/docs';
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 import Swal from 'sweetalert2';
+import { handleDocCreationByRef } from '../utils/helper';
 
 const AddSectionModal = ( { parent, order, className, children } ) => {
+  const docCreateBtnRef = useRef( null );
+
   const [ isOpen, setIsOpen ] = useState( false );
   const [ newDoc, setNewDoc ] = useState( {
     title: { raw: '' },
@@ -73,6 +76,9 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
     setNewDoc( { ...newDoc, menu_order: order } );
   }, [ order ] );
 
+  // Crete section on enter click.
+  handleDocCreationByRef( docCreateBtnRef );
+
   return (
     <>
       <button onClick={ openModal } className={ className }>
@@ -117,9 +123,11 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
                       'Use concise section titles for better navigation',
                       'wedocs'
                     ) }
+                    <br/>
+                    { __( 'E.g., Getting Started', 'wedocs' ) }
                   </p>
 
-                  <div className="relative mt-6 mb-5">
+                  <div className="relative mt-4 mb-5">
                     <input
                       type="text"
                       name="doc_title"
@@ -148,6 +156,7 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
                   <div className="mt-6 space-x-3.5">
                     <button
                       className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md"
+                      ref={ docCreateBtnRef }
                       disabled={ disabled }
                       onClick={ createDoc }
                     >

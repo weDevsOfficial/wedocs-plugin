@@ -21,7 +21,7 @@ import { userIsAdmin } from "../../utils/helper";
 const DocSections = ( { section, sections, searchValue } ) => {
   const isAdmin = userIsAdmin();
   const { id, title } = section;
-  const [ showArticles, setShowArticles ] = useState( false );
+  const [ showArticles, setShowArticles ] = useState( id === sections?.[0]?.id );
 
   const {
     attributes,
@@ -64,7 +64,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
 
   return (
     <div
-      className="space-y-4 mb-3 relative z-[99]"
+      className="space-y-4 mb-3"
       ref={ setNodeRef }
       style={ style }
       { ...attributes }
@@ -110,7 +110,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                     </svg>
                     <a
                       target="_blank"
-                      href={ `${ window.location.origin }/?p=${ id }` }
+                      href={ `${ window.location.origin }/wp-admin/post.php?post=${ id }&action=edit` }
                       className="tooltip cursor-pointer before:max-w-xl flex items-center flex-shrink-0 text-base font-medium text-black !shadow-none z-[9999]"
                       data-tip={ he.decode( __( title?.rendered, 'wedocs' ) ) }
                       rel="noreferrer"
@@ -130,47 +130,72 @@ const DocSections = ( { section, sections, searchValue } ) => {
                   >
                     { filteredArticles.length }
                   </div>
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={ `${ window.location.origin }/?p=${ id }` }
-                    className="flex items-center flex-shrink-0 text-base font-medium text-black !shadow-none"
-                  >
-                    <svg
-                      className="hidden group-hover:block ml-6 stroke-gray-300 hover:stroke-indigo-700"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      fill="none"
+                  { isAdmin && (
+                    <AddArticleModal
+                      sections={ sections }
+                      className={ `ml-6 mr-1` }
+                      defaultSection={ section }
+                      setShowArticles={ setShowArticles }
                     >
-                      <path
-                        d="M7.118 3.5H3.452c-1.013 0-1.833.821-1.833 1.833V14.5c0 1.012.821 1.833 1.833 1.833h9.167c1.012 0 1.833-.821 1.833-1.833v-3.667m-3.667-9.167h5.5m0 0v5.5m0-5.5l-9.167 9.167"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </a>
+                      <div
+                        className='tooltip cursor-pointer flex items-center justify-center w-3.5 h-3.5'
+                        data-tip={ __( 'Create', 'wedocs' ) }
+                      >
+                        <span className="flex items-center dashicons dashicons-plus-alt2 hidden group-hover:inline-flex text-2xl font-medium text-[#d1d5db] hover:text-indigo-700"></span>
+                      </div>
+                    </AddArticleModal>
+                  ) }
                   <a
                     target="_blank"
                     className="ml-4 hidden group-hover:block !shadow-none"
                     rel="noreferrer"
                     href={ `${ window.location.origin }/wp-admin/post.php?post=${ id }&action=edit` }
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      fill="none"
-                      className="stroke-gray-300 hover:stroke-indigo-700"
+                    <span
+                      className={ `tooltip cursor-pointer` }
+                      data-tip={ __( 'Edit', 'wedocs' ) }
                     >
-                      <path
-                        d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        fill="none"
+                        className="tooltip cursor-pointer stroke-gray-300 hover:stroke-indigo-700"
+                      >
+                        <path
+                          d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={ `${ window.location.origin }/?p=${ id }` }
+                    className="flex items-center flex-shrink-0 text-base font-medium text-black !shadow-none ml-4"
+                  >
+                    <span
+                      className={ `tooltip cursor-pointer flex items-center` }
+                      data-tip={ __( 'View on Web', 'wedocs' ) }
+                    >
+                      <svg
+                        className="hidden group-hover:block stroke-gray-300 hover:stroke-indigo-700"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        fill="none"
+                      >
+                        <path
+                          d="M7.118 3.5H3.452c-1.013 0-1.833.821-1.833 1.833V14.5c0 1.012.821 1.833 1.833 1.833h9.167c1.012 0 1.833-.821 1.833-1.833v-3.667m-3.667-9.167h5.5m0 0v5.5m0-5.5l-9.167 9.167"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
                   </a>
 
                   { isAdmin && (
@@ -179,21 +204,26 @@ const DocSections = ( { section, sections, searchValue } ) => {
                       type="section"
                       classes="ml-4 hidden group-hover:block"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="w-5 h-5 stroke-gray-300 hover:stroke-red-700"
+                      <span
+                        className={ `tooltip cursor-pointer flex items-center` }
+                        data-tip={ __( 'Delete', 'wedocs' ) }
                       >
-                        <path
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                        />
-                      </svg>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="w-5 h-5 stroke-gray-300 hover:stroke-red-700"
+                        >
+                          <path
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                          />
+                        </svg>
+                      </span>
                     </RestictionModal>
                   ) }
                 </div>
@@ -245,6 +275,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                 <AddArticleModal
                   sections={ sections }
                   defaultSection={ section }
+                  setShowArticles={ setShowArticles }
                   className="py-2.5 px-4 mt-7 mb-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 text-sm text-white hover:text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                   <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-3 text-base flex items-center"></span>

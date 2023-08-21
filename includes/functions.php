@@ -58,7 +58,7 @@ function wedocs_get_template_part( $slug, $name = '', $args = array() ) {
  * @return void
  */
 function wedocs_get_template( $template_name, $args = [] ) {
-    $wedocs = WeDocs::init();
+    $wedocs = ! empty( $args['pro'] ) && true === $args['pro'] ? WeDocs_Pro::init() :WeDocs::init();
 
     if ( $args && is_array( $args ) ) {
         extract( $args );
@@ -76,6 +76,19 @@ function wedocs_get_template( $template_name, $args = [] ) {
     if ( file_exists( $template ) ) {
         include $template;
     }
+}
+
+/**
+ * Control display content length.
+ *
+ * @param string $content
+ * @param int    $max_content_number
+ *
+ * @return string
+ */
+function wedocs_apply_short_content( $content, $max_content_number ) {
+	// Control content length by substr.
+	return ( strlen( $content ) > $max_content_number ) ? substr( $content, 0, $max_content_number ) . '...' : $content;
 }
 
 if ( !function_exists( 'wedocs_breadcrumbs' ) ) {
@@ -153,11 +166,14 @@ if ( !function_exists( 'wedocs_get_breadcrumb_item' ) ) {
      * @return string
      */
     function wedocs_get_breadcrumb_item( $label, $permalink, $position = 1 ) {
-        return '<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-            <a itemprop="item" href="' . esc_attr( $permalink ) . '">
-            <span itemprop="name">' . esc_html( $label ) . '</span></a>
-            <meta itemprop="position" content="' . $position . '" />
-        </li>';
+	    return apply_filters(
+		    'wedocs_breadcrumbs_items',
+		    '<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+	            <a itemprop="item" href="' . esc_attr( $permalink ) . '">
+	            <span itemprop="name">' . esc_html( $label ) . '</span></a>
+	            <meta itemprop="position" content="' . $position . '" />
+            </li>'
+	    );
     }
 }
 
