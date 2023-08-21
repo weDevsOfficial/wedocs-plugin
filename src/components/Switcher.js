@@ -8,8 +8,10 @@ const Switcher = ( {
   settingsData,
   setSettings,
   panelName,
+  onChange = () => {},
+  isEnabled = true,
 } ) => {
-  const [ enabled, setEnabled ] = useState( true );
+  const [ enabled, setEnabled ] = useState( isEnabled );
 
   const classNames = ( ...classes ) => {
     return classes.filter( Boolean ).join( ' ' );
@@ -28,11 +30,15 @@ const Switcher = ( {
     } );
   }, [ enabled ] );
 
+  const handleChange = () => {
+    setEnabled( !enabled );
+    onChange( !enabled );
+  }
   return (
     <>
       <Switch
         checked={ enabled }
-        onChange={ setEnabled }
+        onChange={ ()=>handleChange() }
         className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer outline-0 items-center justify-center rounded-full"
       >
         <span

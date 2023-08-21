@@ -194,9 +194,13 @@ class SettingsApi extends \WP_REST_Controller {
         }
 
         $settings_data = $request->get_param( 'settings' );
+        $settings_data_filtered = apply_filters( 'wedocs_settings_data', $settings_data );
 
         // Update wedocs_settings via docs store.
-        update_option( 'wedocs_settings', $settings_data );
-        return rest_ensure_response( $settings_data );
+        update_option( 'wedocs_settings', $settings_data_filtered );
+        $response = apply_filters( 'wedocs_settings_data_rest_response', $settings_data_filtered, $settings_data );
+        do_action( 'wedocs_settings_data_updated', $settings_data_filtered );
+
+        return new \WP_REST_Response( rest_ensure_response( $response ), 200 );
     }
 }
