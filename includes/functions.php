@@ -166,11 +166,13 @@ if ( !function_exists( 'wedocs_get_breadcrumb_item' ) ) {
      * @return string
      */
     function wedocs_get_breadcrumb_item( $label, $permalink, $position = 1 ) {
+        $breadcrumb_label = wedocs_apply_short_content( $label, 25 );
+
 	    return apply_filters(
 		    'wedocs_breadcrumbs_items',
 		    '<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
 	            <a itemprop="item" href="' . esc_attr( $permalink ) . '">
-	            <span itemprop="name">' . esc_html( $label ) . '</span></a>
+	            <span itemprop="name">' . esc_html( $breadcrumb_label ) . '</span></a>
 	            <meta itemprop="position" content="' . $position . '" />
             </li>'
 	    );

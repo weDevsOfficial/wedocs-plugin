@@ -89,7 +89,7 @@ class Shortcode {
 	    /**
 	     * Handle single docs template directory.
 	     *
-	     * @since WEDOCS_SINCE
+	     * @since 2.0.0
 	     *
 	     * @param string $template_dir
 	     *
@@ -100,7 +100,7 @@ class Shortcode {
 	    /**
 	     * Handle single doc template arguments.
 	     *
-	     * @since WEDOCS_SINCE
+	     * @since 2.0.0
 	     *
 	     * @param array $template_args
 	     *

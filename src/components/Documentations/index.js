@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import AddDocModal from '../AddDocModal';
 import EmptyDocs from './EmptyDocs';
 import ParentDocs from './ParentDocs';
-import {dispatch, useSelect} from '@wordpress/data';
+import { dispatch, useSelect } from '@wordpress/data';
 import SearchFilter from '../SearchFilter';
 import { useState, useEffect } from '@wordpress/element';
 import DocsPlaceholder from './DocsPlaceholder';

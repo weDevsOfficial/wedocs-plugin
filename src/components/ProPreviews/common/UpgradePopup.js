@@ -10,7 +10,7 @@ import SliderImgThreeSrc from '../../../assets/img/popup-slider/slider-4.jpg';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
-const UpgradePopup = () => {
+const UpgradePopup = ({ children }) => {
   let [ isOpen, setIsOpen ] = useState( false );
 
   const closeModal = () => {
@@ -22,16 +22,25 @@ const UpgradePopup = () => {
     setIsOpen( true );
   }
 
+  const images = [
+    { src: SliderImgOneSrc, text: __( 'Pop-up slider first image', 'wedocs' ) },
+    { src: SliderImgTwoSrc, text: __( 'Pop-up slider second image', 'wedocs' ) },
+    { src: SliderImgThreeSrc, text: __( 'Pop-up slider third image', 'wedocs' ) },
+    { src: SliderImgFourSrc, text: __( 'Pop-up slider fourth image', 'wedocs' ) },
+  ];
+
   return (
     <>
       {/* Pro upgrade button. */}
-      <UpgradeButton showPopup={ openModal } />
+      <UpgradeButton showPopup={ openModal }>
+        { children }
+      </UpgradeButton>
 
       {/* Show premium features content via pop-up. */}
       <Transition appear show={ isOpen } as={ Fragment }>
-        <Dialog as='div' className='relative z-50' onClose={ closeModal }>
+        <Dialog as='div' className='relative z-[9999]' onClose={ closeModal }>
           <Transition.Child
-            as={Fragment}
+            as={ Fragment }
             enter='ease-out duration-300'
             enterFrom='opacity-0'
             enterTo='opacity-100'
@@ -58,7 +67,8 @@ const UpgradePopup = () => {
                     <div className='content-area space-y-[22px]'>
                       <div className='popup-close-button absolute top-10 right-10 cursor-pointer' onClick={ closeModal }>
                         <svg width='16' height='16' fill='#999'>
-                          <path d='M.781 16a.78.78 0 0 1-.722-.482.78.78 0 0 1 .169-.851L14.666.229a.78.78 0 0 1 1.105 0 .78.78 0 0 1 0 1.105L1.334 15.771A.78.78 0 0 1 .781 16z'/><path d='M15.219 16a.78.78 0 0 1-.553-.229L.229 1.334a.78.78 0 0 1 0-1.105.78.78 0 0 1 1.105 0l14.437 14.437a.78.78 0 0 1 .169.851.78.78 0 0 1-.722.482z' />
+                          <path d='M.781 16a.78.78 0 0 1-.722-.482.78.78 0 0 1 .169-.851L14.666.229a.78.78 0 0 1 1.105 0 .78.78 0 0 1 0 1.105L1.334 15.771A.78.78 0 0 1 .781 16z '/>
+                          <path d='M15.219 16a.78.78 0 0 1-.553-.229L.229 1.334a.78.78 0 0 1 0-1.105.78.78 0 0 1 1.105 0l14.437 14.437a.78.78 0 0 1 .169.851.78.78 0 0 1-.722.482z' />
                         </svg>
                       </div>
                       <Dialog.Title
@@ -198,10 +208,9 @@ const UpgradePopup = () => {
                             );
                           }}
                         >
-                          <img className='ml-auto' src={ SliderImgOneSrc } alt={ __( 'Pop-up slider first image', 'wedocs' ) } />
-                          <img className='ml-auto' src={ SliderImgTwoSrc } alt={ __( 'Pop-up slider second image', 'wedocs' ) } />
-                          <img className='ml-auto' src={ SliderImgThreeSrc } alt={ __( 'Pop-up slider third image', 'wedocs' ) } />
-                          <img className='ml-auto' src={ SliderImgFourSrc } alt={ __( 'Pop-up slider fourth image', 'wedocs' ) } />
+                          { images?.map( ( image, index ) => (
+                            <img key={ index } className='ml-auto !w-[381px] h-[407px]' src={ image?.src } alt={ image?.text } />
+                          ) ) }
                         </Carousel>
                       </div>
                     </div>

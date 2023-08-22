@@ -1,5 +1,6 @@
 +( function ( $ ) {
   let pending_ajax = false;
+  const anchestorItem = document.querySelector( 'ul.doc-nav-list > li.page_item.current_page_ancestor' );
 
   const weDocs = {
     initialize() {
@@ -33,6 +34,7 @@
       $( 'a#wedocs-modal-close' ).on( 'click', this.closeModal );
       $( '#wedocs-modal-backdrop' ).on( 'click', this.closeModal );
       $( 'form#wedocs-contact-modal-form' ).on( 'submit', this.contactHelp );
+      $( 'ul.wedocs-doc-sections > li span' ).on( 'click', this.showDocumentationSections );
     },
 
     feedback ( e ) {
@@ -46,7 +48,7 @@
       pending_ajax = true;
 
       const self = $( this ),
-        wrap = self.closest( '.wedocs-feedback-wrap' ),
+        wrap = self.closest( '.feedback-content' ),
         data = {
           post_id: self.data( 'id' ),
           type: self.data( 'type' ),
@@ -54,9 +56,6 @@
           _wpnonce: weDocs_Vars.nonce,
         };
 
-      wrap.append(
-        '&nbsp; <i class="wedocs-icon wedocs-icon-refresh wedocs-icon-spin"></i>'
-      );
       $.post( weDocs_Vars.ajaxurl, data, function ( resp ) {
         wrap.html( resp.data );
 
@@ -151,9 +150,18 @@
         }
       } );
     },
+
+    showDocumentationSections ( e ) {
+      $( this ).toggleClass( 'active' ).closest( 'li' ).next( '.children' ).toggleClass( 'active' );
+    },
   };
 
   $( function () {
+    if ( ! anchestorItem?.classList.contains( 'wd-state-open' ) ) {
+      anchestorItem?.classList.add( 'wd-state-open' );
+      anchestorItem?.classList.remove( 'wd-state-closed' );
+    }
+
     weDocs.initialize();
   } );
 

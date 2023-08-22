@@ -1,26 +1,69 @@
 <?php if ( $docs ) { ?>
 
 <div class="wedocs-shortcode-wrap">
+
+    <?php wedocs_get_template_part( 'doc-search', 'form' ); ?>
+
     <ul class="wedocs-docs-list col-<?php echo $col; ?>">
 
         <?php foreach ( $docs as $main_doc ) { ?>
             <li class="wedocs-docs-single">
-                <h3><a href="<?php echo get_permalink( $main_doc['doc']->ID ); ?>"><?php echo $main_doc['doc']->post_title; ?></a></h3>
+                <h3>
+                    <a href="<?php echo get_permalink( $main_doc['doc']->ID ); ?>" target='_blank'>
+                        <?php echo $main_doc['doc']->post_title; ?>
+                    </a>
+                </h3>
 
-                <?php if ( $main_doc['sections'] ) { ?>
-
-                    <div class="inside">
+                <div class="inside">
+                    <?php if ( $main_doc['sections'] ) : ?>
                         <ul class="wedocs-doc-sections">
-                            <?php foreach ( $main_doc['sections'] as $section ) { ?>
-                                <li><a href="<?php echo get_permalink( $section->ID ); ?>"><?php echo $section->post_title; ?></a></li>
+                            <?php
+                            foreach ( $main_doc['sections'] as $section ) {
+                                $children_docs = wedocs_get_posts_children( $section->ID, 'docs' );
+                                $post_title    = wedocs_apply_short_content(
+                                    __( $section->post_title, 'wedocs' ),
+                                    $col > 1 ? 25 : 60
+                                );
+                                ?>
+                                <li>
+                                    <a class='icon-view' href="<?php echo get_permalink( $section->ID ); ?>" target='_blank'>
+                                        <?php echo esc_html( $post_title ); ?>
+                                    </a>
+                                    <?php if ( $children_docs ) : ?>
+                                        <span class="dashicons dashicons-arrow-down-alt2"></span>
+                                    <?php endif; ?>
+                                </li>
+                                <?php if ( $children_docs ) : ?>
+                                    <ul class='children has-icon'>
+                                        <?php foreach ( $children_docs as $article ) : ?>
+                                            <li>
+                                                <a href="<?php echo get_permalink( $article->ID ); ?>" target='_blank'>
+                                                    <?php echo esc_html( wedocs_apply_short_content( $article->post_title, $col > 1 ? 30 : 80 ) ); ?>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
                             <?php } ?>
                         </ul>
-                    </div>
+                    <?php else : ?>
+                        <span>
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                ></path>
+                            </svg>
+                            <?php esc_html_e( 'This document has no sections yet. Check back later or wait for the author to add content.', 'wedocs' ); ?>
+                        </span>
+                    <?php endif; ?>
+                </div>
 
-                <?php } ?>
+                <hr class='divider' />
 
                 <div class="wedocs-doc-link">
-                    <a href="<?php echo get_permalink( $main_doc['doc']->ID ); ?>"><?php echo $more; ?></a>
+                    <a href="<?php echo get_permalink( $main_doc['doc']->ID ); ?>" target='_blank'><?php echo $more; ?></a>
                 </div>
             </li>
         <?php } ?>

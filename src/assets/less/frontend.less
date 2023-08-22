@@ -159,6 +159,16 @@ body.single.single-docs .content-area {
             position: relative;
         }
     }
+
+    ul.doc-nav-list {
+        > li > a.on {
+            &:before {
+                content: '\f07c';
+                margin-right: 10px;
+                font-family: 'wedocs';
+            }
+        }
+    }
 }
 
 .wedocs-doc-nav {
@@ -185,6 +195,48 @@ body.single.single-docs .content-area {
 .wedocs-shortcode-wrap {
     .clearfix();
 
+    .wedocs-search-input {
+        display: flex;
+        max-width: 50%;
+        margin-left: auto;
+        position: relative;
+        margin-bottom: 4%;
+
+        .search-field {
+            width: 100%;
+            height: 48px;
+            font-size: 14px;
+            background: white;
+            padding: 14px 22px;
+            border-radius: 100px;
+            border: 1px solid #dbdbdb;
+
+            &::placeholder {
+                color: #C5C5C5;
+            }
+
+            &:focus {
+                outline: none;
+                box-shadow: none;
+                border: 1px solid #3c82f6;
+            }
+        }
+
+        .search-submit {
+            top: 0;
+            right: 0;
+            border: 0;
+            height: 100%;
+            display: flex;
+            cursor: pointer;
+            padding: 14px 26px;
+            position: absolute;
+            align-items: center;
+            background: #3B82F6;
+            border-radius: 100px;
+        }
+    }
+
     ul.wedocs-docs-list {
         .clearfix();
         margin: 0;
@@ -194,45 +246,139 @@ body.single.single-docs .content-area {
 
         li.wedocs-docs-single {
             margin: 0;
-            margin-bottom: 20px;
+            margin-bottom: 4%;
+            padding: 22px 30px;
             position: relative;
+            border-radius: 10px;
+            padding-bottom: 37px;
+            box-sizing: border-box;
             border: 1px solid #e5e5e5;
             -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
             box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 
             h3 {
-                border-bottom: 1px solid #eee;
-                font-size: 18px;
-                font-weight: bold;
-                padding: 8px 12px;
                 margin: 0;
+                font-size: 24px;
+                font-weight: 800;
                 line-height: 1.4;
+                margin-bottom: 16px;
 
                 a {
                     text-decoration: none;
+
+                    &:not(:hover) {
+                        color: #000;
+                    }
                 }
             }
 
             .inside {
-                padding: 15px;
-                min-height: 60px;
+                height: 290px;
+                overflow-y: scroll;
+
+                span {
+                    display: flex;
+                    color: #063250;
+                    font-size: 18px;
+
+                    svg {
+                        width: 4rem;
+                        height: 1.5rem;
+                        margin: 1px 0.5rem 0 0;
+                    }
+                }
+            }
+
+            .divider {
+                margin-top: 20px;
+                margin-bottom: 38px;
             }
 
             .wedocs-doc-link {
-                text-align: center;
-                padding: 10px 0;
-                border-top: 1px solid #eee;
-                background-color: #f7f7f7;
+                display: inline-block;
+                font-size: 16px;
+                font-weight: 500;
+
+                a {
+                    color: white;
+                    line-height: 30px;
+                    background: #3B82F6;
+                    border-radius: 10px;
+                    padding: 13.5px 20px;
+                    text-decoration: none;
+                }
             }
         }
 
         ul.wedocs-doc-sections {
-            margin-left: 20px;
+            margin: 0;
             padding: 0;
-            list-style-type: disc;
+            list-style-type: none;
 
-            li {
+            > li {
                 margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                a {
+                    display: flex;
+                    font-size: 18px;
+                    line-height: 40px;
+                    text-decoration: none;
+
+                    &:not(:hover) {
+                        color: #063250;
+                    }
+
+                    &.icon-view:before {
+                        color: #ACB8C4;
+                        font-size: 16px;
+                        content: '\f07c';
+                        margin-right: 18px;
+                        font-family: 'wedocs';
+                    }
+                }
+
+                > span {
+                    color: #ACB8C4 !important;
+                    font-size: 16px;
+                    cursor: pointer;
+                    margin-top: 4px;
+                    font-weight: 800;
+
+                    &.active {
+                        transform: rotate(180deg);
+                        margin-bottom: 4px;
+                    }
+                }
+            }
+
+            ul.children {
+                margin: 0;
+                margin-bottom: 6px;
+
+                > li {
+                    font-size: 16px;
+                    list-style: circle;
+                    line-height: 36px;
+
+                    a {
+                        text-decoration: none;
+
+                        &:not(:hover) {
+                            color: #64748B;
+                        }
+                    }
+                }
+
+                &:not(.active) {
+                    display: none;
+                }
+
+                &.has-icon {
+                    margin-left: 36px !important;
+                }
             }
         }
 
@@ -242,7 +388,7 @@ body.single.single-docs .content-area {
 
             &:nth-child(2n + 1) {
                 clear: both;
-                margin-right: 3%;
+                margin-right: 4%;
             }
         }
 
@@ -262,80 +408,198 @@ body.single.single-docs .content-area {
     }
 }
 
-.wedocs-feedback-wrap {
+footer.entry-footer.wedocs-entry-footer {
     .clearfix();
 
-    padding-top: 15px;
-    text-align: center;
-    margin: 25px 0;
+    display: flex;
+    align-items: center;
 
-    .vote-link-wrap {
-        margin-left: 10px;
-    }
+    .help-content {
+        width: 40%;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        border: 1px solid #E9E9E9;
 
-    a {
-        font-weight: normal;
-        padding: 2px 15px 2px 15px;
-        color: #fff;
-        text-decoration: none;
-        line-height: 150%;
-        border-radius: 3px;
+        .help-panel {
+            display: flex;
+            align-items: center;
 
-        .count {
-            background-color: #fff;
-            border-radius: 50%;
-            color: #999;
-            width: 16px;
-            height: 16px;
-            font-size: 11px;
-            font-weight: normal;
-            text-align: center;
-            display: inline-block;
-            margin-left: 5px;
-            line-height: 150%;
-        }
+            .help-icon {
+                height: 56px;
+                padding: 15px;
+                margin-right: 16px;
+                background: #F1EAFF;
+                border-radius: 100%;
+            }
 
-        &:hover {
-            text-decoration: none;
-        }
-    }
+            .wedocs-help-link a {
+                border-bottom: 1px dotted #C5C5C5;
+                text-decoration: none;
 
-    a.positive {
-        background: #27ae60;
-        border: 1px solid darken(#27ae60, 1%);
-        margin-right: 10px;
+                .wedocs-article-author {
+                    display: none;
+                }
 
-        &:hover {
-            background-color: darken(#27ae60, 5%);
-            color: #fff;
+                time {
+                    font-weight: normal;
+                    font-style: italic;
+                }
+
+                &:hover {
+                    text-decoration: none;
+                    border-bottom: 1px dotted #999;
+                }
+            }
         }
     }
 
-    a.negative {
-        background: #e74c3c;
-        border: 1px solid darken(#e74c3c, 1%);
+    .feedback-content {
+        width: 60%;
 
-        &:hover {
-            background-color: darken(#e74c3c, 5%);
-            color: #fff;
+        .wedocs-feedback-wrap {
+            .clearfix();
+
+            //text-align: center;
+            line-height: 72px;
+            font-size: 18px;
+            color: #4A6474;
+            border: 1px solid #E9E9E9;
+            border-radius: 10px;
+            background: white;
+            padding: 12px 20px;
+            margin-left: 24px;
+
+            .vote-link-wrap {
+                margin-left: 12px;
+            }
+
+            a {
+                text-decoration: none;
+                line-height: 150%;
+                border-radius: 10px;
+                padding: 5px 15px;
+                align-items: center;
+                display: inline-flex;
+
+                .count {
+                    background-color: #0E8A4F;
+                    border-radius: 50%;
+                    color: #fff;
+                    width: 16px;
+                    height: 16px;
+                    font-size: 11px;
+                    font-weight: normal;
+                    text-align: center;
+                    display: inline-block;
+                    margin-left: 5px;
+                    line-height: 150%;
+                }
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+
+            a.positive {
+                font-weight: 500;
+                background: #3BB67B;
+                color: white !important;
+                border: 1px solid darken(#27ae60, 1%);
+
+                &:hover {
+                    background-color: darken(#27ae60, 5%);
+                    color: #fff;
+
+                    .count {
+                        background: #166534;
+                    }
+                }
+            }
+
+            a.negative {
+                margin-right: 12px;
+                border: 1px solid #DBDBDB;
+                background: white;
+                color: #4A6474 !important;
+                font-weight: 500;
+
+                .count {
+                    background: #DBDBDB;
+                }
+
+                &:hover {
+                    color: #fff !important;
+                    background-color: #ef4444;
+
+                    .count {
+                        background: #b91c1c;
+                    }
+                }
+            }
+        }
+
+        .wedocs-alert {
+            border: 1px solid transparent;
+            margin-left: 24px;
+            line-height: 96px;
+            border-radius: 10px;
+            padding: 0 28px;
+
+            &.wedocs-alert-success {
+                color: #3c763d;
+                background-color: #dff0d8;
+                border-color: #d6e9c6;
+            }
+
+            &.wedocs-alert-danger {
+                color: #a94442;
+                background-color: #f2dede;
+                border-color: #ebccd1;
+            }
         }
     }
-}
 
-.wedocs-alert {
-    padding: 15px;
-    border: 1px solid transparent;
+    &.on {
+        display: block;
 
-    &.wedocs-alert-success {
-        color: #3c763d;
-        background-color: #dff0d8;
-        border-color: #d6e9c6;
-    }
+        .help-content,
+        .feedback-content {
+            width: 100%;
 
-    &.wedocs-alert-danger {
-        color: #a94442;
-        background-color: #f2dede;
-        border-color: #ebccd1;
+            .wedocs-feedback-wrap {
+                margin: 0;
+                margin-top: 18px;
+                text-align: center;
+            }
+
+            .wedocs-alert {
+                margin: 0;
+                margin-top: 24px;
+            }
+        }
+
+        .help-content {
+            padding: 20px 30px;
+
+            .help-icon {
+                margin-right: 25px;
+            }
+
+            .help-button {
+                margin-left: auto;
+
+                #wedocs-stuck-modal {
+                    background: #3B82F6;
+                    color: white !important;
+                    font-weight: 600;
+                    font-size: 18px;
+                    text-decoration: none;
+                    padding: 11px 21px;
+                    border-radius: 10px;
+                }
+            }
+        }
     }
 }
 

@@ -30,14 +30,19 @@ const DEFAULT_SETTINGS_STATE = {
         },
       },
     },
-      integrate_ai: {
-        ai_enabled: 'off',
-        sync_data: 'off',
-        ai_response: {}
-      }
+    integrate_ai: {
+      ai_enabled: 'off',
+      sync_data: 'off',
+      ai_response: {}
+    },
     layout: {
-      template: 'default',
+      column: '2',
+      nav_icon: 'on',
       right_bar: 'on',
+      template: 'default',
+      active_text: { r: 59, g: 130, b: 246, a: 1 },
+      active_nav_bg: { r: 59, g: 130, b: 246, a: 1 },
+      active_nav_text: { r: 255, g: 255, b: 255, a: 1 },
     }
   },
   loading: false,
