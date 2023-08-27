@@ -56,7 +56,7 @@ const AssistantWidgetSettings = ( { settingsData, setSettings } ) => {
                                 className={ 'translate-x-5 pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out' }
                             />
                         </Switch>
-                        <span className={ `mt-0.5 ml-3` }>
+                        <span className={ `ml-3` }>
                             <span className="text-sm text-gray-900">
                                 { __( 'Enable', 'wedocs' ) }
                             </span>

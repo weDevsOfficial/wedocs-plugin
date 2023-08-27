@@ -88,7 +88,7 @@ function wedocs_get_template( $template_name, $args = [] ) {
  */
 function wedocs_apply_short_content( $content, $max_content_number ) {
 	// Control content length by substr.
-	return ( strlen( $content ) > $max_content_number ) ? substr( $content, 0, $max_content_number ) . '...' : $content;
+	return ( strlen( $content ) > $max_content_number ) ? mb_substr( $content, 0, $max_content_number ) . '...' : $content;
 }
 
 if ( !function_exists( 'wedocs_breadcrumbs' ) ) {
@@ -401,10 +401,10 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
     $email_body .= sprintf( __( 'Doc Permalink: %s', 'wedocs' ), get_permalink( $document ) ) . "\r\n";
     $email_body .= sprintf( __( 'Edit Doc: %s', 'wedocs' ), admin_url( 'post.php?action=edit&post=' . $doc_id ) ) . "\r\n";
 
-    $from     = "From: \"${author}\" <${wp_email}>";
-    $reply_to = "Reply-To: \"${email}\" <${email}>";
+    $from     = "From: $author <$wp_email>";
+    $reply_to = "Reply-To: $email <$email>";
 
-    $message_headers = "${from}\n"
+    $message_headers = "$from\n"
             . 'Content-Type: text/plain; charset ="' . get_option( 'blog_charset' ) . "\"\n";
     $message_headers .= $reply_to . "\n";
 

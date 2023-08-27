@@ -28,7 +28,7 @@ const GeneralSettings = ( {
   return (
     <section>
       <div className="shadow sm:rounded-md">
-        <div className="bg-white">
+        <div className="bg-white sm:rounded-md overflow-hidden">
           <div className="section-heading py-4 px-8 sm:px-8 sm:py-4">
             <h2 className="text-gray-900 font-medium text-lg">
               { __( 'General', 'wedocs' ) }
@@ -263,6 +263,7 @@ const GeneralSettings = ( {
                     settingsData={ settingsData }
                     setSettings={ setSettings }
                     panelName={ `general` }
+                    isEnabled={ generalSettings?.comments === 'on' }
                   />
                 </div>
               </div>

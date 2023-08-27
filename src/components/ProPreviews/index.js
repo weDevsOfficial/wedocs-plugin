@@ -2,10 +2,11 @@ import { __ } from '@wordpress/i18n';
 import PermissionSettings from './PermissionSettings';
 import AssistantWidgetSettings from './AssistantWidgetSettings';
 import { userIsAdmin } from '../../utils/helper';
-import Badge from './common/Badge';
+import { WrenchIcon } from '@heroicons/react/24/outline'
 import Contributors from './common/Contributors';
 import UpgradePopup from './common/UpgradePopup';
 import LayoutSettings from './LayoutSettings';
+import IntegrateAiSettings from './IntegrateAiSettings';
 
 wp.hooks.addFilter(
     'wedocs_settings_menu',
@@ -64,6 +65,13 @@ wp.hooks.addFilter(
                 </svg>
             ),
         };
+        menus.integrate_ai = {
+            pro: true,
+            text: __( 'Integrate AI', 'wedocs' ),
+            icon: (
+                <WrenchIcon className="-ml-1 mr-4 h-5 w-5 text-gray-600" />
+            ),
+        };
 
         return menus;
     }
@@ -82,10 +90,15 @@ wp.hooks.addFilter(
                 setSettings={ setDocSettings }
             />,
             <LayoutSettings
-              key={ index }
-              settingsData={ docSettings }
-              setSettings={ setDocSettings }
-            />
+                key={ index }
+                settingsData={ docSettings }
+                setSettings={ setDocSettings }
+            />,
+            <IntegrateAiSettings
+                key={ index }
+                settingsData={ docSettings }
+                setSettings={ setDocSettings }
+            />,
         ];
     }
 );
@@ -94,13 +107,6 @@ wp.hooks.addFilter(
   'wedocs_admin_article_restriction_action',
   'wedocs_admin_article_restriction_action_callback',
   function ( componentsArray, id, type ) {
-    // padding: 1px 5px 2px;
-    // font-size: 11px;
-    // line-height: 13.31px;
-    // border-radius: 0.25rem;
-    // margin-left: 0.25rem;
-    // margin-right: 0;
-    // margin-top: 0;
     return (
       <>
         { userIsAdmin() && (

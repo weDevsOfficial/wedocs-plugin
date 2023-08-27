@@ -12,7 +12,7 @@ const AddChildrens = ( { docId, sections, className, children } ) => {
         </span>
         <div
           id="action-menus"
-          className="w-40 bg-white border border-[#DBDBDB] mt-2.5 absolute z-10 shadow right-0 py-1 rounded-md hidden group-hover:block hover:block after:content-[''] before:content-[''] after:absolute before:absolute after:w-[13px] before:w-full after:h-[13px] before:h-2.5 after:top-[-7px] before:-top-2.5 after:right-[22px] after:z-[-1] after:bg-white after:border after:border-[#DBDBDB] after:!rotate-45 after:border-r-0 after:border-b-0"
+          className="w-40 bg-white border border-[#DBDBDB] mt-2.5 absolute z-[99999] shadow right-0 py-1 rounded-md hidden group-hover:block hover:block after:content-[''] before:content-[''] after:absolute before:absolute after:w-[13px] before:w-full after:h-[13px] before:h-2.5 after:top-[-7px] before:-top-2.5 after:right-[22px] after:z-[-1] after:bg-white after:border after:border-[#DBDBDB] after:!rotate-45 after:border-r-0 after:border-b-0"
         >
           { /* Add article */ }
           <AddArticleModal

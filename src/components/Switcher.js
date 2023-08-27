@@ -24,6 +24,10 @@ const Switcher = ( {
   }, [ settingsPanel[ name ] ] );
 
   useEffect( () => {
+      setEnabled( isEnabled );
+  }, [ isEnabled ] );
+
+  useEffect( () => {
     setSettings( {
       ...settingsData,
       [ panelName ]: { ...settingsPanel, [ name ]: enabled ? 'on' : 'off' },
@@ -34,6 +38,7 @@ const Switcher = ( {
     setEnabled( !enabled );
     onChange( !enabled );
   }
+
   return (
     <>
       <Switch
