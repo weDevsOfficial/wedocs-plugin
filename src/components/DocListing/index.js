@@ -18,6 +18,7 @@ import {
 import settingsStore from '../../data/settings';
 import Swal from "sweetalert2";
 import { userIsAdmin } from "../../utils/helper";
+import NotFound from '../NotFound';
 
 const ListingPage = () => {
   const { id } = useParams();
@@ -84,6 +85,12 @@ const ListingPage = () => {
     true
   );
 
+  const validParam = wp.hooks.applyFilters(
+    'wedocs_validate_listing_params',
+    true,
+      id
+  );
+
   const isAdmin = userIsAdmin();
 
   if ( status === 'done' ) {
@@ -106,83 +113,87 @@ const ListingPage = () => {
   }
 
   return (
-    <div className="docs-section-listing wrap py-5">
-      { ! loading && showActions && need_upgrade && <Upgrade status={ status } /> }
+    <>
+      { validParam ? (
+        <div className="docs-section-listing wrap py-5">
+          { ! loading && showActions && need_upgrade && <Upgrade status={ status } /> }
 
-      <div className="flex items-center justify-between mb-7">
-        <BackToDocsPage />
-        <SearchFilter
-          handleChange={ handleChange }
-          searchValue={ searchValue }
-          listing={ true }
-        />
-      </div>
+          <div className="flex items-center justify-between mb-7">
+            <BackToDocsPage />
+            <SearchFilter
+              handleChange={ handleChange }
+              searchValue={ searchValue }
+              listing={ true }
+            />
+          </div>
 
-      <ListingHeader id={ id } />
+          <ListingHeader id={ id } />
 
-      { ! loading && sections.length > 0 && (
-        <>
-          { isAdmin ? (
-            <DraggableDocs setItems={ setSections }>
-              <SortableContext
-                items={ sections }
-                strategy={ verticalListSortingStrategy }
-              >
-                { sections?.map( ( section ) => (
-                  <DocSections
-                    key={ section.id }
-                    sections={ sections }
-                    section={ section }
-                    searchValue={ searchValue }
-                  />
-                ) ) }
-              </SortableContext>
-            </DraggableDocs>
-          ) : (
+          { ! loading && sections.length > 0 && (
             <>
-              { sections?.map( ( section ) => (
-                <DocSections
-                  key={ section.id }
-                  sections={ sections }
-                  section={ section }
-                  searchValue={ searchValue }
-                />
-              ) ) }
+              { isAdmin ? (
+                <DraggableDocs setItems={ setSections }>
+                  <SortableContext
+                    items={ sections }
+                    strategy={ verticalListSortingStrategy }
+                  >
+                    { sections?.map( ( section ) => (
+                      <DocSections
+                        key={ section.id }
+                        sections={ sections }
+                        section={ section }
+                        searchValue={ searchValue }
+                      />
+                    ) ) }
+                  </SortableContext>
+                </DraggableDocs>
+              ) : (
+                <>
+                  { sections?.map( ( section ) => (
+                    <DocSections
+                      key={ section.id }
+                      sections={ sections }
+                      section={ section }
+                      searchValue={ searchValue }
+                    />
+                  ) ) }
+                </>
+              ) }
             </>
           ) }
-        </>
-      ) }
 
-      { ! loading && sections.length === 0 && (
-        <div className="space-y-4 mb-3">
-          <div className="bg-white shadow sm:rounded-md">
-            <div className="flex items-center cursor-pointer text-base px-4 py-5 sm:px-6">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6 mr-2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                />
-              </svg>
-              { __(
-                'No section or article found for this documentation',
-                'wedocs'
-              ) }
+          { ! loading && sections.length === 0 && (
+            <div className="space-y-4 mb-3">
+              <div className="bg-white shadow sm:rounded-md">
+                <div className="flex items-center cursor-pointer text-base px-4 py-5 sm:px-6">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6 mr-2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                    />
+                  </svg>
+                  { __(
+                    'No section or article found for this documentation',
+                    'wedocs'
+                  ) }
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      ) }
+          ) }
 
-      { loading && <DocsListingPlaceholder /> }
-      <ListingButtons sections={ sections } />
-    </div>
+          { loading && <DocsListingPlaceholder /> }
+          <ListingButtons sections={ sections } />
+        </div>
+      ) : <NotFound/> }
+    </>
   );
 };
 

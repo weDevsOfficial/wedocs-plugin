@@ -117,6 +117,7 @@ const GeneralSettings = ( {
                     settingsData={ settingsData }
                     setSettings={ setSettings }
                     panelName={ `general` }
+                    isEnabled={ generalSettings?.email === 'on' }
                   />
                 </div>
               </div>
@@ -218,6 +219,7 @@ const GeneralSettings = ( {
                     settingsData={ settingsData }
                     setSettings={ setSettings }
                     panelName={ `general` }
+                    isEnabled={ generalSettings?.helpful === 'on' }
                   />
                 </div>
               </div>
@@ -309,6 +311,7 @@ const GeneralSettings = ( {
                     settingsData={ settingsData }
                     setSettings={ setSettings }
                     panelName={ `general` }
+                    isEnabled={ generalSettings?.print === 'on' }
                   />
                 </div>
               </div>

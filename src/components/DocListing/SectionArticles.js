@@ -72,7 +72,7 @@ const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
                 width="16"
                 height="21"
                 fill="none"
-                className="w-full h-full px-3.5"
+                className="w-auto px-3.5"
               >
                 <path
                   d="M5 10.02h6m-6 4h6m2 5H3a2 2 0 0 1-2-2v-14a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707v9.586a2 2 0 0 1-2 2z"

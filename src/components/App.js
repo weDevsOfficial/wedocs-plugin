@@ -1,19 +1,21 @@
 import Layout from './Layout';
 import {
-  Route,
-  RouterProvider,
-  createHashRouter,
-  createRoutesFromElements,
+    Route,
+    RouterProvider,
+    createHashRouter,
+    createRoutesFromElements,
 } from 'react-router-dom';
 import ListingPage from './DocListing';
 import SettingsPage from './Settings';
 import Documentations from './Documentations';
+import NotFound from './NotFound';
 
 const App = () => {
   let routes = [
     { path: '/', component: Documentations },
     { path: 'settings', component: SettingsPage },
     { path: 'section/:id', component: ListingPage },
+    { path: '*', component: NotFound },
   ];
 
   routes = wp.hooks.applyFilters( 'wedocs_register_menu_routes', routes );

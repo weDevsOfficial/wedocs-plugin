@@ -157,6 +157,12 @@
   };
 
   $( function () {
+    // Handle hash router.
+    if ( window.location.hash ) {
+      window.location = window.location.pathname;
+    }
+
+    // Handle navigation caret.
     if ( ! anchestorItem?.classList.contains( 'wd-state-open' ) ) {
       anchestorItem?.classList.add( 'wd-state-open' );
       anchestorItem?.classList.remove( 'wd-state-closed' );

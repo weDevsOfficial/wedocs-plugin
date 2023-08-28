@@ -36,7 +36,13 @@ get_header(); ?>
                         <?php the_title( '<h1 class="entry-title" itemprop="headline">', '</h1>' ); ?>
 
                         <?php if ( wedocs_get_general_settings( 'print', 'on' ) === 'on' ) { ?>
-                            <a href="#" class="wedocs-print-article wedocs-hide-print wedocs-hide-mobile" title="<?php echo esc_attr( __( 'Print this article', 'wedocs' ) ); ?>"><i class="wedocs-icon wedocs-icon-print"></i></a>
+                            <a
+                                href="#"
+                                class="wedocs-print-article wedocs-hide-print wedocs-hide-mobile"
+                                title="<?php echo esc_attr( __( 'Print this article', 'wedocs' ) ); ?>"
+                            >
+                                <i class="wedocs-icon wedocs-icon-print"></i>
+                            </a>
                         <?php } ?>
                     </header><!-- .entry-header -->
 
@@ -78,8 +84,8 @@ get_header(); ?>
 	                  <?php wedocs_doc_nav(); ?>
 
                     <footer class="entry-footer wedocs-entry-footer">
-                        <div class='help-content'>
-                            <?php if ( wedocs_get_general_settings( 'email', 'on' ) === 'on' ) { ?>
+	                      <?php if ( wedocs_get_general_settings( 'email', 'on' ) === 'on' ) { ?>
+                            <div class='help-content'>
                                 <div class='help-panel'>
                                     <span class='help-icon'>
                                         <svg width="26" height="25" fill="none" class='wedocs-icon'>
@@ -104,14 +110,14 @@ get_header(); ?>
                                         <time itemprop="dateModified" datetime="<?php echo esc_attr( get_the_modified_date( 'c' ) ); ?>"><?php printf( __( 'Updated on %s', 'wedocs' ), get_the_modified_date() ); ?></time>
                                     </span>
                                 </div>
-                            <?php } ?>
-                        </div>
+                            </div>
+                        <?php } ?>
 
-                        <div class='feedback-content'>
-                            <?php if ( wedocs_get_general_settings( 'helpful', 'on' ) === 'on' ) { ?>
+                        <?php if ( wedocs_get_general_settings( 'helpful', 'on' ) === 'on' ) { ?>
+                            <div class='feedback-content'>
                                 <?php wedocs_get_template_part( 'content', 'feedback' ); ?>
-                            <?php } ?>
-                        </div>
+                            </div>
+                        <?php } ?>
                     </footer>
 
                     <?php if ( wedocs_get_general_settings( 'email', 'on' ) === 'on' ) { ?>
