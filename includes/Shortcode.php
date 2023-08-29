@@ -67,21 +67,21 @@ class Shortcode {
 
         $parent_docs = get_pages( $parent_args );
 
-        // arrange the docs
+        // Arrange the section docs.
         if ( $parent_docs ) {
             foreach ( $parent_docs as $root ) {
-                $sections = get_children( [
-                    'post_parent'    => $root->ID,
-                    'post_type'      => 'docs',
-                    'post_status'    => 'publish',
-                    'orderby'        => 'menu_order',
-                    'order'          => 'ASC',
-                    'numberposts'    => (int) $args['items'],
+	            $section_docs = get_children( [
+                    'post_parent' => $root->ID,
+                    'post_type'   => 'docs',
+                    'post_status' => 'publish',
+                    'orderby'     => 'menu_order',
+                    'order'       => 'ASC',
+                    'numberposts' => (int) $args['items'],
                 ] );
 
                 $arranged[] = [
                     'doc'      => $root,
-                    'sections' => $sections,
+                    'sections' => $section_docs,
                 ];
             }
         }
@@ -95,7 +95,7 @@ class Shortcode {
 	     *
 	     * @return string
 	     */
-		$template_dir = apply_filters( 'wedocs_get_single_doc_template_dir', 'shortcode.php' );
+		$template_dir = apply_filters( 'wedocs_get_doc_listing_template_dir', 'shortcode.php' );
 
 	    /**
 	     * Handle single doc template arguments.
@@ -107,7 +107,7 @@ class Shortcode {
 	     * @return array
 	     */
 		$template_args = apply_filters(
-			'wedocs_get_single_doc_template_args',
+			'wedocs_get_doc_listing_template_args',
 			array(
 				'docs' => $arranged,
 				'more' => $args['more'],

@@ -2,7 +2,6 @@ import { __ } from '@wordpress/i18n';
 import PermissionSettings from './PermissionSettings';
 import AssistantWidgetSettings from './AssistantWidgetSettings';
 import { userIsAdmin } from '../../utils/helper';
-import { WrenchIcon } from '@heroicons/react/24/outline'
 import Contributors from './common/Contributors';
 import UpgradePopup from './common/UpgradePopup';
 import LayoutSettings from './LayoutSettings';

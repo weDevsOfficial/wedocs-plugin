@@ -48,7 +48,7 @@ class V_2_0_0 extends UpgradeHandler {
                 'print'     => wedocs_get_general_settings( 'print', 'on' ),
                 'email'     => wedocs_get_general_settings( 'email', 'on' ),
                 'helpful'   => wedocs_get_general_settings( 'helpful', 'on' ),
-                'comments'  => wedocs_get_general_settings( 'comments', 'on' ),
+                'comments'  => wedocs_get_general_settings( 'comments', 'off' ),
                 'email_to'  => wedocs_get_general_settings( 'email_to' ),
                 'docs_home' => wedocs_get_general_settings( 'docs_home' ),
             ];

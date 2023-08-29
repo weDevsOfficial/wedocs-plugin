@@ -5,6 +5,7 @@ import {
     createHashRouter,
     createRoutesFromElements,
 } from 'react-router-dom';
+import Migrate from './Migrations';
 import ListingPage from './DocListing';
 import SettingsPage from './Settings';
 import Documentations from './Documentations';
@@ -15,6 +16,7 @@ const App = () => {
     { path: '/', component: Documentations },
     { path: 'settings', component: SettingsPage },
     { path: 'section/:id', component: ListingPage },
+    { path: 'migrate', component: Migrate },
     { path: '*', component: NotFound },
   ];
 
