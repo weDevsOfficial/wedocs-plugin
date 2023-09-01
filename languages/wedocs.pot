@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-08-29T04:50:57+00:00\n"
+"POT-Creation-Date: 2023-08-30T08:53:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -586,34 +586,34 @@ msgid "Industry leading 24x7 support"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/PermissionSettings.js:13
+#: src/components/ProPreviews/PermissionSettings.js:14
 msgid "Global doc permission settings"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/PermissionSettings.js:14
+#: src/components/ProPreviews/PermissionSettings.js:15
 msgid "By default, who will get edit access on all the documents?"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/PermissionSettings.js:22
+#: src/components/ProPreviews/PermissionSettings.js:23
 msgid "Who can manage weDocs Settings?"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/PermissionSettings.js:23
+#: src/components/ProPreviews/PermissionSettings.js:24
 msgid "Who will have the ability to alter the settings of the plugin?"
 msgstr ""
 
 #: assets/build/565.js:1
 #: src/components/ProPreviews/index.js:16
 #: src/components/ProPreviews/index.js:118
-#: src/components/ProPreviews/PermissionSettings.js:35
+#: src/components/ProPreviews/PermissionSettings.js:37
 msgid "Permission Management"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/PermissionSettings.js:81
+#: src/components/ProPreviews/PermissionSettings.js:83
 msgid "5 roles selected"
 msgstr ""
 
@@ -623,7 +623,7 @@ msgstr ""
 #: src/components/AddDocModal.js:163
 #: src/components/AddSectionModal.js:165
 #: src/components/ProPreviews/partials/ExploreSettingsPanel.js:314
-#: src/components/ProPreviews/PermissionSettings.js:113
+#: src/components/ProPreviews/PermissionSettings.js:115
 #: src/components/RestrictionModal.js:142
 msgid "%s"
 msgstr ""
@@ -694,8 +694,8 @@ msgid "Enable Explore Tab"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/AssistantWidgetSettings.js:61
-#: src/components/ProPreviews/IntegrateAiSettings.js:53
+#: src/components/ProPreviews/AssistantWidgetSettings.js:62
+#: src/components/ProPreviews/IntegrateAiSettings.js:54
 #: src/components/ProPreviews/partials/ExploreSettingsPanel.js:97
 #: src/components/ProPreviews/partials/MessagingSettingsPanel.js:53
 msgid "Enable"
@@ -1047,7 +1047,7 @@ msgid "Appearance"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/AssistantWidgetSettings.js:25
+#: src/components/ProPreviews/AssistantWidgetSettings.js:26
 #: src/components/ProPreviews/index.js:34
 msgid "Assistant Widget"
 msgstr ""
@@ -1111,65 +1111,48 @@ msgid "Enhance readability. Select a font color for the active elements in your 
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:62
+#: src/components/ProPreviews/LayoutSettings.js:63
 msgid "Layout Settings"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:79
+#: src/components/ProPreviews/LayoutSettings.js:80
 msgid "Choose Doc List Column Style"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:83
+#: src/components/ProPreviews/LayoutSettings.js:84
 msgid "Choose how your document list columns should appear"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:193
+#: src/components/ProPreviews/LayoutSettings.js:194
 msgid "Choose Single Doc Template"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:197
+#: src/components/ProPreviews/LayoutSettings.js:198
 msgid "Customize the template for individual docs. Choose a layout that suits your content best"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:553
+#: src/components/ProPreviews/LayoutSettings.js:554
 msgid "Enable Navigation Icon"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:557
+#: src/components/ProPreviews/LayoutSettings.js:558
 msgid "Enable/Disable navigation icons for a user-friendly experience on your single document pages"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:597
+#: src/components/ProPreviews/LayoutSettings.js:598
 msgid "Enable Table of Contents"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:601
+#: src/components/ProPreviews/LayoutSettings.js:602
 msgid "Improve content navigation. Turn on the table of contents feature for easy access to document sections"
-msgstr ""
-
-#: assets/build/565.js:1
-#: src/components/ProPreviews/index.js:69
-#: src/components/ProPreviews/IntegrateAiSettings.js:15
-msgid "Integrate AI"
-msgstr ""
-
-#: assets/build/565.js:1
-#: src/components/ProPreviews/IntegrateAiSettings.js:72
-msgid "Sync Data with AI"
-msgstr ""
-
-#: assets/build/565.js:1
-#: src/components/ProPreviews/IntegrateAiSettings.js:76
-#: src/components/ProPreviews/IntegrateAiSettings.js:106
-msgid "Please create at least one document to enable and sync data with AI"
 msgstr ""
 
 #: assets/build/565.js:1
@@ -1480,7 +1463,7 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:34
-#: src/components/Settings/Menu.js:8
+#: src/components/Settings/Menu.js:9
 msgid "General"
 msgstr ""
 
@@ -1609,4 +1592,17 @@ msgstr ""
 #: assets/build/index.js:5
 #: src/components/Documentations/index.js:155
 msgid "Oops! It seems that your search did not match any existing documents. Please try again..."
+msgstr ""
+
+#: src/components/ProPreviews/IntegrateAiSettings.js:16
+msgid "Integrate AI"
+msgstr ""
+
+#: src/components/ProPreviews/IntegrateAiSettings.js:73
+msgid "Sync Data with AI"
+msgstr ""
+
+#: src/components/ProPreviews/IntegrateAiSettings.js:77
+#: src/components/ProPreviews/IntegrateAiSettings.js:107
+msgid "Please create at least one document to enable and sync data with AI"
 msgstr ""
