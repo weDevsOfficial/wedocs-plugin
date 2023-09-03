@@ -40,7 +40,9 @@
                                         <?php echo esc_html( $post_title ); ?>
                                     </a>
                                     <?php if ( $children_docs ) : ?>
-                                        <span class="dashicons dashicons-arrow-down-alt2"></span>
+                                        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#acb8c4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
                                     <?php endif; ?>
                                 </li>
                                 <?php if ( $children_docs ) : ?>

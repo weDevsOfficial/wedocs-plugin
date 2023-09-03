@@ -34,7 +34,7 @@
       $( 'a#wedocs-modal-close' ).on( 'click', this.closeModal );
       $( '#wedocs-modal-backdrop' ).on( 'click', this.closeModal );
       $( 'form#wedocs-contact-modal-form' ).on( 'submit', this.contactHelp );
-      $( 'ul.wedocs-doc-sections > li span' ).on( 'click', this.showDocumentationSections );
+      $( 'ul.wedocs-doc-sections > li svg' ).on( 'click', this.showSectionArticles );
     },
 
     feedback ( e ) {
@@ -151,7 +151,7 @@
       } );
     },
 
-    showDocumentationSections ( e ) {
+    showSectionArticles ( e ) {
       $( this ).toggleClass( 'active' ).closest( 'li' ).next( '.children' ).toggleClass( 'active' );
     },
   };

@@ -83,7 +83,7 @@ get_header(); ?>
 
                     <footer class="entry-footer wedocs-entry-footer">
 	                      <?php if ( wedocs_get_general_settings( 'email', 'on' ) === 'on' ) { ?>
-                            <div class='help-content'>
+                            <div class='help-content wedocs-hide-mobile'>
                                 <div class='help-panel'>
                                     <span class='help-icon'>
                                         <svg width="26" height="25" fill="none" class='wedocs-icon'>
