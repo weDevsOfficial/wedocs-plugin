@@ -95,9 +95,9 @@ const ListingPage = () => {
   const validParam = wp.hooks.applyFilters(
     'wedocs_validate_listing_params',
     true,
-      parentDocIds,
-      isAdmin,
-      id
+    parentDocIds,
+    isAdmin,
+    id
   );
 
   if ( status === 'done' ) {

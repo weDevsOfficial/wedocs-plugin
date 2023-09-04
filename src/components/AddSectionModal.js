@@ -39,7 +39,6 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
       .createDoc( newDoc )
       .then( ( result ) => {
         setNewDoc( { ...newDoc, title: { ...newDoc.title, raw: '' } } );
-        // newDoc.title.raw = '';
         Swal.fire( {
           title: __( 'New section added!', 'wedocs' ),
           text: __( 'New section has been added successfully', 'wedocs' ),
