@@ -3,7 +3,7 @@ import DummySwitch from '../DummySwitch';
 
 const IntegrateAiSettings = () => {
 	return (
-		<div className={ `relative` }>
+		<div className={ `relative h-[180px]` }>
 			<div className="grid grid-cols-4 gap-5 mb-5">
                 <div
                     className="col-span-4"
