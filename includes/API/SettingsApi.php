@@ -174,7 +174,7 @@ class SettingsApi extends \WP_REST_Controller {
      */
     public function get_turnstile_site_key() {
         $assistant_settings = wedocs_get_option( 'assistant', 'wedocs_settings', '' );
-        $turnstile_site_key = ! empty( $assistant_settings[ 'turnstile_site_key' ] ) ? esc_html( $assistant_settings[ 'turnstile_site_key' ] ) : '';
+        $turnstile_site_key = ! empty( $assistant_settings[ 'message' ][ 'turnstile_site_key' ] ) ? esc_html( $assistant_settings[ 'message' ][ 'turnstile_site_key' ] ) : '';
 
         return rest_ensure_response( $turnstile_site_key );
     }
