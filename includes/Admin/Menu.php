@@ -83,11 +83,6 @@ class Menu {
                 apply_filters( 'wedocs_settings_management_capabilities', $this->capability ),
                 $base . '#/settings',
             ),
-            array(
-                __( 'Migration', 'wedocs' ),
-                apply_filters( 'wedocs_migration_management_capabilities', 'manage_options' ),
-                $base . '#/migrate',
-            ),
         );
 
         $all_submenus = apply_filters( 'wedocs_submenu', $all_submenus );
