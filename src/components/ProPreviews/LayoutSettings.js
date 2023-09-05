@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { RadioGroup } from '@headlessui/react';
+import { RadioGroup, Tab } from '@headlessui/react';
 import { CheckCircleIcon } from '@heroicons/react/20/solid';
 import Overlay from './common/Overlay';
 import Switcher from '../Switcher';
@@ -56,7 +56,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 
 	return (
 		<section>
-			<div className="shadow sm:rounded-md bg-white overflow-hidden">
+			<div className="shadow sm:rounded-md bg-white overflow-hidden min-h-[500px]">
 				<div className="py-4 px-8 sm:px-8 sm:py-4">
 					<h2 className="text-gray-900 font-medium text-lg">
 						{ __( 'Layout Settings', 'wedocs' ) }
@@ -139,44 +139,44 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 											) }
 										</svg>
 										<span className="flex">
-											<span className="flex flex-col">
-												<RadioGroup.Label
-													as="span"
-													className="flex items-center text-sm font-medium text-gray-600 mb-0.5 absolute top-2.5 right-2.5"
-												>
-													<div
-														className={ classNames(
-															columnOptions[ 1 ]?.name !==
-															column?.name
-																? 'border border-gray-400'
-																: '',
-															'ml-auto rounded-full w-4 h-4'
-														) }
-													>
-														<CheckCircleIcon
-															className={ classNames(
-																columnOptions[ 1 ]?.name !==
-																column?.name
-																	? 'invisible'
-																	: '-mt-0.5',
-																'h-5 w-5 text-indigo-600'
-															) }
-															aria-hidden="true"
-														/>
-													</div>
-												</RadioGroup.Label>
-												<span
+										<span className="flex flex-col">
+											<RadioGroup.Label
+												as="span"
+												className="flex items-center text-sm font-medium text-gray-600 mb-0.5 absolute top-2.5 right-2.5"
+											>
+												<div
 													className={ classNames(
 														columnOptions[ 1 ]?.name !==
 														column?.name
-															? 'border-transparent'
-															: 'border-indigo-600',
-														'pointer-events-none absolute -inset-px rounded-lg border'
+															? 'border border-gray-400'
+															: '',
+														'ml-auto rounded-full w-4 h-4'
 													) }
-													aria-hidden="true"
-												/>
-											</span>
+												>
+													<CheckCircleIcon
+														className={ classNames(
+															columnOptions[ 1 ]?.name !==
+															column?.name
+																? 'invisible'
+																: '-mt-0.5',
+															'h-5 w-5 text-indigo-600'
+														) }
+														aria-hidden="true"
+													/>
+												</div>
+											</RadioGroup.Label>
+											<span
+												className={ classNames(
+													columnOptions[ 1 ]?.name !==
+													column?.name
+														? 'border-transparent'
+														: 'border-indigo-600',
+													'pointer-events-none absolute -inset-px rounded-lg border'
+												) }
+												aria-hidden="true"
+											/>
 										</span>
+									</span>
 									</RadioGroup.Option>
 								) ) }
 							</div>
@@ -241,10 +241,10 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 										{ index === 0 && (
 											<svg width='126' height='135' fill='none'>
 												<style>{`
-												  .B{fill:#dde1ea}
-												  .C{fill:#118ede}
-												  .D{fill:#979da9}
-												`}</style>
+												.B{fill:#dde1ea}
+												.C{fill:#118ede}
+												.D{fill:#979da9}
+											`}</style>
 												<g className='B'>
 													<rect x='36.401' y='20.013' width='7.775' height='.895' rx='.448' />
 													<rect x='47.757' y='20.013' width='7.775' height='.895' rx='.448' />
@@ -311,7 +311,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 											<svg width="126" height="135" fill="none">
 												<rect x="18.057" y="13.825" width="5.964" height=".874" rx=".437" fill="#e2ddea" />
 												<rect x='26.643' y='13.825' width='15.787' height='.874' rx='.437'
-													  fill='#432b69' />
+															fill='#432b69' />
 												<g fill='#e2ddea'>
 													<rect x='45.052' y='13.825' width='9.503' height='.874' rx='.437' />
 													<rect x='57.178' y='13.825' width='4.929' height='.874' rx='.437' />
@@ -319,7 +319,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 													<rect x='90.163' y='13.825' width='4.4' height='.874' rx='.437' />
 												</g>
 												<rect x='9.827' y='11.639' width='5.248' height='5.248' rx='1.567'
-													  stroke='#8873a9' strokeWidth='.448' />
+															stroke='#8873a9' strokeWidth='.448' />
 												<g fill='#432b69'>
 													<path
 														d='M11.362 15.851v-3.178h1.164c.226 0 .412.037.56.112s.259.173.332.3.11.267.11.424c0 .133-.024.244-.073.335a.6.6 0 0 1-.195.217.86.86 0 0 1-.267.118v.031c.106.005.209.039.309.102a.73.73 0 0 1 .251.265c.066.115.099.255.099.419s-.038.308-.115.438-.193.23-.351.306-.361.112-.607.112h-1.218zm.48-.411h.692c.23 0 .394-.044.494-.133a.43.43 0 0 0 .149-.334c0-.1-.025-.193-.076-.276s-.123-.15-.217-.2-.204-.074-.332-.074h-.709v1.018zm0-1.392h.643a.66.66 0 0 0 .29-.062.51.51 0 0 0 .206-.174.46.46 0 0 0 .078-.267.44.44 0 0 0-.138-.331c-.092-.089-.233-.133-.424-.133h-.655v.967z' />
@@ -328,39 +328,39 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 												<g fill='#ae98d1'>
 													<rect x='50.33' y='35.114' width='32.22' height='1.074' rx='.537' />
 													<rect x='50.33' y='67.347' width='56.141' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='50.33' y='94.028' width='32.22' height='1.074' rx='.537' />
 												</g>
 												<g fill='#e2ddea'>
 													<rect x='50.33' y='40.666' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='50.33' y='46.217' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='50.33' y='51.768' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='50.33' y='57.319' width='47.821' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='50.33' y='72.898' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='50.33' y='78.449' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='50.33' y='84.001' width='47.821' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='50.33' y='99.58' width='67.115' height='1.074' rx='.537' />
 													<rect x='50.33' y='105.131' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='50.33' y='110.682' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='50.33' y='116.233' width='53.4' height='1.074' rx='.537' />
 												</g>
 												<rect x='11.242' y='50.212' width='12.828' height='.895' rx='.448'
-													  fill='#ae98d1' />
+															fill='#ae98d1' />
 												<g fill='#e2ddea'>
 													<rect x='11.242' y='55.584' width='10.053' height='.895'
-														  rx='.448' />
+																rx='.448' />
 													<rect x='11.242' y='60.956' width='8.875' height='.895' rx='.448' />
 													<rect x='11.242' y='66.327' width='19.809' height='.895'
-														  rx='.448' />
+																rx='.448' />
 													<rect x='11.242' y='71.699' width='10.81' height='.895' rx='.448' />
 													<rect x='11.242' y='77.071' width='8.455' height='.895' rx='.448' />
 													<rect x='11.242' y='82.443' width='10.81' height='.895' rx='.448' />
@@ -369,18 +369,18 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 												<g fill='#ae98d1'>
 													<rect x='11.242' y='95.873' width='7.782' height='.895' rx='.448' />
 													<rect x='11.242' y='101.245' width='8.875' height='.895'
-														  rx='.448' />
+																rx='.448' />
 													<rect x='11.242' y='106.617' width='14.931' height='.895'
-														  rx='.448' />
+																rx='.448' />
 													<rect x='11.242' y='111.989' width='8.455' height='.895'
-														  rx='.448' />
+																rx='.448' />
 													<rect x='11.242' y='117.361' width='7.782' height='.895'
-														  rx='.448' />
+																rx='.448' />
 													<rect x='11.242' y='122.733' width='10.81' height='.895'
-														  rx='.448' />
+																rx='.448' />
 												</g>
 												<rect x='8.556' y='28.709' width='28.616' height='9.674' rx='1.791'
-													  fill='#e2ddea' />
+															fill='#e2ddea' />
 												<path d='M42.698 28.709v97.465' stroke='#e2ddea' strokeWidth='.448' />
 											</svg>
 										) }
@@ -388,51 +388,51 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 										{ index === 2 && (
 											<svg width='126' height='135' fill='none'>
 												<path fillRule='evenodd'
-													  d='M16.592 8.386c-1.775 0-2.884.882-3.329 2.647.666-.882 1.442-1.213 2.33-.993.506.126.868.491 1.269.895.653.659 1.408 1.421 3.058 1.421 1.775 0 2.885-.882 3.328-2.647-.665.882-1.442 1.213-2.33.992-.507-.126-.869-.491-1.269-.895-.653-.659-1.408-1.421-3.058-1.421zm-3.329 3.97c-1.775 0-2.885.882-3.328 2.647.666-.882 1.442-1.213 2.33-.993.507.126.869.491 1.269.895.653.659 1.408 1.421 3.058 1.421 1.775 0 2.885-.882 3.328-2.647-.666.882-1.442 1.213-2.33.993-.506-.126-.868-.491-1.269-.895-.653-.659-1.408-1.421-3.058-1.421z'
-													  fill='#06b6d4' />
+															d='M16.592 8.386c-1.775 0-2.884.882-3.329 2.647.666-.882 1.442-1.213 2.33-.993.506.126.868.491 1.269.895.653.659 1.408 1.421 3.058 1.421 1.775 0 2.885-.882 3.328-2.647-.665.882-1.442 1.213-2.33.992-.507-.126-.869-.491-1.269-.895-.653-.659-1.408-1.421-3.058-1.421zm-3.329 3.97c-1.775 0-2.885.882-3.328 2.647.666-.882 1.442-1.213 2.33-.993.507.126.869.491 1.269.895.653.659 1.408 1.421 3.058 1.421 1.775 0 2.885-.882 3.328-2.647-.666.882-1.442 1.213-2.33.993-.506-.126-.868-.491-1.269-.895-.653-.659-1.408-1.421-3.058-1.421z'
+															fill='#06b6d4' />
 												<rect x='49.023' y='33.475' width='32.22' height='1.074' rx='.537'
-													  fill='#00beeb' />
+															fill='#00beeb' />
 												<g fill='#dde1ea'>
 													<rect x='49.023' y='39.025' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='49.023' y='44.576' width='47.821' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 												</g>
 												<rect x='49.023' y='54.605' width='32.22' height='1.074' rx='.537'
-													  fill='#00beeb' />
+															fill='#00beeb' />
 												<g fill='#dde1ea'>
 													<rect x='49.023' y='60.155' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='49.023' y='65.706' width='47.821' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 												</g>
 												<g fill='#e9f5fa'>
 													<rect x='49.023' y='71.257' width='12.835' height='12.895'
-														  rx='1.791' />
+																rx='1.791' />
 													<rect x='66.334' y='71.257' width='12.835' height='12.895'
-														  rx='1.791' />
+																rx='1.791' />
 													<rect x='83.646' y='71.257' width='12.835' height='12.895'
-														  rx='1.791' />
+																rx='1.791' />
 													<rect x='100.957' y='71.257' width='12.835' height='12.895'
-														  rx='1.791' />
+																rx='1.791' />
 												</g>
 												<g fill='#dde1ea'>
 													<rect x='49.023' y='88.629' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='49.023' y='94.18' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='49.023' y='99.731' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='49.023' y='105.282' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='49.023' y='110.833' width='67.115' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 													<rect x='49.023' y='116.384' width='34.623' height='1.074'
-														  rx='.537' />
+																rx='.537' />
 												</g>
 												<path d='M41.392 27.069v97.465' stroke='#dde1ea' strokeWidth='.448' />
 												<rect x='9.935' y='27.069' width='23.572' height='.895' rx='.448'
-													  fill='#bec1c9' />
+															fill='#bec1c9' />
 												<g fill='#dde1ea'>
 													<rect x='9.935' y='32.441' width='20.797' height='.895' rx='.448' />
 													<rect x='9.935' y='37.814' width='19.619' height='.895' rx='.448' />
@@ -441,7 +441,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 													<rect x='9.935' y='53.93' width='19.199' height='.895' rx='.448' />
 												</g>
 												<rect x='9.935' y='63.778' width='23.572' height='.895' rx='.448'
-													  fill='#00beeb' />
+															fill='#00beeb' />
 												<g fill='#dde1ea'>
 													<rect x='9.935' y='69.15' width='20.797' height='.895' rx='.448' />
 													<rect x='9.935' y='74.523' width='25.177' height='.895' rx='.448' />
@@ -450,49 +450,49 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 													<rect x='9.935' y='90.638' width='19.619' height='.895' rx='.448' />
 												</g>
 												<rect x='9.935' y='100.486' width='23.572' height='.895' rx='.448'
-													  fill='#bec1c9' />
+															fill='#bec1c9' />
 											</svg>
 										) }
 
 										<span className="flex">
-											<span className="flex flex-col">
-												<RadioGroup.Label
-													as="span"
-													className="flex items-center text-sm font-medium text-gray-600 mb-0.5 absolute top-2.5 right-2.5"
+										<span className="flex flex-col">
+											<RadioGroup.Label
+												as="span"
+												className="flex items-center text-sm font-medium text-gray-600 mb-0.5 absolute top-2.5 right-2.5"
+											>
+												<div
+													className={ classNames(
+														templateOptions[ 2 ]?.name !==
+														template?.name
+															? 'border border-gray-400'
+															: '',
+														'ml-auto rounded-full w-4 h-4'
+													) }
 												>
-													<div
+													<CheckCircleIcon
 														className={ classNames(
 															templateOptions[ 2 ]?.name !==
 															template?.name
-																? 'border border-gray-400'
-																: '',
-															'ml-auto rounded-full w-4 h-4'
+																? 'invisible'
+																: '-mt-0.5',
+															'h-5 w-5 text-indigo-600'
 														) }
-													>
-														<CheckCircleIcon
-															className={ classNames(
-																templateOptions[ 2 ]?.name !==
-																template?.name
-																	? 'invisible'
-																	: '-mt-0.5',
-																'h-5 w-5 text-indigo-600'
-															) }
-															aria-hidden="true"
-														/>
-													</div>
-												</RadioGroup.Label>
-												<span
-													className={ classNames(
-														templateOptions[ 2 ]?.name ===
-														template?.name
-															? 'border-indigo-600'
-															: 'border-transparent',
-														'pointer-events-none absolute -inset-px rounded-lg border'
-													) }
-													aria-hidden="true"
-												/>
-											</span>
+														aria-hidden="true"
+													/>
+												</div>
+											</RadioGroup.Label>
+											<span
+												className={ classNames(
+													templateOptions[ 2 ]?.name ===
+													template?.name
+														? 'border-indigo-600'
+														: 'border-transparent',
+													'pointer-events-none absolute -inset-px rounded-lg border'
+												) }
+												aria-hidden="true"
+											/>
 										</span>
+									</span>
 									</RadioGroup.Option>
 								) ) }
 							</div>

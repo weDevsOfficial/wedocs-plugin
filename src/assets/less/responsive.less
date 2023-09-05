@@ -1,6 +1,18 @@
+@media screen and (max-width: 1024px) {
+    .feedback-content {
+        .wedocs-feedback-wrap {
+            line-height: 46px;
+
+            .vote-link-wrap {
+                display: block;
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 768px) {
     .wedocs-single-wrap {
-        display: block;
+        display: flex;
 
         .wedocs-sidebar,
         .wedocs-single-content {
@@ -10,6 +22,20 @@
         .wedocs-single-content {
             padding-left: 0;
             border-left: 0;
+        }
+
+        .prose {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .right-sidebar {
+            h3.widget-title {
+                strong {
+                    font-size: 16px;
+                    margin-left: 8px;
+                }
+            }
         }
     }
 
@@ -33,6 +59,24 @@
                 margin-right: 0;
             }
 
+        }
+    }
+
+    footer.entry-footer.wedocs-entry-footer {
+        .help-content {
+            .wedocs-help-link {
+                font-size: 13px;
+            }
+        }
+
+        .feedback-content {
+            .wedocs-feedback-wrap {
+                line-height: 56px;
+
+                .vote-link-wrap {
+                    margin: 0;
+                }
+            }
         }
     }
 }
@@ -62,11 +106,45 @@
                 float: none;
                 margin-right: 0;
             }
+
+            .wedocs-docs-single {
+                padding: 26px 18px;
+
+                .inside {
+                    height: 240px;
+
+                    span {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+
+        .wedocs-search-input {
+            .search-field {
+                height: 36px;
+                font-size: 11px;
+                padding: 10px 12px;
+            }
+
+            .search-submit {
+                padding: 10px 14px;
+            }
         }
     }
 
-    .wedocs-feedback-wrap .vote-link-wrap {
-        display: block;
-        margin-top: 15px;
+    .feedback-content {
+        width: 80%;
+        margin: 0 auto;
+
+        .wedocs-feedback-wrap {
+            font-size: 16px;
+            line-height: 42px;
+
+            .vote-link-wrap {
+                display: block;
+                margin: 0;
+            }
+        }
     }
 }

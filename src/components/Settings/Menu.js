@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { Tab } from '@headlessui/react';
 import Badge from '../ProPreviews/common/Badge';
+import { useState } from '@wordpress/element';
 
 const Menu = () => {
   let menus = {
@@ -24,19 +25,53 @@ const Menu = () => {
     },
   };
 
+  const [ showSubTabs, setShowSubTabs ] = useState( false );
+
   menus = wp.hooks.applyFilters( 'wedocs_settings_menu', menus );
 
   return (
     <>
-      { Object.entries( menus ).map( ( value, index ) => (
-        <Tab
-          key={ index }
-          className="w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium"
-        >
-          { value[ 1 ]?.icon }
-          <span className="truncate">{ value[ 1 ]?.text }</span>
-          { value[ 1 ]?.pro && <Badge /> }
-        </Tab>
+      { Object.entries( menus ).map( ( tab, index ) => (
+        <>
+          { !tab[ 1 ]?.disabled ? (
+            <Tab
+              key={ index }
+              className="w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer"
+            >
+              { tab[ 1 ]?.icon }
+              <span className="truncate">{ tab[ 1 ]?.text }</span>
+              { tab[ 1 ]?.pro && <Badge /> }
+            </Tab>
+          ) : (
+            <>
+              <div
+                key={ index }
+                onClick={ () => setShowSubTabs( !showSubTabs ) }
+                className={ `disable-tab-item w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer` }
+              >
+                { tab[ 1 ]?.icon }
+                <span className="truncate">{ tab[ 1 ]?.text }</span>
+                { tab[ 1 ]?.pro && <Badge /> }
+                <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#6b7280" className="w-5 h-5 ml-auto">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                </svg>
+              </div>
+              { tab[ 1 ]?.subtabs && tab[ 1 ]?.subtabs?.map( ( subtab, index ) => (
+                <Tab
+                  key={ index }
+                  disabled={ subtab?.disabled }
+                  className={ `${ showSubTabs ? '' : 'hidden' } w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium` }
+                >
+                  <div className={ `ml-9 flex items-center` }>
+                    { subtab?.icon }
+                    <span className="truncate">{ subtab?.text }</span>
+                    { subtab?.pro && <Badge /> }
+                  </div>
+                </Tab>
+              ) ) }
+            </>
+          ) }
+        </>
       ) ) }
     </>
   );

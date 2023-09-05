@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-08-28T08:28:51+00:00\n"
+"POT-Creation-Date: 2023-08-30T08:53:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -72,6 +72,10 @@ msgstr ""
 
 #: includes/Admin/Menu.php:82
 msgid "Settings"
+msgstr ""
+
+#: includes/Admin/Menu.php:87
+msgid "Migration"
 msgstr ""
 
 #: includes/Ajax.php:176
@@ -361,7 +365,7 @@ msgstr ""
 #: assets/build/index.js:1
 #: assets/build/index.js:5
 #: src/components/BackToDocsPage.js:25
-#: src/components/Documentations/index.js:104
+#: src/components/Documentations/index.js:105
 msgid "All Docs"
 msgstr ""
 
@@ -416,7 +420,7 @@ msgid "Yes"
 msgstr ""
 
 #: templates/content-modal.php:14
-#: templates/single-docs.php:102
+#: templates/single-docs.php:100
 msgid "How can we help?"
 msgstr ""
 
@@ -445,37 +449,37 @@ msgctxt "placeholder"
 msgid "Search for a topic or question …"
 msgstr ""
 
-#: templates/shortcode.php:58
+#: templates/shortcode.php:68
 msgid "This document has no sections yet. Check back later or wait for the author to add content."
 msgstr ""
 
-#: templates/single-docs.php:42
+#: templates/single-docs.php:40
 msgid "Print this article"
 msgstr ""
 
 #. translators: %s: Name of current post.
-#: templates/single-docs.php:53
+#: templates/single-docs.php:51
 msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
-#: templates/single-docs.php:58
+#: templates/single-docs.php:56
 msgid "Docs:"
 msgstr ""
 
-#: templates/single-docs.php:66
+#: templates/single-docs.php:64
 msgid "Articles"
 msgstr ""
 
-#: templates/single-docs.php:77
+#: templates/single-docs.php:75
 msgctxt "Used before tag names."
 msgid "Tags"
 msgstr ""
 
-#: templates/single-docs.php:102
+#: templates/single-docs.php:100
 msgid "Still stuck? "
 msgstr ""
 
-#: templates/single-docs.php:110
+#: templates/single-docs.php:108
 #: assets/build/index.js:1
 #: src/components/DocListing/SectionArticles.js:192
 msgid "Updated on %s"
@@ -582,34 +586,34 @@ msgid "Industry leading 24x7 support"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/PermissionSettings.js:13
+#: src/components/ProPreviews/PermissionSettings.js:14
 msgid "Global doc permission settings"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/PermissionSettings.js:14
+#: src/components/ProPreviews/PermissionSettings.js:15
 msgid "By default, who will get edit access on all the documents?"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/PermissionSettings.js:22
+#: src/components/ProPreviews/PermissionSettings.js:23
 msgid "Who can manage weDocs Settings?"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/PermissionSettings.js:23
+#: src/components/ProPreviews/PermissionSettings.js:24
 msgid "Who will have the ability to alter the settings of the plugin?"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/index.js:17
-#: src/components/ProPreviews/index.js:117
-#: src/components/ProPreviews/PermissionSettings.js:35
+#: src/components/ProPreviews/index.js:16
+#: src/components/ProPreviews/index.js:118
+#: src/components/ProPreviews/PermissionSettings.js:37
 msgid "Permission Management"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/PermissionSettings.js:81
+#: src/components/ProPreviews/PermissionSettings.js:83
 msgid "5 roles selected"
 msgstr ""
 
@@ -617,9 +621,9 @@ msgstr ""
 #: assets/build/index.js:1
 #: src/components/AddArticleModal.js:204
 #: src/components/AddDocModal.js:163
-#: src/components/AddSectionModal.js:164
+#: src/components/AddSectionModal.js:165
 #: src/components/ProPreviews/partials/ExploreSettingsPanel.js:314
-#: src/components/ProPreviews/PermissionSettings.js:113
+#: src/components/ProPreviews/PermissionSettings.js:115
 #: src/components/RestrictionModal.js:142
 msgid "%s"
 msgstr ""
@@ -690,8 +694,8 @@ msgid "Enable Explore Tab"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/AssistantWidgetSettings.js:61
-#: src/components/ProPreviews/IntegrateAiSettings.js:53
+#: src/components/ProPreviews/AssistantWidgetSettings.js:62
+#: src/components/ProPreviews/IntegrateAiSettings.js:54
 #: src/components/ProPreviews/partials/ExploreSettingsPanel.js:97
 #: src/components/ProPreviews/partials/MessagingSettingsPanel.js:53
 msgid "Enable"
@@ -1043,8 +1047,8 @@ msgid "Appearance"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/AssistantWidgetSettings.js:25
-#: src/components/ProPreviews/index.js:35
+#: src/components/ProPreviews/AssistantWidgetSettings.js:26
+#: src/components/ProPreviews/index.js:34
 msgid "Assistant Widget"
 msgstr ""
 
@@ -1107,81 +1111,130 @@ msgid "Enhance readability. Select a font color for the active elements in your 
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:62
+#: src/components/ProPreviews/LayoutSettings.js:63
 msgid "Layout Settings"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:79
+#: src/components/ProPreviews/LayoutSettings.js:80
 msgid "Choose Doc List Column Style"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:83
+#: src/components/ProPreviews/LayoutSettings.js:84
 msgid "Choose how your document list columns should appear"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:193
+#: src/components/ProPreviews/LayoutSettings.js:194
 msgid "Choose Single Doc Template"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:197
+#: src/components/ProPreviews/LayoutSettings.js:198
 msgid "Customize the template for individual docs. Choose a layout that suits your content best"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:553
+#: src/components/ProPreviews/LayoutSettings.js:554
 msgid "Enable Navigation Icon"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:557
+#: src/components/ProPreviews/LayoutSettings.js:558
 msgid "Enable/Disable navigation icons for a user-friendly experience on your single document pages"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:597
+#: src/components/ProPreviews/LayoutSettings.js:598
 msgid "Enable Table of Contents"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/LayoutSettings.js:601
+#: src/components/ProPreviews/LayoutSettings.js:602
 msgid "Improve content navigation. Turn on the table of contents feature for easy access to document sections"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/index.js:70
-#: src/components/ProPreviews/IntegrateAiSettings.js:15
-msgid "Integrate AI"
-msgstr ""
-
-#: assets/build/565.js:1
-#: src/components/ProPreviews/IntegrateAiSettings.js:72
-msgid "Sync Data with AI"
-msgstr ""
-
-#: assets/build/565.js:1
-#: src/components/ProPreviews/IntegrateAiSettings.js:76
-#: src/components/ProPreviews/IntegrateAiSettings.js:106
-msgid "Please create at least one document to enable and sync data with AI"
-msgstr ""
-
-#: assets/build/565.js:1
-#: src/components/ProPreviews/index.js:124
-#: src/components/ProPreviews/index.js:139
+#: src/components/ProPreviews/index.js:125
+#: src/components/ProPreviews/index.js:140
 msgid "Pro"
 msgstr ""
 
 #: assets/build/565.js:1
-#: src/components/ProPreviews/index.js:132
+#: src/components/ProPreviews/index.js:133
 msgid "Restrict editing for admin only"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/ProPreviews/common/UpgradeButton.js:15
 msgid "Upgrade to PRO "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:119
+msgid "Enter your doc title"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:122
+msgid "Start writing your doc from scratch"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:129
+msgid "Type a title for your document"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:42
+msgid "New doc added!"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:43
+msgid "New doc has been added successfully"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:81
+#: src/components/AddDocModal.js:57
+#: src/components/AddSectionModal.js:56
+#: src/components/ConfirmationModal.js:24
+#: src/components/RestrictionModal.js:39
+#: src/components/Settings/index.js:49
+msgid "Error"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:214
+#: src/components/AddDocModal.js:171
+#: src/components/AddSectionModal.js:175
+#: src/components/ConfirmationModal.js:140
+#: src/components/RestrictionModal.js:134
+msgid "Cancel"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Migrations/index.js:74
+msgid "Get started betterdocs to weDocs mirgration"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:84
+#: src/components/Migrations/index.js:83
+msgid "Learn More "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:86
+#: src/components/Migrations/index.js:85
+msgid "how to create a new doc"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Migrations/index.js:90
+msgid "Migrate"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1205,25 +1258,6 @@ msgid "Deleting it means it will be permanently lost, and you won't be able to r
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:214
-#: src/components/AddDocModal.js:171
-#: src/components/AddSectionModal.js:174
-#: src/components/ConfirmationModal.js:140
-#: src/components/RestrictionModal.js:134
-msgid "Cancel"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/AddArticleModal.js:81
-#: src/components/AddDocModal.js:57
-#: src/components/AddSectionModal.js:55
-#: src/components/ConfirmationModal.js:24
-#: src/components/RestrictionModal.js:39
-#: src/components/Settings/index.js:49
-msgid "Error"
-msgstr ""
-
-#: assets/build/index.js:1
 #: src/components/DocActions.js:57
 msgid "View"
 msgstr ""
@@ -1235,7 +1269,7 @@ msgid "Delete"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:135
+#: src/components/AddSectionModal.js:136
 #: src/components/ComboBox.js:85
 msgid "Type a section name"
 msgstr ""
@@ -1272,13 +1306,13 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/AddArticleModal.js:206
-#: src/components/AddSectionModal.js:166
+#: src/components/AddSectionModal.js:167
 msgid "Creating…"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/AddArticleModal.js:207
-#: src/components/AddSectionModal.js:167
+#: src/components/AddSectionModal.js:168
 #: src/components/DocListing/DocSections.js:142
 msgid "Create"
 msgstr ""
@@ -1291,27 +1325,27 @@ msgid "Add article"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:118
+#: src/components/AddSectionModal.js:119
 msgid "Enter your section title"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:122
+#: src/components/AddSectionModal.js:123
 msgid "Use concise section titles for better navigation"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:127
+#: src/components/AddSectionModal.js:128
 msgid "E.g., Getting Started"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:43
+#: src/components/AddSectionModal.js:44
 msgid "New section added!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:44
+#: src/components/AddSectionModal.js:45
 msgid "New section has been added successfully"
 msgstr ""
 
@@ -1378,22 +1412,22 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: assets/build/index.js:5
-#: src/components/DocListing/index.js:103
-#: src/components/Documentations/index.js:88
+#: src/components/DocListing/index.js:110
+#: src/components/Documentations/index.js:89
 #: src/components/Settings/index.js:121
 msgid "weDocs database has been updated successfully"
 msgstr ""
 
 #: assets/build/index.js:1
 #: assets/build/index.js:5
-#: src/components/DocListing/index.js:104
-#: src/components/Documentations/index.js:89
+#: src/components/DocListing/index.js:111
+#: src/components/Documentations/index.js:90
 #: src/components/Settings/index.js:122
 msgid "Database Updated!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/index.js:183
+#: src/components/DocListing/index.js:190
 msgid "No section or article found for this documentation"
 msgstr ""
 
@@ -1429,7 +1463,7 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:34
-#: src/components/Settings/Menu.js:8
+#: src/components/Settings/Menu.js:9
 msgid "General"
 msgstr ""
 
@@ -1524,43 +1558,8 @@ msgid "Settings data has been saved successfully"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddDocModal.js:119
-msgid "Enter your doc title"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/AddDocModal.js:122
-msgid "Start writing your doc from scratch"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/AddDocModal.js:129
-msgid "Type a title for your document"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/AddDocModal.js:42
-msgid "New doc added!"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/AddDocModal.js:43
-msgid "New doc has been added successfully"
-msgstr ""
-
-#: assets/build/index.js:1
 #: src/components/Documentations/EmptyDocs.js:75
 msgid "Get started by creating a new doc"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/Documentations/EmptyDocs.js:84
-msgid "Learn More "
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/Documentations/EmptyDocs.js:86
-msgid "how to create a new doc"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1586,11 +1585,24 @@ msgid "Add"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/index.js:108
+#: src/components/Documentations/index.js:109
 msgid "New doc"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/index.js:154
+#: src/components/Documentations/index.js:155
 msgid "Oops! It seems that your search did not match any existing documents. Please try again..."
+msgstr ""
+
+#: src/components/ProPreviews/IntegrateAiSettings.js:16
+msgid "Integrate AI"
+msgstr ""
+
+#: src/components/ProPreviews/IntegrateAiSettings.js:73
+msgid "Sync Data with AI"
+msgstr ""
+
+#: src/components/ProPreviews/IntegrateAiSettings.js:77
+#: src/components/ProPreviews/IntegrateAiSettings.js:107
+msgid "Please create at least one document to enable and sync data with AI"
 msgstr ""

@@ -67,7 +67,7 @@ class SettingsApi extends \WP_REST_Controller {
                 array(
                     'methods'             => WP_REST_Server::READABLE,
                     'callback'            => array( $this, 'get_items' ),
-                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'permission_callback' => '__return_true',
                 ),
                 array(
                     'methods'             => WP_REST_Server::CREATABLE,
@@ -101,27 +101,6 @@ class SettingsApi extends \WP_REST_Controller {
                 ),
             )
         );
-    }
-
-    /**
-     * Check settings data getting permission.
-     *
-     * @since 2.0.0
-     *
-     * @param \WP_REST_Request $request
-     *
-     * @return bool|\WP_Error
-     */
-    public function get_items_permissions_check( $request ) {
-        if ( empty( $request->get_param( 'data' ) ) ) {
-            return new \WP_Error( 'rest_doc_invalid_arg', __( 'No settings request given', 'wedocs' ) );
-        }
-
-        if ( current_user_can( 'read' ) ) {
-            return true;
-        }
-
-        return new \WP_Error( 'wedocs_permission_failure', __( "You don't have permission to get settings data", 'wedocs' ) );
     }
 
     /**
@@ -174,7 +153,7 @@ class SettingsApi extends \WP_REST_Controller {
      */
     public function get_turnstile_site_key() {
         $assistant_settings = wedocs_get_option( 'assistant', 'wedocs_settings', '' );
-        $turnstile_site_key = ! empty( $assistant_settings[ 'turnstile_site_key' ] ) ? esc_html( $assistant_settings[ 'turnstile_site_key' ] ) : '';
+        $turnstile_site_key = ! empty( $assistant_settings[ 'message' ][ 'turnstile_site_key' ] ) ? esc_html( $assistant_settings[ 'message' ][ 'turnstile_site_key' ] ) : '';
 
         return rest_ensure_response( $turnstile_site_key );
     }

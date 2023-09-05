@@ -85,13 +85,20 @@ const ListingPage = () => {
     true
   );
 
-  const validParam = wp.hooks.applyFilters(
-    'wedocs_validate_listing_params',
-    true,
-      id
+  const parentDocIds = useSelect(
+    ( select ) => select( 'wedocs/docs' ).getUserDocIds(),
+    []
   );
 
   const isAdmin = userIsAdmin();
+
+  const validParam = wp.hooks.applyFilters(
+    'wedocs_validate_listing_params',
+    true,
+    parentDocIds,
+    isAdmin,
+    id
+  );
 
   if ( status === 'done' ) {
     dispatch( settingsStore )

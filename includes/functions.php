@@ -81,14 +81,16 @@ function wedocs_get_template( $template_name, $args = [] ) {
 /**
  * Control display content length.
  *
+ * @since 2.0.0
+ *
  * @param string $content
  * @param int    $max_content_number
  *
  * @return string
  */
 function wedocs_apply_short_content( $content, $max_content_number ) {
-	// Control content length by substr.
-	return ( strlen( $content ) > $max_content_number ) ? mb_substr( $content, 0, $max_content_number ) . '...' : $content;
+    // Control content length by substr.
+    return ( strlen( $content ) > $max_content_number ) ? mb_substr( $content, 0, $max_content_number ) . '...' : $content;
 }
 
 if ( !function_exists( 'wedocs_breadcrumbs' ) ) {
@@ -168,14 +170,14 @@ if ( !function_exists( 'wedocs_get_breadcrumb_item' ) ) {
     function wedocs_get_breadcrumb_item( $label, $permalink, $position = 1 ) {
         $breadcrumb_label = wedocs_apply_short_content( $label, 25 );
 
-	    return apply_filters(
-		    'wedocs_breadcrumbs_items',
-		    '<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        return apply_filters(
+            'wedocs_breadcrumbs_items',
+            '<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
 	            <a itemprop="item" href="' . esc_attr( $permalink ) . '">
 	            <span itemprop="name">' . esc_html( $breadcrumb_label ) . '</span></a>
 	            <meta itemprop="position" content="' . $position . '" />
             </li>'
-	    );
+        );
     }
 }
 

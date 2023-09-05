@@ -46,7 +46,7 @@ const selectors = {
 
   getTurnstileSiteKey( state ) {
     const { settings } = state;
-    return settings?.assistant?.turnstile_site_key;
+    return settings?.assistant?.message?.turnstile_site_key;
   },
 };
 

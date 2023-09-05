@@ -1,9 +1,8 @@
 import { __ } from '@wordpress/i18n';
 import { useRef, useState } from '@wordpress/element';
-import extractedTitle from '../../../utils/extractedTitle';
+import extractedTitle from '../../../../utils/extractedTitle';
 
-const MessagePreview = ( { settings } ) => {
-
+const MessagePreview = ( { settings, previewColors } ) => {
     const dummyDocs = [
         __( 'How to Install', 'wedocs' ),
         __( 'Activating & Deactivating WPUF Modules', 'wedocs' ),
@@ -20,7 +19,7 @@ const MessagePreview = ( { settings } ) => {
         breadcrumbColor,
         bubbleIcon,
         bubbleBg,
-    } = { ...settings?.color_settings?.preview_colors };
+    } = previewColors;
 
     const tabStyleRef = useRef( {
             color: `rgba(${ inactiveTabFont?.r }, ${ inactiveTabFont?.g }, ${ inactiveTabFont?.b }, ${ inactiveTabFont?.a })`,
@@ -41,9 +40,32 @@ const MessagePreview = ( { settings } ) => {
 
     const tabs = [
         {
+            key: 'integrate_ai',
+            name: __( 'Ai Chatbot', 'wedocs' ),
+            enable: settings?.integrate_ai?.ai_enabled !== 'off',
+            icon: (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="18"
+                style={
+                    selectedTab === 'integrate_ai'
+                      ? activeTabSvgStyleRef.current
+                      : tabSvgStyleRef.current
+                }
+              >
+                  <path d="M1.161 2.514a2 2 0 0 1 2-2h4.586a2 2 0 0 1 1.414.586l3.414 3.414a2 2 0 0 1 .586 1.414v8.586a2 2 0 0 1-2 2H9.633c.95-1.062 1.528-2.463 1.528-4a6 6 0 0 0-6-6c-1.537 0-2.938.578-4 1.528V2.514z" />
+                  <path
+                    fillRule="evenodd"
+                    d="M5.161 8.514a4 4 0 0 0-4 4c0 .741.202 1.436.554 2.032L.454 15.807a1 1 0 0 0 0 1.414 1 1 0 0 0 1.414 0l1.261-1.261c.595.352 1.29.554 2.032.554a4 4 0 1 0 0-8zm-2 4a2 2 0 1 1 4 0 2 2 0 0 1-2 2 1.99 1.99 0 0 1-1.414-.586 1.99 1.99 0 0 1-.586-1.414z"
+                  />
+              </svg>
+            ),
+        },
+        {
             key: 'explore',
             name: __( 'Explore', 'wedocs' ),
-            enable: settings?.explore_enable !== 'off',
+            enable: settings?.explore?.explore_enable !== 'off',
             icon: (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -66,14 +88,14 @@ const MessagePreview = ( { settings } ) => {
         {
             key: 'messaging',
             name: __( 'Messaging', 'wedocs' ),
-            enable: settings?.messaging_enable !== 'off',
+            enable: settings?.message?.messaging_enable !== 'off',
             icon: (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="17"
                     height="15"
                     style={
-                        selectedTab === 'messaging'
+                        selectedTab === 'message'
                             ? activeTabSvgStyleRef.current
                             : tabSvgStyleRef.current
                     }
@@ -88,9 +110,9 @@ const MessagePreview = ( { settings } ) => {
     ];
 
     return (
-        <div className={ `w-96 relative` }>
+        <div className={ `w-[26rem] relative` }>
             <div className={ `palette-preview-content transition-all` }>
-                <div className={ `pb-2.5 palette-preview bg-white rounded-[10px] shadow-xl mb-5 overflow-hidden` }>
+                <div className={ `pb-6 palette-preview bg-white rounded-[10px] shadow-xl mb-5 overflow-hidden` }>
                     <div
                         className="preview-header flex items-center justify-center h-48"
                         style={ {
@@ -115,16 +137,16 @@ const MessagePreview = ( { settings } ) => {
                                                 : tabStyleRef.current
                                         }
                                     >
-                                        { settings?.[ `${ tab.key }_tab_icon` ]
+                                        { settings?.[ tab?.key ]?.[ `${ tab.key }_tab_icon` ]
                                             ?.src ? (
                                             <img
                                                 src={
-                                                    settings?.[
+                                                    settings?.[ tab?.key ]?.[
                                                         `${ tab.key }_tab_icon`
                                                     ]?.src
                                                 }
                                                 alt={
-                                                    settings?.[
+                                                    settings?.[ tab?.key ]?.[
                                                         `${ tab.key }_tab_icon`
                                                     ]?.name
                                                 }
@@ -133,7 +155,7 @@ const MessagePreview = ( { settings } ) => {
                                         ) : (
                                             tab?.icon
                                         ) }
-                                        { settings?.[ `${ tab?.key }_title` ]
+                                        { settings?.[ tab?.key ]?.[ `${ tab?.key }_title` ]
                                             ? extractedTitle(
                                                 settings?.[
                                                     `${ tab?.key }_title`
@@ -146,21 +168,21 @@ const MessagePreview = ( { settings } ) => {
                             </div>
                             <div
                                 className={ `preview-heading mb-1.5 ${
-                                    settings?.widget_title_font?.size
-                                        ? `text-${ settings?.widget_title_font?.size }`
+                                    settings?.preference?.widget_title_font?.size
+                                        ? `text-${ settings?.preference?.widget_title_font?.size }`
                                         : 'text-lg'
                                 } ${
-                                    settings?.widget_title_font?.weight
-                                        ? `font-${ settings?.widget_title_font?.weight }`
+                                    settings?.preference?.widget_title_font?.weight
+                                        ? `font-${ settings?.preference?.widget_title_font?.weight }`
                                         : 'font-medium'
                                 }` }
                                 style={ {
                                     color: `rgba(${ tabTitleFont?.r }, ${ tabTitleFont?.g }, ${ tabTitleFont?.b }, ${ tabTitleFont?.a })`,
                                 } }
                             >
-                                { settings?.[ `${ selectedTab }_subtitle_one` ]
+                                { settings?.explore?.[ `${ selectedTab }_subtitle_one` ]
                                     ? extractedTitle(
-                                        settings?.[
+                                        settings?.explore?.[
                                             `${ selectedTab }_subtitle_one`
                                             ],
                                         20
@@ -169,21 +191,21 @@ const MessagePreview = ( { settings } ) => {
                             </div>
                             <div
                                 className={ `preview-description w-80 ${
-                                    settings?.widget_description_font?.size
-                                        ? `text-${ settings?.widget_description_font?.size }`
+                                    settings?.preference?.widget_description_font?.size
+                                        ? `text-${ settings?.preference?.widget_description_font?.size }`
                                         : 'text-sm'
                                 } ${
-                                    settings?.widget_description_font?.weight
-                                        ? `font-${ settings?.widget_description_font?.weight }`
+                                    settings?.preference?.widget_description_font?.weight
+                                        ? `font-${ settings?.preference?.widget_description_font?.weight }`
                                         : 'font-normal'
                                 }` }
                                 style={ {
                                     color: `rgba(${ tabDescriptionFont?.r }, ${ tabDescriptionFont?.g }, ${ tabDescriptionFont?.b }, ${ tabDescriptionFont?.a })`,
                                 } }
                             >
-                                { settings?.[ `${ selectedTab }_subtitle_two` ]
+                                { settings?.explore?.[ `${ selectedTab }_subtitle_two` ]
                                     ? extractedTitle(
-                                        settings?.[
+                                        settings?.explore?.[
                                             `${ selectedTab }_subtitle_two`
                                             ],
                                         80
