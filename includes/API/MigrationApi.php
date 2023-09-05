@@ -97,11 +97,11 @@ class MigrationApi extends \WP_REST_Controller {
      * @return bool|\WP_Error
      */
     public function get_items_permissions_check( $request ) {
-        if ( current_user_can( 'read' ) ) {
-            return true;
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return new \WP_Error( 'wedocs_permission_failure', __( "You don't have permission to get upgrader data", 'wedocs' ) );
         }
 
-        return new \WP_Error( 'wedocs_permission_failure', __( "You don't have permission to get upgrader data", 'wedocs' ) );
+        return true;
     }
 
     /**
