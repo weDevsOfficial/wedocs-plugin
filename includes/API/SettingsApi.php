@@ -104,27 +104,6 @@ class SettingsApi extends \WP_REST_Controller {
     }
 
     /**
-     * Check settings data getting permission.
-     *
-     * @since 2.0.0
-     *
-     * @param \WP_REST_Request $request
-     *
-     * @return bool|\WP_Error
-     */
-    public function get_items_permissions_check( $request ) {
-        if ( empty( $request->get_param( 'data' ) ) ) {
-            return new \WP_Error( 'rest_doc_invalid_arg', __( 'No settings request given', 'wedocs' ) );
-        }
-
-        if ( current_user_can( 'read' ) ) {
-            return true;
-        }
-
-        return new \WP_Error( 'wedocs_permission_failure', __( "You don't have permission to get settings data", 'wedocs' ) );
-    }
-
-    /**
      * Check settings data creation permission.
      *
      * @since 2.0.0
