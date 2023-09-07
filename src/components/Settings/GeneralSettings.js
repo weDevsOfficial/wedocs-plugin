@@ -25,8 +25,6 @@ const GeneralSettings = ( {
     } );
   }, [ generalSettingsData ] );
 
-    console.log( 'general:', settingsData );
-
   return (
     <section>
       <div className="shadow sm:rounded-md">
