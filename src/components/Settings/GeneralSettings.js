@@ -25,6 +25,8 @@ const GeneralSettings = ( {
     } );
   }, [ generalSettingsData ] );
 
+    console.log( 'general:', settingsData );
+
   return (
     <section>
       <div className="shadow sm:rounded-md">
@@ -117,7 +119,7 @@ const GeneralSettings = ( {
                     settingsData={ settingsData }
                     setSettings={ setSettings }
                     panelName={ `general` }
-                    isEnabled={ generalSettings?.email === 'on' }
+                    isEnabled={ generalSettings?.email !== 'off' }
                   />
                 </div>
               </div>
@@ -219,7 +221,7 @@ const GeneralSettings = ( {
                     settingsData={ settingsData }
                     setSettings={ setSettings }
                     panelName={ `general` }
-                    isEnabled={ generalSettings?.helpful === 'on' }
+                    isEnabled={ generalSettings?.helpful !== 'off' }
                   />
                 </div>
               </div>
@@ -311,7 +313,7 @@ const GeneralSettings = ( {
                     settingsData={ settingsData }
                     setSettings={ setSettings }
                     panelName={ `general` }
-                    isEnabled={ generalSettings?.print === 'on' }
+                    isEnabled={ generalSettings?.print !== 'off' }
                   />
                 </div>
               </div>
