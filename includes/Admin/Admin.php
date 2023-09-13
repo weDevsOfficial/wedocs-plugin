@@ -13,10 +13,11 @@ class Admin {
     public function __construct() {
         new Menu();
 
+        add_action( 'init', [ $this, 'register_translations' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ] );
 
-        add_filter( 'parent_file', array( $this, 'fix_tag_menu' ) );
-        add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
+        add_filter( 'parent_file', [ $this, 'fix_tag_menu' ] );
+        add_filter( 'admin_footer_text', [ $this, 'admin_footer_text' ], 1 );
     }
 
     /**
@@ -40,6 +41,21 @@ class Admin {
             wp_enqueue_style( 'wedocs-app-style', WEDOCS_URL . '/assets/build/index.css', [], $react_dependencies['version'] );
             wp_enqueue_script( 'wedocs-app-script', WEDOCS_URL . '/assets/build/index.js', $react_dependencies['dependencies'], $react_dependencies['version'], true );
         }
+    }
+
+    /**
+     * Register script translations
+     *
+     * @since 2.0.0
+     *
+     * @return void
+     */
+    public function register_translations() {
+        wp_set_script_translations(
+            'wedocs-app-script',
+            'wedocs',
+            plugin_dir_path( WEDOCS_FILE ) . 'languages'
+        );
     }
 
     /**

@@ -15,6 +15,10 @@ const actions = {
     return { type: 'SET_UPGRADE_INFO', needUpgrade };
   },
 
+  setMigrateInfo( needMigrate ) {
+    return { type: 'SET_MIGRATE_INFO', needMigrate };
+  },
+
   setSaving( saving ) {
     return { type: 'SET_SAVING', saving };
   },
@@ -41,8 +45,19 @@ const actions = {
     return response;
   },
 
+  *wedocsMigrate( data ) {
+    const path = '/wp/v2/docs/migrate';
+    const response = yield { type: 'UPDATE_TO_API', path, data };
+    yield actions.setUpgradeInfo( false );
+    return response;
+  },
+
   *makeUpdateDone() {
     return yield { type: 'UPDATE_TO_API', path: '/wp/v2/docs/upgrade/done' };
+  },
+
+  *makeMigrateDone() {
+    return yield { type: 'UPDATE_TO_API', path: '/wp/v2/docs/migrate/done' };
   }
 };
 

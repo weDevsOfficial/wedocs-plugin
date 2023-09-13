@@ -14,6 +14,7 @@ class Admin {
      */
     public function __construct() {
         new Admin\Admin();
+        new Admin\Migrate();
         new Admin\Docs_List_Table();
 
         add_action( 'admin_init', array( $this, 'init_admin_actions' ) );

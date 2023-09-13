@@ -1,7 +1,35 @@
+import Swal from 'sweetalert2';
 import { __ } from '@wordpress/i18n';
-import AddDocModal from '../AddDocModal';
+import settingsStore from '../../data/settings';
+import { dispatch, useSelect } from '@wordpress/data';
+import MigrationConfirmationModal from './MigrationConfirmationModal';
+import { useEffect, useState } from '@wordpress/element';
 
 const Migrate = () => {
+    const { need_migrate, status } = useSelect(
+        ( select ) => select( settingsStore ).getMigrateInfo(),
+        []
+    );
+
+    if ( status === 'done' ) {
+        dispatch( settingsStore )
+            .makeMigrateDone()
+            .then( ( result ) => {
+                if ( result ) {
+                    Swal.fire( {
+                        icon: 'success',
+                        text: __( 'Betterdocs to weDocs migration has been successfully done.', 'wedocs' ),
+                        title: __( 'Database Migrated!', 'wedocs' ),
+                        toast: true,
+                        timer: 3000,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                    } );
+                }
+            } )
+            .catch( ( err ) => {} );
+    }
+
     return (
         <div className="w-full mt-7">
             <div className="shadow sm:overflow-hidden sm:rounded-md">
@@ -85,10 +113,19 @@ const Migrate = () => {
                                 { __( 'how to create a new doc', 'wedocs' ) }
                             </p>
                         </h2>
-                        <AddDocModal className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-2.5 text-base text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-4 text-base flex items-center"></span>
-                            { __( 'Migrate', 'wedocs' ) }
-                        </AddDocModal>
+                        { need_migrate ? (
+                            <MigrationConfirmationModal className={ `bg-indigo-600 inline-flex items-center focus:ring-0 rounded-md border border-transparent px-6 py-2.5 text-base text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2` }>
+                                { __( `Migrat${ status === 'running' ? 'ing...' : 'e' }`, 'wedocs' ) }
+                            </MigrationConfirmationModal>
+                        ) : (
+                            <button
+                                type='submit'
+                                disabled={ true }
+                                className={ `disabled:bg-gray-600 inline-flex items-center focus:ring-0 rounded-md border border-transparent px-6 py-2.5 text-base text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2` }
+                            >
+                                { __( `Migration not required`, 'wedocs' ) }
+                            </button>
+                        ) }
                     </div>
                 </div>
             </div>

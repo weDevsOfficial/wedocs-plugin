@@ -19,6 +19,12 @@ const controls = {
     } );
   },
 
+  FETCH_MIGRATE_INFO() {
+    return apiFetch( {
+      path: '/wp/v2/docs/migrate',
+    } );
+  },
+
   FETCH_SITE_KEY() {
     return apiFetch( {
       path: '/wp/v2/docs/settings/turnstile-site-key',

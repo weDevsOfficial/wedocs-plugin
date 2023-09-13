@@ -39,6 +39,11 @@ const selectors = {
     return needUpgrade;
   },
 
+  getMigrateInfo( state ) {
+    const { needMigrate } = state;
+    return needMigrate;
+  },
+
   getSaving( state ) {
     const { saving } = state;
     return saving;
