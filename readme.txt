@@ -5,7 +5,7 @@ Tags: document, documentation, knowledge base, knowledgebase, support, faq
 Requires at least: 5.6
 Tested up to: 6.3.1
 Requires PHP: 7.4
-Stable tag: 1.7.2
+Stable tag: 1.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,14 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 9. Search widget in frontend
 
 == Changelog ==
+
+= v1.7.3 (13th September, 2023) =
+
+ * **Improved:** Upgrade appsero version 1.2.4 from 1.1.11.
+
+= v1.7.2 (13th September, 2023) =
+
+ * **Improved:** Upgrade wp org stable tag 6.3.1 from 6.0.
 
 = v1.7.1 (15th November, 2021) =
 
