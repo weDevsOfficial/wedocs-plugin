@@ -2,9 +2,9 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 1.7.2\n"
+"Project-Id-Version: weDocs 1.7.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
-"POT-Creation-Date: 2023-09-04 09:57:23+00:00\n"
+"POT-Creation-Date: 2023-09-13 04:14:10+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -70,6 +70,7 @@ msgid "Yes, delete it!"
 msgstr ""
 
 #: includes/Admin/Admin.php:49
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:133
 msgid "Cancel"
 msgstr ""
 
@@ -520,184 +521,788 @@ msgstr ""
 msgid "Updated on %s"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:38
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:20
-msgid "Basic Settings"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ActionFactory.php:232
+msgid "Invalid action - must be a recurring action."
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:42
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:24
-msgid "Advanced Settings"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:60
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:75
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:76
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:89
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:19
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:30
+msgid "Scheduled Actions"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:58
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:36
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:111
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:187
-msgid "Text Input"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:225
+#. translators: 1) is the number of affected actions, 2) is a link to an admin
+#. screen.
+msgid "About"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:59
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:37
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:112
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:188
-msgid "Text input description"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:227
+msgid "About Action Scheduler %s"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:60
-msgid "Text Input placeholder"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:67
-msgid "Number Input"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:68
-msgid "Number field with validation callback `floatval`"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:69
-msgid "1.99"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:79
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:43
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:118
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:194
-msgid "Textarea Input"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:80
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:44
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:119
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:195
-msgid "Textarea description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:81
-msgid "Textarea placeholder"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:86
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:229
 msgid ""
-"HTML area description. You can use any <strong>bold</strong> or other HTML "
-"elements."
+"Action Scheduler is a scalable, traceable job queue for background "
+"processing large sets of actions. Action Scheduler works by triggering an "
+"action hook to run at some time in the future. Scheduled actions can also "
+"be scheduled to run on a recurring schedule."
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:91
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:49
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:124
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:200
-msgid "Checkbox"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:237
+msgid "Columns"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:92
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:50
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:125
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:201
-msgid "Checkbox Label"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:239
+msgid "Scheduled Action Columns"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:97
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:55
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:130
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:206
-msgid "Radio Button"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:241
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:96
+msgid "Hook"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:98
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:56
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:131
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:207
-msgid "A radio button"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:241
+msgid "Name of the action hook that will be triggered."
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:107
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:77
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:154
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:228
-msgid "A Dropdown"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:242
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:97
+msgid "Status"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:108
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:78
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:155
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:229
-msgid "Dropdown description"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:242
+msgid "Action statuses are Pending, Complete, Canceled, Failed"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:118
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:144
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:88
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:164
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:238
-msgid "Password"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:243
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:98
+msgid "Arguments"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:119
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:145
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:89
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:165
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:239
-msgid "Password description"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:243
+msgid "Optional data array passed to the action hook."
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:125
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:95
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:171
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:245
-msgid "File"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:244
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:99
+msgid "Group"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:126
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:96
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:172
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:246
-msgid "File description"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:244
+msgid "Optional action group."
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:137
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:102
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:178
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:252
-msgid "Color"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:245
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:100
+msgid "Recurrence"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:138
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:103
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:179
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:253
-msgid "Color description"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:245
+msgid "The action's schedule frequency."
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:151
-msgid "Advanced Editor"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:246
+msgid "Scheduled"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:152
-msgid "WP_Editor description"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:246
+msgid "The date/time the action is/was scheduled to run."
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:158
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:65
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:141
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:216
-msgid "Multile checkbox"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:247
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:102
+msgid "Log"
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:159
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:66
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:142
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:217
-msgid "Multi checkbox description"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_AdminView.php:247
+msgid "Activity log for the action."
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:28
-msgid "Other Settings"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_DataController.php:133
+#. translators: %d: amount of time
+msgid "Stopped the insanity for %d second"
+msgid_plural "Stopped the insanity for %d seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_DataController.php:137
+msgid "Attempting to reduce used memory..."
 msgstr ""
 
-#: vendor/tareq1988/wordpress-settings-api-class/src/class.settings-api.php:370
-msgid "Choose File"
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_InvalidActionException.php:21
+#. translators: 1: action ID 2: schedule
+msgid "Action [%1$s] has an invalid schedule: %2$s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_InvalidActionException.php:40
+#. translators: 1: action ID 2: arguments
+msgid ""
+"Action [%1$s] has invalid arguments. It cannot be JSON decoded to an array. "
+"$args = %2$s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:92
+msgid "Delete"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:101
+msgid "Scheduled Date"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:122
+msgid "Claim ID"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:129
+msgid "Run"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:130
+msgid "Process the action now as if it were run as part of a queue"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:134
+msgid "Cancel the action now to avoid it being run in future"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:144
+#. translators: %s: amount of time
+msgid "%s year"
+msgid_plural "%s years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:149
+#. translators: %s: amount of time
+msgid "%s month"
+msgid_plural "%s months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:154
+#. translators: %s: amount of time
+msgid "%s week"
+msgid_plural "%s weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:159
+#. translators: %s: amount of time
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:164
+#. translators: %s: amount of time
+msgid "%s hour"
+msgid_plural "%s hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:169
+#. translators: %s: amount of time
+msgid "%s minute"
+msgid_plural "%s minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:174
+#. translators: %s: amount of time
+msgid "%s second"
+msgid_plural "%s seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:224
+msgid "Now!"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:260
+#. translators: %s: time interval
+msgid "Every %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:266
+msgid "Non-repeating"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:364
+msgid ""
+"It appears one or more database tables were missing. Attempting to "
+"re-create the missing table(s)."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:380
+#. translators: %s: amount of claims
+msgid ""
+"Maximum simultaneous queues already in progress (%s queue). No additional "
+"queues will begin processing until the current queues are complete."
+msgid_plural ""
+"Maximum simultaneous queues already in progress (%s queues). No additional "
+"queues will begin processing until the current queues are complete."
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:397
+#. translators: %s: process URL
+msgid ""
+"A new queue has begun processing. <a href=\"%s\">View actions in-progress "
+"&raquo;</a>"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:400
+#. translators: %d: seconds
+msgid "The next queue will begin processing in approximately %d seconds."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:421
+#. translators: %s: action HTML
+msgid "Successfully executed action: %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:425
+#. translators: %s: action HTML
+msgid "Successfully canceled action: %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:429
+#. translators: %s: action HTML
+msgid "Successfully processed change for action: %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:435
+#. translators: 1: action HTML 2: action ID 3: error message
+msgid "Could not process change for action: \"%1$s\" (ID: %2$d). Error: %3$s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:471
+msgid "async"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:485
+#. translators: %s: date interval
+msgid " (%s ago)"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:488
+#. translators: %s: date interval
+msgid " (%s)"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:513
+#. translators: 1: action ID 2: exception message.
+msgid "Action Scheduler was unable to delete action %1$d. Reason: %2$s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:661
+msgid "Search hook, args and claim ID"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_QueueCleaner.php:60
+#. Translators: %s is the exception message.
+msgid "It was not possible to determine a valid cut-off time: %s."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_QueueRunner.php:224
+msgid "Every minute"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_WPCommentCleaner.php:103
+#. translators: %s: date interval
+msgid "This data will be deleted in %s."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_WPCommentCleaner.php:108
+#. translators: 1: next cleanup message 2: github issue URL
+msgid ""
+"Action Scheduler has migrated data to custom tables; however, orphaned log "
+"entries exist in the WordPress Comments table. %1$s <a href=\"%2$s\">Learn "
+"more &raquo;</a>"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:111
+msgid "Action Scheduler"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:111
+msgid "This section shows details of Action Scheduler."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:114
+msgid "Version:"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:118
+msgid "Data store:"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:122
+msgid "Action Status"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:124
+msgid "Count"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:125
+msgid "Oldest Scheduled Date"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/ActionScheduler_wcSystemStatus.php:126
+msgid "Newest Scheduled Date"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_Clean_Command.php:88
+#. translators: %d refers to the total number of batches processed
+msgid "%d batch processed."
+msgid_plural "%d batches processed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_Clean_Command.php:105
+#. translators: %s refers to the exception error message
+msgid "There was an error deleting an action: %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_Clean_Command.php:120
+#. translators: %d refers to the total number of actions deleted
+msgid "%d action deleted."
+msgid_plural "%d actions deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:33
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ProgressBar.php:47
+#. translators: %s php class name
+msgid "The %s class can only be run within WP CLI."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:59
+msgid "There are too many concurrent batches, but the run is forced to continue."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:61
+msgid "There are too many concurrent batches."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:93
+#. translators: %d: amount of actions
+msgid "Running %d action"
+msgid_plural "Running %d actions"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:113
+msgid "The claim has been lost. Aborting current batch."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:138
+#. translators: %s refers to the action ID
+msgid "Started processing action %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:155
+#. translators: 1: action ID 2: hook name
+msgid "Completed processing action %1$s with hook: %2$s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_QueueRunner.php:170
+#. translators: 1: action ID 2: exception message
+msgid "Error processing action %1$s: %2$s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_Scheduler_command.php:30
+#. translators: %s refers to the schema name
+msgid "Registered schema for %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_Scheduler_command.php:152
+#. translators: %d refers to how many scheduled tasks were found to run
+msgid "Found %d scheduled task"
+msgid_plural "Found %d scheduled tasks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_Scheduler_command.php:169
+#. translators: %d refers to the total number of batches executed
+msgid "%d batch executed."
+msgid_plural "%d batches executed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_Scheduler_command.php:188
+#. translators: %s refers to the exception error message
+msgid "There was an error running the action scheduler: %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/WP_CLI/ActionScheduler_WPCLI_Scheduler_command.php:205
+#. translators: %d refers to the total number of tasks completed
+msgid "%d scheduled task completed."
+msgid_plural "%d scheduled tasks completed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler.php:226
+#. translators: %s function name.
+msgid "%s() was called before the Action Scheduler data store was initialized"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Abstract_ListTable.php:523
+msgid "Filter"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Abstract_ListTable.php:650
+#. translators: %s: search query
+msgid "Search results for \"%s\""
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Abstract_ListTable.php:765
+msgid "Search"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Abstract_QueueRunner.php:155
+msgid ""
+"This action appears to be consistently failing. A new instance will not be "
+"scheduled."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:72
+msgid "action created"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:76
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBLogger.php:142
+msgid "action canceled"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:82
+#. translators: %s: context
+msgid "action started via %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:84
+msgid "action started"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:92
+#. translators: %s: context
+msgid "action complete via %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:94
+msgid "action complete"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:102
+#. translators: 1: context 2: exception message
+msgid "action failed via %1$s: %2$s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:105
+#. translators: %s: exception message
+msgid "action failed: %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:112
+#. translators: %s: amount of time
+msgid ""
+"action marked as failed after %s seconds. Unknown error occurred. Check "
+"server, PHP and database error logs to diagnose cause."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:118
+#. translators: 1: error message 2: filename 3: line
+msgid "unexpected shutdown: PHP Fatal error %1$s in %2$s on line %3$s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:123
+msgid "action reset"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:129
+#. translators: %s: context
+msgid "action ignored via %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:131
+msgid "action ignored"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:146
+#. translators: %s: exception message
+msgid "There was a failure fetching this action: %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:148
+msgid "There was a failure fetching this action"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Logger.php:156
+#. translators: %s: exception message
+msgid "There was a failure scheduling the next instance of this action: %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Store.php:329
+msgid ""
+"ActionScheduler_Action::$args too long. To ensure the args column can be "
+"indexed, action args should not be more than %d characters when encoded as "
+"JSON."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Store.php:405
+msgid "Complete"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Store.php:406
+msgid "Pending"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Store.php:407
+msgid "In-progress"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Store.php:408
+msgid "Failed"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Store.php:409
+msgid "Canceled"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/actions/ActionScheduler_Action.php:50
+#. translators: 1: action hook.
+msgid ""
+"Scheduled action for %1$s will not be executed as no callbacks are "
+"registered."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:118
+msgid "Database error."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:126
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:49
+#: vendor/woocommerce/action-scheduler/classes/migration/ActionScheduler_DBStoreMigrator.php:44
+#. translators: %s: error message
+#. translators: %s: action error message
+msgid "Error saving action: %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:396
+msgid "Invalid value for select or count parameter. Cannot query actions."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:454
+msgid ""
+"JSON partial matching not supported in your environment. Please check your "
+"MySQL/MariaDB version."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:471
+#. translators: %s: provided value type
+msgid ""
+"The value type for the JSON partial matching is not supported. Must be "
+"either integer, boolean, double or string. %s type provided."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:492
+msgid "Unknown partial args matching value."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:653
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:745
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:776
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:1085
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:1143
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:515
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:534
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:564
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:987
+#. translators: %s: action ID
+#. translators: %s is the action ID
+msgid "Unidentified action %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:910
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:717
+#. translators: %s: group name(s)
+#. translators: %s is the group name
+msgid "The group \"%s\" does not exist."
+msgid_plural "The groups \"%s\" do not exist."
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:945
+#. translators: %s database error.
+msgid "Unable to claim actions. Database error: %s."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:1042
+msgid "Unable to release actions from claim id %d."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:1112
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:967
+#. translators: 1: action ID. 2: status slug.
+msgid "Unable to update the status of action %1$d to %2$s."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:1173
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:904
+msgid "Invalid action ID. No status found."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:1175
+msgid "Unknown status found for action."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:101
+msgid "Unable to save action."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:318
+msgid "Invalid schedule. Cannot save action."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:696
+msgid "Unable to claim actions. Database error."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:824
+#. translators: %s: claim ID
+msgid "Unable to unlock claim %s. Database error."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:852
+#. translators: %s: action ID
+msgid "Unable to unlock claim on action %s. Database error."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:878
+#. translators: %s: action ID
+msgid "Unable to mark failure on action %s. Database error."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:1068
+#. translators: %s is the error message
+msgid "%s Support for strings longer than this will be removed in a future version."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostStatusRegistrar.php:38
+#. translators: %s: count
+msgid "Failed <span class=\"count\">(%s)</span>"
+msgid_plural "Failed <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostStatusRegistrar.php:53
+#. translators: %s: count
+msgid "In-Progress <span class=\"count\">(%s)</span>"
+msgid_plural "In-Progress <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:20
+msgid "Scheduled actions are hooks triggered on a cetain date and time."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:31
+msgid "Scheduled Action"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:33
+msgid "Add"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:34
+msgid "Add New Scheduled Action"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:35
+msgid "Edit"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:36
+msgid "Edit Scheduled Action"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:37
+msgid "New Scheduled Action"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:38
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:39
+msgid "View Action"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:40
+msgid "Search Scheduled Actions"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:41
+msgid "No actions found"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:42
+msgid "No actions found in trash"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_TaxonomyRegistrar.php:14
+msgid "Action Group"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/migration/ActionMigrator.php:95
+msgid "Unable to remove source migrated action %s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/migration/Config.php:52
+msgid "Source store must be configured before running a migration"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/migration/Config.php:74
+msgid "Source logger must be configured before running a migration"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/migration/Config.php:96
+msgid "Destination store must be configured before running a migration"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/migration/Config.php:118
+msgid "Destination logger must be configured before running a migration"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/migration/Controller.php:162
+msgid ""
+"Action Scheduler migration in progress. The list of scheduled actions may "
+"be incomplete."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/migration/Runner.php:82
+#. translators: %d: amount of actions
+msgid "Migrating %d action"
+msgid_plural "Migrating %d actions"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor/woocommerce/action-scheduler/classes/migration/Runner.php:107
+#. translators: 1: source action ID 2: source store class 3: destination action
+#. ID 4: destination store class
+msgid "Migrated action with ID %1$d in %2$s to ID %3$d in %4$s"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/functions.php:134
+#. translators: 1: provided value 2: provided type.
+msgid "An integer was expected but \"%1$s\" (%2$s) was received."
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/functions.php:287
+#. translators: %s is the name of the hook to be cancelled.
+msgid "Caught exception while cancelling action: %s"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
@@ -756,4 +1361,34 @@ msgstr ""
 #: templates/single-docs.php:71
 msgctxt "Used before tag names."
 msgid "Tags"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Abstract_ListTable.php:685
+msgctxt "status labels"
+msgid "All"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Abstract_ListTable.php:686
+msgctxt "status labels"
+msgid "Past-due"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:939
+msgctxt "database error"
+msgid "unknown"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostStatusRegistrar.php:36
+msgctxt "post"
+msgid "Failed"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostStatusRegistrar.php:51
+msgctxt "post"
+msgid "In-Progress"
+msgstr ""
+
+#: vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore_PostTypeRegistrar.php:32
+msgctxt "Admin menu name"
+msgid "Scheduled Actions"
 msgstr ""

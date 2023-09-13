@@ -12,7 +12,7 @@
   "minimum-stability": "dev",
   "require": {
     "tareq1988/wordpress-settings-api-class": "dev-master",
-    "appsero/client": "dev-master"
+    "appsero/client": "1.2.4"
   },
   "autoload": {
     "psr-4": {
