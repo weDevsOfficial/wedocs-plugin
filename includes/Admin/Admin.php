@@ -45,7 +45,10 @@ class Admin {
      * @return void
      */
     public function admin_scripts( $hook ) {
-        if ( 'toplevel_page_wedocs' != $hook ) {
+        // Check if the admin notice should be hidden based on the user meta.
+        $user_id     = get_current_user_id();
+        $hide_notice = get_user_meta( $user_id, 'wedocs_hide_beta_notice', true );
+        if ( 'toplevel_page_wedocs' !== $hook && $hide_notice ) {
             return;
         }
 
