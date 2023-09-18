@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width='257' height='257' fill="none">
+    <path fill="#3d7aff" d="M.168.983h256v256h-256z" />
+    <path fill="url(#B)" d="M.168.983h256v256h-256z" />
+    <path
+        d="M57.688 152.094c-23.918 30.937-48.312 15.924-57.52 4.55V.983h174.184c-29.079 23.709-34.497 35.223-34.497 35.223s-52.27 77.217-82.167 115.887z"
+        fill="url(#C)" fill-opacity=".06" />
+    <path
+        d="M89.408 57.261c35.643-1.34 51.99-39.93 59.226-56.278H.168V117.29c8.397-1.251 26.822 3.411 41.27-9.647 13.935-12.596 16.867-49.213 47.97-50.382z"
+        fill="url(#D)" />
+    <path
+        d="M63.196 45.804C91.358 42.529 103.239 14.071 105.21.983H.168v83.88c13.969 0 17.392-13.006 20.529-19.227 2.282-4.525 10.011-16.055 42.499-19.833z"
+        fill="url(#E)" fill-opacity=".51" />
+    <path
+        d="M118.605 112.95C164.324 73.246 160.502 35.911 162.326.983h93.842v114.883c-13.939 0-50.937-2.615-99.364 23.854-39.621 21.657-52.651-14.219-38.199-26.77z"
+        fill="url(#F)" fill-opacity=".43" />
+    <path
+        d="M217.667 214.572c36.185-9.523 38.501-40.607 38.501-40.607v83.018h-83.921s2.801-31.196 45.42-42.411z"
+        fill="url(#G)" fill-opacity=".3" />
+    <path
+        d="M85.947 256.034c22.544-118.781 122.21-148.776 170.221-148.925v28.986s-47.455 12.832-62.492 51.996c-21.712 56.545-43.424 67.943-43.424 67.943H85.947z"
+        fill="url(#H)" fill-opacity=".04" />
+    <g fill="#fff">
+        <circle cx="191.817" cy="61.036" r="4.226" />
+        <circle cx="120.13" cy="41.054" r="2.087" />
+    </g>
+    <circle cx="31.172" cy="103.878" r="3.198" fill="#83c2ff" />
+    <circle cx="163.84" cy="200.713" r="6.17" fill="url(#I)" />
+    <circle cx="213.882" cy="178.82" r="4.022" fill="#5b97ff" />
+    <rect x="182.851" y="110.745" width="7.069" height="7.069" rx="3" transform="rotate(315 182.851 110.745)"
+          fill="url(#J)" />
+    <rect x="75.186" y="80.869" width="9.549" height="9.549" rx="3" transform="rotate(315 75.186 80.869)"
+          fill="url(#K)" />
+    <rect x="54.872" y="193.859" width="11.619" height="11.619" rx="3" transform="rotate(315 54.872 193.859)"
+          fill="url(#L)" />
+    <g filter="url(#A)">
+        <path fill-rule="evenodd"
+              d="M134.587 182.239H83.919v-68.174c.026-21.446 17.596-38.828 39.283-38.854h11.385c21.683.03 39.258 17.407 39.284 38.854v29.321c-.026 21.446-17.597 38.827-39.284 38.853zm-39.82-10.727h39.82c15.7-.022 28.419-12.598 28.436-28.122v-29.321c-.022-15.523-12.74-28.1-28.436-28.122h-11.385c-15.695.017-28.414 12.598-28.435 28.122v57.443zm46.651-29.421h-31.145c-.095 0-.177.078-.177.177v7.574c0 .099.078.177.177.177h31.145c.099 0 .176-.078.176-.177v-7.574c0-.099-.077-.177-.176-.177zm-31.145-15.987h37.236c.098 0 .176.077.176.176v7.575c0 .098-.078.176-.176.176h-37.236c-.099 0-.177-.078-.177-.176v-7.575a.18.18 0 0 1 .177-.176zm20.56-15.988h-20.56a.18.18 0 0 0-.177.176v7.575c0 .099.078.176.177.176h20.56c.099 0 .176-.077.176-.176v-7.575c0-.099-.077-.176-.176-.176z"
+              fill="#fff" />
+    </g>
+    <defs>
+        <filter id="A" x="63.919" y="59.211" width="129.952" height="147.028" filterUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="A" />
+            <feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="B" />
+            <feOffset dy="4" />
+            <feGaussianBlur stdDeviation="10" />
+            <feComposite in2="B" operator="out" />
+            <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.27 0" />
+            <feBlend in2="A" />
+            <feBlend in="SourceGraphic" />
+        </filter>
+        <linearGradient id="B" x1="71.568" y1="-107.444" x2="128.168" y2="256.983">
+            <stop stop-color="#3cbeff" />
+            <stop offset="1" stop-color="#2c6eff" />
+        </linearGradient>
+        <linearGradient id="C" x1="131.37" y1="170.468" x2="91.063" y2="44.721">
+            <stop stop-color="#fff" />
+            <stop offset="1" stop-color="#0094ff" />
+        </linearGradient>
+        <linearGradient id="D" x1="74.401" y1=".983" x2="74.401" y2="117.29">
+            <stop stop-color="#3cc1ff" />
+            <stop offset="1" stop-color="#3c9bff" stop-opacity=".21" />
+        </linearGradient>
+        <linearGradient id="E" x1="-8.362" y1="74.331" x2="116.13" y2=".983">
+            <stop stop-color="#3d69ff" />
+            <stop offset="1" stop-color="#3cadff" />
+        </linearGradient>
+        <linearGradient id="F" x1="184.529" y1=".983" x2="129.531" y2="105.476">
+            <stop stop-color="#3cf3ff" />
+            <stop offset="1" stop-color="#3c9bff" stop-opacity="0" />
+        </linearGradient>
+        <linearGradient id="G" x1="165.433" y1="246.558" x2="274.701" y2="194.591">
+            <stop stop-color="#3cadff" />
+            <stop offset="1" stop-color="#5b80ff" />
+        </linearGradient>
+        <linearGradient id="H" x1="72.124" y1="237.333" x2="282.931" y2="123.971">
+            <stop stop-color="#fff" />
+            <stop offset="1" stop-color="#3cadff" />
+        </linearGradient>
+        <linearGradient id="I" x1="163.84" y1="194.543" x2="163.84" y2="210.671">
+            <stop stop-color="#c0ddfd" />
+            <stop offset="1" stop-color="#c0ddfd" stop-opacity="0" />
+        </linearGradient>
+        <linearGradient id="J" x1="182.851" y1="117.814" x2="189.919" y2="110.745">
+            <stop stop-color="#ff50c3" />
+            <stop offset="1" stop-color="#ff94c1" />
+        </linearGradient>
+        <linearGradient id="K" x1="75.186" y1="90.418" x2="84.735" y2="80.869">
+            <stop stop-color="#596efd" />
+            <stop offset="1" stop-color="#c8bdff" />
+        </linearGradient>
+        <linearGradient id="L" x1="54.872" y1="205.478" x2="66.491" y2="193.859">
+            <stop stop-color="#16cf89" />
+            <stop offset="1" stop-color="#ade696" />
+        </linearGradient>
+        <linearGradient id="M" gradientUnits="userSpaceOnUse" />
+    </defs>
+</svg>
