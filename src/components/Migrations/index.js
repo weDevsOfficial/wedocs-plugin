@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import settingsStore from '../../data/settings';
 import { dispatch, useSelect } from '@wordpress/data';
 import MigrationConfirmationModal from './MigrationConfirmationModal';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 const Migrate = () => {
     const { need_migrate, status } = useSelect(
@@ -29,6 +29,10 @@ const Migrate = () => {
             } )
             .catch( ( err ) => {} );
     }
+
+    // useEffect( () => {
+    //     console.log( 'holla:', need_migrate );
+    // }, [ need_migrate ] );
 
     return (
         <div className="w-full mt-7">
