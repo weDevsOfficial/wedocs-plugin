@@ -5,7 +5,7 @@ Tags: document, documentation, knowledge base, knowledgebase, support, faq
 Requires at least: 5.6
 Tested up to: 6.3.1
 Requires PHP: 7.4
-Stable tag: 1.7.7
+Stable tag: 1.7.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,7 +61,7 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 == Changelog ==
 
-= v1.7.7 (19th September, 2023) =
+= v1.7.8 (19th September, 2023) =
 
  * **Improved:** Add weDocs beta info notice.
 

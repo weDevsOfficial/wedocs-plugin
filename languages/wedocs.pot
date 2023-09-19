@@ -2,7 +2,7 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 1.7.7\n"
+"Project-Id-Version: weDocs 1.7.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
 "POT-Creation-Date: 2023-09-18 10:29:48+00:00\n"
 "MIME-Version: 1.0\n"

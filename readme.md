@@ -2,7 +2,7 @@
 
 The documentation plugin for WordPress. Create great looking documentation for your products.
 
-![WordPress Plugin Version](https://img.shields.io/badge/PLUGIN_VERSION-V1.7.7-blue) ![WordPress Plugin Active Installs](https://img.shields.io/badge/ACTIVE_INSTALLS-6K-green) ![WordPress Plugin Rating](https://img.shields.io/badge/RATING-4.8/5_(61)-green) ![WordPress Plugin: Tested WP Version](https://img.shields.io/badge/WORDPRESS-V6.3.1_TESTED-orange) ![WordPress Plugin Last Updated](https://img.shields.io/badge/LAST_UPDATED-SEPTEMBER_2023-orange)
+![WordPress Plugin Version](https://img.shields.io/badge/PLUGIN_VERSION-V1.7.8-blue) ![WordPress Plugin Active Installs](https://img.shields.io/badge/ACTIVE_INSTALLS-6K-green) ![WordPress Plugin Rating](https://img.shields.io/badge/RATING-4.8/5_(61)-green) ![WordPress Plugin: Tested WP Version](https://img.shields.io/badge/WORDPRESS-V6.3.1_TESTED-orange) ![WordPress Plugin Last Updated](https://img.shields.io/badge/LAST_UPDATED-SEPTEMBER_2023-orange)
 
 ## Description ##
 
