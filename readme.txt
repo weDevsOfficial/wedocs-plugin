@@ -61,6 +61,10 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 == Changelog ==
 
+= v1.7.7 (19th September, 2023) =
+
+ * **Improved:** Add weDocs beta info notice.
+
 = v1.7.3 (13th September, 2023) =
 
  * **Improved:** Upgrade appsero version 1.2.4 from 1.1.11.
