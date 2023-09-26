@@ -2,6 +2,8 @@
 
 namespace WeDevs\WeDocs;
 
+use WeDevs\WeDocs\Admin\Migrate;
+
 /**
  * Ajax Class.
  */
@@ -25,6 +27,10 @@ class Ajax {
         // contact
         add_action( 'wp_ajax_wedocs_contact_feedback', [ $this, 'handle_contact' ] );
         add_action( 'wp_ajax_nopriv_wedocs_contact_feedback', [ $this, 'handle_contact' ] );
+
+        // Data migration.
+        add_action( 'wp_ajax_wedocs_check_need_betterdocs_migration', [ Migrate::class, 'need_migration' ] );
+        add_action( 'wp_ajax_wedocs_migrate_betterdocs_to_wedocs', [ Migrate::class, 'do_migration' ] );
     }
 
     /**

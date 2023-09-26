@@ -9,20 +9,19 @@ namespace WeDevs\WeDocs\Admin;
  */
 class Migrate {
 
+    private static $migration_done = 0;
+
+    private static $migratable_docs_length = 0;
+
+    private static $migration_progress = 0;
+
     /**
      * Class Constructor.
      */
     public function __construct() {
-        add_action( 'wedocs_migration_runner', [ $this, 'do_migrate' ] );
+//        add_action( 'wedocs_migration_runner', [ $this, 'do_migration' ] );
         add_action( 'create_term', [ $this, 'migrate_category_insert_status' ], 10, 3 );
         add_action( 'save_post_docs', [ $this, 'migrate_documentation_insert_status' ], 10, 3 );
-//        add_action( 'pre_post_update', [ $this, 'handle_documentation_update' ], 10, 2 );
-    }
-
-    public function handle_documentation_update( $post_id, $data ) {
-//        error_log( print_r( wp_get_post_terms( $post_id, 'doc_category', array( 'fields' => 'ids' ) ), 1 ) );
-//        error_log( print_r( $post_id, 1 ) );
-//        error_log( print_r( $data, 1 ) );
     }
 
     public function migrate_documentation_insert_status( $post_id, $data, $update ) {
@@ -48,56 +47,123 @@ class Migrate {
 //        }
     }
 
-    public function need_migration() {
-        if ( ! $this->is_betterdocs_exists() ) {
-            return false;
+    public static function need_migration() {
+        if ( ! self::is_betterdocs_exists() ) {
+            wp_send_json_error( [
+                'success' => false,
+                'message' => __( 'BetterDocs not exists.', 'wedocs' )
+            ] );
+        }
+
+        $migratable_docs = self::betterdocs_migratable_docs();
+        error_log( print_r( $migratable_docs, 1 ) );
+        if ( ! empty( $migratable_docs ) ) {
+            wp_send_json_success( [
+                'success' => true,
+                'message' => __( 'Migration done.', 'wedocs' )
+            ] );
         }
 
         $need_migration = get_option( 'wedocs_need_migration', false );
+        error_log( print_r( $need_migration, 1 ) );
         if ( $need_migration ) {
-            return true;
+            wp_send_json_success( [
+                'success' => $need_migration,
+                'message' => __( 'Migration done.', 'wedocs' )
+            ] );
         }
 
-        $migratable_docs = $this->betterdocs_migratable_docs();
-        if ( ! empty( $migratable_docs ) ) {
-            return true;
-        }
-
-        return false;
+        wp_send_json_error( [
+            'success' => false,
+            'message' => __( 'Migration not available at this moment.', 'wedocs' )
+        ] );
     }
 
-    public function betterdocs_migratable_docs() {
-        $betterdoc_categories = get_terms( [
-            'hide_empty' => false,
-            'order'      => 'DESC',
-            'order_by'   => 'term_id',
-            'taxonomy'   => 'doc_category'
-        ] );
+//    public function betterdocs_migratable_docs() {
+//        $betterdoc_categories = get_terms( [
+//            'hide_empty' => false,
+//            'order'      => 'DESC',
+//            'order_by'   => 'term_id',
+//            'taxonomy'   => 'doc_category'
+//        ] );
+//
+//        $docs_tree           = [];
+//        $migrated_categories = get_option( 'wedocs_migrated_categories', [] );
+//        foreach ( $betterdoc_categories as $category ) {
+//            if ( empty( $migrated_categories[ $category->term_id ] ) ) {
+//                $docs_tree['parents'][ $category->term_id ] = $category->name;
+//            }
+//
+//            $doc_ids = get_term_meta( $category->term_id, '_docs_order', true );
+//            $doc_ids = ! empty( $doc_ids ) ? explode( ',', $doc_ids ) : [];
+//
+//            $anchestor_ids = $this->split_doc_ids( $doc_ids, $category->term_id );
+//            $docs_tree     = array_merge_recursive( $docs_tree, $anchestor_ids );
+//        }
+//
+//        return $docs_tree;
+//    }
 
-        $docs_tree           = [];
-        $migrated_categories = get_option( 'wedocs_migrated_categories', [] );
-        foreach ( $betterdoc_categories as $category ) {
-            if ( empty( $migrated_categories[ $category->term_id ] ) ) {
-                $docs_tree['parents'][ $category->term_id ] = $category->name;
+    public static function migrate_category_to_sections( $migratable_docs ) {
+        if ( empty( $migratable_docs['parents'] ) ) {
+            return;
+        }
+
+        $need_migrate_doc = self::$migratable_docs_length - self::$migration_done;
+        $upgrade_index    = min( $need_migrate_doc, 2 );
+        for ( $i = self::$migration_done; $i < self::$migratable_docs_length; $i += $upgrade_index ) {
+            $parent_docs = array_slice( $migratable_docs['parents'], 0, $upgrade_index, true );
+            $parent_docs = array_map( 'sanitize_text_field', $parent_docs );
+
+            // Migrate parent docs.
+            $migrate_categories = self::migrate_categories_to_docs( $parent_docs );
+            if ( $migrate_categories === false ) {
+                return;
             }
 
-            $doc_ids = get_term_meta( $category->term_id, '_docs_order', true );
-            $doc_ids = ! empty( $doc_ids ) ? explode( ',', $doc_ids ) : [];
+            // Upgrade migration progress.
+            self::$migration_done     = self::$migration_done += $upgrade_index;
+            self::$migration_progress = floor( ( self::$migration_done / self::$migratable_docs_length ) * 100 );
 
-            $anchestor_ids = $this->split_doc_ids( $doc_ids, $category->term_id );
-            $docs_tree     = array_merge_recursive( $docs_tree, $anchestor_ids );
+            if ( absint( self::$migration_progress ) === 100 ) {
+                update_option( 'wedocs_need_migration', 'done' );
+            }
+
+            wp_send_json_success( [
+                'progress'        => self::$migration_progress,
+                'migrated_length' => self::$migration_done,
+            ] );
         }
-
-        return $docs_tree;
     }
 
-    public function do_migrate() {
-        $migratable_docs = $this->betterdocs_migratable_docs();
-        if ( ! empty( $migratable_docs['parents'] ) ) {
-            $parent_docs             = array_map( 'sanitize_text_field', $migratable_docs['parents'] );
-            $category_migration_data = $this->migrate_categories_to_docs( $parent_docs );
-            update_option( 'wedocs_migrated_categories', $category_migration_data );
-        }
+    private static function migrate_default_categories_parent() {
+        // Through the parent title array and prepare post data.
+        $post_data = [
+            'post_type'   => 'docs',
+            'post_status' => 'publish',
+            'post_title'  => __( 'Untitled Docs', 'wedocs' ),
+        ];
+
+        $parent_doc_id = wp_insert_post( $post_data, true );
+        update_option( 'wedocs_migrated_default_parent_doc', $parent_doc_id );
+
+        return $parent_doc_id;
+    }
+
+    public static function do_migration() {
+        $migratable_docs      = self::betterdocs_migratable_docs();
+        $migrated_docs_length = ! empty( $_POST[ 'migratedDocLength' ] ) ? $_POST[ 'migratedDocLength' ] : 0;
+
+        self::$migration_progress = 0;
+        self::$migration_done     = $migrated_docs_length;
+
+        $migratable_docs_length = array_reduce( $migratable_docs, function ( $carry, $item ) {
+            return $carry + count( $item );
+        }, 0 );
+
+        self::$migratable_docs_length = $migratable_docs_length + $migrated_docs_length;
+
+        self::migrate_category_to_sections( $migratable_docs );
 
 //        $section_docs = ! empty( $migratable_docs['sections'] ) ? $migratable_docs['sections'] : [];
 //        $article_docs = ! empty( $migratable_docs['articles'] ) ? $migratable_docs['articles'] : [];
@@ -106,8 +172,59 @@ class Migrate {
 //            update_option( 'wedocs_migrated_doc_ids', $migrated_ids );
 //        }
 
-//        update_option( 'wedocs_need_migration', false );
-        update_option( 'wedocs_migration_runner', 'done' );
+//        update_option( 'wedocs_need_migration', 'done' );
+    }
+
+    private static function migrate_categories_to_docs( $parent_docs ) {
+        // Get migrated docs data.
+        $migrated_data  = get_option( 'wedocs_migrated_categories', [] );
+        $default_parent = get_option( 'wedocs_migrated_default_parent_doc', 0 );
+
+        if ( empty( $default_parent ) ) {
+            $default_parent = self::migrate_default_categories_parent();
+        }
+
+        // Loop through the titles array and prepare post data
+        foreach ( $parent_docs as $category_id => $category_title ) {
+            $post_data = [
+                'post_type'   => 'docs',
+                'post_title'  => $category_title,
+                'post_parent' => $default_parent,
+                'post_status' => 'publish',
+            ];
+
+            $migrated_doc_id = wp_insert_post( $post_data, true );
+            $migrated_data[ $category_id ] = $migrated_doc_id;
+        }
+
+        return update_option( 'wedocs_migrated_categories', $migrated_data );
+    }
+
+    public static function betterdocs_migratable_docs() {
+        $betterdocs_categories = get_terms( [
+            'order'      => 'ASC',
+            'orderby'    => 'meta_value_num',
+            'taxonomy'   => 'doc_category',
+            'meta_key'   => 'doc_category_order',
+            'hide_empty' => false,
+            'number'     => 10,
+        ] );
+
+        $docs_tree           = [];
+        $migrated_categories = get_option( 'wedocs_migrated_categories', [] );
+        foreach ( $betterdocs_categories as $category ) {
+            if ( empty( $migrated_categories[ $category->term_id ] ) ) {
+                $docs_tree['parents'][ $category->term_id ] = $category->name;
+            }
+
+            // $doc_ids = get_term_meta( $category->term_id, '_docs_order', true );
+            // $doc_ids = ! empty( $doc_ids ) ? explode( ',', $doc_ids ) : [];
+
+            // $anchestor_ids = $this->split_doc_ids( $doc_ids, $category->term_id );
+            // $docs_tree     = array_merge_recursive( $docs_tree, $anchestor_ids );
+        }
+
+        return $docs_tree;
     }
 
     private function split_doc_ids( $doc_ids, $parent_category_id ) {
@@ -138,8 +255,8 @@ class Migrate {
         return (int) wp_get_post_parent_id( $doc_id ) === 0;
     }
 
-    public function is_betterdocs_exists() {
-        return class_exists( '\WPDeveloper\BetterDocs\Plugin' ) && $this->is_betterdocs_textdomain_available();
+    public static function is_betterdocs_exists() {
+        return class_exists( '\WPDeveloper\BetterDocs\Plugin' ) && self::is_betterdocs_textdomain_available();
     }
 
     private function migrate_category_anchestors( $section_docs, $article_docs ) {
@@ -201,27 +318,18 @@ class Migrate {
         return $section_ids;
     }
 
-    private function migrate_categories_to_docs( $parent_docs ) {
-        // Prepare an array to store post data
-        $migrate_data  = [];
-        $migrated_data = get_option( 'wedocs_migrated_categories', [] );
+    public function upgrade_progress() {
+        $this->migrated_done++;
+        $this->migration_progress = floor( ( $this->migrated_done / $this->migratable_docs_length ) * 100 );
 
-        // Loop through the titles array and prepare post data
-        foreach ( $parent_docs as $category_id => $category_title ) {
-            $post_data = [
-                'post_type'   => 'docs',
-                'post_status' => 'publish',
-                'post_title'  => $category_title,
-            ];
+        $cookie_name   = 'wedocs_migration_progress';
+        $cookie_value  = $this->migration_progress;
+        $cookie_expiry = time() + 3600; // current time + 1 hour
 
-            $migrated_doc_id = wp_insert_post( $post_data, true );
-            $migrate_data[ $category_id ] = $migrated_doc_id;
-        }
-
-        return array_merge( $migrated_data, $migrate_data );
+        setcookie( $cookie_name, $cookie_value, $cookie_expiry );
     }
 
-    public function is_betterdocs_textdomain_available() {
+    public static function is_betterdocs_textdomain_available() {
         $active_plugins = get_option('active_plugins');
         foreach ( $active_plugins as $plugin ) {
             $plugin_data        = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );

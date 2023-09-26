@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { Fragment, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import { dispatch, useSelect } from '@wordpress/data';
-import settingsStore from '../../data/settings';
+import settingsStore from '../../../data/settings';
 import Swal from 'sweetalert2';
 
 const MigrationConfirmationModal = ( { className, children } ) => {
