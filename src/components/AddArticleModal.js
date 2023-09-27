@@ -218,7 +218,7 @@ const AddArticleModal = ( {
                       </button>
                       <div
                         id='action-menus'
-                        className={ `hidden cursor-pointer w-44 z-40 bg-white border border-[#DBDBDB] absolute z-10 shadow right-0 py-1 rounded-md mt-0.5 group-hover:block after:content-[''] before:content-[''] after:absolute before:absolute after:w-[13px] before:w-full after:h-[13px] before:h-6 after:top-[-7px] before:-top-6 after:right-6 after:z-[-1] after:bg-white after:border after:border-[#DBDBDB] after:!rotate-45 after:border-r-0 after:border-b-0` }
+                        className={ `hidden cursor-pointer w-44 z-40 bg-white border border-[#DBDBDB] absolute z-10 shadow right-0 py-1 rounded-md mt-0.5 group-hover:block after:content-[''] before:content-[''] after:absolute before:absolute after:w-[13px] before:w-[70%] before:-right-[1px] after:h-[13px] before:h-3 before:mt-3 after:top-[-7px] before:-top-6 after:right-[1.4rem] after:z-[-1] after:bg-white after:border after:border-[#DBDBDB] after:!rotate-45 after:border-r-0 after:border-b-0` }
                       >
                       <span onClick={ () => articleStatusHandler( 'draft' ) } className="flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none">
                         { __( 'Create with Draft', 'wedocs' ) }
