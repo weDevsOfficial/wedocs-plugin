@@ -14,9 +14,27 @@ class Admin {
         new Menu();
 
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ] );
+        add_action( 'admin_notices', [ $this, 'show_wedocs_beta_notice' ] );
 
-        add_filter( 'parent_file', array( $this, 'fix_tag_menu' ) );
-        add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
+        add_filter( 'parent_file', [$this, 'fix_tag_menu' ] );
+        add_filter( 'admin_footer_text', [ $this, 'admin_footer_text' ], 1 );
+    }
+
+    /**
+     * Show weDocs beta notices.
+     *
+     * @since 1.7.7
+     *
+     * @return void
+     */
+    public function show_wedocs_beta_notice() {
+        // Check if the admin notice should be hidden based on the user meta.
+        $user_id     = get_current_user_id();
+        $hide_notice = get_user_meta( $user_id, 'wedocs_hide_beta_notice', true );
+        if ( ! $hide_notice ) {
+            // Render weDocs beta info notice.
+            wedocs_get_template_part( 'beta', 'notice' );
+        }
     }
 
     /**
@@ -27,7 +45,10 @@ class Admin {
      * @return void
      */
     public function admin_scripts( $hook ) {
-        if ( 'toplevel_page_wedocs' !== $hook  ) {
+        // Check if the admin notice should be hidden based on the user meta.
+        $user_id     = get_current_user_id();
+        $hide_notice = get_user_meta( $user_id, 'wedocs_hide_beta_notice', true );
+        if ( 'toplevel_page_wedocs' !== $hook && $hide_notice ) {
             return;
         }
 
