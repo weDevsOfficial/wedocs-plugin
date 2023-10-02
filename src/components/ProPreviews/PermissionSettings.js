@@ -4,7 +4,7 @@ import { useState } from '@wordpress/element';
 
 const PermissionSettings = () => {
     const [ showOverlay, setShowOverlay ] = useState( false );
-    const roles = [ 'editor', 'author', 'contributor', 'subscriber', 'custom' ];
+    const roles = [ 'administrator', 'editor', 'author', 'contributor', 'subscriber', 'custom' ];
 
     const permissionFields = [
         {
@@ -78,7 +78,7 @@ const PermissionSettings = () => {
                                         <div className="relative mb-2">
                                             <button className="w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
                                                 <span className="block multiSelectBox truncate">
-                                                    { __( '5 roles selected', 'wedocs' ) }
+                                                    { __( '6 roles selected', 'wedocs' ) }
                                                 </span>
                                                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                                     <svg
