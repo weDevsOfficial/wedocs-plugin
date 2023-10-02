@@ -8,6 +8,7 @@ const DEFAULT_SETTINGS_STATE = {
       helpful: 'on',
       comments: 'off',
       print: 'on',
+      collapse_articles: 'off',
     },
     permission: {
       global_permission: [],
