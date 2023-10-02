@@ -1,4 +1,4 @@
-import { render } from '@wordpress/element';
+import { createRoot, render } from '@wordpress/element';
 import './data/store';
 import './assets/css/index.css';
 import App from './components/App';
@@ -9,7 +9,10 @@ const isProLoaded = wp.hooks.applyFilters(
   false
 );
 
-render( <App />, document.getElementById( 'wedocs-app' ) );
+const container = document.getElementById( 'wedocs-app' );
+const root = createRoot( container );
+
+root.render( <App /> );
 
 if ( !isProLoaded ) {
   import( './components/ProPreviews' ).then( ( module ) => module.default );

@@ -4,7 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { dispatch, useSelect } from '@wordpress/data';
 import docStore from '../data/docs';
 import ComboBox from './ComboBox';
-import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
+import { ChevronDownIcon, ExclamationCircleIcon } from '@heroicons/react/20/solid';
 import Swal from 'sweetalert2';
 import { handleDocCreationByRef } from '../utils/helper';
 
@@ -99,6 +99,10 @@ const AddArticleModal = ( {
     setIsOpen( true );
   };
 
+  const articleStatusHandler = ( status ) => {
+    setNewArticle( { ...newArticle, status } );
+  };
+
   useEffect( () => {
     setNewArticle( {
       ...newArticle,
@@ -115,7 +119,7 @@ const AddArticleModal = ( {
   handleDocCreationByRef( docCreateBtnRef );
 
   return (
-    <>
+    <Fragment>
       <button type="button" onClick={ openModal } className={ className }>
         { children }
       </button>
@@ -145,7 +149,7 @@ const AddArticleModal = ( {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform rounded-2xl bg-white py-6 px-9 text-center align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md transform rounded-2xl bg-white py-6 px-9 text-center align-middle shadow-xl transition-all overflow-visible">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-bold text-gray-900 mb-2"
@@ -193,20 +197,37 @@ const AddArticleModal = ( {
                     />
                   ) }
 
-                  <div className="mt-6 space-x-3.5">
-                    <button
-                      className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md"
-                      ref={ docCreateBtnRef }
-                      disabled={ disabled }
-                      onClick={ createDoc }
-                    >
-                      { sprintf(
-                        __( '%s', 'wedocs' ),
-                        disabled
-                          ? __( 'Creating…', 'wedocs' )
-                          : __( 'Create', 'wedocs' )
-                      ) }
-                    </button>
+                  <div className="mt-6 flex items-center justify-center space-x-3.5">
+                    <div className={ `doc-publish-btn group relative` }>
+                      <button
+                        className="inline-flex justify-between items-center cursor-pointer bg-indigo-600 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md min-w-[122px]"
+                        ref={ docCreateBtnRef }
+                        disabled={ disabled }
+                        onClick={ createDoc }
+                      >
+                        <Fragment>
+                          { sprintf(
+                            __( '%s', 'wedocs' ),
+                            newArticle?.status?.charAt( 0 ).toUpperCase() + newArticle?.status?.slice( 1 ) + ( disabled ? 'ing...' : '' )
+                          ) }
+                          <ChevronDownIcon
+                            className="h-5 w-5 text-white mt-[1px]"
+                            aria-hidden="true"
+                          />
+                        </Fragment>
+                      </button>
+                      <div
+                        id='action-menus'
+                        className={ `hidden cursor-pointer w-44 z-40 bg-white border border-[#DBDBDB] absolute z-10 shadow right-0 py-1 rounded-md mt-0.5 group-hover:block after:content-[''] before:content-[''] after:absolute before:absolute after:w-[13px] before:w-[70%] before:-right-[1px] after:h-[13px] before:h-3 before:mt-3 after:top-[-7px] before:-top-6 after:right-[1.4rem] after:z-[-1] after:bg-white after:border after:border-[#DBDBDB] after:!rotate-45 after:border-r-0 after:border-b-0` }
+                      >
+                      <span onClick={ () => articleStatusHandler( 'draft' ) } className="flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none">
+                        { __( 'Create with Draft', 'wedocs' ) }
+                      </span>
+                      <span onClick={ () => articleStatusHandler( 'publish' ) } className="flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none">
+                        { __( 'Create with Publish', 'wedocs' ) }
+                      </span>
+                      </div>
+                    </div>
                     <button
                       className="bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md"
                       onClick={ closeModal }
@@ -220,7 +241,7 @@ const AddArticleModal = ( {
           </div>
         </Dialog>
       </Transition>
-    </>
+    </Fragment>
   );
 };
 
