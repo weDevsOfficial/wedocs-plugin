@@ -74,6 +74,18 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
  * **Fix:** Undefined post error on weDocs sidebar.
 
+= v1.7.8 (19th September, 2023) =
+
+ * **Improved:** Add weDocs beta info notice.
+
+= v1.7.3 (13th September, 2023) =
+
+ * **Improved:** Upgrade appsero version 1.2.4 from 1.1.11.
+
+= v1.7.2 (13th September, 2023) =
+
+ * **Improved:** Upgrade wp org stable tag 6.3.1 from 6.0.
+
 = v1.7.1 (15th November, 2021) =
 
  * **Fix:** Upgraded to SweetAlert2 version 11.1.10

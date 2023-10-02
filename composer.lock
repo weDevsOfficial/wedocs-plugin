@@ -66,12 +66,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/action-scheduler.git",
-                "reference": "5b17c9b4e2eb38494759b65b24e7918b6c3c3de7"
+                "reference": "82b051b43a640456fd2338ebd61cb20efcb78c4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/5b17c9b4e2eb38494759b65b24e7918b6c3c3de7",
-                "reference": "5b17c9b4e2eb38494759b65b24e7918b6c3c3de7",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/82b051b43a640456fd2338ebd61cb20efcb78c4d",
+                "reference": "82b051b43a640456fd2338ebd61cb20efcb78c4d",
                 "shasum": ""
             },
             "require-dev": {
@@ -99,7 +99,7 @@
                 "issues": "https://github.com/woocommerce/action-scheduler/issues",
                 "source": "https://github.com/woocommerce/action-scheduler/tree/trunk"
             },
-            "time": "2023-09-06T04:35:37+00:00"
+            "time": "2023-09-25T19:39:26+00:00"
         }
     ],
     "packages-dev": [
@@ -640,16 +640,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.23.x-dev",
+            "version": "1.24.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "e540adcd37d57d1f46e2b6e172d6140d005226cb"
+                "reference": "bcad8d995980440892759db0c32acae7c8e79442"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/e540adcd37d57d1f46e2b6e172d6140d005226cb",
-                "reference": "e540adcd37d57d1f46e2b6e172d6140d005226cb",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/bcad8d995980440892759db0c32acae7c8e79442",
+                "reference": "bcad8d995980440892759db0c32acae7c8e79442",
                 "shasum": ""
             },
             "require": {
@@ -666,7 +666,6 @@
                 "phpunit/phpunit": "^9.5",
                 "symfony/process": "^5.2"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -682,9 +681,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.23.x"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.24.2"
             },
-            "time": "2023-08-16T11:40:53+00:00"
+            "time": "2023-09-26T12:28:12+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
