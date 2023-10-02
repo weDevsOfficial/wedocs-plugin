@@ -112,64 +112,64 @@ const ParentDocs = ( { doc } ) => {
       <Link to={ `/section/${ doc.id }` }>
         { /* Documentation Body Start */ }
         <div className="w-full p-6 pt-0 pb-7">
-            <ul role="list" className="mb-6 rounded-md">
-              <li className="flex items-center justify-between mb-0 py-1.5 pl-3 pr-4 text-sm">
-                <div className="w-full inline-flex items-center">
-                  <div className="w-6 flex-none -mt-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="17"
-                      fill="none"
-                    >
-                      <path
-                        d="M1 3.945v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-6l-2-2H3a2 2 0 0 0-2 2z"
-                        stroke="#6b7280"
-                        strokeWidth="2"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                  <span className="ml-2 flex-1 truncate text-[#3B3F4A] hover:underline decoration-1">
-                    { sprintf(
-                      // translators: %d: Length of documentation sections
-                      __( '%d Sections', 'wedocs' ),
-                      sections.length
-                    ) }
-                  </span>
+          <ul role="list" className="mb-6 rounded-md">
+            <li className="flex items-center justify-between mb-0 py-1.5 pl-3 pr-4 text-sm">
+              <div className="w-full inline-flex items-center">
+                <div className="w-6 flex-none -mt-1">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="17"
+                    fill="none"
+                  >
+                    <path
+                      d="M1 3.945v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-6l-2-2H3a2 2 0 0 0-2 2z"
+                      stroke="#6b7280"
+                      strokeWidth="2"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </div>
-              </li>
-              <li className="flex items-center justify-between mb-0 py-1.5 pl-3 pr-4 text-sm">
-                <div className="flex w-0 flex-1 items-center">
-                  <div className="w-6 flex justify-center -mt-0.5">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="21"
-                      fill="none"
-                    >
-                      <path
-                        d="M5 10.02h6m-6 4h6m2 5H3a2 2 0 0 1-2-2v-14a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707v9.586a2 2 0 0 1-2 2z"
-                        stroke="#6b7280"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                  <span className="ml-2 w-0 flex-1 truncate text-[#3B3F4A] hover:underline decoration-1">
-                    { sprintf(
-                      // translators: %d: Length of documentation articles
-                      __( '%d Articles', 'wedocs' ),
-                      articles.length
-                    ) }
-                  </span>
+                <span className="ml-2 flex-1 truncate text-[#3B3F4A] hover:underline decoration-1">
+                  { sprintf(
+                    // translators: %d: Length of documentation sections
+                    __( '%d Sections', 'wedocs' ),
+                    sections.length
+                  ) }
+                </span>
+              </div>
+            </li>
+            <li className="flex items-center justify-between mb-0 py-1.5 pl-3 pr-4 text-sm">
+              <div className="flex w-0 flex-1 items-center">
+                <div className="w-6 flex justify-center -mt-0.5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="21"
+                    fill="none"
+                  >
+                    <path
+                      d="M5 10.02h6m-6 4h6m2 5H3a2 2 0 0 1-2-2v-14a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707v9.586a2 2 0 0 1-2 2z"
+                      stroke="#6b7280"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </div>
-              </li>
-            </ul>
-            { /* Render documentation contributors list. */ }
-            { contributors }
-          </div>
+                <span className="ml-2 w-0 flex-1 truncate text-[#3B3F4A] hover:underline decoration-1">
+                  { sprintf(
+                    // translators: %d: Length of documentation articles
+                    __( '%d Articles', 'wedocs' ),
+                    articles.length
+                  ) }
+                </span>
+              </div>
+            </li>
+          </ul>
+          { /* Render documentation contributors list. */ }
+          { contributors }
+        </div>
       </Link>
       { /* Documentation Section End */ }
 

@@ -77,6 +77,10 @@ const actions = {
     return actions.setDocs( response );
   },
 
+  *updateDocs( docs ) {
+    return actions.setDocs( docs );
+  },
+
   *sendMessage( data ) {
     const path = '/wp/v2/docs/message';
     const response = yield { type: 'UPDATE_TO_API', path, data };

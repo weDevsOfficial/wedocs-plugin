@@ -5,14 +5,15 @@ import MigrationProgressModal from './Modals/MigrationProgressModal';
 import MigrationSelectionModal from './Modals/MigrationSelectionModal';
 import { dispatch, resolveSelect } from '@wordpress/data';
 import docsStore from '../../data/docs';
-import actions from '../../data/docs/actions';
+import MigrationContentMappingModal from './Modals/MigrationContentMappingModal';
 
 const Migrate = () => {
     const [ needMigrate, setNeedMigrate ] = useState( false );
-    const [ openSelectionModal, setOpenSelectionModal ] = useState( false );
-    const [ openProgressModal, setOpenProgressModal ] = useState( false );
-    const [ migrationSuccess, setMigrationSuccess ] = useState( false );
     const [ migrationProgress, setMigrationProgress ] = useState( 0 );
+    const [ showMigrationMap, setShowMigraitonMap ] = useState( false );
+    const [ migrationSuccess, setMigrationSuccess ] = useState( false );
+    const [ openProgressModal, setOpenProgressModal ] = useState( false );
+    const [ openSelectionModal, setOpenSelectionModal ] = useState( false );
 
     useEffect( () => {
         jQuery.ajax( {
@@ -47,19 +48,15 @@ const Migrate = () => {
                 }
 
                 if ( data?.progress && data?.progress === 100 ) {
-                    // resolveSelect( docsStore ).getDocs().then( docs => {
-                    //     if ( ! docs ) {
-                    //         return;
-                    //     }
+                    resolveSelect( docsStore ).getDocs().then( docs => {
+                        if ( ! docs ) {
+                            return;
+                        }
 
-                        // const sortableDocs = docs?.sort(
-                        //     ( a, b ) => a.menu_order - b.menu_order
-                        // );
-
-                        // actions.setDocs( { ...docs } );
                         setNeedMigrate( false );
                         setMigrationSuccess( true );
-                    // } );
+                        dispatch( docsStore ).updateDocs( docs );
+                    } );
                 }
             },
         } );
@@ -182,9 +179,11 @@ const Migrate = () => {
                         { needMigrate ? (
                             <Fragment>
                                 <MigrationSelectionModal
-                                    handleMigrateClick={ handleMigrateClick }
+                                    // handleMigrateClick={ handleMigrateClick }
+                                    // showMigrationMap={ showMigrationMap }
                                     openSelectionModal={ openSelectionModal }
                                     isMigrationDone={ needMigrate === 'done' }
+                                    setShowMigrationMap={ setShowMigraitonMap }
                                     setOpenSelectionModal={ setOpenSelectionModal }
                                     className={ `bg-indigo-600 inline-flex gap-3 cursor-pointer items-center focus:ring-0 rounded-md border border-transparent px-6 py-2.5 text-base text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2` }
                                 >
@@ -217,6 +216,10 @@ const Migrate = () => {
                                         </Fragment>
                                     ) }
                                 </MigrationSelectionModal>
+                                <MigrationContentMappingModal
+                                    showMigrationMap={ showMigrationMap }
+                                    setShowMigrationMap={ setShowMigraitonMap }
+                                />
                                 <MigrationProgressModal
                                     openProgressModal={ openProgressModal }
                                     migrationProgress={ migrationProgress }
