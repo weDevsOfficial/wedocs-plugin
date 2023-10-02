@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-09-27T04:10:31+00:00\n"
+"POT-Creation-Date: 2023-09-27T03:59:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -36,19 +36,19 @@ msgstr ""
 msgid "https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri"
 msgstr ""
 
-#: includes/Admin/Admin.php:81
+#: includes/Admin/Admin.php:102
 msgid "Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
 msgstr ""
 
-#: includes/Admin/Admin.php:81
+#: includes/Admin/Admin.php:102
 msgid "Thanks :)"
 msgstr ""
 
-#: includes/Admin/Admin.php:92
+#: includes/Admin/Admin.php:113
 msgid "Thank you for using <strong>weDocs</strong>."
 msgstr ""
 
-#: includes/Admin/Admin.php:95
+#: includes/Admin/Admin.php:116
 msgid "Use the <a href=\"%s\">classic UI</a>."
 msgstr ""
 
@@ -74,27 +74,27 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: includes/Ajax.php:176
+#: includes/Ajax.php:180
 msgid "Sorry, we have already recorded your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:191
+#: includes/Ajax.php:195
 msgid "Thanks for your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:212
+#: includes/Ajax.php:216
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: includes/Ajax.php:219
+#: includes/Ajax.php:223
 msgid "Please provide a subject line."
 msgstr ""
 
-#: includes/Ajax.php:223
+#: includes/Ajax.php:227
 msgid "Please provide the message details."
 msgstr ""
 
-#: includes/Ajax.php:228
+#: includes/Ajax.php:232
 msgid "Thanks for your feedback."
 msgstr ""
 
@@ -378,6 +378,22 @@ msgstr ""
 msgid "Documentation Search"
 msgstr ""
 
+#: templates/beta-notice.php:6
+msgid "weDocs Logo"
+msgstr ""
+
+#: templates/beta-notice.php:11
+msgid "Try out weDocs v2 (Beta) with a completely revamped user interface, advanced role-based permission management, and A.I. infused Assistant widget. Provide feedback to enjoy up to 60% discount when we launch"
+msgstr ""
+
+#: templates/beta-notice.php:14
+msgid "Try Now"
+msgstr ""
+
+#: templates/beta-notice.php:16
+msgid "No, Thanks"
+msgstr ""
+
 #: templates/content-feedback.php:8
 msgid "%d person found this useful"
 msgid_plural "%d persons found this useful"
@@ -469,7 +485,7 @@ msgstr ""
 
 #: templates/single-docs.php:108
 #: assets/build/index.js:1
-#: src/components/DocListing/SectionArticles.js:198
+#: src/components/DocListing/SectionArticles.js:192
 msgid "Updated on %s"
 msgstr ""
 
@@ -607,9 +623,9 @@ msgstr ""
 
 #: assets/build/492.js:1
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:210
-#: src/components/AddDocModal.js:169
-#: src/components/AddSectionModal.js:170
+#: src/components/AddArticleModal.js:204
+#: src/components/AddDocModal.js:163
+#: src/components/AddSectionModal.js:164
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:252
 #: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:124
 #: src/components/ProPreviews/PermissionSettings.js:113
@@ -1319,25 +1335,17 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocActions.js:48
-#: src/components/DocListing/DocSections.js:161
-#: src/components/DocListing/ListingHeader.js:49
-#: src/components/DocListing/SectionArticles.js:118
+#: src/components/DocListing/DocSections.js:156
+#: src/components/DocListing/ListingHeader.js:48
+#: src/components/DocListing/SectionArticles.js:112
 msgid "Edit"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:187
-#: src/components/DocListing/ListingHeader.js:73
-#: src/components/DocListing/SectionArticles.js:139
+#: src/components/DocListing/DocSections.js:182
+#: src/components/DocListing/ListingHeader.js:72
+#: src/components/DocListing/SectionArticles.js:133
 msgid "View on Web"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:135
-#: src/components/DocListing/ListingHeader.js:92
-#: src/components/DocListing/SectionArticles.js:111
-#: src/components/Documentations/ParentDocs.js:98
-msgid "Draft"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1346,9 +1354,9 @@ msgid "Deleting it means it will be permanently lost, and you won't be able to r
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:235
-#: src/components/AddDocModal.js:194
-#: src/components/AddSectionModal.js:195
+#: src/components/AddArticleModal.js:214
+#: src/components/AddDocModal.js:171
+#: src/components/AddSectionModal.js:174
 #: src/components/ConfirmationModal.js:140
 #: src/components/RestrictionModal.js:134
 msgid "Cancel"
@@ -1371,12 +1379,12 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocActions.js:69
-#: src/components/DocListing/DocSections.js:214
+#: src/components/DocListing/DocSections.js:209
 msgid "Delete"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:139
+#: src/components/AddSectionModal.js:135
 #: src/components/ComboBox.js:85
 msgid "Type a section name"
 msgstr ""
@@ -1387,17 +1395,17 @@ msgid "Type to write the name of new section"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:157
+#: src/components/AddArticleModal.js:153
 msgid "Enter your article title"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:161
+#: src/components/AddArticleModal.js:157
 msgid "Describe what the article is about"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:169
+#: src/components/AddArticleModal.js:165
 msgid "Type an article name"
 msgstr ""
 
@@ -1412,43 +1420,37 @@ msgid "New article has been added successfully"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:224
-#: src/components/AddDocModal.js:183
-#: src/components/AddSectionModal.js:184
-msgid "Create with Draft"
+#: src/components/AddArticleModal.js:206
+#: src/components/AddSectionModal.js:166
+msgid "Creating…"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:227
-#: src/components/AddDocModal.js:186
-#: src/components/AddSectionModal.js:187
-msgid "Create with Publish"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:147
+#: src/components/AddArticleModal.js:207
+#: src/components/AddSectionModal.js:167
+#: src/components/DocListing/DocSections.js:142
 msgid "Create"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:287
+#: src/components/DocListing/DocSections.js:282
 #: src/components/DocListing/ListingButtons.js:32
 #: src/components/Documentations/AddChildrens.js:23
 msgid "Add article"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:122
+#: src/components/AddSectionModal.js:118
 msgid "Enter your section title"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:126
+#: src/components/AddSectionModal.js:122
 msgid "Use concise section titles for better navigation"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:131
+#: src/components/AddSectionModal.js:127
 msgid "E.g., Getting Started"
 msgstr ""
 
@@ -1671,17 +1673,17 @@ msgid "Settings data has been saved successfully"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddDocModal.js:123
+#: src/components/AddDocModal.js:119
 msgid "Enter your doc title"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddDocModal.js:126
+#: src/components/AddDocModal.js:122
 msgid "Start writing your doc from scratch"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddDocModal.js:133
+#: src/components/AddDocModal.js:129
 msgid "Type a title for your document"
 msgstr ""
 
@@ -1717,18 +1719,18 @@ msgstr ""
 
 #. translators: %d: Length of documentation sections
 #: assets/build/index.js:3
-#: src/components/Documentations/ParentDocs.js:144
+#: src/components/Documentations/ParentDocs.js:136
 msgid "%d Sections"
 msgstr ""
 
 #. translators: %d: Length of documentation articles
 #: assets/build/index.js:5
-#: src/components/Documentations/ParentDocs.js:171
+#: src/components/Documentations/ParentDocs.js:163
 msgid "%d Articles"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/ParentDocs.js:200
+#: src/components/Documentations/ParentDocs.js:192
 msgid "Add"
 msgstr ""
 
