@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import MigrationProgressModal from './Modals/MigrationProgressModal';
 import MigrationSelectionModal from './Modals/MigrationSelectionModal';
-import { dispatch, resolveSelect } from '@wordpress/data';
+import { dispatch, resolveSelect, useSelect } from '@wordpress/data';
 import docsStore from '../../data/docs';
 import MigrationContentMappingModal from './Modals/MigrationContentMappingModal';
+import apiFetch from '@wordpress/api-fetch';
 
 const Migrate = () => {
+    const [ migratedId, setMigratedId ] = useState( 0 );
+    const [ migratedDocTitle, setMigratedDocTitle ] = useState( '' );
     const [ needMigrate, setNeedMigrate ] = useState( false );
     const [ migrationProgress, setMigrationProgress ] = useState( 0 );
     const [ showMigrationMap, setShowMigraitonMap ] = useState( false );
@@ -15,47 +18,64 @@ const Migrate = () => {
     const [ openProgressModal, setOpenProgressModal ] = useState( false );
     const [ openSelectionModal, setOpenSelectionModal ] = useState( false );
 
+    // const migratedDoc = useSelect( select => select( docsStore ).getDoc( parseInt( migratedId ) ), [] );
+
     useEffect( () => {
         jQuery.ajax( {
             url      : ajaxurl,
             type     : 'POST',
             data     : { action : 'wedocs_check_need_betterdocs_migration' },
             dataType : 'json',
-            success  : ( response ) => setNeedMigrate( response?.data?.success ),
+            success  : ( response ) => {
+                setNeedMigrate( response?.data?.success );
+                setMigratedId( response?.data?.parent_id );
+            },
         } );
     }, [] );
 
-    const handleMigrateClick = ( progressData = {} ) => {
+    useEffect( () => {
+        if ( !Boolean( migratedId ) ) return;
+
+        apiFetch({
+            path: '/wp/v2/docs/' + migratedId,
+        })
+        .then( ( doc ) => setMigratedDocTitle( doc?.title?.rendered ) )
+        .catch( ( err ) => {} );
+    }, [ migratedId ] )
+
+    const handleMigrateClick = ( parentTitle = '', progressData = {} ) => {
         if ( ! openProgressModal ) {
-            setOpenSelectionModal( false );
+            setShowMigraitonMap( false );
             setOpenProgressModal( true );
         }
 
         const { migrated_length } = progressData;
 
+        const data = {
+            action            : 'wedocs_migrate_betterdocs_to_wedocs',
+            migratedDocLength : migrated_length,
+        };
+
+        // Add parent title for migration.
+        if ( parentTitle?.length > 0 ) data.parentTitle = parentTitle;
+
         jQuery.ajax( {
+            data,
             url     : ajaxurl,
             type    : 'POST',
-            data    : {
-                action            : 'wedocs_migrate_betterdocs_to_wedocs',
-                migratedDocLength : migrated_length,
-            },
             success : ( { success, data = {} } ) => {
                 if ( ! success ) return;
                 setMigrationProgress( data?.progress );
                 if ( data?.progress && data?.progress !== 100 ) {
-                    handleMigrateClick( { ...data } );
+                    handleMigrateClick( '', { ...data } );
                 }
 
                 if ( data?.progress && data?.progress === 100 ) {
                     resolveSelect( docsStore ).getDocs().then( docs => {
-                        if ( ! docs ) {
-                            return;
-                        }
-
-                        setNeedMigrate( false );
-                        setMigrationSuccess( true );
-                        dispatch( docsStore ).updateDocs( docs );
+                        dispatch( docsStore ).updateDocs( docs ).then( () => {
+                            setNeedMigrate( false );
+                            setMigrationSuccess( true );
+                        } );
                     } );
                 }
             },
@@ -179,8 +199,6 @@ const Migrate = () => {
                         { needMigrate ? (
                             <Fragment>
                                 <MigrationSelectionModal
-                                    // handleMigrateClick={ handleMigrateClick }
-                                    // showMigrationMap={ showMigrationMap }
                                     openSelectionModal={ openSelectionModal }
                                     isMigrationDone={ needMigrate === 'done' }
                                     setShowMigrationMap={ setShowMigraitonMap }
@@ -217,7 +235,9 @@ const Migrate = () => {
                                     ) }
                                 </MigrationSelectionModal>
                                 <MigrationContentMappingModal
+                                    migratedDocTitle={ migratedDocTitle }
                                     showMigrationMap={ showMigrationMap }
+                                    handleMigrateClick={ handleMigrateClick }
                                     setShowMigrationMap={ setShowMigraitonMap }
                                 />
                                 <MigrationProgressModal

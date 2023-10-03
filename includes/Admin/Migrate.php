@@ -21,16 +21,16 @@ class Migrate {
     public function __construct() {
 //        add_action( 'wedocs_migration_runner', [ $this, 'do_migration' ] );
         add_action( 'create_term', [ $this, 'migrate_category_insert_status' ], 10, 3 );
-        add_action( 'save_post_docs', [ $this, 'migrate_documentation_insert_status' ], 10, 3 );
+//        add_action( 'save_post_docs', [ $this, 'migrate_documentation_insert_status' ], 10, 3 );
     }
 
-    public function migrate_documentation_insert_status( $post_id, $data, $update ) {
-        // Get the taxonomy terms associated with the post
-        $terms = wp_get_post_terms( $post_id, 'doc_category' );
-        if ( ! $update && ! empty( $terms ) ) {
-            update_option( 'wedocs_need_migration', true );
-        }
-    }
+//    public function migrate_documentation_insert_status( $post_id, $data, $update ) {
+//        // Get the taxonomy terms associated with the post
+//        $terms = wp_get_post_terms( $post_id, 'doc_category' );
+//        if ( ! $update && ! empty( $terms ) ) {
+//            update_option( 'wedocs_need_migration', true );
+//        }
+//    }
 
     public function migrate_category_insert_status( $term_id, $tt_id, $taxonomy ) {
         if ( $taxonomy === 'doc_category' ) {
@@ -56,20 +56,21 @@ class Migrate {
         }
 
         $migratable_docs = self::betterdocs_migratable_docs();
-//        self::migrate_uncategorized_docs();
-        if ( ! empty( $migratable_docs ) ) {
+        $default_parent  = get_option( 'wedocs_migrated_default_parent_doc', 0 );
+        if ( ! empty( $migratable_docs['sections'] ) ) {
             wp_send_json_success( [
-                'success' => true,
-                'message' => __( 'Migration done.', 'wedocs' )
+                'success'   => true,
+                'message'   => __( 'Migration done.', 'wedocs' ),
+                'parent_id' => $default_parent,
             ] );
         }
 
         $need_migration = get_option( 'wedocs_need_migration', false );
-//        error_log( print_r( $need_migration, 1 ) );
         if ( $need_migration ) {
             wp_send_json_success( [
-                'success' => $need_migration,
-                'message' => __( 'Migration done.', 'wedocs' )
+                'success'   => $need_migration,
+                'message'   => __( 'Migration done.', 'wedocs' ),
+                'parent_id' => $default_parent,
             ] );
         }
 
@@ -213,11 +214,13 @@ class Migrate {
     }
 
     private static function migrate_default_categories_parent() {
+        $post_title = ! empty( $_POST['parentTitle'] ) ? sanitize_text_field( $_POST['parentTitle'] ) : __( 'Untitled Docs', 'wedocs' );
+
         // Through the parent title array and prepare post data.
         $post_data = [
             'post_type'   => 'docs',
             'post_status' => 'publish',
-            'post_title'  => __( 'Untitled Docs', 'wedocs' ),
+            'post_title'  => $post_title,
         ];
 
         $parent_doc_id = wp_insert_post( $post_data, true );

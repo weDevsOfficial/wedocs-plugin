@@ -78,6 +78,11 @@ const actions = {
   },
 
   *updateDocs( docs ) {
+    const parentDocs = docs.filter( ( doc ) => ! doc.parent );
+    const sortableDocs = parentDocs?.sort(
+      ( a, b ) => a.menu_order - b.menu_order
+    );
+    yield actions.setParentDocs( sortableDocs );
     return actions.setDocs( docs );
   },
 

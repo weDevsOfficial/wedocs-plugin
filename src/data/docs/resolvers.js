@@ -2,8 +2,7 @@ import actions from './actions';
 
 const getDocsPath = wp.hooks.applyFilters(
   'wedocs_documentation_fetching_path',
-  // '/wp/v2/docs?per_page=-1&status=publish,draft'
-  '/wp/v2/docs?per_page=-1&status=publish'
+  '/wp/v2/docs?per_page=-1&status=publish,draft'
 );
 
 const resolvers = {

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-09-27T03:59:24+00:00\n"
+"POT-Creation-Date: 2023-10-03T11:18:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -36,19 +36,19 @@ msgstr ""
 msgid "https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri"
 msgstr ""
 
-#: includes/Admin/Admin.php:102
+#: includes/Admin/Admin.php:97
 msgid "Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
 msgstr ""
 
-#: includes/Admin/Admin.php:102
+#: includes/Admin/Admin.php:97
 msgid "Thanks :)"
 msgstr ""
 
-#: includes/Admin/Admin.php:113
+#: includes/Admin/Admin.php:108
 msgid "Thank you for using <strong>weDocs</strong>."
 msgstr ""
 
-#: includes/Admin/Admin.php:116
+#: includes/Admin/Admin.php:111
 msgid "Use the <a href=\"%s\">classic UI</a>."
 msgstr ""
 
@@ -74,64 +74,106 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: includes/Ajax.php:180
+#: includes/Admin/Menu.php:87
+msgid "Migration"
+msgstr ""
+
+#: includes/Admin/Migrate.php:54
+msgid "BetterDocs not exists."
+msgstr ""
+
+#: includes/Admin/Migrate.php:63
+#: includes/Admin/Migrate.php:72
+msgid "Migration done."
+msgstr ""
+
+#: includes/Admin/Migrate.php:79
+msgid "Migration not available at this moment."
+msgstr ""
+
+#: includes/Admin/Migrate.php:217
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:13
+msgid "Untitled Docs"
+msgstr ""
+
+#: includes/Ajax.php:187
 msgid "Sorry, we have already recorded your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:195
+#: includes/Ajax.php:202
 msgid "Thanks for your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:216
+#: includes/Ajax.php:223
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: includes/Ajax.php:223
+#: includes/Ajax.php:230
 msgid "Please provide a subject line."
 msgstr ""
 
-#: includes/Ajax.php:227
+#: includes/Ajax.php:234
 msgid "Please provide the message details."
 msgstr ""
 
-#: includes/Ajax.php:232
+#: includes/Ajax.php:239
 msgid "Thanks for your feedback."
 msgstr ""
 
-#: includes/API/API.php:138
+#: includes/API/API.php:142
 msgid "Limit results to those matching a string."
 msgstr ""
 
-#: includes/API/API.php:145
+#: includes/API/API.php:149
 msgid "The ID for the parent of the object."
 msgstr ""
 
-#: includes/API/API.php:150
+#: includes/API/API.php:154
 msgid "Current page of the collection."
 msgstr ""
 
-#: includes/API/API.php:158
+#: includes/API/API.php:162
 msgid "Maximum number of items to be returned in result set."
 msgstr ""
 
-#: includes/API/API.php:389
+#: includes/API/API.php:393
 msgid "The page number requested is larger than the number of pages available."
 msgstr ""
 
-#: includes/API/API.php:475
+#: includes/API/API.php:479
 msgid "No name given"
 msgstr ""
 
-#: includes/API/API.php:479
+#: includes/API/API.php:483
 msgid "No email given"
 msgstr ""
 
-#: includes/API/API.php:521
+#: includes/API/API.php:525
 msgid "You cannot delete the documentation resource."
 msgstr ""
 
-#: includes/API/API.php:542
+#: includes/API/API.php:546
 msgid "Invalid Documentation."
+msgstr ""
+
+#: includes/API/MigrationApi.php:101
+msgid "You don't have permission to migrate data"
+msgstr ""
+
+#: includes/API/MigrationApi.php:137
+#: includes/API/SettingsApi.php:117
+#: includes/API/UpgraderApi.php:137
+msgid "Need to be an authenticate user"
+msgstr ""
+
+#: includes/API/MigrationApi.php:141
+#: includes/API/UpgraderApi.php:141
+msgid "Need to be an administrator user"
+msgstr ""
+
+#: includes/API/MigrationApi.php:161
+msgid "Processing migration in the background."
 msgstr ""
 
 #: includes/API/SettingsApi.php:79
@@ -142,21 +184,12 @@ msgstr ""
 msgid "Upgrader version"
 msgstr ""
 
-#: includes/API/SettingsApi.php:117
-#: includes/API/UpgraderApi.php:137
-msgid "Need to be an authenticate user"
-msgstr ""
-
 #: includes/API/SettingsApi.php:121
 msgid "No settings request found"
 msgstr ""
 
 #: includes/API/UpgraderApi.php:104
 msgid "You don't have permission to get upgrader data"
-msgstr ""
-
-#: includes/API/UpgraderApi.php:141
-msgid "Need to be an administrator user"
 msgstr ""
 
 #: includes/API/UpgraderApi.php:161
@@ -220,6 +253,8 @@ msgid "Documentation"
 msgstr ""
 
 #: includes/Post_Types.php:35
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:142
 msgid "Parent Doc"
 msgstr ""
 
@@ -471,6 +506,8 @@ msgid "Docs:"
 msgstr ""
 
 #: templates/single-docs.php:64
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:19
 msgid "Articles"
 msgstr ""
 
@@ -634,15 +671,15 @@ msgid "%s"
 msgstr ""
 
 #: assets/build/492.js:1
-#: src/components/ProPreviews/common/Contributors.js:12
 #: src/components/ProPreviews/common/Contributors.js:17
 #: src/components/ProPreviews/common/Contributors.js:22
 #: src/components/ProPreviews/common/Contributors.js:27
+#: src/components/ProPreviews/common/Contributors.js:32
 msgid "Fourth Contributor"
 msgstr ""
 
 #: assets/build/492.js:1
-#: src/components/ProPreviews/common/Contributors.js:40
+#: src/components/ProPreviews/common/Contributors.js:43
 msgid "Upgrade"
 msgstr ""
 
@@ -1354,10 +1391,15 @@ msgid "Deleting it means it will be permanently lost, and you won't be able to r
 msgstr ""
 
 #: assets/build/index.js:1
+#: assets/build/index.js:5
 #: src/components/AddArticleModal.js:214
 #: src/components/AddDocModal.js:171
 #: src/components/AddSectionModal.js:174
 #: src/components/ConfirmationModal.js:140
+#: src/components/Migrations/Modals/MigrationConfirmationModal.js:114
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:201
+#: src/components/Migrations/Modals/MigrationProgressModal.js:155
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:196
 #: src/components/RestrictionModal.js:134
 msgid "Cancel"
 msgstr ""
@@ -1367,6 +1409,7 @@ msgstr ""
 #: src/components/AddDocModal.js:57
 #: src/components/AddSectionModal.js:55
 #: src/components/ConfirmationModal.js:24
+#: src/components/Migrations/Modals/MigrationConfirmationModal.js:24
 #: src/components/RestrictionModal.js:39
 #: src/components/Settings/index.js:49
 msgid "Error"
@@ -1487,16 +1530,19 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/ConfirmationModal.js:126
+#: src/components/Migrations/Modals/MigrationConfirmationModal.js:100
 msgid "Are you sure?"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/ConfirmationModal.js:129
+#: src/components/Migrations/Modals/MigrationConfirmationModal.js:103
 msgid "We recommend backing up your database before upgrading to ensure your data is safe. Are you sure you want to run the upgrade now?"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/ConfirmationModal.js:146
+#: src/components/Migrations/Modals/MigrationConfirmationModal.js:120
 msgid "I'm sure"
 msgstr ""
 
@@ -1588,6 +1634,8 @@ msgid "Save Settings"
 msgstr ""
 
 #: assets/build/index.js:1
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:152
 #: src/components/SelectBox.js:114
 msgid "loading…"
 msgstr ""
@@ -1703,7 +1751,9 @@ msgid "Get started by creating a new doc"
 msgstr ""
 
 #: assets/build/index.js:1
+#: assets/build/index.js:5
 #: src/components/Documentations/EmptyDocs.js:84
+#: src/components/Migrations/index.js:193
 msgid "Learn More "
 msgstr ""
 
@@ -1742,6 +1792,119 @@ msgstr ""
 #: assets/build/index.js:5
 #: src/components/Documentations/index.js:155
 msgid "Oops! It seems that your search did not match any existing documents. Please try again..."
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationProgressModal.js:52
+msgid "Migrating Docs..."
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationProgressModal.js:55
+msgid "Migrating existing docs from BetterDocs to weDocs"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:16
+msgid "BetterDocs"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:72
+msgid "Are you sure to migrate?"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:74
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:75
+msgid "We want to make sure you have a successful migration experience to weDocs."
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:86
+msgid "Migrate from"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:171
+msgid "Migration Notice: "
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:172
+msgid "In BetterDocs, you may have set some docs as part of 'Internal Knowledge Base,' restricting access to specific user roles. With weDocs, we're simplifying this process to enhance collaboration."
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:183
+msgid "What's Changing: "
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:184
+msgid "In weDocs, documents previously part of the \"Internal Knowledge Base\" in BetterDocs will be accessible to all logged-in users. This means that any content previously restricted to specific roles in BetterDocs will now be viewable by all users who are logged into your weDocs platform."
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:202
+msgid "Yes, I'm sure"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:17
+msgid "Categories"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:17
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:18
+msgid "Section"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:18
+msgid "Subcategories"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:71
+msgid "BetterDocs to weDocs content mapping"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:95
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:123
+msgid "We want to make sure you have a successful migration"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:148
+msgid "Created by weDocs"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:207
+msgid "Continue"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/index.js:217
+msgid "Already Migrated"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/index.js:233
+msgid "Start Migrations"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/index.js:259
+msgid "Go back to Docs"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/index.js:279
+msgid "Migration not required"
 msgstr ""
 
 #: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:89
