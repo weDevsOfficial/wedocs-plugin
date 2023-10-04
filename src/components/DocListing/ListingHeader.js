@@ -3,6 +3,7 @@ import docsStore from '../../data/docs';
 import extractedTitle from '../../utils/extractedTitle';
 import { __ } from '@wordpress/i18n';
 import he from 'he';
+import { Fragment } from '@wordpress/element';
 
 const ListingHeader = ( { id } ) => {
   if ( ! id ) {
@@ -24,7 +25,7 @@ const ListingHeader = ( { id } ) => {
       <div className="section-heading flex items-center">
         <h1 className="flex items-center font-medium text-[#111827] text-xl space-x-3">
           { ! loading ? (
-            <>
+            <Fragment>
               <a
                 target="_blank"
                 rel="noreferrer"
@@ -86,7 +87,12 @@ const ListingHeader = ( { id } ) => {
                   />
                 </svg>
               </a>
-            </>
+              { doc?.status === 'draft' && (
+                <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5 !ml-4` }>
+                  { __( 'Draft', 'wedocs' ) }
+                </div>
+              ) }
+            </Fragment>
           ) : (
             <div className="flex items-center group space-x-4">
               <span className="animate-pulse bg-[#94a3b8] rounded h-4 w-56 border-b hover:bg-gray-50"></span>

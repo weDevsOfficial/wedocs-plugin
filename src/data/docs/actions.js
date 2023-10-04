@@ -67,7 +67,7 @@ const actions = {
     const path = '/wp/v2/docs/' + docId;
     yield { type: 'DELETE_TO_API', path };
     const response = yield actions.fetchFromAPI(
-      '/wp/v2/docs?per_page=-1&status=publish,private'
+      '/wp/v2/docs?per_page=-1&status=publish,draft,private'
     );
     const parentDocs = response.filter( ( doc ) => ! doc.parent );
     const sortableDocs = parentDocs?.sort(

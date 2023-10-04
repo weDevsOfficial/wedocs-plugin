@@ -1,4 +1,4 @@
-import { useEffect, useState } from '@wordpress/element';
+import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import RestictionModal from './RestrictionModal';
 
@@ -23,7 +23,7 @@ const DocActions = ( { docId, type } ) => {
   const [ showActions, setShowActions ] = useState( false );
 
   return (
-    <>
+    <Fragment>
       <div
         className="documentation-ellipsis-actions relative"
         onMouseEnter={ () => setShowActions( true ) }
@@ -70,7 +70,7 @@ const DocActions = ( { docId, type } ) => {
           </RestictionModal>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 
