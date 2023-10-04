@@ -18,8 +18,6 @@ const Migrate = () => {
     const [ openProgressModal, setOpenProgressModal ] = useState( false );
     const [ openSelectionModal, setOpenSelectionModal ] = useState( false );
 
-    // const migratedDoc = useSelect( select => select( docsStore ).getDoc( parseInt( migratedId ) ), [] );
-
     useEffect( () => {
         jQuery.ajax( {
             url      : ajaxurl,

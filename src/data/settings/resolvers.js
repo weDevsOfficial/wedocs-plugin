@@ -15,13 +15,6 @@ const resolvers = {
     return actions.setLoading( false );
   },
 
-  *getMigrateInfo() {
-    yield actions.setLoading( true );
-    const needMigrate = yield { type: 'FETCH_MIGRATE_INFO' };
-    yield actions.setMigrateInfo( needMigrate );
-    return actions.setLoading( false );
-  },
-
   *getRoles() {
     yield actions.setLoading( true );
     const roles = yield { type: 'FETCH_ROLES' };

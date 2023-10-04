@@ -60,7 +60,6 @@ const DEFAULT_SETTINGS_STATE = {
   loading: false,
   saving: false,
   needUpgrade: false,
-  needMigrate: false,
 };
 
 const reducer = ( state = DEFAULT_SETTINGS_STATE, action ) => {
@@ -81,8 +80,6 @@ const reducer = ( state = DEFAULT_SETTINGS_STATE, action ) => {
       };
     case 'SET_UPGRADE_INFO':
       return { ...state, needUpgrade: action.needUpgrade };
-    case 'SET_MIGRATE_INFO':
-      return { ...state, needMigrate: action.needMigrate };
     case 'SET_SAVING':
       return { ...state, saving: action.saving };
     case 'SET_TURNSTILE_SITE_KEY':

@@ -39,10 +39,6 @@ class API extends WP_REST_Controller {
         // Register upgrader api.
         $upgrader_api = new UpgraderApi( $api );
         $upgrader_api->register_api();
-
-        // Register migration api.
-        $migration_api = new MigrationApi( $api );
-        $migration_api->register_api();
     }
 
     /**

@@ -45,20 +45,9 @@ const actions = {
     return response;
   },
 
-  *wedocsMigrate( data ) {
-    const path = '/wp/v2/docs/migrate';
-    const response = yield { type: 'UPDATE_TO_API', path, data };
-    yield actions.setUpgradeInfo( false );
-    return response;
-  },
-
   *makeUpdateDone() {
     return yield { type: 'UPDATE_TO_API', path: '/wp/v2/docs/upgrade/done' };
   },
-
-  *makeMigrateDone() {
-    return yield { type: 'UPDATE_TO_API', path: '/wp/v2/docs/migrate/done' };
-  }
 };
 
 export default actions;
