@@ -7,7 +7,7 @@ import docsStore from '../../data/docs';
 import BackToDocsPage from '../BackToDocsPage';
 import ListingButtons from './ListingButtons';
 import DocsListingPlaceholder from './DocsListingPlaceholder';
-import { useEffect, useState } from '@wordpress/element';
+import { Fragment, useEffect, useState } from '@wordpress/element';
 import DraggableDocs from '../DraggableDocs';
 import SearchFilter from '../SearchFilter';
 import Upgrade from '../Upgrade';
@@ -120,7 +120,7 @@ const ListingPage = () => {
   }
 
   return (
-    <>
+    <Fragment>
       { validParam ? (
         <div className="docs-section-listing wrap py-5">
           { ! loading && showActions && need_upgrade && <Upgrade status={ status } /> }
@@ -200,7 +200,7 @@ const ListingPage = () => {
           <ListingButtons sections={ sections } />
         </div>
       ) : <NotFound/> }
-    </>
+    </Fragment>
   );
 };
 

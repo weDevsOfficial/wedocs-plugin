@@ -130,6 +130,11 @@ const DocSections = ( { section, sections, searchValue } ) => {
                   >
                     { filteredArticles.length }
                   </div>
+                  { section?.status === 'draft' && (
+                    <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5 !ml-5` }>
+                      { __( 'Draft', 'wedocs' ) }
+                    </div>
+                  ) }
                   { isAdmin && (
                     <AddArticleModal
                       sections={ sections }

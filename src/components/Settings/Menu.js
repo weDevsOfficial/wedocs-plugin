@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { Tab } from '@headlessui/react';
 import Badge from '../ProPreviews/common/Badge';
-import { useState } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 
 const Menu = () => {
   let menus = {
@@ -30,22 +30,18 @@ const Menu = () => {
   menus = wp.hooks.applyFilters( 'wedocs_settings_menu', menus );
 
   return (
-    <>
+    <Fragment>
       { Object.entries( menus ).map( ( tab, index ) => (
-        <>
+        <Fragment key={ index }>
           { !tab[ 1 ]?.disabled ? (
-            <Tab
-              key={ index }
-              className="w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer"
-            >
+            <Tab className="w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer">
               { tab[ 1 ]?.icon }
               <span className="truncate">{ tab[ 1 ]?.text }</span>
               { tab[ 1 ]?.pro && <Badge /> }
             </Tab>
           ) : (
-            <>
+            <Fragment>
               <div
-                key={ index }
                 onClick={ () => setShowSubTabs( !showSubTabs ) }
                 className={ `disable-tab-item w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer` }
               >
@@ -69,11 +65,11 @@ const Menu = () => {
                   </div>
                 </Tab>
               ) ) }
-            </>
+            </Fragment>
           ) }
-        </>
+        </Fragment>
       ) ) }
-    </>
+    </Fragment>
   );
 };
 
