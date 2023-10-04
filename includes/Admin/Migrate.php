@@ -144,6 +144,7 @@ class Migrate {
         }
 
         foreach ( $migratable_docs['articles'] as $category_id => $articles ) {
+            // If article already migrated then continue loop.
             if ( empty( $migrated_category_ids[ $category_id ] ) ) {
                 continue;
             }
@@ -200,6 +201,7 @@ class Migrate {
         self::$migration_progress = 0;
         self::$migration_done     = $migrated_docs_length;
 
+        // Count overall migratable docs length.
         $migratable_docs_length = array_reduce( $migratable_docs, function ( $carry, $item ) {
             return $carry + count( $item );
         }, 0 );
@@ -264,6 +266,7 @@ class Migrate {
         $docs_tree           = [];
         $migrated_categories = get_option( 'wedocs_migrated_categories', [] );
         foreach ( $betterdocs_categories as $category ) {
+            // Tree for migratable section docs.
             if ( empty( $migrated_categories[ $category->term_id ] ) ) {
                 $docs_tree['sections'][ $category->term_id ] = $category->name;
             }
@@ -272,6 +275,7 @@ class Migrate {
              $doc_ids = ! empty( $doc_ids ) ? explode( ',', $doc_ids ) : [];
 
              $anchestor_ids = self::get_migratable_article_ids( $doc_ids );
+            // Tree for migratable article docs.
              if ( ! empty( $anchestor_ids ) ) {
                  $docs_tree['articles'][ $category->term_id ] = $anchestor_ids;
              }
@@ -339,6 +343,7 @@ class Migrate {
      */
     public static function is_betterdocs_textdomain_available() {
         $active_plugins = get_option('active_plugins');
+        // Check betterdocs domain availability.
         foreach ( $active_plugins as $plugin ) {
             $plugin_data        = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
             $plugin_text_domain = ! empty( $plugin_data[ 'TextDomain' ] ) ? sanitize_key( $plugin_data[ 'TextDomain' ] ) : '';
