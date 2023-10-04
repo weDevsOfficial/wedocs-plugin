@@ -8,10 +8,11 @@ const DEFAULT_SETTINGS_STATE = {
       helpful: 'on',
       comments: 'off',
       print: 'on',
+      collapse_articles: 'off',
     },
     permission: {
-      global_permission: [],
-      role_wise_permission: [],
+      global_permission: [ 'administrator' ],
+      role_wise_permission: [ 'administrator' ],
     },
     assistant: {
       assist_enable: 'on',

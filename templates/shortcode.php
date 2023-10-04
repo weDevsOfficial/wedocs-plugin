@@ -29,24 +29,34 @@
                                     )
                                 );
 
-	                              $children_docs = get_page_children( $section->ID, $all_wp_pages );
+                                $children_docs = get_page_children( $section->ID, $all_wp_pages );
                                 $post_title    = wedocs_apply_short_content(
                                     __( $section->post_title, 'wedocs' ),
                                     $col > 1 ? 25 : 60
                                 );
+
+                                $collapse_section_articles = wedocs_get_general_settings( 'collapse_articles', 'off' );
                                 ?>
                                 <li>
                                     <a class='icon-view' href="<?php echo get_permalink( $section->ID ); ?>" target='_blank'>
                                         <?php echo esc_html( $post_title ); ?>
                                     </a>
                                     <?php if ( $children_docs ) : ?>
-                                        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#acb8c4">
+                                        <svg
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="2"
+                                            stroke="#acb8c4"
+                                            class='<?php echo esc_attr( $collapse_section_articles !== 'on' ? 'active' : '' ); ?>'
+                                        >
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                         </svg>
                                     <?php endif; ?>
                                 </li>
                                 <?php if ( $children_docs ) : ?>
-                                    <ul class='children has-icon'>
+                                    <ul
+                                        class='children has-icon <?php echo esc_attr( $collapse_section_articles !== 'on' ? 'active' : '' ); ?>'
+                                    >
                                         <?php foreach ( $children_docs as $article ) : ?>
                                             <li>
                                                 <a href="<?php echo get_permalink( $article->ID ); ?>" target='_blank'>

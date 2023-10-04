@@ -316,6 +316,52 @@ const GeneralSettings = ( {
                 </div>
               </div>
             </div>
+
+            <div className="col-span-4">
+              <div className="settings-content flex items-center justify-between">
+                <div className="settings-heading space-x-2 items-center flex flex-1">
+                  <label
+                    className="block text-sm font-medium text-gray-600"
+                    id="headlessui-listbox-label-15"
+                    data-headlessui-state="open"
+                  >
+                    { __( 'Collapse Documentation Page Articles', 'wedocs' ) }
+                  </label>
+                  <div
+                    className="tooltip cursor-pointer ml-2 z-[9999]"
+                    data-tip={ __(
+                      'Settings for collapse/expand documentation page articles.',
+                      'wedocs'
+                    ) }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="none"
+                    >
+                      <path
+                        d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                        stroke="#6b7280"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                  <Switcher
+                    name='collapse_articles'
+                    settingsPanel={ generalSettings }
+                    settingsData={ settingsData }
+                    setSettings={ setSettings }
+                    panelName={ `general` }
+                    isEnabled={ generalSettings?.collapse_articles === 'on' }
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
