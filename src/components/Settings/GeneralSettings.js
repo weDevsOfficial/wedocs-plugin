@@ -330,7 +330,7 @@ const GeneralSettings = ( {
                   <div
                     className="tooltip cursor-pointer ml-2 z-[9999]"
                     data-tip={ __(
-                      'Settings for collapse/expand documentation page articles.',
+                      'Choose if your sections should be collapsed or expanded in Doc Homepage.',
                       'wedocs'
                     ) }
                   >
