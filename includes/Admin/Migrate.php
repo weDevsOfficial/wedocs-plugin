@@ -153,6 +153,7 @@ class Migrate {
                 $post_data = [
                     'ID'          => $article_id,
                     'post_type'   => 'docs',
+                    'post_status' => get_post_status( $article_id ),
                     'post_parent' => $migrated_category_ids[ $category_id ],
                 ];
 
