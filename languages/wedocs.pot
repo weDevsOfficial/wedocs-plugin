@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-04T04:55:57+00:00\n"
+"POT-Creation-Date: 2023-10-04T06:15:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -78,20 +78,20 @@ msgstr ""
 msgid "Migration"
 msgstr ""
 
-#: includes/Admin/Migrate.php:57
+#: includes/Admin/Migrate.php:58
 msgid "BetterDocs not exists."
 msgstr ""
 
-#: includes/Admin/Migrate.php:66
-#: includes/Admin/Migrate.php:75
+#: includes/Admin/Migrate.php:68
+#: includes/Admin/Migrate.php:78
 msgid "Migration done."
 msgstr ""
 
-#: includes/Admin/Migrate.php:82
+#: includes/Admin/Migrate.php:86
 msgid "Migration not available at this moment."
 msgstr ""
 
-#: includes/Admin/Migrate.php:170
+#: includes/Admin/Migrate.php:175
 #: assets/build/index.js:5
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:13
 msgid "Untitled Docs"
@@ -1399,7 +1399,7 @@ msgstr ""
 #: src/components/Migrations/Modals/MigrationConfirmationModal.js:114
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:201
 #: src/components/Migrations/Modals/MigrationProgressModal.js:155
-#: src/components/Migrations/Modals/MigrationSelectionModal.js:196
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:183
 #: src/components/RestrictionModal.js:134
 msgid "Cancel"
 msgstr ""
@@ -1635,7 +1635,7 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationSelectionModal.js:152
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:151
 #: src/components/SelectBox.js:114
 msgid "loading…"
 msgstr ""
@@ -1805,48 +1805,38 @@ msgid "Migrating existing docs from BetterDocs to weDocs"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationSelectionModal.js:16
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:15
 msgid "BetterDocs"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationSelectionModal.js:72
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:71
 msgid "Are you sure to migrate?"
 msgstr ""
 
 #: assets/build/index.js:5
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:74
-#: src/components/Migrations/Modals/MigrationSelectionModal.js:75
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:74
 msgid "We want to make sure you have a successful migration experience to weDocs."
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationSelectionModal.js:86
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:85
 msgid "Migrate from"
 msgstr ""
 
 #: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:170
+msgid "Uncategorized Articles: "
+msgstr ""
+
+#: assets/build/index.js:5
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:171
-msgid "Migration Notice: "
+msgid "Note: During the migration, articles under \"Uncategorized\" category won't be transferred. Please ensure to categorize articles appropriately before migrating."
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationSelectionModal.js:172
-msgid "In BetterDocs, you may have set some docs as part of 'Internal Knowledge Base,' restricting access to specific user roles. With weDocs, we're simplifying this process to enhance collaboration."
-msgstr ""
-
-#: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationSelectionModal.js:183
-msgid "What's Changing: "
-msgstr ""
-
-#: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationSelectionModal.js:184
-msgid "In weDocs, documents previously part of the \"Internal Knowledge Base\" in BetterDocs will be accessible to all logged-in users. This means that any content previously restricted to specific roles in BetterDocs will now be viewable by all users who are logged into your weDocs platform."
-msgstr ""
-
-#: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationSelectionModal.js:202
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:189
 msgid "Yes, I'm sure"
 msgstr ""
 

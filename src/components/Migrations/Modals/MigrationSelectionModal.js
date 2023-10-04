@@ -7,7 +7,6 @@ const MigrationSelectionModal = ( {
     children,
     className,
     isMigrationDone,
-    // handleMigrateClick,
     openSelectionModal,
     setShowMigrationMap,
     setOpenSelectionModal
@@ -157,7 +156,7 @@ const MigrationSelectionModal = ( {
                                                 </div>
                                             ) }
 
-                                            <div className={ `migration-notice notice m-0 border-0 border-l-4 border-yellow-400 bg-yellow-50 flex border-[#FBBF24] mb-6` }>
+                                            <div className={ `migration-notice notice m-0 border-0 border-l-4 border-yellow-400 bg-yellow-50 flex border-[#FBBF24]` }>
                                                 <div className={ `exclamation-icon my-3.5` }>
                                                     <svg xmlns='http://www.w3.org/2000/svg' width='16' height='14' fill='none'>
                                                         <path
@@ -168,20 +167,8 @@ const MigrationSelectionModal = ( {
                                                     </svg>
                                                 </div>
                                                 <div className={ `text-[#92400E] text-sm leading-5 p-3 pr-9` }>
-                                                    <span className={ `font-bold` }>{ __( 'Migration Notice: ', 'wedocs' ) }</span>
-                                                    { __( 'In BetterDocs, you may have set some docs as part of \'Internal Knowledge Base,\' restricting access to specific user roles. With weDocs, we\'re simplifying this process to enhance collaboration.', 'wedocs' ) }
-                                                </div>
-                                            </div>
-
-                                            <div className={ `migration-changing-notice flex border border-[#DBDBDB] rounded-md py-0.5 px-4` }>
-                                                <div className={ `exclamation-icon my-3.5` }>
-                                                    <svg width='16' height='16' viewBox='0 0 16 16' fill='none'>
-                                                        <path fillRule='evenodd' clipRule='evenodd' d='M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM11.7071 6.70711C12.0976 6.31658 12.0976 5.68342 11.7071 5.29289C11.3166 4.90237 10.6834 4.90237 10.2929 5.29289L7 8.58579L5.70711 7.29289C5.31658 6.90237 4.68342 6.90237 4.29289 7.29289C3.90237 7.68342 3.90237 8.31658 4.29289 8.70711L6.29289 10.7071C6.68342 11.0976 7.31658 11.0976 7.70711 10.7071L11.7071 6.70711Z' fill='#4F46E5'/>
-                                                    </svg>
-                                                </div>
-                                                <div className={ `text-[#6B7280] text-sm leading-5 p-3 pr-9` }>
-                                                    <span className={ `font-bold block leading-5 text-gray-600` }>{ __( 'What\'s Changing: ', 'wedocs' ) }</span>
-                                                    { __( 'In weDocs, documents previously part of the "Internal Knowledge Base" in BetterDocs will be accessible to all logged-in users. This means that any content previously restricted to specific roles in BetterDocs will now be viewable by all users who are logged into your weDocs platform.', 'wedocs' ) }
+                                                    <span className={ `font-bold` }>{ __( 'Uncategorized Articles: ', 'wedocs' ) }</span> <br />
+                                                    { __( 'Note: During the migration, articles under "Uncategorized" category won\'t be transferred. Please ensure to categorize articles appropriately before migrating.', 'wedocs' ) }
                                                 </div>
                                             </div>
                                         </div>
