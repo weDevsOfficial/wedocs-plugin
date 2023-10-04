@@ -15,6 +15,10 @@ const actions = {
     return { type: 'SET_UPGRADE_INFO', needUpgrade };
   },
 
+  setMigrateInfo( needMigrate ) {
+    return { type: 'SET_MIGRATE_INFO', needMigrate };
+  },
+
   setSaving( saving ) {
     return { type: 'SET_SAVING', saving };
   },
@@ -43,7 +47,7 @@ const actions = {
 
   *makeUpdateDone() {
     return yield { type: 'UPDATE_TO_API', path: '/wp/v2/docs/upgrade/done' };
-  }
+  },
 };
 
 export default actions;

@@ -77,6 +77,15 @@ const actions = {
     return actions.setDocs( response );
   },
 
+  *updateDocs( docs ) {
+    const parentDocs = docs.filter( ( doc ) => ! doc.parent );
+    const sortableDocs = parentDocs?.sort(
+      ( a, b ) => a.menu_order - b.menu_order
+    );
+    yield actions.setParentDocs( sortableDocs );
+    return actions.setDocs( docs );
+  },
+
   *sendMessage( data ) {
     const path = '/wp/v2/docs/message';
     const response = yield { type: 'UPDATE_TO_API', path, data };

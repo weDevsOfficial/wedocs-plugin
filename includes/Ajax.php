@@ -2,6 +2,8 @@
 
 namespace WeDevs\WeDocs;
 
+use WeDevs\WeDocs\Admin\Migrate;
+
 /**
  * Ajax Class.
  */
@@ -29,6 +31,10 @@ class Ajax {
         // Handle weDocs beta notice.
         add_action( 'wp_ajax_hide_wedocs_beta_notice', [ $this, 'hide_beta_notice' ] );
         add_action( 'wp_ajax_nopriv_hide_wedocs_beta_notice', [ $this, 'hide_beta_notice' ] );
+
+        // Data migration.
+        add_action( 'wp_ajax_wedocs_check_need_betterdocs_migration', [ Migrate::class, 'need_migration' ] );
+        add_action( 'wp_ajax_wedocs_migrate_betterdocs_to_wedocs', [ Migrate::class, 'do_migration' ] );
     }
 
     /**

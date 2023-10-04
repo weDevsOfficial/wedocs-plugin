@@ -8,6 +8,7 @@ import {
 import ListingPage from './DocListing';
 import SettingsPage from './Settings';
 import Documentations from './Documentations';
+import Migrate from './Migrations';
 import NotFound from './NotFound';
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
     { path: '/', component: Documentations },
     { path: 'settings', component: SettingsPage },
     { path: 'section/:id', component: ListingPage },
+    { path: 'migrate', component: Migrate },
     { path: '*', component: NotFound },
   ];
 

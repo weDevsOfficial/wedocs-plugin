@@ -37,7 +37,7 @@ const Contributors = () => {
       </div>
       <div className={ `overlay absolute opacity-0 hover:opacity-100 flex items-center justify-center w-[160px] h-[50px] -mt-3 !ml-[-26px] rounded bg-[#00000080]` }>
         <span
-           onClick={ ( event ) => handleUpgradeClick( event ) }
+          onClick={ ( event ) => handleUpgradeClick( event ) }
           className={ `upgrade-button text-white hover:text-white px-4 py-1.5 focus:text-white focus:ring-0 inline-flex items-center rounded-md bg-[#ff9000] hover:bg-[#cf7500] font-semibold text-[13px] gap-2.5` }
         >
           { __( 'Upgrade', 'wedocs' ) }

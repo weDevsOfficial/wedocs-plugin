@@ -203,8 +203,9 @@ final class WeDocs {
             $this->container['ajax'] = new WeDevs\WeDocs\Ajax();
         }
 
-        $this->container['api'] = new WeDevs\WeDocs\API();
-        $this->container['upgrader'] =new WeDevs\WeDocs\Upgrader\Upgrader();
+        $this->container['api']      = new WeDevs\WeDocs\API();
+        $this->container['migrate']  = new WeDevs\WeDocs\Admin\Migrate();
+        $this->container['upgrader'] = new WeDevs\WeDocs\Upgrader\Upgrader();
     }
 
     /**
@@ -213,7 +214,7 @@ final class WeDocs {
      * @uses load_plugin_textdomain()
      */
     public function localization_setup() {
-        load_plugin_textdomain( 'wedocs', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+        load_plugin_textdomain( 'wedocs', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
     }
 
     /**
