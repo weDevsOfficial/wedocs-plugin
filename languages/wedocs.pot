@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-03T11:18:06+00:00\n"
+"POT-Creation-Date: 2023-10-04T04:55:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -78,20 +78,20 @@ msgstr ""
 msgid "Migration"
 msgstr ""
 
-#: includes/Admin/Migrate.php:54
+#: includes/Admin/Migrate.php:57
 msgid "BetterDocs not exists."
 msgstr ""
 
-#: includes/Admin/Migrate.php:63
-#: includes/Admin/Migrate.php:72
+#: includes/Admin/Migrate.php:66
+#: includes/Admin/Migrate.php:75
 msgid "Migration done."
 msgstr ""
 
-#: includes/Admin/Migrate.php:79
+#: includes/Admin/Migrate.php:82
 msgid "Migration not available at this moment."
 msgstr ""
 
-#: includes/Admin/Migrate.php:217
+#: includes/Admin/Migrate.php:170
 #: assets/build/index.js:5
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:13
 msgid "Untitled Docs"
