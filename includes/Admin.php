@@ -17,7 +17,7 @@ class Admin {
         new Admin\Migrate();
         new Admin\Docs_List_Table();
 
-        add_action( 'admin_init', array( $this, 'init_admin_actions' ) );
+        add_action( 'admin_init', array( $this, 'init_admin_actions' ), 5 );
     }
 
     /**

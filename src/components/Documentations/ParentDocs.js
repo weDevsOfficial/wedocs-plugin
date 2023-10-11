@@ -81,7 +81,7 @@ const ParentDocs = ( { doc } ) => {
                   <h3
                     className="truncate hover:underline text-lg font-medium text-[#3B3F4A]"
                     dangerouslySetInnerHTML={ {
-                      __html: extractedTitle( doc?.title?.rendered, 20 ),
+                      __html: extractedTitle( doc?.title?.rendered, doc.status !== 'publish' ? 12 : 20 ),
                     } }
                   ></h3>
                 </Link>

@@ -52,8 +52,8 @@ class Shortcode {
         $arranged = [];
 
         $parent_args = [
-            'post_type'   => 'docs',
             'parent'      => 0,
+            'post_type'   => 'docs',
             'sort_column' => 'menu_order',
         ];
 
@@ -65,19 +65,23 @@ class Shortcode {
             $parent_args['exclude'] = $args['exclude'];
         }
 
+        $parent_args = apply_filters( 'wedocs_shortcode_page_parent_args', $parent_args );
         $parent_docs = get_pages( $parent_args );
 
         // Arrange the section docs.
         if ( $parent_docs ) {
             foreach ( $parent_docs as $root ) {
-	            $section_docs = get_children( [
+                $section_args = [
                     'post_parent' => $root->ID,
                     'post_type'   => 'docs',
                     'post_status' => 'publish',
                     'orderby'     => 'menu_order',
                     'order'       => 'ASC',
                     'numberposts' => (int) $args['items'],
-                ] );
+                ];
+
+                $section_args = apply_filters( 'wedocs_shortcode_page_section_args', $section_args );
+	            $section_docs = get_children( $section_args );
 
                 $arranged[] = [
                     'doc'      => $root,

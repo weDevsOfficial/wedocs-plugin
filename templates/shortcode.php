@@ -19,15 +19,16 @@
                         <ul class="wedocs-doc-sections">
                             <?php
                             foreach ( $main_doc['sections'] as $section ) {
-                                $my_wp_query  = new WP_Query();
-                                $all_wp_pages = $my_wp_query->query(
-                                    array(
-                                        'post_type'      => 'docs',
-                                        'posts_per_page' => '-1',
-                                        'orderby'        => 'menu_order',
-                                        'order'          => 'ASC'
-                                    )
+                                $article_args = array(
+                                    'post_type'      => 'docs',
+                                    'posts_per_page' => '-1',
+                                    'orderby'        => 'menu_order',
+                                    'order'          => 'ASC'
                                 );
+
+                                $article_args = apply_filters( 'wedocs_shortcode_page_section_args', $article_args );
+                                $my_wp_query  = new WP_Query();
+                                $all_wp_pages = $my_wp_query->query( $article_args );
 
                                 $children_docs = get_page_children( $section->ID, $all_wp_pages );
                                 $post_title    = wedocs_apply_short_content(

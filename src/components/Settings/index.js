@@ -100,11 +100,11 @@ const SettingsPage = () => {
       delete settings?.email_to;
       delete settings?.docs_home;
 
-      settings.general.email = email;
-      settings.general.print = print;
-      settings.general.helpful = helpful;
-      settings.general.email_to = emailTo;
-      settings.general.comments = comments;
+      settings.general.email = typeof email !== 'undefined' ? email : 'on';
+      settings.general.print = typeof print !== 'undefined' ? print : 'on';
+      settings.general.helpful = typeof helpful !== 'undefined' ? helpful : 'on';
+      settings.general.email_to = typeof emailTo !== 'undefined' ? emailTo : '';
+      settings.general.comments = typeof comments !== 'undefined' ? comments : 'off';
       settings.general.docs_home = docsPageId;
     }
 

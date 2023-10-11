@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-04T07:54:57+00:00\n"
+"POT-Creation-Date: 2023-10-11T07:00:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -36,19 +36,19 @@ msgstr ""
 msgid "https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri"
 msgstr ""
 
-#: includes/Admin/Admin.php:81
+#: includes/Admin/Admin.php:105
 msgid "Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
 msgstr ""
 
-#: includes/Admin/Admin.php:81
+#: includes/Admin/Admin.php:105
 msgid "Thanks :)"
 msgstr ""
 
-#: includes/Admin/Admin.php:92
+#: includes/Admin/Admin.php:116
 msgid "Thank you for using <strong>weDocs</strong>."
 msgstr ""
 
-#: includes/Admin/Admin.php:95
+#: includes/Admin/Admin.php:119
 msgid "Use the <a href=\"%s\">classic UI</a>."
 msgstr ""
 
@@ -78,20 +78,20 @@ msgstr ""
 msgid "Migration"
 msgstr ""
 
-#: includes/Admin/Migrate.php:58
+#: includes/Admin/Migrate.php:59
 msgid "BetterDocs not exists."
 msgstr ""
 
-#: includes/Admin/Migrate.php:68
-#: includes/Admin/Migrate.php:78
+#: includes/Admin/Migrate.php:69
+#: includes/Admin/Migrate.php:79
 msgid "Migration done."
 msgstr ""
 
-#: includes/Admin/Migrate.php:86
+#: includes/Admin/Migrate.php:87
 msgid "Migration not available at this moment."
 msgstr ""
 
-#: includes/Admin/Migrate.php:176
+#: includes/Admin/Migrate.php:177
 #: assets/build/index.js:5
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:13
 msgid "Untitled Docs"
@@ -403,22 +403,6 @@ msgstr ""
 msgid "Documentation Search"
 msgstr ""
 
-#: templates/beta-notice.php:6
-msgid "weDocs Logo"
-msgstr ""
-
-#: templates/beta-notice.php:11
-msgid "Try out weDocs v2 (Beta) with a completely revamped user interface, advanced role-based permission management, and A.I. infused Assistant widget. Provide feedback to enjoy up to 60% discount when we launch"
-msgstr ""
-
-#: templates/beta-notice.php:14
-msgid "Try Now"
-msgstr ""
-
-#: templates/beta-notice.php:16
-msgid "No, Thanks"
-msgstr ""
-
 #: templates/content-feedback.php:8
 msgid "%d person found this useful"
 msgid_plural "%d persons found this useful"
@@ -478,7 +462,7 @@ msgctxt "placeholder"
 msgid "Search for a topic or question …"
 msgstr ""
 
-#: templates/shortcode.php:80
+#: templates/shortcode.php:81
 msgid "This document has no sections yet. Check back later or wait for the author to add content."
 msgstr ""
 
@@ -1462,14 +1446,14 @@ msgstr ""
 #: src/components/AddArticleModal.js:224
 #: src/components/AddDocModal.js:183
 #: src/components/AddSectionModal.js:184
-msgid "Create with Draft"
+msgid "Create and Draft"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/AddArticleModal.js:227
 #: src/components/AddDocModal.js:186
 #: src/components/AddSectionModal.js:187
-msgid "Create with Publish"
+msgid "Create and Publish"
 msgstr ""
 
 #: assets/build/index.js:1

@@ -40,6 +40,7 @@ class Migrate {
      * Class Constructor.
      */
     public function __construct() {
+        add_action( 'before_delete_post', [ $this, 'reset_migration' ], 10, 2 );
         add_action( 'create_term', [ $this, 'update_migration_status' ], 10, 3 );
     }
 
@@ -116,7 +117,7 @@ class Migrate {
             self::$migration_progress = floor( ( self::$migration_done / self::$migratable_docs_length ) * 100 );
 
             if ( absint( self::$migration_progress ) === 100 ) {
-                update_option( 'wedocs_need_migration', 'done' );
+                self::handle_migration_done();
             }
 
             wp_send_json_success( [
@@ -249,6 +250,24 @@ class Migrate {
     }
 
     /**
+     * Update migration status.
+     *
+     * @since 2.0.0
+     *
+     * @return void
+     */
+    public static function handle_migration_done() {
+        // Update migration status.
+        update_option( 'wedocs_need_migration', 'done' );
+        if ( self::is_betterdocs_textdomain_available() ) {
+            deactivate_plugins( [
+                'betterdocs/betterdocs.php',
+                'betterdocs-pro/betterdocs-pro.php',
+            ] );
+        }
+    }
+
+    /**
      * Collect migratable category & documentation ids.
      *
      * @since 2.0.0
@@ -306,6 +325,47 @@ class Migrate {
     }
 
     /**
+     * Reset migration for migrated parent trash.
+     *
+     * @since 2.0.0
+     *
+     * @param int      $doc_id
+     * @param \WP_Post $post
+     *
+     * @return void
+     */
+    public function reset_migration( $doc_id, $post ) {
+        if ( empty( $post->post_type ) || $post->post_type !== 'docs' ) {
+            return;
+        }
+
+        $default_parent = get_option( 'wedocs_migrated_default_parent_doc', 0 );
+        if ( absint( $default_parent ) !== $doc_id ) {
+            return;
+        }
+
+        delete_option( 'wedocs_need_migration' );
+        delete_option( 'wedocs_migrated_categories' );
+        delete_option( 'wedocs_migrated_article_ids' );
+        delete_option( 'wedocs_migrated_default_parent_doc' );
+
+        $meta_key  = '_doc_order';
+        $meta_type = 'term';
+
+        // Get all term ids.
+        $term_ids = get_terms( [
+            'fields'     => 'ids',
+            'taxonomy'   => 'doc_category',
+            'hide_empty' => false,
+        ] );
+
+        // Loop through each term and delete the specific meta key.
+        foreach ( $term_ids as $term_id ) {
+            delete_metadata( $meta_type, $term_id, $meta_key );
+        }
+    }
+
+    /**
      * Update weDocs migration status for betterdocs category insertion.
      *
      * @since 2.0.0
@@ -343,7 +403,8 @@ class Migrate {
      * @return bool
      */
     public static function is_betterdocs_textdomain_available() {
-        $active_plugins = get_option('active_plugins');
+        $active_plugins = get_option( 'active_plugins' );
+
         // Check betterdocs domain availability.
         foreach ( $active_plugins as $plugin ) {
             $plugin_data        = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );

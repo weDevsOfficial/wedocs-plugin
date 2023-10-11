@@ -126,6 +126,19 @@ body.single.single-docs .content-area {
                     display: block;
                 }
             }
+
+            .children {
+                .tailwind {
+                    border-left: 1px solid rgb(6, 182, 212);
+                }
+            }
+
+            .tailwind {
+                .wedocs-caret {
+                    border-color: rgb(6, 182, 212);
+                    color: rgb(6, 182, 212);
+                }
+            }
         }
     }
 
@@ -135,6 +148,7 @@ body.single.single-docs .content-area {
         padding-left: 25px;
 
         ol.wedocs-breadcrumb {
+            text-wrap: pretty;
             margin-bottom: 30px;
             list-style: none;
             margin-left: 0;
@@ -161,6 +175,7 @@ body.single.single-docs .content-area {
         }
 
         .wedocs-comments-wrap {
+            overflow: hidden;
             position: relative;
         }
     }

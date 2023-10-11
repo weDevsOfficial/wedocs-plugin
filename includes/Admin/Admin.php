@@ -15,7 +15,8 @@ class Admin {
 
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ] );
 
-        add_filter( 'parent_file', [$this, 'fix_tag_menu' ] );
+        add_filter( 'parent_file', [ $this, 'fix_tag_menu' ], 15 );
+        add_filter( 'submenu_file', [ $this, 'highlight_admin_submenu' ] );
         add_filter( 'admin_footer_text', [ $this, 'admin_footer_text' ], 1 );
     }
 
@@ -39,6 +40,10 @@ class Admin {
             // Adding wedocs necessary assets.
             wp_enqueue_style( 'wedocs-app-style', WEDOCS_URL . '/assets/build/index.css', [], $react_dependencies['version'] );
             wp_enqueue_script( 'wedocs-app-script', WEDOCS_URL . '/assets/build/index.js', $react_dependencies['dependencies'], $react_dependencies['version'], true );
+
+            wp_localize_script( 'wedocs-app-script', 'weDocsAdminVars', [
+                'hasManageCap' => current_user_can( 'manage_options' ),
+            ] );
         }
     }
 
@@ -56,11 +61,30 @@ class Admin {
     public function fix_tag_menu( $parent_file ) {
         global $current_screen;
 
-        if ( 'doc_tag' === $current_screen->taxonomy || 'docs' === $current_screen->post_type ) {
+        if ( 'doc_tag' === $current_screen->taxonomy ) {
             $parent_file = 'wedocs';
         }
 
         return $parent_file;
+    }
+
+    /**
+     * Highlight the proper top level submenu.
+     *
+     * @global obj $current_screen
+     *
+     * @param string $submenu_file
+     *
+     * @return string
+     */
+    public function highlight_admin_submenu( $submenu_file ) {
+        global $current_screen;
+
+        if ( $current_screen->id === 'edit-doc_tag' ) {
+            $submenu_file = 'edit-tags.php?taxonomy=doc_tag&post_type=docs';
+        }
+
+        return $submenu_file;
     }
 
     /**

@@ -1,8 +1,9 @@
 import actions from './actions';
 
+const hasManageCap = typeof weDocsAdminVars !== 'undefined' && Boolean( weDocsAdminVars?.hasManageCap );
 const getDocsPath = wp.hooks.applyFilters(
   'wedocs_documentation_fetching_path',
-  '/wp/v2/docs?per_page=-1&status=publish,draft'
+  `/wp/v2/docs?per_page=-1&status=publish${ hasManageCap ? ',draft' : '' }`
 );
 
 const resolvers = {
