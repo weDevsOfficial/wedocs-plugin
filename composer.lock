@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "61f8063968c3b295185d518950461ee8",
+    "content-hash": "a1dd6cebfcc825184cee5d5665093ea9",
     "packages": [
         {
             "name": "appsero/client",
@@ -66,12 +66,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/action-scheduler.git",
-                "reference": "82b051b43a640456fd2338ebd61cb20efcb78c4d"
+                "reference": "754dc005b82a858c6398f1d0799d41771e2f5779"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/82b051b43a640456fd2338ebd61cb20efcb78c4d",
-                "reference": "82b051b43a640456fd2338ebd61cb20efcb78c4d",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/754dc005b82a858c6398f1d0799d41771e2f5779",
+                "reference": "754dc005b82a858c6398f1d0799d41771e2f5779",
                 "shasum": ""
             },
             "require-dev": {
@@ -99,7 +99,7 @@
                 "issues": "https://github.com/woocommerce/action-scheduler/issues",
                 "source": "https://github.com/woocommerce/action-scheduler/tree/trunk"
             },
-            "time": "2023-09-25T19:39:26+00:00"
+            "time": "2023-09-29T18:41:23+00:00"
         }
     ],
     "packages-dev": [
@@ -109,12 +109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/deprecations.git",
-                "reference": "bdaa697ed9c7f5ee2f7d3b5f9c2a6f2519523cd9"
+                "reference": "4f2d4f2836e7ec4e7a8625e75c6aa916004db931"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/bdaa697ed9c7f5ee2f7d3b5f9c2a6f2519523cd9",
-                "reference": "bdaa697ed9c7f5ee2f7d3b5f9c2a6f2519523cd9",
+                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/4f2d4f2836e7ec4e7a8625e75c6aa916004db931",
+                "reference": "4f2d4f2836e7ec4e7a8625e75c6aa916004db931",
                 "shasum": ""
             },
             "require": {
@@ -147,9 +147,9 @@
             "homepage": "https://www.doctrine-project.org/",
             "support": {
                 "issues": "https://github.com/doctrine/deprecations/issues",
-                "source": "https://github.com/doctrine/deprecations/tree/1.1.x"
+                "source": "https://github.com/doctrine/deprecations/tree/1.1.2"
             },
-            "time": "2023-07-29T16:12:19+00:00"
+            "time": "2023-09-27T20:04:15+00:00"
         },
         {
             "name": "doctrine/instantiator",

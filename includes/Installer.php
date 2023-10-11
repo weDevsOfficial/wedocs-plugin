@@ -18,7 +18,7 @@ class Installer {
         $this->maybe_create_docs_page();
         $this->add_post_types();
         $this->timestamps();
-        $this->add_documentation_handling_capabilities();
+        wedocs_user_documentation_handling_capabilities();
     }
 
     /**
@@ -92,30 +92,6 @@ class Installer {
             $settings['general']['docs_home'] = $docs_page;
 
             update_option( 'wedocs_settings', $settings );
-        }
-    }
-
-    /**
-     * Add weDocs documentation handling capabilities for users.
-     *
-     * @since 1.0.0
-     *
-     * @return void
-     */
-    public function add_documentation_handling_capabilities() {
-        global $wp_roles;
-
-        if ( class_exists( 'WP_Roles' ) && ! isset( $wp_roles ) ) {
-            $wp_roles = new \WP_Roles(); // @codingStandardsIgnoreLine
-        }
-
-        $roles        = $wp_roles->get_names();
-        $capabilities = array( 'edit_post', 'edit_docs', 'publish_docs', 'edit_others_docs', 'read_private_docs', 'edit_private_docs', 'edit_published_docs' );
-        // Push documentation handling access to users.
-        foreach ( $capabilities as $capability ) {
-            foreach ( $roles as $role_key => $role ) {
-                $wp_roles->add_cap( $role_key, $capability );
-            }
         }
     }
 }

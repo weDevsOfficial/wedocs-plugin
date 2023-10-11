@@ -490,3 +490,27 @@ function wedocs_sidebar_page_status_class( $css_class, $page, $depth, $args, $cu
 }
 
 add_filter( 'page_css_class', 'wedocs_sidebar_page_status_class', 20, 5 );
+
+/**
+ * Add weDocs documentation handling capabilities for users.
+ *
+ * @since 1.0.0
+ *
+ * @return void
+ */
+function wedocs_user_documentation_handling_capabilities() {
+    global $wp_roles;
+
+    if ( class_exists( 'WP_Roles' ) && ! isset( $wp_roles ) ) {
+        $wp_roles = new \WP_Roles(); // @codingStandardsIgnoreLine
+    }
+
+    $roles        = $wp_roles->get_names();
+    $capabilities = array( 'edit_post', 'edit_docs', 'publish_docs', 'edit_others_docs', 'read_private_docs', 'edit_private_docs', 'edit_published_docs' );
+    // Push documentation handling access to users.
+    foreach ( $capabilities as $capability ) {
+        foreach ( $roles as $role_key => $role ) {
+            $wp_roles->add_cap( $role_key, $capability );
+        }
+    }
+}

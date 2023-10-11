@@ -118,6 +118,7 @@ class Migrate {
 
             if ( absint( self::$migration_progress ) === 100 ) {
                 self::handle_migration_done();
+                wedocs_user_documentation_handling_capabilities();
             }
 
             wp_send_json_success( [
