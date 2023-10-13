@@ -179,7 +179,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                   <a
                     target="_blank"
                     rel="noreferrer"
-                    href={ `${ window.location.origin }/?p=${ id }` }
+                    href={ section?.link }
                     className="flex items-center flex-shrink-0 text-base font-medium text-black !shadow-none ml-4"
                   >
                     <span

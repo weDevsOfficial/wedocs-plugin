@@ -102,9 +102,13 @@ class Migrate {
             return;
         }
 
-        $need_migrate_doc = self::$migratable_docs_length - self::$migration_done;
+        // Handle total & migratable sections length count.
+        $migratable_sections_length      = count( $migratable_docs['sections'] );
+        $total_migratable_section_length = $migratable_sections_length + self::$migration_done;
+
+        $need_migrate_doc = $total_migratable_section_length - self::$migration_done;
         $upgrade_index    = min( $need_migrate_doc, 10 );
-        for ( $i = self::$migration_done; $i < self::$migratable_docs_length; $i += $upgrade_index ) {
+        for ( $i = self::$migration_done; $i < $total_migratable_section_length; $i += $upgrade_index ) {
             $section_docs = array_slice( $migratable_docs['sections'], 0, $upgrade_index, true );
             $section_docs = array_map( 'sanitize_text_field', $section_docs );
 
@@ -114,7 +118,7 @@ class Migrate {
 
             // Upgrade migration progress.
             self::$migration_done     = self::$migration_done += $upgrade_index;
-            self::$migration_progress = floor( ( self::$migration_done / self::$migratable_docs_length ) * 100 );
+            self::$migration_progress = floor( ( self::$migration_done / $total_migratable_section_length ) * 100 );
 
             if ( absint( self::$migration_progress ) === 100 ) {
                 self::handle_migration_done();

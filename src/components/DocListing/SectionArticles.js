@@ -142,7 +142,7 @@ const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
                   target="_blank"
                   className="hidden group-hover:block !shadow-none"
                   rel="noreferrer"
-                  href={ `${ window.location.origin }/?p=${ article?.id }` }
+                  href={ article?.link }
                 >
                   <svg
                     className="hidden group-hover:block stroke-gray-300 hover:stroke-indigo-700"
@@ -204,7 +204,7 @@ const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
         </div>
         <div className="ml-8 flex-shrink-0 w-5 h-5">
           { isAdmin && ! Boolean( parseInt( isAdminRestricted ) ) && (
-            <DocActions docId={ article?.id } type="article" />
+            <DocActions doc={ article } type="article" />
           ) }
         </div>
       </div>

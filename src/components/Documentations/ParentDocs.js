@@ -114,7 +114,7 @@ const ParentDocs = ( { doc } ) => {
             </Fragment>
           ) }
           { privacyIcon }
-          { showActions && <DocActions docId={ doc?.id } type="doc" disabled /> }
+          { showActions && <DocActions doc={ doc } type="doc" disabled /> }
         </div>
       </div>
       <Link to={ `/section/${ doc.id }` }>

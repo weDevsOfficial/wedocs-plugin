@@ -2,11 +2,11 @@ import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import RestictionModal from './RestrictionModal';
 
-const DocActions = ( { docId, type } ) => {
+const DocActions = ( { doc, type } ) => {
   const restrictionAction = wp.hooks.applyFilters(
     'wedocs_admin_article_restriction_action',
     '',
-    docId,
+    doc?.id,
     type
   );
 
@@ -40,7 +40,7 @@ const DocActions = ( { docId, type } ) => {
         >
           { /* Edit documentation */ }
           <a
-            href={ `${ window.location.origin }/wp-admin/post.php?post=${ docId }&action=edit` }
+            href={ `${ window.location.origin }/wp-admin/post.php?post=${ doc?.id }&action=edit` }
             target="_blank"
             className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
             rel="noreferrer"
@@ -50,7 +50,7 @@ const DocActions = ( { docId, type } ) => {
 
           <a
             target="_blank"
-            href={ `${ window.location.origin }/?p=${ docId }` }
+            href={ doc?.link }
             rel="noreferrer"
             className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
           >
@@ -62,8 +62,8 @@ const DocActions = ( { docId, type } ) => {
 
           { /* Delete documentation */ }
           <RestictionModal
-            docId={ docId }
             type={ type }
+            docId={ doc?.id }
             classes="w-full group flex items-center py-2 px-4 text-sm font-medium text-red-500 hover:bg-indigo-700 hover:text-white"
           >
             { __( 'Delete', 'wedocs' ) }
