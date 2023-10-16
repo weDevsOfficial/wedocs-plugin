@@ -1,8 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
-import { useSelect } from '@wordpress/data';
-import docsStore from '../../../data/docs';
 
 const MigrationContentMappingModal = ( {
     migratedDocTitle,

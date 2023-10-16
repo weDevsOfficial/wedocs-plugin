@@ -80,6 +80,18 @@ const Migrate = () => {
         } );
     };
 
+    const handleBackToDocPageClick = ( event ) => {
+        event.preventDefault();
+
+        const $ = jQuery;
+        const { origin, pathname, search } = window.location;
+        const menuRoot = $( '#toplevel_page_wedocs' );
+        $( 'ul.wp-submenu li', menuRoot ).removeClass( 'current' );
+        menuRoot.find( 'li.wp-first-item' ).addClass( 'current' );
+
+        window.location.href = `${ origin + pathname + search }#/`;
+    };
+
     return (
         <div className='w-full mt-7'>
             <div className='shadow sm:overflow-hidden sm:rounded-md'>
@@ -247,15 +259,16 @@ const Migrate = () => {
                         ) : (
                             <Fragment>
                                 { migrationSuccess ? (
-                                    <Link
-                                        to={ '/' }
-                                        className="inline-flex gap-3 items-center rounded-md border border-transparent bg-indigo-600 hover:text-white px-6 py-2.5 text-base text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    <a
+                                        href={ '#' }
+                                        onClick={ handleBackToDocPageClick }
+                                        className="inline-flex gap-3 items-center rounded-md border border-transparent bg-indigo-600 hover:text-white focus:text-white px-6 py-2.5 text-base text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     >
                                         <svg width="17" height="11" viewBox="0 0 17 11" fill="none">
                                             <path fillRule="evenodd" clipRule="evenodd" d="M6.30281 10.567C5.91229 10.9575 5.27912 10.9575 4.8886 10.567L0.888597 6.56697C0.498072 6.17645 0.498072 5.54328 0.888597 5.15276L4.8886 1.15276C5.27912 0.762232 5.91229 0.762232 6.30281 1.15276C6.69334 1.54328 6.69334 2.17645 6.30281 2.56697L4.00992 4.85986L15.5957 4.85986C16.148 4.85986 16.5957 5.30758 16.5957 5.85986C16.5957 6.41215 16.148 6.85986 15.5957 6.85986L4.00992 6.85986L6.30281 9.15276C6.69334 9.54328 6.69334 10.1764 6.30281 10.567Z" fill="white" />
                                         </svg>
                                         { __( 'Go back to Docs', 'wedocs' ) }
-                                    </Link>
+                                    </a>
                                 ) : (
                                     <button
                                         type='submit'

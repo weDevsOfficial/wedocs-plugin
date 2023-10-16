@@ -28,11 +28,15 @@ const SettingsPage = () => {
     []
   );
 
+  const [ saving, setSaving ] = useState( false );
+
   const handleSettingsSave = () => {
     // Update wedocs settings data.
+    setSaving( true );
     dispatch( settingsStore )
       .updateSettings( { settings: docSettings } )
       .then( ( result ) => {
+        setSaving( false );
         setDocSettings( { ...docSettings, ...result } );
         Swal.fire( {
           title: __( 'Settings Data Saved!', 'wedocs' ),
@@ -165,7 +169,7 @@ const SettingsPage = () => {
                 </div>
               </main>
 
-              <SaveButton settingsSaveHandler={ handleSettingsSave } />
+              <SaveButton settingsSaveHandler={ handleSettingsSave } saving={ saving } />
             </div>
           </div>
           { /* Render settings footer contents. */ }
