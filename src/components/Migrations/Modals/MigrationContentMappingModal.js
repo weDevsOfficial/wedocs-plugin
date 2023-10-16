@@ -72,7 +72,7 @@ const MigrationContentMappingModal = ( {
                                             </Dialog.Title>
                                             <p className='text-gray-500 text-center text-base leading-6'>
                                                 { __(
-                                                    'We want to make sure you have a successful migration experience to weDocs.',
+                                                    'We want to make sure you have a seamless migration experience to weDocs',
                                                     'wedocs'
                                                 ) }
                                             </p>
@@ -92,7 +92,7 @@ const MigrationContentMappingModal = ( {
                                                     </defs>
                                                 </svg>
                                                 <p className='text-gray-500 text-base leading-6'>
-                                                    { __( 'We want to make sure you have a successful migration', 'wedocs' ) }
+                                                    { __( 'No parent doc, only category & subcategory-based articles', 'wedocs' ) }
                                                 </p>
                                             </div>
                                             <div className={ `min-w-[150px] visibility-hidden` }></div>
@@ -120,7 +120,7 @@ const MigrationContentMappingModal = ( {
                                                     />
                                                 </svg>
                                                 <p className='text-gray-500 text-base leading-6'>
-                                                    { __( 'We want to make sure you have a successful migration', 'wedocs' ) }
+                                                    { __( 'Articles under super-organized parent doc-section structure', 'wedocs' ) }
                                                 </p>
                                             </div>
                                         </div>
