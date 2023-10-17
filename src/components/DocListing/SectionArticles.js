@@ -4,8 +4,9 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import extractedTitle from '../../utils/extractedTitle';
 import he from 'he';
+import QuickEditModal from './QuickEditModal';
 
-const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
+const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles, isAllowComments } ) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable( { id: article.id } );
 
@@ -160,6 +161,36 @@ const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
                   </svg>
                 </a>
               </div>
+
+              { isAdmin && (
+                <QuickEditModal
+                  article={ article }
+                  sections={ sections }
+                  className={ `hidden group-hover:block ml-4 mr-1` }
+                  defaultSection={ section }
+                  setShowArticles={ setShowArticles }
+                >
+                  <span
+                    className={ `tooltip cursor-pointer` }
+                    data-tip={ __( 'Quick Edit', 'wedocs' ) }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="none"
+                      className="tooltip cursor-pointer stroke-gray-300 hover:stroke-indigo-700"
+                    >
+                      <path
+                        d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </QuickEditModal>
+              ) }
             </div>
           </div>
           <div className="flex items-center gap-5 flex-shrink-0 mt-4 sm:mt-0 sm:ml-5">
@@ -204,7 +235,13 @@ const SectionArticles = ( { article, isAdmin, isAllowComments } ) => {
         </div>
         <div className="ml-8 flex-shrink-0 w-5 h-5">
           { isAdmin && ! Boolean( parseInt( isAdminRestricted ) ) && (
-            <DocActions doc={ article } type="article" />
+            <DocActions
+              type="article"
+              doc={ article }
+              section={ section }
+              sections={ sections }
+              setShowArticles={ setShowArticles }
+            />
           ) }
         </div>
       </div>

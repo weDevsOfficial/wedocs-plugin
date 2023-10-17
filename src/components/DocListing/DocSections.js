@@ -4,7 +4,7 @@ import docStore from '../../data/docs';
 import SectionArticles from './SectionArticles';
 import { useEffect, useState } from '@wordpress/element';
 import AddArticleModal from '../AddArticleModal';
-import RestictionModal from '../RestrictionModal';
+import RestrictionModal from '../RestrictionModal';
 
 import {
   SortableContext,
@@ -204,7 +204,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                   </a>
 
                   { isAdmin && (
-                    <RestictionModal
+                    <RestrictionModal
                       docId={ section.id }
                       type="section"
                       classes="ml-4 hidden group-hover:block"
@@ -229,7 +229,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                           />
                         </svg>
                       </span>
-                    </RestictionModal>
+                    </RestrictionModal>
                   ) }
                 </div>
               </div>
@@ -269,6 +269,9 @@ const DocSections = ( { section, sections, searchValue } ) => {
                         key={ article.id }
                         article={ article }
                         isAdmin={ isAdmin }
+                        section={ section }
+                        sections={ sections }
+                        setShowArticles={ setShowArticles }
                         isAllowComments={ isCommentsAllowed }
                       />
                     ) ) }

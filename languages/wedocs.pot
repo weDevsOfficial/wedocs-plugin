@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-13T06:09:33+00:00\n"
+"POT-Creation-Date: 2023-10-17T20:48:10+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -93,7 +93,7 @@ msgstr ""
 
 #: includes/Admin/Migrate.php:182
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:13
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:11
 msgid "Untitled Docs"
 msgstr ""
 
@@ -244,7 +244,7 @@ msgstr ""
 
 #: includes/Post_Types.php:35
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:142
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:140
 msgid "Parent Doc"
 msgstr ""
 
@@ -481,7 +481,7 @@ msgstr ""
 
 #: templates/single-docs.php:64
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:19
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:17
 msgid "Articles"
 msgstr ""
 
@@ -496,7 +496,7 @@ msgstr ""
 
 #: templates/single-docs.php:108
 #: assets/build/index.js:1
-#: src/components/DocListing/SectionArticles.js:198
+#: src/components/DocListing/SectionArticles.js:229
 msgid "Updated on %s"
 msgstr ""
 
@@ -637,6 +637,7 @@ msgstr ""
 #: src/components/AddArticleModal.js:210
 #: src/components/AddDocModal.js:169
 #: src/components/AddSectionModal.js:170
+#: src/components/DocListing/QuickEditModal.js:251
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:252
 #: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:124
 #: src/components/ProPreviews/PermissionSettings.js:113
@@ -1345,24 +1346,24 @@ msgid "Upgrade to PRO "
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocActions.js:48
+#: src/components/DocActions.js:51
 #: src/components/DocListing/DocSections.js:161
 #: src/components/DocListing/ListingHeader.js:49
-#: src/components/DocListing/SectionArticles.js:118
+#: src/components/DocListing/SectionArticles.js:119
 msgid "Edit"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocListing/DocSections.js:187
 #: src/components/DocListing/ListingHeader.js:73
-#: src/components/DocListing/SectionArticles.js:139
+#: src/components/DocListing/SectionArticles.js:140
 msgid "View on Web"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocListing/DocSections.js:135
 #: src/components/DocListing/ListingHeader.js:92
-#: src/components/DocListing/SectionArticles.js:111
+#: src/components/DocListing/SectionArticles.js:112
 #: src/components/Documentations/ParentDocs.js:98
 msgid "Draft"
 msgstr ""
@@ -1378,7 +1379,8 @@ msgstr ""
 #: src/components/AddDocModal.js:194
 #: src/components/AddSectionModal.js:195
 #: src/components/ConfirmationModal.js:140
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:201
+#: src/components/DocListing/QuickEditModal.js:240
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:199
 #: src/components/Migrations/Modals/MigrationProgressModal.js:155
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:195
 #: src/components/RestrictionModal.js:134
@@ -1390,20 +1392,10 @@ msgstr ""
 #: src/components/AddDocModal.js:57
 #: src/components/AddSectionModal.js:55
 #: src/components/ConfirmationModal.js:24
+#: src/components/DocListing/QuickEditModal.js:92
 #: src/components/RestrictionModal.js:39
-#: src/components/Settings/index.js:49
+#: src/components/Settings/index.js:53
 msgid "Error"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocActions.js:57
-msgid "View"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocActions.js:69
-#: src/components/DocListing/DocSections.js:214
-msgid "Delete"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1419,17 +1411,58 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/AddArticleModal.js:157
+#: src/components/DocListing/QuickEditModal.js:168
 msgid "Enter your article title"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/AddArticleModal.js:161
+#: src/components/DocListing/QuickEditModal.js:172
 msgid "Describe what the article is about"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/AddArticleModal.js:169
+#: src/components/DocListing/QuickEditModal.js:180
+#: src/components/DocListing/QuickEditModal.js:206
 msgid "Type an article name"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:80
+msgid "Article updated!"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:81
+msgid "Article has been updated successfully"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:265
+msgid "Update and Draft"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:268
+msgid "Update and Publish"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:60
+msgid "View"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:71
+#: src/components/DocListing/SectionArticles.js:175
+msgid "Quick Edit"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:84
+#: src/components/DocListing/DocSections.js:214
+msgid "Delete"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1462,7 +1495,7 @@ msgid "Create"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:287
+#: src/components/DocListing/DocSections.js:290
 #: src/components/DocListing/ListingButtons.js:32
 #: src/components/Documentations/AddChildrens.js:23
 msgid "Add article"
@@ -1558,7 +1591,7 @@ msgstr ""
 #: assets/build/index.js:5
 #: src/components/DocListing/index.js:110
 #: src/components/Documentations/index.js:89
-#: src/components/Settings/index.js:121
+#: src/components/Settings/index.js:125
 msgid "weDocs database has been updated successfully"
 msgstr ""
 
@@ -1566,7 +1599,7 @@ msgstr ""
 #: assets/build/index.js:5
 #: src/components/DocListing/index.js:111
 #: src/components/Documentations/index.js:90
-#: src/components/Settings/index.js:122
+#: src/components/Settings/index.js:126
 msgid "Database Updated!"
 msgstr ""
 
@@ -1609,11 +1642,6 @@ msgstr ""
 #: src/components/Settings/GeneralSettings.js:34
 #: src/components/Settings/Menu.js:9
 msgid "General"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/Settings/SaveButton.js:11
-msgid "Save Settings"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1704,12 +1732,12 @@ msgid "Choose if your sections should be collapsed or expanded in Doc Homepage."
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/index.js:38
+#: src/components/Settings/index.js:42
 msgid "Settings Data Saved!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/index.js:39
+#: src/components/Settings/index.js:43
 msgid "Settings data has been saved successfully"
 msgstr ""
 
@@ -1746,7 +1774,7 @@ msgstr ""
 #: assets/build/index.js:1
 #: assets/build/index.js:5
 #: src/components/Documentations/EmptyDocs.js:84
-#: src/components/Migrations/index.js:191
+#: src/components/Migrations/index.js:203
 msgid "Learn More "
 msgstr ""
 
@@ -1808,7 +1836,6 @@ msgid "Are you sure to migrate?"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:74
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:74
 msgid "We want to make sure you have a successful migration experience to weDocs."
 msgstr ""
@@ -1844,59 +1871,68 @@ msgid "Yes, I'm sure"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:17
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:15
 msgid "Categories"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:17
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:18
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:15
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:16
 msgid "Section"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:18
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:16
 msgid "Subcategories"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:71
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:69
 msgid "BetterDocs to weDocs content mapping"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:95
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:123
-msgid "We want to make sure you have a successful migration"
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:72
+msgid "We want to make sure you have a seamless migration experience to weDocs"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:148
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:93
+msgid "No parent doc, only category & subcategory-based articles"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:121
+msgid "Articles under super-organized parent doc-section structure"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:146
 msgid "Created by weDocs"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:207
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:205
 msgid "Continue"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/index.js:215
+#: src/components/Migrations/index.js:227
 msgid "Already Migrated"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/index.js:231
+#: src/components/Migrations/index.js:243
 msgid "Start Migrations"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/index.js:257
+#: src/components/Migrations/index.js:270
 msgid "Go back to Docs"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/index.js:277
+#: src/components/Migrations/index.js:290
 msgid "Migration not required"
 msgstr ""
 

@@ -1,8 +1,11 @@
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import RestictionModal from './RestrictionModal';
+import QuickEditModal from './DocListing/QuickEditModal';
+import { userIsAdmin } from '../utils/helper';
 
-const DocActions = ( { doc, type } ) => {
+const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
+  const isAdmin = userIsAdmin();
   const restrictionAction = wp.hooks.applyFilters(
     'wedocs_admin_article_restriction_action',
     '',
@@ -56,6 +59,18 @@ const DocActions = ( { doc, type } ) => {
           >
             { __( 'View', 'wedocs' ) }
           </a>
+
+          { isAdmin && (
+            <QuickEditModal
+              article={ doc }
+              sections={ sections }
+              defaultSection={ section }
+              setShowArticles={ setShowArticles }
+              className={ `group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none w-full` }
+            >
+              { __( 'Quick Edit', 'wedocs' ) }
+            </QuickEditModal>
+          ) }
 
           { /* Add external actions */ }
           { restrictionAction }
