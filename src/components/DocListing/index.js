@@ -32,7 +32,18 @@ const ListingPage = () => {
     []
   );
 
+  const sortableStatus = useSelect(
+    ( select ) => select( docsStore ).getSortingStatus(),
+    []
+  );
+
+  const needSortableStatus = useSelect(
+    ( select ) => select( docsStore ).getNeedSortingStatus(),
+    []
+  );
+
   const [ searchValue, setSearchValue ] = useState( '' );
+  const [ needSortingStatus, setNeedSortingStatus ] = useState( needSortableStatus );
 
   const handleChange = ( event, reset = false ) => {
     if ( reset ) {
@@ -119,6 +130,15 @@ const ListingPage = () => {
       .catch( ( err ) => {} );
   }
 
+  useEffect( () => {
+    if ( needSortingStatus ) {
+      dispatch( docsStore )
+        .updateSortingStatus( { sortable_status: sortableStatus, documentations: sections } )
+        .then( ( result ) => setNeedSortingStatus( result?.sorting ) )
+        .catch( ( err ) => {} );
+    }
+  }, [ needSortingStatus ] );
+
   return (
     <Fragment>
       { validParam ? (
@@ -128,9 +148,9 @@ const ListingPage = () => {
           <div className="flex items-center justify-between mb-7">
             <BackToDocsPage />
             <SearchFilter
-              handleChange={ handleChange }
-              searchValue={ searchValue }
               listing={ true }
+              searchValue={ searchValue }
+              handleChange={ handleChange }
             />
           </div>
 
@@ -139,7 +159,10 @@ const ListingPage = () => {
           { ! loading && sections.length > 0 && (
             <>
               { isAdmin ? (
-                <DraggableDocs setItems={ setSections }>
+                <DraggableDocs
+                  setItems={ setSections }
+                  setNeedSortingStatus={ setNeedSortingStatus }
+                >
                   <SortableContext
                     items={ sections }
                     strategy={ verticalListSortingStrategy }
@@ -147,8 +170,8 @@ const ListingPage = () => {
                     { sections?.map( ( section ) => (
                       <DocSections
                         key={ section.id }
-                        sections={ sections }
                         section={ section }
+                        sections={ sections }
                         searchValue={ searchValue }
                       />
                     ) ) }
@@ -159,8 +182,8 @@ const ListingPage = () => {
                   { sections?.map( ( section ) => (
                     <DocSections
                       key={ section.id }
-                      sections={ sections }
                       section={ section }
+                      sections={ sections }
                       searchValue={ searchValue }
                     />
                   ) ) }

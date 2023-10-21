@@ -514,3 +514,30 @@ function wedocs_user_documentation_handling_capabilities() {
         }
     }
 }
+
+/**
+ * Check premium version
+ * availability.
+ *
+ * @since 2.0.0
+ *
+ * @return bool
+ */
+function wedocs_pro_exists() {
+    if ( ! class_exists( 'WeDocs_Pro' ) ) {
+        return false;
+    }
+
+    // Check weDocs pro plugin domain availability.
+    $active_plugins = get_option( 'active_plugins' );
+    foreach ( $active_plugins as $plugin ) {
+        $plugin_data        = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
+        $plugin_text_domain = ! empty( $plugin_data[ 'TextDomain' ] ) ? sanitize_key( $plugin_data[ 'TextDomain' ] ) : '';
+
+        if ( $plugin_text_domain === 'wedocs-pro' ) {
+            return true;
+        }
+    }
+
+     return false;
+}

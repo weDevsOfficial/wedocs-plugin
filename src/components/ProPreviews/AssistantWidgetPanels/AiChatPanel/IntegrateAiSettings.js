@@ -16,7 +16,7 @@ const IntegrateAiSettings = () => {
                                 id="headlessui-listbox-label-15"
                                 data-headlessui-state="open"
                             >
-                                { __('Manage AI Chatbot Billing', 'wedocs') }
+                                { __('Manage A.I. Chatbot Billing', 'wedocs') }
                             </label>
                         </div>
                         <div className="settings-field w-full align-center max-w-[490px] mt-1 ml-auto">

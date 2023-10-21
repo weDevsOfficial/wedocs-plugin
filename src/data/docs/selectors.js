@@ -24,6 +24,16 @@ const selectors = {
     return loading;
   },
 
+  getSortingStatus: ( state ) => {
+    const { sorting } = state;
+    return sorting;
+  },
+
+  getNeedSortingStatus: ( state ) => {
+    const { needSorting } = state;
+    return needSorting;
+  },
+
   getUserDocIds: ( state ) => {
     const { userDocIds } = state;
     return userDocIds;

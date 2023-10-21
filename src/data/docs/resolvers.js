@@ -40,6 +40,20 @@ const resolvers = {
     return actions.setLoading( false );
   },
 
+  *getSortingStatus() {
+    yield actions.setLoading( true );
+    const response = yield actions.fetchFromAPI( '/wp/v2/docs/sorting_status' );
+    yield actions.setSortingStatus( response );
+    return actions.setLoading( false );
+  },
+
+  *getNeedSortingStatus() {
+    yield actions.setLoading( true );
+    const response = yield actions.fetchFromAPI( '/wp/v2/docs/need_sorting_status' );
+    yield actions.setNeedSortingStatus( response );
+    return actions.setLoading( false );
+  },
+
   *getUserDocIds() {
     yield actions.setLoading( true );
     const userDocIds = yield actions.fetchFromAPI( `/wp/v2/docs/users/ids` );

@@ -81,7 +81,7 @@ const EmptyDocs = () => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    { __( 'Learn More ', 'wedocs' ) }
+                    { __( 'Learn more ', 'wedocs' ) }
                   </a>
                   { __( 'how to create a new doc', 'wedocs' ) }
                 </p>

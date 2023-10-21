@@ -41,7 +41,7 @@ const MessagePreview = ( { settings, previewColors } ) => {
     const tabs = [
         {
             key: 'integrate_ai',
-            name: __( 'Ai Chatbot', 'wedocs' ),
+            name: __( 'A.I. Chatbot', 'wedocs' ),
             enable: settings?.integrate_ai?.ai_enabled !== 'off',
             icon: (
               <svg

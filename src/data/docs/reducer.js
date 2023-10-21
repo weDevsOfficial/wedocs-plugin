@@ -3,8 +3,10 @@ const DEFAULT_STATE = {
   pages: [],
   parents: [],
   loading: false,
+  sorting: false,
   userDocIds: [],
   helpfulDocs: [],
+  needSorting: false,
 };
 
 const reducer = ( state = DEFAULT_STATE, action ) => {
@@ -47,6 +49,18 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
       return {
         ...state,
         loading: action.loading,
+      };
+
+    case 'SET_SORTING_STATUS':
+      return {
+        ...state,
+        sorting: action.sorting,
+      };
+
+    case 'SET_NEED_SORTING_STATUS':
+      return {
+        ...state,
+        needSorting: action.needSorting,
       };
 
     case 'SET_HELPFUL_DOCS':

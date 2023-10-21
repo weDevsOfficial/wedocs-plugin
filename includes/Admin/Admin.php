@@ -18,6 +18,7 @@ class Admin {
         add_filter( 'parent_file', [ $this, 'fix_tag_menu' ], 15 );
         add_filter( 'submenu_file', [ $this, 'highlight_admin_submenu' ] );
         add_filter( 'admin_footer_text', [ $this, 'admin_footer_text' ], 1 );
+        add_action( 'admin_notices', [ $this, 'show_wedocs_pro_available_notice' ] );
     }
 
     /**
@@ -28,6 +29,14 @@ class Admin {
      * @return void
      */
     public function admin_scripts( $hook ) {
+        wp_enqueue_script(
+            'wedocs-admin-script',
+            wedocs()->plugin_url() . '/assets/js/admin-script.js',
+            [ 'jquery' ],
+            filemtime( wedocs()->plugin_path() . '/assets/js/admin-script.js' ),
+            true
+        );
+
         if ( 'toplevel_page_wedocs' !== $hook ) {
             return;
         }
@@ -85,6 +94,27 @@ class Admin {
         }
 
         return $submenu_file;
+    }
+
+    /**
+     * Show weDocs pro available notices.
+     *
+     * @since 2.0.0
+     *
+     * @return void
+     */
+    public function show_wedocs_pro_available_notice() {
+        if ( wedocs_pro_exists() ) {
+            return;
+        }
+
+        // Check if the admin notice should be hidden based on the user meta.
+        $user_id     = get_current_user_id();
+        $hide_notice = get_user_meta( $user_id, 'wedocs_hide_pro_notice', true );
+        if ( ! $hide_notice ) {
+            // Render weDocs pro info notice.
+            wedocs_get_template_part( 'pro', 'notice' );
+        }
     }
 
     /**

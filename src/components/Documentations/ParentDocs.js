@@ -103,7 +103,7 @@ const ParentDocs = ( { doc } ) => {
                 height="17"
                 fill="none"
                 { ...listeners }
-                className={ `cursor-grab ml-1.5` }
+                className={ `cursor-grab pl-1.5 box-content` }
               >
                 <path
                   fill="#9ca3af"

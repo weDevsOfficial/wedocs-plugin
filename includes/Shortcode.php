@@ -90,6 +90,9 @@ class Shortcode {
             }
         }
 
+        // Count documentation length.
+        $docs_length = ! empty( $arranged ) ? count( $arranged ) : 0;
+
 	    /**
 	     * Handle single docs template directory.
 	     *
@@ -115,7 +118,7 @@ class Shortcode {
             array(
                 'docs' => $arranged,
                 'more' => $args['more'],
-                'col'  => (int) $args['col'],
+                'col'  => (int) ( $docs_length === 1 ? $docs_length : $args['col'] ),
             )
         );
 

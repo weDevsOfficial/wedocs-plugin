@@ -166,6 +166,173 @@ class API extends WP_REST_Controller {
                 ],
             ],
         ] );
+
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/sorting_status', [
+            [
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => [ $this, 'get_sortable_status' ],
+                'permission_callback' => [ $this, 'sortable_item_permissions_check' ],
+            ],
+            [
+                'methods'             => WP_REST_Server::CREATABLE,
+                'callback'            => [ $this, 'update_sortable_status' ],
+                'permission_callback' => [ $this, 'sortable_item_permissions_check' ],
+                'args'                => [
+                    'sortable_status' => [
+                        'required'          => true,
+                        'type'              => 'boolean',
+                        'sanitize_callback' => 'rest_sanitize_boolean',
+                    ],
+                    'documentations'  => [
+                        'required'    => true,
+                        'type'        => 'object',
+                        'description' => __( 'Documentations data', 'wedocs' ),
+                    ]
+                ],
+            ],
+        ] );
+
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/need_sorting_status', [
+            [
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => [ $this, 'get_need_sortable_status' ],
+                'permission_callback' => [ $this, 'sortable_item_permissions_check' ],
+            ],
+            [
+                'methods'             => WP_REST_Server::CREATABLE,
+                'callback'            => [ $this, 'update_need_sortable_status' ],
+                'permission_callback' => [ $this, 'sortable_item_permissions_check' ],
+                'args'                => [
+                    'need_sortable_status' => [
+                        'required'          => true,
+                        'type'              => 'boolean',
+                        'sanitize_callback' => 'rest_sanitize_boolean',
+                    ],
+                ],
+            ],
+        ] );
+    }
+
+    /**
+     * Get need sortable status.
+     *
+     * @since 2.0.0
+     *
+     * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
+     */
+    public function get_need_sortable_status() {
+        $need_sortable_status = get_option( 'wedocs_need_sortable_status', false );
+        return rest_ensure_response( $need_sortable_status );
+    }
+
+    /**
+     * Get sortable status.
+     *
+     * @since 2.0.0
+     *
+     * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
+     */
+    public function get_sortable_status() {
+        $need_sortable_status = get_option( 'wedocs_sortable_status', false );
+        return rest_ensure_response( $need_sortable_status );
+    }
+
+    /**
+     * Update need sortable status.
+     *
+     * @since 2.0.0
+     *
+     * @param WP_REST_Request $request full data about the request
+     *
+     * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
+     */
+    public function update_need_sortable_status( $request ) {
+        if ( ! is_user_logged_in() ) {
+            return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ) );
+        }
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return new WP_Error( 'wedocs_permission_failure', __( 'Unauthorized permission error', 'wedocs' ) );
+        }
+
+        if ( ! isset( $request['need_sortable_status'] ) ) {
+            return new WP_Error( 'wedocs_required_args', __( 'Currently sortable status not given', 'wedocs' ) );
+        }
+
+        update_option( 'wedocs_need_sortable_status', $request['need_sortable_status'] );
+        return rest_ensure_response( $request['need_sortable_status'] );
+    }
+
+    /**
+     * Update sortable status.
+     *
+     * @since 2.0.0
+     *
+     * @param WP_REST_Request $request full data about the request
+     *
+     * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
+     */
+    public function update_sortable_status( $request ) {
+        // Check log in status.
+        if ( ! is_user_logged_in() ) {
+            return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ) );
+        }
+
+        // Check current user is admin.
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return new WP_Error( 'wedocs_permission_failure', __( 'Unauthorized permission error', 'wedocs' ) );
+        }
+
+        // Check sortable status is running or not.
+        if ( ! isset( $request['sortable_status'] ) ) {
+            return new WP_Error( 'wedocs_required_args', __( 'Currently sortable status not given', 'wedocs' ) );
+        }
+
+        // Check currently sorting is necessary or not.
+        $need_sortable_status = get_option( 'wedocs_need_sortable_status', false );
+        if ( empty( $need_sortable_status ) ) {
+            return new WP_Error( 'wedocs_need_sorting_required', __( 'Need sortable status is required', 'wedocs' ) );
+        }
+
+        // Check documentation exists or not.
+        if ( empty( $request['documentations'] ) ) {
+            return new WP_Error( 'wedocs_required_args', __( 'Currently documentations data not found for update', 'wedocs' ) );
+        }
+
+        // Make sortable status running.
+        update_option( 'wedocs_sortable_status', true );
+        foreach ( $request['documentations'] as $index => $doc ) {
+            $post_data = [
+                'ID'          => $doc['id'],
+                'post_type'   => 'docs',
+                'menu_order'  => $index,
+            ];
+
+            wp_update_post( $post_data, true );
+        }
+
+        // Reset sortable statuses.
+        update_option( 'wedocs_sortable_status', false );
+        update_option( 'wedocs_need_sortable_status', false );
+        return rest_ensure_response( false );
+    }
+
+    /**
+     * Check sortable items permission check.
+     *
+     * @since 2.0.0
+     *
+     * @return \WP_Error|bool
+     */
+    public function sortable_item_permissions_check() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return new WP_Error(
+                'wedocs_permission_failure',
+                __( 'Unauthorized permission error', 'wedocs' )
+            );
+        }
+
+        return true;
     }
 
     /**
@@ -518,7 +685,7 @@ class API extends WP_REST_Controller {
         if ( ! current_user_can( 'manage_options' ) ) {
             return new WP_Error(
                 'wedocs_permission_failure',
-                esc_html__( 'You cannot delete the documentation resource.', 'wedocs' )
+                __( 'You cannot delete the documentation resource.', 'wedocs' )
             );
         }
 
@@ -539,7 +706,7 @@ class API extends WP_REST_Controller {
         $doc    = get_post( $doc_id );
 
         if ( ! $doc ) {
-            return new WP_Error( 'rest_invalid_documentation', esc_html__( 'Invalid Documentation.', 'wedocs' ) );
+            return new WP_Error( 'rest_invalid_documentation', __( 'Invalid Documentation.', 'wedocs' ) );
         }
 
         $this->remove_child_docs( $doc_id );

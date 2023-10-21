@@ -35,6 +35,10 @@ class Ajax {
         // Data migration.
         add_action( 'wp_ajax_wedocs_check_need_betterdocs_migration', [ Migrate::class, 'need_migration' ] );
         add_action( 'wp_ajax_wedocs_migrate_betterdocs_to_wedocs', [ Migrate::class, 'do_migration' ] );
+
+        // Handle weDocs pro notice.
+        add_action( 'wp_ajax_hide_wedocs_pro_notice', [ $this, 'hide_pro_notice' ] );
+        add_action( 'wp_ajax_nopriv_hide_wedocs_pro_notice', [ $this, 'hide_pro_notice' ] );
     }
 
     /**
@@ -317,14 +321,14 @@ class Ajax {
     }
 
     /**
-     * Hide weDocs beta notice.
+     * Hide weDocs pro notice.
      *
-     * @since 1.7.7
+     * @since 2.0.0
      *
      * @return void
      */
-    public function hide_beta_notice() {
+    public function hide_pro_notice() {
         $user_id = get_current_user_id();
-        update_user_meta( $user_id, 'wedocs_hide_beta_notice', true );
+        update_user_meta( $user_id, 'wedocs_hide_pro_notice', true );
     }
 }

@@ -1,10 +1,10 @@
 import { __ } from '@wordpress/i18n';
-import { useSelect } from '@wordpress/data';
+import { dispatch, useSelect } from '@wordpress/data';
 import docStore from '../../data/docs';
 import SectionArticles from './SectionArticles';
 import { useEffect, useState } from '@wordpress/element';
 import AddArticleModal from '../AddArticleModal';
-import RestictionModal from '../RestrictionModal';
+import RestrictionModal from '../RestrictionModal';
 
 import {
   SortableContext,
@@ -16,10 +16,10 @@ import DraggableDocs from '../DraggableDocs';
 import extractedTitle from '../../utils/extractedTitle';
 import settingsStore from '../../data/settings';
 import he from 'he';
-import { userIsAdmin } from "../../utils/helper";
+import docsStore from '../../data/docs';
 
 const DocSections = ( { section, sections, searchValue } ) => {
-  const isAdmin = userIsAdmin();
+  const isAdmin = weDocsAdminVars?.hasManageCap;
   const { id, title } = section;
   const [ showArticles, setShowArticles ] = useState( id === sections?.[0]?.id );
 
@@ -33,12 +33,22 @@ const DocSections = ( { section, sections, searchValue } ) => {
   } = useSortable( { id: section.id } );
 
   const style = {
-    transform: CSS.Transform.toString( transform ),
+    transform: CSS?.Transform?.toString( transform ),
     transition,
   };
 
   const sectionArticles = useSelect(
     ( select ) => select( docStore ).getSectionArticles( parseInt( id ) ),
+    []
+  );
+
+  const sortableStatus = useSelect(
+    ( select ) => select( docsStore ).getSortingStatus(),
+    []
+  );
+
+  const needSortableStatus = useSelect(
+    ( select ) => select( docsStore ).getNeedSortingStatus(),
     []
   );
 
@@ -48,10 +58,20 @@ const DocSections = ( { section, sections, searchValue } ) => {
     ) || [];
 
   const [ articles, setArticles ] = useState( [] );
+  const [ needSortingStatus, setNeedSortingStatus ] = useState( needSortableStatus );
 
   useEffect( () => {
     setArticles( [ ...filteredArticles ] );
   }, [ sectionArticles, searchValue ] );
+
+  useEffect( () => {
+    if ( needSortingStatus ) {
+      dispatch( docsStore )
+        .updateSortingStatus( { sortable_status: sortableStatus, documentations: articles } )
+        .then( ( result ) => setNeedSortingStatus( result?.sorting ) )
+        .catch( ( err ) => {} );
+    }
+  }, [ needSortingStatus ] );
 
   const settings = useSelect(
     ( select ) => select( settingsStore ).getSettings(),
@@ -65,7 +85,6 @@ const DocSections = ( { section, sections, searchValue } ) => {
   return (
     <div
       className="space-y-4 mb-3"
-      ref={ setNodeRef }
       style={ style }
       { ...attributes }
       { ...listeners }
@@ -77,18 +96,21 @@ const DocSections = ( { section, sections, searchValue } ) => {
             onClick={ () => setShowArticles( ! showArticles ) }
           >
             { isAdmin && (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="21"
-                fill="none"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M8.5 7.498c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 8.573 8.5 7.498zm0 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 15.467 8.5 14.392zm3-6.894c0-1.075.871-1.947 1.947-1.947s1.947.872 1.947 1.947-.872 1.947-1.947 1.947S11.5 8.573 11.5 7.498zm3.893 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.871 1.947 1.947 1.947 1.947-.872 1.947-1.947z"
-                  fill="#d9d9d9"
-                />
-              </svg>
+              <div className={ `pr-3.5 py-0.5 cursor-grab` }>
+                <svg
+                  width="20"
+                  height="21"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  ref={ setNodeRef }
+                >
+                  <path
+                    fill="#d9d9d9"
+                    fillRule="evenodd"
+                    d="M8.5 7.498c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 8.573 8.5 7.498zm0 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 15.467 8.5 14.392zm3-6.894c0-1.075.871-1.947 1.947-1.947s1.947.872 1.947 1.947-.872 1.947-1.947 1.947S11.5 8.573 11.5 7.498zm3.893 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.871 1.947 1.947 1.947 1.947-.872 1.947-1.947z"
+                  />
+                </svg>
+              </div>
             ) }
             <div className="flex items-center w-full">
               <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
@@ -96,7 +118,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                   <div className="flex items-center text-sm pr-5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-auto px-3.5"
+                      className="w-auto pr-3.5"
                       width="20"
                       height="17"
                       fill="none"
@@ -204,7 +226,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                   </a>
 
                   { isAdmin && (
-                    <RestictionModal
+                    <RestrictionModal
                       docId={ section.id }
                       type="section"
                       classes="ml-4 hidden group-hover:block"
@@ -229,7 +251,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                           />
                         </svg>
                       </span>
-                    </RestictionModal>
+                    </RestrictionModal>
                   ) }
                 </div>
               </div>
@@ -258,8 +280,11 @@ const DocSections = ( { section, sections, searchValue } ) => {
                 isAdmin ? 'mt-3' : ''
               } section-article pl-4 sm:pl-6` }
             >
-              { articles && articles.length > 0 && (
-                <DraggableDocs setItems={ setArticles }>
+              { articles?.length ? (
+                <DraggableDocs
+                  setItems={ setArticles }
+                  setNeedSortingStatus={ setNeedSortingStatus }
+                >
                   <SortableContext
                     items={ articles }
                     strategy={ verticalListSortingStrategy }
@@ -269,12 +294,15 @@ const DocSections = ( { section, sections, searchValue } ) => {
                         key={ article.id }
                         article={ article }
                         isAdmin={ isAdmin }
+                        section={ section }
+                        sections={ sections }
+                        setShowArticles={ setShowArticles }
                         isAllowComments={ isCommentsAllowed }
                       />
                     ) ) }
                   </SortableContext>
                 </DraggableDocs>
-              ) }
+              ): null }
 
               { isAdmin && (
                 <AddArticleModal

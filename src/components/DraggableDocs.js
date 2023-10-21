@@ -11,7 +11,7 @@ import { arrayMove } from '@dnd-kit/sortable';
 import { dispatch } from '@wordpress/data';
 import docsStore from '../data/docs';
 
-const DraggableDocs = ( { setItems, children } ) => {
+const DraggableDocs = ( { setItems, children, setNeedSortingStatus } ) => {
   const sensors = useSensors(
     useSensor( PointerSensor, {
       activationConstraint: {
@@ -37,12 +37,13 @@ const DraggableDocs = ( { setItems, children } ) => {
         const newIndex = elements.indexOf( newItem );
         const updatedOrder = arrayMove( elements, oldIndex, newIndex );
 
-        updatedOrder.forEach( ( doc, index ) => {
+        { updatedOrder &&
           dispatch( docsStore )
-            .updateDoc( doc?.id, { menu_order: index } )
-            .then( ( result ) => {} )
-            .catch( ( err ) => {} );
-        } );
+            ?.updateNeedSortingStatus( { need_sortable_status: true } )
+            ?.then( ( result ) => {
+              setNeedSortingStatus( result?.needSorting );
+            } );
+        }
 
         return updatedOrder;
       } );
