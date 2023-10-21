@@ -450,19 +450,40 @@ class API extends WP_REST_Controller {
      * @return mixed
      */
     public function get_helpful_docs() {
+        // Get all docs.
         $args = array(
-            'posts_per_page' => 10,
             'post_type'      => 'docs',
-            'meta_key'       => 'positive',
-            'orderby'        => 'meta_value',
-            'fields'         => 'ids',
-            'order'          => 'DESC',
+            'posts_per_page' => -1 // Retrieve all docs.
         );
 
-        $query   = new WP_Query( $args );
-        $doc_ids = ! empty( $query->posts ) ? $query->posts : [];
+        $docs = get_posts( $args );
 
-        return rest_ensure_response( $doc_ids );
+        // Create an array to store the vote counts
+        $vote_counts = array();
+
+        // Loop through each post and calculate the vote count
+        foreach ( $docs as $doc ) {
+            if ( empty( $doc->ID ) ) {
+                continue;
+            }
+
+            $positive = (int) get_post_meta( $doc->ID, 'positive', true );
+            $negative = (int) get_post_meta( $doc->ID, 'negative', true );
+            if ( empty( $positive ) && empty( $negative ) ) {
+                continue;
+            }
+
+            $vote_count              = $positive - $negative;
+            $vote_counts[ $doc->ID ] = $vote_count;
+        }
+
+        // Sort the vote counts in descending order
+        arsort( $vote_counts );
+
+        // Get the top 10 post IDs
+        $top_10_post_ids = array_slice( array_keys( $vote_counts ), 0, 10 );
+
+        return rest_ensure_response( $top_10_post_ids );
     }
 
     /**

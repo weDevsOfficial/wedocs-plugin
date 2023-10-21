@@ -6,12 +6,6 @@ import { userIsAdmin } from '../utils/helper';
 
 const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
   const isAdmin = userIsAdmin();
-  const restrictionAction = wp.hooks.applyFilters(
-    'wedocs_admin_article_restriction_action',
-    '',
-    doc?.id,
-    type
-  );
 
   const documentationActionMenuWidth = wp.hooks.applyFilters(
     'wedocs_admin_documentation_action_menu_width',
@@ -73,7 +67,12 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           </a>
 
           { /* Add external actions */ }
-          { restrictionAction }
+          { wp.hooks.applyFilters(
+            'wedocs_admin_article_restriction_action',
+            '',
+            doc?.id,
+            type
+          ) }
 
           { /* Delete documentation */ }
           <RestictionModal

@@ -195,7 +195,7 @@ const Migrate = () => {
                             <p className='text-[#666B79] text-lg mx-auto'>
                                 { !migrationSuccess && (
                                     <a
-                                        href='https://wedocs.co/docs/wedocs/how-to/how-to-create-a-doc/'
+                                        href='//wedocs.co/docs/wedocs/migration/how-to-migrate-documentation-from-betterdocs-to-wedocs/'
                                         className='text-[#0043FF] !shadow-none'
                                         target='_blank'
                                         rel='noreferrer'
@@ -240,7 +240,7 @@ const Migrate = () => {
                                                     d='M12.389 5.622a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414l2.293-2.293H3.096a1 1 0 0 1 0-2h11.586l-2.293-2.293a1 1 0 0 1 0-1.414z'
                                                 />
                                             </svg>
-                                            { __( `Start Migrations`, 'wedocs' ) }
+                                            { __( `Start Migration`, 'wedocs' ) }
                                         </Fragment>
                                     ) }
                                 </MigrationSelectionModal>

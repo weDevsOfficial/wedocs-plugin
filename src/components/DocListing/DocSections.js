@@ -34,6 +34,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
 
   const style = {
     transform: CSS?.Transform?.toString( transform ),
+    zIndex: isDragging ? 9999 : 0,
     transition,
   };
 
@@ -84,10 +85,9 @@ const DocSections = ( { section, sections, searchValue } ) => {
 
   return (
     <div
-      className="space-y-4 mb-3"
+      className="space-y-4 mb-3 relative"
       style={ style }
       { ...attributes }
-      { ...listeners }
     >
       <div className="bg-white shadow sm:rounded-md">
         <div className="doc-section cursor-pointer px-4 py-5 sm:px-6">
@@ -101,8 +101,9 @@ const DocSections = ( { section, sections, searchValue } ) => {
                   width="20"
                   height="21"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                  { ...listeners }
                   ref={ setNodeRef }
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     fill="#d9d9d9"

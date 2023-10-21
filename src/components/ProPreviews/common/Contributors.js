@@ -6,6 +6,7 @@ import avatarFour from '../../../assets/img/avatar-four.jpg';
 
 const Contributors = () => {
   const handleUpgradeClick = ( event ) => {
+    event.preventDefault();
     event.stopPropagation();
     window.open( '//wedocs.co', '_blank' );
   };

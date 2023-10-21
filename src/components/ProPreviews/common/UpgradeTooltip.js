@@ -3,11 +3,11 @@ import UpgradeButton from './UpgradeButton';
 
 const UpgradeTooltip = ( { classes } ) => {
   const features = [
-    __( 'Role-based Permission Management', 'wedocs' ),
+    __( 'Role-based permission management', 'wedocs' ),
     __( 'Auto & manual content arrangement', 'wedocs' ),
     __( 'Customizable doc & messaging tab' , 'wedocs' ),
-    __( 'Pre-built & Custom Colors', 'wedocs' ),
-    __( 'Assistant Widget and Ai Powered Chat Bot', 'wedocs' ),
+    __( 'Pre-built & custom colors', 'wedocs' ),
+    __( 'Assistant widget and A.I. Powered Chatbot', 'wedocs' ),
   ];
 
   return (

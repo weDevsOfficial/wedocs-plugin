@@ -18,12 +18,13 @@ const ParentDocs = ( { doc } ) => {
 
   const isAdmin = userIsAdmin();
 
-  const { attributes, listeners, setNodeRef, transform, transition } =
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable( { id: doc.id } );
 
   const style = {
     transform: CSS.Transform.toString( transform ),
-    transition,
+    zIndex: isDragging ? 9999 : 1,
+    transition
   };
 
   const privacyIcon = wp.hooks.applyFilters(

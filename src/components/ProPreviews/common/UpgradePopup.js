@@ -113,7 +113,7 @@ const UpgradePopup = ({ children }) => {
                           </div>
                           <div className='check-list'>
                             <p className='text-[#656668] mb-0.5 mt-[13px] pr-8 text-[13px] leading-normal font-normal'>
-                              <span className='font-medium text-black'>{ __( 'Role based Permission management ', 'wedocs' ) }</span>
+                              <span className='font-medium text-black'>{ __( 'Role based permission management ', 'wedocs' ) }</span>
                               { __( 'or viewing, managing, and configuring permission settings.', 'wedocs' ) }
                             </p>
                           </div>
@@ -174,8 +174,8 @@ const UpgradePopup = ({ children }) => {
                           </div>
                           <div className='check-list'>
                             <p className='text-[#656668] mb-0.5 mt-[13px] pr-14 text-[13px] leading-normal font-normal'>
-                              <span className='font-medium text-black'>{ __( 'Get assisted by Ai Powered Chatbot ', 'wedocs' ) }</span>
-                              { __( '24/7 with updated information and support. (Upcoming)', 'wedocs' ) }
+                              <span className='font-medium text-black'>{ __( 'Get assisted by A.I. Powered Chatbot ', 'wedocs' ) }</span>
+                              { __( '24/7 with updated information and support.', 'wedocs' ) }
                             </p>
                           </div>
                         </div>

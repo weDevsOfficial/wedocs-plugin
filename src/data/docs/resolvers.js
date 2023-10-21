@@ -80,9 +80,10 @@ const resolvers = {
     const helpfulDocIds = yield actions.fetchFromAPI(
       '/wp/v2/docs/helpfulness'
     );
-    const helpfulDocs = docs?.filter( ( doc ) =>
-      helpfulDocIds?.includes( doc?.id )
-    );
+    const helpfulDocs = docs.sort( ( a, b ) => helpfulDocIds.indexOf( a.id ) - helpfulDocIds.indexOf( b.id ) )
+      .filter( ( doc ) =>
+        helpfulDocIds?.includes( doc?.id )
+      );
     yield actions.setHelpfulDocs( helpfulDocs );
     yield actions.setLoading( false );
   },

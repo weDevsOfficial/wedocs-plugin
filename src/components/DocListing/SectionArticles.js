@@ -7,11 +7,13 @@ import { useSortable } from '@dnd-kit/sortable';
 import extractedTitle from '../../utils/extractedTitle';
 
 const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles, isAllowComments } ) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable( { id: article?.id } );
 
   const style = {
     transform: CSS?.Transform?.toString( transform ),
+    zIndex: isDragging ? 999999 : 100,
+    position: isDragging ? 'relative' : '',
     transition,
   };
 
@@ -29,7 +31,7 @@ const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles
       className="flex items-center bg-white border-b border-[#D9D9D9] py-4"
       style={ style }
       { ...attributes }
-      { ...listeners }
+      ref={ setNodeRef }
     >
       { isAdmin && (
         <div className={ `pr-3.5 py-0.5 cursor-grab` }>
@@ -37,7 +39,7 @@ const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles
             width="20"
             height="21"
             fill="none"
-            ref={ setNodeRef }
+            { ...listeners }
             xmlns="http://www.w3.org/2000/svg"
           >
             <path

@@ -82,7 +82,7 @@ const MigrationSelectionModal = ( {
                                                     { Object.keys( migratablePlugins ).length > 0 ? (
                                                         <div className={ `list-area grid gap-1` }>
                                                             <label className={ `text-gray-400 text-base leading-7` }>
-                                                                { __( 'Migrate from', 'wedocs' ) }
+                                                                { __( 'Migrate from:', 'wedocs' ) }
                                                             </label>
                                                             <div className={ `list-field-content flex gap-5` }>
                                                                 <Listbox value={ selectedPlugin } onChange={ setSelectedPlugin }>
