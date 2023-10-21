@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-17T20:48:10+00:00\n"
+"POT-Creation-Date: 2023-10-20T21:14:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -36,19 +36,19 @@ msgstr ""
 msgid "https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri"
 msgstr ""
 
-#: includes/Admin/Admin.php:105
+#: includes/Admin/Admin.php:135
 msgid "Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
 msgstr ""
 
-#: includes/Admin/Admin.php:105
+#: includes/Admin/Admin.php:135
 msgid "Thanks :)"
 msgstr ""
 
-#: includes/Admin/Admin.php:116
+#: includes/Admin/Admin.php:146
 msgid "Thank you for using <strong>weDocs</strong>."
 msgstr ""
 
-#: includes/Admin/Admin.php:119
+#: includes/Admin/Admin.php:149
 msgid "Use the <a href=\"%s\">classic UI</a>."
 msgstr ""
 
@@ -78,46 +78,46 @@ msgstr ""
 msgid "Migration"
 msgstr ""
 
-#: includes/Admin/Migrate.php:59
+#: includes/Admin/Migrate.php:61
 msgid "BetterDocs not exists."
 msgstr ""
 
-#: includes/Admin/Migrate.php:69
-#: includes/Admin/Migrate.php:79
+#: includes/Admin/Migrate.php:71
+#: includes/Admin/Migrate.php:81
 msgid "Migration done."
 msgstr ""
 
-#: includes/Admin/Migrate.php:87
+#: includes/Admin/Migrate.php:89
 msgid "Migration not available at this moment."
 msgstr ""
 
-#: includes/Admin/Migrate.php:182
+#: includes/Admin/Migrate.php:184
 #: assets/build/index.js:5
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:11
 msgid "Untitled Docs"
 msgstr ""
 
-#: includes/Ajax.php:186
+#: includes/Ajax.php:190
 msgid "Sorry, we have already recorded your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:201
+#: includes/Ajax.php:205
 msgid "Thanks for your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:222
+#: includes/Ajax.php:226
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: includes/Ajax.php:229
+#: includes/Ajax.php:233
 msgid "Please provide a subject line."
 msgstr ""
 
-#: includes/Ajax.php:233
+#: includes/Ajax.php:237
 msgid "Please provide the message details."
 msgstr ""
 
-#: includes/Ajax.php:238
+#: includes/Ajax.php:242
 msgid "Thanks for your feedback."
 msgstr ""
 
@@ -137,23 +137,51 @@ msgstr ""
 msgid "Maximum number of items to be returned in result set."
 msgstr ""
 
-#: includes/API/API.php:389
+#: includes/API/API.php:189
+msgid "Documentations data"
+msgstr ""
+
+#: includes/API/API.php:251
+#: includes/API/API.php:278
+msgid "You are not currently logged in."
+msgstr ""
+
+#: includes/API/API.php:255
+#: includes/API/API.php:283
+#: includes/API/API.php:331
+msgid "Unauthorized permission error"
+msgstr ""
+
+#: includes/API/API.php:259
+#: includes/API/API.php:288
+msgid "Currently sortable status not given"
+msgstr ""
+
+#: includes/API/API.php:294
+msgid "Need sortable status is required"
+msgstr ""
+
+#: includes/API/API.php:299
+msgid "Currently documentations data not found for update"
+msgstr ""
+
+#: includes/API/API.php:556
 msgid "The page number requested is larger than the number of pages available."
 msgstr ""
 
-#: includes/API/API.php:475
+#: includes/API/API.php:642
 msgid "No name given"
 msgstr ""
 
-#: includes/API/API.php:479
+#: includes/API/API.php:646
 msgid "No email given"
 msgstr ""
 
-#: includes/API/API.php:521
+#: includes/API/API.php:688
 msgid "You cannot delete the documentation resource."
 msgstr ""
 
-#: includes/API/API.php:542
+#: includes/API/API.php:709
 msgid "Invalid Documentation."
 msgstr ""
 
@@ -378,7 +406,7 @@ msgstr ""
 #: assets/build/index.js:1
 #: assets/build/index.js:5
 #: src/components/BackToDocsPage.js:25
-#: src/components/Documentations/index.js:105
+#: src/components/Documentations/index.js:125
 msgid "All Docs"
 msgstr ""
 
@@ -459,7 +487,23 @@ msgstr ""
 
 #: templates/doc-search-form.php:9
 msgctxt "placeholder"
-msgid "Search for a topic or question …"
+msgid "Search for a topic or question"
+msgstr ""
+
+#: templates/pro-notice.php:6
+msgid "weDocs Logo"
+msgstr ""
+
+#: templates/pro-notice.php:11
+msgid "🎉 Introducing weDocs Pro — a completely revamped weDocs with better user experience, A.I. Chatbot, granular permission management, assistant widget, floating contact form and more. Get 50% OFF while the Early Bird Offer lasts!"
+msgstr ""
+
+#: templates/pro-notice.php:14
+msgid "Try Now"
+msgstr ""
+
+#: templates/pro-notice.php:16
+msgid "No, Thanks"
 msgstr ""
 
 #: templates/shortcode.php:81
@@ -496,7 +540,7 @@ msgstr ""
 
 #: templates/single-docs.php:108
 #: assets/build/index.js:1
-#: src/components/DocListing/SectionArticles.js:229
+#: src/components/DocListing/SectionArticles.js:230
 msgid "Updated on %s"
 msgstr ""
 
@@ -602,7 +646,7 @@ msgstr ""
 
 #: assets/build/492.js:1
 #: src/components/ProPreviews/PermissionSettings.js:13
-msgid "Global doc permission settings"
+msgid "Global access permission to edit Docs"
 msgstr ""
 
 #: assets/build/492.js:1
@@ -612,7 +656,7 @@ msgstr ""
 
 #: assets/build/492.js:1
 #: src/components/ProPreviews/PermissionSettings.js:22
-msgid "Who can manage weDocs Settings?"
+msgid "weDocs - Settings panel access"
 msgstr ""
 
 #: assets/build/492.js:1
@@ -634,10 +678,10 @@ msgstr ""
 
 #: assets/build/492.js:1
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:210
-#: src/components/AddDocModal.js:169
-#: src/components/AddSectionModal.js:170
-#: src/components/DocListing/QuickEditModal.js:251
+#: src/components/AddArticleModal.js:216
+#: src/components/AddDocModal.js:175
+#: src/components/AddSectionModal.js:176
+#: src/components/DocListing/QuickEditModal.js:252
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:252
 #: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:124
 #: src/components/ProPreviews/PermissionSettings.js:113
@@ -750,7 +794,7 @@ msgstr ""
 
 #: assets/build/492.js:1
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/IntegrateAiSettings.js:19
-msgid "Manage AI Chatbot Billing"
+msgid "Manage A.I. Chatbot Billing"
 msgstr ""
 
 #: assets/build/492.js:1
@@ -778,7 +822,7 @@ msgstr ""
 
 #: assets/build/492.js:1
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:18
-msgid "Ai ChatBot tab icon"
+msgid "A.I. ChatBot tab icon"
 msgstr ""
 
 #: assets/build/492.js:1
@@ -790,7 +834,7 @@ msgstr ""
 
 #: assets/build/492.js:1
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:59
-msgid "Ai ChatBot tab name"
+msgid "A.I. ChatBot tab name"
 msgstr ""
 
 #: assets/build/492.js:1
@@ -800,12 +844,12 @@ msgstr ""
 
 #: assets/build/492.js:1
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:90
-msgid "Ai ChatBot"
+msgid "A.I. ChatBot"
 msgstr ""
 
 #: assets/build/492.js:1
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:110
-msgid "Ai ChatBot Tab Subtitle 1"
+msgid "A.I. ChatBot Tab Subtitle 1"
 msgstr ""
 
 #: assets/build/492.js:1
@@ -815,12 +859,12 @@ msgstr ""
 
 #: assets/build/492.js:1
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:144
-msgid "Ai ChatBot tab subtitle 1"
+msgid "A.I. ChatBot tab subtitle 1"
 msgstr ""
 
 #: assets/build/492.js:1
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:164
-msgid "Ai ChatBot Tab Subtitle 2"
+msgid "A.I. ChatBot Tab Subtitle 2"
 msgstr ""
 
 #: assets/build/492.js:1
@@ -830,7 +874,7 @@ msgstr ""
 
 #: assets/build/492.js:1
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:198
-msgid "Ai Chatbot tab subtitle 2"
+msgid "A.I. Chatbot tab subtitle 2"
 msgstr ""
 
 #: assets/build/492.js:1
@@ -841,7 +885,7 @@ msgstr ""
 
 #: assets/build/492.js:1
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/AiEnable.js:16
-msgid "Connect to AI"
+msgid "Connect to A.I."
 msgstr ""
 
 #: assets/build/492.js:1
@@ -853,7 +897,8 @@ msgstr ""
 #: assets/build/492.js:1
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/index.js:11
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:5
-msgid "Ai Chat"
+#: src/components/ProPreviews/index.js:56
+msgid "A.I. Chat"
 msgstr ""
 
 #: assets/build/492.js:1
@@ -990,6 +1035,7 @@ msgstr ""
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/index.js:11
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:6
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:67
+#: src/components/ProPreviews/index.js:65
 msgid "Explore"
 msgstr ""
 
@@ -1125,6 +1171,7 @@ msgstr ""
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/index.js:11
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:90
+#: src/components/ProPreviews/index.js:80
 msgid "Messaging"
 msgstr ""
 
@@ -1216,7 +1263,7 @@ msgstr ""
 
 #: assets/build/492.js:1
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:44
-msgid "Ai Chatbot"
+msgid "A.I. Chatbot"
 msgstr ""
 
 #: assets/build/492.js:1
@@ -1330,6 +1377,21 @@ msgid "Reset All"
 msgstr ""
 
 #: assets/build/492.js:1
+#: src/components/ProPreviews/index.js:95
+msgid "Placement"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/index.js:110
+msgid "Widget Preference"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/index.js:127
+msgid "Layout & Styles"
+msgstr ""
+
+#: assets/build/492.js:1
 #: src/components/ProPreviews/index.js:194
 #: src/components/ProPreviews/index.js:209
 msgid "Pro"
@@ -1346,24 +1408,24 @@ msgid "Upgrade to PRO "
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocActions.js:51
-#: src/components/DocListing/DocSections.js:161
+#: src/components/DocActions.js:63
+#: src/components/DocListing/DocSections.js:183
 #: src/components/DocListing/ListingHeader.js:49
-#: src/components/DocListing/SectionArticles.js:119
+#: src/components/DocListing/SectionArticles.js:142
 msgid "Edit"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:187
+#: src/components/DocListing/DocSections.js:209
 #: src/components/DocListing/ListingHeader.js:73
-#: src/components/DocListing/SectionArticles.js:140
+#: src/components/DocListing/SectionArticles.js:163
 msgid "View on Web"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:135
+#: src/components/DocListing/DocSections.js:157
 #: src/components/DocListing/ListingHeader.js:92
-#: src/components/DocListing/SectionArticles.js:112
+#: src/components/DocListing/SectionArticles.js:100
 #: src/components/Documentations/ParentDocs.js:98
 msgid "Draft"
 msgstr ""
@@ -1375,11 +1437,11 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: assets/build/index.js:5
-#: src/components/AddArticleModal.js:235
-#: src/components/AddDocModal.js:194
-#: src/components/AddSectionModal.js:195
+#: src/components/AddArticleModal.js:205
+#: src/components/AddDocModal.js:164
+#: src/components/AddSectionModal.js:165
 #: src/components/ConfirmationModal.js:140
-#: src/components/DocListing/QuickEditModal.js:240
+#: src/components/DocListing/QuickEditModal.js:241
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:199
 #: src/components/Migrations/Modals/MigrationProgressModal.js:155
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:195
@@ -1410,59 +1472,57 @@ msgid "Type to write the name of new section"
 msgstr ""
 
 #: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:169
+msgid "Quickly edit important info of the article"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:173
+msgid "Edit post details easily"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:169
+#: src/components/DocListing/QuickEditModal.js:181
+#: src/components/DocListing/QuickEditModal.js:207
+msgid "Type an article name"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:266
+msgid "Update and Draft"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:269
+msgid "Update and Publish"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:52
+#: src/components/DocListing/SectionArticles.js:114
+msgid "Quick Edit"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:72
+msgid "View"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:84
+#: src/components/DocListing/DocSections.js:236
+msgid "Delete"
+msgstr ""
+
+#: assets/build/index.js:1
 #: src/components/AddArticleModal.js:157
-#: src/components/DocListing/QuickEditModal.js:168
 msgid "Enter your article title"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/AddArticleModal.js:161
-#: src/components/DocListing/QuickEditModal.js:172
 msgid "Describe what the article is about"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/AddArticleModal.js:169
-#: src/components/DocListing/QuickEditModal.js:180
-#: src/components/DocListing/QuickEditModal.js:206
-msgid "Type an article name"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:80
-msgid "Article updated!"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:81
-msgid "Article has been updated successfully"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:265
-msgid "Update and Draft"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:268
-msgid "Update and Publish"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocActions.js:60
-msgid "View"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocActions.js:71
-#: src/components/DocListing/SectionArticles.js:175
-msgid "Quick Edit"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocActions.js:84
-#: src/components/DocListing/DocSections.js:214
-msgid "Delete"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1476,26 +1536,26 @@ msgid "New article has been added successfully"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:224
-#: src/components/AddDocModal.js:183
-#: src/components/AddSectionModal.js:184
+#: src/components/AddArticleModal.js:230
+#: src/components/AddDocModal.js:189
+#: src/components/AddSectionModal.js:190
 msgid "Create and Draft"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddArticleModal.js:227
-#: src/components/AddDocModal.js:186
-#: src/components/AddSectionModal.js:187
+#: src/components/AddArticleModal.js:233
+#: src/components/AddDocModal.js:192
+#: src/components/AddSectionModal.js:193
 msgid "Create and Publish"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:147
+#: src/components/DocListing/DocSections.js:169
 msgid "Create"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:290
+#: src/components/DocListing/DocSections.js:315
 #: src/components/DocListing/ListingButtons.js:32
 #: src/components/Documentations/AddChildrens.js:23
 msgid "Add article"
@@ -1533,17 +1593,22 @@ msgid "Add section"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/SearchFilter.js:9
-msgid "Search by %s…"
+#: src/components/SearchFilter.js:11
+msgid "💡 Feedback"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/SearchFilter.js:11
+#: src/components/SearchFilter.js:17
+msgid "Search by %s"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/SearchFilter.js:19
 msgid "article name"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/SearchFilter.js:12
+#: src/components/SearchFilter.js:20
 msgid "document name"
 msgstr ""
 
@@ -1589,22 +1654,22 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: assets/build/index.js:5
-#: src/components/DocListing/index.js:110
-#: src/components/Documentations/index.js:89
+#: src/components/DocListing/index.js:121
+#: src/components/Documentations/index.js:109
 #: src/components/Settings/index.js:125
 msgid "weDocs database has been updated successfully"
 msgstr ""
 
 #: assets/build/index.js:1
 #: assets/build/index.js:5
-#: src/components/DocListing/index.js:111
-#: src/components/Documentations/index.js:90
+#: src/components/DocListing/index.js:122
+#: src/components/Documentations/index.js:110
 #: src/components/Settings/index.js:126
 msgid "Database Updated!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/index.js:190
+#: src/components/DocListing/index.js:213
 msgid "No section or article found for this documentation"
 msgstr ""
 
@@ -1775,7 +1840,7 @@ msgstr ""
 #: assets/build/index.js:5
 #: src/components/Documentations/EmptyDocs.js:84
 #: src/components/Migrations/index.js:203
-msgid "Learn More "
+msgid "Learn more "
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1806,12 +1871,12 @@ msgid "Add"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/index.js:109
+#: src/components/Documentations/index.js:129
 msgid "New doc"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/index.js:155
+#: src/components/Documentations/index.js:178
 msgid "Oops! It seems that your search did not match any existing documents. Please try again..."
 msgstr ""
 

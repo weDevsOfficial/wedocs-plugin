@@ -23,7 +23,7 @@ const ListingHeader = ( { id } ) => {
   return (
     <div className="docs-heading flex justify-between items-center mb-3.5">
       <div className="section-heading flex items-center">
-        <h1 className="flex items-center font-medium text-[#111827] text-xl space-x-3">
+        <h1 className="flex items-center font-medium text-[#111827] text-xl space-x-3 relative z-0">
           { ! loading ? (
             <Fragment>
               <a

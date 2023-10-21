@@ -16,7 +16,7 @@ const Appearance = () => {
 								data-headlessui-state="open"
 							>
 								{ __(
-									'Ai ChatBot tab icon',
+									'A.I. ChatBot tab icon',
 									'wedocs'
 								) }
 							</label>
@@ -56,7 +56,7 @@ const Appearance = () => {
 								id="headlessui-listbox-label-15"
 								data-headlessui-state="open"
 							>
-								{ __( 'Ai ChatBot tab name', 'wedocs' ) }
+								{ __( 'A.I. ChatBot tab name', 'wedocs' ) }
 							</label>
 							<div
 								className="tooltip cursor-pointer ml-2"
@@ -88,7 +88,7 @@ const Appearance = () => {
 									id="chatbot-title"
 									name="chatbot_title"
 									placeholder={ __(
-										'Ai ChatBot',
+										'A.I. ChatBot',
 										'wedocs'
 									) }
 									className="w-full !rounded-md !bg-white !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
@@ -108,7 +108,7 @@ const Appearance = () => {
 								data-headlessui-state="open"
 							>
 								{ __(
-									'Ai ChatBot Tab Subtitle 1',
+									'A.I. ChatBot Tab Subtitle 1',
 									'wedocs'
 								) }
 							</label>
@@ -142,7 +142,7 @@ const Appearance = () => {
 									name="chatbot_subtitle_one"
 									id="chatbot-subtitle-one"
 									placeholder={ __(
-										'Ai ChatBot tab subtitle 1',
+										'A.I. ChatBot tab subtitle 1',
 										'wedocs'
 									) }
 									className="w-full !rounded-md !bg-white !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
@@ -162,7 +162,7 @@ const Appearance = () => {
 								data-headlessui-state="open"
 							>
 								{ __(
-									'Ai ChatBot Tab Subtitle 2',
+									'A.I. ChatBot Tab Subtitle 2',
 									'wedocs'
 								) }
 							</label>
@@ -196,7 +196,7 @@ const Appearance = () => {
 									name="chatbot_subtitle_two"
 									id="chatbot-subtitle-two"
 									placeholder={ __(
-										'Ai Chatbot tab subtitle 2',
+										'A.I. Chatbot tab subtitle 2',
 										'wedocs'
 									) }
 									className="w-full !rounded-md !bg-white !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"

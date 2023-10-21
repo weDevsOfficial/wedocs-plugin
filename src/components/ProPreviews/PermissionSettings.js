@@ -10,7 +10,7 @@ const PermissionSettings = () => {
         {
             permissionObj: roles,
             boxId: 'global_permission',
-            title: __( 'Global doc permission settings', 'wedocs' ),
+            title: __( 'Global access permission to edit Docs', 'wedocs' ),
             tooltip: __(
                 'By default, who will get edit access on all the documents?',
                 'wedocs'
@@ -19,7 +19,7 @@ const PermissionSettings = () => {
         {
             permissionObj: roles,
             boxId: 'role_wise_permission',
-            title: __( 'Who can manage weDocs Settings?', 'wedocs' ),
+            title: __( 'weDocs - Settings panel access', 'wedocs' ),
             tooltip: __(
                 'Who will have the ability to alter the settings of the plugin?',
                 'wedocs'

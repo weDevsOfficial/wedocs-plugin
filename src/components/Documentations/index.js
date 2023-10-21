@@ -30,8 +30,19 @@ const Documentations = () => {
     []
   );
 
+  const sortableStatus = useSelect(
+    ( select ) => select( docsStore ).getSortingStatus(),
+    []
+  );
+
+  const needSortableStatus = useSelect(
+    ( select ) => select( docsStore ).getNeedSortingStatus(),
+    []
+  );
+
   const [ searchValue, setSearchValue ] = useState( '' );
   const [ documentations, setDocumentations ] = useState( [] );
+  const [ needSortingStatus, setNeedSortingStatus ] = useState( needSortableStatus );
 
   const handleChange = ( event, reset = false ) => {
     if ( reset ) {
@@ -78,6 +89,15 @@ const Documentations = () => {
 
     setDocumentations( [ ...filteredDocs ] );
   }, [ parentDocs, searchValue, isAdmin ] );
+
+  useEffect( () => {
+    if ( needSortingStatus ) {
+      dispatch( docsStore )
+        .updateSortingStatus( { sortable_status: sortableStatus, documentations } )
+        .then( ( result ) => setNeedSortingStatus( result?.sorting ) )
+        .catch( ( err ) => {} );
+    }
+  }, [ needSortingStatus ] );
 
   if ( status === 'done' ) {
     dispatch( settingsStore )
@@ -127,7 +147,10 @@ const Documentations = () => {
         { ! loading && documentations.length > 0 && (
           <>
             { isAdmin ? (
-              <DraggableDocs setItems={ setDocumentations }>
+              <DraggableDocs
+                setItems={ setDocumentations }
+                setNeedSortingStatus={ setNeedSortingStatus }
+              >
                 <SortableContext
                   items={ documentations }
                   strategy={ rectSortingStrategy }

@@ -158,6 +158,12 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
                   </div>
 
                   <div className="mt-6 flex items-center justify-center space-x-3.5">
+                    <button
+                      className="bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md"
+                      onClick={ closeModal }
+                    >
+                      { __( 'Cancel', 'wedocs' ) }
+                    </button>
                     <div className={ `doc-publish-btn group relative` }>
                       <button
                         className="inline-flex justify-between items-center cursor-pointer bg-indigo-600 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md min-w-[122px]"
@@ -188,12 +194,6 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
                       </span>
                       </div>
                     </div>
-                    <button
-                      className="bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md"
-                      onClick={ closeModal }
-                    >
-                      { __( 'Cancel', 'wedocs' ) }
-                    </button>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

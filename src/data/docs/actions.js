@@ -28,6 +28,14 @@ const actions = {
     return { type: 'SET_LOADING', loading };
   },
 
+  setSortingStatus( sorting ) {
+    return { type: 'SET_SORTING_STATUS', sorting };
+  },
+
+  setNeedSortingStatus( needSorting ) {
+    return { type: 'SET_NEED_SORTING_STATUS', needSorting };
+  },
+
   setUserDocIds( userDocIds ) {
     return { type: 'SET_USER_DOC_IDS', userDocIds };
   },
@@ -63,6 +71,25 @@ const actions = {
     );
     yield actions.setParentDocs( sortableDocs );
     return actions.setDocs( response );
+  },
+
+  *updateNeedSortingStatus( data ) {
+    const path = '/wp/v2/docs/need_sorting_status';
+    yield { type: 'UPDATE_TO_API', path, data };
+    const response = yield actions.fetchFromAPI(
+      '/wp/v2/docs/need_sorting_status'
+    );
+    return actions.setNeedSortingStatus( response );
+  },
+
+  *updateSortingStatus( data ) {
+    const path = '/wp/v2/docs/sorting_status';
+    yield { type: 'UPDATE_TO_API', path, data };
+    const response = yield actions.fetchFromAPI(
+      '/wp/v2/docs/sorting_status'
+    );
+    yield actions.setNeedSortingStatus( response );
+    return actions.setSortingStatus( response );
   },
 
   *updateDocMeta( docId, meta ) {

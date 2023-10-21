@@ -77,8 +77,8 @@ const QuickEditModal = ( {
         setSectionId( defaultSection?.id || '' );
         if ( setShowArticles ) setShowArticles( true );
         Swal.fire( {
-          title: __( 'Article updated!', 'wedocs' ),
-          text: __( 'Article has been updated successfully', 'wedocs' ),
+          title: __( newArticle?.status === 'draft' ? 'Article has been drafted!' : 'Article has been published!', 'wedocs' ),
+          text: __( newArticle?.status === 'draft' ? 'The article has been drafted successfully' : 'The article has been published successfully', 'wedocs' ),
           icon: 'success',
           toast: true,
           position: 'bottom-end',
@@ -106,6 +106,7 @@ const QuickEditModal = ( {
   };
 
   const openModal = ( e ) => {
+    e.preventDefault();
     e.stopPropagation();
     setIsOpen( true );
   };
@@ -165,11 +166,11 @@ const QuickEditModal = ( {
                     as="h3"
                     className="text-lg font-bold text-gray-900 mb-2"
                   >
-                    { __( 'Enter your article title', 'wedocs' ) }
+                    { __( 'Quickly edit important info of the article', 'wedocs' ) }
                   </Dialog.Title>
 
                   <p className="text-gray-500 text-base">
-                    { __( 'Describe what the article is about', 'wedocs' ) }
+                    { __( 'Edit post details easily', 'wedocs' ) }
                   </p>
 
                   <div className="relative mt-6 mb-4">

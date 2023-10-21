@@ -6,7 +6,7 @@
             class='search-field'
             value='<?php get_search_query(); ?>'
             title='<?php echo esc_attr_x( 'Search for:', 'label', 'wedocs' ); ?>'
-            placeholder='<?php echo esc_attr_x( 'Search for a topic or question …', 'placeholder', 'wedocs' ); ?>'
+            placeholder='<?php echo esc_attr_x( 'Search for a topic or question', 'placeholder', 'wedocs' ); ?>'
         />
         <input type='hidden' name='post_type' value='docs' />
         <button type='submit' class='search-submit'>

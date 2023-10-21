@@ -41,6 +41,18 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
             type === 'article' ? articleActionMenuWidth : documentationActionMenuWidth
           } ${ showActions ? 'block' : 'hidden' } z-40 bg-white border border-[#DBDBDB] absolute z-10 shadow -right-3.5 py-1 rounded-md mt-2.5 hover:block after:content-[''] before:content-[''] after:absolute before:absolute after:w-[13px] before:w-full after:h-[13px] before:h-2.5 after:top-[-7px] before:-top-2.5 after:right-4 after:z-[-1] after:bg-white after:border after:border-[#DBDBDB] after:!rotate-45 after:border-r-0 after:border-b-0` }
         >
+          { isAdmin && type === 'article' && (
+            <QuickEditModal
+              article={ doc }
+              sections={ sections }
+              defaultSection={ section }
+              setShowArticles={ setShowArticles }
+              className={ `group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none w-full` }
+            >
+              { __( 'Quick Edit', 'wedocs' ) }
+            </QuickEditModal>
+          ) }
+
           { /* Edit documentation */ }
           <a
             href={ `${ window.location.origin }/wp-admin/post.php?post=${ doc?.id }&action=edit` }
@@ -59,18 +71,6 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           >
             { __( 'View', 'wedocs' ) }
           </a>
-
-          { isAdmin && (
-            <QuickEditModal
-              article={ doc }
-              sections={ sections }
-              defaultSection={ section }
-              setShowArticles={ setShowArticles }
-              className={ `group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none w-full` }
-            >
-              { __( 'Quick Edit', 'wedocs' ) }
-            </QuickEditModal>
-          ) }
 
           { /* Add external actions */ }
           { restrictionAction }

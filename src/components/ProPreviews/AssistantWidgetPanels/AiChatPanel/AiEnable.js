@@ -13,7 +13,7 @@ const AiEnable = () => {
 								id="headlessui-listbox-label-15"
 								data-headlessui-state="open"
 							>
-								{ __( 'Connect to AI', 'wedocs' ) }
+								{ __( 'Connect to A.I.', 'wedocs' ) }
 							</label>
 							<div
 								className="tooltip cursor-pointer ml-2"

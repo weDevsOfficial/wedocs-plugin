@@ -8,7 +8,7 @@ import AiEnable from './AiEnable';
 const IntegrateAi = () => {
 
 	const tabs = [
-		__( 'Ai Chat', 'wedocs' ),
+		__( 'A.I. Chat', 'wedocs' ),
 		__( 'Appearance', 'wedocs' ),
 	];
 

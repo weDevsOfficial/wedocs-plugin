@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 
 const PlacementSettings = () => {
 	let tabs = [
-		{ id: 1, key: 'integrate_ai', text: __( 'Ai Chat', 'wedocs' ) },
+		{ id: 1, key: 'integrate_ai', text: __( 'A.I. Chat', 'wedocs' ) },
 		{ id: 2, key: 'explore', text: __( 'Explore', 'wedocs' ) },
 		{ id: 3, key: 'message', text: __( 'Messaging', 'wedocs' ) },
 	];

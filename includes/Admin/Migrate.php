@@ -42,6 +42,8 @@ class Migrate {
     public function __construct() {
         add_action( 'before_delete_post', [ $this, 'reset_migration' ], 10, 2 );
         add_action( 'create_term', [ $this, 'update_migration_status' ], 10, 3 );
+
+        $this->reset_documentation_page();
     }
 
     /**
@@ -262,13 +264,34 @@ class Migrate {
      * @return void
      */
     public static function handle_migration_done() {
-        // Update migration status.
-        update_option( 'wedocs_need_migration', 'done' );
         if ( self::is_betterdocs_textdomain_available() ) {
             deactivate_plugins( [
                 'betterdocs/betterdocs.php',
                 'betterdocs-pro/betterdocs-pro.php',
             ] );
+        }
+
+        // Update migration status.
+        update_option( 'wedocs_need_migration', 'done' );
+        update_option( 'wedocs_need_reset_documentation_page', true );
+    }
+
+    /**
+     * Reset default docs page after
+     * migration done.
+     *
+     * @since 2.0.0
+     *
+     * @return void
+     */
+    public function reset_documentation_page() {
+        $need_reset_documentation_page = get_option( 'wedocs_need_reset_documentation_page', false );
+
+        // Get back weDocs "docs" page ui.
+        if ( $need_reset_documentation_page ) {
+            // Remove reset option after done.
+            delete_option( 'wedocs_need_reset_documentation_page' );
+            flush_rewrite_rules();
         }
     }
 

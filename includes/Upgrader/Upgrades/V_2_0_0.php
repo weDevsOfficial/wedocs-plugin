@@ -27,8 +27,25 @@ class V_2_0_0 extends UpgradeHandler {
      * @return void
      */
     public function handle_upgrade() {
+        $this->clean_beta_notice();
         $this->update_settings_db();
         $this->add_documentation_handling_capabilities();
+    }
+
+    /**
+     * Remove beta notice data.
+     *
+     * @since 2.0.0
+     *
+     * @return void
+     */
+    public function clean_beta_notice() {
+        $user_id         = get_current_user_id();
+        $has_beta_notice = get_user_meta( $user_id, 'wedocs_hide_beta_notice', true );
+
+        if ( ! empty( $has_beta_notice ) ) {
+            delete_user_meta( $user_id, 'wedocs_hide_beta_notice', 1 );
+        }
     }
 
     /**
@@ -81,7 +98,16 @@ class V_2_0_0 extends UpgradeHandler {
         }
 
         $roles        = $wp_roles->get_names();
-        $capabilities = array( 'edit_post', 'edit_docs', 'publish_docs', 'edit_others_docs', 'read_private_docs', 'edit_private_docs', 'edit_published_docs' );
+        $capabilities = array(
+            'edit_post',
+            'edit_docs',
+            'publish_docs',
+            'edit_others_docs',
+            'read_private_docs',
+            'edit_private_docs',
+            'edit_published_docs'
+        );
+
         // Push documentation handling access to users.
         foreach ( $capabilities as $capability ) {
             foreach ( $roles as $role_key => $role ) {

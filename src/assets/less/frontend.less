@@ -51,9 +51,9 @@ body.single.single-docs .content-area {
                     float: right;
                     line-height: inherit;
                     padding: 0 10px;
-                    border: 1px solid @mainColor;
+                    border: 1px solid @borderColor;
                     border-radius: 3px;
-                    color: @mainColor;
+                    color: @borderColor;
 
                     &:hover {
                         border-color: #000;
@@ -216,13 +216,14 @@ body.single.single-docs .content-area {
     .clearfix();
 
     .wedocs-search-input {
+        width: 50%;
         display: flex;
-        max-width: 50%;
         margin-left: auto;
         position: relative;
         margin-bottom: 4%;
 
         .search-field {
+            margin: 0;
             width: 100%;
             height: 48px;
             font-size: 14px;
@@ -238,7 +239,7 @@ body.single.single-docs .content-area {
             &:focus {
                 outline: none;
                 box-shadow: none;
-                border: 1px solid #3c82f6;
+                border: 1px solid #dbdbdb;
             }
         }
 
@@ -252,7 +253,6 @@ body.single.single-docs .content-area {
             padding: 14px 26px;
             position: absolute;
             align-items: center;
-            background: #3B82F6;
             border-radius: 100px;
         }
     }
@@ -282,14 +282,6 @@ body.single.single-docs .content-area {
                 font-weight: 800;
                 line-height: 1.4;
                 margin-bottom: 16px;
-
-                a {
-                    text-decoration: none;
-
-                    &:not(:hover) {
-                        color: #000;
-                    }
-                }
             }
 
             .inside {
@@ -313,21 +305,6 @@ body.single.single-docs .content-area {
                 margin-top: 20px;
                 margin-bottom: 38px;
             }
-
-            .wedocs-doc-link {
-                display: inline-block;
-                font-size: 16px;
-                font-weight: 500;
-
-                a {
-                    color: white;
-                    line-height: 30px;
-                    background: #3B82F6;
-                    border-radius: 10px;
-                    padding: 13.5px 20px;
-                    text-decoration: none;
-                }
-            }
         }
 
         ul.wedocs-doc-sections {
@@ -340,25 +317,6 @@ body.single.single-docs .content-area {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-
-                a {
-                    display: flex;
-                    font-size: 18px;
-                    line-height: 40px;
-                    text-decoration: none;
-
-                    &:not(:hover) {
-                        color: #063250;
-                    }
-
-                    &.icon-view:before {
-                        color: #ACB8C4;
-                        font-size: 16px;
-                        content: '\f07c';
-                        margin-right: 18px;
-                        font-family: 'wedocs';
-                    }
-                }
 
                 > svg {
                     width: 16px;
@@ -375,25 +333,12 @@ body.single.single-docs .content-area {
                 margin-bottom: 6px;
 
                 > li {
-                    font-size: 16px;
                     list-style: circle;
                     line-height: 36px;
-
-                    a {
-                        text-decoration: none;
-
-                        &:not(:hover) {
-                            color: #64748B;
-                        }
-                    }
                 }
 
                 &:not(.active) {
                     display: none;
-                }
-
-                &.has-icon {
-                    margin-left: 36px !important;
                 }
             }
         }
@@ -422,6 +367,88 @@ body.single.single-docs .content-area {
             }
         }
     }
+
+    &.pro {
+        ul.wedocs-search-input {
+            background: #3B82F6;
+
+            .search-field {
+                &:focus {
+                    border-color: #3c82f6;
+                }
+            }
+        }
+
+        ul.wedocs-docs-list {
+            li.wedocs-docs-single {
+                h3 {
+                    a {
+                        text-decoration: none;
+
+                        &:not(:hover) {
+                            color: #000;
+                        }
+                    }
+                }
+
+                .wedocs-doc-link {
+                    display: inline-block;
+                    font-size: 16px;
+                    font-weight: 500;
+
+                    a {
+                        color: white;
+                        line-height: 30px;
+                        background: #3B82F6;
+                        border-radius: 10px;
+                        padding: 13.5px 20px;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+
+        ul.wedocs-doc-sections {
+            > li {
+                a {
+                    display: flex;
+                    font-size: 18px;
+                    line-height: 40px;
+                    text-decoration: none;
+
+                    &:not(:hover) {
+                        color: #063250;
+                    }
+
+                    &.icon-view:before {
+                        color: #ACB8C4;
+                        font-size: 16px;
+                        content: '\f07c';
+                        margin-right: 18px;
+                        font-family: 'wedocs';
+                    }
+                }
+            }
+
+            ul.children {
+                > li {
+                    font-size: 16px;
+
+                    a {
+                        text-decoration: none;
+
+                        &:not(:hover) {
+                            color: #64748B;
+                        }
+                    }
+                }
+
+                &.has-icon {
+                    margin-left: 36px !important;
+                }
+            }
+        }
+    }
 }
 
 footer.entry-footer.wedocs-entry-footer {
@@ -432,6 +459,7 @@ footer.entry-footer.wedocs-entry-footer {
     margin-bottom: 30px;
 
     .help-content {
+        flex: 1;
         width: 40%;
         padding: 20px;
         background: white;

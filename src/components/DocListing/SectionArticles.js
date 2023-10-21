@@ -1,17 +1,17 @@
-import { __, sprintf } from '@wordpress/i18n';
-import DocActions from '../DocActions';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import extractedTitle from '../../utils/extractedTitle';
 import he from 'he';
+import DocActions from '../DocActions';
+import { CSS } from '@dnd-kit/utilities';
+import { __, sprintf } from '@wordpress/i18n';
 import QuickEditModal from './QuickEditModal';
+import { useSortable } from '@dnd-kit/sortable';
+import extractedTitle from '../../utils/extractedTitle';
 
 const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles, isAllowComments } ) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable( { id: article.id } );
+    useSortable( { id: article?.id } );
 
   const style = {
-    transform: CSS.Transform.toString( transform ),
+    transform: CSS?.Transform?.toString( transform ),
     transition,
   };
 
@@ -21,48 +21,32 @@ const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles
     const date = new Date( lastModifiedDate ),
       options = { day: 'numeric', month: 'short', year: 'numeric' };
 
-    return date.toLocaleDateString( 'en-US', options );
+    return date?.toLocaleDateString( 'en-US', options );
   };
 
-  const privacyIcon = wp.hooks.applyFilters(
-    'wedocs_article_privacy_action',
-    [],
-    article?.id
-  );
-
-  const contributors = wp.hooks.applyFilters(
-    'wedocs_article_contributors',
-    '',
-    article?.id
-  );
-
-  const isAdminRestricted = wp.hooks.applyFilters(
-    'wedocs_check_is_admin_restricted_article',
-    false,
-    article?.id
-  );
-
-  return (
-    <div
+  if( section ) {
+    return <div
       className="flex items-center bg-white border-b border-[#D9D9D9] py-4"
-      ref={ setNodeRef }
       style={ style }
       { ...attributes }
       { ...listeners }
     >
       { isAdmin && (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="21"
-          fill="none"
-        >
-          <path
-            fillRule="evenodd"
-            d="M8.5 7.498c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 8.573 8.5 7.498zm0 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 15.467 8.5 14.392zm3-6.894c0-1.075.871-1.947 1.947-1.947s1.947.872 1.947 1.947-.872 1.947-1.947 1.947S11.5 8.573 11.5 7.498zm3.893 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.871 1.947 1.947 1.947 1.947-.872 1.947-1.947z"
-            fill="#d9d9d9"
-          />
-        </svg>
+        <div className={ `pr-3.5 py-0.5 cursor-grab` }>
+          <svg
+            width="20"
+            height="21"
+            fill="none"
+            ref={ setNodeRef }
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              d="M8.5 7.498c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 8.573 8.5 7.498zm0 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 15.467 8.5 14.392zm3-6.894c0-1.075.871-1.947 1.947-1.947s1.947.872 1.947 1.947-.872 1.947-1.947 1.947S11.5 8.573 11.5 7.498zm3.893 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.871 1.947 1.947 1.947 1.947-.872 1.947-1.947z"
+              fill="#d9d9d9"
+            />
+          </svg>
+        </div>
       ) }
       <div className="flex items-center w-full group">
         <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
@@ -73,22 +57,26 @@ const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles
                 width="16"
                 height="21"
                 fill="none"
-                className="w-auto px-3.5"
+                className="w-auto pr-3.5"
               >
                 <path
-                  d="M5 10.02h6m-6 4h6m2 5H3a2 2 0 0 1-2-2v-14a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707v9.586a2 2 0 0 1-2 2z"
-                  stroke="#6b7280"
                   strokeWidth="2"
+                  stroke="#6b7280"
                   strokeLinecap="round"
                   strokeLinejoin="round"
+                  d="M5 10.02h6m-6 4h6m2 5H3a2 2 0 0 1-2-2v-14a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707v9.586a2 2 0 0 1-2 2z"
                 />
               </svg>
               <a
                 target="_blank"
                 href={
-                  ! Boolean( parseInt( isAdminRestricted ) ) ?
-                  `${ window.location.origin }/wp-admin/post.php?post=${ article?.id }&action=edit` :
-                  `${ window.location.origin }/?p=${ article?.id }`
+                  ! Boolean( parseInt( wp?.hooks?.applyFilters(
+                    'wedocs_check_is_admin_restricted_article',
+                    false,
+                    article?.id
+                  ) ) ) ?
+                    `${ window.location.origin }/wp-admin/post.php?post=${ article?.id }&action=edit` :
+                    `${ window.location.origin }/?p=${ article?.id }`
                 }
                 className="flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none mr-4"
                 rel="noreferrer"
@@ -113,9 +101,44 @@ const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles
                   </div>
                 ) }
 
-                { ! Boolean( parseInt( isAdminRestricted ) ) && (
+                { isAdmin && (
+                  <QuickEditModal
+                    article={ article }
+                    sections={ sections }
+                    className={ `hidden group-hover:block mr-4` }
+                    defaultSection={ section }
+                    setShowArticles={ setShowArticles }
+                  >
+                    <span
+                      className={ `tooltip cursor-pointer` }
+                      data-tip={ __( 'Quick Edit', 'wedocs' ) }
+                    >
+                      <svg
+                        width="22"
+                        fill="none"
+                        height="22"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        className="tooltip cursor-pointer stroke-gray-300 hover:stroke-indigo-700 -mt-[3px]"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                        />
+                      </svg>
+                    </span>
+                  </QuickEditModal>
+                ) }
+
+                { ! Boolean( parseInt( wp?.hooks?.applyFilters(
+                  'wedocs_check_is_admin_restricted_article',
+                  false,
+                  article?.id
+                ) ) ) && (
                   <div
-                    className="tooltip cursor-pointer flex items-center"
+                    className="tooltip cursor-pointer flex items-center mr-0.5"
                     data-tip={ __( 'Edit', 'wedocs' ) }
                   >
                     <svg
@@ -161,42 +184,16 @@ const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles
                   </svg>
                 </a>
               </div>
-
-              { isAdmin && (
-                <QuickEditModal
-                  article={ article }
-                  sections={ sections }
-                  className={ `hidden group-hover:block ml-4 mr-1` }
-                  defaultSection={ section }
-                  setShowArticles={ setShowArticles }
-                >
-                  <span
-                    className={ `tooltip cursor-pointer` }
-                    data-tip={ __( 'Quick Edit', 'wedocs' ) }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      fill="none"
-                      className="tooltip cursor-pointer stroke-gray-300 hover:stroke-indigo-700"
-                    >
-                      <path
-                        d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                </QuickEditModal>
-              ) }
             </div>
           </div>
           <div className="flex items-center gap-5 flex-shrink-0 mt-4 sm:mt-0 sm:ml-5">
             <div className="flex items-center gap-10">
               { /* Render admin restriction icon. */ }
-              { privacyIcon }
+              { wp?.hooks?.applyFilters(
+                'wedocs_article_privacy_action',
+                [],
+                article?.id
+              ) }
 
               { ( isAllowComments === 'on' ||
                 ! Boolean( isAllowComments ) ) && (
@@ -222,7 +219,11 @@ const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles
                 </div>
               ) }
               { /* Render article contributors. */ }
-              { contributors }
+              { wp?.hooks?.applyFilters(
+                'wedocs_article_contributors',
+                '',
+                article?.id
+              ) }
               <div className="article-updated-date w-44 text-sm text-[#969696]">
                 { /* translators: %s: Formatted datetime string */ }
                 { sprintf(
@@ -234,7 +235,11 @@ const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles
           </div>
         </div>
         <div className="ml-8 flex-shrink-0 w-5 h-5">
-          { isAdmin && ! Boolean( parseInt( isAdminRestricted ) ) && (
+          { isAdmin && ! Boolean( parseInt( wp?.hooks?.applyFilters(
+            'wedocs_check_is_admin_restricted_article',
+            false,
+            article?.id
+          ) ) ) && (
             <DocActions
               type="article"
               doc={ article }
@@ -246,7 +251,9 @@ const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles
         </div>
       </div>
     </div>
-  );
+  }
+
+  return null;
 };
 
 export default SectionArticles;
