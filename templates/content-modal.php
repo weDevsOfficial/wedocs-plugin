@@ -11,7 +11,7 @@ if ( is_user_logged_in() ) {
 <div class="wedocs-modal-backdrop" id="wedocs-modal-backdrop"></div>
 <div id="wedocs-contact-modal" class="wedocs-contact-modal wedocs-hide-print">
     <div class="wedocs-modal-header">
-        <h1><?php _e( 'How can we help?', 'wedocs' ); ?></h1>
+        <h3><?php _e( 'How can we help?', 'wedocs' ); ?></h3>
         <a href="#" id="wedocs-modal-close" class="wedocs-modal-close"><i class="wedocs-icon wedocs-icon-times"></i></a>
     </div>
 
