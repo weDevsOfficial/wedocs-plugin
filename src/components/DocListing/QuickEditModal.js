@@ -204,7 +204,7 @@ const QuickEditModal = ( {
                       type="text"
                       name="doc_slug"
                       id="doc-slug"
-                      placeholder={ __( 'Type an article name', 'wedocs' ) }
+                      placeholder={ __( 'Enter your slug here', 'wedocs' ) }
                       required
                       className={ `${
                         formError.slug
