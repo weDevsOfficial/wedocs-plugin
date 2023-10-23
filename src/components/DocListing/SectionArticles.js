@@ -12,7 +12,7 @@ const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles
 
   const style = {
     transform: CSS?.Transform?.toString( transform ),
-    zIndex: isDragging ? 999999 : 100,
+    zIndex: isDragging ? 9999 : 100,
     position: isDragging ? 'relative' : '',
     transition,
   };

@@ -121,7 +121,7 @@ const Documentations = () => {
   return (
     <>
       <div className="documentation-header my-7">
-        <h1 className="w-full flex items-center">
+        <h1 className="w-full flex items-center justify-between">
           { __( 'All Docs', 'wedocs' ) }
           { showActions && (
             <AddDocModal className="ml-5 mr-auto py-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 ease-in-out duration-200 px-4 text-sm text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">

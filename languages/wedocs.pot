@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-21T15:24:46+00:00\n"
+"POT-Creation-Date: 2023-10-23T03:44:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -1409,21 +1409,21 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocActions.js:57
-#: src/components/DocListing/DocSections.js:184
+#: src/components/DocListing/DocSections.js:185
 #: src/components/DocListing/ListingHeader.js:49
 #: src/components/DocListing/SectionArticles.js:144
 msgid "Edit"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:210
+#: src/components/DocListing/DocSections.js:211
 #: src/components/DocListing/ListingHeader.js:73
 #: src/components/DocListing/SectionArticles.js:165
 msgid "View on Web"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:158
+#: src/components/DocListing/DocSections.js:159
 #: src/components/DocListing/ListingHeader.js:92
 #: src/components/DocListing/SectionArticles.js:102
 #: src/components/Documentations/ParentDocs.js:99
@@ -1511,7 +1511,7 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocActions.js:83
-#: src/components/DocListing/DocSections.js:237
+#: src/components/DocListing/DocSections.js:238
 msgid "Delete"
 msgstr ""
 
@@ -1550,12 +1550,12 @@ msgid "Create and Publish"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:170
+#: src/components/DocListing/DocSections.js:171
 msgid "Create"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:316
+#: src/components/DocListing/DocSections.js:317
 #: src/components/DocListing/ListingButtons.js:32
 #: src/components/Documentations/AddChildrens.js:23
 msgid "Add article"
@@ -1793,7 +1793,7 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:332
-msgid "Choose if your sections should be collapsed or expanded in Doc Homepage."
+msgid "Choose if your sections should be collapsed or expanded in Doc Homepage"
 msgstr ""
 
 #: assets/build/index.js:1

@@ -35,6 +35,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
   const style = {
     transform: CSS?.Transform?.toString( transform ),
     zIndex: isDragging ? 9999 : 0,
+    position: isDragging ? 'relative' : '',
     transition,
   };
 
@@ -85,7 +86,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
 
   return (
     <div
-      className="space-y-4 mb-3 relative"
+      className="space-y-4 mb-3"
       style={ style }
       { ...attributes }
     >
