@@ -5,7 +5,7 @@ const SearchFilter = ( { handleChange, searchValue, listing } ) => {
     <div className={ `flex items-center space-x-4 text-xl` }>
       <a
         target={ `_blank` }
-        href={ `https://dub.sh/wedocs-beta` }
+        href={ `https://forms.gle/i8HArn6nMqifW4Tk7` }
         className={ `hover:!text-indigo-800 focus:shadow-none` }
       >
         { __( '💡 Feedback', 'wedocs' ) }
