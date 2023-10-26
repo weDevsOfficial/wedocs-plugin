@@ -23,7 +23,7 @@ const ParentDocs = ( { doc } ) => {
 
   const style = {
     transform: CSS.Transform.toString( transform ),
-    zIndex: isDragging ? 9999 : 1,
+    zIndex: isDragging ? 9999 : '',
     transition
   };
 

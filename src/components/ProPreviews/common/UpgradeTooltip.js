@@ -11,7 +11,7 @@ const UpgradeTooltip = ( { classes } ) => {
   ];
 
   return (
-    <div className={ `${classes} pro-badge-tooltip w-[270px] z-[2000] py-8 px-6 bg-black left-[50%] text-left absolute -translate-x-1/2 translate-y-[4%] rounded-md text-center after:content-[''] after:w-4 after:h-4 after:left-1/2 after:top-0.5 after:rounded-sm after:absolute after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-[45deg] after:bg-black` }>
+    <div className={ `${classes} pro-badge-tooltip w-[270px] z-[2000] py-8 px-6 bg-black left-[50%] text-left absolute -translate-x-1/2 translate-y-[4%] rounded-md text-center after:content-[''] before:content[''] before:absolute before:w-full before:h-4 before:left-0 before:-top-4 after:w-4 after:h-4 after:left-1/2 after:top-0.5 after:rounded-sm after:absolute after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-[45deg] after:bg-black` }>
       <h3 className='tooltip-header text-white text-sm mb-4 leading-3 font-semibold'>{ __( 'Available in Pro. Unlock & enjoy:', 'wedocs' ) }</h3>
       { features && (
         <ul className={ `text-left mb-7` }>
