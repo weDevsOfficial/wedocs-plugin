@@ -61,7 +61,7 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 == Changelog ==
 
-= v2.0.0 (21st October, 2023) =
+= v2.0.0 (26th October, 2023) =
 
  * **Enhancement:** Update documentations page ui & separate documentation section page.
  * **Enhancement:** Update weDocs settings page ui & added navigation menu page for settings.

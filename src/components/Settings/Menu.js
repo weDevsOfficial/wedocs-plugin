@@ -25,7 +25,7 @@ const Menu = () => {
     },
   };
 
-  const [ showSubTabs, setShowSubTabs ] = useState( false );
+  const [ showSubTabs, setShowSubTabs ] = useState( true );
 
   menus = wp.hooks.applyFilters( 'wedocs_settings_menu', menus );
 
