@@ -247,9 +247,11 @@ body.single.single-docs .content-area {
             top: 0;
             right: 0;
             border: 0;
+            margin: 0;
             height: 100%;
             display: flex;
             cursor: pointer;
+            width: fit-content;
             padding: 14px 26px;
             position: absolute;
             align-items: center;
@@ -294,9 +296,9 @@ body.single.single-docs .content-area {
                     font-size: 18px;
 
                     svg {
-                        width: 4rem;
-                        height: 1.5rem;
-                        margin: 1px 0.5rem 0 0;
+                        width: 64px;
+                        height: 24px;
+                        margin: 2px 0.5rem 0 0;
                     }
                 }
             }
@@ -330,6 +332,7 @@ body.single.single-docs .content-area {
 
             ul.children {
                 margin: 0;
+                padding-left: 24px;
                 margin-bottom: 6px;
 
                 > li {
@@ -444,6 +447,7 @@ body.single.single-docs .content-area {
                 }
 
                 &.has-icon {
+                    padding: 0;
                     margin-left: 36px !important;
                 }
             }
