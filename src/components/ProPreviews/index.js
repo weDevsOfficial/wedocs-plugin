@@ -26,7 +26,7 @@ wp.hooks.addFilter(
                     stroke="#6b7280"
                     strokeWidth="2"
                     strokeLinejoin="round"
-                    className="-ml-1 mr-4"
+                    className="-ml-1 mr-4 pro-settings"
                 >
                     <path d="M10 2.866a3.99 3.99 0 0 1 3-1.354 4 4 0 1 1 0 8 3.99 3.99 0 0 1-3-1.354m3 11.354H1v-1a6 6 0 1 1 12 0v1zm0 0h6v-1a6 6 0 0 0-6-6 5.97 5.97 0 0 0-3 .803m1-7.803a4 4 0 1 1-8 0 4 4 0 1 1 8 0z" />
                 </svg>
@@ -44,7 +44,7 @@ wp.hooks.addFilter(
                     stroke="#6b7280"
                     strokeWidth="2"
                     strokeLinejoin="round"
-                    className="-ml-1 mr-4"
+                    className="-ml-1 mr-4 pro-settings"
                 >
                     <path d="M1 3.512v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-6l-2-2H3a2 2 0 0 0-2 2z" />
                 </svg>
@@ -133,7 +133,7 @@ wp.hooks.addFilter(
                     strokeWidth="2"
                     stroke="#6b7280"
                     strokeLinejoin="round"
-                    className="-ml-0.5 mr-4"
+                    className="-ml-0.5 mr-4 pro-settings"
                 >
                     <path d="M1 2.47a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-2zm0 8a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-6zm12 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-6z" />
                 </svg>

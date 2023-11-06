@@ -64,7 +64,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 				<div className="grid grid-cols-4 gap-5">
 					<div className="col-span-4">
 						<div className="settings-content flex items-center justify-between">
-							<div className="settings-field-heading flex items-center space-x-2 flex-1">
+							<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
 								<label
 									className="block text-sm font-medium text-gray-600"
 									id="headlessui-listbox-label-15"
@@ -131,7 +131,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 					</div>
 					<div className="col-span-4">
 						<div className="settings-content flex items-center justify-between">
-							<div className="settings-field-heading flex items-center space-x-2 flex-1">
+							<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
 								<label
 									className="block text-sm font-medium text-gray-600"
 									id="headlessui-listbox-label-15"
@@ -177,7 +177,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 					</div>
 					<div className="col-span-4">
 						<div className="settings-content flex items-center justify-between">
-							<div className="settings-field-heading flex items-center space-x-2 flex-1">
+							<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
 								<label
 									className="block text-sm font-medium text-gray-600"
 									id="headlessui-listbox-label-15"
@@ -306,7 +306,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 
 				{ colorBy[ 0 ]?.field === 'custom' && (
 					<div id="custom-heading" className="w-80">
-						<div className="settings-heading flex items-center justify-between mb-4">
+						<div className="settings-heading md:min-w-[300px] flex items-center justify-between mb-4">
 							<span className="font-bold text-sm text-gray-600">
 								{ __(
 									'Choose Color: ',
@@ -321,7 +321,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 					</div>
 				) }
 
-				<div className="flex gap-24 my-6">
+				<div className="palette-options-container flex gap-24 my-6">
 					<ColorPaletteSettings />
 					<MessagePreview settings={ settingsData } previewColors={ defaultColorPalette } />
 				</div>

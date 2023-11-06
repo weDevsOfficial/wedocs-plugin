@@ -149,7 +149,7 @@ const SettingsPage = () => {
                     onChange={ setSelectedIndex }
                     selectedIndex={ selectedIndex }
                   >
-                    <aside className="px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
+                    <aside className="px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3 md:mb-6">
                       <nav className="py-[18px] min-h-[500px] bg-white rounded-md">
                         <Tab.List className="px-2 space-y-1">
                           <Menu />

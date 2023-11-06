@@ -173,7 +173,7 @@ const ColorPaletteSettings = () => {
     ];
 
     return (
-        <div className="w-80">
+        <div className="w-80 settings-palette-options">
             <div className="palette-options">
                 { paletteOptions?.map( ( palette ) => (
                     <div
@@ -204,8 +204,8 @@ const ColorPaletteSettings = () => {
                                     'wedocs'
                                 ) }
                             >
-								                <span
-                                    className={ `w-10 h-4 rounded-[55px] ${
+                                <span
+                                    className={ `palette-first-color w-10 h-4 rounded-[55px] ${
                                         palette.widgetColors.color1 ===
                                         '#FFFFFF'
                                             ? 'border border-[#DBDBDB]'

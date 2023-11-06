@@ -10,7 +10,7 @@ const IntegrateAiSettings = () => {
                     key="manage_subscription"
                 >
                     <div className="settings-content flex items-center justify-between">
-                        <div className="settings-heading flex items-center space-x-2 flex-1">
+                        <div className="settings-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
                             <label
                                 className="block text-sm font-medium text-gray-700"
                                 id="headlessui-listbox-label-15"

@@ -34,7 +34,7 @@ const Menu = () => {
       { Object.entries( menus ).map( ( tab, index ) => (
         <Fragment key={ index }>
           { !tab[ 1 ]?.disabled ? (
-            <Tab className="w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer">
+            <Tab className="settings-tab w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer">
               { tab[ 1 ]?.icon }
               <span className="truncate">{ tab[ 1 ]?.text }</span>
               { tab[ 1 ]?.pro && <Badge /> }
@@ -43,7 +43,7 @@ const Menu = () => {
             <Fragment>
               <div
                 onClick={ () => setShowSubTabs( !showSubTabs ) }
-                className={ `disable-tab-item w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer` }
+                className={ `disable-tab-item settings-tab w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer` }
               >
                 { tab[ 1 ]?.icon }
                 <span className="truncate">{ tab[ 1 ]?.text }</span>
@@ -56,9 +56,9 @@ const Menu = () => {
                 <Tab
                   key={ index }
                   disabled={ subtab?.disabled }
-                  className={ `${ showSubTabs ? '' : 'hidden' } w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium` }
+                  className={ `${ showSubTabs ? '' : 'hidden' } settings-sub-tab w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium` }
                 >
-                  <div className={ `ml-9 flex items-center` }>
+                  <div className={ `pro-sub-settings ml-9 flex items-center w-full` }>
                     { subtab?.icon }
                     <span className="truncate">{ subtab?.text }</span>
                     { subtab?.pro && <Badge /> }

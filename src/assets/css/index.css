@@ -37,3 +37,78 @@ html.wp-toolbar {
         padding: 0 25px !important;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .settings-description {
+        max-width: 305px;
+    }
+
+    .palette-options-container {
+        gap: 32px;
+    }
+
+    .settings-palette-options {
+        width: 272px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .palette-preview-container {
+        width: 320px;
+    }
+
+    .preview-header .tabs .tab {
+        padding: 8px;
+    }
+
+    .preview-header .tabs {
+        margin-bottom: 12px;
+    }
+
+    .preview-header {
+        height: 160px;
+    }
+
+    .listing-docs .doc-search {
+        min-height: 28px;
+    }
+
+    .listing-docs .search-panel {
+        width: 256px;
+        margin-bottom: 16px;
+    }
+
+    .explore-docs .doc-section {
+        width: 290px;
+    }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1100px) {
+    .pro-sub-settings {
+        margin-left: 1.5rem;
+    }
+
+    .settings-description {
+        max-width: 240px;
+    }
+
+    .palette-options-container {
+        gap: 16px;
+    }
+
+    .settings-palette-options {
+        width: 232px;
+    }
+
+    .palette-first-color {
+        width: 16px;
+    }
+
+    .settings-tab .pro-settings {
+        width: 54px;
+    }
+
+    .settings-sub-tab svg {
+        width: 24px;
+    }
+}

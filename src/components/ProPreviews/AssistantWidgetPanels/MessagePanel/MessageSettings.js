@@ -6,7 +6,7 @@ const MessageSettings = () => {
 			<div className="grid grid-cols-4 gap-5">
 				<div className="col-span-4">
 					<div className="settings-content flex items-center justify-between">
-						<div className="settings-field-heading flex items-center space-x-2 flex-1">
+						<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
 							<label
 								className="block text-sm font-medium text-gray-600"
 								id="headlessui-listbox-label-15"
@@ -76,7 +76,7 @@ const MessageSettings = () => {
 				</div>
 				<div className="col-span-4">
 					<div className="settings-content flex items-center justify-between">
-						<div className="settings-field-heading flex items-center space-x-2 flex-1">
+						<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
 							<label
 								className="block text-sm font-medium text-gray-600"
 								id="headlessui-listbox-label-15"
@@ -130,7 +130,7 @@ const MessageSettings = () => {
 				</div>
 				<div className="col-span-4">
 					<div className="settings-content flex items-center justify-between">
-						<div className="settings-field-heading flex items-center space-x-2 flex-1">
+						<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
 							<label
 								className="block text-sm font-medium text-gray-600"
 								id="headlessui-listbox-label-15"
@@ -184,7 +184,7 @@ const MessageSettings = () => {
 				</div>
 				<div className="col-span-4">
 					<div className="settings-content flex items-center justify-between">
-						<div className="settings-field-heading flex items-center space-x-2 flex-1">
+						<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
 							<label
 								className="block text-sm font-medium text-gray-600"
 								id="headlessui-listbox-label-15"

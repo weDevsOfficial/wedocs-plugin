@@ -110,7 +110,7 @@ const MessagePreview = ( { settings, previewColors } ) => {
     ];
 
     return (
-        <div className={ `w-[26rem] relative` }>
+        <div className={ `w-[26rem] palette-preview-container relative` }>
             <div className={ `palette-preview-content transition-all` }>
                 <div className={ `pb-6 palette-preview bg-white rounded-[10px] shadow-xl mb-5 overflow-hidden` }>
                     <div
@@ -224,7 +224,7 @@ const MessagePreview = ( { settings, previewColors } ) => {
                         } explore-tab -mt-5` }
                     >
                         <div className={ `listing-docs` }>
-                            <div className={ `px-3 py-1 doc-search-panel relative flex items-center justify-center border border-[#D1D5DB] bg-white rounded-md w-80 mx-auto shadow-sm mb-8` }>
+                            <div className={ `search-panel px-3 py-1 doc-search-panel relative flex items-center justify-center border border-[#D1D5DB] bg-white rounded-md w-80 mx-auto shadow-sm mb-8` }>
                                 <input
                                     id="doc-search"
                                     type="text"
