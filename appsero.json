@@ -15,6 +15,7 @@
     "package-lock.json",
     "phpunit.xml.dist",
     "bin",
-    "tests"
+    "tests",
+    "src"
   ]
 }
