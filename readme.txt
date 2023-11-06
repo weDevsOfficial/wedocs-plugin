@@ -5,7 +5,7 @@ Tags: WordPress documentation, WordPress docs plugin, WordPress documentation pl
 Requires at least: 5.6
 Tested up to: 6.3.2
 Requires PHP: 7.4
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -176,6 +176,10 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 9. Search widget in frontend
 
 == Changelog ==
+= v2.0.2 (6 November, 2023) =
+
+ * **Enhance:** Add weDocs app build stuffs in Appsero
+
 = v2.0.1 (6 November, 2023) =
 
  * **Fix:** weDocs app build stuffs in Appsero
