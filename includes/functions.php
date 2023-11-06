@@ -1,40 +1,49 @@
 <?php
 /**
  * Get template part implementation for wedocs.
+ * Looks at the theme directory first.
  *
- * Looks at the theme directory first
+ * @since 2.0.0
+ *
+ * @param string $slug
+ * @param string $name
+ * @param array  $args
+ *
+ * @return void
  */
-function wedocs_get_template_part( $slug, $name = '' ) {
-    $wedocs = WeDocs::init();
+function wedocs_get_template_part( $slug, $name = '', $args = array() ) {
+    $defaults = array(
+        'pro' => false,
+    );
 
-    $templates = [];
-    $name      = (string) $name;
-
-    // lookup at theme/slug-name.php or wedocs/slug-name.php
-    if ( '' !== $name ) {
-        $templates[] = "{$slug}-{$name}.php";
-        $templates[] = $wedocs->theme_dir_path . "{$slug}-{$name}.php";
+    $args = wp_parse_args( $args, $defaults );
+    if ( $args && is_array( $args ) ) {
+        extract( $args ); // phpcs:ignore
     }
 
-    $template = locate_template( $templates );
+    $wedocs   = ! empty( $args['pro'] ) && true === $args['pro'] ? WeDocs_Pro::init() : WeDocs::init();
+    $template = '';
 
-    // fallback to plugin default template
-    if ( !$template && $name && file_exists( $wedocs->template_path() . "{$slug}-{$name}.php" ) ) {
-        $template = $wedocs->template_path() . "{$slug}-{$name}.php";
+    // Look in yourtheme/wedocs/slug-name.php and yourtheme/wedocs/slug.php.
+    $template_path = ! empty( $name ) ? "{$slug}-{$name}.php" : "{$slug}.php";
+    $template      = locate_template( [ $wedocs->template_path() . $template_path ] );
+
+    $template_path = apply_filters( 'wedocs_set_template_path', $wedocs->plugin_path() . '/templates', $template, $args );
+
+    // Get default slug-name.php.
+    if ( ! $template && $name && file_exists( $template_path . "/{$slug}-{$name}.php" ) ) {
+        $template = $template_path . "/{$slug}-{$name}.php";
     }
 
-    // if not yet found, lookup in slug.php only
-    if ( !$template ) {
-        $templates = [
-            "{$slug}.php",
-            $wedocs->theme_dir_path . "{$slug}.php",
-        ];
-
-        $template = locate_template( $templates );
+    if ( ! $template && ! $name && file_exists( $template_path . "/{$slug}.php" ) ) {
+        $template = $template_path . "/{$slug}.php";
     }
+
+    // Allow 3rd party plugin filter template file from their plugin
+    $template = apply_filters( 'wedocs_get_template_part', $template, $slug, $name );
 
     if ( $template ) {
-        load_template( $template, false );
+        include $template;
     }
 }
 
@@ -49,7 +58,7 @@ function wedocs_get_template_part( $slug, $name = '' ) {
  * @return void
  */
 function wedocs_get_template( $template_name, $args = [] ) {
-    $wedocs = WeDocs::init();
+    $wedocs = ! empty( $args['pro'] ) && true === $args['pro'] ? WeDocs_Pro::init() :WeDocs::init();
 
     if ( $args && is_array( $args ) ) {
         extract( $args );
@@ -67,6 +76,21 @@ function wedocs_get_template( $template_name, $args = [] ) {
     if ( file_exists( $template ) ) {
         include $template;
     }
+}
+
+/**
+ * Control display content length.
+ *
+ * @since 2.0.0
+ *
+ * @param string $content
+ * @param int    $max_content_number
+ *
+ * @return string
+ */
+function wedocs_apply_short_content( $content, $max_content_number ) {
+    // Control content length by substr.
+    return ( strlen( $content ) > $max_content_number ) ? mb_substr( $content, 0, $max_content_number ) . '...' : $content;
 }
 
 if ( !function_exists( 'wedocs_breadcrumbs' ) ) {
@@ -94,7 +118,8 @@ if ( !function_exists( 'wedocs_breadcrumbs' ) ) {
         $html .= wedocs_get_breadcrumb_item( $args['home'], home_url( '/' ), $breadcrumb_position );
         $html .= $args['delimiter'];
 
-        $docs_home = wedocs_get_option( 'docs_home', 'wedocs_settings' );
+        // Collect documentation home page settings.
+        $docs_home = wedocs_get_general_settings( 'docs_home' );
 
         if ( $docs_home ) {
             ++$breadcrumb_position;
@@ -143,11 +168,16 @@ if ( !function_exists( 'wedocs_get_breadcrumb_item' ) ) {
      * @return string
      */
     function wedocs_get_breadcrumb_item( $label, $permalink, $position = 1 ) {
-        return '<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-            <a itemprop="item" href="' . esc_attr( $permalink ) . '">
-            <span itemprop="name">' . esc_html( $label ) . '</span></a>
-            <meta itemprop="position" content="' . $position . '" />
-        </li>';
+        $breadcrumb_label = wedocs_apply_short_content( $label, 25 );
+
+        return apply_filters(
+            'wedocs_breadcrumbs_items',
+            '<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+	            <a itemprop="item" href="' . esc_attr( $permalink ) . '">
+	            <span itemprop="name">' . esc_html( $breadcrumb_label ) . '</span></a>
+	            <meta itemprop="position" content="' . $position . '" />
+            </li>'
+        );
     }
 }
 
@@ -287,11 +317,34 @@ function wedocs_is_plugin_active( $plugin_path_and_name ) {
 function wedocs_get_option( $option, $section, $default = '' ) {
     $options = get_option( $section );
 
-    if ( isset( $options[$option] ) ) {
-        return $options[$option];
+    if ( isset( $options[ $option ] ) ) {
+        return $options[ $option ];
     }
 
     return $default;
+}
+
+/**
+ * Get the value of general settings.
+ *
+ * @since 2.0.0
+ *
+ * @param string $field_name general settings field name.
+ * @param string $default    default data if settings not found.
+ *
+ * @return mixed
+ */
+function wedocs_get_general_settings( $field_name = '', $default = '' ) {
+    $general_settings  = wedocs_get_option( 'general', 'wedocs_settings', [] );
+
+    if ( ! empty( $field_name ) ) {
+        $wedocs_field_data = wedocs_get_option( $field_name, 'wedocs_settings', $default );
+
+        // Check from general settings if not found then collect data from wedocs_settings.
+        return ! empty( $general_settings[ $field_name ] ) ? $general_settings[ $field_name ] : $wedocs_field_data;
+    }
+
+    return $general_settings;
 }
 
 /**
@@ -339,7 +392,8 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
     $blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
     $document = get_post( $doc_id );
 
-    $email_to = wedocs_get_option( 'email_to', 'wedocs_settings', get_option( 'admin_email' ) );
+    // Collect feedback sending email address & prepare body.
+    $email_to = wedocs_get_general_settings( 'email_to', get_option( 'admin_email' ) );
     $subject  = sprintf( __( '[%1$s] New Doc Feedback: "%2$s"', 'wedocs' ), $blogname, $subject );
 
     $email_body = sprintf( __( 'New feedback on your doc "%s"', 'wedocs' ), apply_filters( 'wedocs_translate_text', $document->post_title ) ) . "\r\n";
@@ -349,10 +403,10 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
     $email_body .= sprintf( __( 'Doc Permalink: %s', 'wedocs' ), get_permalink( $document ) ) . "\r\n";
     $email_body .= sprintf( __( 'Edit Doc: %s', 'wedocs' ), admin_url( 'post.php?action=edit&post=' . $doc_id ) ) . "\r\n";
 
-    $from     = "From: \"${author}\" <${wp_email}>";
-    $reply_to = "Reply-To: \"${email}\" <${email}>";
+    $from     = "From: $author <$wp_email>";
+    $reply_to = "Reply-To: $email <$email>";
 
-    $message_headers = "${from}\n"
+    $message_headers = "$from\n"
             . 'Content-Type: text/plain; charset ="' . get_option( 'blog_charset' ) . "\"\n";
     $message_headers .= $reply_to . "\n";
 
@@ -436,3 +490,54 @@ function wedocs_sidebar_page_status_class( $css_class, $page, $depth, $args, $cu
 }
 
 add_filter( 'page_css_class', 'wedocs_sidebar_page_status_class', 20, 5 );
+
+/**
+ * Add weDocs documentation handling capabilities for users.
+ *
+ * @since 1.0.0
+ *
+ * @return void
+ */
+function wedocs_user_documentation_handling_capabilities() {
+    global $wp_roles;
+
+    if ( class_exists( 'WP_Roles' ) && ! isset( $wp_roles ) ) {
+        $wp_roles = new \WP_Roles(); // @codingStandardsIgnoreLine
+    }
+
+    $roles        = $wp_roles->get_names();
+    $capabilities = array( 'edit_post', 'edit_docs', 'publish_docs', 'edit_others_docs', 'read_private_docs', 'edit_private_docs', 'edit_published_docs' );
+    // Push documentation handling access to users.
+    foreach ( $capabilities as $capability ) {
+        foreach ( $roles as $role_key => $role ) {
+            $wp_roles->add_cap( $role_key, $capability );
+        }
+    }
+}
+
+/**
+ * Check premium version
+ * availability.
+ *
+ * @since 2.0.0
+ *
+ * @return bool
+ */
+function wedocs_pro_exists() {
+    if ( ! class_exists( 'WeDocs_Pro' ) ) {
+        return false;
+    }
+
+    // Check weDocs pro plugin domain availability.
+    $active_plugins = get_option( 'active_plugins' );
+    foreach ( $active_plugins as $plugin ) {
+        $plugin_data        = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
+        $plugin_text_domain = ! empty( $plugin_data[ 'TextDomain' ] ) ? sanitize_key( $plugin_data[ 'TextDomain' ] ) : '';
+
+        if ( $plugin_text_domain === 'wedocs-pro' ) {
+            return true;
+        }
+    }
+
+     return false;
+}

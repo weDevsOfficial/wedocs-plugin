@@ -22,10 +22,8 @@ get_header(); ?>
 
         <div class="wedocs-single-wrap">
 
-            <?php if ( !$skip_sidebar ) { ?>
-
-                <?php wedocs_get_template_part( 'docs', 'sidebar' ); ?>
-
+            <?php if ( ! $skip_sidebar ) { ?>
+                <?php wedocs_get_template_part( 'docs', 'sidebar', [ 'post' => $post ] ); ?>
             <?php } ?>
 
             <div class="wedocs-single-content">
@@ -35,8 +33,14 @@ get_header(); ?>
                     <header class="entry-header">
                         <?php the_title( '<h1 class="entry-title" itemprop="headline">', '</h1>' ); ?>
 
-                        <?php if ( wedocs_get_option( 'print', 'wedocs_settings', 'on' ) == 'on' ) { ?>
-                            <a href="#" class="wedocs-print-article wedocs-hide-print wedocs-hide-mobile" title="<?php echo esc_attr( __( 'Print this article', 'wedocs' ) ); ?>"><i class="wedocs-icon wedocs-icon-print"></i></a>
+                        <?php if ( wedocs_get_general_settings( 'print', 'on' ) === 'on' ) { ?>
+                            <a
+                                href="#"
+                                class="wedocs-print-article wedocs-hide-print wedocs-hide-mobile"
+                                title="<?php echo esc_attr( __( 'Print this article', 'wedocs' ) ); ?>"
+                            >
+                                <i class="wedocs-icon wedocs-icon-print"></i>
+                            </a>
                         <?php } ?>
                     </header><!-- .entry-header -->
 
@@ -75,34 +79,50 @@ get_header(); ?>
                         ?>
                     </div><!-- .entry-content -->
 
+	                  <?php wedocs_doc_nav(); ?>
+
                     <footer class="entry-footer wedocs-entry-footer">
-                        <?php if ( wedocs_get_option( 'email', 'wedocs_settings', 'on' ) == 'on' ) { ?>
-                            <span class="wedocs-help-link wedocs-hide-print wedocs-hide-mobile">
-                                <i class="wedocs-icon wedocs-icon-envelope"></i>
-                                <?php printf( '%s <a id="wedocs-stuck-modal" href="%s">%s</a>', __( 'Still stuck?', 'wedocs' ), '#', __( 'How can we help?', 'wedocs' ) ); ?>
-                            </span>
+	                      <?php if ( wedocs_get_general_settings( 'email', 'on' ) === 'on' ) { ?>
+                            <div class='help-content wedocs-hide-mobile'>
+                                <div class='help-panel'>
+                                    <span class='help-icon'>
+                                        <svg width="26" height="25" fill="none" class='wedocs-icon'>
+                                            <path
+                                                d="M1.429 21.292V9.924c0-.851.425-1.646 1.134-2.118l8.911-5.941c.855-.57 1.969-.57 2.825 0l8.911 5.941c.708.472 1.134 1.267 1.134 2.118v11.367m-22.914 0c0 1.406 1.14 2.546 2.546 2.546h17.822c1.406 0 2.546-1.14 2.546-2.546m-22.914 0l8.593-5.728m14.321 5.728l-8.593-5.728M1.429 9.835l8.593 5.728m14.321-5.728l-8.593 5.728m0 0l-1.452.968c-.855.57-1.969.57-2.825 0l-1.452-.968"
+                                                stroke="#9559ff"
+                                                stroke-width="1.67"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </span>
+                                    <span class="wedocs-help-link wedocs-hide-print wedocs-hide-mobile">
+                                        <?php printf( '%s <a id="wedocs-stuck-modal" href="%s">%s</a>', __( 'Still stuck? ', 'wedocs' ), '#', __( 'How can we help?', 'wedocs' ) ); ?>
+
+                                        <div class="wedocs-article-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                                            <meta itemprop="name" content="<?php echo get_the_author(); ?>" />
+                                            <meta itemprop="url" content="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>" />
+                                        </div>
+
+                                        <meta itemprop="datePublished" content="<?php echo get_the_time( 'c' ); ?>"/>
+                                        <time itemprop="dateModified" datetime="<?php echo esc_attr( get_the_modified_date( 'c' ) ); ?>"><?php printf( __( 'Updated on %s', 'wedocs' ), get_the_modified_date() ); ?></time>
+                                    </span>
+                                </div>
+                            </div>
                         <?php } ?>
 
-                        <div class="wedocs-article-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
-                            <meta itemprop="name" content="<?php echo get_the_author(); ?>" />
-                            <meta itemprop="url" content="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>" />
-                        </div>
-
-                        <meta itemprop="datePublished" content="<?php echo get_the_time( 'c' ); ?>"/>
-                        <time itemprop="dateModified" datetime="<?php echo esc_attr( get_the_modified_date( 'c' ) ); ?>"><?php printf( __( 'Updated on %s', 'wedocs' ), get_the_modified_date() ); ?></time>
+                        <?php if ( wedocs_get_general_settings( 'helpful', 'on' ) === 'on' ) { ?>
+                            <div class='feedback-content'>
+                                <?php wedocs_get_template_part( 'content', 'feedback' ); ?>
+                            </div>
+                        <?php } ?>
                     </footer>
 
-                    <?php wedocs_doc_nav(); ?>
-
-                    <?php if ( wedocs_get_option( 'helpful', 'wedocs_settings', 'on' ) == 'on' ) { ?>
-                        <?php wedocs_get_template_part( 'content', 'feedback' ); ?>
-                    <?php } ?>
-
-                    <?php if ( wedocs_get_option( 'email', 'wedocs_settings', 'on' ) == 'on' ) { ?>
+                    <?php if ( wedocs_get_general_settings( 'email', 'on' ) === 'on' ) { ?>
                         <?php wedocs_get_template_part( 'content', 'modal' ); ?>
                     <?php } ?>
 
-                    <?php if ( wedocs_get_option( 'comments', 'wedocs_settings', 'off' ) == 'on' ) { ?>
+                    <?php if ( wedocs_get_general_settings( 'comments', 'off' ) === 'on' ) { ?>
                         <?php if ( comments_open() || get_comments_number() ) { ?>
                             <div class="wedocs-comments-wrap">
                                 <?php comments_template(); ?>

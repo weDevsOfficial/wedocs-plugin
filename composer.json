@@ -11,8 +11,8 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "tareq1988/wordpress-settings-api-class": "dev-master",
-    "appsero/client": "1.2.4"
+    "appsero/client": "1.2.4",
+    "woocommerce/action-scheduler": "dev-trunk"
   },
   "autoload": {
     "psr-4": {

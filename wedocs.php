@@ -3,7 +3,7 @@
 Plugin Name: weDocs
 Plugin URI: https://wedocs.co/
 Description: A documentation plugin for WordPress
-Version: 1.7.8
+Version: 2.0.0
 Author: weDevs
 Author URI: https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri
 License: GPL2
@@ -38,6 +38,8 @@ Domain Path: /languages
  */
 
 // don't call the file directly
+use Appsero\Client;
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
@@ -56,7 +58,7 @@ final class WeDocs {
      *
      * @var string
      */
-    const VERSION = '1.7.1';
+    const VERSION = '2.0.0';
 
     /**
      * The plugin url.
@@ -94,7 +96,7 @@ final class WeDocs {
     private $container = [];
 
     /**
-     * Class construcotr
+     * Class constructor.
      */
     private function __construct() {
         $this->define_constants();
@@ -103,6 +105,8 @@ final class WeDocs {
         register_activation_hook( __FILE__, [ $this, 'activate' ] );
 
         add_action( 'after_setup_theme', [ $this, 'init_classes' ] );
+
+        $this->init_action_scheduler();
     }
 
     /**
@@ -174,6 +178,9 @@ final class WeDocs {
     public function activate() {
         $installer = new WeDevs\WeDocs\Installer();
         $installer->run();
+
+        // Set the redirect option to true when the plugin is activated.
+        update_option( 'wedocs_activation_redirect', true );
     }
 
     /**
@@ -187,16 +194,18 @@ final class WeDocs {
         $this->container['post_type'] = new WeDevs\WeDocs\Post_Types();
 
         if ( is_admin() ) {
-            $this->container['admin'] =new WeDevs\WeDocs\Admin();
+            $this->container['admin'] = new WeDevs\WeDocs\Admin();
         } else {
-            $this->container['frontend'] =new WeDevs\WeDocs\Frontend();
+            $this->container['frontend'] = new WeDevs\WeDocs\Frontend();
         }
 
         if ( wp_doing_ajax() ) {
-            $this->container['ajax'] =new WeDevs\WeDocs\Ajax();
+            $this->container['ajax'] = new WeDevs\WeDocs\Ajax();
         }
 
-        $this->container['api'] =new WeDevs\WeDocs\API();
+        $this->container['api']      = new WeDevs\WeDocs\API();
+        $this->container['migrate']  = new WeDevs\WeDocs\Admin\Migrate();
+        $this->container['upgrader'] = new WeDevs\WeDocs\Upgrader\Upgrader();
     }
 
     /**
@@ -205,7 +214,7 @@ final class WeDocs {
      * @uses load_plugin_textdomain()
      */
     public function localization_setup() {
-        load_plugin_textdomain( 'wedocs', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+        load_plugin_textdomain( 'wedocs', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
     }
 
     /**
@@ -241,6 +250,17 @@ final class WeDocs {
         }
 
         return $this->plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
+    }
+
+    /**
+     * Initialize action scheduler.
+     *
+     * @since 2.0.0
+     *
+     * @return void
+     */
+    public function init_action_scheduler() {
+        require_once( __DIR__ . '/vendor/woocommerce/action-scheduler/action-scheduler.php' );
     }
 
     /**

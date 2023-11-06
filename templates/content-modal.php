@@ -11,7 +11,7 @@ if ( is_user_logged_in() ) {
 <div class="wedocs-modal-backdrop" id="wedocs-modal-backdrop"></div>
 <div id="wedocs-contact-modal" class="wedocs-contact-modal wedocs-hide-print">
     <div class="wedocs-modal-header">
-        <h1><?php _e( 'How can we help?', 'wedocs' ); ?></h1>
+        <h3><?php _e( 'How can we help?', 'wedocs' ); ?></h3>
         <a href="#" id="wedocs-modal-close" class="wedocs-modal-close"><i class="wedocs-icon wedocs-icon-times"></i></a>
     </div>
 
@@ -35,7 +35,7 @@ if ( is_user_logged_in() ) {
             </div>
 
             <div class="wedocs-form-row">
-                <label for="subject"><?php _e( 'subject', 'wedocs' ); ?></label>
+                <label for="subject"><?php _e( 'Subject', 'wedocs' ); ?></label>
 
                 <div class="wedocs-form-field">
                     <input type="text" name="subject" id="subject" placeholder="" value="" required />
@@ -43,7 +43,7 @@ if ( is_user_logged_in() ) {
             </div>
 
             <div class="wedocs-form-row">
-                <label for="message"><?php _e( 'message', 'wedocs' ); ?></label>
+                <label for="message"><?php _e( 'Message', 'wedocs' ); ?></label>
 
                 <div class="wedocs-form-field">
                     <textarea type="message" name="message" id="message" required></textarea>
@@ -51,7 +51,7 @@ if ( is_user_logged_in() ) {
             </div>
 
             <div class="wedocs-form-action">
-                <input type="submit" name="submit" value="<?php echo esc_attr_e( 'Send', 'wedocs' ); ?>">
+                <input type="submit" name="submit" value="<?php esc_attr_e( 'Send', 'wedocs' ); ?>">
                 <input type="hidden" name="doc_id" value="<?php the_ID(); ?>">
                 <input type="hidden" name="action" value="wedocs_contact_feedback">
             </div>

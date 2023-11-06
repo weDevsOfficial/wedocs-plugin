@@ -18,6 +18,7 @@ class Installer {
         $this->maybe_create_docs_page();
         $this->add_post_types();
         $this->timestamps();
+        wedocs_user_documentation_handling_capabilities();
     }
 
     /**
@@ -68,7 +69,7 @@ class Installer {
         $pages_query = new WP_Query( [
             'post_type'      => 'page',
             'posts_per_page' => -1,
-            's'              => '[wedocs',
+            's'              => '[wedocs]',
         ] );
 
         if ( $pages_query->found_posts ) {
@@ -87,8 +88,8 @@ class Installer {
         ] );
 
         if ( ! is_wp_error( $docs_page ) ) {
-            $settings              = get_option( 'wedocs_settings', [] );
-            $settings['docs_home'] = $docs_page;
+            $settings                         = wedocs_get_general_settings();
+            $settings['general']['docs_home'] = $docs_page;
 
             update_option( 'wedocs_settings', $settings );
         }
