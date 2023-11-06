@@ -12,19 +12,19 @@
     <?php _e( 'Was this article helpful to you?', 'wedocs' ); ?>
 
     <span class="vote-link-wrap">
-        <a href="#" class="wedocs-tip positive" data-id="<?php the_ID(); ?>" data-type="positive" title="<?php echo esc_attr( $positive_title ); ?>">
-            <?php _e( 'Yes', 'wedocs' ); ?>
-
-            <?php if ( $positive ) { ?>
-                <span class="count"><?php echo number_format_i18n( $positive ); ?></span>
-            <?php } ?>
-        </a>
         <a href="#" class="wedocs-tip negative" data-id="<?php the_ID(); ?>" data-type="negative" title="<?php echo esc_attr( $negative_title ); ?>">
-            <?php _e( 'No', 'wedocs' ); ?>
+            <?php esc_html_e( 'No', 'wedocs' ); ?>
 
             <?php if ( $negative ) { ?>
                 <span class="count"><?php echo number_format_i18n( $negative ); ?></span>
             <?php } ?>
+            <a href="#" class="wedocs-tip positive" data-id="<?php the_ID(); ?>" data-type="positive" title="<?php echo esc_attr( $positive_title ); ?>">
+                <?php esc_html_e( 'Yes', 'wedocs' ); ?>
+
+	              <?php if ( $positive ) { ?>
+                    <span class="count"><?php echo number_format_i18n( $positive ); ?></span>
+	              <?php } ?>
+            </a>
         </a>
     </span>
 </div>

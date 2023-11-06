@@ -14,10 +14,41 @@ class Admin {
      */
     public function __construct() {
         new Admin\Admin();
-        new Admin\Settings();
+        new Admin\Migrate();
         new Admin\Docs_List_Table();
 
-        add_action( 'admin_init', [ $this, 'init_appsero' ], 1 );
+        add_action( 'admin_init', array( $this, 'init_admin_actions' ), 5 );
+    }
+
+    /**
+     * Admin initialization hook.
+     *
+     * @since 2.0.0
+     *
+     * @return void
+     */
+    public function init_admin_actions() {
+        $this->handle_plugin_activate_redirection();
+        $this->init_appsero();
+    }
+
+    /**
+     * Handle redirection after activate wedocs.
+     *
+     * @since 2.0.0
+     *
+     * @return void
+     */
+    public function handle_plugin_activate_redirection() {
+        // Check if the plugin is being activated for the first time.
+        if ( get_option( 'wedocs_activation_redirect', false ) ) {
+            // Remove the redirect option to prevent further redirections.
+            delete_option('wedocs_activation_redirect');
+
+            // Redirect to the weDocs dashboard & exit.
+            wp_safe_redirect( admin_url( 'admin.php?page=wedocs#/' ) );
+            exit;
+        }
     }
 
     /**

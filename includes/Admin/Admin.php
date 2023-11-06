@@ -11,91 +11,49 @@ class Admin {
      * Constructor
      */
     public function __construct() {
+        new Menu();
+
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ] );
 
-        add_action( 'admin_menu', [ $this, 'admin_menu' ] );
-        add_action( 'admin_notices', [ $this, 'show_wedocs_beta_notice' ] );
-
-        add_filter( 'parent_file', [$this, 'fix_tag_menu' ] );
+        add_filter( 'parent_file', [ $this, 'fix_tag_menu' ], 15 );
+        add_filter( 'submenu_file', [ $this, 'highlight_admin_submenu' ] );
         add_filter( 'admin_footer_text', [ $this, 'admin_footer_text' ], 1 );
-    }
-
-    /**
-     * Show weDocs beta notices.
-     *
-     * @since 1.7.7
-     *
-     * @return void
-     */
-    public function show_wedocs_beta_notice() {
-        // Check if the admin notice should be hidden based on the user meta.
-        $user_id     = get_current_user_id();
-        $hide_notice = get_user_meta( $user_id, 'wedocs_hide_beta_notice', true );
-        if ( ! $hide_notice ) {
-            // Render weDocs beta info notice.
-            wedocs_get_template_part( 'beta', 'notice' );
-        }
+        add_action( 'admin_notices', [ $this, 'show_wedocs_pro_available_notice' ] );
     }
 
     /**
      * Load admin scripts and styles.
      *
-     * @param  string
+     * @param string $hook
      *
      * @return void
      */
     public function admin_scripts( $hook ) {
-        // Check if the admin notice should be hidden based on the user meta.
-        $user_id     = get_current_user_id();
-        $hide_notice = get_user_meta( $user_id, 'wedocs_hide_beta_notice', true );
-        if ( 'toplevel_page_wedocs' !== $hook && $hide_notice ) {
+        wp_enqueue_script(
+            'wedocs-admin-script',
+            wedocs()->plugin_url() . '/assets/js/admin-script.js',
+            [ 'jquery' ],
+            filemtime( wedocs()->plugin_path() . '/assets/js/admin-script.js' ),
+            true
+        );
+
+        if ( 'toplevel_page_wedocs' !== $hook ) {
             return;
         }
 
-        $suffix     = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
         $assets_url = wedocs()->plugin_url() . '/assets';
 
-        wp_enqueue_script( 'vuejs', $assets_url . '/js/vue' . $suffix . '.js' );
-        wp_enqueue_script( 'sweetalert', $assets_url . '/js/sweetalert.min.js', [ 'jquery' ] );
-        wp_enqueue_script( 'wedocs-admin-script', $assets_url . '/js/admin-script.js', [ 'jquery', 'jquery-ui-sortable', 'wp-util' ], time(), true );
-        wp_localize_script( 'wedocs-admin-script', 'weDocs', [
-            'nonce'               => wp_create_nonce( 'wedocs-admin-nonce' ),
-            'editurl'             => admin_url( 'post.php?action=edit&post=' ),
-            'viewurl'             => home_url( '/?p=' ),
-            'enter_doc_title'     => __( 'Enter doc title', 'wedocs' ),
-            'write_something'     => __( 'Write something', 'wedocs' ),
-            'enter_section_title' => __( 'Enter section title', 'wedocs' ),
-            'confirmBtn'          => __( 'OK', 'wedocs' ),
-            'delConfirmBtn'       => __( 'Yes, delete it!', 'wedocs' ),
-            'cancelBtn'           => __( 'Cancel', 'wedocs' ),
-            'delConfirm'          => __( 'Are you sure?', 'wedocs' ),
-            'delConfirmTxt'       => __( 'Are you sure to delete the entire section? Articles inside this section will be deleted too!', 'wedocs' ),
-        ] );
+        if ( file_exists( WEDOCS_PATH . '/assets/build/index.asset.php' ) ) {
+            $react_dependencies = require WEDOCS_PATH . '/assets/build/index.asset.php';
 
-        wp_enqueue_style( 'sweetalert', $assets_url . '/css/sweetalert.css', false, date( 'Ymd' ) );
-        wp_enqueue_style( 'wedocs-admin-styles', $assets_url . '/css/admin.css', false, date( 'Ymd' ) );
-    }
+            // Adding wedocs necessary assets.
+            wp_enqueue_style( 'wedocs-app-style', WEDOCS_URL . '/assets/build/index.css', [], $react_dependencies['version'] );
+            wp_enqueue_script( 'wedocs-app-script', WEDOCS_URL . '/assets/build/index.js', $react_dependencies['dependencies'], $react_dependencies['version'], true );
 
-    /**
-     * Get the admin menu position.
-     *
-     * @return int the position of the menu
-     */
-    public function get_menu_position() {
-        return apply_filters( 'wedocs_menu_position', 48 );
-    }
-
-    /**
-     * Add menu items.
-     *
-     * @return void
-     */
-    public function admin_menu() {
-        $capability = wedocs_get_publish_cap();
-
-        add_menu_page( __( 'weDocs', 'wedocs' ), __( 'weDocs', 'wedocs' ), $capability, 'wedocs', [ $this, 'page_index' ], 'dashicons-media-document', $this->get_menu_position() );
-        add_submenu_page( 'wedocs', __( 'Docs', 'wedocs' ), __( 'Docs', 'wedocs' ), $capability, 'wedocs', [ $this, 'page_index' ] );
-        add_submenu_page( 'wedocs', __( 'Tags', 'wedocs' ), __( 'Tags', 'wedocs' ), 'manage_categories', 'edit-tags.php?taxonomy=doc_tag&post_type=docs' );
+            wp_localize_script( 'wedocs-app-script', 'weDocsAdminVars', [
+                'hasManageCap' => current_user_can( 'manage_options' ),
+            ] );
+        }
     }
 
     /**
@@ -112,7 +70,7 @@ class Admin {
     public function fix_tag_menu( $parent_file ) {
         global $current_screen;
 
-        if ( 'doc_tag' == $current_screen->taxonomy || 'docs' == $current_screen->post_type ) {
+        if ( 'doc_tag' === $current_screen->taxonomy ) {
             $parent_file = 'wedocs';
         }
 
@@ -120,12 +78,43 @@ class Admin {
     }
 
     /**
-     * UI Page handler.
+     * Highlight the proper top level submenu.
+     *
+     * @global obj $current_screen
+     *
+     * @param string $submenu_file
+     *
+     * @return string
+     */
+    public function highlight_admin_submenu( $submenu_file ) {
+        global $current_screen;
+
+        if ( $current_screen->id === 'edit-doc_tag' ) {
+            $submenu_file = 'edit-tags.php?taxonomy=doc_tag&post_type=docs';
+        }
+
+        return $submenu_file;
+    }
+
+    /**
+     * Show weDocs pro available notices.
+     *
+     * @since 2.0.0
      *
      * @return void
      */
-    public function page_index() {
-        include __DIR__ . '/views/admin.php';
+    public function show_wedocs_pro_available_notice() {
+        if ( wedocs_pro_exists() ) {
+            return;
+        }
+
+        // Check if the admin notice should be hidden based on the user meta.
+        $user_id     = get_current_user_id();
+        $hide_notice = get_user_meta( $user_id, 'wedocs_hide_pro_notice', true );
+        if ( ! $hide_notice ) {
+            // Render weDocs pro info notice.
+            wedocs_get_template_part( 'pro', 'notice' );
+        }
     }
 
     /**

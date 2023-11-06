@@ -2,114 +2,53 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 1.7.8\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
-"POT-Creation-Date: 2023-09-18 10:29:48+00:00\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2023-MO-DA HO:MI+ZONE\n"
+"Project-Id-Version: weDocs 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"X-Generator: grunt-wp-i18n 1.0.3\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-11-06T09:39:56+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Domain: wedocs\n"
 
-#: includes/API/API.php:51
-msgid "Email address of the author."
-msgstr ""
-
-#: includes/API/API.php:101
-msgid "Limit results to those matching a string."
-msgstr ""
-
-#: includes/API/API.php:108
-msgid "The ID for the parent of the object."
-msgstr ""
-
-#: includes/API/API.php:113
-msgid "Current page of the collection."
-msgstr ""
-
-#: includes/API/API.php:121
-msgid "Maximum number of items to be returned in result set."
-msgstr ""
-
-#: includes/API/API.php:291
-msgid "The page number requested is larger than the number of pages available."
-msgstr ""
-
-#: includes/API/API.php:377
-msgid "No name given"
-msgstr ""
-
-#: includes/API/API.php:381
-msgid "No email given"
-msgstr ""
-
-#: includes/API/API.php:395
-msgid "Invalid doc ID."
-msgstr ""
-
-#: includes/Admin/Admin.php:62
-msgid "Enter doc title"
-msgstr ""
-
-#: includes/Admin/Admin.php:63
-msgid "Write something"
-msgstr ""
-
-#: includes/Admin/Admin.php:64
-msgid "Enter section title"
-msgstr ""
-
-#: includes/Admin/Admin.php:65
-msgid "OK"
-msgstr ""
-
-#: includes/Admin/Admin.php:66
-msgid "Yes, delete it!"
-msgstr ""
-
-#: includes/Admin/Admin.php:67
-msgid "Cancel"
-msgstr ""
-
-#: includes/Admin/Admin.php:68
-msgid "Are you sure?"
-msgstr ""
-
-#: includes/Admin/Admin.php:69
-msgid ""
-"Are you sure to delete the entire section? Articles inside this section "
-"will be deleted too!"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
+#. Plugin Name of the plugin
+#: includes/Admin/Menu.php:45
+#: includes/Admin/Menu.php:46
 msgid "weDocs"
 msgstr ""
 
-#: includes/Admin/Admin.php:94 includes/functions.php:102
-msgid "Docs"
+#. Plugin URI of the plugin
+msgid "https://wedocs.co/"
 msgstr ""
 
-#: includes/Admin/Admin.php:95 includes/Post_Types.php:85
-msgid "Tags"
+#. Description of the plugin
+msgid "A documentation plugin for WordPress"
 msgstr ""
 
-#: includes/Admin/Admin.php:143
-msgid ""
-"Thank you for using <strong>weDocs</strong>. Please leave us a "
-"%s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
+#. Author of the plugin
+msgid "weDevs"
 msgstr ""
 
-#: includes/Admin/Admin.php:143
+#. Author URI of the plugin
+msgid "https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri"
+msgstr ""
+
+#: includes/Admin/Admin.php:135
+msgid "Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
+msgstr ""
+
+#: includes/Admin/Admin.php:135
 msgid "Thanks :)"
 msgstr ""
 
-#: includes/Admin/Admin.php:154
+#: includes/Admin/Admin.php:146
 msgid "Thank you for using <strong>weDocs</strong>."
 msgstr ""
 
-#: includes/Admin/Admin.php:157
+#: includes/Admin/Admin.php:149
 msgid "Use the <a href=\"%s\">classic UI</a>."
 msgstr ""
 
@@ -121,154 +60,210 @@ msgstr ""
 msgid "Votes"
 msgstr ""
 
-#: includes/Admin/Settings.php:44
-msgid "weDocs Settings"
+#: includes/Admin/Menu.php:72
+#: includes/functions.php:127
+msgid "Docs"
 msgstr ""
 
-#: includes/Admin/Settings.php:44
+#: includes/Admin/Menu.php:77
+#: includes/Post_Types.php:88
+msgid "Tags"
+msgstr ""
+
+#: includes/Admin/Menu.php:82
 msgid "Settings"
 msgstr ""
 
-#: includes/Admin/Settings.php:56
-msgid "Plugin Settings"
+#: includes/Admin/Menu.php:87
+msgid "Migration"
 msgstr ""
 
-#: includes/Admin/Settings.php:73
-msgid "Docs Home"
+#: includes/Admin/Migrate.php:61
+msgid "BetterDocs not exists."
 msgstr ""
 
-#: includes/Admin/Settings.php:74
-msgid ""
-"Home page for docs page. Preferably use <code>[wedocs]</code> <a "
-"href=\"%s\" target=\"_blank\">shortcode</a> or design your own."
+#: includes/Admin/Migrate.php:71
+#: includes/Admin/Migrate.php:81
+msgid "Migration done."
 msgstr ""
 
-#: includes/Admin/Settings.php:80
-msgid "Email feedback"
+#: includes/Admin/Migrate.php:89
+msgid "Migration not available at this moment."
 msgstr ""
 
-#: includes/Admin/Settings.php:81
-msgid "Enable Email feedback form"
+#: includes/Admin/Migrate.php:184
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:11
+msgid "Untitled Docs"
 msgstr ""
 
-#: includes/Admin/Settings.php:87
-msgid "Email Address"
+#: includes/Ajax.php:190
+msgid "Sorry, we have already recorded your feedback!"
 msgstr ""
 
-#: includes/Admin/Settings.php:88
-msgid "The email address where the feedbacks should sent to"
-msgstr ""
-
-#: includes/Admin/Settings.php:95
-msgid "Helpful feedback"
-msgstr ""
-
-#: includes/Admin/Settings.php:96
-msgid "Enable helpful feedback links"
-msgstr ""
-
-#: includes/Admin/Settings.php:102
-msgid "Comments"
-msgstr ""
-
-#: includes/Admin/Settings.php:103
-msgid "Allow Comments"
-msgstr ""
-
-#: includes/Admin/Settings.php:109
-msgid "Print article"
-msgstr ""
-
-#: includes/Admin/Settings.php:110
-msgid "Enable article printing"
-msgstr ""
-
-#: includes/Admin/Settings.php:142
-msgid "&mdash; Select Page &mdash;"
-msgstr ""
-
-#: includes/Admin/views/admin.php:3
-msgid "Documentations"
-msgstr ""
-
-#: includes/Admin/views/admin.php:3
-msgid "Add Doc"
-msgstr ""
-
-#: includes/Admin/views/admin.php:16
-msgid "Preview the doc"
-msgstr ""
-
-#: includes/Admin/views/admin.php:17
-msgid "Delete this doc"
-msgstr ""
-
-#: includes/Admin/views/admin.php:30
-msgid "Re-order this section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:31
-msgid "Preview the section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:32
-msgid "Delete this section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:33
-msgid "Add a new article"
-msgstr ""
-
-#: includes/Admin/views/admin.php:46 includes/Admin/views/admin.php:57
-msgid "Preview the article"
-msgstr ""
-
-#: includes/Admin/views/admin.php:47 includes/Admin/views/admin.php:58
-msgid "Delete this article"
-msgstr ""
-
-#: includes/Admin/views/admin.php:69
-msgid "Add Section"
-msgstr ""
-
-#: includes/Admin/views/admin.php:75
-msgid "No docs has been found. Perhaps %s?"
-msgstr ""
-
-#: includes/Admin/views/admin.php:75
-msgid "create one"
-msgstr ""
-
-#: includes/Ajax.php:109
-msgid "You are not allowed to delete this item."
-msgstr ""
-
-#: includes/Ajax.php:191
-msgid "Sorry, you've already recorded your feedback!"
-msgstr ""
-
-#: includes/Ajax.php:206
+#: includes/Ajax.php:205
 msgid "Thanks for your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:227
+#: includes/Ajax.php:226
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: includes/Ajax.php:234
+#: includes/Ajax.php:233
 msgid "Please provide a subject line."
 msgstr ""
 
-#: includes/Ajax.php:238
+#: includes/Ajax.php:237
 msgid "Please provide the message details."
 msgstr ""
 
-#: includes/Ajax.php:243
+#: includes/Ajax.php:242
 msgid "Thanks for your feedback."
+msgstr ""
+
+#: includes/API/API.php:138
+msgid "Limit results to those matching a string."
+msgstr ""
+
+#: includes/API/API.php:145
+msgid "The ID for the parent of the object."
+msgstr ""
+
+#: includes/API/API.php:150
+msgid "Current page of the collection."
+msgstr ""
+
+#: includes/API/API.php:158
+msgid "Maximum number of items to be returned in result set."
+msgstr ""
+
+#: includes/API/API.php:189
+msgid "Documentations data"
+msgstr ""
+
+#: includes/API/API.php:251
+#: includes/API/API.php:278
+msgid "You are not currently logged in."
+msgstr ""
+
+#: includes/API/API.php:255
+#: includes/API/API.php:283
+#: includes/API/API.php:331
+msgid "Unauthorized permission error"
+msgstr ""
+
+#: includes/API/API.php:259
+#: includes/API/API.php:288
+msgid "Currently sortable status not given"
+msgstr ""
+
+#: includes/API/API.php:294
+msgid "Need sortable status is required"
+msgstr ""
+
+#: includes/API/API.php:299
+msgid "Currently documentations data not found for update"
+msgstr ""
+
+#: includes/API/API.php:577
+msgid "The page number requested is larger than the number of pages available."
+msgstr ""
+
+#: includes/API/API.php:663
+msgid "No name given"
+msgstr ""
+
+#: includes/API/API.php:667
+msgid "No email given"
+msgstr ""
+
+#: includes/API/API.php:709
+msgid "You cannot delete the documentation resource."
+msgstr ""
+
+#: includes/API/API.php:730
+msgid "Invalid Documentation."
+msgstr ""
+
+#: includes/API/SettingsApi.php:79
+msgid "Settings value"
+msgstr ""
+
+#: includes/API/SettingsApi.php:88
+msgid "Upgrader version"
+msgstr ""
+
+#: includes/API/SettingsApi.php:117
+#: includes/API/UpgraderApi.php:137
+msgid "Need to be an authenticate user"
+msgstr ""
+
+#: includes/API/SettingsApi.php:121
+msgid "No settings request found"
+msgstr ""
+
+#: includes/API/UpgraderApi.php:104
+msgid "You don't have permission to get upgrader data"
+msgstr ""
+
+#: includes/API/UpgraderApi.php:141
+msgid "Need to be an administrator user"
+msgstr ""
+
+#: includes/API/UpgraderApi.php:161
+msgid "Processing Upgrade in the background."
 msgstr ""
 
 #: includes/Frontend.php:74
 msgid "Powered by weDocs plugin for WordPress"
+msgstr ""
+
+#: includes/functions.php:109
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:33
+msgid "Home"
+msgstr ""
+
+#: includes/functions.php:207
+msgid "Doc navigation"
+msgstr ""
+
+#: includes/functions.php:397
+msgid "[%1$s] New Doc Feedback: \"%2$s\""
+msgstr ""
+
+#: includes/functions.php:399
+msgid "New feedback on your doc \"%s\""
+msgstr ""
+
+#: includes/functions.php:400
+msgid "Author: %1$s (IP: %2$s)"
+msgstr ""
+
+#: includes/functions.php:401
+msgid "Email: %s"
+msgstr ""
+
+#: includes/functions.php:402
+msgid "Feedback: %s"
+msgstr ""
+
+#: includes/functions.php:403
+msgid "Doc Permalink: %s"
+msgstr ""
+
+#: includes/functions.php:404
+msgid "Edit Doc: %s"
+msgstr ""
+
+#: includes/Post_Types.php:32
+msgctxt "Post Type General Name"
+msgid "Docs"
+msgstr ""
+
+#: includes/Post_Types.php:33
+msgctxt "Post Type Singular Name"
+msgid "Doc"
 msgstr ""
 
 #: includes/Post_Types.php:34
@@ -276,6 +271,8 @@ msgid "Documentation"
 msgstr ""
 
 #: includes/Post_Types.php:35
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:140
 msgid "Parent Doc"
 msgstr ""
 
@@ -316,70 +313,80 @@ msgid "Not found in Trash"
 msgstr ""
 
 #: includes/Post_Types.php:86
-msgid "All Tags"
+msgctxt "Taxonomy General Name"
+msgid "Tags"
 msgstr ""
 
 #: includes/Post_Types.php:87
-msgid "Parent Tag"
-msgstr ""
-
-#: includes/Post_Types.php:88
-msgid "Parent Tag:"
+msgctxt "Taxonomy Singular Name"
+msgid "Tag"
 msgstr ""
 
 #: includes/Post_Types.php:89
-msgid "New Tag"
+msgid "All Tags"
 msgstr ""
 
 #: includes/Post_Types.php:90
-msgid "Add New Item"
+msgid "Parent Tag"
 msgstr ""
 
 #: includes/Post_Types.php:91
-msgid "Edit Tag"
+msgid "Parent Tag:"
 msgstr ""
 
 #: includes/Post_Types.php:92
-msgid "Update Tag"
+msgid "New Tag"
 msgstr ""
 
 #: includes/Post_Types.php:93
-msgid "View Tag"
+msgid "Add New Item"
 msgstr ""
 
 #: includes/Post_Types.php:94
-msgid "Separate items with commas"
+msgid "Edit Tag"
 msgstr ""
 
 #: includes/Post_Types.php:95
-msgid "Add or remove items"
+msgid "Update Tag"
 msgstr ""
 
 #: includes/Post_Types.php:96
-msgid "Choose from the most used"
+msgid "View Tag"
 msgstr ""
 
 #: includes/Post_Types.php:97
-msgid "Popular Tags"
+msgid "Separate items with commas"
 msgstr ""
 
 #: includes/Post_Types.php:98
-msgid "Search Tags"
+msgid "Add or remove items"
 msgstr ""
 
 #: includes/Post_Types.php:99
-msgid "Not Found"
+msgid "Choose from the most used"
 msgstr ""
 
 #: includes/Post_Types.php:100
-msgid "No items"
+msgid "Popular Tags"
 msgstr ""
 
 #: includes/Post_Types.php:101
-msgid "Tags list"
+msgid "Search Tags"
 msgstr ""
 
 #: includes/Post_Types.php:102
+msgid "Not Found"
+msgstr ""
+
+#: includes/Post_Types.php:103
+msgid "No items"
+msgstr ""
+
+#: includes/Post_Types.php:104
+msgid "Tags list"
+msgstr ""
+
+#: includes/Post_Types.php:105
 msgid "Tags list navigation"
 msgstr ""
 
@@ -396,368 +403,16 @@ msgid "weDocs Document Search"
 msgstr ""
 
 #: includes/Widget.php:36
+#: assets/build/index.js:1
+#: assets/build/index.js:5
+#: src/components/BackToDocsPage.js:25
+#: src/components/Documentations/index.js:125
 msgid "All Docs"
 msgstr ""
 
-#: includes/Widget.php:68
-msgid "Documentation Search"
-msgstr ""
-
-#: includes/Widget.php:70
-msgid "Title:"
-msgstr ""
-
-#: includes/functions.php:85
-msgid "Home"
-msgstr ""
-
-#: includes/functions.php:177
-msgid "Doc navigation"
-msgstr ""
-
-#: includes/functions.php:343
-msgid "[%1$s] New Doc Feedback: \"%2$s\""
-msgstr ""
-
-#: includes/functions.php:345
-msgid "New feedback on your doc \"%s\""
-msgstr ""
-
-#: includes/functions.php:346
-msgid "Author: %1$s (IP: %2$s)"
-msgstr ""
-
-#: includes/functions.php:347
-msgid "Email: %s"
-msgstr ""
-
-#: includes/functions.php:348
-msgid "Feedback: %s"
-msgstr ""
-
-#: includes/functions.php:349
-msgid "Doc Permalink: %s"
-msgstr ""
-
-#: includes/functions.php:350
-msgid "Edit Doc: %s"
-msgstr ""
-
-#: templates/beta-notice.php:6
-msgid "weDocs Logo"
-msgstr ""
-
-#: templates/beta-notice.php:11
-msgid ""
-"Try out weDocs v2 (Beta) with a completely revamped user interface, "
-"advanced role-based permission management, and A.I. infused Assistant "
-"widget. Provide feedback to enjoy up to 60% discount when we launch"
-msgstr ""
-
-#: templates/beta-notice.php:14
-msgid "Try Now"
-msgstr ""
-
-#: templates/beta-notice.php:16
-msgid "No, Thanks"
-msgstr ""
-
-#: templates/content-feedback.php:8
-msgid "%d person found this useful"
-msgid_plural "%d persons found this useful"
-msgstr[0] ""
-msgstr[1] ""
-
-#: templates/content-feedback.php:8 templates/content-feedback.php:9
-msgid "No votes yet"
-msgstr ""
-
-#: templates/content-feedback.php:9
-msgid "%d person found this not useful"
-msgid_plural "%d persons found this not useful"
-msgstr[0] ""
-msgstr[1] ""
-
-#: templates/content-feedback.php:12
-msgid "Was this article helpful to you?"
-msgstr ""
-
-#: templates/content-feedback.php:16
-msgid "Yes"
-msgstr ""
-
-#: templates/content-feedback.php:23
-msgid "No"
-msgstr ""
-
-#: templates/content-modal.php:14 templates/single-docs.php:82
-msgid "How can we help?"
-msgstr ""
-
-#: templates/content-modal.php:22
-msgid "Name"
-msgstr ""
-
-#: templates/content-modal.php:30
-msgid "Email"
-msgstr ""
-
-#: templates/content-modal.php:38
-msgid "subject"
-msgstr ""
-
-#: templates/content-modal.php:46
-msgid "message"
-msgstr ""
-
-#: templates/content-modal.php:54
-msgid "Send"
-msgstr ""
-
-#: templates/single-docs.php:39
-msgid "Print this article"
-msgstr ""
-
-#: templates/single-docs.php:47
-#. translators: %s: Name of current post.
-msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
-msgstr ""
-
-#: templates/single-docs.php:52
-msgid "Docs:"
-msgstr ""
-
-#: templates/single-docs.php:60
-msgid "Articles"
-msgstr ""
-
-#: templates/single-docs.php:82
-msgid "Still stuck?"
-msgstr ""
-
-#: templates/single-docs.php:92
-msgid "Updated on %s"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:38
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:20
-msgid "Basic Settings"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:42
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:24
-msgid "Advanced Settings"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:58
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:36
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:111
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:187
-msgid "Text Input"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:59
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:37
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:112
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:188
-msgid "Text input description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:60
-msgid "Text Input placeholder"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:67
-msgid "Number Input"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:68
-msgid "Number field with validation callback `floatval`"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:69
-msgid "1.99"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:79
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:43
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:118
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:194
-msgid "Textarea Input"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:80
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:44
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:119
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:195
-msgid "Textarea description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:81
-msgid "Textarea placeholder"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:86
-msgid ""
-"HTML area description. You can use any <strong>bold</strong> or other HTML "
-"elements."
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:91
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:49
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:124
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:200
-msgid "Checkbox"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:92
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:50
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:125
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:201
-msgid "Checkbox Label"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:97
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:55
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:130
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:206
-msgid "Radio Button"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:98
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:56
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:131
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:207
-msgid "A radio button"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:107
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:77
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:154
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:228
-msgid "A Dropdown"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:108
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:78
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:155
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:229
-msgid "Dropdown description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:118
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:144
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:88
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:164
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:238
-msgid "Password"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:119
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:145
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:89
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:165
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:239
-msgid "Password description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:125
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:95
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:171
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:245
-msgid "File"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:126
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:96
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:172
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:246
-msgid "File description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:137
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:102
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:178
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:252
-msgid "Color"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:138
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:103
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:179
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:253
-msgid "Color description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:151
-msgid "Advanced Editor"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:152
-msgid "WP_Editor description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:158
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:65
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:141
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:216
-msgid "Multile checkbox"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/oop-example.php:159
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:66
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:142
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:217
-msgid "Multi checkbox description"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/example/procedural-example.php:28
-msgid "Other Settings"
-msgstr ""
-
-#: vendor/tareq1988/wordpress-settings-api-class/src/class.settings-api.php:370
-msgid "Choose File"
-msgstr ""
-
-#. Plugin URI of the plugin/theme
-msgid "https://wedocs.co/"
-msgstr ""
-
-#. Description of the plugin/theme
-msgid "A documentation plugin for WordPress"
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "weDevs"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid ""
-"https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-"
-"uri"
-msgstr ""
-
-#: includes/Post_Types.php:32
-msgctxt "Post Type General Name"
-msgid "Docs"
-msgstr ""
-
-#: includes/Post_Types.php:33
-msgctxt "Post Type Singular Name"
-msgid "Doc"
-msgstr ""
-
-#: includes/Post_Types.php:83
-msgctxt "Taxonomy General Name"
-msgid "Tags"
-msgstr ""
-
-#: includes/Post_Types.php:84
-msgctxt "Taxonomy Singular Name"
-msgid "Tag"
-msgstr ""
-
-#: includes/Widget.php:47 includes/Widget.php:48
+#: includes/Widget.php:47
+#: includes/Widget.php:48
+#: templates/doc-search-form.php:8
 msgctxt "label"
 msgid "Search for:"
 msgstr ""
@@ -772,7 +427,1584 @@ msgctxt "submit button"
 msgid "Search"
 msgstr ""
 
-#: templates/single-docs.php:71
+#: includes/Widget.php:68
+msgid "Documentation Search"
+msgstr ""
+
+#: templates/content-feedback.php:8
+msgid "%d person found this useful"
+msgid_plural "%d persons found this useful"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/content-feedback.php:8
+#: templates/content-feedback.php:9
+msgid "No votes yet"
+msgstr ""
+
+#: templates/content-feedback.php:9
+msgid "%d person found this not useful"
+msgid_plural "%d persons found this not useful"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/content-feedback.php:12
+msgid "Was this article helpful to you?"
+msgstr ""
+
+#: templates/content-feedback.php:16
+msgid "No"
+msgstr ""
+
+#: templates/content-feedback.php:22
+msgid "Yes"
+msgstr ""
+
+#: templates/content-modal.php:14
+#: templates/single-docs.php:100
+msgid "How can we help?"
+msgstr ""
+
+#: templates/content-modal.php:22
+msgid "Name"
+msgstr ""
+
+#: templates/content-modal.php:30
+msgid "Email"
+msgstr ""
+
+#: templates/content-modal.php:38
+msgid "Subject"
+msgstr ""
+
+#: templates/content-modal.php:46
+msgid "Message"
+msgstr ""
+
+#: templates/content-modal.php:54
+msgid "Send"
+msgstr ""
+
+#: templates/doc-search-form.php:9
+msgctxt "placeholder"
+msgid "Search for a topic or question"
+msgstr ""
+
+#: templates/pro-notice.php:6
+msgid "weDocs Logo"
+msgstr ""
+
+#: templates/pro-notice.php:11
+msgid "🎉 Introducing weDocs Pro — a completely revamped weDocs with better user experience, A.I. Chatbot, granular permission management, assistant widget, floating contact form and more. Get 50% OFF while the Early Bird Offer lasts!"
+msgstr ""
+
+#: templates/pro-notice.php:14
+msgid "Try Now"
+msgstr ""
+
+#: templates/pro-notice.php:16
+msgid "No, Thanks"
+msgstr ""
+
+#: templates/shortcode.php:81
+msgid "This document has no sections yet. Check back later or wait for the author to add content."
+msgstr ""
+
+#: templates/single-docs.php:40
+msgid "Print this article"
+msgstr ""
+
+#. translators: %s: Name of current post.
+#: templates/single-docs.php:51
+msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: templates/single-docs.php:56
+msgid "Docs:"
+msgstr ""
+
+#: templates/single-docs.php:64
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:17
+msgid "Articles"
+msgstr ""
+
+#: templates/single-docs.php:75
 msgctxt "Used before tag names."
 msgid "Tags"
+msgstr ""
+
+#: templates/single-docs.php:100
+msgid "Still stuck? "
+msgstr ""
+
+#: templates/single-docs.php:108
+#: assets/build/index.js:1
+#: src/components/DocListing/SectionArticles.js:230
+msgid "Updated on %s"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:26
+msgid "Pop-up slider first image"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:27
+msgid "Pop-up slider second image"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:28
+msgid "Pop-up slider third image"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:29
+msgid "Pop-up slider fourth image"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:95
+msgid "Upgrade to"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:101
+msgid "to experience even more Powerful features 🎉"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:116
+msgid "Role based permission management "
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:117
+msgid "or viewing, managing, and configuring permission settings."
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:131
+msgid "Arrange content automatically or manually "
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:132
+msgid "giving you full control over its presentation."
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:146
+msgid "Personalize messaging tab with custom titles "
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:147
+msgid "and messages for seamless communication."
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:161
+msgid "Customize with "
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:162
+msgid "design widgets, colors, and pre-built options "
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:163
+msgid "for an appealing interface."
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:177
+msgid "Get assisted by A.I. Powered Chatbot "
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:178
+msgid "24/7 with updated information and support."
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:224
+msgid "10,000+ successful businesses"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:234
+msgid "14 days no questions asked refund policy"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:244
+msgid "Industry leading 24x7 support"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/PermissionSettings.js:13
+msgid "Global doc permission settings"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/PermissionSettings.js:14
+msgid "By default, who will get edit access on all the documents?"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/PermissionSettings.js:22
+msgid "Who can manage weDocs Settings?"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/PermissionSettings.js:23
+msgid "Who will have the ability to alter the settings of the plugin?"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/index.js:19
+#: src/components/ProPreviews/index.js:187
+#: src/components/ProPreviews/PermissionSettings.js:35
+msgid "Permission Management"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/PermissionSettings.js:81
+msgid "6 roles selected"
+msgstr ""
+
+#: assets/build/492.js:1
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:216
+#: src/components/AddDocModal.js:175
+#: src/components/AddSectionModal.js:176
+#: src/components/DocListing/QuickEditModal.js:252
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:252
+#: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:124
+#: src/components/ProPreviews/PermissionSettings.js:113
+#: src/components/RestrictionModal.js:142
+msgid "%s"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/Contributors.js:18
+#: src/components/ProPreviews/common/Contributors.js:23
+#: src/components/ProPreviews/common/Contributors.js:28
+#: src/components/ProPreviews/common/Contributors.js:33
+msgid "Fourth Contributor"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/common/Contributors.js:44
+msgid "Upgrade"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:29
+msgid "Default Template"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:30
+msgid "Bootstrap Template"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:31
+msgid "Tailwind Template"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:37
+msgid "Active Navigation Background Color"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:38
+msgid "Highlight the active navigation section. Pick a background color that stands out"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:43
+msgid "Active Navigation Text Color"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:44
+msgid "Make navigation clear. Choose a text color for the active navigation section"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:49
+msgid "Active Font Color"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:50
+msgid "Enhance readability. Select a font color for the active elements in your layout"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:62
+msgid "Layout Settings"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:79
+msgid "Choose Doc List Column Style"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:83
+msgid "Choose how your document list columns should appear"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:193
+msgid "Choose Single Doc Template"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:197
+msgid "Customize the template for individual docs. Choose a layout that suits your content best"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:553
+msgid "Enable Navigation Icon"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:557
+msgid "Enable/Disable navigation icons for a user-friendly experience on your single document pages"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:597
+msgid "Enable Table of Contents"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:601
+msgid "Improve content navigation. Turn on the table of contents feature for easy access to document sections"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/IntegrateAiSettings.js:19
+msgid "Manage A.I. Chatbot Billing"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/IntegrateAiSettings.js:27
+msgid "Manage Subscription"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/UploadButton.js:24
+msgid "Upload"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/UploadButton.js:30
+msgid "example.png"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/index.js:12
+#: src/components/ProPreviews/AssistantWidgetPanels/AppearanceLabel.js:7
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/index.js:12
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/index.js:12
+msgid "Appearance"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:18
+msgid "A.I. ChatBot tab icon"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:25
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:25
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:25
+msgid "Upload the new explore tab icon. png/jpg preferred"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:59
+msgid "A.I. ChatBot tab name"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:63
+msgid "Give your explore tab a meaningful title"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:90
+msgid "A.I. ChatBot"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:110
+msgid "A.I. ChatBot Tab Subtitle 1"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:117
+msgid "Edit the first chatbot tab subtitle"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:144
+msgid "A.I. ChatBot tab subtitle 1"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:164
+msgid "A.I. ChatBot Tab Subtitle 2"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:171
+msgid "Edit the second chatbot tab subtitle"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:198
+msgid "A.I. Chatbot tab subtitle 2"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AssistantPanel.js:16
+#: src/components/ProPreviews/index.js:37
+msgid "Assistant Widget"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/AiEnable.js:16
+msgid "Connect to A.I."
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/AiEnable.js:20
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreEnable.js:20
+msgid "Explore tab helps keep all the crucial and indispensable information at the forefront, making it easier for the readers to access and utilize"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/index.js:11
+#: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:5
+#: src/components/ProPreviews/index.js:56
+msgid "A.I. Chat"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:18
+msgid "Explore tab icon"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:59
+msgid "Explore tab name"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:63
+msgid "Give your explore tab a meaningful name"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:90
+msgid "Explore tab title"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:110
+msgid "Explore Tab Subtitle 1"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:117
+msgid "Edit the first explore tab subtitle"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:144
+msgid "Explore tab subtitle 1"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:164
+msgid "Explore Tab Subtitle 2"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:171
+msgid "Edit the second explore tab subtitle"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:198
+msgid "Explore tab subtitle 2"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreEnable.js:16
+msgid "Enable Explore Tab"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:9
+msgid "Helpful Content"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:10
+msgid "Top 10 contents that are found as most helpful by the visitors will be set automatically in descending order"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:17
+msgid "Selected Content"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:18
+msgid "Manually select content that will appear in the Explore tab of the Assistant widget"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:30
+msgid "Documentation Team 1"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:31
+msgid "Documentation Team 2"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:32
+msgid "Documentation Team 3"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:33
+msgid "Documentation Team 4"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:122
+msgid "Select Content"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:129
+msgid "Handpick content to showcase in the explore tab"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:155
+msgid "Select Articles"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:180
+msgid "Selected Articles"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:209
+msgid "Parent Documentation"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:223
+msgid "Section Documentation"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:262
+msgid "Remove"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/index.js:11
+#: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:6
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:67
+#: src/components/ProPreviews/index.js:65
+msgid "Explore"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:18
+msgid "Messaging tab icon"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:59
+msgid "Messaging tab name"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:63
+msgid "Give your messaging tab a meaningful name"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:90
+msgid "Messaging tab title"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:110
+msgid "Messaging Tab Subtitle 1"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:117
+msgid "Edit the first messaging tab subtitle"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:144
+msgid "Messaging tab subtitle 1"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:164
+msgid "Messaging Tab Subtitle 2"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:171
+msgid "Edit the second messaging tab subtitle"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:198
+msgid "Messaging tab subtitle 2"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageEnable.js:17
+msgid "Enable Messaging Tab"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageEnable.js:21
+msgid "Stay connected to your readers and receive their thoughts effortlessly through an email form"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:15
+msgid "Cloudflare Turnstile Site Key"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:22
+msgid "Set your cloudflare turnstile site key for sending message traffic free"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:49
+msgid "Enter your cloudflare turnstile site key"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:62
+msgid "How to set up "
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:72
+msgid "Cloudflare Turnstile"
+msgstr ""
+
+#: assets/build/492.js:1
+#: assets/build/index.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:85
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:119
+#: src/components/Settings/GeneralSettings.js:136
+msgid "Email Address"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:92
+msgid "Please enter the email addresses where you would like to receive contact from leads from your users. You can enter multiple emails separated by a comma."
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:139
+msgid "Success Message Title"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:146
+msgid "Success message title when message is sent successfully"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:173
+msgid "Messaging success title"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:193
+msgid "Success Message Text"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:200
+msgid "Success message text when message is sent successfully"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:227
+msgid "Messaging success text"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/index.js:11
+#: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:7
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:90
+#: src/components/ProPreviews/index.js:80
+msgid "Messaging"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:19
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:77
+msgid "Prevent the widget from appearing on specific pages"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:6
+msgid "Normal"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:7
+msgid "Medium"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:8
+msgid "Semi bold"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:9
+msgid "Bold"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:10
+msgid "Extra bold"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:73
+msgid "Reset"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:7
+msgid "Default"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:31
+msgid "Watermelon"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:55
+msgid "Dark Slate Blue"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:79
+msgid "Azure"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:103
+msgid "Elephant"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:127
+msgid "Atomic Tangerine"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:151
+msgid "Meteorite"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:202
+msgid "Widget Background"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:7
+msgid "How to Install"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:8
+msgid "Activating & Deactivating WPUF Modules"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:44
+msgid "A.I. Chatbot"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:190
+msgid "Explore Feature"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:213
+msgid "Search with keywords for quick answers"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:232
+msgid "Search"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:272
+msgid "WP User Frontend… > Getting Started"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:281
+msgid "Here you will find everything about WP User Frontend, what it offers and its"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:12
+msgid "Pre-built Color Palette"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:13
+msgid "Choose a pre-built color palette for the colors of your assistant widget."
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:20
+msgid "Custom Color Palette"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:21
+msgid "Choose any colors that represents your brand or that you prefer."
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:34
+msgid "About"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:35
+msgid "Services"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:36
+msgid "Portfolio"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:37
+msgid "Contact Us"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:59
+msgid "Widget Settings"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:73
+msgid "Hide from Pages"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:140
+msgid "Tab First Sub-Title Font Size"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:147
+msgid "Choose an appropriate font size for tab first sub-title"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:186
+msgid "Tab Second Sub-Title Font Size"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:193
+msgid "Choose an appropriate font size for tab second sub-title"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:230
+msgid "Color Palette Settings"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:311
+msgid "Choose Color: "
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:317
+msgid "Reset All"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/index.js:95
+msgid "Placement"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/index.js:110
+msgid "Widget Preference"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/index.js:127
+msgid "Layout & Styles"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/index.js:194
+#: src/components/ProPreviews/index.js:209
+msgid "Pro"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/index.js:202
+msgid "Restrict editing for admin only"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeButton.js:15
+msgid "Upgrade to PRO "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:57
+#: src/components/DocListing/DocSections.js:185
+#: src/components/DocListing/ListingHeader.js:49
+#: src/components/DocListing/SectionArticles.js:142
+msgid "Edit"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/DocSections.js:211
+#: src/components/DocListing/ListingHeader.js:73
+#: src/components/DocListing/SectionArticles.js:163
+msgid "View on Web"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/DocSections.js:159
+#: src/components/DocListing/ListingHeader.js:92
+#: src/components/DocListing/SectionArticles.js:102
+#: src/components/Documentations/ParentDocs.js:99
+msgid "Draft"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/RestrictionModal.js:123
+msgid "Deleting it means it will be permanently lost, and you won't be able to retrieve it again."
+msgstr ""
+
+#: assets/build/index.js:1
+#: assets/build/index.js:5
+#: src/components/AddArticleModal.js:205
+#: src/components/AddDocModal.js:164
+#: src/components/AddSectionModal.js:165
+#: src/components/ConfirmationModal.js:140
+#: src/components/DocListing/QuickEditModal.js:241
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:199
+#: src/components/Migrations/Modals/MigrationProgressModal.js:155
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:195
+#: src/components/RestrictionModal.js:134
+msgid "Cancel"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:81
+#: src/components/AddDocModal.js:57
+#: src/components/AddSectionModal.js:55
+#: src/components/ConfirmationModal.js:24
+#: src/components/DocListing/QuickEditModal.js:92
+#: src/components/RestrictionModal.js:39
+#: src/components/Settings/index.js:53
+msgid "Error"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:139
+#: src/components/ComboBox.js:85
+msgid "Type a section name"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ComboBox.js:164
+msgid "Type to write the name of new section"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:169
+msgid "Quickly edit important info of the article"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:173
+msgid "Edit post details easily"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:169
+#: src/components/DocListing/QuickEditModal.js:181
+msgid "Type an article name"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:207
+msgid "Enter your slug here"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:266
+msgid "Update and Draft"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:269
+msgid "Update and Publish"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:46
+#: src/components/DocListing/SectionArticles.js:115
+msgid "Quick Edit"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:66
+msgid "View"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:83
+#: src/components/DocListing/DocSections.js:238
+msgid "Delete"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:157
+msgid "Enter your article title"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:161
+msgid "Describe what the article is about"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:69
+msgid "New article added!"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:70
+msgid "New article has been added successfully"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:230
+#: src/components/AddDocModal.js:189
+#: src/components/AddSectionModal.js:190
+msgid "Create and Draft"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:233
+#: src/components/AddDocModal.js:192
+#: src/components/AddSectionModal.js:193
+msgid "Create and Publish"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/DocSections.js:171
+msgid "Create"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/DocSections.js:317
+#: src/components/DocListing/ListingButtons.js:32
+#: src/components/Documentations/AddChildrens.js:23
+msgid "Add article"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:122
+msgid "Enter your section title"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:126
+msgid "Use concise section titles for better navigation"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:131
+msgid "E.g., Getting Started"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:43
+msgid "New section added!"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddSectionModal.js:44
+msgid "New section has been added successfully"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/ListingButtons.js:24
+#: src/components/Documentations/AddChildrens.js:31
+msgid "Add section"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/SearchFilter.js:11
+msgid "💡 Feedback"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/SearchFilter.js:17
+msgid "Search by %s"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/SearchFilter.js:19
+msgid "article name"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/SearchFilter.js:20
+msgid "document name"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ConfirmationModal.js:126
+msgid "Are you sure?"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ConfirmationModal.js:129
+msgid "We recommend backing up your database before upgrading to ensure your data is safe. Are you sure you want to run the upgrade now?"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ConfirmationModal.js:146
+msgid "I'm sure"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Upgrade.js:22
+msgid "Wedocs Logo"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Upgrade.js:29
+msgid "weDocs Data Update Required"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Upgrade.js:49
+msgid "A database upgrade is required. If you don't upgrade, you may experience unexpected behaviour while using weDocs."
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/NotFound.js:25
+msgid "There’s Noting here..."
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/NotFound.js:28
+msgid "...maybe the page you’re looking for is not found or never existed."
+msgstr ""
+
+#: assets/build/index.js:1
+#: assets/build/index.js:5
+#: src/components/DocListing/index.js:121
+#: src/components/Documentations/index.js:109
+#: src/components/Settings/index.js:125
+msgid "weDocs database has been updated successfully"
+msgstr ""
+
+#: assets/build/index.js:1
+#: assets/build/index.js:5
+#: src/components/DocListing/index.js:122
+#: src/components/Documentations/index.js:110
+#: src/components/Settings/index.js:126
+msgid "Database Updated!"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/index.js:213
+msgid "No section or article found for this documentation"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeTooltip.js:6
+msgid "Role-based permission management"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeTooltip.js:7
+msgid "Auto & manual content arrangement"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeTooltip.js:8
+msgid "Customizable doc & messaging tab"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeTooltip.js:9
+msgid "Pre-built & custom colors"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeTooltip.js:10
+msgid "Assistant widget and A.I. Powered Chatbot"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeTooltip.js:15
+msgid "Available in Pro. Unlock & enjoy:"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:34
+#: src/components/Settings/Menu.js:9
+msgid "General"
+msgstr ""
+
+#: assets/build/index.js:1
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:151
+#: src/components/SelectBox.js:114
+msgid "loading…"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:47
+msgid "weDocs Home"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:63
+msgid "Select the documentation Home page, where the shortcode [wedocs] "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:73
+msgid "shortcode"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:75
+msgid " is used."
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:88
+msgid "Email Feedback on Article"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:92
+msgid "Invite readers to share their thoughts through an email feedback form"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:141
+msgid "Enter the email address where you would like to receive feedback"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:168
+msgid "Write your email address"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:190
+msgid "Helpful Feedback on Article"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:194
+msgid "Enabling helpful feedback on your article allows readers to provide opinions on your content"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:236
+msgid "Allow Comments on Article"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:240
+msgid "Increase reader engagement by turning on comments"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:282
+msgid "Allow Article Printing"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:286
+msgid "Allow users to print articles directly from the website"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:328
+msgid "Collapse Documentation Page Articles"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:332
+msgid "Choose if your sections should be collapsed or expanded in Doc Homepage"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/index.js:42
+msgid "Settings Data Saved!"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/index.js:43
+msgid "Settings data has been saved successfully"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:123
+msgid "Enter your doc title"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:126
+msgid "Start writing your doc from scratch"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:133
+msgid "Type a title for your document"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:42
+msgid "New doc added!"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddDocModal.js:43
+msgid "New doc has been added successfully"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:75
+msgid "Get started by creating a new doc"
+msgstr ""
+
+#: assets/build/index.js:1
+#: assets/build/index.js:5
+#: src/components/Documentations/EmptyDocs.js:84
+#: src/components/Migrations/index.js:203
+msgid "Learn more "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:86
+msgid "how to create a new doc"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Documentations/EmptyDocs.js:91
+msgid "Create a new doc"
+msgstr ""
+
+#. translators: %d: Length of documentation sections
+#: assets/build/index.js:3
+#: src/components/Documentations/ParentDocs.js:145
+msgid "%d Sections"
+msgstr ""
+
+#. translators: %d: Length of documentation articles
+#: assets/build/index.js:5
+#: src/components/Documentations/ParentDocs.js:172
+msgid "%d Articles"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Documentations/ParentDocs.js:201
+msgid "Add"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Documentations/index.js:129
+msgid "New doc"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Documentations/index.js:178
+msgid "Oops! It seems that your search did not match any existing documents. Please try again..."
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationProgressModal.js:52
+msgid "Migrating Docs..."
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationProgressModal.js:55
+msgid "Migrating existing docs from BetterDocs to weDocs"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:15
+msgid "BetterDocs"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:71
+msgid "Are you sure to migrate?"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:74
+msgid "We want to make sure you have a successful migration experience to weDocs."
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:85
+msgid "Migrate from:"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:166
+msgid "Migration Notice: "
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:167
+msgid "This will migrate all your docs to a Single Parent Doc. If you are a BetterDocs Pro user and using Knowledge Bases, migration for Pro users is coming soon."
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:182
+msgid "Uncategorized Articles: "
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:183
+msgid "Note: During the migration, articles under \"Uncategorized\" category won't be transferred. Please ensure to categorize articles appropriately before migrating."
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:201
+msgid "Yes, I'm sure"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:15
+msgid "Categories"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:15
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:16
+msgid "Section"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:16
+msgid "Subcategories"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:69
+msgid "BetterDocs to weDocs content mapping"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:72
+msgid "We want to make sure you have a seamless migration experience to weDocs"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:93
+msgid "No parent doc, only category & subcategory-based articles"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:121
+msgid "Articles under super-organized parent doc-section structure"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:146
+msgid "Created by weDocs"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:205
+msgid "Continue"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/index.js:227
+msgid "Already Migrated"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/index.js:243
+msgid "Start Migration"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/index.js:270
+msgid "Go back to Docs"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/index.js:290
+msgid "Migration not required"
+msgstr ""
+
+#: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:89
+msgid "Select page"
 msgstr ""

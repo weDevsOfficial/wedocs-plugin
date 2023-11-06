@@ -1,0 +1,14 @@
+@mainColor: #3B82F6;
+@borderColor: #eee;
+
+.clearfix() {
+    &:before,
+    &:after {
+        content: " "; // 1
+        display: table; // 2
+    }
+
+    &:after {
+        clear: both;
+    }
+}
