@@ -65,14 +65,14 @@ class Ajax {
             $status = 'pending';
         }
 
-        $post_id = wp_insert_post( [
+        $post_id = wp_insert_post(apply_filters('wedocs/admin-ajax/create_doc', [
             'post_title'  => $title,
             'post_type'   => 'docs',
             'post_status' => $status,
             'post_parent' => $parent,
             'post_author' => get_current_user_id(),
             'menu_order'  => $order,
-        ] );
+        ] ) );
 
         if ( is_wp_error( $post_id ) ) {
             wp_send_json_error();
@@ -146,14 +146,16 @@ class Ajax {
      */
     public function get_docs() {
         check_ajax_referer( 'wedocs-admin-nonce' );
-
-        $docs = get_pages( [
+        
+        $args = apply_filters('wedocs/admin-ajax/get_pages/args', [
             'post_type'      => 'docs',
             'post_status'    => [ 'publish', 'draft', 'pending' ],
             'posts_per_page' => '-1',
             'orderby'        => 'menu_order',
             'order'          => 'ASC',
         ] );
+        
+        $docs = apply_filters('wedocs/admin-ajax/get_pages', get_pages($args) );
 
         $arranged = $this->build_tree( $docs );
         usort( $arranged, [ $this, 'sort_callback' ] );
@@ -289,7 +291,7 @@ class Ajax {
                 $child = $this->build_tree( $docs, $doc->ID );
                 usort( $child, [ $this, 'sort_callback' ] );
 
-                $result[] = [
+                $result[] = apply_filters('wedocs/admin-ajax/build_tree/item', [
                     'post' => [
                         'id'     => $doc->ID,
                         'title'  => $doc->post_title,
@@ -301,11 +303,11 @@ class Ajax {
                         ],
                     ],
                     'child' => $child,
-                ];
+                ] );
             }
         }
 
-        return $result;
+        return apply_filters('wedocs/admin-ajax/build_tree', $result);
     }
 
     /**
