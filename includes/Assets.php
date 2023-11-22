@@ -57,7 +57,10 @@ class Assets {
             wp_localize_script(
                 'wedocs-app-script',
                 'weDocsAdminVars',
-                array( 'hasManageCap' => current_user_can( 'manage_options' ) )
+                array(
+                    'adminUrl'     => admin_url(),
+                    'hasManageCap' => current_user_can( 'manage_options' ),
+                ),
             );
         }
     }
