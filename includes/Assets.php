@@ -27,8 +27,6 @@ class Assets {
         $assets_url  = wedocs()->plugin_url() . '/assets';
         $assets_path = wedocs()->plugin_path() . '/assets';
 
-        wp_enqueue_media();
-
         // Register admin scripts.
         wp_register_script(
             'wedocs-admin-script',
