@@ -5,36 +5,26 @@
   const weDocs = {
     initialize() {
       $( '.wedocs-feedback-wrap' ).on( 'click', 'a', this.feedback );
-      $( '#top-search-form .dropdown-menu' ).on(
-        'click',
-        'a',
-        this.searchForm
-      );
+      $( '#top-search-form .dropdown-menu' ).on( 'click', 'a', this.searchForm );
       $( 'a.wedocs-print-article' ).on( 'click', this.printArticle );
 
-      // sidebar toggle
-      $( 'ul.doc-nav-list .page_item_has_children' ).on(
-        'click',
-        '.wedocs-caret',
-        function ( event ) {
-          event.preventDefault();
-          const self = $( this ),
-            parent = self.closest( '.page_item' );
+      // Sidebar toggle.
+      $( 'ul.doc-nav-list .page_item_has_children' ).on( 'click', '.wedocs-caret', this.toggleSidebar );
 
-          if ( parent.hasClass( 'wd-state-closed' ) ) {
-            parent.removeClass( 'wd-state-closed' ).addClass( 'wd-state-open' );
-          } else {
-            parent.removeClass( 'wd-state-open' ).addClass( 'wd-state-closed' );
-          }
-        }
-      );
+      // Load single doc page search modal.
+      this.loadSingleDocSearchModal();
 
-      // modal
+      // Handle modal actions.
       $( 'a#wedocs-stuck-modal' ).on( 'click', this.showModal );
       $( 'a#wedocs-modal-close' ).on( 'click', this.closeModal );
       $( '#wedocs-modal-backdrop' ).on( 'click', this.closeModal );
       $( 'form#wedocs-contact-modal-form' ).on( 'submit', this.contactHelp );
       $( 'ul.wedocs-doc-sections > li svg' ).on( 'click', this.showSectionArticles );
+
+      // Single documentation page search modal actions.
+      $( '#wedocs-single-doc-search-modal' ).on( 'click', this.handleDocSearchModalBackDrop );
+      $( '.wedocs-single-search-input > .search-field' ).on( 'click', this.showSinglePageSearchModal );
+      $( '#wedocs-single-doc-search-modal .doc-search-cancel' ).on( 'click', this.closeSinglePageSearchModal );
     },
 
     feedback ( e ) {
@@ -151,8 +141,48 @@
       } );
     },
 
+    toggleSidebar ( e ) {
+      e.preventDefault();
+      const self = $( this ),
+        parent = self.closest( '.page_item' );
+
+      if ( parent.hasClass( 'wd-state-closed' ) ) {
+        parent.removeClass( 'wd-state-closed' ).addClass( 'wd-state-open' );
+      } else {
+        parent.removeClass( 'wd-state-open' ).addClass( 'wd-state-closed' );
+      }
+    },
+
     showSectionArticles ( e ) {
       $( this ).toggleClass( 'active' ).closest( 'li' ).next( '.children' ).toggleClass( 'active' );
+    },
+
+    loadSingleDocSearchModal( e ) {
+      // Mount doc single page search modal.
+      const mountDiv = document.createElement( 'div' );
+      mountDiv.setAttribute( 'id', 'wedocs-single-doc-search-modal' );
+      mountDiv.innerHTML = weDocs_Vars.searchModal;
+      document.body.appendChild( mountDiv );
+
+      document.addEventListener( 'keydown', ( event ) => {
+        if ( ( event.ctrlKey || event.metaKey ) && event.key === 'k' ) {
+          this.showSinglePageSearchModal();
+        }
+      } );
+    },
+
+    showSinglePageSearchModal ( e ) {
+      $( '#wedocs-single-doc-search-modal' ).addClass( 'active' );
+    },
+
+    closeSinglePageSearchModal ( e ) {
+      $( '#wedocs-single-doc-search-modal' ).removeClass( 'active' );
+    },
+
+    handleDocSearchModalBackDrop ( e ) {
+      if ( !e.target.closest( '.doc-search-modal' ) ) {
+        e.target.hide();
+      }
     },
   };
 
