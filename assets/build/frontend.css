@@ -136,8 +136,10 @@
   outline: none;
   box-shadow: none;
 }
-#wedocs-single-doc-search-modal .doc-search-container .doc-search-modal .modal-header .doc-search-form .doc-search-field svg {
+#wedocs-single-doc-search-modal .doc-search-container .doc-search-modal .modal-header .doc-search-form .doc-search-field .search-clean {
+  width: 20px;
   right: 30px;
+  height: 20px;
   display: none;
   position: absolute;
 }
