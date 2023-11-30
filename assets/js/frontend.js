@@ -156,6 +156,10 @@
     },
 
     loadSingleDocSearchModal( e ) {
+      if ( !weDocs_Vars.isSingleDoc ) {
+        return;
+      }
+
       const data = {
         action   : 'wedocs_get_docs',
         _wpnonce : weDocs_Vars.nonce,
@@ -209,75 +213,8 @@
         searchEmpty = `<div class='doc-empty-search'>Search result is empty</div>`,
         searchKeyEmpty = `<div class='doc-empty-search'>Search key is empty</div>`;
 
-      const ulNode = document.createElement('ul');
-      ulNode.setAttribute('id', 'doc-search-list');
-
-      searchDocs.forEach((data, index) => {
-        const url = data?.article ? data?.article?.guid :
-            ( data?.section ? data?.section?.guid : data?.parent?.guid ),
-          title = data?.article ? data?.article?.post_title :
-            ( data?.section ? data?.section?.post_title : data?.parent?.post_title ),
-          parentNavigation = data?.section ?
-            `<span data-url="${ data?.parent?.guid }" class="doc-search-hit-path">${ data?.parent?.post_title }</span>` : '',
-          sectionNavigation = data?.article ?
-            `<span data-url="${ data?.section?.guid }" class="doc-search-hit-path">${ data?.section?.post_title }</span>` : '';
-
-
-        const liNode = document.createElement('li');
-        liNode.setAttribute('class', 'doc-search-hit');
-        liNode.setAttribute('id', `doc-search-item-${index}`);
-        liNode.setAttribute('role', 'option');
-        liNode.setAttribute('aria-selected', 'false');
-        liNode.innerHTML = `
-          <a
-            href="${ url }"
-            target="_blank"
-            class="doc-search-hit-result"
-          >
-            <div class="doc-search-hit-container">
-              <div class="doc-search-hit-icon">
-                <svg width="14" height="10" fill="none">
-                  <path
-                    fill="#BAE6FD"
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M3.5 0c1.093 0 2.117.27 3 .743V10a6.344 6.344 0 0 0-3-.743c-1.093 0-2.617.27-3.5.743V.743C.883.27 2.407 0 3.5 0Z"
-                  />
-                  <path
-                    fill="#38BDF8"
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M10.5 0c1.093 0 2.617.27 3.5.743V10c-.883-.473-2.407-.743-3.5-.743s-2.117.27-3 .743V.743a6.344 6.344 0 0 1 3-.743Z"
-                  />
-                </svg>
-              </div>
-              <div class="doc-search-hit-content-wrapper">
-                <span class="doc-search-hit-title">${ title }</span>
-                <div class='docs-navigation'>
-                  ${ parentNavigation + sectionNavigation }
-                </div>
-              </div>
-              <div class="doc-search-hit-action">
-                <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#475569" class="w-5 h-5 doc-search-hit-select-icon">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                </svg>
-              </div>
-            </div>
-          </a>
-        `;
-
-        liNode.querySelectorAll( '.doc-search-hit-path' ).forEach(
-          searchPath => searchPath?.addEventListener( 'click', function ( event ) {
-            event.preventDefault();
-            window.open( $( this ).data( 'url' ), '_blank' );
-          })
-        );
-
-
-        ulNode.appendChild(liNode);
-      });
-
-      const $ulNode = $( ulNode );
+      // Searched docs list.
+      const $ulNode = this.getListTemplete( searchDocs );
 
       // Render search cleaner icon.
       $( e.target ).next( '.search-clean' )[0].style.display = `${ searchValue ? 'block' : 'none' }`;
@@ -286,50 +223,77 @@
       $( '.doc-search-dropdown-container .doc-search-hits' ).html(
         ( searchValue ? ( searchDocs.length ? $ulNode : searchEmpty ) : searchKeyEmpty )
       );
+    },
 
-        // <div class='doc-empty-search'><?php _e( 'Search result is empty', 'wedocs' ); ?></div>
-        // <ul id='doc-search-list'>
-        //     <li class='doc-search-hit' id='doc-search-item-0' role='option' aria-selected='false'>
-        //         <a
-        //             target="_blank"
-        //             class="doc-search-hit-result"
-        //             href="https://tailwindui.com/components/ecommerce/components/product-lists"
-        //         >
-        //             <div class="doc-search-hit-container">
-        //                 <div class="doc-search-hit-icon">
-        //                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" fill="none">
-        //                         <path
-        //                             fill="#BAE6FD"
-        //                             fill-rule="evenodd"
-        //                             clip-rule="evenodd"
-        //                             d="M3.5 0c1.093 0 2.117.27 3 .743V10a6.344 6.344 0 0 0-3-.743c-1.093 0-2.617.27-3.5.743V.743C.883.27 2.407 0 3.5 0Z"
-        //                         />
-        //                         <path
-        //                             fill="#38BDF8"
-        //                             fill-rule="evenodd"
-        //                             clip-rule="evenodd"
-        //                             d="M10.5 0c1.093 0 2.617.27 3.5.743V10c-.883-.473-2.407-.743-3.5-.743s-2.117.27-3 .743V.743a6.344 6.344 0 0 1 3-.743Z"
-        //                         />
-        //                     </svg>
-        //                 </div>
-        //                 <div class="doc-search-hit-content-wrapper">
-        //                                 <span class="doc-search-hit-title">
-        //                                     Product Lists
-        //                                 </span>
-        //                     <div class='docs-navigation'>
-        //                         <span class="doc-search-hit-path">Ecommerce / Components</span>
-        //                         <span class="doc-search-hit-path">Ecommerce / Components</span>
-        //                     </div>
-        //                 </div>
-        //                 <div class="doc-search-hit-action">
-        //                     <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#475569" class="w-5 h-5 doc-search-hit-select-icon">
-        //                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-        //                     </svg>
-        //                 </div>
-        //             </div>
-        //         </a>
-        //     </li>
-        // </ul>
+    getListTemplete ( searchDocs ) {
+      const ulNode = document.createElement( 'ul' );
+      ulNode.setAttribute( 'id', 'doc-search-list' );
+
+      searchDocs.forEach( ( data, index ) => {
+        const url = data?.article ? data?.article?.guid :
+          ( data?.section ? data?.section?.guid : data?.parent?.guid ),
+          title = data?.article ? data?.article?.post_title :
+            ( data?.section ? data?.section?.post_title : data?.parent?.post_title ),
+          parentNavigation = data?.section ?
+            `<span data-url="${ data?.parent?.guid }" class="doc-search-hit-path">${ data?.parent?.post_title }</span>` : '',
+          sectionNavigation = data?.article ?
+            `<span data-url="${ data?.section?.guid }" class="doc-search-hit-path">${ data?.section?.post_title }</span>` : '';
+
+          // Make search results as list node.
+          const liNode = document.createElement('li');
+          liNode.setAttribute('class', 'doc-search-hit');
+          liNode.setAttribute('id', `doc-search-item-${index}`);
+          liNode.setAttribute('role', 'option');
+          liNode.setAttribute('aria-selected', 'false');
+          liNode.innerHTML = `
+            <a
+              href="${ url }"
+              target="_blank"
+              class="doc-search-hit-result"
+            >
+              <div class="doc-search-hit-container">
+                <div class="doc-search-hit-icon">
+                  <svg width="14" height="10" fill="none">
+                    <path
+                      fill="#BAE6FD"
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M3.5 0c1.093 0 2.117.27 3 .743V10a6.344 6.344 0 0 0-3-.743c-1.093 0-2.617.27-3.5.743V.743C.883.27 2.407 0 3.5 0Z"
+                    />
+                    <path
+                      fill="#38BDF8"
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M10.5 0c1.093 0 2.617.27 3.5.743V10c-.883-.473-2.407-.743-3.5-.743s-2.117.27-3 .743V.743a6.344 6.344 0 0 1 3-.743Z"
+                    />
+                  </svg>
+                </div>
+                <div class="doc-search-hit-content-wrapper">
+                  <span class="doc-search-hit-title">${ title }</span>
+                  <div class='docs-navigation'>
+                    ${ parentNavigation + sectionNavigation }
+                  </div>
+                </div>
+                <div class="doc-search-hit-action">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#475569" class="w-5 h-5 doc-search-hit-select-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                  </svg>
+                </div>
+              </div>
+            </a>`;
+
+          // Handle navigation redirection manually.
+          liNode.querySelectorAll( '.doc-search-hit-path' ).forEach(
+            searchPath => searchPath?.addEventListener( 'click', function ( event ) {
+              event.preventDefault();
+              window.open( $( this ).data( 'url' ), '_blank' );
+            })
+          );
+
+          ulNode.appendChild(liNode);
+        });
+
+        return $( ulNode );
     },
 
     getSearchDocs( searchValue ) {

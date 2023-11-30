@@ -79,6 +79,7 @@ class Frontend {
             'style'       => WEDOCS_ASSETS . '/build/print.css?v=10',
             'ajaxurl'     => admin_url( 'admin-ajax.php' ),
             'powered'     => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs plugin for WordPress', 'wedocs' ), home_url() ),
+            'isSingleDoc' => is_singular( 'docs' ),
             'searchModal' => $searchModal,
         ] );
     }
