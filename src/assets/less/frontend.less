@@ -53,20 +53,34 @@
                         justify-content: center;
                     }
 
-                    #doc-search-input {
-                        border: 0;
-                        flex: auto;
-                        min-width: 0;
-                        height: 3.5rem;
-                        color: #0f172a;
-                        font-size: 1rem;
-                        appearance: none;
-                        background: #0000;
-                        margin-right: 1rem;
-                        margin-left: 0.75rem;
+                    .doc-search-field {
+                        width: 100%;
+                        display: flex;
+                        position: relative;
+                        align-items: center;
 
-                        &:focus {
-                            outline: none;
+                        #doc-search-input {
+                            border: 0;
+                            flex: auto;
+                            min-width: 0;
+                            height: 3.5rem;
+                            color: #0f172a;
+                            font-size: 1rem;
+                            appearance: none;
+                            background: #0000;
+                            margin-right: 1rem;
+                            margin-left: 0.75rem;
+
+                            &:focus {
+                                outline: none;
+                                box-shadow: none;
+                            }
+                        }
+
+                        svg {
+                            right: 30px;
+                            display: none;
+                            position: absolute;
                         }
                     }
                 }
@@ -92,10 +106,109 @@
             .modal-body {
                 .doc-search-dropdown-container {
                     .doc-search-hits {
-                        padding: 4rem 1.5rem;
+                        overflow: scroll;
+                        max-height: 600px;
                         text-align: center;
-                        --tw-text-opacity: 1;
-                        color: rgb(148 163 184/var(--tw-text-opacity));
+                        padding: 1rem 1.5rem;
+                        color: rgb(148 163 184/1);
+
+                        .doc-empty-search {
+                            padding: 3rem 0;
+                        }
+
+                        #doc-search-list {
+                            gap: 10px;
+                            margin: 0;
+                            padding: 0;
+                            display: grid;
+                            list-style: none;
+
+                            .doc-search-hit {
+                                .doc-search-hit-result {
+                                    display: block;
+                                    position: relative;
+                                    font-size: .875rem;
+                                    padding: 0.75rem 1rem;
+                                    border-radius: 0.5rem;
+                                    text-decoration: none;
+                                    background-color: rgb(248 250 252/1);
+
+                                    .doc-search-hit-container {
+                                        display: flex;
+                                        align-items: center;
+
+                                        .doc-search-hit-icon {
+                                            width: 1.5rem;
+                                            display: flex;
+                                            height: 1.5rem;
+                                            margin-right: 1rem;
+                                            align-items: center;
+                                            border-radius: 0.375rem;
+                                            justify-content: center;
+                                            background-color: rgb(255 255 255/1);
+                                            box-shadow: 0 0 #0000,0 0 0 calc(1px + 0px) #0f172a0d,0 1px 2px 0 #0000000d;
+                                        }
+
+                                        .doc-search-hit-content-wrapper {
+                                            z-index: 1;
+                                            flex: auto;
+                                            min-width: 0;
+                                            display: flex;
+                                            flex-direction: column-reverse;
+
+                                            .doc-search-hit-title {
+                                                overflow: hidden;
+                                                font-weight: 600;
+                                                text-align: left;
+                                                white-space: nowrap;
+                                                line-height: 1.5rem;
+                                                color: rgb(51 65 85/1);
+                                                text-overflow: ellipsis;
+                                            }
+
+                                            .docs-navigation {
+                                                gap: 0.5rem;
+                                                display: flex;
+                                                text-align: left;
+                                                align-items: center;
+
+                                                .doc-search-hit-path {
+                                                    color: #334155;
+                                                    font-weight: 600;
+                                                    padding: 0 0.6rem;
+                                                    font-size: 0.75rem;
+                                                    background: #e2e8f0;
+                                                    line-height: 1.5rem;
+                                                    border-radius: 999px;
+                                                    align-self: flex-start;
+                                                    margin-bottom: 0.35rem;
+                                                }
+                                            }
+                                        }
+
+                                        .doc-search-hit-action {
+                                            margin-left: auto;
+                                        }
+                                    }
+
+                                    &:hover {
+                                        background: #3b82f6;
+
+                                        .doc-search-hit-title {
+                                            color: #fff !important;
+                                        }
+
+                                        .doc-search-hit-path {
+                                            background: #fff !important;
+                                        }
+
+                                        .doc-search-hit-select-icon {
+                                            stroke: #fff;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -109,9 +222,11 @@
                 border-color: rgb(241 245 249/1);
 
                 .doc-search-logo {
-                    a {
-                        gap: 16px;
-                        display: flex;
+                    gap: 16px;
+                    display: flex;
+                    align-items: center;
+
+                    .doc-search-label {
                         font-weight: 500;
                         font-size: .75rem;
                         line-height: 1rem;
@@ -126,6 +241,57 @@
 
     &.active {
         display: flex;
+    }
+}
+
+.wedocs-single-search-input {
+    position: relative;
+    margin: 0 0 15px 0;
+    border-bottom: 1px solid @borderColor;
+
+    .short-key,
+    .search-field,
+    .search-submit {
+        cursor: pointer;
+        margin: 0 0 15px 0;
+    }
+
+    .search-field {
+        width: 96%;
+        height: 42px;
+        font-size: 16px;
+        background: white;
+        border-radius: 8px;
+        border: 1px solid #dbdbdb;
+        padding: 10px 22px 10px 45px;
+
+        &::placeholder {
+            color: #a6b3c4;
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    .search-submit {
+        top: 0;
+        left: 0;
+        position: absolute;
+        padding: 10px 16px;
+        background: transparent;
+    }
+
+    .short-key {
+        top: 1px;
+        right: 12px;
+        color: #9caabd;
+        font-size: 14px;
+        font-weight: 600;
+        position: absolute;
+        padding: 10px 16px;
+        background: transparent;
     }
 }
 
@@ -158,56 +324,6 @@ body.single.single-docs .content-area {
         h3.widget-title {
             font-weight: bold;
             margin: 0 0 15px 0;
-        }
-
-        .wedocs-single-search-input {
-            position: relative;
-            margin: 0 0 15px 0;
-            border-bottom: 1px solid @borderColor;
-
-            .short-key,
-            .search-field,
-            .search-submit {
-                cursor: pointer;
-                margin: 0 0 15px 0;
-            }
-
-            .search-field {
-                width: 96%;
-                height: 42px;
-                font-size: 16px;
-                background: white;
-                border-radius: 8px;
-                border: 1px solid #dbdbdb;
-                padding: 10px 22px 10px 45px;
-
-                &::placeholder {
-                    color: #a6b3c4;
-                }
-
-                &:focus {
-                    outline: none;
-                }
-            }
-
-            .search-submit {
-                top: 0;
-                left: 0;
-                position: absolute;
-                padding: 10px 16px;
-                background: transparent;
-            }
-
-            .short-key {
-                top: 1px;
-                right: 12px;
-                color: #9caabd;
-                font-size: 14px;
-                font-weight: 600;
-                position: absolute;
-                padding: 10px 16px;
-                background: transparent;
-            }
         }
 
         ul.doc-nav-list {

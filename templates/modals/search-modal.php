@@ -27,22 +27,16 @@
                         </g>
                     </svg>
                 </div>
-                <input
-                    value=''
-                    type='search'
-                    maxlength='64'
-                    class='doc-input'
-                    autocorrect='off'
-                    enterkeyhint='go'
-                    spellcheck='false'
-                    autocomplete='off'
-                    autocapitalize='off'
-                    id='doc-search-input'
-                    aria-autocomplete='both'
-                    aria-controls='docsearch-list'
-                    aria-activedescendant='docsearch-item-3'
-                    placeholder='<?php _e( 'Search documentation', 'wedocs' ); ?>'
-                />
+                <div class='doc-search-field'>
+                    <input
+                        type='text'
+                        id='doc-search-input'
+                        placeholder='<?php _e( 'Search documentation', 'wedocs' ); ?>'
+                    />
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 search-clean">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </div>
             </form>
             <button class='doc-search-cancel' type='reset'>
                 <?php _e( 'ESC', 'wedocs' ); ?>
@@ -50,57 +44,13 @@
         </div>
         <div class='modal-body doc-search-dropdown'>
             <div class='doc-search-dropdown-container'>
-                <section class='doc-search-hits'>
-                    <div class='doc-empty-search'><?php _e( 'Search result is empty', 'wedocs' ); ?></div>
-<!--                    <ul id='doc-search-list'>-->
-<!--                        <li class='doc-search-hit' id='doc-search-item-0' role='option' aria-selected='false'>-->
-<!--                            <a class='' href='/docs/height'>-->
-<!--                                <div class='doc-search-hit-container'>-->
-<!--                                    <div class='doc-search-hit-icon'>-->
-<!--                                        <svg width='20' height='20' viewBox='0 0 20 20'>-->
-<!--                                            <g stroke='currentColor' fill='none' fill-rule='evenodd' stroke-linecap='round' stroke-linejoin='round'>-->
-<!--                                                <path d='M3.18 6.6a8.23 8.23 0 1112.93 9.94h0a8.23 8.23 0 01-11.63 0'></path>-->
-<!--                                                <path d='M6.44 7.25H2.55V3.36M10.45 6v5.6M10.45 11.6L13 13'></path>-->
-<!--                                            </g>-->
-<!--                                        </svg>-->
-<!--                                    </div>-->
-<!--                                    <div class='doc-search-hit-content-wrapper'>-->
-<!--                                        <span class='DocSearch-Hit-title'>-->
-<!--                                            --><?php //_e( 'Height', 'wedocs' ); ?>
-<!--                                        </span>-->
-<!--                                    </div>-->
-<!--                                    <div class='doc-search-hit-action'>-->
-<!--                                        <button class='doc-search-hit-action-button' type='submit'>-->
-<!--                                            <svg width='20' height='20' viewBox='0 0 20 20'>-->
-<!--                                                <path d='M10 14.2L5 17l1-5.6-4-4 5.5-.7 2.5-5 2.5 5 5.6.8-4 4 .9 5.5z' stroke='currentColor' fill='none' fill-rule='evenodd' stroke-linejoin='round'></path>-->
-<!--                                            </svg>-->
-<!--                                        </button>-->
-<!--                                    </div>-->
-<!--                                    <div class='doc-search-hit-action'>-->
-<!--                                        <button class='doc-search-hit-action-button' type='submit'>-->
-<!--                                            <svg width='20' height='20' viewBox='0 0 20 20'>-->
-<!--                                                <path-->
-<!--                                                    fill='none'-->
-<!--                                                    fill-rule='evenodd'-->
-<!--                                                    stroke='currentColor'-->
-<!--                                                    stroke-linecap='round'-->
-<!--                                                    stroke-linejoin='round'-->
-<!--                                                    d='M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z'-->
-<!--                                                ></path>-->
-<!--                                            </svg>-->
-<!--                                        </button>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-                </section>
+                <section class='doc-search-hits'></section>
             </div>
         </div>
         <div class='modal-footer doc-search-footer'>
             <div class='doc-search-logo'>
-                <a href='https://www.algolia.com/ref/docsearch/?utm_source=tailwindcss.com&amp;utm_medium=referral&amp;utm_content=powered_by&amp;utm_campaign=docsearch' target='_blank' rel='noopener noreferrer'>
-                    <span class='DocSearch-Label'>Search by</span>
+                <span class='doc-search-label'><?php _e( 'Search by', 'wedocs' ); ?></span>
+                <a href='https://wedocs.co' target='_blank' rel='noopener noreferrer'>
                     <svg width='77px' height='22px' viewBox='0 0 78 22' version='1.1'>
                         <g id='surface1'>
                             <path

@@ -13,18 +13,18 @@ class Ajax {
      * Bind actions.
      */
     public function __construct() {
-        add_action( 'wp_ajax_wedocs_create_doc', [ $this, 'create_doc' ] );
-        add_action( 'wp_ajax_wedocs_remove_doc', [ $this, 'remove_doc' ] );
-        add_action( 'wp_ajax_wedocs_admin_get_docs', [ $this, 'get_docs' ] );
-        add_action( 'wp_ajax_wedocs_sortable_docs', [ $this, 'sort_docs' ] );
+        // Get documentations stuff.
+        add_action( 'wp_ajax_wedocs_get_docs', [ $this, 'get_docs' ] );
+        add_action( 'wp_ajax_nopriv_wedocs_get_docs', [ $this, 'get_docs' ] );
 
+        // Handle weDocs rating stuff.
         add_action( 'wp_ajax_wedocs_rated', [ $this, 'hide_wedocs_rating' ] );
 
-        // feedback
+        // Handle weDocs feedback stuff.
         add_action( 'wp_ajax_wedocs_ajax_feedback', [ $this, 'handle_feedback' ] );
         add_action( 'wp_ajax_nopriv_wedocs_ajax_feedback', [ $this, 'handle_feedback' ] );
 
-        // contact
+        // Handle weDocs documentation contact stuff.
         add_action( 'wp_ajax_wedocs_contact_feedback', [ $this, 'handle_contact' ] );
         add_action( 'wp_ajax_nopriv_wedocs_contact_feedback', [ $this, 'handle_contact' ] );
 
@@ -42,110 +42,12 @@ class Ajax {
     }
 
     /**
-     * Create a new doc.
-     *
-     * @return void
-     */
-    public function create_doc() {
-        check_ajax_referer( 'wedocs-admin-nonce' );
-
-        $title  = isset( $_POST['title'] ) ? trim( sanitize_text_field( $_POST['title'] ) ) : '';
-        $status = isset( $_POST['status'] ) ? sanitize_text_field( $_POST['status'] ) : 'draft';
-        $parent = isset( $_POST['parent'] ) ? absint( $_POST['parent'] ) : 0;
-        $order  = isset( $_POST['order'] ) ? absint( $_POST['order'] ) : 0;
-
-        $status           = 'publish';
-        $post_type_object = get_post_type_object( 'docs' );
-
-        if ( '' === $title ) {
-            return wp_send_json_error();
-        }
-
-        if ( ! current_user_can( $post_type_object->cap->publish_posts ) ) {
-            $status = 'pending';
-        }
-
-        $post_id = wp_insert_post( [
-            'post_title'  => $title,
-            'post_type'   => 'docs',
-            'post_status' => $status,
-            'post_parent' => $parent,
-            'post_author' => get_current_user_id(),
-            'menu_order'  => $order,
-        ] );
-
-        if ( is_wp_error( $post_id ) ) {
-            wp_send_json_error();
-        }
-
-        wp_send_json_success( [
-            'post' => [
-                'id'     => $post_id,
-                'title'  => stripslashes( $title ),
-                'status' => $status,
-                'caps'   => [
-                    'edit'   => current_user_can( $post_type_object->cap->edit_post, $post_id ),
-                    'delete' => current_user_can( $post_type_object->cap->delete_post, $post_id ),
-                ],
-            ],
-            'child' => [],
-        ] );
-    }
-
-    /**
-     * Delete a doc.
-     *
-     * @return void
-     */
-    public function remove_doc() {
-        check_ajax_referer( 'wedocs-admin-nonce' );
-
-        $post_id = ! empty( $_POST['id'] ) ? absint( $_POST['id'] ) : 0;
-        if ( ! current_user_can( 'delete_post', $post_id ) ) {
-            wp_send_json_error( __( 'You are not allowed to delete this item.' ) );
-        }
-
-        if ( $post_id ) {
-            // Delete childrens first if found.
-            $this->remove_child_docs( $post_id );
-
-            // Delete main doc.
-            wp_delete_post( $post_id, false );
-        }
-
-        wp_send_json_success();
-    }
-
-    /**
-     * Remove child docs.
-     *
-     * @since 2.0.0
-     *
-     * @param int  $parent_id
-     * @param bool $force_delete
-     *
-     * @return void
-     */
-    public function remove_child_docs( $parent_id, $force_delete = false ) {
-        $childrens = get_children( [ 'post_parent' => $parent_id ] );
-
-        if ( $childrens ) {
-            foreach ( $childrens as $child_post ) {
-                // Recursively delete.
-                $this->remove_child_docs( $child_post->ID, $force_delete );
-
-                wp_delete_post( $child_post->ID, $force_delete );
-            }
-        }
-    }
-
-    /**
      * Get all docs.
      *
      * @return void
      */
     public function get_docs() {
-        check_ajax_referer( 'wedocs-admin-nonce' );
+        check_ajax_referer( 'wedocs-ajax' );
 
         $docs = get_pages( [
             'post_type'      => 'docs',
@@ -155,9 +57,24 @@ class Ajax {
             'order'          => 'ASC',
         ] );
 
-        $arranged = $this->build_tree( $docs );
-        usort( $arranged, [ $this, 'sort_callback' ] );
-        wp_send_json_success( $arranged );
+        $docs_tree = [ 'all_docs' => $docs ];
+        foreach ( $docs as $doc ) {
+            $is_parent = $this->is_a_parent_doc( $doc->ID );
+            if ( $is_parent ) {
+                $docs_tree['parents'][] = $doc;
+                continue;
+            }
+
+            $is_section = $this->is_a_parent_doc( $doc->post_parent );
+            if ( $is_section ) {
+                $docs_tree['sections'][] = $doc;
+                continue;
+            }
+
+            $docs_tree['articles'][] = $doc;
+        }
+
+        wp_send_json_success( $docs_tree );
     }
 
     /**
@@ -243,28 +160,6 @@ class Ajax {
     }
 
     /**
-     * Sort docs.
-     *
-     * @return void
-     */
-    public function sort_docs() {
-        check_ajax_referer( 'wedocs-admin-nonce' );
-
-        $doc_ids = isset( $_POST['ids'] ) ? array_map( 'absint', $_POST['ids'] ) : [];
-
-        if ( $doc_ids ) {
-            foreach ( $doc_ids as $order => $id ) {
-                wp_update_post( [
-                    'ID'         => $id,
-                    'menu_order' => $order,
-                ] );
-            }
-        }
-
-        exit;
-    }
-
-    /**
      * Build a tree of docs with parent-child relation.
      *
      * @param array $docs
@@ -330,5 +225,18 @@ class Ajax {
     public function hide_pro_notice() {
         $user_id = get_current_user_id();
         update_user_meta( $user_id, 'wedocs_hide_pro_notice', true );
+    }
+
+    /**
+     * Check this documentation is parent.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param int $doc_id
+     *
+     * @return bool
+     */
+    public function is_a_parent_doc( $doc_id ) {
+        return (int) wp_get_post_parent_id( $doc_id ) === 0;
     }
 }
