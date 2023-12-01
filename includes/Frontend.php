@@ -75,12 +75,14 @@ class Frontend {
         wedocs_get_template_part( 'modals/search', 'modal' );
         $searchModal = ob_get_clean();
         wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', [
-            'nonce'       => wp_create_nonce( 'wedocs-ajax' ),
-            'style'       => WEDOCS_ASSETS . '/build/print.css?v=10',
-            'ajaxurl'     => admin_url( 'admin-ajax.php' ),
-            'powered'     => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs plugin for WordPress', 'wedocs' ), home_url() ),
-            'isSingleDoc' => is_singular( 'docs' ),
-            'searchModal' => $searchModal,
+            'nonce'          => wp_create_nonce( 'wedocs-ajax' ),
+            'style'          => WEDOCS_ASSETS . '/build/print.css?v=10',
+            'ajaxurl'        => admin_url( 'admin-ajax.php' ),
+            'powered'        => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs plugin for WordPress', 'wedocs' ), home_url() ),
+            'isSingleDoc'    => is_singular( 'docs' ),
+            'searchModal'    => $searchModal,
+            'searchBlankMsg' => __( 'Search field cannot be blank', 'wedocs' ),
+            'searchEmptyMsg' => __( 'Your search didn\'t match any documents', 'wedocs' ),
         ] );
     }
 

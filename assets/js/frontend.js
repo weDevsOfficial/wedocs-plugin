@@ -204,14 +204,14 @@
       $( this ).hide();
       $( this ).prev( 'input[type="text"]' ).val( null ).focus();
         $( '.doc-search-dropdown-container .doc-search-hits' )
-          .html( `<div class='doc-empty-search'>Search field cannot be blank</div>` );
+          .html( `<div class='doc-empty-search'>${ weDocs_Vars.searchBlankMsg }</div>` );
     },
 
     detectDocSearchInput ( e ) {
       const searchValue = e.target.value,
         searchDocs = this.getSearchDocs( searchValue ),
-        searchEmpty = `<div class='doc-empty-search'>Your search didn't match any documents</div>`,
-        searchKeyEmpty = `<div class='doc-empty-search'>Search field cannot be blank</div>`;
+        searchEmpty = `<div class='doc-empty-search'>${ weDocs_Vars.searchEmptyMsg }</div>`,
+        searchKeyEmpty = `<div class='doc-empty-search'>${ weDocs_Vars.searchBlankMsg }</div>`;
 
       // Searched docs list.
       const $ulNode = this.getListTemplate( searchDocs );
@@ -230,14 +230,16 @@
       ulNode.setAttribute( 'id', 'doc-search-list' );
 
       searchDocs.forEach( ( data, index ) => {
-        const url = data?.article ? data?.article?.guid :
+        let url = data?.article ? data?.article?.guid :
           ( data?.section ? data?.section?.guid : data?.parent?.guid ),
           title = data?.article ? data?.article?.post_title :
             ( data?.section ? data?.section?.post_title : data?.parent?.post_title ),
           parentNavigation = data?.section ?
-            `<span data-url="${ data?.parent?.guid }" class="doc-search-hit-path">${ data?.parent?.post_title }</span>` : '',
+            `<span data-url="${ data?.parent?.guid }" class="doc-search-hit-path">${ this.extractedTitle( data?.parent?.post_title, 40 ) }</span>` : '',
           sectionNavigation = data?.article ?
-            `<span data-url="${ data?.section?.guid }" class="doc-search-hit-path">${ data?.section?.post_title }</span>` : '';
+            `<span data-url="${ data?.section?.guid }" class="doc-search-hit-path">${ this.extractedTitle( data?.section?.post_title, 40 ) }</span>` : '';
+
+        title = this.extractedTitle( title );
 
         const bootstrapTemplate = $( '.wedocs-single-wrap .doc-nav-list a' ).hasClass( 'bootstrap' ) ? 'bootstrap ' : '',
           tailwindTemplate = $( '.wedocs-single-wrap .doc-nav-list a' ).hasClass( 'tailwind' ) ? 'tailwind ' : '';
@@ -256,18 +258,13 @@
           >
             <div class="doc-search-hit-container">
               <div class="doc-search-hit-icon">
-                <svg width="14" height="10" fill="none">
+                <svg width="10" height="18" viewBox="0 0 14 18" fill="none">
                   <path
-                    fill="#BAE6FD"
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M3.5 0c1.093 0 2.117.27 3 .743V10a6.344 6.344 0 0 0-3-.743c-1.093 0-2.617.27-3.5.743V.743C.883.27 2.407 0 3.5 0Z"
-                  />
-                  <path
-                    fill="#38BDF8"
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M10.5 0c1.093 0 2.617.27 3.5.743V10c-.883-.473-2.407-.743-3.5-.743s-2.117.27-3 .743V.743a6.344 6.344 0 0 1 3-.743Z"
+                    stroke="#6B7280"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M4.49984 9H9.49984M4.49984 12.3333H9.49984M11.1665 16.5H2.83317C1.9127 16.5 1.1665 15.7538 1.1665 14.8333V3.16667C1.1665 2.24619 1.9127 1.5 2.83317 1.5H7.48799C7.70901 1.5 7.92097 1.5878 8.07725 1.74408L12.5891 6.25592C12.7454 6.4122 12.8332 6.62416 12.8332 6.84518V14.8333C12.8332 15.7538 12.087 16.5 11.1665 16.5Z"
                   />
                 </svg>
               </div>
@@ -338,6 +335,11 @@
 
     closeSinglePageSearchModal ( e ) {
       $( '#wedocs-single-doc-search-modal' ).removeClass( 'active' );
+    },
+
+    extractedTitle ( title, length = 80 ) {
+      const extractedString = title?.substr( 0, length );
+      return extractedString?.length >= length ? `${ extractedString }...` : extractedString;
     },
 
     handleDocSearchModalBackDrop ( e ) {
