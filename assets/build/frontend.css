@@ -128,10 +128,10 @@ body.single.single-docs .content-area {
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li.wd-state-closed > a > .wedocs-caret::before {
   font-family: 'wedocs' !important;
 }
-.wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li.wd-state-open > a > .wedocs-caret::before {
+.wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li.wd-state-open > a > .wedocs-caret:before {
   content: '\f106';
 }
-.wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li.wd-state-closed > a > .wedocs-caret::before {
+.wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li.wd-state-closed > a > .wedocs-caret:before {
   content: '\f107';
 }
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li.wd-state-closed ul.children {
@@ -157,6 +157,11 @@ body.single.single-docs .content-area {
   color: #333333;
   font-weight: normal;
 }
+.wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li.current_page_item > a > .wedocs-caret:hover,
+.wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li.current_page_parent > a > .wedocs-caret:hover {
+  border-color: #fff;
+  color: #fff;
+}
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_parent > a,
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_item > a,
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_ancestor > a {
@@ -168,7 +173,6 @@ body.single.single-docs .content-area {
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_item > a .wedocs-caret,
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_ancestor > a .wedocs-caret {
   color: #fff;
-  display: none;
 }
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_parent li.current_page_item > a,
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_item li.current_page_item > a,
@@ -176,11 +180,6 @@ body.single.single-docs .content-area {
   border-left: 2px solid #3B82F6;
   color: #191919;
   font-weight: bold;
-}
-.wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_parent ul.children,
-.wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_item ul.children,
-.wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list > li.current_page_ancestor ul.children {
-  display: block;
 }
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list .children .tailwind {
   border-left: 1px solid #06b6d4;
