@@ -11,7 +11,7 @@ const DEFAULT_SETTINGS_STATE = {
       collapse_articles: 'off',
     },
     permission: {
-      global_permission: [ 'administrator' ],
+      global_permission: [ 'administrator', 'editor' ],
       role_wise_permission: [ 'administrator' ],
     },
     assistant: {
