@@ -44,7 +44,11 @@
         </div>
         <div class='modal-body doc-search-dropdown'>
             <div class='doc-search-dropdown-container'>
-                <section class='doc-search-hits'></section>
+                <section class='doc-search-hits'>
+                    <div class='doc-empty-search'>
+                        <?php _e( 'Search field cannot be blank', 'wedocs' ); ?>
+                    </div>
+                </section>
             </div>
         </div>
         <div class='modal-footer doc-search-footer'>

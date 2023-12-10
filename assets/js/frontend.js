@@ -25,8 +25,8 @@
       $( '#wedocs-single-doc-search-modal' ).on( 'click', this.handleDocSearchModalBackDrop );
       $( '.doc-search-container #doc-search-input' ).on( 'keyup', this.detectDocSearchInput.bind( this ) );
       $( '.doc-search-container .doc-search-field .search-clean' ).on( 'click', this.cleanDocSearchInput );
-      $( '.wedocs-single-search-input > .search-field' ).on( 'click', this.showSinglePageSearchModal );
       $( '#wedocs-single-doc-search-modal .doc-search-cancel' ).on( 'click', this.closeSinglePageSearchModal );
+      $( '.wedocs-single-search-input' ).on( 'click', '.search-field, .search-submit, .short-key', this.showSinglePageSearchModal );
     },
 
     feedback ( e ) {
@@ -184,6 +184,7 @@
       document.body.appendChild( mountDiv );
 
       document.addEventListener( 'keydown', ( event ) => {
+        // console.log( event, event.keyCode,  event.key );
         // Bind single page search modal with (ctrl/command + k).
         if ( ( event.ctrlKey || event.metaKey ) && event.key === 'k' ) {
           this.showSinglePageSearchModal();
@@ -326,11 +327,8 @@
     },
 
     showSinglePageSearchModal ( e ) {
-        // console.log( 'before:', this.docs );
       $( '#wedocs-single-doc-search-modal' ).addClass( 'active' );
-        // console.log( 'MID:', this.docs );
       $( '#wedocs-single-doc-search-modal #doc-search-input' ).focus();
-        // console.log( 'after:', this.docs );
     },
 
     closeSinglePageSearchModal ( e ) {
