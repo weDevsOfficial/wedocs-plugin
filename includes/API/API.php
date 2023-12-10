@@ -211,6 +211,28 @@ class API extends WP_REST_Controller {
                 ],
             ],
         ] );
+
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/update_docs_status', [
+            [
+                'methods'             => WP_REST_Server::CREATABLE,
+                'callback'            => [ $this, 'update_docs_status' ],
+                'permission_callback' => [ $this, 'sortable_item_permissions_check' ],
+                'args'                => [
+                    'data' => array(
+                        'type'        => 'object',
+                        'description' => esc_html__( 'Collective documents object', 'wedocs' ),
+                        'properties'  => array(
+                            'docIds' => array(
+                                'type' => 'object',
+                            ),
+                            'status' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ],
+            ],
+        ] );
     }
 
     /**
@@ -315,6 +337,29 @@ class API extends WP_REST_Controller {
         update_option( 'wedocs_sortable_status', false );
         update_option( 'wedocs_need_sortable_status', false );
         return rest_ensure_response( false );
+    }
+
+    /**
+     * Update collective docs status.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
+     */
+    public function update_docs_status( $request ) {
+        $status  = false;
+        $doc_ids = ! empty( $request['docIds'] ) ? array_map( 'intval', $request['docIds'] ) : array();
+
+        foreach ( $doc_ids as $doc_id ) {
+            $post_data = array(
+                'ID'          => $doc_id,
+                'post_status' => ! empty( $request['status'] ) ? sanitize_text_field( $request['status'] ) : 'publish',
+            );
+
+            $status = wp_update_post( $post_data );
+        }
+
+        return rest_ensure_response( $status );
     }
 
     /**

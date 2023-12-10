@@ -73,6 +73,20 @@ const actions = {
     return actions.setDocs( response );
   },
 
+  *updateDocs( data ) {
+      const path = '/wp/v2/docs/update_docs_status';
+      yield { type: 'UPDATE_TO_API', path, data };
+      const response = yield actions.fetchFromAPI(
+          '/wp/v2/docs?per_page=-1&status=publish,draft,private'
+      );
+      const parentDocs = response.filter( ( doc ) => ! doc.parent );
+      const sortableDocs = parentDocs?.sort(
+          ( a, b ) => a.menu_order - b.menu_order
+      );
+      yield actions.setParentDocs( sortableDocs );
+      return actions.setDocs( response );
+  },
+
   *updateNeedSortingStatus( data ) {
     const path = '/wp/v2/docs/need_sorting_status';
     yield { type: 'UPDATE_TO_API', path, data };
@@ -112,7 +126,7 @@ const actions = {
     return actions.setDocs( response );
   },
 
-  *updateDocs( docs ) {
+  *updateParentDocs( docs ) {
     const parentDocs = docs.filter( ( doc ) => ! doc.parent );
     const sortableDocs = parentDocs?.sort(
       ( a, b ) => a.menu_order - b.menu_order
