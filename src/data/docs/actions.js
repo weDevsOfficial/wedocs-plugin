@@ -40,6 +40,10 @@ const actions = {
     return { type: 'SET_USER_DOC_IDS', userDocIds };
   },
 
+  setUserDocId( userDocId ) {
+    return { type: 'SET_USER_DOC_ID', userDocId };
+  },
+
   fetchFromAPI( path ) {
     return { type: 'FETCH_FROM_API', path };
   },
@@ -55,6 +59,7 @@ const actions = {
 
   *createDoc( doc ) {
     const createdDoc = yield actions.createDocsToAPI( doc );
+    yield actions.setUserDocId( createdDoc.id );
     yield actions.setDoc( createdDoc );
     return createdDoc;
   },
