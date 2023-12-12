@@ -75,7 +75,7 @@ class Menu {
             ),
             array(
                 __( 'Tags', 'wedocs' ),
-                'manage_categories',
+                $this->capability,
                 'edit-tags.php?taxonomy=doc_tag&post_type=docs',
             ),
             array(
