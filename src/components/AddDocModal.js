@@ -50,6 +50,12 @@ const AddDocModal = ( { className, children } ) => {
             container: '!z-[9999]',
           },
         } );
+
+        wp.hooks.doAction(
+          'wedocs_after_create_new_doc',
+          result,
+        );
+
         closeModal();
       } )
       .catch( ( err ) => {
