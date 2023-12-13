@@ -70,7 +70,7 @@ const Migrate = () => {
 
                 if ( data?.progress && data?.progress === 100 ) {
                     resolveSelect( docsStore ).getDocs().then( docs => {
-                        dispatch( docsStore ).updateDocs( docs ).then( () => {
+                        dispatch( docsStore ).updateParentDocs( docs ).then( () => {
                             setNeedMigrate( false );
                             setMigrationSuccess( true );
                         } );

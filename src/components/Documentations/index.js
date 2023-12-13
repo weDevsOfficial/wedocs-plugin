@@ -54,7 +54,7 @@ const Documentations = () => {
 
   const isAdmin = userIsAdmin();
   const showActions = wp.hooks.applyFilters(
-    'wedocs_show_documentation_actions',
+    'wedocs_show_parent_documentation_addition_actions',
     true
   );
 

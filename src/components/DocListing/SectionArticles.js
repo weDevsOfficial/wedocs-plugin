@@ -235,7 +235,7 @@ const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles
           </div>
         </div>
         <div className="ml-8 flex-shrink-0 w-5 h-5">
-          { isAdmin && ! Boolean( parseInt( wp?.hooks?.applyFilters(
+          { ! Boolean( parseInt( wp?.hooks?.applyFilters(
             'wedocs_check_is_admin_restricted_article',
             false,
             article?.id
