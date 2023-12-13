@@ -121,12 +121,6 @@ class Post_Types {
             'show_tagcloud'     => true,
             'show_in_rest'      => true,
             'rewrite'           => $rewrite,
-//            'capabilities'      => array(
-//                'edit_terms'   => 'manage_categories',
-//                'manage_terms' => 'manage_categories', // Restrict editing to administrators
-//                'delete_terms' => 'manage_categories',
-//                'assign_terms' => 'edit_posts',
-//            ),
         ];
 
         register_taxonomy( 'doc_tag', [ 'docs' ], $args );

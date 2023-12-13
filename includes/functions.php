@@ -426,7 +426,7 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
  * @return string
  */
 function wedocs_get_publish_cap() {
-    return apply_filters( 'wedocs_publish_cap', 'publish_posts' );
+    return apply_filters( 'wedocs_publish_cap', 'manage_categories' );
 }
 
 if ( ! function_exists( 'wedocs_template_wrapper_start' ) ) {

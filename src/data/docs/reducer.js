@@ -33,6 +33,12 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
         userDocIds: [ ...state.userDocIds, ...action.userDocIds ],
       };
 
+    case 'SET_USER_DOC_ID':
+      return {
+        ...state,
+        userDocIds: [ ...state.userDocIds, action.userDocId ],
+      };
+
     case 'SET_PAGES':
       return {
         ...state,

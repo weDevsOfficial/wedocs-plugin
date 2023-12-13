@@ -159,21 +159,19 @@ const DocSections = ( { section, sections, searchValue } ) => {
                       { __( 'Draft', 'wedocs' ) }
                     </div>
                   ) }
-                  { isAdmin && (
-                    <AddArticleModal
-                      sections={ sections }
-                      className={ `ml-6 mr-1` }
-                      defaultSection={ section }
-                      setShowArticles={ setShowArticles }
+                  <AddArticleModal
+                    sections={ sections }
+                    className={ `ml-6 mr-1` }
+                    defaultSection={ section }
+                    setShowArticles={ setShowArticles }
+                  >
+                    <div
+                      className='tooltip cursor-pointer flex items-center justify-center w-3.5 h-3.5'
+                      data-tip={ __( 'Create', 'wedocs' ) }
                     >
-                      <div
-                        className='tooltip cursor-pointer flex items-center justify-center w-3.5 h-3.5'
-                        data-tip={ __( 'Create', 'wedocs' ) }
-                      >
-                        <span className="flex items-center dashicons dashicons-plus-alt2 hidden group-hover:inline-flex text-2xl font-medium text-[#d1d5db] hover:text-indigo-700"></span>
-                      </div>
-                    </AddArticleModal>
-                  ) }
+                      <span className="flex items-center dashicons dashicons-plus-alt2 hidden group-hover:inline-flex text-2xl font-medium text-[#d1d5db] hover:text-indigo-700"></span>
+                    </div>
+                  </AddArticleModal>
                   <a
                     target="_blank"
                     className="ml-4 hidden group-hover:block !shadow-none"
@@ -227,34 +225,32 @@ const DocSections = ( { section, sections, searchValue } ) => {
                     </span>
                   </a>
 
-                  { isAdmin && (
-                    <RestrictionModal
-                      docId={ section.id }
-                      type="section"
-                      classes="ml-4 hidden group-hover:block"
+                  <RestrictionModal
+                    docId={ section.id }
+                    type="section"
+                    classes="ml-4 hidden group-hover:block"
+                  >
+                    <span
+                      className={ `tooltip cursor-pointer flex items-center` }
+                      data-tip={ __( 'Delete', 'wedocs' ) }
                     >
-                      <span
-                        className={ `tooltip cursor-pointer flex items-center` }
-                        data-tip={ __( 'Delete', 'wedocs' ) }
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="w-5 h-5 stroke-gray-300 hover:stroke-red-700"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-5 h-5 stroke-gray-300 hover:stroke-red-700"
-                        >
-                          <path
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                          />
-                        </svg>
-                      </span>
-                    </RestrictionModal>
-                  ) }
+                        <path
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                        />
+                      </svg>
+                    </span>
+                  </RestrictionModal>
                 </div>
               </div>
 
@@ -278,9 +274,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
 
           { showArticles && ! Boolean( isDragging ) && (
             <div
-              className={ `${
-                isAdmin ? 'mt-3' : ''
-              } section-article pl-4 sm:pl-6` }
+              className={ `mt-3 section-article pl-4 sm:pl-6` }
             >
               { articles?.length ? (
                 <DraggableDocs
@@ -306,17 +300,16 @@ const DocSections = ( { section, sections, searchValue } ) => {
                 </DraggableDocs>
               ): null }
 
-              { isAdmin && (
-                <AddArticleModal
-                  sections={ sections }
-                  defaultSection={ section }
-                  setShowArticles={ setShowArticles }
-                  className="py-2.5 px-4 mt-7 mb-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 text-sm text-white hover:text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-3 text-base flex items-center"></span>
-                  { __( 'Add article', 'wedocs' ) }
-                </AddArticleModal>
-              ) }
+
+              <AddArticleModal
+                sections={ sections }
+                defaultSection={ section }
+                setShowArticles={ setShowArticles }
+                className="py-2.5 px-4 mt-7 mb-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 text-sm text-white hover:text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-3 text-base flex items-center"></span>
+                { __( 'Add article', 'wedocs' ) }
+              </AddArticleModal>
             </div>
           ) }
         </div>
