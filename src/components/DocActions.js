@@ -1,8 +1,10 @@
-import { Fragment, useEffect, useState } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import RestictionModal from './RestrictionModal';
 import QuickEditModal from './DocListing/QuickEditModal';
 import { userIsAdmin } from '../utils/helper';
+import { dispatch } from '@wordpress/data';
+import Swal from 'sweetalert2';
 
 const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
   const isAdmin = userIsAdmin();
@@ -18,6 +20,27 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
   );
 
   const [ showActions, setShowActions ] = useState( false );
+
+  // Update documentation data.
+  const updateDocStatus = () => {
+    dispatch( 'wedocs/docs' )
+      .updateDoc( doc?.id, { status: doc?.status === 'draft' ? 'publish' : 'draft' } )
+      .then( ( { docs } ) => {
+        Swal.fire( {
+          icon              : 'success',
+          toast             : true,
+          title             : __( `Doc ${doc?.status === 'draft' ? 'Published' : 'Drafted' } Successfully!`, 'wedocs' ),
+          timer             : 2000,
+          position          : 'bottom-end',
+          showConfirmButton : false,
+          text              : __(
+            `Documentation has been ${doc?.status === 'draft' ? 'published' : 'drafted' } successfully`,
+            'wedocs'
+          ),
+        } );
+      } )
+      .catch( err => console.log( err ) );
+  }
 
   return (
     <Fragment>
@@ -65,6 +88,13 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           >
             { __( 'View', 'wedocs' ) }
           </a>
+
+          <span
+            onClick={ updateDocStatus }
+            className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
+          >
+            { __( doc?.status === 'draft' ? 'Publish Now' : 'Switch to Draft', 'wedocs' ) }
+          </span>
 
           { /* Add external actions */ }
           { wp.hooks.applyFilters(

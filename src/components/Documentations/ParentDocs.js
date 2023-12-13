@@ -91,14 +91,14 @@ const ParentDocs = ( { doc } ) => {
           </div>
         </div>
         <div className="flex gap-5 items-center">
+          { doc?.status === 'draft' && (
+            <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5` }>
+              { __( 'Draft', 'wedocs' ) }
+            </div>
+          ) }
           { /* Render private documentation icon */ }
           { isAdmin && (
             <Fragment>
-              { doc?.status === 'draft' && (
-                <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5` }>
-                  { __( 'Draft', 'wedocs' ) }
-                </div>
-              ) }
               <svg
                 width="17"
                 height="17"
