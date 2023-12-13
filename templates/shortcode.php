@@ -33,7 +33,7 @@
                                 $children_docs = get_page_children( $section->ID, $all_wp_pages );
                                 $post_title    = wedocs_apply_short_content(
                                     __( $section->post_title, 'wedocs' ),
-                                    $col > 1 ? 25 : 60
+                                    $col > 1 ? 60 : 160
                                 );
 
                                 $collapse_section_articles = wedocs_get_general_settings( 'collapse_articles', 'off' );
@@ -61,7 +61,7 @@
                                         <?php foreach ( $children_docs as $article ) : ?>
                                             <li>
                                                 <a href="<?php echo get_permalink( $article->ID ); ?>" target='_blank'>
-                                                    <?php echo esc_html( wedocs_apply_short_content( $article->post_title, $col > 1 ? 30 : 80 ) ); ?>
+                                                    <?php echo esc_html( wedocs_apply_short_content( $article->post_title, $col > 1 ? 60 : 160 ) ); ?>
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>

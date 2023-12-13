@@ -491,18 +491,18 @@ body.single.single-docs .content-area {
 .wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections > li > svg {
   width: 16px;
   cursor: pointer;
+  margin-left: 10px;
 }
 .wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections > li > svg.active {
   transform: rotate(180deg);
 }
 .wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections ul.children {
-  margin: 0;
+  margin: 6px 0;
   padding-left: 24px;
-  margin-bottom: 6px;
 }
 .wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections ul.children > li {
   list-style: circle;
-  line-height: 36px;
+  line-height: 1.5;
 }
 .wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections ul.children:not(.active) {
   display: none;
@@ -554,7 +554,7 @@ body.single.single-docs .content-area {
 .wedocs-shortcode-wrap.pro ul.wedocs-doc-sections > li a {
   display: flex;
   font-size: 18px;
-  line-height: 40px;
+  line-height: 1.5;
   text-decoration: none;
 }
 .wedocs-shortcode-wrap.pro ul.wedocs-doc-sections > li a:not(:hover) {
