@@ -1,5 +1,6 @@
 @import 'src/assets/less/variables';
 @import 'src/assets/less/fonts';
+@import 'src/assets/less/search-modal.less';
 
 body.single.single-docs .content-area {
     width: 100%;
@@ -29,15 +30,13 @@ body.single.single-docs .content-area {
 
         h3.widget-title {
             font-weight: bold;
-            border-bottom: 1px solid @borderColor;
             margin: 0 0 15px 0;
-            padding: 0 0 15px 0;
         }
 
         ul.doc-nav-list {
+            padding: 0;
             list-style: none;
             margin: 0 12px 0 0;
-            padding: 0;
 
             > li > a:before {
                 content: '\f07c';

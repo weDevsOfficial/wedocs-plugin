@@ -82,7 +82,7 @@ get_header(); ?>
 	                  <?php wedocs_doc_nav(); ?>
 
                     <footer class="entry-footer wedocs-entry-footer">
-	                      <?php if ( wedocs_get_general_settings( 'email', 'on' ) === 'on' ) { ?>
+                        <?php if ( wedocs_get_general_settings( 'email', 'on' ) === 'on' ) { ?>
                             <div class='help-content wedocs-hide-mobile'>
                                 <div class='help-panel'>
                                     <span class='help-icon'>
