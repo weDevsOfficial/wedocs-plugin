@@ -89,7 +89,7 @@ class Assets {
      */
     public function admin_enqueue() {
         // Enqueue admin script.
-        wp_enqueue_script('wedocs-admin-script' );
+        wp_enqueue_script( 'wedocs-admin-script' );
 
         // Enqueue admin app scripts.
         if ( 'toplevel_page_wedocs' === get_current_screen()->id ) {
