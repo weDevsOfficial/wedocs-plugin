@@ -26,7 +26,7 @@ function wedocs_get_template_part( $slug, $name = '', $args = array() ) {
 
     // Look in yourtheme/wedocs/slug-name.php and yourtheme/wedocs/slug.php.
     $template_path = ! empty( $name ) ? "{$slug}-{$name}.php" : "{$slug}.php";
-    $template      = locate_template( [ $wedocs->template_path() . $template_path ] );
+    $template      = locate_template( [ $wedocs->theme_dir_path() . $template_path ] );
 
     $template_path = apply_filters( 'wedocs_set_template_path', $wedocs->plugin_path() . '/templates', $template, $args );
 
