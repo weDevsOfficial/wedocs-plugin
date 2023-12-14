@@ -134,7 +134,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                     </svg>
                     <a
                       target="_blank"
-                      href={ `${ window.location.origin }/wp-admin/post.php?post=${ id }&action=edit` }
+                      href={ `${ weDocsAdminVars.adminUrl }post.php?post=${ id }&action=edit` }
                       className="tooltip cursor-pointer before:max-w-xl flex items-center flex-shrink-0 text-base font-medium text-black !shadow-none z-[9980]"
                       data-tip={ he.decode( __( title?.rendered, 'wedocs' ) ) }
                       rel="noreferrer"
@@ -176,7 +176,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                     target="_blank"
                     className="ml-4 hidden group-hover:block !shadow-none"
                     rel="noreferrer"
-                    href={ `${ window.location.origin }/wp-admin/post.php?post=${ id }&action=edit` }
+                    href={ `${ weDocsAdminVars.adminUrl }post.php?post=${ id }&action=edit` }
                   >
                     <span
                       className={ `tooltip cursor-pointer` }

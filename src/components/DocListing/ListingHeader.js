@@ -29,7 +29,7 @@ const ListingHeader = ( { id } ) => {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href={ `${ window.location.origin }/wp-admin/post.php?post=${ id }&action=edit` }
+                href={ `${ weDocsAdminVars.adminUrl }post.php?post=${ id }&action=edit` }
                 className="flex tooltip cursor-pointer items-center group hover:text-black !shadow-none before:max-w-xl z-[90] mr-1"
                 data-tip={ he?.decode(
                   __(

@@ -204,6 +204,7 @@ final class WeDocs {
         }
 
         $this->container['api']      = new WeDevs\WeDocs\API();
+        $this->container['assets']   = new WeDevs\WeDocs\Assets();
         $this->container['migrate']  = new WeDevs\WeDocs\Admin\Migrate();
         $this->container['upgrader'] = new WeDevs\WeDocs\Upgrader\Upgrader();
     }
