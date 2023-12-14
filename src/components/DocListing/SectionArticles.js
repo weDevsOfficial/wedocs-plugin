@@ -77,7 +77,7 @@ const SectionArticles = ( { article, isAdmin, section, sections, setShowArticles
                     false,
                     article?.id
                   ) ) ) ?
-                    `${ window.location.origin }/wp-admin/post.php?post=${ article?.id }&action=edit` :
+                    `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit` :
                     `${ window.location.origin }/?p=${ article?.id }`
                 }
                 className="flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none mr-4"

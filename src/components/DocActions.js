@@ -72,7 +72,7 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
 
           { /* Edit documentation */ }
           <a
-            href={ `${ window.location.origin }/wp-admin/post.php?post=${ doc?.id }&action=edit` }
+            href={ `${ weDocsAdminVars.adminUrl }post.php?post=${ doc?.id }&action=edit` }
             target="_blank"
             className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
             rel="noreferrer"

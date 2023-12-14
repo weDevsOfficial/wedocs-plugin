@@ -13,47 +13,10 @@ class Admin {
     public function __construct() {
         new Menu();
 
-        add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ] );
-
         add_filter( 'parent_file', [ $this, 'fix_tag_menu' ], 15 );
         add_filter( 'submenu_file', [ $this, 'highlight_admin_submenu' ] );
         add_filter( 'admin_footer_text', [ $this, 'admin_footer_text' ], 1 );
         add_action( 'admin_notices', [ $this, 'show_wedocs_pro_available_notice' ] );
-    }
-
-    /**
-     * Load admin scripts and styles.
-     *
-     * @param string $hook
-     *
-     * @return void
-     */
-    public function admin_scripts( $hook ) {
-        wp_enqueue_script(
-            'wedocs-admin-script',
-            wedocs()->plugin_url() . '/assets/js/admin-script.js',
-            [ 'jquery' ],
-            filemtime( wedocs()->plugin_path() . '/assets/js/admin-script.js' ),
-            true
-        );
-
-        if ( 'toplevel_page_wedocs' !== $hook ) {
-            return;
-        }
-
-        $assets_url = wedocs()->plugin_url() . '/assets';
-
-        if ( file_exists( WEDOCS_PATH . '/assets/build/index.asset.php' ) ) {
-            $react_dependencies = require WEDOCS_PATH . '/assets/build/index.asset.php';
-
-            // Adding wedocs necessary assets.
-            wp_enqueue_style( 'wedocs-app-style', WEDOCS_URL . '/assets/build/index.css', [], $react_dependencies['version'] );
-            wp_enqueue_script( 'wedocs-app-script', WEDOCS_URL . '/assets/build/index.js', $react_dependencies['dependencies'], $react_dependencies['version'], true );
-
-            wp_localize_script( 'wedocs-app-script', 'weDocsAdminVars', [
-                'hasManageCap' => current_user_can( 'manage_options' ),
-            ] );
-        }
     }
 
     /**
