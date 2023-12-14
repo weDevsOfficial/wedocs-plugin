@@ -1,0 +1,294 @@
+#wedocs-single-doc-search-modal {
+    top: 0;
+    left: 0;
+    z-index: 200;
+    width: 100vw;
+    cursor: auto;
+    display: none;
+    height: 100vh;
+    position: fixed;
+    flex-direction: column;
+    background-color: #0003;
+
+    .doc-search-container {
+        padding: 12vh;
+
+        .doc-search-modal {
+            width: 100%;
+            display: flex;
+            min-height: 0;
+            margin: 0 auto;
+            background: #fff;
+            max-width: 47.375rem;
+            border-radius: 0.5rem;
+            flex-direction: column;
+            box-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;
+
+            .modal-header {
+                z-index: 1;
+                flex: none;
+                display: flex;
+                padding: 0 1rem;
+                position: relative;
+                align-items: center;
+                border-bottom: 1px solid;
+                border-color: rgb(241 245 249/1);
+
+                .doc-search-form {
+                    min-width: 0;
+                    display: flex;
+                    flex: 1 1 auto;
+                    align-items: center;
+
+                    .doc-search-magnifier-label {
+                        flex: none;
+                        display: flex;
+                        width: 1.5rem;
+                        height: 1.5rem;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    .doc-search-field {
+                        width: 100%;
+                        display: flex;
+                        position: relative;
+                        align-items: center;
+
+                        #doc-search-input {
+                            border: 0;
+                            flex: auto;
+                            min-width: 0;
+                            height: 3.5rem;
+                            color: #0f172a;
+                            font-size: 1rem;
+                            appearance: none;
+                            background: #0000;
+                            margin-right: 1rem;
+                            margin-left: 0.75rem;
+
+                            &:focus {
+                                outline: none;
+                                box-shadow: none;
+                            }
+                        }
+
+                        .search-clean {
+                            width: 20px;
+                            right: 30px;
+                            height: 20px;
+                            display: none;
+                            position: absolute;
+                        }
+                    }
+                }
+
+                .doc-search-cancel {
+                    flex: none;
+                    display: flex;
+                    width: 1.75rem;
+                    height: 1.5rem;
+                    color: #334155;
+                    font-size: 10px;
+                    appearance: none;
+                    font-weight: 700;
+                    align-items: center;
+                    padding: 0.5rem 1rem;
+                    background: transparent;
+                    border-radius: 0.375rem;
+                    justify-content: center;
+                    border: 1px solid #d4dde6;
+                }
+            }
+
+            .modal-body {
+                .doc-search-dropdown-container {
+                    .doc-search-hits {
+                        overflow: scroll;
+                        max-height: 600px;
+                        text-align: center;
+                        padding: 1rem 1.5rem;
+                        color: rgb(148 163 184/1);
+
+                        .doc-empty-search {
+                            padding: 3rem 0;
+                        }
+
+                        #doc-search-list {
+                            gap: 10px;
+                            margin: 0;
+                            padding: 0;
+                            display: grid;
+                            list-style: none;
+
+                            .doc-search-hit {
+                                .doc-search-hit-result {
+                                    display: block;
+                                    position: relative;
+                                    font-size: .875rem;
+                                    padding: 0.75rem 1rem;
+                                    border-radius: 0.5rem;
+                                    text-decoration: none;
+                                    background-color: rgb(248 250 252/1);
+
+                                    .doc-search-hit-container {
+                                        display: flex;
+                                        align-items: center;
+
+                                        .doc-search-hit-icon {
+                                            width: 1.5rem;
+                                            display: flex;
+                                            height: 1.5rem;
+                                            margin-right: 1rem;
+                                            align-items: center;
+                                            border-radius: 0.375rem;
+                                            justify-content: center;
+                                            background-color: rgb(255 255 255/1);
+                                            box-shadow: 0 0 #0000,0 0 0 calc(1px + 0px) #0f172a0d,0 1px 2px 0 #0000000d;
+                                        }
+
+                                        .doc-search-hit-content-wrapper {
+                                            z-index: 1;
+                                            flex: auto;
+                                            min-width: 0;
+                                            display: flex;
+                                            flex-direction: column-reverse;
+
+                                            .doc-search-hit-title {
+                                                overflow: hidden;
+                                                font-weight: 600;
+                                                text-align: left;
+                                                white-space: nowrap;
+                                                line-height: 1.5rem;
+                                                color: rgb(51 65 85/1);
+                                                text-overflow: ellipsis;
+                                            }
+
+                                            .docs-navigation {
+                                                gap: 0.5rem;
+                                                display: flex;
+                                                text-align: left;
+                                                align-items: center;
+
+                                                .doc-search-hit-path {
+                                                    color: #334155;
+                                                    font-weight: 600;
+                                                    padding: 0 0.6rem;
+                                                    font-size: 0.75rem;
+                                                    background: #e2e8f0;
+                                                    line-height: 1.5rem;
+                                                    border-radius: 999px;
+                                                    align-self: flex-start;
+                                                    margin-bottom: 0.35rem;
+                                                }
+                                            }
+                                        }
+
+                                        .doc-search-hit-action {
+                                            margin-left: auto;
+                                        }
+                                    }
+
+                                    &:hover {
+                                        background: #3b82f6;
+
+                                        .doc-search-hit-title {
+                                            color: #fff !important;
+                                        }
+
+                                        .doc-search-hit-path {
+                                            background: #fff !important;
+                                        }
+
+                                        .doc-search-hit-select-icon {
+                                            stroke: #fff;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .modal-footer {
+                flex: none;
+                display: flex;
+                padding: 1rem 1.5rem;
+                border-top: 1px solid;
+                justify-content: flex-end;
+                border-color: rgb(241 245 249/1);
+
+                .doc-search-logo {
+                    gap: 16px;
+                    display: flex;
+                    align-items: center;
+
+                    .doc-search-label {
+                        font-weight: 500;
+                        font-size: .75rem;
+                        line-height: 1rem;
+                        align-items: center;
+                        text-decoration: none;
+                        color: rgb(148 163 184/1);
+                    }
+                }
+            }
+        }
+    }
+
+    &.active {
+        display: flex;
+    }
+}
+
+.wedocs-single-search-input {
+    position: relative;
+    margin: 0 0 15px 0;
+    border-bottom: 1px solid @borderColor;
+
+    .short-key,
+    .search-field,
+    .search-submit {
+        cursor: pointer;
+        margin: 0 0 15px 0;
+    }
+
+    .search-field {
+        width: 96%;
+        height: 42px;
+        font-size: 16px;
+        background: white;
+        border-radius: 8px;
+        border: 1px solid #dbdbdb;
+        padding: 10px 22px 10px 45px;
+
+        &::placeholder {
+            color: #a6b3c4;
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    .search-submit {
+        top: 0;
+        left: 0;
+        position: absolute;
+        padding: 14px 16px;
+        background: transparent;
+    }
+
+    .short-key {
+        top: 0;
+        right: 12px;
+        color: #9caabd;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 8px 16px;
+        position: absolute;
+        background: transparent;
+    }
+}
