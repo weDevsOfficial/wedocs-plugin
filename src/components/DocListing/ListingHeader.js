@@ -49,11 +49,11 @@ const ListingHeader = ( { id } ) => {
                   data-tip={ __( 'Edit', 'wedocs' ) }
                 >
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
                     width="18"
                     height="18"
                     fill="none"
                     className={ `group` }
+                    xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
                       d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
@@ -69,7 +69,7 @@ const ListingHeader = ( { id } ) => {
                 target="_blank"
                 rel="noreferrer"
                 className={ `group tooltip cursor-pointer` }
-                href={ `${ window.location.origin }/?p=${ id }` }
+                href={ doc?.link }
                 data-tip={ __( 'View on Web', 'wedocs' ) }
               >
                 <svg
