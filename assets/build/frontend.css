@@ -303,17 +303,17 @@
   top: 0;
   left: 0;
   position: absolute;
-  padding: 10px 16px;
+  padding: 14px 16px;
   background: transparent;
 }
 .wedocs-single-search-input .short-key {
-  top: 1px;
+  top: 0;
   right: 12px;
   color: #9caabd;
   font-size: 14px;
   font-weight: 600;
+  padding: 8px 16px;
   position: absolute;
-  padding: 10px 16px;
   background: transparent;
 }
 body.single.single-docs .content-area {

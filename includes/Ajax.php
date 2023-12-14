@@ -57,20 +57,24 @@ class Ajax {
             'order'          => 'ASC',
         ] );
 
+        // Build a doc tree with separate parents, sections, articles & all docs together.
         $docs_tree = [ 'all_docs' => $docs ];
         foreach ( $docs as $doc ) {
             $is_parent = $this->is_a_parent_doc( $doc->ID );
             if ( $is_parent ) {
+                // Get parents documentation.
                 $docs_tree['parents'][] = $doc;
                 continue;
             }
 
             $is_section = $this->is_a_parent_doc( $doc->post_parent );
             if ( $is_section ) {
+                // Get sections documentation.
                 $docs_tree['sections'][] = $doc;
                 continue;
             }
 
+            // Get articles documentation.
             $docs_tree['articles'][] = $doc;
         }
 

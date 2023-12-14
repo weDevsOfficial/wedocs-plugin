@@ -74,6 +74,7 @@ class Frontend {
         ob_start();
         wedocs_get_template_part( 'modals/search', 'modal' );
         $searchModal = ob_get_clean();
+
         wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', [
             'nonce'          => wp_create_nonce( 'wedocs-ajax' ),
             'style'          => WEDOCS_ASSETS . '/build/print.css?v=10',

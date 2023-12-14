@@ -169,12 +169,12 @@
         data,
         url      : weDocs_Vars.ajaxurl,
         type     : 'POST',
+        error    : ( e ) => console.log( e ),
         complete : ( response ) => {
           if ( response?.responseJSON?.data ) {
             this.docs = response?.responseJSON?.data;
           }
         },
-        error    : ( e ) => console.log( e ),
       });
 
       // Mount doc single page search modal.
@@ -184,7 +184,6 @@
       document.body.appendChild( mountDiv );
 
       document.addEventListener( 'keydown', ( event ) => {
-        // console.log( event, event.keyCode,  event.key );
         // Bind single page search modal with (ctrl/command + k).
         if ( ( event.ctrlKey || event.metaKey ) && event.key === 'k' ) {
           this.showSinglePageSearchModal();
@@ -204,8 +203,8 @@
     cleanDocSearchInput ( e ) {
       $( this ).hide();
       $( this ).prev( 'input[type="text"]' ).val( null ).focus();
-        $( '.doc-search-dropdown-container .doc-search-hits' )
-          .html( `<div class='doc-empty-search'>${ weDocs_Vars.searchBlankMsg }</div>` );
+      $( '.doc-search-dropdown-container .doc-search-hits' )
+        .html( `<div class='doc-empty-search'>${ weDocs_Vars.searchBlankMsg }</div>` );
     },
 
     detectDocSearchInput ( e ) {
@@ -241,7 +240,6 @@
             `<span data-url="${ data?.section?.guid }" class="doc-search-hit-path">${ this.extractedTitle( data?.section?.post_title, 40 ) }</span>` : '';
 
         title = this.extractedTitle( title );
-
         const bootstrapTemplate = $( '.wedocs-single-wrap .doc-nav-list a' ).hasClass( 'bootstrap' ) ? 'bootstrap ' : '',
           tailwindTemplate = $( '.wedocs-single-wrap .doc-nav-list a' ).hasClass( 'tailwind' ) ? 'tailwind ' : '';
 
