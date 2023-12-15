@@ -93,7 +93,7 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
             onClick={ updateDocStatus }
             className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
           >
-            { __( doc?.status === 'draft' ? 'Publish Now' : 'Switch to Draft', 'wedocs' ) }
+            { doc?.status === 'draft' ? __( 'Publish Now', 'wedocs' ) : __( 'Switch to Draft', 'wedocs' ) }
           </span>
 
           { /* Add external actions */ }

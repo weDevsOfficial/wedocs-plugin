@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-11-17T11:41:49+00:00\n"
+"POT-Creation-Date: 2023-12-15T03:46:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -97,27 +97,27 @@ msgstr ""
 msgid "Untitled Docs"
 msgstr ""
 
-#: includes/Ajax.php:190
+#: includes/Ajax.php:111
 msgid "Sorry, we have already recorded your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:205
+#: includes/Ajax.php:126
 msgid "Thanks for your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:226
+#: includes/Ajax.php:147
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: includes/Ajax.php:233
+#: includes/Ajax.php:154
 msgid "Please provide a subject line."
 msgstr ""
 
-#: includes/Ajax.php:237
+#: includes/Ajax.php:158
 msgid "Please provide the message details."
 msgstr ""
 
-#: includes/Ajax.php:242
+#: includes/Ajax.php:163
 msgid "Thanks for your feedback."
 msgstr ""
 
@@ -141,47 +141,51 @@ msgstr ""
 msgid "Documentations data"
 msgstr ""
 
-#: includes/API/API.php:251
-#: includes/API/API.php:278
+#: includes/API/API.php:223
+msgid "Collective documents object"
+msgstr ""
+
+#: includes/API/API.php:273
+#: includes/API/API.php:300
 msgid "You are not currently logged in."
 msgstr ""
 
-#: includes/API/API.php:255
-#: includes/API/API.php:283
-#: includes/API/API.php:331
+#: includes/API/API.php:277
+#: includes/API/API.php:305
+#: includes/API/API.php:376
 msgid "Unauthorized permission error"
 msgstr ""
 
-#: includes/API/API.php:259
-#: includes/API/API.php:288
+#: includes/API/API.php:281
+#: includes/API/API.php:310
 msgid "Currently sortable status not given"
 msgstr ""
 
-#: includes/API/API.php:294
+#: includes/API/API.php:316
 msgid "Need sortable status is required"
 msgstr ""
 
-#: includes/API/API.php:299
+#: includes/API/API.php:321
 msgid "Currently documentations data not found for update"
 msgstr ""
 
-#: includes/API/API.php:577
+#: includes/API/API.php:622
 msgid "The page number requested is larger than the number of pages available."
 msgstr ""
 
-#: includes/API/API.php:663
+#: includes/API/API.php:708
 msgid "No name given"
 msgstr ""
 
-#: includes/API/API.php:667
+#: includes/API/API.php:712
 msgid "No email given"
 msgstr ""
 
-#: includes/API/API.php:709
+#: includes/API/API.php:754
 msgid "You cannot delete the documentation resource."
 msgstr ""
 
-#: includes/API/API.php:730
+#: includes/API/API.php:775
 msgid "Invalid Documentation."
 msgstr ""
 
@@ -214,8 +218,17 @@ msgstr ""
 msgid "Processing Upgrade in the background."
 msgstr ""
 
-#: includes/Frontend.php:74
+#: includes/Frontend.php:82
 msgid "Powered by weDocs plugin for WordPress"
+msgstr ""
+
+#: includes/Frontend.php:85
+#: templates/modals/search-modal.php:49
+msgid "Search field cannot be blank"
+msgstr ""
+
+#: includes/Frontend.php:86
+msgid "Your search didn't match any documents"
 msgstr ""
 
 #: includes/functions.php:109
@@ -413,6 +426,7 @@ msgstr ""
 #: includes/Widget.php:47
 #: includes/Widget.php:48
 #: templates/doc-search-form.php:8
+#: templates/docs-sidebar.php:35
 msgctxt "label"
 msgid "Search for:"
 msgstr ""
@@ -488,6 +502,23 @@ msgstr ""
 #: templates/doc-search-form.php:9
 msgctxt "placeholder"
 msgid "Search for a topic or question"
+msgstr ""
+
+#: templates/docs-sidebar.php:36
+msgctxt "placeholder"
+msgid "Quick search..."
+msgstr ""
+
+#: templates/modals/search-modal.php:34
+msgid "Search documentation"
+msgstr ""
+
+#: templates/modals/search-modal.php:42
+msgid "ESC"
+msgstr ""
+
+#: templates/modals/search-modal.php:56
+msgid "Search by"
 msgstr ""
 
 #: templates/pro-notice.php:6
@@ -679,7 +710,7 @@ msgstr ""
 #: assets/build/492.js:1
 #: assets/build/index.js:1
 #: src/components/AddArticleModal.js:216
-#: src/components/AddDocModal.js:175
+#: src/components/AddDocModal.js:181
 #: src/components/AddSectionModal.js:176
 #: src/components/DocListing/QuickEditModal.js:252
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:252
@@ -790,6 +821,16 @@ msgstr ""
 #: assets/build/492.js:1
 #: src/components/ProPreviews/LayoutSettings.js:601
 msgid "Improve content navigation. Turn on the table of contents feature for easy access to document sections"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:641
+msgid "Collapse Documentation Page Articles"
+msgstr ""
+
+#: assets/build/492.js:1
+#: src/components/ProPreviews/LayoutSettings.js:645
+msgid "Choose if your sections should be collapsed or expanded in Doc Homepage"
 msgstr ""
 
 #: assets/build/492.js:1
@@ -1408,15 +1449,15 @@ msgid "Upgrade to PRO "
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocActions.js:57
-#: src/components/DocListing/DocSections.js:185
+#: src/components/DocActions.js:80
+#: src/components/DocListing/DocSections.js:183
 #: src/components/DocListing/ListingHeader.js:49
 #: src/components/DocListing/SectionArticles.js:142
 msgid "Edit"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:211
+#: src/components/DocListing/DocSections.js:209
 #: src/components/DocListing/ListingHeader.js:73
 #: src/components/DocListing/SectionArticles.js:163
 msgid "View on Web"
@@ -1426,7 +1467,7 @@ msgstr ""
 #: src/components/DocListing/DocSections.js:159
 #: src/components/DocListing/ListingHeader.js:92
 #: src/components/DocListing/SectionArticles.js:102
-#: src/components/Documentations/ParentDocs.js:99
+#: src/components/Documentations/ParentDocs.js:96
 msgid "Draft"
 msgstr ""
 
@@ -1438,7 +1479,7 @@ msgstr ""
 #: assets/build/index.js:1
 #: assets/build/index.js:5
 #: src/components/AddArticleModal.js:205
-#: src/components/AddDocModal.js:164
+#: src/components/AddDocModal.js:170
 #: src/components/AddSectionModal.js:165
 #: src/components/ConfirmationModal.js:140
 #: src/components/DocListing/QuickEditModal.js:241
@@ -1451,7 +1492,7 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/AddArticleModal.js:81
-#: src/components/AddDocModal.js:57
+#: src/components/AddDocModal.js:63
 #: src/components/AddSectionModal.js:55
 #: src/components/ConfirmationModal.js:24
 #: src/components/DocListing/QuickEditModal.js:92
@@ -1503,19 +1544,29 @@ msgid "Update and Publish"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocActions.js:46
+#: src/components/DocActions.js:69
 #: src/components/DocListing/SectionArticles.js:115
 msgid "Quick Edit"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocActions.js:66
+#: src/components/DocActions.js:89
 msgid "View"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocActions.js:83
-#: src/components/DocListing/DocSections.js:238
+#: src/components/DocActions.js:96
+msgid "Publish Now"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:96
+msgid "Switch to Draft"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocActions.js:113
+#: src/components/DocListing/DocSections.js:235
 msgid "Delete"
 msgstr ""
 
@@ -1541,25 +1592,25 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/AddArticleModal.js:230
-#: src/components/AddDocModal.js:189
+#: src/components/AddDocModal.js:195
 #: src/components/AddSectionModal.js:190
 msgid "Create and Draft"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/AddArticleModal.js:233
-#: src/components/AddDocModal.js:192
+#: src/components/AddDocModal.js:198
 #: src/components/AddSectionModal.js:193
 msgid "Create and Publish"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:171
+#: src/components/DocListing/DocSections.js:170
 msgid "Create"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:317
+#: src/components/DocListing/DocSections.js:311
 #: src/components/DocListing/ListingButtons.js:32
 #: src/components/Documentations/AddChildrens.js:23
 msgid "Add article"
@@ -1714,10 +1765,8 @@ msgid "General"
 msgstr ""
 
 #: assets/build/index.js:1
-#: assets/build/index.js:5
-#: src/components/Migrations/Modals/MigrationSelectionModal.js:151
-#: src/components/SelectBox.js:114
-msgid "loading…"
+#: src/components/SelectBox.js:116
+msgid "Page not found"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1791,16 +1840,6 @@ msgid "Allow users to print articles directly from the website"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:328
-msgid "Collapse Documentation Page Articles"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/Settings/GeneralSettings.js:332
-msgid "Choose if your sections should be collapsed or expanded in Doc Homepage"
-msgstr ""
-
-#: assets/build/index.js:1
 #: src/components/Settings/index.js:42
 msgid "Settings Data Saved!"
 msgstr ""
@@ -1811,17 +1850,17 @@ msgid "Settings data has been saved successfully"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddDocModal.js:123
+#: src/components/AddDocModal.js:129
 msgid "Enter your doc title"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddDocModal.js:126
+#: src/components/AddDocModal.js:132
 msgid "Start writing your doc from scratch"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddDocModal.js:133
+#: src/components/AddDocModal.js:139
 msgid "Type a title for your document"
 msgstr ""
 
@@ -1912,6 +1951,11 @@ msgstr ""
 #: assets/build/index.js:5
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:85
 msgid "Migrate from:"
+msgstr ""
+
+#: assets/build/index.js:5
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:151
+msgid "loading…"
 msgstr ""
 
 #: assets/build/index.js:5

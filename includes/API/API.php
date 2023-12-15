@@ -342,7 +342,7 @@ class API extends WP_REST_Controller {
     /**
      * Update collective docs status.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.2
      *
      * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
      */

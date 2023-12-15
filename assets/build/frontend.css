@@ -280,6 +280,7 @@
 .wedocs-single-search-input .short-key,
 .wedocs-single-search-input .search-field,
 .wedocs-single-search-input .search-submit {
+  border: 0;
   cursor: pointer;
   margin: 0 0 15px 0;
 }
@@ -831,6 +832,7 @@ body.single.single-docs .content-area {
 }
 footer.entry-footer.wedocs-entry-footer {
   display: flex;
+  margin-top: 10px;
   align-items: center;
   margin-bottom: 30px;
 }
