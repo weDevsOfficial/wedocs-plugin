@@ -1,4 +1,4 @@
-# Copyright (C) 2024 weDevs
+# Copyright (C) 2023 weDevs
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
@@ -1433,13 +1433,6 @@ msgid "6 roles selected"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:252
-#: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:124
-#: src/components/ProPreviews/PermissionSettings.js:113
-msgid "%s"
-msgstr ""
-
-#: assets/build/index.js:5
 #: src/components/ProPreviews/common/Contributors.js:18
 #: src/components/ProPreviews/common/Contributors.js:23
 #: src/components/ProPreviews/common/Contributors.js:28
@@ -1925,11 +1918,6 @@ msgstr ""
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:90
 #: src/components/ProPreviews/index.js:86
 msgid "Messaging"
-msgstr ""
-
-#: assets/build/index.js:5
-#: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:15
-msgid "Drag your tabs and place orders"
 msgstr ""
 
 #: assets/build/index.js:5
