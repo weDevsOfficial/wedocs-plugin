@@ -21,6 +21,15 @@ if ( !isProLoaded ) {
     import( '../components/ProPreviews' ).then( ( module ) => module.default );
 }
 
+const isProLoaded = wp.hooks.applyFilters(
+    'wedocs_pro_loaded',
+    false
+);
+
+if ( !isProLoaded ) {
+    import( '../components/ProPreviews' ).then( ( module ) => module.default );
+}
+
 const App = () => {
   let routes = [
     { path: '/', component: Documentations },
