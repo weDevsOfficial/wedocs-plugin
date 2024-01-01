@@ -234,7 +234,7 @@ class Ajax {
     /**
      * Check this documentation is parent.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.0.2
      *
      * @param int $doc_id
      *

@@ -37,25 +37,25 @@ const PermissionSettings = () => {
                 </div>
                 <hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200" />
                 <div
-                  className='pt-6 pb-20 px-8 grid grid-cols-4 auto-rows-max gap-5 relative min-h-[439px]'
-                  onMouseEnter={ () => setShowOverlay( true ) }
-                  onMouseLeave={ () => setShowOverlay( false ) }
+                    className='pt-6 pb-20 px-8 grid grid-cols-4 auto-rows-max gap-5 relative min-h-[439px]'
+                    onMouseEnter={ () => setShowOverlay( true ) }
+                    onMouseLeave={ () => setShowOverlay( false ) }
                 >
                     { permissionFields &&
-                      permissionFields?.map( ( field, fieldIndex ) => (
+                        permissionFields?.map( ( field, fieldIndex ) => (
                         <div className="col-span-4" key={ fieldIndex }>
                             <div className="settings-content flex items-center justify-between">
                                 <div className="settings-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
                                     <label
-                                      className="block text-sm font-medium text-gray-700"
-                                      id="headlessui-listbox-label-15"
-                                      data-headlessui-state="open"
+                                        className="block text-sm font-medium text-gray-700"
+                                        id="headlessui-listbox-label-15"
+                                        data-headlessui-state="open"
                                     >
                                         { field?.title }
                                     </label>
                                     <div
-                                      className="tooltip cursor-pointer ml-2"
-                                      data-tip={ field?.tooltip }
+                                        className="tooltip cursor-pointer ml-2"
+                                        data-tip={ field?.tooltip }
                                     >
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -64,11 +64,11 @@ const PermissionSettings = () => {
                                           fill="none"
                                         >
                                             <path
-                                              d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
-                                              stroke="#6b7280"
-                                              strokeWidth="2"
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
+                                                d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                                                stroke="#6b7280"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
                                             />
                                         </svg>
                                     </div>
@@ -82,15 +82,15 @@ const PermissionSettings = () => {
                                                 </span>
                                                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                                     <svg
-                                                      xmlns="http://www.w3.org/2000/svg"
-                                                      viewBox="0 0 20 20"
-                                                      fill="currentColor"
-                                                      aria-hidden="true"
-                                                      className="h-5 w-5 text-gray-400"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 20 20"
+                                                        fill="currentColor"
+                                                        aria-hidden="true"
+                                                        className="h-5 w-5 text-gray-400"
                                                     >
                                                         <path
-                                                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                          clipRule="evenodd"
+                                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                            clipRule="evenodd"
                                                         ></path>
                                                     </svg>
                                                 </span>
