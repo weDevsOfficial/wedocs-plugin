@@ -297,41 +297,55 @@
 
         liNode.querySelectorAll( '.doc-search-hit-result' ).forEach(
           list => {
+            // Update list icon background & color.
             list.querySelector( '.doc-search-hit-icon' ).style.background = weDocs_Vars?.searchModalColors?.active_shade_color;
             list.querySelector( '.doc-search-hit-icon path' ).style.stroke = weDocs_Vars?.searchModalColors?.active_primary_color;
 
-            if ( list.querySelector( '.parent-doc-nav .doc-search-hit-path' ) ) {
-              list.querySelector( '.parent-doc-nav .doc-search-hit-path' ).style.background = weDocs_Vars?.searchModalColors?.active_shade_color;
+            const parentDocNav = list.querySelector( '.parent-doc-nav' ),
+              sectionDocNav = list.querySelector( '.section-doc-nav' ),
+              parentNavSearchHitPath = list.querySelector( '.parent-doc-nav .doc-search-hit-path' ),
+              sectionNavSearchHitPath = list.querySelector( '.section-doc-nav .doc-search-hit-path' );
+
+            if ( parentNavSearchHitPath ) {
+              // Update parent nav shade color.
+              parentNavSearchHitPath.style.background = weDocs_Vars?.searchModalColors?.active_shade_color;
             }
 
-            if ( list.querySelector( '.section-doc-nav .doc-search-hit-path' ) ) {
-              list.querySelector( '.section-doc-nav .doc-search-hit-path' ).style.background = weDocs_Vars?.searchModalColors?.active_shade_color;
+            if ( sectionNavSearchHitPath ) {
+              // Update section nav shade color.
+              sectionNavSearchHitPath.style.background = weDocs_Vars?.searchModalColors?.active_shade_color;
             }
 
-            if ( list.querySelector( '.parent-doc-nav' ) ) {
-              list.querySelector( '.parent-doc-nav' ).addEventListener( 'mouseover', function() {
-                this.querySelector( '.doc-search-hit-path' ).style.color = weDocs_Vars?.searchModalColors?.active_primary_color;
+            if ( parentDocNav ) {
+              // Update parent text color on mouse over.
+              parentDocNav.addEventListener( 'mouseover', function() {
+                parentNavSearchHitPath.style.color = weDocs_Vars?.searchModalColors?.active_primary_color;
               } );
 
-              list.querySelector( '.parent-doc-nav' ).addEventListener( 'mouseout', function() {
-                this.querySelector( '.doc-search-hit-path' ).style.color = '#6B7280';
+              // Update parent text color on mouse out.
+              parentDocNav.addEventListener( 'mouseout', function() {
+                parentNavSearchHitPath.style.color = '#6B7280';
               } );
             }
 
-            if ( list.querySelector( '.section-doc-nav' ) ) {
-              list.querySelector( '.section-doc-nav' ).addEventListener( 'mouseover', function() {
-                    this.querySelector( '.doc-search-hit-path' ).style.color = weDocs_Vars?.searchModalColors?.active_primary_color;
-                } );
+            if ( sectionDocNav ) {
+              // Update section text color on mouse over.
+              sectionDocNav.addEventListener( 'mouseover', function() {
+                sectionNavSearchHitPath.style.color = weDocs_Vars?.searchModalColors?.active_primary_color;
+              } );
 
-                list.querySelector( '.section-doc-nav' ).addEventListener( 'mouseout', function() {
-                    this.querySelector( '.doc-search-hit-path' ).style.color = '#6B7280';
-                } );
+              // Update section text color on mouse over.
+              sectionDocNav.addEventListener( 'mouseout', function() {
+                sectionNavSearchHitPath.style.color = '#6B7280';
+              } );
             }
 
+            // Update doc lists background color on mouse over.
             list.addEventListener( 'mouseover', function() {
               this.style.background = weDocs_Vars?.searchModalColors?.active_primary_color;
             } );
 
+            // Update doc lists background color on mouse out.
             list.addEventListener( 'mouseout', function() {
               this.style.background = '#fff';
             } );
