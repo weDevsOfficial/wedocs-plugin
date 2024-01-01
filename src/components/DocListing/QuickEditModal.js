@@ -170,7 +170,7 @@ const QuickEditModal = ( {
                   </Dialog.Title>
 
                   <p className="text-gray-500 text-base">
-                    { __( 'Edit post details easily', 'wedocs' ) }
+                    { __( 'Edit article details easily', 'wedocs' ) }
                   </p>
 
                   <div className="relative mt-6 mb-4">
