@@ -541,3 +541,21 @@ function wedocs_pro_exists() {
 
      return false;
 }
+
+/**
+ * Collect active layout colors.
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @return array
+ */
+function wedocs_get_search_modal_active_colors() {
+    return apply_filters(
+        'wedocs_search_modal_active_colors',
+        array(
+            'active_primary_color' => '#3B82F6',
+            'active_shade_color'   => '#D9EBFF',
+            'active_font_color'    => '#fff',
+        )
+    );
+}

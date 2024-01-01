@@ -10,6 +10,7 @@ import SettingsPage from './Settings';
 import Documentations from './Documentations';
 import Migrate from './Migrations';
 import NotFound from './NotFound';
+import '../components/ProPreviews';
 
 const isProLoaded = wp.hooks.applyFilters(
     'wedocs_pro_loaded',
