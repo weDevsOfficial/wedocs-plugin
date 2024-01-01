@@ -235,9 +235,19 @@
           title = data?.article ? data?.article?.post_title :
             ( data?.section ? data?.section?.post_title : data?.parent?.post_title ),
           parentNavigation = data?.section ?
-            `<span data-url="${ data?.parent?.guid }" class="doc-search-hit-path">${ this.extractedTitle( data?.parent?.post_title, 40 ) }</span>` : '',
+            `<div class='parent-doc-nav'>
+              ${ weDocs_Vars.docNavLabel }
+              <span data-url="${ data?.parent?.guid }" class="doc-search-hit-path">
+                ${ this.extractedTitle( data?.parent?.post_title, 35 ) }
+              </span>
+            </div>` : '',
           sectionNavigation = data?.article ?
-            `<span data-url="${ data?.section?.guid }" class="doc-search-hit-path">${ this.extractedTitle( data?.section?.post_title, 40 ) }</span>` : '';
+            `<div class='section-doc-nav'>
+              ${ weDocs_Vars.sectionNavLabel }
+              <span data-url="${ data?.section?.guid }" class="doc-search-hit-path">
+                ${ this.extractedTitle( data?.section?.post_title, 35 ) }
+              </span>
+            </div>` : '';
 
         title = this.extractedTitle( title );
         const bootstrapTemplate = $( '.wedocs-single-wrap .doc-nav-list a' ).hasClass( 'bootstrap' ) ? 'bootstrap ' : '',
@@ -257,9 +267,9 @@
           >
             <div class="doc-search-hit-container">
               <div class="doc-search-hit-icon">
-                <svg width="10" height="18" viewBox="0 0 14 18" fill="none">
+                <svg width="12" height="18" viewBox="0 0 14 18" fill="none">
                   <path
-                    stroke="#6B7280"
+                    stroke="#3B82F6"
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -268,15 +278,11 @@
                 </svg>
               </div>
               <div class="doc-search-hit-content-wrapper">
-                <span class="doc-search-hit-title">${ title }</span>
-                <div class='docs-navigation'>
+                <div class="doc-search-hit-title">${ title }</div>
+                ${ ( parentNavigation || sectionNavigation ) ? '<hr />' : '' }
+                <div class='wd-docs-navigation'>
                   ${ parentNavigation + sectionNavigation }
                 </div>
-              </div>
-              <div class="doc-search-hit-action">
-                <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#475569" class="w-5 h-5 doc-search-hit-select-icon">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                </svg>
               </div>
             </div>
           </a>`;
@@ -284,9 +290,66 @@
         // Handle navigation redirection manually.
         liNode.querySelectorAll( '.doc-search-hit-path' ).forEach(
           searchPath => searchPath?.addEventListener( 'click', function ( event ) {
-          event.preventDefault();
+            event.preventDefault();
             window.open( $( this ).data( 'url' ), '_blank' );
           })
+        );
+
+        liNode.querySelectorAll( '.doc-search-hit-result' ).forEach(
+          list => {
+            // Update list icon background & color.
+            list.querySelector( '.doc-search-hit-icon' ).style.background = weDocs_Vars?.searchModalColors?.active_shade_color;
+            list.querySelector( '.doc-search-hit-icon path' ).style.stroke = weDocs_Vars?.searchModalColors?.active_primary_color;
+
+            const parentDocNav = list.querySelector( '.parent-doc-nav' ),
+              sectionDocNav = list.querySelector( '.section-doc-nav' ),
+              parentNavSearchHitPath = list.querySelector( '.parent-doc-nav .doc-search-hit-path' ),
+              sectionNavSearchHitPath = list.querySelector( '.section-doc-nav .doc-search-hit-path' );
+
+            if ( parentNavSearchHitPath ) {
+              // Update parent nav shade color.
+              parentNavSearchHitPath.style.background = weDocs_Vars?.searchModalColors?.active_shade_color;
+            }
+
+            if ( sectionNavSearchHitPath ) {
+              // Update section nav shade color.
+              sectionNavSearchHitPath.style.background = weDocs_Vars?.searchModalColors?.active_shade_color;
+            }
+
+            if ( parentDocNav ) {
+              // Update parent text color on mouse over.
+              parentDocNav.addEventListener( 'mouseover', function() {
+                parentNavSearchHitPath.style.color = weDocs_Vars?.searchModalColors?.active_primary_color;
+              } );
+
+              // Update parent text color on mouse out.
+              parentDocNav.addEventListener( 'mouseout', function() {
+                parentNavSearchHitPath.style.color = '#6B7280';
+              } );
+            }
+
+            if ( sectionDocNav ) {
+              // Update section text color on mouse over.
+              sectionDocNav.addEventListener( 'mouseover', function() {
+                sectionNavSearchHitPath.style.color = weDocs_Vars?.searchModalColors?.active_primary_color;
+              } );
+
+              // Update section text color on mouse over.
+              sectionDocNav.addEventListener( 'mouseout', function() {
+                sectionNavSearchHitPath.style.color = '#6B7280';
+              } );
+            }
+
+            // Update doc lists background color on mouse over.
+            list.addEventListener( 'mouseover', function() {
+              this.style.background = weDocs_Vars?.searchModalColors?.active_primary_color;
+            } );
+
+            // Update doc lists background color on mouse out.
+            list.addEventListener( 'mouseout', function() {
+              this.style.background = '#fff';
+            } );
+          }
         );
 
         ulNode.appendChild(liNode);
@@ -333,7 +396,7 @@
       $( '#wedocs-single-doc-search-modal' ).removeClass( 'active' );
     },
 
-    extractedTitle ( title, length = 80 ) {
+    extractedTitle ( title, length = 190 ) {
       const extractedString = title?.substr( 0, length );
       return extractedString?.length >= length ? `${ extractedString }...` : extractedString;
     },

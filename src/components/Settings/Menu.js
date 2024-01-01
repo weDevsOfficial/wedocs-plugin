@@ -36,7 +36,7 @@ const Menu = () => {
           { !tab[ 1 ]?.disabled ? (
             <Tab className="settings-tab w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer">
               { tab[ 1 ]?.icon }
-              <span className="truncate">{ tab[ 1 ]?.text }</span>
+              <span className="truncate">{ __( tab[ 1 ]?.text, 'wedocs' ) }</span>
               { tab[ 1 ]?.pro && <Badge /> }
             </Tab>
           ) : (

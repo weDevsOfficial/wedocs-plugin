@@ -41,6 +41,8 @@ const SelectBox = ( { name, setSettings, settingsData, settingsPanel } ) => {
       )[ 0 ];
     }
 
+    selectedPageObj = ( typeof selectedPageObj === 'undefined' || selectedPageObj === {} ) ? { ...options?.[0] } : selectedPageObj;
+
     setPageOptions( [ ...options ] );
     setSelectedPage( { ...selectedPageObj } );
 
@@ -51,7 +53,7 @@ const SelectBox = ( { name, setSettings, settingsData, settingsPanel } ) => {
   }, [ pages ] );
 
   return (
-    <>
+    <Fragment>
       { selectedPage && Object.keys( selectedPage ).length > 0 ? (
         <Listbox value={ selectedPage } onChange={ setSelectedPage }>
           <div className="relative mt-1">
@@ -111,12 +113,12 @@ const SelectBox = ( { name, setSettings, settingsData, settingsPanel } ) => {
         <div className="relative mt-1">
           <input
             className="relative !w-full cursor-pointer !rounded-md border !border-gray-300 bg-white !py-2 !pl-3 !pr-10 text-left shadow-sm sm:text-sm"
-            placeholder={ __( 'loading…', 'wedocs' ) }
+            placeholder={ __( 'Page not found', 'wedocs' ) }
             disabled
           />
         </div>
       ) }
-    </>
+    </Fragment>
   );
 };
 
