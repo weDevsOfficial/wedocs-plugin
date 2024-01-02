@@ -70,7 +70,7 @@ const AssistantSwitcher = ( {
 			</Switch>
 			<span className={ `${ name === 'assist_enable' ? 'mt-0.5' : '' } ml-3` }>
 				<span className="text-sm text-gray-900">
-					{ __( enabled ? 'Enable' : 'Disable', 'wedocs' ) }
+					{ enabled ? __( 'Enable', 'wedocs' ) : __(  'Disable', 'wedocs' ) }
 				</span>
 		  	</span>
 		</>
