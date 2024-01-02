@@ -9,14 +9,14 @@ class Upgrades {
      *
      * @var array $class_list
      *
-     * @since 2.0.0
+     * @since 2.0.2
      */
-    public $class_list = array( '2.0.0' => V_2_0_0::class );
+    public $class_list = array( '2.0.2' => V_2_0_2::class );
 
     /**
      * Get wedocs installed version number.
      *
-     * @since 2.0.0
+     * @since 2.0.2
      *
      * @return string
      */

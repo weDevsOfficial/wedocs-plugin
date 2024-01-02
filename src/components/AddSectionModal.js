@@ -172,10 +172,8 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
                         onClick={ createDoc }
                       >
                         <Fragment>
-                          { sprintf(
-                            __( '%s', 'wedocs' ),
-                            newDoc?.status?.charAt( 0 ).toUpperCase() + newDoc?.status?.slice( 1 ) + ( disabled ? 'ing...' : '' )
-                          ) }
+                          { newDoc?.status === 'publish' ? __( 'Publish', 'wedocs' ) : __( 'Draft', 'wedocs' ) }
+                          { disabled ? __( 'ing...', 'wedocs' ) : '' }
                           <ChevronDownIcon
                             className="h-5 w-5 text-white mt-[1px]"
                             aria-hidden="true"

@@ -212,10 +212,8 @@ const AddArticleModal = ( {
                         onClick={ createDoc }
                       >
                         <Fragment>
-                          { sprintf(
-                            __( '%s', 'wedocs' ),
-                            newArticle?.status?.charAt( 0 ).toUpperCase() + newArticle?.status?.slice( 1 ) + ( disabled ? 'ing...' : '' )
-                          ) }
+                          { newArticle?.status === 'publish' ? __( 'Publish', 'wedocs' ) : __( 'Draft', 'wedocs' ) }
+                          { disabled ? __( 'ing...', 'wedocs' ) : '' }
                           <ChevronDownIcon
                             className="h-5 w-5 text-white mt-[1px]"
                             aria-hidden="true"

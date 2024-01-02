@@ -95,14 +95,6 @@ class Assets {
         if ( 'toplevel_page_wedocs' === get_current_screen()->id ) {
             wp_enqueue_style( 'wedocs-app-style' );
             wp_enqueue_script( 'wedocs-app-script' );
-            wp_localize_script(
-                'wedocs-app-script',
-                'weDocsAdminVars',
-                array(
-                    'adminUrl'     => admin_url(),
-                    'hasManageCap' => current_user_can( 'manage_options' ),
-                ),
-            );
         }
     }
 }

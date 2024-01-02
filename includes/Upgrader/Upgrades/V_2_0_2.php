@@ -8,21 +8,21 @@ use WeDevs\WeDocs\Upgrader\Abstracts\UpgradeHandler;
 /**
  * Car handler class.
  */
-class V_2_0_0 extends UpgradeHandler {
+class V_2_0_2 extends UpgradeHandler {
 
     /**
      * Upgrade version.
      *
-     * @since 2.0.0
+     * @since 2.0.2
      *
      * @var string
      */
-    protected $version = '2.0.0';
+    protected $version = '2.0.2';
 
     /**
      * Upgrade necessary data in database.
      *
-     * @since 2.0.0
+     * @since 2.0.2
      *
      * @return void
      */
@@ -35,7 +35,7 @@ class V_2_0_0 extends UpgradeHandler {
     /**
      * Remove beta notice data.
      *
-     * @since 2.0.0
+     * @since 2.0.2
      *
      * @return void
      */
@@ -51,7 +51,7 @@ class V_2_0_0 extends UpgradeHandler {
     /**
      * Update weDocs settings db.
      *
-     * @since 2.0.0
+     * @since 2.0.2
      *
      * @return void
      */
@@ -86,7 +86,7 @@ class V_2_0_0 extends UpgradeHandler {
     /**
      * Add weDocs documentation handling capabilities for users.
      *
-     * @since 2.0.0
+     * @since 2.0.2
      *
      * @return void
      */

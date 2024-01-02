@@ -11,7 +11,7 @@ class Upgrader {
      *
      * @var bool $need_upgrade
      *
-     * @since 2.0.0
+     * @since 2.0.2
      */
     protected $need_upgrade = false;
 
@@ -25,7 +25,7 @@ class Upgrader {
     /**
      * Calculate upgrader version for run it.
      *
-     * @since 2.0.0
+     * @since 2.0.2
      *
      * @return $this
      */
@@ -42,7 +42,7 @@ class Upgrader {
     /**
      * Check if upgrader run is required.
      *
-     * @since 2.0.0
+     * @since 2.0.2
      *
      * @return bool
      */
@@ -53,7 +53,7 @@ class Upgrader {
     /**
      * Upgrade necessary data.
      *
-     * @since 2.0.0
+     * @since 2.0.2
      *
      * @return void
      */

@@ -18,11 +18,8 @@ const RestictionModal = ( { classes, children, docId, type } ) => {
       .deleteDoc( docId )
       .then( ( result ) => {
         Swal.fire( {
-          title: __( `${ deletedType } deleted!`, 'wedocs' ),
-          text: __(
-            `${ deletedType } has been deleted successfully`,
-            'wedocs'
-          ),
+          title: deletedType + __( ` deleted!`, 'wedocs' ),
+          text: deletedType + __( ` has been deleted successfully`, 'wedocs' ),
           icon: 'success',
           toast: true,
           position: 'bottom-end',
@@ -115,9 +112,9 @@ const RestictionModal = ( { classes, children, docId, type } ) => {
                         className="text-lg font-medium text-gray-900 mb-2"
                       >
                         { __(
-                          `Are you sure you want to delete this ${type}?`,
+                          `Are you sure you want to delete this `,
                           'wedocs'
-                        ) }
+                        ) + type + `?` }
                       </Dialog.Title>
                       <p className="text-gray-500 text-base">
                         { __(
@@ -138,10 +135,7 @@ const RestictionModal = ( { classes, children, docId, type } ) => {
                           onClick={ removeDocumentation }
                           disabled={ disabled }
                         >
-                          { sprintf(
-                            __( '%s', 'wedocs' ),
-                            disabled ? 'Removing...' : "I'm Sure"
-                          ) }
+                          { disabled ? __( 'Removing...', 'wedocs' ) : __( "I'm sure", 'wedocs' ) }
                         </button>
                       </div>
                     </div>

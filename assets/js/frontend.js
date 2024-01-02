@@ -360,9 +360,10 @@
 
     getSearchDocs( searchValue ) {
       const searchDocs = [];
-      const searchResult = this?.docs?.all_docs?.filter( doc =>
-        doc?.post_title?.toLowerCase().includes( searchValue?.toLowerCase() )
-      );
+      const searchResult = this?.docs?.all_docs?.filter( doc => {
+        if ( doc?.post_status !== 'publish' ) return;
+        return doc?.post_title?.toLowerCase().includes( searchValue?.toLowerCase() );
+      } );
 
       searchResult?.map( doc => {
         const docObj = {};

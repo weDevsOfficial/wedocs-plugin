@@ -29,12 +29,12 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
         Swal.fire( {
           icon              : 'success',
           toast             : true,
-          title             : __( `Doc ${doc?.status === 'draft' ? 'Published' : 'Drafted' } Successfully!`, 'wedocs' ),
+          title             : __( `${ type === 'doc' ? 'Doc' : 'Article' } ${ doc?.status === 'draft' ? 'Published' : 'Drafted' } Successfully!`, 'wedocs' ),
           timer             : 2000,
           position          : 'bottom-end',
           showConfirmButton : false,
           text              : __(
-            `Documentation has been ${doc?.status === 'draft' ? 'published' : 'drafted' } successfully`,
+            `${ type === 'doc' ? 'Documentation' : 'Article documentation' } has been ${doc?.status === 'draft' ? 'published' : 'drafted' } successfully`,
             'wedocs'
           ),
         } );

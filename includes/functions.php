@@ -545,7 +545,7 @@ function wedocs_pro_exists() {
 /**
  * Collect active layout colors.
  *
- * @since WEDOCS_SINCE
+ * @since 2.0.2
  *
  * @return array
  */
