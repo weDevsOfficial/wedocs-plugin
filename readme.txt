@@ -51,13 +51,13 @@ Besides providing a robust knowledge base for your products, weDocs offers role-
 
 
 
-“In one word: amazing. This plugin does what it says. I encountered no problems and found it extremely easy to work with. I recommend this to anyone who wants to set up solid product documentation.” - [User ID](https://profiles.wordpress.org/drazenbebic/)<br/><br/>
+“In one word: amazing. This plugin does what it says. I encountered no problems and found it extremely easy to work with. I recommend this to anyone who wants to set up solid product documentation.” - [User ID](https://profiles.wordpress.org/drazenbebic/)
 
 
 
 
 
-**🔥weDocs top features at a glance**<br/>
+**🔥weDocs top features at a glance**
 
 
 
@@ -79,7 +79,7 @@ Besides providing a robust knowledge base for your products, weDocs offers role-
 
 8. Optimized search features, ensuring better visibility and reach.
 
-9. Adaptable responsive design for a great UX across devices.<br/><br/>
+9. Adaptable responsive design for a great UX across devices.
 
 
 
@@ -99,7 +99,7 @@ Besides providing a robust knowledge base for your products, weDocs offers role-
 
 7. Pre-built layouts and styles.
 
-8. Floating contact form in the Assistant Widget.<br/><br/>
+8. Floating contact form in the Assistant Widget.
 
 
 
@@ -218,23 +218,23 @@ Tailor the appearance of your knowledge base to your website's identity through 
 
 ✍️Floating contact form
 
-weDocs provides a floating contact form as a part of the Assistant Widget to provide a convenient way for users to reach out to you. Users can easily contact you via email without navigating away from the documentation.  <br/><br/>
+weDocs provides a floating contact form as a part of the Assistant Widget to provide a convenient way for users to reach out to you. Users can easily contact you via email without navigating away from the documentation.
 
 
 
 
 
-🚀Want to unlock these awesome features? [Upgrade to our weDocs Pro](https://wedocs.co/pricing/)<br/><br/>
+🚀Want to unlock these awesome features? [Upgrade to our weDocs Pro](https://wedocs.co/pricing/)
 
 
 
 Let’s check out what Mr. Web shared about weDocs
 
-[Create Great Looking Documentation for Your WordPress Website [weDocs Review]](https://www.youtube.com/watch?v=TFXsyB09VJQ&ab_channel=MrWeb)<br/><br/>
+[Create Great Looking Documentation for Your WordPress Website [weDocs Review]](https://www.youtube.com/watch?v=TFXsyB09VJQ&ab_channel=MrWeb)
 
 For detailed documentation and support resources, please visit the [weDocs](https://wedocs.co/) website.
 
-If you have any questions or need assistance, you can also reach out to our support team through the website.<br/><br/>
+If you have any questions or need assistance, you can also reach out to our support team through the website.
 
 
 🚀 People behind this awesome documentation plugin
@@ -263,9 +263,10 @@ Can’t wait to join us?
 
 
 💯Show love and rate [weDocs](https://wordpress.org/support/plugin/wedocs/reviews/#new-post)
-<br/><br/>
 
-== Frequently Asked Questions ==</br></br>
+
+
+== Frequently Asked Questions ==
 
 WHAT IS APPSERO
 
@@ -275,7 +276,7 @@ Appsero SDK **does not gather any data by default.** The SDK only starts gatheri
 
 Integrating Appsero SDK **DOES NOT IMMEDIATELY** start gathering data, **without confirmation from users in any case.**
 
-Learn more about how [Appsero collects and uses this data](https://appsero.com/privacy-policy/).</br></br>
+Learn more about how [Appsero collects and uses this data](https://appsero.com/privacy-policy/).
 
 **1. How can I create new documentation??**
 
@@ -318,7 +319,7 @@ Brought to you by [Tareq Hasan](https://tareq.co) from [weDevs](https://wedevs.c
 
 3. Activate the weDocs plugin through the 'Plugins' screen in WordPress.
 
-4. Configure the plugin settings to customize your documentation and knowledge base.</br></br>
+4. Configure the plugin settings to customize your documentation and knowledge base.
 
 **Screenshots**
 
@@ -333,7 +334,7 @@ Brought to you by [Tareq Hasan](https://tareq.co) from [weDevs](https://wedevs.c
 9. Article Suggestions in Explore Tab
 10. Instant Search with Assistant Widget
 11. Pre-built Layouts and Styles
-12. Floating Contact Form</br></br>
+12. Floating Contact Form
 
 == Changelog ==
 
