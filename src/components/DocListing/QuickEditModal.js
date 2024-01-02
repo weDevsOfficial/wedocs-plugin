@@ -77,8 +77,8 @@ const QuickEditModal = ( {
         setSectionId( defaultSection?.id || '' );
         if ( setShowArticles ) setShowArticles( true );
         Swal.fire( {
-          title: __( newArticle?.status === 'draft' ? 'Article has been drafted!' : 'Article has been published!', 'wedocs' ),
-          text: __( newArticle?.status === 'draft' ? 'The article has been drafted successfully' : 'The article has been published successfully', 'wedocs' ),
+          title: newArticle?.status === 'draft' ? __( 'Article has been drafted!', 'wedocs' ) : __(  'Article has been published!', 'wedocs' ),
+          text: newArticle?.status === 'draft' ? __( 'The article has been drafted successfully', 'wedocs' ) : __( 'The article has been published successfully', 'wedocs' ),
           icon: 'success',
           toast: true,
           position: 'bottom-end',
@@ -248,10 +248,8 @@ const QuickEditModal = ( {
                         onClick={ createDoc }
                       >
                         <Fragment>
-                          { sprintf(
-                            __( '%s', 'wedocs' ),
-                            newArticle?.status === 'draft' ? 'Draft' + ( disabled ? 'ing...' : '' ) : 'Updat' + ( disabled ? 'ing...' : 'e' )
-                          ) }
+                          { newArticle?.status === 'draft' ? __( 'Draft', 'wedocs' ) : ( __( 'Update', 'wedocs' ) ) }
+                          { disabled ? __( 'ing...', 'wedocs' ) : '' }
                           <ChevronDownIcon
                             className="h-5 w-5 text-white mt-[1px]"
                             aria-hidden="true"

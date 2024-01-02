@@ -190,7 +190,7 @@ const Migrate = () => {
                                 </svg>
                             ) }
                             <p className={ `${ migrationSuccess ? 'text-[#111827]' : 'text-[#3B3F4A]' } font-bold text-2xl mx-auto mb-3` }>
-                                { __(  migrationSuccess ? 'Migration has been successful' : 'Migrate existing docs from BetterDocs to weDocs', 'wedocs' ) }
+                                { migrationSuccess ? __( 'Migration has been successful', 'wedocs' ) : __( 'Migrate existing docs from BetterDocs to weDocs', 'wedocs' ) }
                             </p>
                             <p className='text-[#666B79] text-lg mx-auto'>
                                 { !migrationSuccess && (
@@ -203,7 +203,7 @@ const Migrate = () => {
                                         { __( 'Learn more ', 'wedocs' ) }
                                     </a>
                                 ) }
-                                { __( migrationSuccess ? 'All existing docs have been successfully migrated from BetterDocs to weDocs.' : 'how to migrate docs', 'wedocs' ) }
+                                { migrationSuccess ? __( 'All existing docs have been successfully migrated from BetterDocs to weDocs.', 'wedocs' ) : __( 'how to migrate docs', 'wedocs' ) }
                             </p>
                         </h2>
                         { needMigrate ? (

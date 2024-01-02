@@ -12,7 +12,7 @@ const PlacementSettings = () => {
 			<div className={ `placement-label` }>
 				<div className={ 'flex items-center' }>
 					<h3 className={ `text-base text-[#111827] font-medium leading-5` }>
-						{ __( 'Drag your tabs and place orders', 'wedocs_pro' ) }
+						{ __( 'Drag your tabs and place orders', 'wedocs' ) }
 					</h3>
 					<div
 						className="tooltip cursor-pointer ml-2 z-[9999]"
