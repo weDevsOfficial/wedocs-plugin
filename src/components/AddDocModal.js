@@ -1,7 +1,7 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { Fragment, useRef, useState } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
-import { dispatch } from '@wordpress/data';
+import { dispatch, useSelect } from '@wordpress/data';
 import docStore from '../data/docs';
 import { ChevronDownIcon, ExclamationCircleIcon } from '@heroicons/react/20/solid';
 import Swal from 'sweetalert2';
@@ -53,7 +53,7 @@ const AddDocModal = ( { className, children } ) => {
 
         wp.hooks.doAction(
           'wedocs_after_create_new_doc',
-          result,
+          result
         );
 
         closeModal();

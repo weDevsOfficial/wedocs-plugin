@@ -1,126 +1,273 @@
-=== weDocs – Knowledgebase and Documentation Plugin for WordPress ===
+=== The Best WordPress Knowledgebase and Documentation Plugin - weDocs ===
 Contributors: tareq1988, wedevs
 Donate link: http://wedocs.co/
 Tags: WordPress documentation, WordPress docs plugin, WordPress documentation plugin, Knowledge base, Knowledge base plugin, documentation plugin, documentation, AI chatbot, ChatGPT
 Requires at least: 5.6
-Tested up to: 6.3.2
+Tested up to: 6.4.2
 Requires PHP: 7.4
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+With the best WordPress documentation plugin, you can manage your product’s knowledgebase, docs, and wiki. Just set it up, and get started.
 
-The best WordPress documentation plugin, weDocs, lets you manage your self-hosted knowledge base, wiki, and docs. Just set it up, and you can get going in a few minutes.
 
-== Description ==
+**Description**
 
-Struggling to manage your product’s knowledge base? Or are you looking to produce elegant and resourceful documentation for your WordPress plugins/themes?
+Struggling to manage your product’s knowledge base? Finding it challenging to craft sleek, comprehensive documentation for your WordPress plugins/themes?
 
-No worries, weDocs got you covered!
+Juggling wikis, guidelines, and documentation manually is no easy feat. A well-structured knowledge base is pivotal, particularly for online service-based products and WordPress plugins/themes. It's the key to enabling users to explore, learn, and understand your products.
 
-It’s the best knowledge base and documentation plugin for WordPress. Create great-looking documentation and organize it beautifully on your website.
+Enter weDocs—the ultimate solution. Now, accomplish these tasks efficiently and effortlessly within minutes. It stands out as the premier knowledge base and documentation plugin for WordPress, enabling you to create stunning documentation and seamlessly organize it on your website.
 
-With weDocs, writing, and document management are now a piece of cake now. From producing a great knowledge base to restricting the selected users and managing it smartly, weDocs holds the power to provide users with an initiative interface and dashboard.
 
-Yes, it makes the entire documentation management process easier and simpler for your users to find the information they need.
+**What makes weDocs the top choice?**
 
-* [Documentation](https://wedocs.co/docs/wedocs/getting-started/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
-* [Feature Requests](https://forms.gle/bzfZBk7mWMZxZRYC6)
-* [GitHub](https://github.com/weDevsOfficial/wedocs-plugin)
+Besides providing a robust knowledge base for your products, weDocs offers role-based permission management, a centralized dashboard for document management, migration tools for effortless data transfer, pre-designed templates for your documentation page, and a lot more.
 
+
+[🎉Introducing the Next Gen of weDocs - The Ultimate WordPress Documentation Plugin](https://youtu.be/9E7ZJetD2WU?si=1qI3Z-u1gWt0RN-7)
 
 # What users say about weDocs
 
-> “Really love the system for adding posts. Wish all of WP had this kind of editor. The doc features are just enough, and it’s a good starting point to develop with.”- [jdh1178](https://profiles.wordpress.org/jhinden/)
 
 
-> “We are very happy with the plugin so far. Here, many corners and edges were thought of as extensible. That is super.” - [Pixelbart](https://profiles.wordpress.org/pixelbart/)
-
-> “The plugin is very easy to use. It makes creating the documentation quite easy. It also displays them with a reasonable appearance. The documentation is also very straightforward. It also does not bother you with “rate us” notifications. I highly recommend it.” - [turzifer](https://profiles.wordpress.org/turzifer/)
-
-> “This documentation system is just perfect for my needs. It can be understood quickly (by the developer), it is for multiple products, and for each, I can write articles and sub-articles. All is correctly placed into the URL by Slugs. I’d just desire a bit more configuration—some visual design. But I can do this with CSS, and out-of-the-box this plugin is doing its task perfectly. I can even write articles using Elementor, and it displays fine. Also, a search box would be nice to have. Thank you!" - [User ID](https://profiles.wordpress.org/mice777/)
-
-> “In one word: amazing. This plugin does what it says. I encountered no problems and found it extremely easy to work with. I recommend this to anyone who wants to set up solid product documentation.” - [User ID](https://profiles.wordpress.org/drazenbebic/)
-
-**Top features at a glance**
-
-1.  Create and organize **WordPress documentation** effortlessly
-
-2.  User-friendly drag-and-drop feature to sort and organize your **WordPress documents**
-
-3.  **Powerful search functionality** for instant access to relevant information
-
-4.  **Multilingual support** with the Weglot plugin
-
-5.  **Customizable themes and templates** to match your branding
-
-6.  **3-level nested documentation** for better organization
-
-7.  **SEO optimization** for improved visibility
-
-8.  Easy **permission management** for internal and external knowledge bases
-
-9.  Assistant Widget powered by **weDocs ChatGPT AI Chatbot** for automated support
-
-10.  **Floating contact form** for accessible communication with users
+“Really love the system for adding posts. Wish all of WP had this kind of editor. The doc features are just enough, and it’s a good starting point to develop with. - [jdh1178](https://profiles.wordpress.org/jhinden/)
 
 
 
-**User-friendly interface**
-weDocs has an intuitive and user-friendly interface to let you create and manage your knowledge base, even if you're not tech-savvy.
 
-**Easy documentation creation and organization**
-Create and organize documentation with ease using the weDocs WordPress plugin. Its user-friendly drag-and-drop feature allows you to sort and organize documents without any hassle.
+“We are very happy with the plugin so far. Here, many corners and edges were thought of as extensible. That is super.” - [Pixelbart](https://profiles.wordpress.org/pixelbart/)
 
-**Powerful search option**
-weDocs provides powerful search functionality for instant access to relevant information. Users can easily search for the required document using the search bar on the website.
 
-**Compatible with WordPress language plugins**
+
+
+“The plugin is very easy to use. It makes creating the documentation quite easy. It also displays them with a reasonable appearance. The documentation is also very straightforward. It also does not bother you with “rate us” notifications. I highly recommend it.” - [turzifer](https://profiles.wordpress.org/turzifer/)
+
+
+
+
+“This documentation system is just perfect for my needs. It can be understood quickly (by the developer), it is for multiple products, and for each, I can write articles and sub-articles. All is correctly placed into the URL by Slugs. I’d just desire a bit more configuration—some visual design. But I can do this with CSS, and out-of-the-box this plugin is doing its task perfectly. I can even write articles using Elementor, and it displays fine. Also, a search box would be nice to have. Thank you!” - [User ID](https://profiles.wordpress.org/mice777/)
+
+
+
+
+“In one word: amazing. This plugin does what it says. I encountered no problems and found it extremely easy to work with. I recommend this to anyone who wants to set up solid product documentation.” - [User ID](https://profiles.wordpress.org/drazenbebic/)<br/><br/>
+
+
+
+
+
+**🔥weDocs top features at a glance**<br/>
+
+
+
+**Top Free Features:**
+
+1. User-friendly design for easy knowledge base creation and management.
+
+2. Simplified document creation and organization with drag-and-drop functionality.
+
+3. Three-level nested document structure for better organization of sections and articles.
+
+4. Instant access to relevant information through a robust search feature.
+
+5. Each document includes a feedback form, and articles can be voted on for helpfulness.
+
+6. Seamless migration of data from the BetterDocs knowledge base plugin.
+
+7. Multilingual support using the Weglot plugin for documentation in multiple languages.
+
+8. Optimized search features, ensuring better visibility and reach.
+
+9. Adaptable responsive design for a great UX across devices.<br/><br/>
+
+
+
+**Top Premium Features:**
+
+1. Role-based permission management.
+
+2. Define privacy settings for each document.
+
+3. Locked articles editing for admins.
+
+4. AI-assisted chat response powered with ChatGPT.
+
+5. Smart article suggestions.
+
+6. Instant search with Assistant Widget.
+
+7. Pre-built layouts and styles.
+
+8. Floating contact form in the Assistant Widget.<br/><br/>
+
+
+
+
+
+🔗 **Free features**
+
+💻User-friendly interface
+
+weDocs has an intuitive and user-friendly interface to let you create and manage your knowledge base, even if you're not tech-savvy. Also, you can re-arrange your preferred documentation depending on the importance of the content. Just use the simple drag-and-drop method and get your job done.
+
+
+
+
+📜Easy documentation creation and organization
+
+Create and organize unlimited docs with ease using weDocs. Easily convert a published doc to a drafted one and vice versa from the dashboard. weDocs user-friendly drag-and-drop feature allows you to sort and organize documents without any hassle.
+
+
+
+📊Nested documentation structure
+
+To better organize your documents, use the three-level nested documentation structure. Categorize your documentation into sections and articles, ensuring your users can swiftly locate the answers they seek.
+
+
+
+🔎Powerful search option
+
+weDocs provides powerful search functionality for instant access to relevant information. Users can easily search for the required document using the search bar on the website. Alongwith this there is quick search on single documentation pages to find specific sections or articles within a doc.
+
+
+
+
+🗳️Feedback form and helpful voting
+
+Each document includes a feedback form, allowing users to provide valuable insights, suggestions, or report issues directly. Enhance user engagement further with the "Helpful" voting system on articles. Users can vote on the helpfulness of an article, providing instant feedback to guide others to valuable content and helping the article to rank in Assistant Widget's explore tab.
+
+
+
+⚧️Betterdocs migration feature
+
+If you’re using BetterDocs knowledge base plugin for your WordPress site, you can easily migrate all your data from there to weDocs. You just need to follow some easy steps to complete the entire migration.
+
+
+
+
+🥰Compatible with WordPress language plugins
+
 weDocs supports multilingual documentation using the Weglot plugin. You can create documentation in multiple languages to cater to a diverse audience. It supports almost 100+ different languages.
 
-**SEO Optimization**
+
+
+
+🧑‍💻SEO Optimization
+
 weDocs is optimized for search engines to ensure better visibility and reach. Users can easily find the documentation using search engines, improving the overall SERP result.
 
-**Create unlimited sections and articles**
-Effortlessly categorize your documentation into sections and articles, ensuring your users can swiftly locate the answers they seek.
 
-**Permission management (PRO)**
-weDocs provides easy permission management for internal and external knowledge bases. You can control access to your WordPress documentation and knowledge base using this feature.
 
-**Nested documentation structure (Pro)**
-To better organize your documents, use the three-level nested documentation structure. This feature makes it easy for users to find the information they are looking for in the documents.
 
-**Responsive design  (Pro)**
+🧾Responsive design with a great UX and UI experience
+
 weDocs ensures your knowledgebase adapts flawlessly to all screen sizes, ensuring a compatible and satisfying experience across devices.
 
-**Instant search with the assistant widget  (Pro)**
+
+
+
+🔗**Premium features**
+
+
+👥Role-based permission management
+
+Tailor access control with precision. Grant edit & view permissions based on user roles, defining who can modify docs for a finely tuned collaborative environment. Contributors in each document is displayed by showing their user icons, enabling seamless tracking and identification of document editors. Through global permission management define default editing access for the users.
+
+
+
+👁️Viewing privacy
+
+Tailor view accessibility by defining privacy settings for each document. Choose between limiting document visibility to logged-in users or enabling it to everyone.
+
+
+
+🔒Locked articles editing
+
+Admins can secure specific articles, ensuring exclusive editing access for themselves.
+
+
+
+
+🤖An AI-assisted chatbot with ChatGPT
+
+Experience the magic of weDocs AI Chat, powered by ChatGPT. This feature unlocks a smarter, more intuitive ChatBot, leveraging ChatGPT's advanced AI with document-backed responses, quick understanding of queries, and fast, accurate answers. Enhance customer support with 24/7 availability, reduced workload on routine queries, and continuous learning for improved responses over time.
+
+
+
+
+📂Smart artcile suggestions
+
+Give instant access to the most relevant articles on the Assistant Widget's Explore Tab. weDocs combines manual curation and analytics to bring you the most helpful content, making your experience seamless and efficient.
+
+
+
+🔍Instant search with the assistant widget
+
 Assist users in finding solutions promptly with our robust search feature, which promptly delivers relevant articles based on their inquiries.
 
-**Pre-built layouts and styles (Pro)**
+
+
+
+🖼️Pre-built layouts and styles
+
 Tailor the appearance of your knowledge base to your website's identity through customizable themes and styling options.
 
-**Floating contact form (Pro)**
-weDocs provides a floating contact form to provide a convenient way for users to reach out to you. Users can easily contact you via email without having to navigate away from the documentation.
-
-**An AI-assisted chatbot with ChatGPT (Pro)**
-weDocs AI bot understands your query and delivers answers based on your prompts. It will work as a ChatGPT for your knowledge base. Using the GPT 3.5 language model, it will fetch information from your users and information from the documentation. The bot ensures that it will learn different contexts across different websites and user queries.
-
-**== Installation ==**
-
-1.  Download the weDocs plugin from the WordPress.org repository or the official website.
-
-2.  Upload the plugin files to the /wp-content/plugins/docs directory, or install the plugin directly through the WordPress plugin repository.
-
-3.  Activate the weDocs plugin through the 'Plugins' screen in WordPress.
-
-4.  Configure the plugin settings to customize your documentation and knowledge base.
 
 
 
-For detailed documentation and support resources, please visit the [weDocs](https://wedocs.co/) website. If you have any questions or need assistance, you can also reach out to our support team through the website.
+✍️Floating contact form
 
-**== Frequently Asked Questions ==**
+weDocs provides a floating contact form as a part of the Assistant Widget to provide a convenient way for users to reach out to you. Users can easily contact you via email without navigating away from the documentation.  <br/><br/>
 
-= What is Appsero =
+
+
+
+
+🚀Want to unlock these awesome features? [Upgrade to our weDocs Pro](https://wedocs.co/pricing/)<br/><br/>
+
+
+
+Let’s check out what Mr. Web shared about weDocs
+
+[Create Great Looking Documentation for Your WordPress Website [weDocs Review]](https://www.youtube.com/watch?v=TFXsyB09VJQ&ab_channel=MrWeb)<br/><br/>
+
+For detailed documentation and support resources, please visit the [weDocs](https://wedocs.co/) website.
+
+If you have any questions or need assistance, you can also reach out to our support team through the website.<br/><br/>
+
+
+🚀 People behind this awesome documentation plugin
+
+This powerful knowledge plugin is developed by the people behind [weDevs](https://wedevs.com/), a dedicated team that creates amazing stuff with a customer happiness of more than 425k+.
+
+
+
+👨‍💻 Get help from our official documentation and expert support team
+
+*   Visit our [documentation page](https://wedocs.co/docs/wedocs/getting-started/?utm_source=wporg&utm_medium=readme&utm_campaign=docs) for tutorials
+*   Check out the [YouTube playlist](https://www.youtube.com/watch?v=HUgwDn9bdqI&list=PLJorZsV2RVv8LVL6E6OkFWcP_9B4EHWu4) for more
+*   Get to solve any query around your mind on our [Plugin’s Forum](https://wordpress.org/support/plugin/wedocs/)
+*   For more information about features, FAQs, and documentation, check out our website at [weDocs](https://wedocs.co/)
+
+
+
+
+✨Let’s get started and start creating your knowledge base, documentation, and wikis in minutes with weDocs.
+
+
+Can’t wait to join us?
+
+-   Join our [Facebook Community](https://www.facebook.com/groups/wedevs)
+-   Learn more tutorials about [WordPress plugins here](https://www.youtube.com/@wedevs)
+
+
+💯Show love and rate [weDocs](https://wordpress.org/support/plugin/wedocs/reviews/#new-post)
+<br/><br/>
+
+== Frequently Asked Questions ==</br></br>
+
+WHAT IS APPSERO
 
 weDocs uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
 
@@ -128,27 +275,32 @@ Appsero SDK **does not gather any data by default.** The SDK only starts gatheri
 
 Integrating Appsero SDK **DOES NOT IMMEDIATELY** start gathering data, **without confirmation from users in any case.**
 
-Learn more about how [Appsero collects and uses this data](https://appsero.com/privacy-policy/).
+Learn more about how [Appsero collects and uses this data](https://appsero.com/privacy-policy/).</br></br>
 
-01. How can I create new documentation? =
+**1. How can I create new documentation??**
 
-Creating new documentation in weDocs is quite simple. Just navigate to the 'Docs' menu in your WordPress dashboard and click on 'Add New'. Then give a title and that’s all. You have successfully created new documentation in weDocs.
+Creating new documentation in weDocs is quite simple. Just navigate to the 'Docs' menu in your WordPress dashboard and click on '+ New Doc'. Then give a title and that’s all. You have successfully created new documentation in weDocs.
 
-02. Can I customize the appearance of my documentation? =
+**2. Can I customize the appearance of my documentation?**
 
 Yes, weDocs provides customizable themes and templates that you can use to match the branding of your website. You can also use your templates to create a unique documentation style.
 
-03. Can I export my documentation? =
-
-Yes, weDocs allows you to export your documentation. You can export your documentation in various formats such as PDF or HTML for offline access or backup purposes.
-
-04. How can I enable user feedback and comments on my documentation? =
+**3. How can I enable user feedback and comments on my documentation?**
 
 With weDocs, you can enable user feedback and comments on your documentation. Simply activate the comments feature in WordPress and users will be able to leave comments and provide feedback on your documentation pages.
 
-05. Can I customize the URL structure of my documentation pages? =
+**4. Is the AI Chatbot feature free to use?**
 
-Yes, weDocs allows you to customize the URL structure of your documentation pages. You can set up custom permalinks and choose a URL structure that suits your requirements, making it easier for users to navigate through your documentation.
+No, it’s a premium feature. You have to buy the individual subscription package to use the AI ChatBot feature.
+
+**5. How does the AI Chatbot feature work?**
+
+It fetches the data from your already-written articles on your WordPress site. That means users will get the answers from the documentation you have provided about your plugins or themes.
+
+**6. Can I customize the URL structure of my documentation pages?**
+
+Yes, weDocs allows you to customize the URL structure of your documentation pages. You can set up custom permalinks and choose a URL structure that suits your requirements, making it easier for users to navigate your documentation.
+
 
 
 ### Contribute ###
@@ -158,24 +310,46 @@ This may have bugs and lack of many features. If you want to contribute on this 
 Brought to you by [Tareq Hasan](https://tareq.co) from [weDevs](https://wedevs.com)
 
 
-== Installation ==
+**Installation**
 
-Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
+1. Download the weDocs plugin from the WordPress.org repository or the official website.
 
+2. Upload the plugin files to the /wp-content/plugins/docs directory, or install the plugin directly through the WordPress plugin repository.
 
-== Screenshots ==
+3. Activate the weDocs plugin through the 'Plugins' screen in WordPress.
 
-1. Admin UI
-2. Documentation on Admin UI builder
-3. Actions UI
-4. Switch to classic UI
-5. Classic docs UI
-6. All docs in frontend via shortcode
-7. Single docs view with navigation
-8. Search widget
-9. Search widget in frontend
+4. Configure the plugin settings to customize your documentation and knowledge base.</br></br>
+
+**Screenshots**
+
+1. Dashboard Overview
+2. Create New Documentation
+3. Role-Based Permission Management
+4. Viewing Privacy Settings
+5. Locked Articles Editing
+6. Single Page Quick Search
+7. Customizable Templates
+8. AI Chatbot in Action
+9. Article Suggestions in Explore Tab
+10. Instant Search with Assistant Widget
+11. Pre-built Layouts and Styles
+12. Floating Contact Form</br></br>
 
 == Changelog ==
+
+= v2.0.3 (2nd January, 2023) =
+
+ * **Feature:** Quick search for documentation single page. Fixes [#166](https://github.com/weDevsOfficial/wedocs-plugin/issues/166)
+
+ * **Enhance:** Permission management access for drafted documents. Fixes [#19](https://github.com/weDevsOfficial/wedocs-pro/issues/19)
+ * **Enhance:** Add new documentation create, delete actions permission for editor. Fixes [#39](https://github.com/weDevsOfficial/wedocs-pro/issues/39)
+ * **Enhance:** Ensure weDocs strings localization for frontend, backend. Fixes [#40](https://github.com/weDevsOfficial/wedocs-pro/issues/40)
+ * **Enhance:** Move articles collapse/expand settings from general to layout. Fixes [#51](https://github.com/weDevsOfficial/wedocs-pro/issues/51)
+
+ * **Fix:** Static admin url for documentation edit (make it dynamic). Fixes [#38](https://github.com/weDevsOfficial/wedocs-pro/issues/38)
+ * **Fix:** Template override loading issue for documentation single page. Fixes [#176](https://github.com/weDevsOfficial/wedocs-plugin/issues/176)
+ * **Fix:** Arrow dropdown visibility issue for active navigation of documentation single page. Fixes [#177](https://github.com/weDevsOfficial/wedocs-plugin/issues/177)
+
 = v2.0.2 (6 November, 2023) =
 
  * **Enhance:** Add weDocs app build stuffs in Appsero
@@ -256,12 +430,12 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 = v1.3.2 (15 October, 2017) =
 
-* **Fix:** Remove WPUF dependency on weForms upsell
-* **New:** Show docs and taxonomy in REST API. Fixes #44
-* **New:** List child articles if present in single doc. Fixes #34
-* **New:** Added page-atrribute support for the Docs post type. Now you can change the doc parent from the single docs edit page.
-* **Improved:** Upgrade Vue to 2.5.1 from 1.0.16
-* **Improved:** Every user should see the switch to classic UI url
+ * **Fix:** Remove WPUF dependency on weForms upsell
+ * **New:** Show docs and taxonomy in REST API. Fixes #44
+ * **New:** List child articles if present in single doc. Fixes #34
+ * **New:** Added page-atrribute support for the Docs post type. Now you can change the doc parent from the single docs edit page.
+ * **Improved:** Upgrade Vue to 2.5.1 from 1.0.16
+ * **Improved:** Every user should see the switch to classic UI url
 
 = v1.3.1 (24 August, 2017) =
 
