@@ -5,7 +5,7 @@ Tags: WordPress documentation, WordPress docs plugin, WordPress documentation pl
 Requires at least: 5.6
 Tested up to: 6.4.2
 Requires PHP: 7.4
-Stable tag: 2.0.3
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 With the best WordPress documentation plugin, you can manage your product’s knowledgebase, docs, and wiki. Just set it up, and get started.
@@ -338,7 +338,7 @@ Brought to you by [Tareq Hasan](https://tareq.co) from [weDevs](https://wedevs.c
 
 == Changelog ==
 
-= v2.0.3 (2nd January, 2023) =
+= v2.1.0 (2nd January, 2023) =
 
  * **Feature:** Quick search for documentation single page. Fixes [#166](https://github.com/weDevsOfficial/wedocs-plugin/issues/166)
 
