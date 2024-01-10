@@ -23,6 +23,12 @@ import NotFound from '../NotFound';
 const ListingPage = () => {
   const { id } = useParams();
 
+  const docs = useSelect( ( select ) => {
+    return select( docsStore ).getDocs();
+  }, [] );
+
+  const parentDoc = docs?.find( doc => doc?.id === parseInt( id ) );
+
   const sectionsData = useSelect( ( select ) => {
     return select( docsStore ).getSectionsDocs( parseInt( id ) );
   }, [] );
@@ -154,19 +160,35 @@ const ListingPage = () => {
             />
           </div>
 
-          <ListingHeader id={ id } />
+          <ListingHeader doc={ parentDoc } />
 
-          { ! loading && sections.length > 0 && (
+          { loading && <DocsListingPlaceholder /> }
+
+          { ! loading && (
             <>
-              { isAdmin ? (
-                <DraggableDocs
-                  setItems={ setSections }
-                  setNeedSortingStatus={ setNeedSortingStatus }
-                >
-                  <SortableContext
-                    items={ sections }
-                    strategy={ verticalListSortingStrategy }
+            { sections.length > 0 ? (
+              <>
+                { isAdmin ? (
+                  <DraggableDocs
+                    setItems={ setSections }
+                    setNeedSortingStatus={ setNeedSortingStatus }
                   >
+                    <SortableContext
+                      items={ sections }
+                      strategy={ verticalListSortingStrategy }
+                    >
+                      { sections?.map( ( section ) => (
+                        <DocSections
+                          key={ section.id }
+                          section={ section }
+                          sections={ sections }
+                          searchValue={ searchValue }
+                        />
+                      ) ) }
+                    </SortableContext>
+                  </DraggableDocs>
+                ) : (
+                  <>
                     { sections?.map( ( section ) => (
                       <DocSections
                         key={ section.id }
@@ -175,51 +197,38 @@ const ListingPage = () => {
                         searchValue={ searchValue }
                       />
                     ) ) }
-                  </SortableContext>
-                </DraggableDocs>
-              ) : (
-                <>
-                  { sections?.map( ( section ) => (
-                    <DocSections
-                      key={ section.id }
-                      section={ section }
-                      sections={ sections }
-                      searchValue={ searchValue }
-                    />
-                  ) ) }
-                </>
-              ) }
+                  </>
+                ) }
+              </>
+            ) : (
+              <div className="space-y-4 mb-3">
+                <div className="bg-white shadow sm:rounded-md">
+                  <div className="flex items-center cursor-pointer text-base px-4 py-5 sm:px-6">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6 mr-2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                      />
+                    </svg>
+                    { __(
+                      'No section or article found for this documentation',
+                      'wedocs'
+                    ) }
+                  </div>
+                </div>
+              </div>
+            ) }
             </>
           ) }
 
-          { ! loading && sections.length === 0 && (
-            <div className="space-y-4 mb-3">
-              <div className="bg-white shadow sm:rounded-md">
-                <div className="flex items-center cursor-pointer text-base px-4 py-5 sm:px-6">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6 mr-2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                    />
-                  </svg>
-                  { __(
-                    'No section or article found for this documentation',
-                    'wedocs'
-                  ) }
-                </div>
-              </div>
-            </div>
-          ) }
-
-          { loading && <DocsListingPlaceholder /> }
           <ListingButtons sections={ sections } />
         </div>
       ) : <NotFound/> }

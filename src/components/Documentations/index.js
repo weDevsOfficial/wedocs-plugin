@@ -15,6 +15,11 @@ import Swal from "sweetalert2";
 import { userIsAdmin } from "../../utils/helper";
 
 const Documentations = () => {
+  const docs = useSelect(
+    ( select ) => select( docsStore ).getDocs(),
+    []
+  );
+
   const parentDocs = useSelect(
     ( select ) => select( docsStore ).getParentDocs(),
     []

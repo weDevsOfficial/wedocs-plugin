@@ -5,15 +5,10 @@ import { __ } from '@wordpress/i18n';
 import he from 'he';
 import { Fragment } from '@wordpress/element';
 
-const ListingHeader = ( { id } ) => {
-  if ( ! id ) {
+const ListingHeader = ( { doc } ) => {
+  if ( ! doc ) {
     return;
   }
-
-  const doc = useSelect(
-    ( select ) => select( docsStore ).getDoc( parseInt( id ) ),
-    []
-  );
 
   const loading = useSelect(
     ( select ) => select( docsStore ).getLoading(),
@@ -29,7 +24,7 @@ const ListingHeader = ( { id } ) => {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href={ `${ weDocsAdminVars.adminUrl }post.php?post=${ id }&action=edit` }
+                href={ `${ weDocsAdminVars.adminUrl }post.php?post=${ doc?.id }&action=edit` }
                 className="flex tooltip cursor-pointer items-center group hover:text-black !shadow-none before:max-w-xl z-[90] mr-1"
                 data-tip={ he?.decode(
                   __(

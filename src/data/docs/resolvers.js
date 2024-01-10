@@ -10,26 +10,20 @@ const resolvers = {
     yield actions.setLoading( true );
     const response = yield actions.fetchFromAPI( getDocsPath );
     yield actions.setDocs( response );
-    return actions.setLoading( false );
-  },
-
-  *getParentDocs() {
-    yield actions.setLoading( true );
-    const response = yield actions.fetchFromAPI( getDocsPath );
-    yield actions.setDocs( response );
     const parentDocs = response.filter( ( doc ) => ! doc.parent );
     const sortableDocs = parentDocs?.sort(
       ( a, b ) => a.menu_order - b.menu_order
     );
-    yield actions.setParentDocs( response );
+    yield actions.setParentDocs( sortableDocs );
     return actions.setLoading( false );
   },
 
   *getDoc( id ) {
-    // yield actions.setLoading( true );
-    const response = yield actions.fetchFromAPI( getDocsPath );
-    yield actions.setDocs( response );
-    // return actions.setLoading( false );
+    yield actions.setLoading( true );
+    let url = '/wp/v2/docs/' + id;
+    const response = yield actions.fetchFromAPI( url );
+    yield actions.setDoc( response );
+    return actions.setLoading( false );
   },
 
   *getPages() {
@@ -57,20 +51,6 @@ const resolvers = {
     // yield actions.setLoading( true );
     const userDocIds = yield actions.fetchFromAPI( `/wp/v2/docs/users/ids` );
     yield actions.setUserDocIds( userDocIds );
-    // return actions.setLoading( false );
-  },
-
-  *getSectionsDocs( id ) {
-    // yield actions.setLoading( true );
-    const response = yield actions.fetchFromAPI( getDocsPath );
-    yield actions.setDocs( response );
-    // return actions.setLoading( false );
-  },
-
-  *getDocArticles( id ) {
-    // yield actions.setLoading( true );
-    const docs = yield actions.fetchFromAPI( getDocsPath );
-    yield actions.setDocs( docs );
     // return actions.setLoading( false );
   },
 
