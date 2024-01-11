@@ -15,6 +15,11 @@ import Swal from "sweetalert2";
 import { userIsAdmin } from "../../utils/helper";
 
 const Documentations = () => {
+  const docs = useSelect(
+    ( select ) => select( docsStore ).getDocs(),
+    []
+  );
+
   const parentDocs = useSelect(
     ( select ) => select( docsStore ).getParentDocs(),
     []
@@ -140,53 +145,52 @@ const Documentations = () => {
 
       { !loading && showActions && need_upgrade && <Upgrade status={ status } /> }
 
-      <div
-        role="list"
-        className="documentation relative mx-auto grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
-      >
-        { ! loading && documentations.length > 0 && (
-          <>
-            { isAdmin ? (
-              <DraggableDocs
-                setItems={ setDocumentations }
-                setNeedSortingStatus={ setNeedSortingStatus }
-              >
-                <SortableContext
-                  items={ documentations }
-                  strategy={ rectSortingStrategy }
-                >
-                  { documentations?.map( ( doc ) => (
-                    <ParentDocs key={ doc.id } doc={ doc } />
-                  ) ) }
-                </SortableContext>
-              </DraggableDocs>
-            ) : (
-              <>
-                { documentations?.map( ( doc ) => (
-                  <ParentDocs key={ doc.id } doc={ doc } />
-                ) ) }
-              </>
-            ) }
-          </>
-        ) }
-
-        { loading && <DocsPlaceholder /> }
-      </div>
-
-      { !loading && searchValue && documentations.length === 0 && (
-        <h2 className="float-left text-lg mt-4">
-          { __(
-            'Oops! It seems that your search did not match any existing documents. Please try again...',
-            'wedocs'
+      { loading ? <DocsPlaceholder /> : (
+        <div
+          role="list"
+          className={ `${ documentations.length > 0 ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7' : '' } documentation relative mx-auto` }
+        >
+          { searchValue && documentations.length === 0 && (
+            <h2 className="float-left text-lg mt-4">
+              { __(
+                'Oops! It seems that your search did not match any existing documents. Please try again...',
+                'wedocs'
+              ) }
+            </h2>
           ) }
-        </h2>
-      ) }
+          { documentations && (
+            <>
+              { documentations.length > 0 ? (
+                <>
+                  { isAdmin ? (
+                    <DraggableDocs
+                      setItems={ setDocumentations }
+                      setNeedSortingStatus={ setNeedSortingStatus }
+                    >
+                      <SortableContext
+                        items={ documentations }
+                        strategy={ rectSortingStrategy }
+                      >
+                        { documentations?.map( ( doc ) => <ParentDocs key={ doc.id } doc={ doc } /> ) }
+                      </SortableContext>
+                    </DraggableDocs>
+                  ) : (
+                    <>
+                      { documentations?.map( ( doc ) => <ParentDocs key={ doc.id } doc={ doc } /> ) }
+                    </>
+                  ) }
+                </>
+              ) : (
+                <>
+                  { !searchValue && showActions && <EmptyDocs /> }
+                </>
+              ) }
+            </>
+          ) }
 
-      { !loading && !searchValue && isAdmin && documentations && documentations?.length === 0 && (
-        <EmptyDocs />
+          { !loading && !searchValue && showEmptyNotice }
+        </div>
       ) }
-
-      { !loading && !searchValue && showEmptyNotice }
     </>
   );
 };

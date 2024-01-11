@@ -1,11 +1,11 @@
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
 import {
   CheckIcon,
   ChevronUpDownIcon,
   ExclamationCircleIcon,
 } from '@heroicons/react/20/solid';
-import { Combobox, Dialog } from '@headlessui/react';
+import { Combobox } from '@headlessui/react';
 import { useParams } from 'react-router-dom';
 import { dispatch } from '@wordpress/data';
 import docStore from '../data/docs';

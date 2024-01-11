@@ -248,8 +248,11 @@ const QuickEditModal = ( {
                         onClick={ createDoc }
                       >
                         <Fragment>
-                          { newArticle?.status === 'draft' ? __( 'Draft', 'wedocs' ) : ( __( 'Update', 'wedocs' ) ) }
-                          { disabled ? __( 'ing...', 'wedocs' ) : '' }
+                          { newArticle?.status === 'draft' ? __( 'Draft', 'wedocs' ) :
+                            sprintf(
+                            __( `Updat%s`, 'wedocs' ),
+                            disabled ? 'ing...' : 'e'
+                          ) }
                           <ChevronDownIcon
                             className="h-5 w-5 text-white mt-[1px]"
                             aria-hidden="true"

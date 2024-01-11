@@ -3520,6 +3520,9 @@ select {
 .h-\[180px\] {
   height: 180px;
 }
+.h-\[4\.5rem\] {
+  height: 4.5rem;
+}
 .h-\[407px\] {
   height: 407px;
 }
@@ -4465,12 +4468,6 @@ select {
 }
 .pb-7 {
   padding-bottom: 1.75rem;
-}
-.pl-1 {
-  padding-left: 0.25rem;
-}
-.pl-1\.5 {
-  padding-left: 0.375rem;
 }
 .pl-2 {
   padding-left: 0.5rem;

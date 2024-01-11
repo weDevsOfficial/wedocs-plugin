@@ -70,7 +70,7 @@ const ParentDocs = ( { doc } ) => {
       className="col-span-1 rounded bg-white shadow"
     >
       { /* Documentation Header Start */ }
-      <div className="flex w-full items-center justify-between space-x-6 p-6 pt-5">
+      <div className="flex w-full items-center justify-between px-6 h-[4.5rem]">
         <div className="flex-1">
           <div className="inline-flex items-center space-x-3">
             <div className="flex items-center space-x-3 flex-1 group">
@@ -90,7 +90,7 @@ const ParentDocs = ( { doc } ) => {
             </div>
           </div>
         </div>
-        <div className="flex gap-5 items-center">
+        <div className="flex items-center">
           { doc?.status === 'draft' && (
             <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5` }>
               { __( 'Draft', 'wedocs' ) }
@@ -104,16 +104,18 @@ const ParentDocs = ( { doc } ) => {
                 height="17"
                 fill="none"
                 { ...listeners }
-                className={ `cursor-grab pl-1.5 box-content` }
+                className={ `cursor-grab p-5 box-content` }
               >
                 <path
                   fill="#9ca3af"
                   className={ `fill-gray-500` }
                   d="M16.951 8.549l-2.584 2.573-.154.15c-.14.125-.297.15-.466.075-.161-.072-.244-.201-.244-.383l.004-1.358c.004-.165-.036-.229-.215-.226H10.02c-.161 0-.215.043-.215.211v3.29c0 .158.05.204.204.201l1.34-.004c.201-.004.351.072.426.258s.029.348-.115.487L9.06 16.429c-.093.093-.154.097-.247 0l-2.602-2.605c-.14-.14-.19-.305-.115-.487s.226-.262.426-.262l1.358.004c.136.004.19-.036.19-.179V9.556a.14.14 0 0 0-.176-.176H4.552c-.147 0-.183.05-.179.186l.004 1.34c.004.204-.065.366-.262.444s-.358.018-.502-.129l-2.58-2.577c-.108-.104-.104-.168 0-.272l2.566-2.566c.151-.151.312-.219.516-.136s.262.254.258.462l-.004 1.322c-.004.14.039.186.183.186h3.343c.136 0 .172-.047.172-.176V4.123c0-.15-.057-.179-.19-.179l-1.34.004c-.208.004-.366-.068-.444-.262s-.014-.358.129-.502L8.737.668 8.898.5h.072l.161.168 2.516 2.516c.143.143.208.308.129.502s-.236.265-.444.262c-.441-.004-.882.004-1.322-.004-.151-.004-.208.036-.208.197v3.308c0 .147.047.194.194.194h3.308c.161 0 .201-.057.197-.208l-.004-1.376a.39.39 0 0 1 .244-.383c.168-.075.326-.05.466.075l.129.125 2.609 2.598a.28.28 0 0 1 .007.075z"
                 />
-             </svg>
+              </svg>
             </Fragment>
           ) }
+        </div>
+        <div className="flex items-center">
           { privacyIcon }
           { showActions && <DocActions doc={ doc } type="doc" disabled /> }
         </div>

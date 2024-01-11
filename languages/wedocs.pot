@@ -2,14 +2,14 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 2.1.0\n"
+"Project-Id-Version: weDocs 2.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-02T10:30:25+00:00\n"
+"POT-Creation-Date: 2024-01-11T10:12:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -121,72 +121,64 @@ msgstr ""
 msgid "Thanks for your feedback."
 msgstr ""
 
-#: includes/API/API.php:138
+#: includes/API/API.php:125
 msgid "Limit results to those matching a string."
 msgstr ""
 
-#: includes/API/API.php:145
+#: includes/API/API.php:132
 msgid "The ID for the parent of the object."
 msgstr ""
 
-#: includes/API/API.php:150
+#: includes/API/API.php:137
 msgid "Current page of the collection."
 msgstr ""
 
-#: includes/API/API.php:158
+#: includes/API/API.php:145
 msgid "Maximum number of items to be returned in result set."
 msgstr ""
 
-#: includes/API/API.php:189
+#: includes/API/API.php:176
 msgid "Documentations data"
 msgstr ""
 
-#: includes/API/API.php:223
+#: includes/API/API.php:210
 msgid "Collective documents object"
 msgstr ""
 
-#: includes/API/API.php:273
-#: includes/API/API.php:300
+#: includes/API/API.php:260
+#: includes/API/API.php:287
 msgid "You are not currently logged in."
 msgstr ""
 
-#: includes/API/API.php:277
-#: includes/API/API.php:305
-#: includes/API/API.php:376
+#: includes/API/API.php:264
+#: includes/API/API.php:292
+#: includes/API/API.php:363
 msgid "Unauthorized permission error"
 msgstr ""
 
-#: includes/API/API.php:281
-#: includes/API/API.php:310
+#: includes/API/API.php:268
+#: includes/API/API.php:297
 msgid "Currently sortable status not given"
 msgstr ""
 
-#: includes/API/API.php:316
+#: includes/API/API.php:303
 msgid "Need sortable status is required"
 msgstr ""
 
-#: includes/API/API.php:321
+#: includes/API/API.php:308
 msgid "Currently documentations data not found for update"
 msgstr ""
 
-#: includes/API/API.php:622
+#: includes/API/API.php:609
 msgid "The page number requested is larger than the number of pages available."
 msgstr ""
 
-#: includes/API/API.php:708
+#: includes/API/API.php:695
 msgid "No name given"
 msgstr ""
 
-#: includes/API/API.php:712
+#: includes/API/API.php:699
 msgid "No email given"
-msgstr ""
-
-#: includes/API/API.php:754
-msgid "You cannot delete the documentation resource."
-msgstr ""
-
-#: includes/API/API.php:775
-msgid "Invalid Documentation."
 msgstr ""
 
 #: includes/API/SettingsApi.php:79
@@ -427,7 +419,7 @@ msgstr ""
 #: assets/build/index.js:1
 #: assets/build/index.js:5
 #: src/components/BackToDocsPage.js:25
-#: src/components/Documentations/index.js:125
+#: src/components/Documentations/index.js:130
 msgid "All Docs"
 msgstr ""
 
@@ -582,14 +574,14 @@ msgstr ""
 #: assets/build/index.js:1
 #: src/components/DocActions.js:80
 #: src/components/DocListing/DocSections.js:183
-#: src/components/DocListing/ListingHeader.js:49
+#: src/components/DocListing/ListingHeader.js:44
 #: src/components/DocListing/SectionArticles.js:142
 msgid "Edit"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocListing/DocSections.js:209
-#: src/components/DocListing/ListingHeader.js:73
+#: src/components/DocListing/ListingHeader.js:68
 #: src/components/DocListing/SectionArticles.js:163
 msgid "View on Web"
 msgstr ""
@@ -599,7 +591,7 @@ msgstr ""
 #: src/components/AddDocModal.js:180
 #: src/components/AddSectionModal.js:175
 #: src/components/DocListing/DocSections.js:159
-#: src/components/DocListing/ListingHeader.js:92
+#: src/components/DocListing/ListingHeader.js:87
 #: src/components/DocListing/QuickEditModal.js:251
 #: src/components/DocListing/SectionArticles.js:102
 #: src/components/Documentations/ParentDocs.js:96
@@ -715,25 +707,17 @@ msgid "The article has been published successfully"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:251
-msgid "Update"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/AddArticleModal.js:216
-#: src/components/AddDocModal.js:181
-#: src/components/AddSectionModal.js:176
-#: src/components/DocListing/QuickEditModal.js:252
-msgid "ing..."
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:264
-msgid "Update and Draft"
+#: src/components/DocListing/QuickEditModal.js:253
+msgid "Updat%s"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocListing/QuickEditModal.js:267
+msgid "Update and Draft"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:270
 msgid "Update and Publish"
 msgstr ""
 
@@ -789,6 +773,13 @@ msgstr ""
 #: src/components/AddDocModal.js:180
 #: src/components/AddSectionModal.js:175
 msgid "Publish"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/AddArticleModal.js:216
+#: src/components/AddDocModal.js:181
+#: src/components/AddSectionModal.js:176
+msgid "ing..."
 msgstr ""
 
 #: assets/build/index.js:1
@@ -905,22 +896,22 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: assets/build/index.js:5
-#: src/components/DocListing/index.js:121
-#: src/components/Documentations/index.js:109
+#: src/components/DocListing/index.js:127
+#: src/components/Documentations/index.js:114
 #: src/components/Settings/index.js:125
 msgid "weDocs database has been updated successfully"
 msgstr ""
 
 #: assets/build/index.js:1
 #: assets/build/index.js:5
-#: src/components/DocListing/index.js:122
-#: src/components/Documentations/index.js:110
+#: src/components/DocListing/index.js:128
+#: src/components/Documentations/index.js:115
 #: src/components/Settings/index.js:126
 msgid "Database Updated!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/index.js:213
+#: src/components/DocListing/index.js:221
 msgid "No section or article found for this documentation"
 msgstr ""
 
@@ -1129,28 +1120,28 @@ msgstr ""
 
 #. translators: %d: Length of documentation sections
 #: assets/build/index.js:3
-#: src/components/Documentations/ParentDocs.js:145
+#: src/components/Documentations/ParentDocs.js:147
 msgid "%d Sections"
 msgstr ""
 
 #. translators: %d: Length of documentation articles
 #: assets/build/index.js:5
-#: src/components/Documentations/ParentDocs.js:172
+#: src/components/Documentations/ParentDocs.js:174
 msgid "%d Articles"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/ParentDocs.js:201
+#: src/components/Documentations/ParentDocs.js:203
 msgid "Add"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/index.js:129
+#: src/components/Documentations/index.js:134
 msgid "New doc"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Documentations/index.js:178
+#: src/components/Documentations/index.js:155
 msgid "Oops! It seems that your search did not match any existing documents. Please try again..."
 msgstr ""
 
