@@ -57,6 +57,10 @@ const actions = {
     return { type: 'UPDATE_TO_API', path, data: doc };
   },
 
+  removeDoc( docId ) {
+    return { type: 'REMOVE_DOC', docId };
+  },
+
   *createDoc( doc ) {
     const createdDoc = yield actions.createDocsToAPI( doc );
     yield actions.setUserDocId( createdDoc.id );
@@ -120,15 +124,7 @@ const actions = {
   *deleteDoc( docId ) {
     const path = '/wp/v2/docs/' + docId;
     yield { type: 'DELETE_TO_API', path };
-    const response = yield actions.fetchFromAPI(
-      '/wp/v2/docs?per_page=-1&status=publish,draft,private'
-    );
-    const parentDocs = response.filter( ( doc ) => ! doc.parent );
-    const sortableDocs = parentDocs?.sort(
-      ( a, b ) => a.menu_order - b.menu_order
-    );
-    yield actions.setParentDocs( sortableDocs );
-    return actions.setDocs( response );
+    return actions.removeDoc( docId );
   },
 
   *updateParentDocs( docs ) {

@@ -75,6 +75,13 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
         helpfulDocs: action.helpfulDocs,
       };
 
+    case 'REMOVE_DOC':
+      return {
+        ...state,
+        docs: [ ...state.docs?.filter( doc => doc.id !== action.docId ) ],
+        parents: [ ...state.parents?.filter( parent => parent.id !== action.docId ) ],
+      };
+
     default:
       return state;
   }
