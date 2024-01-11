@@ -27,35 +27,26 @@ const resolvers = {
   },
 
   *getPages() {
-    // yield actions.setLoading( true );
     const response = yield actions.fetchFromAPI( '/wp/v2/pages' );
-    yield actions.setPages( response );
-    // return actions.setLoading( false );
+    return actions.setPages( response );
   },
 
   *getSortingStatus() {
-    // yield actions.setLoading( true );
     const response = yield actions.fetchFromAPI( '/wp/v2/docs/sorting_status' );
-    yield actions.setSortingStatus( response );
-    // return actions.setLoading( false );
+    return actions.setSortingStatus( response );
   },
 
   *getNeedSortingStatus() {
-    // yield actions.setLoading( true );
     const response = yield actions.fetchFromAPI( '/wp/v2/docs/need_sorting_status' );
-    yield actions.setNeedSortingStatus( response );
-    // return actions.setLoading( false );
+    return actions.setNeedSortingStatus( response );
   },
 
   *getUserDocIds() {
-    // yield actions.setLoading( true );
     const userDocIds = yield actions.fetchFromAPI( `/wp/v2/docs/users/ids` );
-    yield actions.setUserDocIds( userDocIds );
-    // return actions.setLoading( false );
+    return actions.setUserDocIds( userDocIds );
   },
 
   *getHelpfulDocs() {
-    // yield actions.setLoading( true );
     const docs = yield actions.fetchFromAPI( getDocsPath );
     yield actions.setDocs( docs );
     const helpfulDocIds = yield actions.fetchFromAPI(
@@ -66,7 +57,6 @@ const resolvers = {
         helpfulDocIds?.includes( doc?.id )
       );
     yield actions.setHelpfulDocs( helpfulDocs );
-    // yield actions.setLoading( false );
   },
 };
 
