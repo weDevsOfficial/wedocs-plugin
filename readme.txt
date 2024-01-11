@@ -318,12 +318,12 @@ Can’t wait to join us?
 
 == Changelog ==
 
-= v2.1.1 (11nd January, 2023) =
+= v2.1.1 (11nd January, 2024) =
 
  * **Fix:** Handle unnecessary requests for documentation management.
  * **Enhance:** Maintain docs fetching, actions, placeholder ui requests properly for dashboard & listing pages.
 
-= v2.1.0 (2nd January, 2023) =
+= v2.1.0 (2nd January, 2024) =
 
  * **Feature:** Quick search for documentation single page. Fixes [#166](https://github.com/weDevsOfficial/wedocs-plugin/issues/166)
 
