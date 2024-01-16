@@ -79,6 +79,17 @@ const selectors = {
     return sortableArticles;
   },
 
+  getArticleChildrens: ( state, id ) => {
+    const { docs } = state;
+    const childrens = docs?.filter( ( doc ) => doc.parent === id )?.reverse();
+
+    const sortableChildrens = childrens?.sort(
+      ( a, b ) => a.menu_order - b.menu_order
+    );
+
+    return sortableChildrens;
+  },
+
   getHelpfulDocs: ( state ) => {
     const { helpfulDocs } = state;
     return helpfulDocs;

@@ -273,10 +273,8 @@ const DocSections = ( { section, sections, searchValue } ) => {
           </div>
 
           { showArticles && ! Boolean( isDragging ) && (
-            <div
-              className={ `mt-3 section-article pl-4 sm:pl-6` }
-            >
-              { articles?.length ? (
+            <div className={ `mt-3 section-article pl-4 sm:pl-6` }>
+              { ( articles?.length > 0 ) ? (
                 <DraggableDocs
                   setItems={ setArticles }
                   setNeedSortingStatus={ setNeedSortingStatus }
@@ -291,6 +289,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                         article={ article }
                         isAdmin={ isAdmin }
                         section={ section }
+                        articles={ articles }
                         sections={ sections }
                         setShowArticles={ setShowArticles }
                         isAllowComments={ isCommentsAllowed }
@@ -299,7 +298,6 @@ const DocSections = ( { section, sections, searchValue } ) => {
                   </SortableContext>
                 </DraggableDocs>
               ): null }
-
 
               <AddArticleModal
                 sections={ sections }
