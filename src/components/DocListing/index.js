@@ -145,6 +145,10 @@ const ListingPage = () => {
     }
   }, [ needSortingStatus ] );
 
+    useEffect( () => {
+        console.log( docs );
+    }, [ docs ] );
+
   return (
     <Fragment>
       { validParam ? (
