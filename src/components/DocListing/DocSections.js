@@ -18,7 +18,7 @@ import settingsStore from '../../data/settings';
 import he from 'he';
 import docsStore from '../../data/docs';
 
-const DocSections = ( { section, sections, searchValue } ) => {
+const DocSections = ( { docs, section, sections, searchValue } ) => {
   const isAdmin = weDocsAdminVars?.hasManageCap;
   const { id, title } = section;
   const [ showArticles, setShowArticles ] = useState( id === sections?.[0]?.id );
@@ -55,9 +55,17 @@ const DocSections = ( { section, sections, searchValue } ) => {
   );
 
   const filteredArticles =
-    sectionArticles?.filter( ( doc ) =>
-      doc?.title?.rendered?.toLowerCase().includes( searchValue?.toLowerCase() )
-    ) || [];
+    sectionArticles?.filter( ( article ) => {
+      let matched = article?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() );
+      if ( ! matched ) {
+        docs?.map( doc => {
+          if ( doc?.parent !== article?.id ) return;
+          let childMatched = doc?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() );
+          if ( childMatched ) return matched = childMatched;
+        } );
+      }
+      return matched;
+    }) || [];
 
   const [ articles, setArticles ] = useState( [] );
   const [ needSortingStatus, setNeedSortingStatus ] = useState( needSortableStatus );
@@ -96,24 +104,22 @@ const DocSections = ( { section, sections, searchValue } ) => {
             className="flex items-center group"
             onClick={ () => setShowArticles( ! showArticles ) }
           >
-            { isAdmin && (
-              <div className={ `pr-3.5 py-0.5 cursor-grab` }>
-                <svg
-                  width="20"
-                  height="21"
-                  fill="none"
-                  { ...listeners }
-                  ref={ setNodeRef }
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill="#d9d9d9"
-                    fillRule="evenodd"
-                    d="M8.5 7.498c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 8.573 8.5 7.498zm0 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 15.467 8.5 14.392zm3-6.894c0-1.075.871-1.947 1.947-1.947s1.947.872 1.947 1.947-.872 1.947-1.947 1.947S11.5 8.573 11.5 7.498zm3.893 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.871 1.947 1.947 1.947 1.947-.872 1.947-1.947z"
-                  />
-                </svg>
-              </div>
-            ) }
+            <div className={ `pr-3.5 py-0.5 cursor-grab` }>
+              <svg
+                width="20"
+                height="21"
+                fill="none"
+                { ...listeners }
+                ref={ setNodeRef }
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill="#d9d9d9"
+                  fillRule="evenodd"
+                  d="M8.5 7.498c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 8.573 8.5 7.498zm0 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 15.467 8.5 14.392zm3-6.894c0-1.075.871-1.947 1.947-1.947s1.947.872 1.947 1.947-.872 1.947-1.947 1.947S11.5 8.573 11.5 7.498zm3.893 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.871 1.947 1.947 1.947 1.947-.872 1.947-1.947z"
+                />
+              </svg>
+            </div>
             <div className="flex items-center w-full">
               <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                 <div className="flex items-center">
@@ -291,6 +297,7 @@ const DocSections = ( { section, sections, searchValue } ) => {
                         section={ section }
                         articles={ articles }
                         sections={ sections }
+                        searchValue={ searchValue }
                         setShowArticles={ setShowArticles }
                         isAllowComments={ isCommentsAllowed }
                       />

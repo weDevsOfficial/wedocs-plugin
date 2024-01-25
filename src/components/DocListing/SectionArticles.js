@@ -10,7 +10,7 @@ import { useSelect } from '@wordpress/data';
 import docStore from '../../data/docs';
 import ArticleChildrens from './ArticleChildrens';
 
-const SectionArticles = ( { article, articles, isAdmin, section, sections, setShowArticles, isAllowComments } ) => {
+const SectionArticles = ( { article, articles, isAdmin, section, sections, searchValue, setShowArticles, isAllowComments } ) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable( { id: article?.id } );
 
@@ -35,32 +35,34 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, setSh
     []
   );
 
+  const filteredArticleChildrens = articleChildrens?.filter(
+    ( children ) => children?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() )
+  );
+
   if ( section ) {
     return (
       <Fragment>
         <div
-          className="flex items-center bg-white border-b border-[#D9D9D9] py-4"
+          className="flex items-center !bg-white border-b border-[#D9D9D9] py-4"
           style={ style }
           { ...attributes }
           ref={ setNodeRef }
         >
-          { isAdmin && (
-            <div className={ `pr-3.5 py-0.5 cursor-grab` }>
-              <svg
-                width="20"
-                height="21"
-                fill="none"
-                { ...listeners }
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M8.5 7.498c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 8.573 8.5 7.498zm0 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 15.467 8.5 14.392zm3-6.894c0-1.075.871-1.947 1.947-1.947s1.947.872 1.947 1.947-.872 1.947-1.947 1.947S11.5 8.573 11.5 7.498zm3.893 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.871 1.947 1.947 1.947 1.947-.872 1.947-1.947z"
-                  fill="#d9d9d9"
-                />
-              </svg>
-            </div>
-          ) }
+          <div className={ `pr-3.5 py-0.5 cursor-grab` }>
+            <svg
+              width="20"
+              height="21"
+              fill="none"
+              { ...listeners }
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M8.5 7.498c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 8.573 8.5 7.498zm0 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.872 1.947 1.947 1.947S8.5 15.467 8.5 14.392zm3-6.894c0-1.075.871-1.947 1.947-1.947s1.947.872 1.947 1.947-.872 1.947-1.947 1.947S11.5 8.573 11.5 7.498zm3.893 6.894c0-1.075-.872-1.947-1.947-1.947s-1.947.872-1.947 1.947.871 1.947 1.947 1.947 1.947-.872 1.947-1.947z"
+                fill="#d9d9d9"
+              />
+            </svg>
+          </div>
           <div className="flex items-center w-full group">
             <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
               <div className="flex items-center">
@@ -263,14 +265,17 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, setSh
           </div>
         </div>
 
-        { ( articleChildrens?.length > 0 ) && (
-          <div className={ `my-3 article-children pl-4 sm:pl-9` }>
-            { articleChildrens?.map( ( childrenDoc ) => (
+        { !isDragging && ( filteredArticleChildrens?.length > 0 ) && (
+          <div
+            style={ style }
+            className={ `my-1 article-children pl-4 sm:pl-16 bg-white` }
+          >
+            { filteredArticleChildrens?.map( ( childrenDoc ) => (
               <ArticleChildrens
-                key={ childrenDoc.id }
-                article={ childrenDoc }
                 section={ article }
                 sections={ articles }
+                key={ childrenDoc.id }
+                article={ childrenDoc }
                 setShowArticles={ setShowArticles }
                 isAllowComments={ isAllowComments }
               />

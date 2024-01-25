@@ -260,7 +260,7 @@ class API extends WP_REST_Controller {
             return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ) );
         }
 
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! current_user_can( 'edit_docs' ) ) {
             return new WP_Error( 'wedocs_permission_failure', __( 'Unauthorized permission error', 'wedocs' ) );
         }
 
@@ -288,24 +288,13 @@ class API extends WP_REST_Controller {
         }
 
         // Check current user is admin.
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! current_user_can( 'edit_docs' ) ) {
             return new WP_Error( 'wedocs_permission_failure', __( 'Unauthorized permission error', 'wedocs' ) );
         }
 
         // Check sortable status is running or not.
         if ( ! isset( $request['sortable_status'] ) ) {
             return new WP_Error( 'wedocs_required_args', __( 'Currently sortable status not given', 'wedocs' ) );
-        }
-
-        // Check currently sorting is necessary or not.
-        $need_sortable_status = get_option( 'wedocs_need_sortable_status', false );
-        if ( empty( $need_sortable_status ) ) {
-            return new WP_Error( 'wedocs_need_sorting_required', __( 'Need sortable status is required', 'wedocs' ) );
-        }
-
-        // Check documentation exists or not.
-        if ( empty( $request['documentations'] ) ) {
-            return new WP_Error( 'wedocs_required_args', __( 'Currently documentations data not found for update', 'wedocs' ) );
         }
 
         // Make sortable status running.
@@ -357,7 +346,7 @@ class API extends WP_REST_Controller {
      * @return \WP_Error|bool
      */
     public function sortable_item_permissions_check() {
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! current_user_can( 'edit_docs' ) ) {
             return new WP_Error(
                 'wedocs_permission_failure',
                 __( 'Unauthorized permission error', 'wedocs' )
