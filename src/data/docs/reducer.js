@@ -7,6 +7,7 @@ const DEFAULT_STATE = {
   userDocIds: [],
   helpfulDocs: [],
   needSorting: false,
+  restrictedArticleList: [],
 };
 
 const reducer = ( state = DEFAULT_STATE, action ) => {
@@ -80,6 +81,21 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
         ...state,
         docs: [ ...state.docs?.filter( doc => doc.id !== action.docId ) ],
         parents: [ ...state.parents?.filter( parent => parent.id !== action.docId ) ],
+      };
+
+    case 'SET_RESTRICTED_ARTICLES':
+      return {
+        ...state,
+        restrictedArticleList: [ ...action.restrictedArticleList ],
+      };
+
+    case 'SET_RESTRICTED_ARTICLE':
+      return {
+        ...state,
+        restrictedArticleList: [
+          ...state.restrictedArticleList,
+          { ...action.restrictedArticle }
+        ],
       };
 
     default:
