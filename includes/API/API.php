@@ -89,6 +89,19 @@ class API extends WP_REST_Controller {
             ],
         ] );
 
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)/', [
+            [
+                'methods'             => WP_REST_Server::DELETABLE,
+                'callback'            => array( $this, 'delete_item' ),
+                'permission_callback' => array( $this, 'delete_item_permissions_check' ),
+                'args'                => array(
+                    'force' => array(
+                        'default' => false,
+                    ),
+                ),
+            ]
+        ] );
+
         register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)/parents', [
             [
                 'methods'             => WP_REST_Server::READABLE,
@@ -712,5 +725,69 @@ class API extends WP_REST_Controller {
         }
 
         return $post;
+    }
+
+    /**
+     * Check permissions for the documentation delete.
+     *
+     * @since 2.0.0
+     *
+     * @param WP_REST_Request $request Current request.
+     *
+     * @return bool|WP_Error
+     */
+    public function delete_item_permissions_check( $request ) {
+        if ( ! current_user_can( 'edit_docs' ) ) {
+            return new WP_Error(
+                'wedocs_permission_failure',
+                __( 'You cannot delete the documentation resource.', 'wedocs' )
+            );
+        }
+
+        return true;
+    }
+
+    /**
+     * Delete a single documentation.
+     *
+     * @since 2.0.0
+     *
+     * @param WP_REST_Request $request Current request.
+     *
+     * @return WP_REST_Response|WP_Error
+     */
+    public function delete_item( $request ) {
+        $doc_id = absint( $request->get_param( 'id' ) );
+        $doc    = get_post( $doc_id );
+
+        if ( ! $doc ) {
+            return new WP_Error( 'rest_invalid_documentation', __( 'Invalid Documentation.', 'wedocs' ) );
+        }
+
+        $this->remove_child_docs( $doc_id );
+        $deleted_doc = wp_delete_post( $doc_id, true );
+
+        return rest_ensure_response( $deleted_doc );
+    }
+
+    /**
+     * Remove all children docs if exists.
+     *
+     * @since 2.0.0
+     *
+     * @param int $parent_id
+     *
+     * @return WP_REST_Response|WP_Error
+     */
+    public function remove_child_docs( $parent_id ) {
+        $childrens = get_children( array( 'post_parent' => $parent_id ) );
+
+        if ( $childrens ) {
+            foreach ( $childrens as $child_post ) {
+                // Recursively delete documentations.
+                $this->remove_child_docs( $child_post->ID );
+                wp_delete_post( $child_post->ID );
+            }
+        }
     }
 }

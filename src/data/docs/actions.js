@@ -61,6 +61,14 @@ const actions = {
     return { type: 'REMOVE_DOC', docId };
   },
 
+  setRestrictedArticles( restrictedArticleList ) {
+    return { type: 'SET_RESTRICTED_ARTICLES', restrictedArticleList };
+  },
+
+  setRestrictedArticle( restrictedArticle ) {
+    return { type: 'SET_RESTRICTED_ARTICLE', restrictedArticle };
+  },
+
   *createDoc( doc ) {
     const createdDoc = yield actions.createDocsToAPI( doc );
     yield actions.setUserDocId( createdDoc.id );
@@ -118,6 +126,7 @@ const actions = {
   *updateDocMeta( docId, meta ) {
     const path = '/wp/v2/docs/' + docId + '/meta';
     const response = yield { type: 'UPDATE_TO_API', path, data: meta };
+    yield actions.setRestrictedArticle( { id: docId, value: response } );
     return response;
   },
 
@@ -127,13 +136,18 @@ const actions = {
     return actions.removeDoc( docId );
   },
 
-  *updateParentDocs( docs ) {
-    const parentDocs = docs.filter( ( doc ) => ! doc.parent );
-    const sortableDocs = parentDocs?.sort(
-      ( a, b ) => a.menu_order - b.menu_order
+  *updateParentDocs() {
+    const getDocsPath = wp.hooks.applyFilters(
+      'wedocs_documentation_fetching_path',
+      `/wp/v2/docs?per_page=-1&status=publish${ typeof weDocsAdminVars !== 'undefined' ? ',draft' : ''}`
     );
+
+    const response = yield actions.fetchFromAPI( getDocsPath );
+    const parentDocs = response.filter( ( doc ) => ! doc.parent );
+    const sortableDocs = parentDocs?.sort( ( a, b ) => a.menu_order - b.menu_order );
+
     yield actions.setParentDocs( sortableDocs );
-    return actions.setDocs( docs );
+    return actions.setDocs( response );
   },
 
   *sendMessage( data ) {

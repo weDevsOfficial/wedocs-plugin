@@ -94,6 +94,16 @@ const selectors = {
     const { helpfulDocs } = state;
     return helpfulDocs;
   },
+
+  getRestrictedArticles( state ) {
+    const { restrictedArticleList } = state;
+    return restrictedArticleList;
+  },
+
+  getRestrictedArticle( state, id ) {
+    const { restrictedArticleList } = state;
+    return restrictedArticleList.find( ( article ) => article.id === id );
+  },
 };
 
 export default selectors;

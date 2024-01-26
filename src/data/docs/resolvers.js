@@ -58,6 +58,16 @@ const resolvers = {
       );
     yield actions.setHelpfulDocs( helpfulDocs );
   },
+
+  *getRestrictedArticles() {
+    const response = yield actions.fetchFromAPI( '/wp/v2/docs/meta?key=wedocs_restrict_admin_article_access' );
+    return yield actions.setRestrictedArticles( response );
+  },
+
+  *getRestrictedArticle( state, id ) {
+    const { restrictedArticleList } = state;
+    return restrictedArticleList.find( ( article ) => article.id === id );
+  },
 };
 
 export default resolvers;

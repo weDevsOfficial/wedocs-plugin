@@ -69,11 +69,9 @@ const Migrate = () => {
                 }
 
                 if ( data?.progress && data?.progress === 100 ) {
-                    resolveSelect( docsStore ).getDocs().then( docs => {
-                        dispatch( docsStore ).updateParentDocs( docs ).then( () => {
-                            setNeedMigrate( false );
-                            setMigrationSuccess( true );
-                        } );
+                    dispatch( docsStore ).updateParentDocs().then( ( docs ) => {
+                        setNeedMigrate( false );
+                        setMigrationSuccess( true );
                     } );
                 }
             },

@@ -121,32 +121,32 @@ msgstr ""
 msgid "Thanks for your feedback."
 msgstr ""
 
-#: includes/API/API.php:125
+#: includes/API/API.php:138
 msgid "Limit results to those matching a string."
 msgstr ""
 
-#: includes/API/API.php:132
+#: includes/API/API.php:145
 msgid "The ID for the parent of the object."
 msgstr ""
 
-#: includes/API/API.php:137
+#: includes/API/API.php:150
 msgid "Current page of the collection."
 msgstr ""
 
-#: includes/API/API.php:145
+#: includes/API/API.php:158
 msgid "Maximum number of items to be returned in result set."
 msgstr ""
 
-#: includes/API/API.php:176
+#: includes/API/API.php:189
 msgid "Documentations data"
 msgstr ""
 
-#: includes/API/API.php:210
+#: includes/API/API.php:223
 msgid "Collective documents object"
 msgstr ""
 
-#: includes/API/API.php:260
-#: includes/API/API.php:287
+#: includes/API/API.php:273
+#: includes/API/API.php:300
 msgid "You are not currently logged in."
 msgstr ""
 
@@ -156,8 +156,8 @@ msgstr ""
 msgid "Unauthorized permission error"
 msgstr ""
 
-#: includes/API/API.php:268
-#: includes/API/API.php:297
+#: includes/API/API.php:281
+#: includes/API/API.php:310
 msgid "Currently sortable status not given"
 msgstr ""
 
@@ -171,6 +171,14 @@ msgstr ""
 
 #: includes/API/API.php:688
 msgid "No email given"
+msgstr ""
+
+#: includes/API/API.php:754
+msgid "You cannot delete the documentation resource."
+msgstr ""
+
+#: includes/API/API.php:775
+msgid "Invalid Documentation."
 msgstr ""
 
 #: includes/API/SettingsApi.php:79
