@@ -5675,6 +5675,10 @@ html.wp-toolbar {
     padding-bottom: 1rem;
   }
 
+  .sm\:pl-16 {
+    padding-left: 4rem;
+  }
+
   .sm\:pl-6 {
     padding-left: 1.5rem;
   }
