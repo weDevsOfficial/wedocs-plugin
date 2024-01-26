@@ -2,14 +2,14 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 2.1.1\n"
+"Project-Id-Version: weDocs 2.1.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-11T10:12:20+00:00\n"
+"POT-Creation-Date: 2024-01-26T10:08:02+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -152,7 +152,7 @@ msgstr ""
 
 #: includes/API/API.php:264
 #: includes/API/API.php:292
-#: includes/API/API.php:363
+#: includes/API/API.php:352
 msgid "Unauthorized permission error"
 msgstr ""
 
@@ -161,23 +161,15 @@ msgstr ""
 msgid "Currently sortable status not given"
 msgstr ""
 
-#: includes/API/API.php:303
-msgid "Need sortable status is required"
-msgstr ""
-
-#: includes/API/API.php:308
-msgid "Currently documentations data not found for update"
-msgstr ""
-
-#: includes/API/API.php:609
+#: includes/API/API.php:598
 msgid "The page number requested is larger than the number of pages available."
 msgstr ""
 
-#: includes/API/API.php:695
+#: includes/API/API.php:684
 msgid "No name given"
 msgstr ""
 
-#: includes/API/API.php:699
+#: includes/API/API.php:688
 msgid "No email given"
 msgstr ""
 
@@ -241,31 +233,31 @@ msgstr ""
 msgid "Doc navigation"
 msgstr ""
 
-#: includes/functions.php:397
+#: includes/functions.php:402
 msgid "[%1$s] New Doc Feedback: \"%2$s\""
 msgstr ""
 
-#: includes/functions.php:399
+#: includes/functions.php:404
 msgid "New feedback on your doc \"%s\""
 msgstr ""
 
-#: includes/functions.php:400
+#: includes/functions.php:405
 msgid "Author: %1$s (IP: %2$s)"
 msgstr ""
 
-#: includes/functions.php:401
+#: includes/functions.php:406
 msgid "Email: %s"
 msgstr ""
 
-#: includes/functions.php:402
+#: includes/functions.php:407
 msgid "Feedback: %s"
 msgstr ""
 
-#: includes/functions.php:403
+#: includes/functions.php:408
 msgid "Doc Permalink: %s"
 msgstr ""
 
-#: includes/functions.php:404
+#: includes/functions.php:409
 msgid "Edit Doc: %s"
 msgstr ""
 
@@ -567,22 +559,25 @@ msgstr ""
 
 #: templates/single-docs.php:108
 #: assets/build/index.js:1
-#: src/components/DocListing/SectionArticles.js:230
+#: src/components/DocListing/ArticleChildrens.js:197
+#: src/components/DocListing/SectionArticles.js:243
 msgid "Updated on %s"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocActions.js:80
-#: src/components/DocListing/DocSections.js:183
+#: src/components/DocListing/ArticleChildrens.js:109
+#: src/components/DocListing/DocSections.js:189
 #: src/components/DocListing/ListingHeader.js:44
-#: src/components/DocListing/SectionArticles.js:142
+#: src/components/DocListing/SectionArticles.js:155
 msgid "Edit"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:209
+#: src/components/DocListing/ArticleChildrens.js:130
+#: src/components/DocListing/DocSections.js:215
 #: src/components/DocListing/ListingHeader.js:68
-#: src/components/DocListing/SectionArticles.js:163
+#: src/components/DocListing/SectionArticles.js:176
 msgid "View on Web"
 msgstr ""
 
@@ -590,10 +585,11 @@ msgstr ""
 #: src/components/AddArticleModal.js:215
 #: src/components/AddDocModal.js:180
 #: src/components/AddSectionModal.js:175
-#: src/components/DocListing/DocSections.js:159
+#: src/components/DocListing/ArticleChildrens.js:69
+#: src/components/DocListing/DocSections.js:165
 #: src/components/DocListing/ListingHeader.js:87
 #: src/components/DocListing/QuickEditModal.js:251
-#: src/components/DocListing/SectionArticles.js:102
+#: src/components/DocListing/SectionArticles.js:115
 #: src/components/Documentations/ParentDocs.js:96
 msgid "Draft"
 msgstr ""
@@ -723,7 +719,8 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocActions.js:69
-#: src/components/DocListing/SectionArticles.js:115
+#: src/components/DocListing/ArticleChildrens.js:82
+#: src/components/DocListing/SectionArticles.js:128
 msgid "Quick Edit"
 msgstr ""
 
@@ -744,7 +741,7 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocActions.js:113
-#: src/components/DocListing/DocSections.js:235
+#: src/components/DocListing/DocSections.js:241
 msgid "Delete"
 msgstr ""
 
@@ -797,12 +794,12 @@ msgid "Create and Publish"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:170
+#: src/components/DocListing/DocSections.js:176
 msgid "Create"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/DocSections.js:311
+#: src/components/DocListing/DocSections.js:316
 #: src/components/DocListing/ListingButtons.js:32
 #: src/components/Documentations/AddChildrens.js:23
 msgid "Add article"
@@ -896,7 +893,7 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: assets/build/index.js:5
-#: src/components/DocListing/index.js:127
+#: src/components/DocListing/index.js:135
 #: src/components/Documentations/index.js:114
 #: src/components/Settings/index.js:125
 msgid "weDocs database has been updated successfully"
@@ -904,14 +901,14 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: assets/build/index.js:5
-#: src/components/DocListing/index.js:128
+#: src/components/DocListing/index.js:136
 #: src/components/Documentations/index.js:115
 #: src/components/Settings/index.js:126
 msgid "Database Updated!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/index.js:221
+#: src/components/DocListing/index.js:215
 msgid "No section or article found for this documentation"
 msgstr ""
 

@@ -568,10 +568,10 @@ function wedocs_get_search_modal_active_colors() {
 /**
  * Control displaying content length.
  *
- * @since WEDOCS_SINCE
+ * @since 2.1.1
  *
  * @param string $content
- * @param int $max_content_number
+ * @param int    $max_content_number
  *
  * @return string
  */
