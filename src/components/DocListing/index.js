@@ -64,9 +64,17 @@ const ListingPage = () => {
     []
   );
 
-  const filteredArticles = docArticles?.filter( ( doc ) =>
-    doc?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() )
-  );
+  const filteredArticles = docArticles?.filter( ( article ) => {
+    let matched = article?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() );
+    if ( ! matched ) {
+      docs?.map( doc => {
+        if ( doc?.parent !== article?.id ) return;
+        let childMatched = doc?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() );
+        if ( childMatched ) return matched = childMatched;
+      } );
+    }
+    return matched;
+  } );
 
   const { need_upgrade, status } = useSelect(
     ( select ) => select( settingsStore ).getUpgradeInfo(),
@@ -167,39 +175,25 @@ const ListingPage = () => {
           { ! loading && (
             <>
             { sections.length > 0 ? (
-              <>
-                { isAdmin ? (
-                  <DraggableDocs
-                    setItems={ setSections }
-                    setNeedSortingStatus={ setNeedSortingStatus }
-                  >
-                    <SortableContext
-                      items={ sections }
-                      strategy={ verticalListSortingStrategy }
-                    >
-                      { sections?.map( ( section ) => (
-                        <DocSections
-                          key={ section.id }
-                          section={ section }
-                          sections={ sections }
-                          searchValue={ searchValue }
-                        />
-                      ) ) }
-                    </SortableContext>
-                  </DraggableDocs>
-                ) : (
-                  <>
-                    { sections?.map( ( section ) => (
-                      <DocSections
-                        key={ section.id }
-                        section={ section }
-                        sections={ sections }
-                        searchValue={ searchValue }
-                      />
-                    ) ) }
-                  </>
-                ) }
-              </>
+              <DraggableDocs
+                setItems={ setSections }
+                setNeedSortingStatus={ setNeedSortingStatus }
+              >
+                <SortableContext
+                  items={ sections }
+                  strategy={ verticalListSortingStrategy }
+                >
+                  { sections?.map( ( section ) => (
+                    <DocSections
+                      docs={ docs }
+                      key={ section.id }
+                      section={ section }
+                      sections={ sections }
+                      searchValue={ searchValue }
+                    />
+                  ) ) }
+                </SortableContext>
+              </DraggableDocs>
             ) : (
               <div className="space-y-4 mb-3">
                 <div className="bg-white shadow sm:rounded-md">

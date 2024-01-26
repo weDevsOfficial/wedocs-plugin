@@ -5,7 +5,7 @@ Tags: WordPress documentation plugin, WordPress docs plugin, Documentation, Know
 Requires at least: 5.6
 Tested up to: 6.4.2
 Requires PHP: 7.4
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -317,6 +317,14 @@ Can’t wait to join us?
 
 
 == Changelog ==
+
+= v2.1.2 (29th January, 2024) =
+
+ * **Fix:** Migrated docs reactivity issue for multiple migration.
+ * **Fix:** Documentation delete api not working for new users.
+
+ * **Enhance:** Implement article children preview for doc listing page.
+ * **Enhance:** Add section, article documentations draggable option for all users.
 
 = v2.1.1 (11nd January, 2024) =
 

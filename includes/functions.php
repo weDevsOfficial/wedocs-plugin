@@ -228,17 +228,22 @@ if ( !function_exists( 'wedocs_get_posts_children' ) ) {
      *
      * @return array
      */
-    function wedocs_get_posts_children( $parent_id, $post_type = 'page' ) {
-        $children = [];
+    function wedocs_get_posts_children( $parent_id, $post_type = 'page', $custom_args = array() ) {
+        $children = array();
 
-        // grab the posts children
-        $posts = get_posts( [
+        $default = array(
             'numberposts'      => -1,
             'post_status'      => 'publish',
             'post_type'        => $post_type,
             'post_parent'      => $parent_id,
             'suppress_filters' => false,
-        ] );
+        );
+
+        // Parse posts arguments.
+        $args = wp_parse_args( $custom_args, $default );
+
+        // grab the posts children
+        $posts = get_posts( $args );
 
         // now grab the grand children
         foreach ( $posts as $child ) {
@@ -558,4 +563,19 @@ function wedocs_get_search_modal_active_colors() {
             'active_font_color'    => '#fff',
         )
     );
+}
+
+/**
+ * Control displaying content length.
+ *
+ * @since 2.1.1
+ *
+ * @param string $content
+ * @param int    $max_content_number
+ *
+ * @return string
+ */
+function wedocs_apply_extracted_content( $content, $max_content_number ) {
+    // Control content length by substr.
+    return ( strlen( $content ) > $max_content_number ) ? substr( $content, 0, $max_content_number ) . '...' : $content;
 }
