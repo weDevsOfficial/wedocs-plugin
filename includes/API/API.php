@@ -765,7 +765,7 @@ class API extends WP_REST_Controller {
         }
 
         $this->remove_child_docs( $doc_id );
-        $deleted_doc = wp_delete_post( $doc_id, true );
+        $deleted_doc = wp_delete_post( $doc_id );
 
         return rest_ensure_response( $deleted_doc );
     }

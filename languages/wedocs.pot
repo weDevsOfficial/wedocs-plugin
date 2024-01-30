@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-26T10:08:02+00:00\n"
+"POT-Creation-Date: 2024-01-29T18:29:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -150,9 +150,9 @@ msgstr ""
 msgid "You are not currently logged in."
 msgstr ""
 
-#: includes/API/API.php:264
-#: includes/API/API.php:292
-#: includes/API/API.php:352
+#: includes/API/API.php:277
+#: includes/API/API.php:305
+#: includes/API/API.php:365
 msgid "Unauthorized permission error"
 msgstr ""
 
@@ -161,23 +161,23 @@ msgstr ""
 msgid "Currently sortable status not given"
 msgstr ""
 
-#: includes/API/API.php:598
+#: includes/API/API.php:611
 msgid "The page number requested is larger than the number of pages available."
 msgstr ""
 
-#: includes/API/API.php:684
+#: includes/API/API.php:697
 msgid "No name given"
 msgstr ""
 
-#: includes/API/API.php:688
+#: includes/API/API.php:701
 msgid "No email given"
 msgstr ""
 
-#: includes/API/API.php:754
+#: includes/API/API.php:743
 msgid "You cannot delete the documentation resource."
 msgstr ""
 
-#: includes/API/API.php:775
+#: includes/API/API.php:764
 msgid "Invalid Documentation."
 msgstr ""
 
@@ -567,14 +567,14 @@ msgstr ""
 
 #: templates/single-docs.php:108
 #: assets/build/index.js:1
-#: src/components/DocListing/ArticleChildrens.js:197
+#: src/components/DocListing/ArticleChildrens.js:198
 #: src/components/DocListing/SectionArticles.js:243
 msgid "Updated on %s"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocActions.js:80
-#: src/components/DocListing/ArticleChildrens.js:109
+#: src/components/DocListing/ArticleChildrens.js:110
 #: src/components/DocListing/DocSections.js:189
 #: src/components/DocListing/ListingHeader.js:44
 #: src/components/DocListing/SectionArticles.js:155
@@ -582,7 +582,7 @@ msgid "Edit"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/ArticleChildrens.js:130
+#: src/components/DocListing/ArticleChildrens.js:131
 #: src/components/DocListing/DocSections.js:215
 #: src/components/DocListing/ListingHeader.js:68
 #: src/components/DocListing/SectionArticles.js:176
@@ -596,19 +596,19 @@ msgstr ""
 #: src/components/DocListing/ArticleChildrens.js:69
 #: src/components/DocListing/DocSections.js:165
 #: src/components/DocListing/ListingHeader.js:87
-#: src/components/DocListing/QuickEditModal.js:251
+#: src/components/DocListing/QuickEditModal.js:253
 #: src/components/DocListing/SectionArticles.js:115
 #: src/components/Documentations/ParentDocs.js:96
 msgid "Draft"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/RestrictionModal.js:114
+#: src/components/RestrictionModal.js:115
 msgid "Are you sure you want to delete this "
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/RestrictionModal.js:120
+#: src/components/RestrictionModal.js:121
 msgid "Deleting it means it will be permanently lost, and you won't be able to retrieve it again."
 msgstr ""
 
@@ -618,11 +618,11 @@ msgstr ""
 #: src/components/AddDocModal.js:170
 #: src/components/AddSectionModal.js:165
 #: src/components/ConfirmationModal.js:140
-#: src/components/DocListing/QuickEditModal.js:241
+#: src/components/DocListing/QuickEditModal.js:243
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:199
 #: src/components/Migrations/Modals/MigrationProgressModal.js:155
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:195
-#: src/components/RestrictionModal.js:131
+#: src/components/RestrictionModal.js:132
 msgid "Cancel"
 msgstr ""
 
@@ -641,93 +641,99 @@ msgstr ""
 #: src/components/AddDocModal.js:63
 #: src/components/AddSectionModal.js:55
 #: src/components/ConfirmationModal.js:24
-#: src/components/DocListing/QuickEditModal.js:92
-#: src/components/RestrictionModal.js:36
+#: src/components/DocListing/QuickEditModal.js:93
+#: src/components/RestrictionModal.js:37
 #: src/components/Settings/index.js:53
 msgid "Error"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/RestrictionModal.js:138
+#: src/components/RestrictionModal.js:139
 msgid "Removing..."
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/ConfirmationModal.js:146
-#: src/components/RestrictionModal.js:138
+#: src/components/RestrictionModal.js:139
 msgid "I'm sure"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/AddSectionModal.js:139
-#: src/components/ComboBox.js:85
-msgid "Type a section name"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/ComboBox.js:164
-msgid "Type to write the name of new section"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:169
-msgid "Quickly edit important info of the article"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:173
-msgid "Edit article details easily"
-msgstr ""
-
-#: assets/build/index.js:1
 #: src/components/AddArticleModal.js:169
-#: src/components/DocListing/QuickEditModal.js:181
+#: src/components/ComboBox.js:87
+#: src/components/DocListing/QuickEditModal.js:182
 msgid "Type an article name"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:207
+#: src/components/AddSectionModal.js:139
+#: src/components/ComboBox.js:88
+msgid "Type a section name"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ComboBox.js:170
+msgid "Type to write the name of new article"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ComboBox.js:171
+msgid "Type to write the name of new section"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:170
+msgid "Quickly edit important info of the article"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:174
+msgid "Edit article details easily"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/QuickEditModal.js:208
 msgid "Enter your slug here"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:80
+#: src/components/DocListing/QuickEditModal.js:81
 msgid "Article has been drafted!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:80
+#: src/components/DocListing/QuickEditModal.js:81
 msgid "Article has been published!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:81
+#: src/components/DocListing/QuickEditModal.js:82
 msgid "The article has been drafted successfully"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:81
+#: src/components/DocListing/QuickEditModal.js:82
 msgid "The article has been published successfully"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:253
+#: src/components/DocListing/QuickEditModal.js:255
 msgid "Updat%s"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:267
+#: src/components/DocListing/QuickEditModal.js:269
 msgid "Update and Draft"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/QuickEditModal.js:270
+#: src/components/DocListing/QuickEditModal.js:272
 msgid "Update and Publish"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocActions.js:69
-#: src/components/DocListing/ArticleChildrens.js:82
+#: src/components/DocListing/ArticleChildrens.js:83
 #: src/components/DocListing/SectionArticles.js:128
 msgid "Quick Edit"
 msgstr ""
@@ -845,22 +851,22 @@ msgid "Add section"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/SearchFilter.js:11
+#: src/components/SearchFilter.js:21
 msgid "💡 Feedback"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/SearchFilter.js:17
+#: src/components/SearchFilter.js:27
 msgid "Search by %s"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/SearchFilter.js:19
+#: src/components/SearchFilter.js:29
 msgid "article name"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/SearchFilter.js:20
+#: src/components/SearchFilter.js:30
 msgid "document name"
 msgstr ""
 
@@ -1109,7 +1115,7 @@ msgstr ""
 #: assets/build/index.js:1
 #: assets/build/index.js:5
 #: src/components/Documentations/EmptyDocs.js:84
-#: src/components/Migrations/index.js:203
+#: src/components/Migrations/index.js:201
 msgid "Learn more "
 msgstr ""
 
@@ -1257,42 +1263,42 @@ msgid "Continue"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/index.js:193
+#: src/components/Migrations/index.js:191
 msgid "Migration has been successful"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/index.js:193
+#: src/components/Migrations/index.js:191
 msgid "Migrate existing docs from BetterDocs to weDocs"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/index.js:206
+#: src/components/Migrations/index.js:204
 msgid "All existing docs have been successfully migrated from BetterDocs to weDocs."
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/index.js:206
+#: src/components/Migrations/index.js:204
 msgid "how to migrate docs"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/index.js:227
+#: src/components/Migrations/index.js:225
 msgid "Already Migrated"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/index.js:243
+#: src/components/Migrations/index.js:241
 msgid "Start Migration"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/index.js:270
+#: src/components/Migrations/index.js:268
 msgid "Go back to Docs"
 msgstr ""
 
 #: assets/build/index.js:5
-#: src/components/Migrations/index.js:290
+#: src/components/Migrations/index.js:288
 msgid "Migration not required"
 msgstr ""
 
