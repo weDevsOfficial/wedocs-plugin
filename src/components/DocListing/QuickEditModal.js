@@ -9,6 +9,7 @@ import { ChevronDownIcon, ExclamationCircleIcon } from '@heroicons/react/20/soli
 import { handleDocCreationByRef } from '../../utils/helper';
 
 const QuickEditModal = ( {
+  type,
   docId,
   article,
   children,
@@ -226,11 +227,12 @@ const QuickEditModal = ( {
                   </div>
 
                   <ComboBox
+                    type={ type }
+                    docId={ docId }
                     sections={ sections }
                     selectSectionId={ setSectionId }
-                    defaultSection={ defaultSection?.title?.rendered }
                     isFormError={ formError.sectionId }
-                    docId={ docId }
+                    defaultSection={ defaultSection?.title?.rendered }
                   />
 
                   <div className="mt-6 flex items-center justify-center space-x-3.5">

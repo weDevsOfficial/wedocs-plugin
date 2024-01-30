@@ -33,8 +33,9 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           timer             : 2000,
           position          : 'bottom-end',
           showConfirmButton : false,
+          // Your article has been successfully drafted
           text              : __(
-            `${ type === 'doc' ? 'Documentation' : 'Article documentation' } has been ${doc?.status === 'draft' ? 'published' : 'drafted' } successfully`,
+            `${ type === 'doc' ? 'Your documentation' : 'Your article' } has been successfully ${doc?.status === 'draft' ? 'published' : 'drafted' }`,
             'wedocs'
           ),
         } );
