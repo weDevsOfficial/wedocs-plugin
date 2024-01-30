@@ -12,11 +12,12 @@ import docStore from '../data/docs';
 import he from 'he';
 
 const ComboBox = ( {
+  type,
+  docId,
   sections,
+  isFormError,
   defaultSection,
   selectSectionId,
-  isFormError,
-  docId,
 } ) => {
   const { id } = useParams();
 
@@ -82,7 +83,10 @@ const ComboBox = ( {
     >
       <div className="relative mb-5">
         <Combobox.Input
-          placeholder={ __( 'Type a section name', 'wedocs' ) }
+          placeholder={
+            type && type === 'article' ? __( 'Type an article name', 'wedocs' ) :
+            __( 'Type a section name', 'wedocs' )
+          }
           required
           className={ `${
             isFormError
@@ -161,7 +165,13 @@ const ComboBox = ( {
                 <span className="dashicons dashicons-plus text-xs mt-1.5"></span>
                 { sectionTitle }
               </>
-            ) : __( 'Type to write the name of new section', 'wedocs' ) }
+            ) : (
+              <>
+                { type && type === 'article' ? __( 'Type to write the name of new article', 'wedocs' ) :
+                  __( 'Type to write the name of new section', 'wedocs' )
+                }
+              </>
+            ) }
           </Combobox.Option>
         </Combobox.Options>
       </div>

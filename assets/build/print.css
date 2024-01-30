@@ -1,3 +1,6 @@
+/*!*********************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./src/assets/less/print.less ***!
+  \*********************************************************************************************************************/
 a.wedocs-print-article {
   position: absolute;
   right: 0;
@@ -179,3 +182,5 @@ table td {
   display: none;
 }
 
+
+/*# sourceMappingURL=print.css.map*/

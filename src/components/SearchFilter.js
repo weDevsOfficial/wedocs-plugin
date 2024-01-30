@@ -1,8 +1,53 @@
 import { __, sprintf } from '@wordpress/i18n';
+import { useEffect } from '@wordpress/element';
 
 const SearchFilter = ( { handleChange, searchValue, listing } ) => {
+  useEffect( () => {
+    // Dynamically load the Headway script and initialize with your public key
+    const script = document.createElement( 'script' );
+    script.src = 'https://cdn.headwayapp.co/widget.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      // Initialize Headway with your public key.
+      window.Headway.init({
+        selector: "#HW_badge_container",
+        account: '7kzePx'
+      });
+    };
+
+    // Clean up the script when the component unmounts
+    return () => document.body.removeChild( script );
+  }, [] );
+
+  const openHeadwayWidget = () => {
+    // Open the Headway widget
+    window.Headway.show();
+  };
+
   return (
     <div className={ `flex items-center space-x-4 text-xl` }>
+      <span
+        id={ `HW_badge_container` }
+        data-tip={ __( 'Changelog', 'weDocs' ) }
+        className={ `flex items-center justify-center tooltip` }
+      >
+        <svg
+          fill="none"
+          id="HW_badge"
+          strokeWidth="1"
+          viewBox="0 0 24 24"
+          onClick={ openHeadwayWidget }
+          className="w-8 h-8 hover:cursor-pointer stroke-indigo-300 absolute mt-0.5"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3"
+          />
+        </svg>
+      </span>
       <a
         target={ `_blank` }
         href={ `https://forms.gle/i8HArn6nMqifW4Tk7` }

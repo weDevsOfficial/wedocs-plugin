@@ -23,8 +23,10 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
         ...state,
         docs: [ ...state.docs, action.doc ],
       };
-      if ( !action.doc.parent ) {
-        setDocState.parents = [ action.doc, ...state.parents ];
+
+      const isNotInParent = !state.parents.some( parent => parent?.id === action?.doc?.id );
+      if ( !action.doc.parent && isNotInParent ) {
+        setDocState.parents = [ { ...action.doc }, ...state.parents ];
       }
       return setDocState;
 

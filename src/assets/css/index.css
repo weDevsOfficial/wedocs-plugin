@@ -32,6 +32,11 @@ html.wp-toolbar {
     padding-bottom: 40px;
 }
 
+.HW_visible {
+    position: absolute;
+    margin-top: 2px;
+}
+
 @media screen and (max-width: 782px) {
     #wpcontent {
         padding: 0 25px !important;
