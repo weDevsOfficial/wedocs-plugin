@@ -14,3 +14,5 @@ jobs:
       env:
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+        SLUG: wedocs
+        IGNORE_OTHER_FILES: true
