@@ -48,25 +48,23 @@ Let’s check out what Mr. Web shared about weDocs
 
 
 
-👏 “Really love the system for adding posts. Wish all of WP had this kind of editor. The doc features are just enough, and it’s a good starting point to develop with.” - [jdh1178](https://profiles.wordpress.org/jhinden/)
+> 👏 “Really love the system for adding posts. Wish all of WP had this kind of editor. The doc features are just enough, and it’s a good starting point to develop with.” - [jdh1178](https://profiles.wordpress.org/jhinden/)
 
 
-👏 "I have tried different Docs plugins for WordPress. This is simply the best. Pros: 1. Easy to use 2. Light-weight. This is extremely important. Some search engines will put limit on the page size. I used other Docs plugins, which add heavy codes to each page. The result is a huge penalty on the website ranking. 3. Multiple docs support." - [dhunter2023](https://profiles.wordpress.org/dhunter2023/)
+> 👏 "I have tried different Docs plugins for WordPress. This is simply the best. Pros: 1. Easy to use 2. Light-weight. This is extremely important. Some search engines will put limit on the page size. I used other Docs plugins, which add heavy codes to each page. The result is a huge penalty on the website ranking. 3. Multiple docs support." - [dhunter2023](https://profiles.wordpress.org/dhunter2023/)
 
 
-👏 “We are very happy with the plugin so far. Here, many corners and edges were thought of as extensible. That is super.” - [Pixelbart](https://profiles.wordpress.org/pixelbart/)
-
-
-
-👏 “The plugin is very easy to use. It makes creating the documentation quite easy. It also displays them with a reasonable appearance. The documentation is also very straightforward. It also does not bother you with rate us notifications. I highly recommend it.” - [turzifer](https://profiles.wordpress.org/turzifer/)
+> 👏 “We are very happy with the plugin so far. Here, many corners and edges were thought of as extensible. That is super.” - [Pixelbart](https://profiles.wordpress.org/pixelbart/)
 
 
 
-👏 “This documentation system is just perfect for my needs. It can be understood quickly (by the developer), it is for multiple products, and for each, I can write articles and sub-articles. All is correctly placed into the URL by Slugs. I’d just desire a bit more configuration—some visual design. But I can do this with CSS, and out-of-the-box this plugin is doing its task perfectly. I can even write articles using Elementor, and it displays fine. Also, a search box would be nice to have. Thank you!" - [mice777](https://profiles.wordpress.org/mice777/)
+> 👏 “The plugin is very easy to use. It makes creating the documentation quite easy. It also displays them with a reasonable appearance. The documentation is also very straightforward. It also does not bother you with rate us notifications. I highly recommend it.” - [turzifer](https://profiles.wordpress.org/turzifer/)
 
 
+> 👏 “This documentation system is just perfect for my needs. It can be understood quickly (by the developer), it is for multiple products, and for each, I can write articles and sub-articles. All is correctly placed into the URL by Slugs. I’d just desire a bit more configuration—some visual design. But I can do this with CSS, and out-of-the-box this plugin is doing its task perfectly. I can even write articles using Elementor, and it displays fine. Also, a search box would be nice to have. Thank you!" - [mice777](https://profiles.wordpress.org/mice777/)
 
-👏 “In one word: amazing. This plugin does what it says. I encountered no problems and found it extremely easy to work with. I recommend this to anyone who wants to set up solid product documentation.” - [Drazen Bebic](https://profiles.wordpress.org/drazenbebic/)
+
+> 👏 “In one word: amazing. This plugin does what it says. I encountered no problems and found it extremely easy to work with. I recommend this to anyone who wants to set up solid product documentation.” - [Drazen Bebic](https://profiles.wordpress.org/drazenbebic/)
 
 
 
