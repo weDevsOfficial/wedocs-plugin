@@ -340,6 +340,11 @@ class API extends WP_REST_Controller {
         $doc_ids = ! empty( $request['docIds'] ) ? array_map( 'intval', $request['docIds'] ) : array();
 
         foreach ( $doc_ids as $doc_id ) {
+            $doc_status = get_post_status( $doc_id );
+            if ( $doc_status === 'draft' ) {
+                continue;
+            }
+
             $post_data = array(
                 'ID'          => $doc_id,
                 'post_status' => ! empty( $request['status'] ) ? sanitize_text_field( $request['status'] ) : 'publish',
@@ -765,7 +770,7 @@ class API extends WP_REST_Controller {
         }
 
         $this->remove_child_docs( $doc_id );
-        $deleted_doc = wp_delete_post( $doc_id );
+        $deleted_doc = wp_trash_post( $doc_id );
 
         return rest_ensure_response( $deleted_doc );
     }
