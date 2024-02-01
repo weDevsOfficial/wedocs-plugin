@@ -16,7 +16,7 @@ Struggling to manage your product’s knowledge base? Or are you looking to prod
 It is difficult to manually maintain and create wikis, guidelines, documentation, and product knowledge bases. Having an aligned knowledge base is crucial, especially for online service-based products and WordPress plugins and themes. It facilitates users' exploration, education, and product knowledge.
 
 
-<img src="https://wedocs.co/wp-content/uploads/2024/02/Dashboard.png" alt="Dashboard Overview" title="weDocs Dashboard Overview" />
+![Screenshot of weDocs Dashboard](https://wedocs.co/wp-content/uploads/2024/02/Dashboard.png)
 
 
 💎 🚀 ✨ 🔥 💡 🎉 ⭐  [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/)  💎 🚀 ✨ 🔥 💡 🎉 ⭐
