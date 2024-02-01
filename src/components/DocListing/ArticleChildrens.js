@@ -82,6 +82,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                         type={ `article` }
                         article={ article }
                         sections={ sections }
+                        docId={ section?.parent }
                         defaultSection={ section }
                         setShowArticles={ setShowArticles }
                         className={ `hidden group-hover:block mr-4` }

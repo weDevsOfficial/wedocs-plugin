@@ -77,11 +77,13 @@ const actions = {
   },
 
   *updateDoc( docId, data ) {
+    const getDocsPath = wp.hooks.applyFilters(
+      'wedocs_documentation_fetching_path',
+      `/wp/v2/docs?per_page=-1&status=publish${ typeof weDocsAdminVars !== 'undefined' ? ',draft' : ''}`
+    );
     const path = '/wp/v2/docs/' + docId;
     yield { type: 'UPDATE_TO_API', path, data };
-    const response = yield actions.fetchFromAPI(
-      '/wp/v2/docs?per_page=-1&status=publish,draft,private'
-    );
+    const response = yield actions.fetchFromAPI( getDocsPath );
     const parentDocs = response.filter( ( doc ) => ! doc.parent );
     const sortableDocs = parentDocs?.sort(
       ( a, b ) => a.menu_order - b.menu_order

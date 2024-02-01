@@ -7,6 +7,7 @@ import docStore from '../../data/docs';
 import ComboBox from './../ComboBox';
 import { ChevronDownIcon, ExclamationCircleIcon } from '@heroicons/react/20/solid';
 import { handleDocCreationByRef } from '../../utils/helper';
+import he from 'he';
 
 const QuickEditModal = ( {
   type,
@@ -36,7 +37,10 @@ const QuickEditModal = ( {
     []
   );
 
+  const [ inputValue, setInputValue ] = useState(  '' );
+
   const onTitleChange = ( e ) => {
+    setInputValue( e.target.value );
     setNewArticle( { ...newArticle, title: { raw: e.target.value } } );
     setFormError( { ...formError, title: e.target.value.length === 0 } );
   };
@@ -131,6 +135,13 @@ const QuickEditModal = ( {
   // Crete article on enter click.
   handleDocCreationByRef( docCreateBtnRef );
 
+  // Update inputValue when newArticle changes
+  useEffect(() => {
+    if ( he.decode( newArticle?.title?.rendered || '' ) ) {
+      setInputValue( he.decode( newArticle?.title?.rendered || '' ) );
+    }
+  }, [ newArticle?.title?.rendered ] );
+
   return (
     <Fragment>
       <button type="button" onClick={ openModal } className={ className }>
@@ -186,7 +197,7 @@ const QuickEditModal = ( {
                           ? '!border-red-500 focus:ring-red-500 focus:border-red-500'
                           : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500'
                       } h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white` }
-                      value={ newArticle?.title?.rendered }
+                      value={ inputValue }
                       onChange={ onTitleChange }
                     />
 
