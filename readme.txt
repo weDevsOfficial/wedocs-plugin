@@ -35,7 +35,7 @@ Apart from creating a knowledgebase for your products, weDocs gives you role-bas
 
 🎉Introducing the Next Gen of weDocs - The Ultimate WordPress Documentation Plugin
 
-[https://youtu.be/9E7ZJetD2WU?si=1qI3Z-u1gWt0RN-7]
+[youtube https://youtu.be/9E7ZJetD2WU?si=1qI3Z-u1gWt0RN-7?rel=0]
 
 
 **What users say about weDocs**
@@ -44,7 +44,7 @@ Apart from creating a knowledgebase for your products, weDocs gives you role-bas
 Let’s check out what Mr. Web shared about weDocs
 
 
-[https://youtu.be/TFXsyB09VJQ?si=k56S-YEjYIUUEMdO]
+[youtube https://youtu.be/TFXsyB09VJQ?si=k56S-YEjYIUUEMdO??rel=0]
 
 
 
