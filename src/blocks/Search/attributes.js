@@ -1,7 +1,9 @@
+import { __ } from '@wordpress/i18n';
+
 const attributes = {
     placeholder: {
         type: 'string',
-        default: 'Search...'
+        default: __( 'Search for a top or question', 'wedocs' ),
     },
     alignment: {
         type: 'string',

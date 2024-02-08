@@ -1,9 +1,9 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps } from '@wordpress/block-editor';
+import { Fragment } from '@wordpress/element';
 
+import { useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, RangeControl, TextControl } from '@wordpress/components';
 import { InspectorControls, BlockControls, AlignmentToolbar, ColorPalette } from '@wordpress/block-editor';
-import { Fragment } from '@wordpress/element';
 
 const Edit = ({ attributes, setAttributes }) => {
     const blockProps = useBlockProps();
@@ -36,8 +36,9 @@ const Edit = ({ attributes, setAttributes }) => {
             <InspectorControls>
                 <PanelBody title={__('Search Bar Settings', 'wedocs')}>
                     <TextControl
-                        label={__('Placeholder Text', 'wedocs')}
+                        label={__('Placeholder', 'wedocs')}
                         value={placeholder}
+                        placeholder={__( 'Search bar placeholder', 'wedocs' )}
                         onChange={(newPlaceholder) => setAttributes({ placeholder: newPlaceholder })}
                     />
                     <RangeControl
