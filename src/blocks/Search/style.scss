@@ -1,9 +1,8 @@
-.wedocs-search-input {
+.wedocs-search-input,
+.wedocs-editor-search-input {
     width: 50%;
     display: flex;
-    margin-left: auto;
     position: relative;
-    margin-bottom: 4%;
 
     .search-field {
         margin: 0;
@@ -39,5 +38,50 @@
         position: absolute;
         align-items: center;
         border-radius: 100px;
+    }
+}
+
+.wedocs-search-input {
+    margin-left: auto;
+    margin-bottom: 4%;
+}
+
+.wedocs-search-color-settings{
+    .block-editor-panel-color-gradient-settings {
+        border-top: 0;
+        padding-left: 0;
+        padding-right: 0;
+
+        .block-editor-tools-panel-color-gradient-settings__item.first {
+            margin-top: 0;
+        }
+    }
+}
+
+.radio-image-control-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .radio-image-option {
+        margin-right: 10px;
+    }
+
+    .radio-image-option label {
+        cursor: pointer;
+        display: block;
+    }
+
+    .radio-image-option input[type="radio"] {
+        display: none;
+    }
+
+    .radio-image-option label i,
+    .radio-image-option label img {
+        width: 30px;
+        height: 30px;
+        display: block;
+        background-size: cover;
+        background-position: center;
     }
 }
