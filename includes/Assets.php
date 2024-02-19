@@ -79,6 +79,12 @@ class Assets {
                 $block_dependencies['version'],
                 true
             );
+
+            wp_localize_script(
+                'wedocs-block-script',
+                'weDocsBlockVars',
+                array( 'siteUrl' => site_url() ),
+            );
         }
 
         wp_enqueue_style( 'wedocs-block-style' );

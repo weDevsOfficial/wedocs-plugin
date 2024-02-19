@@ -1,6 +1,18 @@
 import { __ } from '@wordpress/i18n';
 
 const attributes = {
+    showSearch: {
+        type: 'boolean',
+        default: true, // Default value when the block is first inserted
+    },
+    searchWidth: {
+        type: 'number',
+        default: 50, // Default width in pixels
+    },
+    widthUnit: {
+        type: 'string',
+        default: '%', // Default unit in percent
+    },
     placeholder: {
         type: 'string',
         default: __( 'Search for a top or question', 'wedocs' ),
@@ -11,11 +23,11 @@ const attributes = {
     },
     bgColor: {
         type: 'string',
-        default: '#ffffff' // Default background color
+        default: '#FFFFFF' // Default background color
     },
     hoverColor: {
         type: 'string',
-        default: '#ffffff' // Default background color
+        default: '#FFFFFF' // Default background color
     },
     padding: {
         type: 'object',
@@ -32,7 +44,7 @@ const attributes = {
             top: 0,
             left: 0,
             right: 0,
-            bottom: '4%',
+            bottom: 0,
         }, // Default padding.
     },
     borderColor: {
@@ -49,11 +61,11 @@ const attributes = {
     },
     borderRadius: {
         type: 'number',
-        default: 100 // Default border radius
+        default: 30 // Default border radius
     },
     iconColor: {
         type: 'string',
-        default: '#ffffff' // Default icon color
+        default: '#FFFFFF' // Default icon color
     },
     iconBgColor: {
         type: 'string',
@@ -62,7 +74,32 @@ const attributes = {
     iconHoverColor: {
         type: 'string',
         default: '#2563eb' // Default icon hover color
-    }
+    },
+    svgHoverColor: {
+        type: 'string',
+        default: '#FFFFFF' // Default icon hover color
+    },
+    btnPadding: {
+        type: 'object',
+        default: {
+            top: 24,
+            left: 26,
+            right: 26,
+            bottom: 24,
+        }, // Default padding.
+    },
+    btnPosition: {
+        type: 'object',
+        default: {
+            top: 0,
+            right: 0,
+            bottom: 10,
+        }, // Default padding.
+    },
+    btnRadius: {
+        type: 'number',
+        default: 30 // Default border radius
+    },
 }
 
 export default attributes;

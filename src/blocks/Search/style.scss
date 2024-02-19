@@ -2,6 +2,7 @@
 .wedocs-editor-search-input {
     width: 50%;
     display: flex;
+    overflow: hidden;
     position: relative;
 
     .search-field {
@@ -46,7 +47,15 @@
     margin-bottom: 4%;
 }
 
-.wedocs-search-color-settings{
+.wedocs-search-toggle {
+    margin-bottom: 0 !important;
+
+    .components-h-stack {
+        flex-direction: row-reverse;
+    }
+}
+
+.wedocs-search-color-settings {
     .block-editor-panel-color-gradient-settings {
         border-top: 0;
         padding-left: 0;
@@ -84,4 +93,15 @@
         background-size: cover;
         background-position: center;
     }
+}
+
+.backdrop {
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    opacity: 0.5;
+    height: 100%;
+    background: #FFF;
+    position: absolute;
 }

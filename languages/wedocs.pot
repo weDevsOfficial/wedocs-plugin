@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-02-06T05:14:35+00:00\n"
+"POT-Creation-Date: 2024-02-16T07:11:18+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -533,7 +533,7 @@ msgstr ""
 msgid "No, Thanks"
 msgstr ""
 
-#: templates/shortcode.php:81
+#: templates/shortcode.php:89
 msgid "This document has no sections yet. Check back later or wait for the author to add content."
 msgstr ""
 
@@ -570,6 +570,201 @@ msgstr ""
 #: src/components/DocListing/ArticleChildrens.js:202
 #: src/components/DocListing/SectionArticles.js:275
 msgid "Updated on %s"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/CustomControls/UnitControl.js:16
+msgid "Unit"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/attributes.js:18
+msgid "Search for a top or question"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:47
+msgid "Align left"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:55
+msgid "Align center"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:64
+msgid "Align right"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:106
+msgid "Solid"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:107
+msgid "Dotted"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:108
+msgid "Dashed"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:109
+msgid "Double"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:110
+msgid "Groove"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:111
+msgid "Ridge"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:112
+msgid "Inset"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:113
+msgid "Outset"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:114
+msgid "None"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:115
+msgid "Hidden"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:125
+msgid "Disable Block"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:131
+msgid "Color Settings"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:137
+msgid "Field Background Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:142
+msgid "Field Hover Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:147
+msgid "Border Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:152
+msgid "Button Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:157
+msgid "Icon Background Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:162
+msgid "Button Hover Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:167
+msgid "Icon Hover Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:173
+msgid "Search Bar Settings"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:177
+msgid "Field Width"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:183
+msgid "Placeholder"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:184
+msgid "Search bar placeholder"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:187
+msgid "POSITION"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:201
+msgid "Field Padding"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:212
+msgid "Field Margin"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:219
+msgid "Border Width"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:226
+msgid "Border Radius"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:232
+msgid "Border Type"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:243
+msgid "Button Padding"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:253
+msgid "Button Margin"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:260
+msgid "Button Radius"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/index.js:16
+msgid "weDocs -  Searchbar"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/index.js:19
+msgid "Simple search forms for easy user guidance for your documentation"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1045,31 +1240,41 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:190
-msgid "Helpful Feedback on Article"
+msgid "Enable searchbar on docs home"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:194
-msgid "Enabling helpful feedback on your article allows readers to provide opinions on your content"
+msgid "Enable searchbar on docs homepage, applicable only for those using the [weDocs] shortcode"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:236
-msgid "Allow Comments on Article"
+msgid "Helpful Feedback on Article"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:240
-msgid "Increase reader engagement by turning on comments"
+msgid "Enabling helpful feedback on your article allows readers to provide opinions on your content"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:282
-msgid "Allow Article Printing"
+msgid "Allow Comments on Article"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:286
+msgid "Increase reader engagement by turning on comments"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:328
+msgid "Allow Article Printing"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:332
 msgid "Allow users to print articles directly from the website"
 msgstr ""
 
