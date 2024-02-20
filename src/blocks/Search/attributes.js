@@ -1,9 +1,9 @@
 import { __ } from '@wordpress/i18n';
 
 const attributes = {
-    showSearch: {
+    hideSearch: {
         type: 'boolean',
-        default: true, // Default value when the block is first inserted
+        default: false, // Default value when the block is first inserted
     },
     searchWidth: {
         type: 'number',

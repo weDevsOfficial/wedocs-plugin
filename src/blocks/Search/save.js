@@ -12,7 +12,7 @@ const Save = ({ attributes } ) => {
         widthUnit,
         hoverColor,
         borderType,
-        showSearch,
+        hideSearch,
         btnPadding,
         searchWidth,
         btnPosition,
@@ -25,7 +25,7 @@ const Save = ({ attributes } ) => {
         iconHoverColor,
     } = attributes;
 
-    if (!showSearch) {
+    if (hideSearch) {
         return;
     }
 

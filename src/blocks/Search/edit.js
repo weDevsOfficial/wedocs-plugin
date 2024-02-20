@@ -28,7 +28,7 @@ const Edit = ({ attributes, setAttributes }) => {
         widthUnit,
         hoverColor,
         borderType,
-        showSearch,
+        hideSearch,
         btnPadding,
         searchWidth,
         btnPosition,
@@ -131,13 +131,13 @@ const Edit = ({ attributes, setAttributes }) => {
             <InspectorControls>
                 <PanelBody>
                     <ToggleControl
-                        checked={ showSearch }
+                        checked={ hideSearch }
                         className={ 'wedocs-search-toggle' }
                         label={ __( 'Disable Block', 'wedocs' ) }
-                        onChange={ ( newShowSearch ) => setAttributes( { showSearch: newShowSearch } ) }
+                        onChange={ ( newHideSearch ) => setAttributes( { hideSearch: newHideSearch } ) }
                     />
                 </PanelBody>
-                { showSearch && (
+                { !hideSearch && (
                     <Fragment>
                         <PanelBody title={__('Color Settings', 'wedocs')} icon={ shadow }
                             initialOpen={ false } className={ `wedocs-search-color-settings` } >
@@ -314,7 +314,7 @@ const Edit = ({ attributes, setAttributes }) => {
                         </svg>
                     </button>
                 </div>
-                { !showSearch && <div className='backdrop'></div> }
+                { hideSearch && <div className='backdrop'></div> }
             </div>
         </Fragment>
     );
