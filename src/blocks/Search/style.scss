@@ -1,3 +1,12 @@
+.wp-block-wedocs-wedocs-search {
+    --field-color              : #FFFFFF;
+    --field-bg-color           : #FFFFFF;
+    --field-icon-color         : #FFFFFF;
+    --field-btn-bg-color       : #3B82F6;
+    --field-icon-hover-color   : #FFFFFF;
+    --field-btn-bg-hover-color : #2563EB;
+}
+
 .wedocs-search-input,
 .wedocs-editor-search-input {
     width: 50%;
@@ -104,4 +113,38 @@
     height: 100%;
     background: #FFF;
     position: absolute;
+}
+
+.wp-block-wedocs-wedocs-search {
+    .wedocs-search-input {
+        .search-field {
+            background-color: var( --field-color ) !important;
+
+            &:hover {
+                background-color: var( --field-bg-color ) !important;
+            }
+        }
+
+        .search-submit {
+            background-color: var( --field-btn-bg-color ) !important;
+
+            svg {
+                path {
+                    fill: var( --field-icon-color ) !important;
+
+                    &:hover {
+                        fill: var( --field-icon-hover-color ) !important;
+                    }
+                }
+            }
+
+            &:hover {
+                background-color: var( --field-btn-bg-hover-color ) !important;
+            }
+        }
+    }
+
+    &:not(.wp-block) {
+        display: block;
+    }
 }

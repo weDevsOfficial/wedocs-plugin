@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-02-19T05:26:29+00:00\n"
+"POT-Creation-Date: 2024-02-19T12:24:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -583,177 +583,177 @@ msgid "Search for a top or question"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:47
+#: src/blocks/Search/edit.js:49
 msgid "Align left"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:55
+#: src/blocks/Search/edit.js:57
 msgid "Align center"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:64
+#: src/blocks/Search/edit.js:66
 msgid "Align right"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:106
+#: src/blocks/Search/edit.js:117
 msgid "Solid"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:107
+#: src/blocks/Search/edit.js:118
 msgid "Dotted"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:108
+#: src/blocks/Search/edit.js:119
 msgid "Dashed"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:109
+#: src/blocks/Search/edit.js:120
 msgid "Double"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:110
+#: src/blocks/Search/edit.js:121
 msgid "Groove"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:111
+#: src/blocks/Search/edit.js:122
 msgid "Ridge"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:112
+#: src/blocks/Search/edit.js:123
 msgid "Inset"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:113
+#: src/blocks/Search/edit.js:124
 msgid "Outset"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:114
+#: src/blocks/Search/edit.js:125
 msgid "None"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:115
+#: src/blocks/Search/edit.js:126
 msgid "Hidden"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:125
+#: src/blocks/Search/edit.js:136
 msgid "Disable Block"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:131
+#: src/blocks/Search/edit.js:142
 msgid "Color Settings"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:137
+#: src/blocks/Search/edit.js:149
 msgid "Field Background Color"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:142
+#: src/blocks/Search/edit.js:154
 msgid "Field Hover Color"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:147
+#: src/blocks/Search/edit.js:159
 msgid "Border Color"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:152
+#: src/blocks/Search/edit.js:164
+msgid "Icon Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:169
 msgid "Button Color"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:157
-msgid "Icon Background Color"
-msgstr ""
-
-#: assets/build/block.js:1
-#: src/blocks/Search/edit.js:162
+#: src/blocks/Search/edit.js:174
 msgid "Button Hover Color"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:167
+#: src/blocks/Search/edit.js:179
 msgid "Icon Hover Color"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:173
+#: src/blocks/Search/edit.js:185
 msgid "Search Bar Settings"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:177
+#: src/blocks/Search/edit.js:189
 msgid "Field Width"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:183
+#: src/blocks/Search/edit.js:195
 msgid "Placeholder"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:184
+#: src/blocks/Search/edit.js:196
 msgid "Search bar placeholder"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:187
+#: src/blocks/Search/edit.js:199
 msgid "POSITION"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:201
+#: src/blocks/Search/edit.js:213
 msgid "Field Padding"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:212
+#: src/blocks/Search/edit.js:224
 msgid "Field Margin"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:219
+#: src/blocks/Search/edit.js:231
 msgid "Border Width"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:226
+#: src/blocks/Search/edit.js:238
 msgid "Border Radius"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:232
+#: src/blocks/Search/edit.js:244
 msgid "Border Type"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:243
+#: src/blocks/Search/edit.js:255
 msgid "Button Padding"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:253
+#: src/blocks/Search/edit.js:265
 msgid "Button Margin"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:260
+#: src/blocks/Search/edit.js:272
 msgid "Button Radius"
 msgstr ""
 

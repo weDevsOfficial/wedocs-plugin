@@ -14,6 +14,12 @@ class Assets {
         add_action( 'init', array( $this, 'register' ) );
         add_action( 'init', array( $this, 'register_translations' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
+        add_action( 'after_setup_theme', array( $this, 'mytheme_setup_theme_supported_features' ) );
+    }
+
+    public function mytheme_setup_theme_supported_features()
+    {
+        add_theme_support( 'wp-block-styles' );
     }
 
     /**

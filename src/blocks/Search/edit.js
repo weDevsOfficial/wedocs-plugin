@@ -41,6 +41,8 @@ const Edit = ({ attributes, setAttributes }) => {
         iconHoverColor,
     } = attributes;
 
+    console.log( 'editor panel:', bgColor );
+
     const alignmentOptions = [
         {
             value : 'left',
@@ -77,6 +79,15 @@ const Edit = ({ attributes, setAttributes }) => {
         display        : 'flex',
         justifyContent : alignment,
     };
+
+    const colors = [
+        { name: 'Sweet', color: '#F43F5E' },
+        { name: 'Orange', color: '#F97316' },
+        { name: 'Yellow', color: '#FACC15' },
+        { name: 'Purple', color: '#8B5CF6' },
+        { name: 'Light Blue', color: '#3B82F6' },
+        { name: 'Light Green', color: '#10B981' },
+    ];
 
     const inputStyles = {
         border        : `${borderWidth}px ${borderType} ${borderColor}`,
@@ -131,6 +142,7 @@ const Edit = ({ attributes, setAttributes }) => {
                         <PanelBody title={__('Color Settings', 'wedocs')} icon={ shadow }
                             initialOpen={ false } className={ `wedocs-search-color-settings` } >
                             <PanelColorSettings
+                                colors={ colors }
                                 colorSettings={ [
                                     {
                                         value    : bgColor,
@@ -149,12 +161,12 @@ const Edit = ({ attributes, setAttributes }) => {
                                     },
                                     {
                                         value    : iconColor,
-                                        label    : __( 'Button Color', 'wedocs' ),
+                                        label    : __( 'Icon Color', 'wedocs' ),
                                         onChange : ( newIconColor ) => setAttributes( { iconColor: newIconColor } ),
                                     },
                                     {
                                         value    : iconBgColor,
-                                        label    : __( 'Icon Background Color', 'wedocs' ),
+                                        label    : __( 'Button Color', 'wedocs' ),
                                         onChange : ( newIconBgColor ) => setAttributes( { iconBgColor: newIconBgColor } ),
                                     },
                                     {
