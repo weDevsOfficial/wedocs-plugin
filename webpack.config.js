@@ -7,10 +7,11 @@ const updatedConfig = {
   ...defaultConfig,
   entry: {
     ...defaultConfig.entry,
-    index: './src/index',
-    frontend: './src/assets/less/frontend.less',
-    print: './src/assets/less/print.less',
-    store: './src/data/store.js',
+    index    : './src/index',
+    block    : './src/block.js',
+    store    : './src/data/store.js',
+    print    : './src/assets/less/print.less',
+    frontend : './src/assets/less/frontend.less',
   },
   output: {
     path: path.resolve( __dirname, 'assets/build' ),

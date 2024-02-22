@@ -1,8 +1,16 @@
-<?php if ( $docs ) { ?>
+<?php
+if ( $docs ) {
+    $enable_doc_search = ! empty( $args['enable_search'] ) && $args['enable_search'] === 'on';
+    ?>
 
 <div class="wedocs-shortcode-wrap">
 
-    <?php wedocs_get_template_part( 'doc-search', 'form' ); ?>
+    <?php
+    // Render documentation search form.
+    if ( $enable_doc_search ) {
+        wedocs_get_template_part( 'doc-search', 'form' );
+    }
+    ?>
 
     <ul class="wedocs-docs-list col-<?php echo $col; ?>">
 

@@ -35,7 +35,7 @@ const MigrationSelectionModal = ( {
             <Transition appear show={ openSelectionModal } as={ Fragment }>
                 <Dialog
                     as='div'
-                    className='relative z-[9999]'
+                    className='wedocs-document relative z-[9999]'
                     onClose={ () => setOpenSelectionModal( false ) }
                 >
                     <Transition.Child
@@ -47,10 +47,10 @@ const MigrationSelectionModal = ( {
                         leaveFrom='opacity-100'
                         leaveTo='opacity-0'
                     >
-                        <div className='fixed inset-0 bg-black bg-opacity-25' />
+                        <div className='fixed inset-0 bg-black bg-opacity-25 z-[50]' />
                     </Transition.Child>
 
-                    <div className='fixed inset-0 overflow-y-auto'>
+                    <div className='fixed inset-0 overflow-y-auto z-[100]'>
                         <div className='flex min-h-full items-center justify-center p-4'>
                             <Transition.Child
                                 as={ Fragment }
