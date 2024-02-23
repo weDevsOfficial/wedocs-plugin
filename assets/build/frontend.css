@@ -763,6 +763,62 @@ body.single.single-docs .content-area {
 .wedocs-shortcode-wrap ul.wedocs-docs-list.col-3 > li:nth-child(3n + 3) {
   margin-right: 0;
 }
+.wedocs-shortcode-wrap .pagination {
+  display: flex;
+  justify-content: center;
+}
+.wedocs-shortcode-wrap .pagination ul {
+  padding: 0;
+  margin-left: 0;
+  margin-top: 20px;
+  border-radius: 8px;
+  display: inline-flex;
+  list-style-type: none;
+  border: 1px solid #cbd5e1;
+}
+.wedocs-shortcode-wrap .pagination ul li {
+  border-right: 1px solid #cbd5e1;
+}
+.wedocs-shortcode-wrap .pagination ul li a,
+.wedocs-shortcode-wrap .pagination ul li span {
+  height: 100%;
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+}
+.wedocs-shortcode-wrap .pagination ul li a.prev,
+.wedocs-shortcode-wrap .pagination ul li span.prev,
+.wedocs-shortcode-wrap .pagination ul li a.next,
+.wedocs-shortcode-wrap .pagination ul li span.next {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wedocs-shortcode-wrap .pagination ul li a.prev span,
+.wedocs-shortcode-wrap .pagination ul li span.prev span,
+.wedocs-shortcode-wrap .pagination ul li a.next span,
+.wedocs-shortcode-wrap .pagination ul li span.next span {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wedocs-shortcode-wrap .pagination ul li.disabled span {
+  opacity: 0.3;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.wedocs-shortcode-wrap .pagination ul li.disabled span svg {
+  pointer-events: none;
+}
+.wedocs-shortcode-wrap .pagination ul li:last-child {
+  border-right: 0;
+}
 .wedocs-shortcode-wrap.pro ul.wedocs-search-input {
   background: #3B82F6;
 }
@@ -816,61 +872,6 @@ body.single.single-docs .content-area {
 .wedocs-shortcode-wrap.pro ul.wedocs-doc-sections ul.children.has-icon {
   padding: 0;
   margin-left: 36px !important;
-}
-.pagination {
-  display: flex;
-  justify-content: center;
-}
-.pagination ul {
-  padding: 0;
-  border-radius: 8px;
-  display: inline-flex;
-  list-style-type: none;
-  border: 1px solid #cbd5e1;
-}
-.pagination ul li {
-  border-right: 1px solid #cbd5e1;
-}
-.pagination ul li a,
-.pagination ul li span {
-  height: 100%;
-  display: block;
-  min-width: 40px;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 5px 10px;
-  text-align: center;
-  text-decoration: none;
-}
-.pagination ul li a.prev,
-.pagination ul li span.prev,
-.pagination ul li a.next,
-.pagination ul li span.next {
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.pagination ul li a.prev span,
-.pagination ul li span.prev span,
-.pagination ul li a.next span,
-.pagination ul li span.next span {
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.pagination ul li.disabled span {
-  opacity: 0.3;
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-.pagination ul li.disabled span svg {
-  pointer-events: none;
-}
-.pagination ul li:last-child {
-  border-right: 0;
 }
 footer.entry-footer.wedocs-entry-footer {
   display: flex;
@@ -1269,6 +1270,11 @@ footer.entry-footer.wedocs-entry-footer.on .help-content .help-button #wedocs-st
   .feedback-content .wedocs-feedback-wrap .vote-link-wrap {
     display: block;
     margin: 0;
+  }
+}
+@media screen and (min-width: 540px) {
+  .wedocs-shortcode-wrap .pagination ul li {
+    min-width: 40px;
   }
 }
 

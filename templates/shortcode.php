@@ -125,45 +125,44 @@ if ( $docs ) {
                 </li>
             <?php } ?>
         </ul>
+
+        <?php if ( is_array( $pagination ) ) { ?>
+            <div class="pagination">
+                <ul>
+                    <?php if ( $paged === 1 ) { ?>
+                        <li class="disabled">
+                            <span>
+                                <svg width="20" height="21" fill="none">
+                                    <path
+                                        fill="#475569"
+                                        fill-rule="evenodd"
+                                        d="M12.707 5.68a1 1 0 0 1 0 1.414l-3.293 3.293 3.293 3.293a1 1 0 0 1-1.414 1.414l-4-4a1 1 0 0 1 0-1.414l4-4a1 1 0 0 1 1.414 0z"
+                                    />
+                                </svg>
+                            </span>
+                        </li>
+                    <?php } ?>
+
+                    <?php foreach ( $pagination as $page_link ) { ?>
+                        <li><?php echo $page_link; ?></li>
+                    <?php } ?>
+
+                    <?php if ( $paged === $total_pages ) { ?>
+                        <li class="disabled">
+                            <span>
+                                <svg width="20" height="21" fill="none">
+                                    <path
+                                        fill="#475569"
+                                        fill-rule="evenodd"
+                                        d="M7.293 15.094a1 1 0 0 1 0-1.414l3.293-3.293-3.293-3.293A1 1 0 1 1 8.707 5.68l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414 0z"
+                                    />
+                                </svg>
+                            </span>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+        <?php } ?>
     </div>
-
-<?php if ( is_array( $pagination ) ) { ?>
-    <div class="pagination">
-        <ul>
-            <?php if ( $paged === 1 ) { ?>
-                <li class="disabled">
-                    <span>
-                        <svg width="20" height="21" fill="none">
-                            <path
-                                fill="#475569"
-                                fill-rule="evenodd"
-                                d="M12.707 5.68a1 1 0 0 1 0 1.414l-3.293 3.293 3.293 3.293a1 1 0 0 1-1.414 1.414l-4-4a1 1 0 0 1 0-1.414l4-4a1 1 0 0 1 1.414 0z"
-                            />
-                        </svg>
-                    </span>
-                </li>
-            <?php } ?>
-
-            <?php foreach ( $pagination as $page_link ) { ?>
-                <li><?php echo $page_link; ?></li>
-            <?php } ?>
-
-            <?php if ( $paged === $total_pages ) { ?>
-                <li class="disabled">
-                    <span>
-                        <svg width="20" height="21" fill="none">
-                            <path
-                                fill="#475569"
-                                fill-rule="evenodd"
-                                d="M7.293 15.094a1 1 0 0 1 0-1.414l3.293-3.293-3.293-3.293A1 1 0 1 1 8.707 5.68l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414 0z"
-                            />
-                        </svg>
-                    </span>
-                </li>
-            <?php } ?>
-
-        </ul>
-    </div>
-
-<?php }
+<?php
 }
