@@ -1,9 +1,10 @@
 <?php
 
 if ( $docs ) {
-    $total_parents = (int) ! empty( wp_count_posts( 'docs' )->publish ) ? wp_count_posts( 'docs' )->publish : 0;
-    $total_pages   = (int) ceil( $total_parents / 10 );
-    $pagination    = paginate_links(
+    $enable_doc_search = ! empty( $args['enable_search'] ) && $args['enable_search'] === 'on';
+    $total_parents     = (int) ! empty( wp_count_posts( 'docs' )->publish ) ? wp_count_posts( 'docs' )->publish : 0;
+    $total_pages       = (int) ceil( $total_parents / 10 );
+    $pagination        = paginate_links(
         array(
             'type'      => 'array', // Return pagination links as an array
             'total'     => $total_pages,
@@ -36,7 +37,12 @@ if ( $docs ) {
 
     <div class="wedocs-shortcode-wrap">
 
-        <?php wedocs_get_template_part( 'doc-search', 'form' ); ?>
+        <?php
+        // Render documentation search form.
+        if ( $enable_doc_search ) {
+            wedocs_get_template_part( 'doc-search', 'form' );
+        }
+        ?>
 
         <ul class="wedocs-docs-list col-<?php echo $col; ?>">
 
