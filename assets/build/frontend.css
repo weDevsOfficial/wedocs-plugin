@@ -817,6 +817,61 @@ body.single.single-docs .content-area {
   padding: 0;
   margin-left: 36px !important;
 }
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+.pagination ul {
+  padding: 0;
+  border-radius: 8px;
+  display: inline-flex;
+  list-style-type: none;
+  border: 1px solid #cbd5e1;
+}
+.pagination ul li {
+  border-right: 1px solid #cbd5e1;
+}
+.pagination ul li a,
+.pagination ul li span {
+  height: 100%;
+  display: block;
+  min-width: 40px;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+}
+.pagination ul li a.prev,
+.pagination ul li span.prev,
+.pagination ul li a.next,
+.pagination ul li span.next {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pagination ul li a.prev span,
+.pagination ul li span.prev span,
+.pagination ul li a.next span,
+.pagination ul li span.next span {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pagination ul li.disabled span {
+  opacity: 0.3;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.pagination ul li.disabled span svg {
+  pointer-events: none;
+}
+.pagination ul li:last-child {
+  border-right: 0;
+}
 footer.entry-footer.wedocs-entry-footer {
   display: flex;
   margin-top: 10px;
