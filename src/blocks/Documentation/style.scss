@@ -1,0 +1,31 @@
+.wp-block-wedocs-grid-docs {
+    --field-color              : #FFFFFF;
+    --field-bg-color           : #FFFFFF;
+    --field-icon-color         : #FFFFFF;
+    --field-btn-bg-color       : #3B82F6;
+    --field-icon-hover-color   : #FFFFFF;
+    --field-btn-bg-hover-color : #2563EB;
+
+    .wedocs-grid-toggle {
+        margin-bottom: 0 !important;
+
+        .components-h-stack {
+            flex-direction: row-reverse;
+        }
+    }
+
+    .backdrop {
+        top: 0;
+        left: 0;
+        z-index: 0;
+        width: 100%;
+        opacity: 0.5;
+        height: 100%;
+        background: #FFF;
+        position: absolute;
+    }
+
+    &:not(.wp-block) {
+        display: block;
+    }
+}
