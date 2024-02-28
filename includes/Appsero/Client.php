@@ -113,10 +113,6 @@ class Client {
      * @return Appsero\Insights
      */
     public function insights() {
-        if ( ! class_exists( __NAMESPACE__ . '\Insights' ) ) {
-            require_once __DIR__ . '/Insights.php';
-        }
-
         // if already instantiated, return the cached one
         if ( $this->insights ) {
             return $this->insights;
@@ -128,35 +124,11 @@ class Client {
     }
 
     /**
-     * Initialize plugin/theme updater
-     *
-     * @return void
-     */
-    public function updater() {
-        // do not show update notice on ajax request and rest api request
-        if ( wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
-            return;
-        }
-
-        // show deprecated notice
-        _deprecated_function( __CLASS__ . '::updater', '2.0', '\Appsero\Updater::init($client);, for more details please visit: https://appsero.com/docs/appsero-developers-guide/appsero-client/appsero-sdk-updater-changes/' );
-
-        // initialize the new updater
-        if ( method_exists( '\Appsero\Updater', 'init' ) ) {
-            \Appsero\Updater::init( $this );
-        }
-    }
-
-    /**
      * Initialize license checker
      *
      * @return Appsero\License
      */
     public function license() {
-        if ( ! class_exists( __NAMESPACE__ . '\License' ) ) {
-            require_once __DIR__ . '/License.php';
-        }
-
         // if already instantiated, return the cached one
         if ( $this->license ) {
             return $this->license;

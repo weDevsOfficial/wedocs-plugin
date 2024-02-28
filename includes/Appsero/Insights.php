@@ -57,7 +57,7 @@ class Insights
             $client = new Client($client, $name, $file);
         }
 
-        if (is_object($client) && is_a($client, 'Appsero\Client')) {
+        if (is_object($client) && is_a($client, 'WeDevs\WeDocs\Appsero\Client')) {
             $this->client = $client;
         }
     }
