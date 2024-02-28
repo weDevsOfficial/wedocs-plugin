@@ -5,6 +5,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 
 import { InspectorControls, PanelColorSettings } from '@wordpress/block-editor';
 import {
+    TabPanel,
     PanelBody,
     TextControl,
     RadioControl,
@@ -91,89 +92,211 @@ const Edit = ({ attributes, setAttributes }) => {
                         onChange={ ( newHideBlock ) => setAttributes( { hideBlock: newHideBlock } ) }
                     />
                 </PanelBody>
-                <PanelBody title={ __( 'General Settings', 'wedocs' ) } initialOpen={true}>
-                    <RadioControl
-                        selected={ docsGridColumnStyle }
-                        options={ [ ...columnOptions ] }
-                        label={ __( 'Docs Grid Column Style', 'wedocs' ) }
-                        onChange={ ( newDocsGridColumnStyle ) => setAttributes( { docsGridColumnStyle: newDocsGridColumnStyle } ) }
-                    />
-                    <NumberControl
-                        min={ 1 }
-                        step={ 1 }
-                        max={ 100 }
-                        isDragEnabled
-                        shiftStep={ 10 }
-                        isShiftStepEnabled
-                        value={ docsPerPage }
-                        label={ __( 'Docs Per Page', 'wedocs' ) }
-                        onChange={ ( newDocsPerPage ) => setAttributes( { docsPerPage: parseInt( newDocsPerPage ) } ) }
-                    />
-                    <MultiSelect
-                        items={ docs }
-                        name={ `includeDocs` }
-                        setItems={ setAttributes }
-                        selectedItems={ includeDocs }
-                        label={ __( 'Include Docs', 'wedocs' ) }
-                        placeholder={ loading ? __( 'Loading...', 'wedocs' ) : __( 'Search via doc title', 'wedocs' ) }
-                    />
-                    <MultiSelect
-                        items={ docs }
-                        name={ `excludeDocs` }
-                        setItems={ setAttributes }
-                        selectedItems={ excludeDocs }
-                        label={ __( 'Exclude Docs', 'wedocs' ) }
-                        placeholder={ loading ? __( 'Loading...', 'wedocs' ) : __( 'Search via doc title', 'wedocs' ) }
-                    />
-                    <SelectControl
-                        value={ orderBy }
-                        label={ __( 'Order By', 'wedocs' ) }
-                        options={ [ ...docOrders ] }
-                        onChange={ ( newOrder ) => setAttributes( { orderBy: newOrder } ) }
-                    />
-                    <SelectControl
-                        value={ order }
-                        label={ __( 'Order Type', 'wedocs' ) }
-                        options={ [ ...docOrderTypes ] }
-                        onChange={ ( newOrderType ) => setAttributes( { order: newOrderType } ) }
-                    />
-                    <SelectControl
-                        value={ sectionPerDocs }
-                        options={ [ ...sectionsPerDoc ] }
-                        label={ __( 'Section Per Docs', 'wedocs' ) }
-                        onChange={ ( newSectionPerDocs ) => setAttributes( { sectionPerDocs: newSectionPerDocs } ) }
-                    />
-                    <SelectControl
-                        value={ articlePerDocs }
-                        options={ [ ...articleSPerDoc ] }
-                        label={ __( 'Article Per Docs', 'wedocs' ) }
-                        onChange={ ( newArticlePerDocs ) => setAttributes( { articlePerDocs: newArticlePerDocs } ) }
-                    />
-                    <ToggleControl
-                        checked={ showDocArticles }
-                        className={ 'wedocs-grid-toggle combine' }
-                        label={ __( 'Show Doc Article', 'wedocs' ) }
-                        onChange={ ( newShowDocArticles ) => setAttributes( { showDocArticles: newShowDocArticles } ) }
-                    />
-                    { showDocArticles &&
-                        <ToggleControl
-                            checked={ collapseArticles }
-                            className={ 'wedocs-grid-toggle combine' }
-                            label={ __( 'Keep Articles Collapsed', 'wedocs' ) }
-                            onChange={ ( newCollapseArticles ) => setAttributes( { collapseArticles: newCollapseArticles } ) }
-                        />
-                    }
-                    <ToggleControl
-                        checked={ showViewDetailsBtn }
-                        className={ 'wedocs-grid-toggle combine' }
-                        label={ __( 'Show View Details Button', 'wedocs' ) }
-                        onChange={ ( newShowViewDetailsBtn ) => setAttributes( { showViewDetailsBtn: newShowViewDetailsBtn } ) }
-                    />
-                </PanelBody>
+                { !hideBlock && (
+                    <PanelBody className={ `wedocs-grid-search-panel` }>
+                        <TabPanel
+                            activeClass='is-active'
+                            orientation='horizontal'
+                            initialTabName='general'
+                            tabs={ [
+                                {
+                                    name      : 'general',
+                                    title     : __( 'General', 'wedocs' ),
+                                    className : 'general-grid-settings',
+                                },
+                                {
+                                    name      : 'style',
+                                    title     : __( 'Style', 'wedocs' ),
+                                    className : 'style-grid-settings',
+                                },
+                            ] }>
+                            {
+                                ( tab ) => (
+                                    <PanelBody>
+                                        <p>{ tab.title }</p>
+                                        { tab.name === 'general' && (
+                                            <Fragment>
+                                                <RadioControl
+                                                    selected={ docsGridColumnStyle }
+                                                    options={ [ ...columnOptions ] }
+                                                    label={ __( 'Docs Grid Column Style', 'wedocs' ) }
+                                                    onChange={ ( newDocsGridColumnStyle ) => setAttributes( { docsGridColumnStyle: newDocsGridColumnStyle } ) }
+                                                />
+                                                <NumberControl
+                                                    min={ 1 }
+                                                    step={ 1 }
+                                                    max={ 100 }
+                                                    isDragEnabled
+                                                    shiftStep={ 10 }
+                                                    isShiftStepEnabled
+                                                    value={ docsPerPage }
+                                                    label={ __( 'Docs Per Page', 'wedocs' ) }
+                                                    onChange={ ( newDocsPerPage ) => setAttributes( { docsPerPage: parseInt( newDocsPerPage ) } ) }
+                                                />
+                                                <MultiSelect
+                                                    items={ docs }
+                                                    name={ `includeDocs` }
+                                                    setItems={ setAttributes }
+                                                    selectedItems={ includeDocs }
+                                                    label={ __( 'Include Docs', 'wedocs' ) }
+                                                    placeholder={ loading ? __( 'Loading...', 'wedocs' ) : __( 'Search via doc title', 'wedocs' ) }
+                                                />
+                                                <MultiSelect
+                                                    items={ docs }
+                                                    name={ `excludeDocs` }
+                                                    setItems={ setAttributes }
+                                                    selectedItems={ excludeDocs }
+                                                    label={ __( 'Exclude Docs', 'wedocs' ) }
+                                                    placeholder={ loading ? __( 'Loading...', 'wedocs' ) : __( 'Search via doc title', 'wedocs' ) }
+                                                />
+                                                <SelectControl
+                                                    value={ orderBy }
+                                                    label={ __( 'Order By', 'wedocs' ) }
+                                                    options={ [ ...docOrders ] }
+                                                    onChange={ ( newOrder ) => setAttributes( { orderBy: newOrder } ) }
+                                                />
+                                                <SelectControl
+                                                    value={ order }
+                                                    label={ __( 'Order Type', 'wedocs' ) }
+                                                    options={ [ ...docOrderTypes ] }
+                                                    onChange={ ( newOrderType ) => setAttributes( { order: newOrderType } ) }
+                                                />
+                                                <SelectControl
+                                                    value={ sectionPerDocs }
+                                                    options={ [ ...sectionsPerDoc ] }
+                                                    label={ __( 'Section Per Docs', 'wedocs' ) }
+                                                    onChange={ ( newSectionPerDocs ) => setAttributes( { sectionPerDocs: newSectionPerDocs } ) }
+                                                />
+                                                <SelectControl
+                                                    value={ articlePerDocs }
+                                                    options={ [ ...articleSPerDoc ] }
+                                                    label={ __( 'Article Per Docs', 'wedocs' ) }
+                                                    onChange={ ( newArticlePerDocs ) => setAttributes( { articlePerDocs: newArticlePerDocs } ) }
+                                                />
+                                                <ToggleControl
+                                                    checked={ showDocArticles }
+                                                    className={ 'wedocs-grid-toggle combine' }
+                                                    label={ __( 'Show Doc Article', 'wedocs' ) }
+                                                    onChange={ ( newShowDocArticles ) => setAttributes( { showDocArticles: newShowDocArticles } ) }
+                                                />
+                                                { showDocArticles &&
+                                                    <ToggleControl
+                                                        checked={ collapseArticles }
+                                                        className={ 'wedocs-grid-toggle combine' }
+                                                        label={ __( 'Keep Articles Collapsed', 'wedocs' ) }
+                                                        onChange={ ( newCollapseArticles ) => setAttributes( { collapseArticles: newCollapseArticles } ) }
+                                                    />
+                                                }
+                                                <ToggleControl
+                                                    checked={ showViewDetailsBtn }
+                                                    className={ 'wedocs-grid-toggle combine' }
+                                                    label={ __( 'Show View Details Button', 'wedocs' ) }
+                                                    onChange={ ( newShowViewDetailsBtn ) => setAttributes( { showViewDetailsBtn: newShowViewDetailsBtn } ) }
+                                                />
+                                            </Fragment>
+                                        ) }
+
+                                        { tab.name === 'style' && (
+                                            <Fragment>
+                                                <NumberControl
+                                                    onChange={ e => console.log(e) }
+                                                    isDragEnabled
+                                                    isShiftStepEnabled
+                                                    shiftStep={ 10 }
+                                                    step={10}
+                                                    value={ 10 }
+                                                />
+                                            </Fragment>
+                                        ) }
+                                    </PanelBody>
+                                )
+                            }
+                        </TabPanel>
+                    </PanelBody>
+                ) }
+                {/*<PanelBody title={ __( 'General Settings', 'wedocs' ) } initialOpen={true}>*/}
+                {/*    <RadioControl*/}
+                {/*        selected={ docsGridColumnStyle }*/}
+                {/*        options={ [ ...columnOptions ] }*/}
+                {/*        label={ __( 'Docs Grid Column Style', 'wedocs' ) }*/}
+                {/*        onChange={ ( newDocsGridColumnStyle ) => setAttributes( { docsGridColumnStyle: newDocsGridColumnStyle } ) }*/}
+                {/*    />*/}
+                {/*    <NumberControl*/}
+                {/*        min={ 1 }*/}
+                {/*        step={ 1 }*/}
+                {/*        max={ 100 }*/}
+                {/*        isDragEnabled*/}
+                {/*        shiftStep={ 10 }*/}
+                {/*        isShiftStepEnabled*/}
+                {/*        value={ docsPerPage }*/}
+                {/*        label={ __( 'Docs Per Page', 'wedocs' ) }*/}
+                {/*        onChange={ ( newDocsPerPage ) => setAttributes( { docsPerPage: parseInt( newDocsPerPage ) } ) }*/}
+                {/*    />*/}
+                {/*    <MultiSelect*/}
+                {/*        items={ docs }*/}
+                {/*        name={ `includeDocs` }*/}
+                {/*        setItems={ setAttributes }*/}
+                {/*        selectedItems={ includeDocs }*/}
+                {/*        label={ __( 'Include Docs', 'wedocs' ) }*/}
+                {/*        placeholder={ loading ? __( 'Loading...', 'wedocs' ) : __( 'Search via doc title', 'wedocs' ) }*/}
+                {/*    />*/}
+                {/*    <MultiSelect*/}
+                {/*        items={ docs }*/}
+                {/*        name={ `excludeDocs` }*/}
+                {/*        setItems={ setAttributes }*/}
+                {/*        selectedItems={ excludeDocs }*/}
+                {/*        label={ __( 'Exclude Docs', 'wedocs' ) }*/}
+                {/*        placeholder={ loading ? __( 'Loading...', 'wedocs' ) : __( 'Search via doc title', 'wedocs' ) }*/}
+                {/*    />*/}
+                {/*    <SelectControl*/}
+                {/*        value={ orderBy }*/}
+                {/*        label={ __( 'Order By', 'wedocs' ) }*/}
+                {/*        options={ [ ...docOrders ] }*/}
+                {/*        onChange={ ( newOrder ) => setAttributes( { orderBy: newOrder } ) }*/}
+                {/*    />*/}
+                {/*    <SelectControl*/}
+                {/*        value={ order }*/}
+                {/*        label={ __( 'Order Type', 'wedocs' ) }*/}
+                {/*        options={ [ ...docOrderTypes ] }*/}
+                {/*        onChange={ ( newOrderType ) => setAttributes( { order: newOrderType } ) }*/}
+                {/*    />*/}
+                {/*    <SelectControl*/}
+                {/*        value={ sectionPerDocs }*/}
+                {/*        options={ [ ...sectionsPerDoc ] }*/}
+                {/*        label={ __( 'Section Per Docs', 'wedocs' ) }*/}
+                {/*        onChange={ ( newSectionPerDocs ) => setAttributes( { sectionPerDocs: newSectionPerDocs } ) }*/}
+                {/*    />*/}
+                {/*    <SelectControl*/}
+                {/*        value={ articlePerDocs }*/}
+                {/*        options={ [ ...articleSPerDoc ] }*/}
+                {/*        label={ __( 'Article Per Docs', 'wedocs' ) }*/}
+                {/*        onChange={ ( newArticlePerDocs ) => setAttributes( { articlePerDocs: newArticlePerDocs } ) }*/}
+                {/*    />*/}
+                {/*    <ToggleControl*/}
+                {/*        checked={ showDocArticles }*/}
+                {/*        className={ 'wedocs-grid-toggle combine' }*/}
+                {/*        label={ __( 'Show Doc Article', 'wedocs' ) }*/}
+                {/*        onChange={ ( newShowDocArticles ) => setAttributes( { showDocArticles: newShowDocArticles } ) }*/}
+                {/*    />*/}
+                {/*    { showDocArticles &&*/}
+                {/*        <ToggleControl*/}
+                {/*            checked={ collapseArticles }*/}
+                {/*            className={ 'wedocs-grid-toggle combine' }*/}
+                {/*            label={ __( 'Keep Articles Collapsed', 'wedocs' ) }*/}
+                {/*            onChange={ ( newCollapseArticles ) => setAttributes( { collapseArticles: newCollapseArticles } ) }*/}
+                {/*        />*/}
+                {/*    }*/}
+                {/*    <ToggleControl*/}
+                {/*        checked={ showViewDetailsBtn }*/}
+                {/*        className={ 'wedocs-grid-toggle combine' }*/}
+                {/*        label={ __( 'Show View Details Button', 'wedocs' ) }*/}
+                {/*        onChange={ ( newShowViewDetailsBtn ) => setAttributes( { showViewDetailsBtn: newShowViewDetailsBtn } ) }*/}
+                {/*    />*/}
+                {/*</PanelBody>*/}
 
                 {/* Additional PanelBody components for other attribute categories */}
             </InspectorControls>
-            <div { ...blockProps }>
+            <div { ...blockProps } className={ `test-docs` }>
                 {/*<div*/}
                 {/*    className='wedocs-editor-search-input'*/}
                 {/*    style={ {*/}
