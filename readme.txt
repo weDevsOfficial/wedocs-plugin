@@ -5,7 +5,7 @@ Tags: WordPress documentation plugin, WordPress docs plugin, Documentation, Know
 Requires at least: 5.6
 Tested up to: 6.4.2
 Requires PHP: 7.4
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -342,6 +342,10 @@ Can’t wait to join us?
 
 
 == Changelog ==
+
+= v2.1.4 (29th February, 2024) =
+
+ * **Fix:** Update appsero sdk, manage from wedocs & handle deprecation error.
 
 = v2.1.3 (6th February, 2024) =
 
