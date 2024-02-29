@@ -2,7 +2,7 @@
 
 namespace WeDevs\WeDocs;
 
-use Appsero\Client as Appsero_Client;
+use \WeDevs\WeDocs\Appsero\Client as Appsero_Client;
 
 /**
  * Frontend Handler Class
