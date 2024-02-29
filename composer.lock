@@ -4,74 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8424029e90e55c86bf1bed76bb2931dd",
+    "content-hash": "116350e1527c41e68b0c663fd18e52db",
     "packages": [
-        {
-            "name": "appsero/client",
-            "version": "v2.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Appsero/client.git",
-                "reference": "b61c3ab21df4d44f805ee9476f9d880f8370a36b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Appsero/client/zipball/b61c3ab21df4d44f805ee9476f9d880f8370a36b",
-                "reference": "b61c3ab21df4d44f805ee9476f9d880f8370a36b",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.6"
-            },
-            "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
-                "phpcompatibility/phpcompatibility-wp": "dev-master",
-                "phpunit/phpunit": "^8.5.31",
-                "squizlabs/php_codesniffer": "^3.7",
-                "tareq1988/wp-php-cs-fixer": "dev-master",
-                "wp-coding-standards/wpcs": "dev-develop"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Appsero\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tareq Hasan",
-                    "email": "tareq@appsero.com"
-                }
-            ],
-            "description": "Appsero Client",
-            "keywords": [
-                "analytics",
-                "plugin",
-                "theme",
-                "wordpress"
-            ],
-            "support": {
-                "issues": "https://github.com/Appsero/client/issues",
-                "source": "https://github.com/Appsero/client/tree/v2.0.2"
-            },
-            "time": "2024-01-30T08:15:01+00:00"
-        },
         {
             "name": "woocommerce/action-scheduler",
             "version": "dev-trunk",
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/action-scheduler.git",
-                "reference": "2410f037681195150e08072827fefd846354fe05"
+                "reference": "65b0d7392accd4978c495e4eed4c0281a46eed4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/2410f037681195150e08072827fefd846354fe05",
-                "reference": "2410f037681195150e08072827fefd846354fe05",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/65b0d7392accd4978c495e4eed4c0281a46eed4a",
+                "reference": "65b0d7392accd4978c495e4eed4c0281a46eed4a",
                 "shasum": ""
             },
             "require": {
@@ -102,7 +48,7 @@
                 "issues": "https://github.com/woocommerce/action-scheduler/issues",
                 "source": "https://github.com/woocommerce/action-scheduler/tree/trunk"
             },
-            "time": "2023-12-14T14:01:47+00:00"
+            "time": "2024-02-22T13:47:42+00:00"
         }
     ],
     "packages-dev": [
@@ -230,12 +176,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "202aaf6b7c2e1e0a622b0298e9f3f537e4d84018"
+                "reference": "2f5294676c802a62b0549f6bc8983f14294ce369"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/202aaf6b7c2e1e0a622b0298e9f3f537e4d84018",
-                "reference": "202aaf6b7c2e1e0a622b0298e9f3f537e4d84018",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/2f5294676c802a62b0549f6bc8983f14294ce369",
+                "reference": "2f5294676c802a62b0549f6bc8983f14294ce369",
                 "shasum": ""
             },
             "require": {
@@ -283,7 +229,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-01T08:01:43+00:00"
+            "time": "2024-02-10T11:10:03+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -518,17 +464,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "bc3dc91a5e9b14aa06d1d9e90647c5c5a2cc5353"
+                "reference": "153ae662783729388a584b4361f2545e4d841e3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/bc3dc91a5e9b14aa06d1d9e90647c5c5a2cc5353",
-                "reference": "bc3dc91a5e9b14aa06d1d9e90647c5c5a2cc5353",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/153ae662783729388a584b4361f2545e4d841e3c",
+                "reference": "153ae662783729388a584b4361f2545e4d841e3c",
                 "shasum": ""
             },
             "require": {
                 "doctrine/deprecations": "^1.0",
-                "php": "^7.4 || ^8.0",
+                "php": "^7.3 || ^8.0",
                 "phpdocumentor/reflection-common": "^2.0",
                 "phpstan/phpdoc-parser": "^1.13"
             },
@@ -567,9 +513,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.x"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.8.2"
             },
-            "time": "2024-01-18T19:15:27+00:00"
+            "time": "2024-02-23T11:10:43+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -577,20 +523,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "d4f454f7e1193933f04e6500de3e79191648ed0c"
+                "reference": "016d7770cf4ca93ab8fcc30511f31003b1f8bdcd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d4f454f7e1193933f04e6500de3e79191648ed0c",
-                "reference": "d4f454f7e1193933f04e6500de3e79191648ed0c",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/016d7770cf4ca93ab8fcc30511f31003b1f8bdcd",
+                "reference": "016d7770cf4ca93ab8fcc30511f31003b1f8bdcd",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.2 || ^2.0",
                 "php": "^7.2 || 8.0.* || 8.1.* || 8.2.* || 8.3.*",
                 "phpdocumentor/reflection-docblock": "^5.2",
-                "sebastian/comparator": "^3.0 || ^4.0 || ^5.0",
-                "sebastian/recursion-context": "^3.0 || ^4.0 || ^5.0"
+                "sebastian/comparator": "^3.0 || ^4.0 || ^5.0 || ^6.0",
+                "sebastian/recursion-context": "^3.0 || ^4.0 || ^5.0 || ^6.0"
             },
             "require-dev": {
                 "phpspec/phpspec": "^6.0 || ^7.0",
@@ -637,22 +583,22 @@
             ],
             "support": {
                 "issues": "https://github.com/phpspec/prophecy/issues",
-                "source": "https://github.com/phpspec/prophecy/tree/v1.18.0"
+                "source": "https://github.com/phpspec/prophecy/tree/master"
             },
-            "time": "2023-12-07T16:22:33+00:00"
+            "time": "2024-02-06T10:23:13+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.25.0",
+            "version": "1.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "bd84b629c8de41aa2ae82c067c955e06f1b00240"
+                "reference": "231e3186624c03d7e7c890ec662b81e6b0405227"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/bd84b629c8de41aa2ae82c067c955e06f1b00240",
-                "reference": "bd84b629c8de41aa2ae82c067c955e06f1b00240",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/231e3186624c03d7e7c890ec662b81e6b0405227",
+                "reference": "231e3186624c03d7e7c890ec662b81e6b0405227",
                 "shasum": ""
             },
             "require": {
@@ -684,9 +630,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.25.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.26.0"
             },
-            "time": "2024-01-04T17:06:16+00:00"
+            "time": "2024-02-23T16:05:55+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
