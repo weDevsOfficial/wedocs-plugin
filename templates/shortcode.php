@@ -2,7 +2,7 @@
 
 if ( $docs ) {
     $total_parents = (int) ! empty( wp_count_posts( 'docs' )->publish ) ? wp_count_posts( 'docs' )->publish : 0;
-    $total_pages   = (int) ceil( $total_parents / 10 );
+    $total_pages   = (int) ( $total_parents / $items );
     $pagination    = paginate_links(
         array(
             'type'      => 'array', // Return pagination links as an array

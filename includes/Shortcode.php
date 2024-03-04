@@ -41,21 +41,22 @@ class Shortcode {
      */
     public static function wedocs( $args = [] ) {
         // Pagination variables
-        $paged          = (int) ( ! empty( $_GET['paged'] ) ? $_GET['paged'] : get_query_var( 'paged' ) );
-        $current_page   = ! empty( $paged ) ? max( 1, $paged ) : 1;
-        $items_per_page = 10;
-        $offset         = ( $current_page - 1 ) * $items_per_page;
+        $paged        = (int) ( ! empty( $_GET['paged'] ) ? $_GET['paged'] : get_query_var( 'paged' ) );
+        $current_page = ! empty( $paged ) ? max( 1, $paged ) : 1;
 
         $defaults = [
             'col'     => '2',
             'include' => 'any',
             'exclude' => '',
-            'items'   => 10,
+            'items'   => 6,
             'more'    => __( 'View Details', 'wedocs' ),
         ];
 
         $args     = wp_parse_args( $args, $defaults );
         $arranged = [];
+
+        $items_per_page = ! empty( $args['items'] ) ? intval( $args['items'] ) : 6;
+        $offset         = ( $current_page - 1 ) * $items_per_page;
 
         $parent_args = [
             'parent'    => 0,
@@ -124,6 +125,7 @@ class Shortcode {
         $template_args = apply_filters(
             'wedocs_get_doc_listing_template_args',
             array(
+                'items' => $items_per_page,
                 'paged' => $current_page,
                 'more'  => $args['more'],
                 'docs'  => $arranged,
