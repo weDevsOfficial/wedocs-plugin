@@ -40,21 +40,30 @@ class Shortcode {
      * @return void
      */
     public static function wedocs( $args = [] ) {
+        // Pagination variables
+        $paged        = (int) ( ! empty( $_GET['paged'] ) ? $_GET['paged'] : get_query_var( 'paged' ) );
+        $current_page = ! empty( $paged ) ? max( 1, $paged ) : 1;
+
         $defaults = [
             'col'     => '2',
             'include' => 'any',
             'exclude' => '',
-            'items'   => 10,
+            'items'   => 6,
             'more'    => __( 'View Details', 'wedocs' ),
         ];
 
         $args     = wp_parse_args( $args, $defaults );
         $arranged = [];
 
+        $items_per_page = ! empty( $args['items'] ) ? intval( $args['items'] ) : 6;
+        $offset         = ( $current_page - 1 ) * $items_per_page;
+
         $parent_args = [
-            'parent'      => 0,
-            'post_type'   => 'docs',
-            'sort_column' => 'menu_order',
+            'parent'    => 0,
+            'offset'    => $offset,
+            'post_type' => 'docs',
+            'orderby'   => 'menu_order',
+            'number'    => $items_per_page,
         ];
 
         if ( 'any' != $args['include'] ) {
@@ -81,7 +90,7 @@ class Shortcode {
                 ];
 
                 $section_args = apply_filters( 'wedocs_shortcode_page_section_args', $section_args );
-	            $section_docs = get_children( $section_args );
+                $section_docs = get_children( $section_args );
 
                 $arranged[] = [
                     'doc'      => $root,
@@ -93,32 +102,34 @@ class Shortcode {
         // Count documentation length.
         $docs_length = ! empty( $arranged ) ? count( $arranged ) : 0;
 
-	    /**
-	     * Handle single docs template directory.
-	     *
-	     * @since 2.0.0
-	     *
-	     * @param string $template_dir
-	     *
-	     * @return string
-	     */
+        /**
+         * Handle single docs template directory.
+         *
+         * @since 2.0.0
+         *
+         * @param string $template_dir
+         *
+         * @return string
+         */
         $template_dir = apply_filters( 'wedocs_get_doc_listing_template_dir', 'shortcode.php' );
 
-	    /**
-	     * Handle single doc template arguments.
-	     *
-	     * @since 2.0.0
-	     *
-	     * @param array $template_args
-	     *
-	     * @return array
-	     */
+        /**
+         * Handle single doc template arguments.
+         *
+         * @since 2.0.0
+         *
+         * @param array $template_args
+         *
+         * @return array
+         */
         $template_args = apply_filters(
             'wedocs_get_doc_listing_template_args',
             array(
-                'docs' => $arranged,
-                'more' => $args['more'],
-                'col'  => (int) ( $docs_length === 1 ? $docs_length : $args['col'] ),
+                'items' => $items_per_page,
+                'paged' => $current_page,
+                'more'  => $args['more'],
+                'docs'  => $arranged,
+                'col'   => (int) ( $docs_length === 1 ? $docs_length : $args['col'] ),
             )
         );
 

@@ -377,6 +377,78 @@ body.single.single-docs .content-area {
         }
     }
 
+    .pagination {
+        display: flex;
+        justify-content: center;
+
+        ul {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            display: inline-flex;
+            list-style-type: none;
+            border-top: 1px solid #e5e5e5;
+
+            li {
+                padding-top: 18px;
+                border-top: 1px solid transparent;
+
+                a,
+                span {
+                    border: 0;
+                    height: 100%;
+                    display: block;
+                    font-size: 16px;
+                    font-weight: 600;
+                    padding: 5px 10px;
+                    text-align: center;
+                    text-decoration: none;
+                    background: transparent;
+
+                    &.prev,
+                    &.next {
+                        padding: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        span {
+                            gap: 12px;
+                            padding: 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                    }
+                }
+
+                &.disabled {
+                    span {
+                        gap: 12px;
+                        opacity: 0.3;
+                        height: 100%;
+                        display: flex;
+                        padding-left: 0;
+                        padding-right: 0;
+                        align-items: center;
+
+                        svg {
+                            pointer-events: none;
+                        }
+                    }
+                }
+
+                &:first-child {
+                    margin-right: auto;
+                }
+
+                &:last-child {
+                    margin-left: auto;
+                }
+            }
+        }
+    }
+
     &.pro {
         ul.wedocs-search-input {
             background: #3B82F6;

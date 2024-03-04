@@ -763,6 +763,71 @@ body.single.single-docs .content-area {
 .wedocs-shortcode-wrap ul.wedocs-docs-list.col-3 > li:nth-child(3n + 3) {
   margin-right: 0;
 }
+.wedocs-shortcode-wrap .pagination {
+  display: flex;
+  justify-content: center;
+}
+.wedocs-shortcode-wrap .pagination ul {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: inline-flex;
+  list-style-type: none;
+  border-top: 1px solid #e5e5e5;
+}
+.wedocs-shortcode-wrap .pagination ul li {
+  padding-top: 18px;
+  border-top: 1px solid transparent;
+}
+.wedocs-shortcode-wrap .pagination ul li a,
+.wedocs-shortcode-wrap .pagination ul li span {
+  border: 0;
+  height: 100%;
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  background: transparent;
+}
+.wedocs-shortcode-wrap .pagination ul li a.prev,
+.wedocs-shortcode-wrap .pagination ul li span.prev,
+.wedocs-shortcode-wrap .pagination ul li a.next,
+.wedocs-shortcode-wrap .pagination ul li span.next {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wedocs-shortcode-wrap .pagination ul li a.prev span,
+.wedocs-shortcode-wrap .pagination ul li span.prev span,
+.wedocs-shortcode-wrap .pagination ul li a.next span,
+.wedocs-shortcode-wrap .pagination ul li span.next span {
+  gap: 12px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wedocs-shortcode-wrap .pagination ul li.disabled span {
+  gap: 12px;
+  opacity: 0.3;
+  height: 100%;
+  display: flex;
+  padding-left: 0;
+  padding-right: 0;
+  align-items: center;
+}
+.wedocs-shortcode-wrap .pagination ul li.disabled span svg {
+  pointer-events: none;
+}
+.wedocs-shortcode-wrap .pagination ul li:first-child {
+  margin-right: auto;
+}
+.wedocs-shortcode-wrap .pagination ul li:last-child {
+  margin-left: auto;
+}
 .wedocs-shortcode-wrap.pro ul.wedocs-search-input {
   background: #3B82F6;
 }
@@ -1214,6 +1279,11 @@ footer.entry-footer.wedocs-entry-footer.on .help-content .help-button #wedocs-st
   .feedback-content .wedocs-feedback-wrap .vote-link-wrap {
     display: block;
     margin: 0;
+  }
+}
+@media screen and (min-width: 540px) {
+  .wedocs-shortcode-wrap .pagination ul li {
+    min-width: 40px;
   }
 }
 
