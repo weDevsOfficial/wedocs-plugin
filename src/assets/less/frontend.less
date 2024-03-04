@@ -382,16 +382,16 @@ body.single.single-docs .content-area {
         justify-content: center;
 
         ul {
+            margin: 0;
             padding: 0;
-            margin-left: 0;
-            margin-top: 20px;
-            border-radius: 8px;
+            width: 100%;
             display: inline-flex;
             list-style-type: none;
-            border: 1px solid #cbd5e1;
+            border-top: 1px solid #e5e5e5;
 
             li {
-                border-right: 1px solid #cbd5e1;
+                padding-top: 18px;
+                border-top: 1px solid transparent;
 
                 a,
                 span {
@@ -411,6 +411,7 @@ body.single.single-docs .content-area {
                         justify-content: center;
 
                         span {
+                            gap: 12px;
                             padding: 0;
                             display: flex;
                             align-items: center;
@@ -421,9 +422,12 @@ body.single.single-docs .content-area {
 
                 &.disabled {
                     span {
+                        gap: 12px;
                         opacity: 0.3;
                         height: 100%;
                         display: flex;
+                        padding-left: 0;
+                        padding-right: 0;
                         align-items: center;
 
                         svg {
@@ -432,8 +436,12 @@ body.single.single-docs .content-area {
                     }
                 }
 
+                &:first-child {
+                    margin-right: auto;
+                }
+
                 &:last-child {
-                    border-right: 0;
+                    margin-left: auto;
                 }
             }
         }

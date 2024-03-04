@@ -13,20 +13,22 @@ if ( $docs ) {
             'mid_size'  => 1, // number of pages on either the start and the end list edges
             'prev_next' => true,
             'prev_text' => '<span>
-                <svg width="20" height="21" fill="none">
+                <svg width="16" height="11" fill="none">
                     <path
-                        fill="#475569"
+                        fill="#64748B"
                         fill-rule="evenodd"
-                        d="M12.707 5.68a1 1 0 0 1 0 1.414l-3.293 3.293 3.293 3.293a1 1 0 0 1-1.414 1.414l-4-4a1 1 0 0 1 0-1.414l4-4a1 1 0 0 1 1.414 0z"
+                        d="M5.707 9.954a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414l4-4a1 1 0 0 1 1.414 1.414L3.414 4.247H15a1 1 0 1 1 0 2H3.414L5.707 8.54a1 1 0 0 1 0 1.414z"
                     />
-                </svg>
-            </span>',
-            'next_text' => '<span>
-                <svg width="20" height="21" fill="none">
+                </svg>'
+                . __( 'Previous', 'wedocs' ) .
+            '</span>',
+            'next_text' => '<span>'
+                . __( 'Next', 'wedocs' ) .
+                '<svg width="16" height="11" fill="none">
                     <path
-                        fill="#475569"
+                        fill="#64748B"
                         fill-rule="evenodd"
-                        d="M7.293 15.094a1 1 0 0 1 0-1.414l3.293-3.293-3.293-3.293A1 1 0 1 1 8.707 5.68l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414 0z"
+                        d="M10.293.54a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414l2.293-2.293H1a1 1 0 1 1 0-2h11.586l-2.293-2.293a1 1 0 0 1 0-1.414z"
                     />
                 </svg>
             </span>',
@@ -132,13 +134,14 @@ if ( $docs ) {
                     <?php if ( $paged === 1 ) { ?>
                         <li class="disabled">
                             <span>
-                                <svg width="20" height="21" fill="none">
+                                <svg width='16' height='11' fill='none'>
                                     <path
-                                        fill="#475569"
-                                        fill-rule="evenodd"
-                                        d="M12.707 5.68a1 1 0 0 1 0 1.414l-3.293 3.293 3.293 3.293a1 1 0 0 1-1.414 1.414l-4-4a1 1 0 0 1 0-1.414l4-4a1 1 0 0 1 1.414 0z"
+                                        fill='#64748B'
+                                        fill-rule='evenodd'
+                                        d='M5.707 9.954a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414l4-4a1 1 0 0 1 1.414 1.414L3.414 4.247H15a1 1 0 1 1 0 2H3.414L5.707 8.54a1 1 0 0 1 0 1.414z'
                                     />
                                 </svg>
+                                <?php esc_html_e( 'Previous', 'wedocs' ); ?>
                             </span>
                         </li>
                     <?php } ?>
@@ -150,11 +153,12 @@ if ( $docs ) {
                     <?php if ( $paged === $total_pages ) { ?>
                         <li class="disabled">
                             <span>
-                                <svg width="20" height="21" fill="none">
+                                <?php esc_html_e( 'Next', 'wedocs' ); ?>
+                                <svg width='16' height='11' fill='none'>
                                     <path
-                                        fill="#475569"
-                                        fill-rule="evenodd"
-                                        d="M7.293 15.094a1 1 0 0 1 0-1.414l3.293-3.293-3.293-3.293A1 1 0 1 1 8.707 5.68l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414 0z"
+                                        fill='#64748B'
+                                        fill-rule='evenodd'
+                                        d='M10.293.54a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414l2.293-2.293H1a1 1 0 1 1 0-2h11.586l-2.293-2.293a1 1 0 0 1 0-1.414z'
                                     />
                                 </svg>
                             </span>
