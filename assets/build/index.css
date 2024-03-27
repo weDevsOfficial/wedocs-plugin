@@ -3439,6 +3439,9 @@ select {
 .inline {
   display: inline;
 }
+.\!flex {
+  display: flex !important;
+}
 .flex {
   display: flex;
 }
