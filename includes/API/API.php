@@ -712,7 +712,7 @@ class API extends WP_REST_Controller {
     /**
      * Check helpful item permission.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.1.5
      *
      * @param WP_REST_Request $request full data about the request
      *

@@ -2,14 +2,14 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 2.1.3\n"
+"Project-Id-Version: weDocs 2.1.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-02-27T14:13:40+00:00\n"
+"POT-Creation-Date: 2024-04-05T09:38:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -92,12 +92,13 @@ msgid "Migration not available at this moment."
 msgstr ""
 
 #: includes/Admin/Migrate.php:184
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:11
 msgid "Untitled Docs"
 msgstr ""
 
 #: includes/Ajax.php:111
+#: includes/API/API.php:741
 msgid "Sorry, we have already recorded your feedback!"
 msgstr ""
 
@@ -147,6 +148,7 @@ msgstr ""
 
 #: includes/API/API.php:273
 #: includes/API/API.php:300
+#: includes/API/API.php:723
 msgid "You are not currently logged in."
 msgstr ""
 
@@ -173,11 +175,15 @@ msgstr ""
 msgid "No email given"
 msgstr ""
 
-#: includes/API/API.php:748
+#: includes/API/API.php:732
+msgid "Doc status not valid for update helpful data"
+msgstr ""
+
+#: includes/API/API.php:788
 msgid "You cannot delete the documentation resource."
 msgstr ""
 
-#: includes/API/API.php:769
+#: includes/API/API.php:809
 msgid "Invalid Documentation."
 msgstr ""
 
@@ -232,7 +238,7 @@ msgid "Section: "
 msgstr ""
 
 #: includes/functions.php:109
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:33
 msgid "Home"
 msgstr ""
@@ -284,7 +290,7 @@ msgid "Documentation"
 msgstr ""
 
 #: includes/Post_Types.php:35
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:140
 msgid "Parent Doc"
 msgstr ""
@@ -417,7 +423,7 @@ msgstr ""
 
 #: includes/Widget.php:36
 #: assets/build/index.js:1
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/BackToDocsPage.js:25
 #: src/components/Documentations/index.js:130
 msgid "All Docs"
@@ -551,7 +557,7 @@ msgid "Docs:"
 msgstr ""
 
 #: templates/single-docs.php:64
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:17
 msgid "Articles"
 msgstr ""
@@ -613,7 +619,7 @@ msgid "Deleting it means it will be permanently lost, and you won't be able to r
 msgstr ""
 
 #: assets/build/index.js:1
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/AddArticleModal.js:205
 #: src/components/AddDocModal.js:170
 #: src/components/AddSectionModal.js:165
@@ -907,7 +913,7 @@ msgid "...maybe the page you’re looking for is not found or never existed."
 msgstr ""
 
 #: assets/build/index.js:1
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/DocListing/index.js:135
 #: src/components/Documentations/index.js:114
 #: src/components/Settings/index.js:125
@@ -915,7 +921,7 @@ msgid "weDocs database has been updated successfully"
 msgstr ""
 
 #: assets/build/index.js:1
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/DocListing/index.js:136
 #: src/components/Documentations/index.js:115
 #: src/components/Settings/index.js:126
@@ -1026,7 +1032,7 @@ msgid "Invite readers to share their thoughts through an email feedback form"
 msgstr ""
 
 #: assets/build/index.js:1
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:85
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:119
 #: src/components/Settings/GeneralSettings.js:136
@@ -1114,7 +1120,7 @@ msgid "Get started by creating a new doc"
 msgstr ""
 
 #: assets/build/index.js:1
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Documentations/EmptyDocs.js:84
 #: src/components/Migrations/index.js:201
 msgid "Learn more "
@@ -1131,318 +1137,318 @@ msgid "Create a new doc"
 msgstr ""
 
 #. translators: %d: Length of documentation sections
-#: assets/build/index.js:3
+#: assets/build/index.js:4
 #: src/components/Documentations/ParentDocs.js:147
 msgid "%d Sections"
 msgstr ""
 
 #. translators: %d: Length of documentation articles
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Documentations/ParentDocs.js:174
 msgid "%d Articles"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Documentations/ParentDocs.js:203
 msgid "Add"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Documentations/index.js:134
 msgid "New doc"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Documentations/index.js:155
 msgid "Oops! It seems that your search did not match any existing documents. Please try again..."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationProgressModal.js:52
 msgid "Migrating Docs..."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationProgressModal.js:55
 msgid "Migrating existing docs from BetterDocs to weDocs"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:15
 msgid "BetterDocs"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:71
 msgid "Are you sure to migrate?"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:74
 msgid "We want to make sure you have a successful migration experience to weDocs."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:85
 msgid "Migrate from:"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:151
 msgid "loading…"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:166
 msgid "Migration Notice: "
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:167
 msgid "This will migrate all your docs to a Single Parent Doc. If you are a BetterDocs Pro user and using Knowledge Bases, migration for Pro users is coming soon."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:182
 msgid "Uncategorized Articles: "
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:183
 msgid "Note: During the migration, articles under \"Uncategorized\" category won't be transferred. Please ensure to categorize articles appropriately before migrating."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:201
 msgid "Yes, I'm sure"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:15
 msgid "Categories"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:15
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:16
 msgid "Section"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:16
 msgid "Subcategories"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:69
 msgid "BetterDocs to weDocs content mapping"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:72
 msgid "We want to make sure you have a seamless migration experience to weDocs"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:93
 msgid "No parent doc, only category & subcategory-based articles"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:121
 msgid "Articles under super-organized parent doc-section structure"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:146
 msgid "Created by weDocs"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:205
 msgid "Continue"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/index.js:191
 msgid "Migration has been successful"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/index.js:191
 msgid "Migrate existing docs from BetterDocs to weDocs"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/index.js:204
 msgid "All existing docs have been successfully migrated from BetterDocs to weDocs."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/index.js:204
 msgid "how to migrate docs"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/index.js:225
 msgid "Already Migrated"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/index.js:241
 msgid "Start Migration"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/index.js:268
 msgid "Go back to Docs"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/Migrations/index.js:288
 msgid "Migration not required"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:26
 msgid "Pop-up slider first image"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:27
 msgid "Pop-up slider second image"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:28
 msgid "Pop-up slider third image"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:29
 msgid "Pop-up slider fourth image"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:95
 msgid "Upgrade to"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:101
 msgid "to experience even more Powerful features 🎉"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:116
 msgid "Role based permission management "
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:117
 msgid "or viewing, managing, and configuring permission settings."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:131
 msgid "Arrange content automatically or manually "
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:132
 msgid "giving you full control over its presentation."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:146
 msgid "Personalize messaging tab with custom titles "
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:147
 msgid "and messages for seamless communication."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:161
 msgid "Customize with "
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:162
 msgid "design widgets, colors, and pre-built options "
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:163
 msgid "for an appealing interface."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:177
 msgid "Get assisted by A.I. Powered Chatbot "
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:178
 msgid "24/7 with updated information and support."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:224
 msgid "10,000+ successful businesses"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:234
 msgid "14 days no questions asked refund policy"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/UpgradePopup.js:244
 msgid "Industry leading 24x7 support"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/PermissionSettings.js:13
 msgid "Global doc permission settings"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/PermissionSettings.js:14
 msgid "By default, who will get edit access on all the documents?"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/PermissionSettings.js:22
 msgid "Who can manage weDocs Settings?"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/PermissionSettings.js:23
 msgid "Who will have the ability to alter the settings of the plugin?"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/index.js:25
 #: src/components/ProPreviews/index.js:193
 #: src/components/ProPreviews/PermissionSettings.js:35
 msgid "Permission Management"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/PermissionSettings.js:81
 msgid "6 roles selected"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:252
 #: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:124
 #: src/components/ProPreviews/PermissionSettings.js:113
 msgid "%s"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/Contributors.js:18
 #: src/components/ProPreviews/common/Contributors.js:23
 #: src/components/ProPreviews/common/Contributors.js:28
@@ -1450,132 +1456,132 @@ msgstr ""
 msgid "Fourth Contributor"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/common/Contributors.js:44
 msgid "Upgrade"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:29
 msgid "Default Template"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:30
 msgid "Bootstrap Template"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:31
 msgid "Tailwind Template"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:37
 msgid "Active Navigation Background Color"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:38
 msgid "Highlight the active navigation section. Pick a background color that stands out"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:43
 msgid "Active Navigation Text Color"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:44
 msgid "Make navigation clear. Choose a text color for the active navigation section"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:49
 msgid "Active Font Color"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:50
 msgid "Enhance readability. Select a font color for the active elements in your layout"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:62
 msgid "Layout Settings"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:79
 msgid "Choose Doc List Column Style"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:83
 msgid "Choose how your document list columns should appear"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:193
 msgid "Choose Single Doc Template"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:197
 msgid "Customize the template for individual docs. Choose a layout that suits your content best"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:553
 msgid "Enable Navigation Icon"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:557
 msgid "Enable/Disable navigation icons for a user-friendly experience on your single document pages"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:597
 msgid "Enable Table of Contents"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:601
 msgid "Improve content navigation. Turn on the table of contents feature for easy access to document sections"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:641
 msgid "Collapse Documentation Page Articles"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/LayoutSettings.js:645
 msgid "Choose if your sections should be collapsed or expanded in Doc Homepage"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/IntegrateAiSettings.js:19
 msgid "Manage A.I. Chatbot Billing"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/IntegrateAiSettings.js:27
 msgid "Manage Subscription"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/UploadButton.js:24
 msgid "Upload"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/UploadButton.js:30
 msgid "example.png"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/index.js:12
 #: src/components/ProPreviews/AssistantWidgetPanels/AppearanceLabel.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/index.js:12
@@ -1583,218 +1589,218 @@ msgstr ""
 msgid "Appearance"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:18
 msgid "A.I. ChatBot tab icon"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:25
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:25
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:25
 msgid "Upload the new explore tab icon. png/jpg preferred"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:59
 msgid "A.I. ChatBot tab name"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:63
 msgid "Give your explore tab a meaningful title"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:90
 msgid "A.I. ChatBot"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:110
 msgid "A.I. ChatBot Tab Subtitle 1"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:117
 msgid "Edit the first chatbot tab subtitle"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:144
 msgid "A.I. ChatBot tab subtitle 1"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:164
 msgid "A.I. ChatBot Tab Subtitle 2"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:171
 msgid "Edit the second chatbot tab subtitle"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/Appearance.js:198
 msgid "A.I. Chatbot tab subtitle 2"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AssistantPanel.js:16
 #: src/components/ProPreviews/index.js:43
 msgid "Assistant Widget"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/AiEnable.js:16
 msgid "Connect to A.I."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/AiEnable.js:20
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreEnable.js:20
 msgid "Explore tab helps keep all the crucial and indispensable information at the forefront, making it easier for the readers to access and utilize"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/index.js:11
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:5
 #: src/components/ProPreviews/index.js:62
 msgid "A.I. Chat"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:18
 msgid "Explore tab icon"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:59
 msgid "Explore tab name"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:63
 msgid "Give your explore tab a meaningful name"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:90
 msgid "Explore tab title"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:110
 msgid "Explore Tab Subtitle 1"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:117
 msgid "Edit the first explore tab subtitle"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:144
 msgid "Explore tab subtitle 1"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:164
 msgid "Explore Tab Subtitle 2"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:171
 msgid "Edit the second explore tab subtitle"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/Appearance.js:198
 msgid "Explore tab subtitle 2"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreEnable.js:16
 msgid "Enable Explore Tab"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:9
 msgid "Helpful Content"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:10
 msgid "Top 10 contents that are found as most helpful by the visitors will be set automatically in descending order"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:17
 msgid "Selected Content"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:18
 msgid "Manually select content that will appear in the Explore tab of the Assistant widget"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:30
 msgid "Documentation Team 1"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:31
 msgid "Documentation Team 2"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:32
 msgid "Documentation Team 3"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:33
 msgid "Documentation Team 4"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:122
 msgid "Select Content"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:129
 msgid "Handpick content to showcase in the explore tab"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:155
 msgid "Select Articles"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:180
 msgid "Selected Articles"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:209
 msgid "Parent Documentation"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:223
 msgid "Section Documentation"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:262
 msgid "Remove"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/index.js:11
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:6
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:67
@@ -1802,127 +1808,127 @@ msgstr ""
 msgid "Explore"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:18
 msgid "Messaging tab icon"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:59
 msgid "Messaging tab name"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:63
 msgid "Give your messaging tab a meaningful name"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:90
 msgid "Messaging tab title"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:110
 msgid "Messaging Tab Subtitle 1"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:117
 msgid "Edit the first messaging tab subtitle"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:144
 msgid "Messaging tab subtitle 1"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:164
 msgid "Messaging Tab Subtitle 2"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:171
 msgid "Edit the second messaging tab subtitle"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/Appearance.js:198
 msgid "Messaging tab subtitle 2"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageEnable.js:17
 msgid "Enable Messaging Tab"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageEnable.js:21
 msgid "Stay connected to your readers and receive their thoughts effortlessly through an email form"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:15
 msgid "Cloudflare Turnstile Site Key"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:22
 msgid "Set your cloudflare turnstile site key for sending message traffic free"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:49
 msgid "Enter your cloudflare turnstile site key"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:62
 msgid "How to set up "
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:72
 msgid "Cloudflare Turnstile"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:92
 msgid "Please enter the email addresses where you would like to receive contact from leads from your users. You can enter multiple emails separated by a comma."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:139
 msgid "Success Message Title"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:146
 msgid "Success message title when message is sent successfully"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:173
 msgid "Messaging success title"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:193
 msgid "Success Message Text"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:200
 msgid "Success message text when message is sent successfully"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/MessageSettings.js:227
 msgid "Messaging success text"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/index.js:11
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:90
@@ -1930,234 +1936,234 @@ msgstr ""
 msgid "Messaging"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:15
 msgid "Drag your tabs and place orders"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:19
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:77
 msgid "Prevent the widget from appearing on specific pages"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:6
 msgid "Normal"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:7
 msgid "Medium"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:8
 msgid "Semi bold"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:9
 msgid "Bold"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:10
 msgid "Extra bold"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:73
 msgid "Reset"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:7
 msgid "Default"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:31
 msgid "Watermelon"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:55
 msgid "Dark Slate Blue"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:79
 msgid "Azure"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:103
 msgid "Elephant"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:127
 msgid "Atomic Tangerine"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:151
 msgid "Meteorite"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:202
 msgid "Widget Background"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:7
 msgid "How to Install"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:8
 msgid "Activating & Deactivating WPUF Modules"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:44
 msgid "A.I. Chatbot"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:190
 msgid "Explore Feature"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:213
 msgid "Search with keywords for quick answers"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:232
 msgid "Search"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:272
 msgid "WP User Frontend… > Getting Started"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:281
 msgid "Here you will find everything about WP User Frontend, what it offers and its"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:12
 msgid "Pre-built Color Palette"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:13
 msgid "Choose a pre-built color palette for the colors of your assistant widget."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:20
 msgid "Custom Color Palette"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:21
 msgid "Choose any colors that represents your brand or that you prefer."
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:34
 msgid "About"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:35
 msgid "Services"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:36
 msgid "Portfolio"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:37
 msgid "Contact Us"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:59
 msgid "Widget Settings"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:73
 msgid "Hide from Pages"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:140
 msgid "Tab First Sub-Title Font Size"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:147
 msgid "Choose an appropriate font size for tab first sub-title"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:186
 msgid "Tab Second Sub-Title Font Size"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:193
 msgid "Choose an appropriate font size for tab second sub-title"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:230
 msgid "Color Palette Settings"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:311
 msgid "Choose Color: "
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/PreferenceSettings.js:317
 msgid "Reset All"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/index.js:101
 msgid "Placement"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/index.js:116
 msgid "Widget Preference"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/index.js:133
 msgid "Layout & Styles"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/index.js:200
 #: src/components/ProPreviews/index.js:215
 msgid "Pro"
 msgstr ""
 
-#: assets/build/index.js:5
+#: assets/build/index.js:7
 #: src/components/ProPreviews/index.js:208
 msgid "Restrict editing for admin only"
 msgstr ""
