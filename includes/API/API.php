@@ -78,7 +78,7 @@ class API extends WP_REST_Controller {
             [
                 'methods'             => WP_REST_Server::EDITABLE,
                 'callback'            => [ $this, 'update_helpfullness' ],
-                'permission_callback' => '__return_true',
+                'permission_callback' => [ $this, 'helpful_update_permissions_check', ],
                 'args'                => [
                     'type' => [
                         'required' => true,
@@ -705,6 +705,46 @@ class API extends WP_REST_Controller {
         if ( empty( $request['email'] ) ) {
             return new WP_Error( 'rest_doc_invalid_email', __( 'No email given', 'wedocs' ) );
         }
+
+        return true;
+    }
+
+    /**
+     * Check helpful item permission.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param WP_REST_Request $request full data about the request
+     *
+     * @return WP_Error|bool true on success
+     */
+    public function helpful_update_permissions_check( $request ) {
+        if ( ! is_user_logged_in() ) {
+            return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ) );
+        }
+
+        $doc_id       = absint( $request->get_param( 'id' ) );
+        $doc_status   = get_post_status( $doc_id );
+        $doc_statuses = array( 'publish', 'private' );
+
+        // Check doc status is valid.
+        if ( ! in_array( $doc_status, $doc_statuses ) ) {
+            return new WP_Error( 'rest_doc_invalid_status', __( 'Doc status not valid for update helpful data', 'wedocs' ) );
+        }
+
+        $user_id         = get_current_user_id();
+        $updated_doc_ids = get_user_meta( $user_id, 'wedocs_response', true );
+        $previous        = ! empty( $updated_doc_ids ) ? explode( ',', $updated_doc_ids ) : [];
+
+        // Check doc status is valid.
+        if ( in_array( $doc_id, $previous ) ) {
+            return new WP_Error( 'rest_doc_invalid_helpful_update', __( 'Sorry, we have already recorded your feedback!', 'wedocs' ) );
+        }
+
+        array_push( $previous, $doc_id );
+        $responsed_doc_ids = implode( ',', $previous );
+
+        update_user_meta( $user_id, 'wedocs_response', $responsed_doc_ids );
 
         return true;
     }
