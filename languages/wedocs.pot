@@ -102,23 +102,23 @@ msgstr ""
 msgid "Sorry, we have already recorded your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:126
+#: includes/Ajax.php:127
 msgid "Thanks for your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:147
+#: includes/Ajax.php:148
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: includes/Ajax.php:154
+#: includes/Ajax.php:155
 msgid "Please provide a subject line."
 msgstr ""
 
-#: includes/Ajax.php:158
+#: includes/Ajax.php:159
 msgid "Please provide the message details."
 msgstr ""
 
-#: includes/Ajax.php:163
+#: includes/Ajax.php:164
 msgid "Thanks for your feedback."
 msgstr ""
 
