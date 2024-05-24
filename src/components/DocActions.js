@@ -57,7 +57,7 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           id="action-menus"
           className={ `${
             type === 'article' ? articleActionMenuWidth : documentationActionMenuWidth
-          } ${ showActions ? 'block' : 'hidden' } z-40 bg-white border border-[#DBDBDB] absolute z-10 shadow -right-3.5 py-1 rounded-md mt-2.5 hover:block after:content-[''] before:content-[''] after:absolute before:absolute after:w-[13px] before:w-full after:h-[13px] before:h-2.5 after:top-[-7px] before:-top-2.5 after:right-4 after:z-[-1] after:bg-white after:border after:border-[#DBDBDB] after:!rotate-45 after:border-r-0 after:border-b-0` }
+          } ${ showActions ? 'block' : 'hidden' } z-40 bg-white border border-[#DBDBDB] absolute shadow -right-3.5 py-1 rounded-md mt-2.5 hover:block after:content-[''] before:content-[''] after:absolute before:absolute after:w-[13px] before:w-full after:h-[13px] before:h-2.5 after:top-[-7px] before:-top-2.5 after:right-4 after:z-[-1] after:bg-white after:border after:border-[#DBDBDB] after:!rotate-45 after:border-r-0 after:border-b-0` }
         >
           { isAdmin && type === 'article' && (
             <QuickEditModal
