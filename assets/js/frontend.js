@@ -230,8 +230,8 @@
       ulNode.setAttribute( 'id', 'doc-search-list' );
 
       searchDocs.forEach( ( data, index ) => {
-        let url = data?.article ? data?.article?.guid :
-          ( data?.section ? data?.section?.guid : data?.parent?.guid ),
+        let url = data?.article ? data?.article?.permalink :
+          ( data?.section ? data?.section?.permalink : data?.parent?.permalink ),
           title = data?.article ? data?.article?.post_title :
             ( data?.section ? data?.section?.post_title : data?.parent?.post_title ),
           parentNavigation = data?.section ?
