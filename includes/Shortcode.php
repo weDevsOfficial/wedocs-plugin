@@ -116,9 +116,10 @@ class Shortcode {
         $template_args = apply_filters(
             'wedocs_get_doc_listing_template_args',
             array(
-                'docs' => $arranged,
-                'more' => $args['more'],
-                'col'  => (int) ( $docs_length === 1 ? $docs_length : $args['col'] ),
+                'docs'          => $arranged,
+                'more'          => $args['more'],
+                'col'           => (int) ( $docs_length === 1 ? $docs_length : $args['col'] ),
+                'enable_search' => wedocs_get_general_settings( 'enable_search', 'on' ),
             )
         );
 
