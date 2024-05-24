@@ -3445,6 +3445,9 @@ select {
 .wedocs-document :is(.inline) {
   display: inline;
 }
+.wedocs-document :is(.\!flex) {
+  display: flex !important;
+}
 .wedocs-document :is(.flex) {
   display: flex;
 }
