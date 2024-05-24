@@ -63,6 +63,31 @@ class Assets {
                 ),
             );
         }
+
+        if ( file_exists( WEDOCS_PATH . '/assets/build/block.asset.php' ) ) {
+            $block_dependencies = require WEDOCS_PATH . '/assets/build/block.asset.php';
+            wp_register_style(
+                'wedocs-block-style',
+                $assets_url . '/build/style-block.css',
+                $block_dependencies['version']
+            );
+
+            wp_register_script(
+                'wedocs-block-script',
+                $assets_url . '/build/block.js',
+                $block_dependencies['dependencies'],
+                $block_dependencies['version'],
+                true
+            );
+
+            wp_localize_script(
+                'wedocs-block-script',
+                'weDocsBlockVars',
+                array( 'siteUrl' => site_url() ),
+            );
+        }
+
+        wp_enqueue_style( 'wedocs-block-style' );
     }
 
     /**
@@ -88,8 +113,11 @@ class Assets {
      * @return void
      */
     public function admin_enqueue() {
+        wp_enqueue_style( 'wedocs-block-style' );
+
         // Enqueue admin script.
         wp_enqueue_script( 'wedocs-admin-script' );
+        wp_enqueue_script( 'wedocs-block-script' );
 
         // Enqueue admin app scripts.
         if ( 'toplevel_page_wedocs' === get_current_screen()->id ) {

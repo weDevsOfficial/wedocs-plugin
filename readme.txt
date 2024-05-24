@@ -3,9 +3,9 @@ Contributors: tareq1988, wedevs
 Donate link: http://wedocs.co/
 Tags: WordPress documentation plugin, WordPress docs plugin, Documentation, Knowledge base, Wiki
 Requires at least: 5.6
-Tested up to: 6.4.2
+Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 2.1.4
+Stable tag: 2.1.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -342,6 +342,10 @@ Can’t wait to join us?
 
 
 == Changelog ==
+
+= v2.1.5 (5th April, 2024) =
+
+ * **Fix:** Security vulnerability on docs helpful data update api.
 
 = v2.1.4 (29th February, 2024) =
 
