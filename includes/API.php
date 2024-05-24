@@ -19,7 +19,6 @@ class API {
         add_filter( 'rest_delete_docs', [ $this, 'delete_child_docs' ], 10 );
     }
 
-
     /**
      * Initialize the API
      *

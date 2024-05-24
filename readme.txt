@@ -3,9 +3,9 @@ Contributors: tareq1988, wedevs
 Donate link: http://wedocs.co/
 Tags: WordPress documentation plugin, WordPress docs plugin, Documentation, Knowledge base, Wiki
 Requires at least: 5.6
-Tested up to: 6.5
+Tested up to: 6.5.3
 Requires PHP: 7.4
-Stable tag: 2.1.5
+Stable tag: 2.1.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -342,6 +342,13 @@ Can’t wait to join us?
 
 
 == Changelog ==
+
+= v2.1.6 (24th May, 2024) =
+
+ * **Feature:** Add search block for documentation page.
+
+ * **Fix:** weDocs dashboard ui conflicts with elementor.
+ * **Fix:** Search Box's Doc Redirection Issue on Classic Editor.
 
 = v2.1.5 (5th April, 2024) =
 

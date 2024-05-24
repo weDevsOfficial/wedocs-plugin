@@ -97,7 +97,7 @@ const AddDocModal = ( { className, children } ) => {
       </button>
 
       <Transition appear show={ isOpen } as={ Fragment }>
-        <Dialog as="div" className="relative z-[9999]" onClose={ closeModal }>
+        <Dialog as="div" className="wedocs-document relative z-[9999]" onClose={ closeModal }>
           <Transition.Child
             as={ Fragment }
             enter="ease-out duration-300"
@@ -107,11 +107,11 @@ const AddDocModal = ( { className, children } ) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25"></div>
+            <div className="fixed inset-0 bg-black bg-opacity-25 z-[50]"></div>
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="fixed inset-0 overflow-y-auto z-[100]">
+            <div className="flex min-h-full items-center justify-center p-4 text-center z-[9999]">
               <Transition.Child
                 as={ Fragment }
                 enter="ease-out duration-300"

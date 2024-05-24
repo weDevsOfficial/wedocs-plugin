@@ -2,14 +2,14 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 2.1.5\n"
+"Project-Id-Version: weDocs 2.1.6\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-04-05T09:38:06+00:00\n"
+"POT-Creation-Date: 2024-05-24T10:57:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wedocs\n"
@@ -97,28 +97,28 @@ msgstr ""
 msgid "Untitled Docs"
 msgstr ""
 
-#: includes/Ajax.php:111
+#: includes/Ajax.php:112
 #: includes/API/API.php:741
 msgid "Sorry, we have already recorded your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:126
+#: includes/Ajax.php:127
 msgid "Thanks for your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:147
+#: includes/Ajax.php:148
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: includes/Ajax.php:154
+#: includes/Ajax.php:155
 msgid "Please provide a subject line."
 msgstr ""
 
-#: includes/Ajax.php:158
+#: includes/Ajax.php:159
 msgid "Please provide the message details."
 msgstr ""
 
-#: includes/Ajax.php:163
+#: includes/Ajax.php:164
 msgid "Thanks for your feedback."
 msgstr ""
 
@@ -539,7 +539,7 @@ msgstr ""
 msgid "No, Thanks"
 msgstr ""
 
-#: templates/shortcode.php:81
+#: templates/shortcode.php:89
 msgid "This document has no sections yet. Check back later or wait for the author to add content."
 msgstr ""
 
@@ -576,6 +576,201 @@ msgstr ""
 #: src/components/DocListing/ArticleChildrens.js:202
 #: src/components/DocListing/SectionArticles.js:275
 msgid "Updated on %s"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/CustomControls/UnitControl.js:16
+msgid "Unit"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/attributes.js:18
+msgid "Search for a top or question"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:49
+msgid "Align left"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:57
+msgid "Align center"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:66
+msgid "Align right"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:117
+msgid "Solid"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:118
+msgid "Dotted"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:119
+msgid "Dashed"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:120
+msgid "Double"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:121
+msgid "Groove"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:122
+msgid "Ridge"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:123
+msgid "Inset"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:124
+msgid "Outset"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:125
+msgid "None"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:126
+msgid "Hidden"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:136
+msgid "Disable Block"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:142
+msgid "Color Settings"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:149
+msgid "Field Background Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:154
+msgid "Field Hover Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:159
+msgid "Border Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:164
+msgid "Icon Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:169
+msgid "Button Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:174
+msgid "Button Hover Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:179
+msgid "Icon Hover Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:185
+msgid "Search Bar Settings"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:189
+msgid "Field Width"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:195
+msgid "Placeholder"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:196
+msgid "Search bar placeholder"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:199
+msgid "POSITION"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:213
+msgid "Field Padding"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:224
+msgid "Field Margin"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:231
+msgid "Border Width"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:238
+msgid "Border Radius"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:244
+msgid "Border Type"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:255
+msgid "Button Padding"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:265
+msgid "Button Margin"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/edit.js:272
+msgid "Button Radius"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/index.js:16
+msgid "weDocs -  Searchbar"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/Search/index.js:19
+msgid "Simple search forms for easy user guidance for your documentation"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1051,31 +1246,41 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:190
-msgid "Helpful Feedback on Article"
+msgid "Enable searchbar on docs home"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:194
-msgid "Enabling helpful feedback on your article allows readers to provide opinions on your content"
+msgid "Enable searchbar on docs homepage, applicable only for those using the [weDocs] shortcode"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:236
-msgid "Allow Comments on Article"
+msgid "Helpful Feedback on Article"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:240
-msgid "Increase reader engagement by turning on comments"
+msgid "Enabling helpful feedback on your article allows readers to provide opinions on your content"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:282
-msgid "Allow Article Printing"
+msgid "Allow Comments on Article"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/GeneralSettings.js:286
+msgid "Increase reader engagement by turning on comments"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:328
+msgid "Allow Article Printing"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/GeneralSettings.js:332
 msgid "Allow users to print articles directly from the website"
 msgstr ""
 
