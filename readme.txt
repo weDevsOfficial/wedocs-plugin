@@ -19,11 +19,11 @@ It is difficult to manually maintain and create wikis, guidelines, documentation
 ![Screenshot of weDocs Dashboard](https://wedocs.co/wp-content/uploads/2024/02/Dashboard.png)
 
 
-🎉 ⭐  [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/)  🎉 ⭐
+🎉 ⭐  [Upgrade to weDocs Pro now!](https://wedocs.co/pricing/)  🎉 ⭐
 
 Well, weDocs got you covered. You can now do all of these tasks smartly and efficiently in minutes. It’s the best knowledge base and documentation plugin for WordPress. Create great-looking documentation and organize it beautifully on your website.
 
-**Why iweDocs the best docs plugin **
+** Why weDocs is the best docs plugin for WordPress **
 Apart from creating a knowledgebase for your products, weDocs gives you role-based permission management options, a central dashboard to manage documents, migration options to transfer data, pre-built design templates for your documentation page, and more.
 
 🎉 Introducing the Next Gen of weDocs - The Ultimate WordPress Documentation Plugin
@@ -31,7 +31,7 @@ Apart from creating a knowledgebase for your products, weDocs gives you role-bas
 [youtube https://youtu.be/9E7ZJetD2WU?si=1qI3Z-u1gWt0RN-7?rel=0]
 
 
-**What users say about weDocs**
+## What users say about weDocs
 Let’s check out what Mr. Web shared about weDocs
 [youtube https://youtu.be/TFXsyB09VJQ?si=k56S-YEjYIUUEMdO??rel=0]
 
@@ -51,9 +51,7 @@ Let’s check out what Mr. Web shared about weDocs
 🎉 ⭐  [Upgrade to weDocs Pro now!](https://wedocs.co/pricing/)  🎉 ⭐
 
 
-**🔥weDocs top features at a glance**
-
-**🌐 Top Free Features:**
+## 🌐 weDocs Free Features
 
 - User-friendly design for easy knowledge base creation and management
 - Simplified document creation and organization with drag-and-drop functionality
@@ -130,14 +128,6 @@ Tailor the appearance of your knowledge base to your website's identity through 
 ✍️ Floating contact form
 weDocs provides a floating contact form as a part of the Assistant Widget to provide a convenient way for users to reach out to you. Users can easily contact you via email without navigating away from the documentation.
 
-
-= Explore more prodcuts of weDocs's parent company - weDevs! ==
-**[Dokan:](https://wordpress.org/plugins/dokan-lite/)** The pioneer WooCommerce multivendor marketplace solution for WordPress. Start your own multi vendor marketplace like Amazon, eBay, Etsy - in minutes!
-**[weMail:](https://wordpress.org/plugins/wemail/)** A simplified WordPress solution for email marketing, newsletter, opt-in form, subscription form, and more!
-**[WP Project Manager:](https://wordpress.org/plugins/wedevs-project-manager/)** A project management plugin by weDevs making task scheduling, project management, and team collaboration simpler than ever featuring a Kanban board and Gantt charts.
-**[WP User Frontend:](https://wordpress.org/plugins/wp-user-frontend/)** Get content access & restriction, user login & registration, subscription & membership, form builder, profile builder & Frontend post submission plugin - all in one product
-**[Happy Addons for Elementor:](https://wordpress.org/plugins/happy-elementor-addons/)** An Elementor Addon solution that comes with Header Footer Builder, 500+ templates, 143+ free & essential pro elementor widget like – Theme Builder, Mega Menu, and more!
-**[WP ERP:](https://wordpress.org/plugins/erp/)** An ERP with complete HR, Recruitment, and Job Listings for Business Managers with WooCommerce CRM and accounting solutions by weDevs.
 
 == Frequently Asked Questions ==
 
