@@ -8,12 +8,13 @@ Requires PHP: 7.4
 Stable tag: 2.1.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Discover weDocs, the ultimate WordPress documentation plugin. Easily create, manage, and organize content with seamless integration and a user-friendly interface.
 
-The best WordPress documentation plugin, weDocs, lets you manage a product’s knowledgebase, documentation, and wiki in a few minutes. Check out now!
+== Description ==
 
-Struggling to manage your product’s knowledge base? Or are you looking to produce elegant and resourceful documentation for your WordPress plugins and themes?
+## weDocs: THE BEST WORDPRESS DOCUMENTATION PLUGIN
 
-It is difficult to manually maintain and create wikis, guidelines, documentation, and product knowledge bases. Having an aligned knowledge base is crucial, especially for online service-based products and WordPress plugins and themes. It facilitates users' exploration, education, and product knowledge.
+Discover **weDocs**, the ultimate **WordPress documentation plugin**. Easily create, manage, and organize documenation, docs, Wikis, Knowledgebase articles. Perfect for developers, bloggers, and businesses, weDocs offers a user-friendly interface, robust features, seamless integration with other plugins, SEO compatbility and more. Simplify your documentation workflow today by installing weDocs, the best solution for all your WordPress documentation needs.
 
 
 ![Screenshot of weDocs Dashboard](https://wedocs.co/wp-content/uploads/2024/02/Dashboard.png)
@@ -21,9 +22,9 @@ It is difficult to manually maintain and create wikis, guidelines, documentation
 
 🎉 ⭐  [Upgrade to weDocs Pro now!](https://wedocs.co/pricing/)  🎉 ⭐
 
-Well, weDocs got you covered. You can now do all of these tasks smartly and efficiently in minutes. It’s the best knowledge base and documentation plugin for WordPress. Create great-looking documentation and organize it beautifully on your website.
+weDocs is a comprehensive knowledgebase (KB Articles) and documentation plugin for WordPress. Create great-looking documentation and organize it beautifully on your website.
 
-** Why weDocs is the best docs plugin for WordPress **
+## Why weDocs is the best docs plugin for WordPress?
 Apart from creating a knowledgebase for your products, weDocs gives you role-based permission management options, a central dashboard to manage documents, migration options to transfer data, pre-built design templates for your documentation page, and more.
 
 🎉 Introducing the Next Gen of weDocs - The Ultimate WordPress Documentation Plugin
@@ -31,7 +32,7 @@ Apart from creating a knowledgebase for your products, weDocs gives you role-bas
 [youtube https://youtu.be/9E7ZJetD2WU?si=1qI3Z-u1gWt0RN-7?rel=0]
 
 
-## What users say about weDocs
+## What do users say about weDocs?
 Let’s check out what Mr. Web shared about weDocs
 [youtube https://youtu.be/TFXsyB09VJQ?si=k56S-YEjYIUUEMdO??rel=0]
 
@@ -51,7 +52,7 @@ Let’s check out what Mr. Web shared about weDocs
 🎉 ⭐  [Upgrade to weDocs Pro now!](https://wedocs.co/pricing/)  🎉 ⭐
 
 
-## 🌐 weDocs Free Features
+## 🌐 weDocs Free Features at a glance
 
 - User-friendly design for easy knowledge base creation and management
 - Simplified document creation and organization with drag-and-drop functionality
@@ -63,7 +64,7 @@ Let’s check out what Mr. Web shared about weDocs
 - Optimized search features, ensuring better visibility and reach
 - Adaptable responsive design for a great UX across devices
 
-**💼 Top Premium Features:**
+## 🚀 weDocs Premium Features at a glance **
 
 - Role-based permission management
 - Define privacy settings for each document
@@ -77,7 +78,7 @@ Let’s check out what Mr. Web shared about weDocs
 🎉 ⭐  [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/)  🎉 ⭐
 
 
-🔗 **Top Free Features**
+## 🔥 Why weDocs is the best documentation plugin?
 
 💻 User-friendly interface
 weDocs has an intuitive and user-friendly interface to let you create and manage your knowledge base, even if you're not tech-savvy. Also, you can re-arrange your preferred documentation depending on the importance of the content. Just use the simple drag-and-drop method and get your job done.
@@ -103,7 +104,7 @@ weDocs is optimized for search engines to ensure better visibility and reach. Us
 🧾 Responsive design with a great UX and UI experience
 weDocs ensures your knowledgebase adapts flawlessly to all screen sizes, ensuring a compatible and satisfying experience across devices.
 
-**🚀 Premium Features**
+## 🚀 Upgrade to weDocs Pro for more awesome features
 
 👥 Role-based permission management
 Tailor access control with precision. Grant edit & view permissions based on user roles, defining who can modify docs for a finely tuned collaborative environment. Contributors in each document is displayed by showing their user icons, enabling seamless tracking and identification of document editors. Through global permission management define default editing access for the users.
