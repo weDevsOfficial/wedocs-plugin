@@ -1,4 +1,4 @@
-=== The Best WordPress Knowledgebase and Documentation Plugin - weDocs===
+=== weDocs - Knowledgebase, Documentation, and Wiki Plugin for WP ===
 Contributors: tareq1988, wedevs
 Donate link: http://wedocs.co/
 Tags: WordPress documentation plugin, WordPress docs plugin, Documentation, Knowledge base, Wiki
