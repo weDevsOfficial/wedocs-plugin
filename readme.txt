@@ -1,4 +1,4 @@
-=== The Best WordPress Knowledgebase and Documentation Plugin - weDocs===
+=== weDocs - Knowledgebase, Documentation, and Wiki Plugin for WP ===
 Contributors: tareq1988, wedevs
 Donate link: http://wedocs.co/
 Tags: WordPress documentation plugin, WordPress docs plugin, Documentation, Knowledge base, Wiki
@@ -19,7 +19,7 @@ It is difficult to manually maintain and create wikis, guidelines, documentation
 ![Screenshot of weDocs Dashboard](https://wedocs.co/wp-content/uploads/2024/02/Dashboard.png)
 
 
-💎 🚀 ✨ 🔥 💡 🎉 ⭐  [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/)  💎 🚀 ✨ 🔥 💡 🎉 ⭐
+🚀 🔥 [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/)  🚀 🔥
 
 
 
@@ -68,7 +68,7 @@ Let’s check out what Mr. Web shared about weDocs
 
 
 
-💎 🚀 ✨ 🔥 💡 🎉 ⭐  [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/)  💎 🚀 ✨ 🔥 💡 🎉 ⭐
+🎉 ⭐  [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/) 🎉 ⭐
 
 
 
@@ -204,7 +204,7 @@ Experience the magic of weDocs AI Chat, powered by ChatGPT. This feature unlocks
 
 
 
-💎 🚀 ✨ 🔥 💡 🎉 ⭐  [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/)  💎 🚀 ✨ 🔥 💡 🎉 ⭐
+🎉 ⭐  [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/)  🎉 ⭐
 
 
 
@@ -268,7 +268,7 @@ A. Yes, weDocs allows you to customize the URL structure of your documentation p
 
 
 
-💎 🚀 ✨ 🔥 💡 🎉 ⭐  [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/)  💎 🚀 ✨ 🔥 💡 🎉 ⭐
+🎉 ⭐  [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/)  🎉 ⭐
 
 
 
