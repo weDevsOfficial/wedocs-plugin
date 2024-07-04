@@ -12,9 +12,9 @@ Discover weDocs, the ultimate WordPress documentation plugin. Easily create, man
 
 == Description ==
 
-## weDocs: THE BEST WORDPRESS DOCUMENTATION PLUGIN
+## weDocs -- Effortlessly create great-looking documenation, wikis, knowledgebase articles. Documentation has never 
 
-Discover **weDocs**, the ultimate **WordPress documentation plugin**. Easily create, manage, and organize documenation, docs, Wikis, Knowledgebase articles. Perfect for developers, bloggers, and businesses, weDocs offers a user-friendly interface, robust features, seamless integration with other plugins, SEO compatbility and more. Simplify your documentation workflow today by installing weDocs, the best solution for all your WordPress documentation needs.
+Documentation has never been this fun on WordPress! Discover **weDocs**, the ultimate **WordPress documentation plugin**. Easily create, manage, and organize documenation, docs, Wikis, Knowledgebase articles. Perfect for developers, bloggers, and businesses, weDocs offers a user-friendly interface, robust features, seamless integration with other plugins, SEO compatbility and more. Simplify your documentation workflow today by installing weDocs, the best solution for all your WordPress documentation needs.
 
 
 ![Screenshot of weDocs Dashboard](https://wedocs.co/wp-content/uploads/2024/02/Dashboard.png)
@@ -64,7 +64,7 @@ Let’s check out what Mr. Web shared about weDocs
 - Optimized search features, ensuring better visibility and reach
 - Adaptable responsive design for a great UX across devices
 
-## 🚀 weDocs Premium Features at a glance **
+## 🚀 weDocs Premium Features at a glance
 
 - Role-based permission management
 - Define privacy settings for each document
