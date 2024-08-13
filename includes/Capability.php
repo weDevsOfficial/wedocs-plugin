@@ -36,7 +36,7 @@ class Capability {
             $permitted_roles = wedocs_get_permission_settings( 'global_permission', [ 'administrator', 'editor' ] );
         }
 
-        if ( in_array( $user->roles[0], $permitted_roles, true ) ) {
+        if ( isset( $user->roles[0] ) && in_array( $user->roles[0], $permitted_roles, true ) ) {
             $all_caps = array_merge( $all_caps, $delete_caps );
         }
 
