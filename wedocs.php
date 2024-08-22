@@ -39,6 +39,7 @@ Domain Path: /languages
 
 // don't call the file directly
 use Appsero\Client;
+use WeDevs\WeDocs\Capability;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -207,6 +208,7 @@ final class WeDocs {
         $this->container['assets']   = new WeDevs\WeDocs\Assets();
         $this->container['migrate']  = new WeDevs\WeDocs\Admin\Migrate();
         $this->container['upgrader'] = new WeDevs\WeDocs\Upgrader\Upgrader();
+        $this->container['capability'] = new Capability();
     }
 
     /**
