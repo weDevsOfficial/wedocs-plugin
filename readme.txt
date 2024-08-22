@@ -1,11 +1,11 @@
-=== weDocs - Knowledgebase, Documentation, and Wiki for WP ===
+=== weDocs - Knowledgebase, Documentation, and Wiki Plugin for WP ===
 Contributors: tareq1988, wedevs
 Donate link: http://wedocs.co/
 Tags: WordPress documentation plugin, WordPress docs plugin, Documentation, Knowledge base, Wiki
 Requires at least: 5.6
 Tested up to: 6.5.3
 Requires PHP: 7.4
-Stable tag: 2.1.6
+Stable tag: 2.1.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Discover weDocs, the ultimate WordPress documentation plugin. Easily create, manage, and organize content with seamless integration and a user-friendly interface.
@@ -20,7 +20,7 @@ Documentation has never been this fun on WordPress! Discover **weDocs**, the ult
 ![Screenshot of weDocs Dashboard](https://wedocs.co/wp-content/uploads/2024/02/Dashboard.png)
 
 
-🎉 ⭐  [Upgrade to weDocs Pro now!](https://wedocs.co/pricing/)  🎉 ⭐
+🚀 🔥 [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/)  🚀 🔥
 
 weDocs is a comprehensive knowledgebase (KB Articles) and documentation plugin for WordPress. Create great-looking documentation and organize it beautifully on your website.
 
@@ -49,7 +49,8 @@ Let’s check out what Mr. Web shared about weDocs
 > 👏 “In one word: amazing. This plugin does what it says. I encountered no problems and found it extremely easy to work with. I recommend this to anyone who wants to set up solid product documentation.” - [Drazen Bebic](https://profiles.wordpress.org/drazenbebic/)
 
 
-🎉 ⭐  [Upgrade to weDocs Pro now!](https://wedocs.co/pricing/)  🎉 ⭐
+
+🎉 ⭐  [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/) 🎉 ⭐
 
 
 ## 🌐 weDocs Free Features at a glance
@@ -118,7 +119,16 @@ Admins can secure specific articles, ensuring exclusive editing access for thems
 🤖 An AI-assisted chatbot with ChatGPT
 Experience the magic of weDocs AI Chat, powered by ChatGPT. This feature unlocks a smarter, more intuitive ChatBot, leveraging ChatGPT's advanced AI with document-backed responses, quick understanding of queries, and fast, accurate answers. Enhance customer support with 24/7 availability, reduced workload on routine queries, and continuous learning for improved responses over time.
 
+
+
 🎉 ⭐  [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/)  🎉 ⭐
+
+
+
+📂 Smart article suggestions
+Give instant access to the most relevant articles on the Assistant Widget's Explore Tab. weDocs combines manual curation and analytics to bring you the most helpful content, making your experience seamless and efficient.
+
+
 
 🔍 Instant search with the assistant widget
 Assist users in finding solutions promptly with our robust search feature, which promptly delivers relevant articles based on their inquiries.
@@ -155,7 +165,18 @@ A. It fetches the data from your already-written articles on your WordPress site
 = Can I customize the URL structure of my documentation pages? =
 A. Yes, weDocs allows you to customize the URL structure of your documentation pages. You can set up custom permalinks and choose a URL structure that suits your requirements, making it easier for users to navigate your documentation.
 
-# Others
+
+
+
+🎉 ⭐  [Upgrade to weDocs Pro now and supercharge your documentation experience!](https://wedocs.co/pricing/)  🎉 ⭐
+
+
+
+🚀 People behind this awesome documentation plugin
+
+This powerful knowledge plugin is developed by the people behind [weDevs](https://wedevs.com/), a dedicated team that creates amazing stuff with a customer happiness of more than 425k+.
+
+# Others:
 
 1.  Download the weDocs plugin from the WordPress.org repository or the official website.
 
@@ -215,6 +236,10 @@ Can’t wait to join us?
 
 
 == Changelog ==
+
+= v2.1.7 (22th Aug, 2024) =
+
+* **Fix:** Move To Trash option not available for users with the Editor role.
 
 = v2.1.6 (24th May, 2024) =
 
