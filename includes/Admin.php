@@ -18,6 +18,24 @@ class Admin {
         new Admin\Docs_List_Table();
 
         add_action( 'admin_init', array( $this, 'init_admin_actions' ), 5 );
+
+        // Redirect to a new design after trashing a doc
+        add_action('load-edit.php', array($this, 'trashed_docs_redirect'));
+    }
+
+    /**
+     * Redirect to a new design after trashing a doc.
+     *
+     * @return void
+     */
+    public function trashed_docs_redirect(){
+        $screen = get_current_screen();
+        if($screen->id === 'edit-docs'){
+            if( isset($_GET['trashed']) &&  intval($_GET['trashed']) >0){
+                wp_redirect(admin_url('admin.php?page=wedocs#'));
+                exit();
+            }
+        }
     }
 
     /**
