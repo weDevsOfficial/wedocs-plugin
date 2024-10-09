@@ -411,9 +411,10 @@
 
   $( function () {
     // Handle hash router.
-    if ( window.location.hash ) {
-      window.location = window.location.pathname;
-    }
+      // This is commented out because it causes the page to reload when the hash is present.
+    // if ( window.location.hash ) {
+    //   window.location = window.location.pathname;
+    // }
 
     // Handle navigation caret.
     if ( ! anchestorItem?.classList.contains( 'wd-state-open' ) ) {
