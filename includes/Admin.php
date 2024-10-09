@@ -28,15 +28,15 @@ class Admin {
      *
      * @return void
      */
-    public function trashed_docs_redirect(){
-        $screen = get_current_screen();
-        if($screen->id === 'edit-docs'){
-            if( isset($_GET['trashed']) &&  intval($_GET['trashed']) >0){
-                wp_redirect(admin_url('admin.php?page=wedocs#'));
-                exit();
-            }
+    public function trashed_docs_redirect() {
+    $screen = get_current_screen();
+    if ($screen->id === 'edit-docs') {
+        if (isset($_GET['trashed']) && intval(sanitize_text_field($_GET['trashed'])) > 0) {
+            wp_redirect(admin_url('admin.php?page=wedocs#'));
+            exit();
         }
     }
+}
 
     /**
      * Admin initialization hook.
