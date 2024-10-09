@@ -45,7 +45,7 @@ if ( ! isProduction ) {
       writeToDisk: true,
     },
     allowedHosts: 'all',
-    host: 'localhost',
+    host: 'wedocs.test',
     port: 8886,
     proxy: {
       '/assets/build': {
