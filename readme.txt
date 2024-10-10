@@ -5,7 +5,7 @@ Tags: WordPress documentation plugin, WordPress docs plugin, Documentation, Know
 Requires at least: 5.6
 Tested up to: 6.5.3
 Requires PHP: 7.4
-Stable tag: 2.1.7
+Stable tag: 2.1.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -342,6 +342,11 @@ Can’t wait to join us?
 
 
 == Changelog ==
+
+= v2.1.8 (10th Oct, 2024) =
+
+* 🛠️ [FIX] Redirect to a new design after trashing a doc.
+* 🛠️ [FIX] Handle hash router issue for the documentation page.
 
 = v2.1.7 (22th Aug, 2024) =
 
