@@ -3,7 +3,7 @@ Contributors: tareq1988, wedevs
 Donate link: http://wedocs.co/
 Tags: WordPress documentation plugin, WordPress docs plugin, Documentation, Knowledge base, Wiki
 Requires at least: 5.6
-Tested up to: 6.5.3
+Tested up to: 6.6.2
 Requires PHP: 7.4
 Stable tag: 2.1.8
 License: GPLv2 or later
