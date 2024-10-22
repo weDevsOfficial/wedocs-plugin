@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { grid } from '@wordpress/icons';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import {
     PanelBody,
@@ -13,31 +13,8 @@ import {
 const Edit = ({ attributes, setAttributes }) => {
     const blockProps = useBlockProps();
     const { useSelect } = wp.data;
-
-    // Get published docs
-    const { pages } = useSelect((select) => {
-        const { getEntityRecords } = select('core');
-        const query = {
-            status: 'publish',
-            per_page: -1,
-            parent: 0,
-        };
-        return {
-            pages: getEntityRecords('postType', 'docs', query),
-        };
-    });
-
-    // Create a mapping of ID to title for suggestions
-    const docsMap = pages ? pages.reduce((acc, page) => {
-        acc[page.id] = page.title.rendered;
-        return acc;
-    }, {}) : {};
-
-    // Prepare docs options for FormTokenField
-    const docsOptions = pages ? pages.map(page => ({
-        value: page.id.toString(),
-        label: page.title.rendered
-    })) : [];
+    const [currentPage, setCurrentPage] = useState(1);
+    const [loading, setLoading] = useState(false);
 
     const {
         hideDocGrid,
@@ -80,31 +57,171 @@ const Edit = ({ attributes, setAttributes }) => {
             value: String(i + 1)
         }))
     ];
+    // Get published docs
+    const { pages, sections, articles } = useSelect((select) => {
+        const { getEntityRecords } = select('core');
 
-    // Update handlers
-    const updateAttribute = (attributeName) => (value) => {
-        setAttributes({ [attributeName]: value });
-    };
+        const docs = getEntityRecords('postType', 'docs', {
+            status: 'publish',
+            per_page: -1,
+            parent: 0,
+            orderby: attributes.orderBy,
+            order: 'asc'
+        });
 
-    // Filter and limit docs based on settings
-    const getDisplayDocs = () => {
-        if (!pages) return [];
+        // Get all sections (docs children)
+        const allSections = docs ? getEntityRecords('postType', 'docs', {
+            status: 'publish',
+            parent_in: docs.map(doc => doc.id),
+            per_page: -1
+        }) : null;
 
-        let filteredDocs = [...pages];
+        // Get all articles (sections children)
+        const allArticles = allSections ? getEntityRecords('postType', 'docs', {
+            status: 'publish',
+            parent_in: allSections.map(section => section.id),
+            per_page: -1
+        }) : null;
 
-        // Filter excluded docs
+        return {
+            pages: docs,
+            sections: allSections,
+            articles: allArticles
+        };
+    });
+
+    const processDocsData = () => {
+        if (!pages || !sections || !articles) return [];
+
+        // Filter and sort docs based on settings
+        let processedDocs = [...pages];
+
+        // Apply exclude filter
         if (excludeDocs && excludeDocs.length > 0) {
-            filteredDocs = filteredDocs.filter(doc =>
+            processedDocs = processedDocs.filter(doc =>
                 !excludeDocs.includes(doc.id.toString())
             );
         }
 
-        // Apply docs per page limit
-        if (docsPerPage !== 'all') {
-            filteredDocs = filteredDocs.slice(0, parseInt(docsPerPage));
-        }
+        // Process each doc with its sections and articles
+        processedDocs = processedDocs.map(doc => {
+            // Get sections for this doc
+            let docSections = sections.filter(section => section.parent === doc.id);
 
-        return filteredDocs;
+            // Limit sections if specified
+            if (sectionsPerDoc !== 'all') {
+                docSections = docSections.slice(0, parseInt(sectionsPerDoc));
+            }
+
+            // Process sections with their articles
+            docSections = docSections.map(section => {
+                let sectionArticles = articles.filter(article => article.parent === section.id);
+
+                // Limit articles if specified
+                if (articlesPerSection !== 'all') {
+                    sectionArticles = sectionArticles.slice(0, parseInt(articlesPerSection));
+                }
+
+                return {
+                    ...section,
+                    articles: sectionArticles
+                };
+            });
+
+            // Calculate total articles for the doc
+            const totalArticles = docSections.reduce((total, section) =>
+                total + section.articles.length, 0
+            );
+
+            return {
+                ...doc,
+                sections: docSections,
+                articleCount: totalArticles
+            };
+        });
+
+        return processedDocs;
+    };
+    // Handle pagination
+    const getPagedDocs = (docs) => {
+        if (!enablePagination || docsPerPage === 'all') return docs;
+
+        const perPage = parseInt(docsPerPage);
+        const start = (currentPage - 1) * perPage;
+        const end = start + perPage;
+
+        return docs.slice(start, end);
+    };
+
+    // Get final display docs
+    const getDisplayDocs = () => {
+        const processedDocs = processDocsData();
+        return getPagedDocs(processedDocs);
+    };
+
+    // Pagination controls
+    const renderPagination = (totalDocs) => {
+        if (!enablePagination || docsPerPage === 'all') return null;
+
+        const totalPages = Math.ceil(totalDocs.length / parseInt(docsPerPage));
+
+        return (
+            <div className="wedocs-docs-pagination">
+                {Array.from({ length: totalPages }, (_, i) => (
+                    <button
+                        key={i + 1}
+                        className={`wedocs-docs-pagination__button ${currentPage === i + 1 ? 'is-active' : ''}`}
+                        onClick={() => setCurrentPage(i + 1)}
+                    >
+                        {i + 1}
+                    </button>
+                ))}
+            </div>
+        );
+    };
+
+    // Render section preview
+    const renderSections = (doc) => {
+        if (!doc.sections || !showViewDetails) return null;
+
+        return (
+            <div className={`wedocs-docs-grid__sections ${keepArticlesCollapsed ? 'is-collapsed' : ''}`}>
+                {doc.sections.map(section => (
+                    <div key={section.id} className="wedocs-docs-grid__section">
+                        <h4 className="wedocs-docs-grid__section-title">
+                            {section.title.rendered}
+                        </h4>
+                        {!keepArticlesCollapsed && section.articles && (
+                            <ul className="wedocs-docs-grid__articles">
+                                {section.articles.map(article => (
+                                    <li key={article.id} className="wedocs-docs-grid__article">
+                                        {article.title.rendered}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
+    const displayDocs = getDisplayDocs();
+    // Create a mapping of ID to title for suggestions
+    const docsMap = pages ? pages.reduce((acc, page) => {
+        acc[page.id] = page.title.rendered;
+        return acc;
+    }, {}) : {};
+
+    // Prepare docs options for FormTokenField
+    const docsOptions = pages ? pages.map(page => ({
+        value: page.id.toString(),
+        label: page.title.rendered
+    })) : [];
+
+    // Update handlers
+    const updateAttribute = (attributeName) => (value) => {
+        setAttributes({ [attributeName]: value });
     };
 
     // Transform IDs to titles for FormTokenField display
@@ -229,30 +346,37 @@ const Edit = ({ attributes, setAttributes }) => {
                             {__('Docs Grid Preview', 'wedocs')}
                         </p>
                         <div className={`wedocs-docs-grid ${getGridClass()}`}>
-                            {getDisplayDocs().map((doc) => (
-                                <div
-                                    key={doc.id}
-                                    className="wedocs-docs-grid__item"
-                                >
-                                    <h3 className="wedocs-docs-grid__title">
-                                        {doc.title.rendered}
-                                    </h3>
-                                    {showDocArticle && doc.articleCount && (
-                                        <p className="wedocs-docs-grid__article-count">
-                                            {doc.articleCount} {__('articles',
-                                            'wedocs')}
-                                        </p>
-                                    )}
-                                    {showViewDetails && (
-                                        <div className="wedocs-docs-grid__details">
-                                            <span className="wedocs-docs-grid__details-link">
-                                                {__('View Details', 'wedocs')} →
-                                            </span>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
+                            {loading ? (
+                                <Spinner />
+                            ) : (
+                                displayDocs.map((doc) => (
+                                    <div
+                                        key={doc.id}
+                                        className="wedocs-docs-grid__item"
+                                    >
+                                        <h3 className="wedocs-docs-grid__title">
+                                            {doc.title.rendered}
+                                        </h3>
+                                        {showDocArticle && (
+                                            <p className="wedocs-docs-grid__article-count">
+                                                {doc.articleCount} {__(
+                                                'articles', 'wedocs')}
+                                            </p>
+                                        )}
+                                        {renderSections(doc)}
+                                        {showViewDetails && (
+                                            <div className="wedocs-docs-grid__details">
+                                                <span className="wedocs-docs-grid__details-link">
+                                                    {__('View Details',
+                                                        'wedocs')} →
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))
+                            )}
                         </div>
+                        {renderPagination(processDocsData())}
                     </div>
                 )}
             </div>
