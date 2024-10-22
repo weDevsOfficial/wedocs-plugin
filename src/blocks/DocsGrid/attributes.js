@@ -1,105 +1,51 @@
-import { __ } from '@wordpress/i18n';
 
 const attributes = {
+    // Grid Controls
     hideDocGrid: {
         type: 'boolean',
-        default: false, // Default value when the block is first inserted
+        default: false
     },
-    docStyles: {
+    docStyle: {
         type: 'string',
-        default: '1x1',
+        default: '1x1'
     },
-    searchWidth: {
-        type: 'number',
-        default: 50, // Default width in pixels
-    },
-    widthUnit: {
+    docsPerPage: {
         type: 'string',
-        default: '%', // Default unit in percent
+        default: 'all'
     },
-    placeholder: {
+    excludeDocs: {
+        type: 'array',
+        default: []
+    },
+    orderBy: {
         type: 'string',
-        default: __( 'Search for a top or question', 'wedocs' ),
+        default: 'date'
     },
-    alignment: {
+    sectionsPerDoc: {
         type: 'string',
-        default: 'right'
+        default: 'all'
     },
-    bgColor: {
+    articlesPerSection: {
         type: 'string',
-        default: '#FFFFFF' // Default background color
+        default: 'all'
     },
-    hoverColor: {
-        type: 'string',
-        default: '#FFFFFF' // Default background color
+    enablePagination: {
+        type: 'boolean',
+        default: false
     },
-    padding: {
-        type: 'object',
-        default: {
-            top: 14,
-            left: 22,
-            right: 22,
-            bottom: 14,
-        }, // Default padding.
+    showDocArticle: {
+        type: 'boolean',
+        default: true
     },
-    margin: {
-        type: 'object',
-        default: {
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-        }, // Default padding.
+    keepArticlesCollapsed: {
+        type: 'boolean',
+        default: false
     },
-    borderColor: {
-        type: 'string',
-        default: '#cccccc' // Default border color
+    showViewDetails: {
+        type: 'boolean',
+        default: true
     },
-    borderWidth: {
-        type: 'number',
-        default: 1 // Default border width
-    },
-    borderRadius: {
-        type: 'number',
-        default: 30 // Default border radius
-    },
-    iconColor: {
-        type: 'string',
-        default: '#FFFFFF' // Default icon color
-    },
-    iconBgColor: {
-        type: 'string',
-        default: '#3b82f6' // Default icon background color
-    },
-    iconHoverColor: {
-        type: 'string',
-        default: '#2563eb' // Default icon hover color
-    },
-    svgHoverColor: {
-        type: 'string',
-        default: '#FFFFFF' // Default icon hover color
-    },
-    btnPadding: {
-        type: 'object',
-        default: {
-            top: 24,
-            left: 26,
-            right: 26,
-            bottom: 24,
-        }, // Default padding.
-    },
-    btnPosition: {
-        type: 'object',
-        default: {
-            top: 0,
-            right: 0,
-            bottom: 10,
-        }, // Default padding.
-    },
-    btnRadius: {
-        type: 'number',
-        default: 30 // Default border radius
-    },
-}
+
+};
 
 export default attributes;
