@@ -1,0 +1,58 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/wedocs-docs-grid",
+	"version": "1.0.0",
+	"title": "weDocs - Docs Grid",
+	"category": "widgets",
+	"description": "Display all the docs in a grid view",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+  "attributes": {
+    "docStyle": {
+      "type": "string",
+      "default": "1x1"
+    },
+    "docsPerPage": {
+      "type": "string",
+      "default": "all"
+    },
+    "excludeDocs": {
+      "type": "array",
+      "default": []
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "date"
+    },
+    "sectionsPerDoc": {
+      "type": "string",
+      "default": "all"
+    },
+    "articlesPerSection": {
+      "type": "string",
+      "default": "all"
+    },
+    "enablePagination": {
+      "type": "boolean",
+      "default": false
+    },
+    "showDocArticle": {
+      "type": "boolean",
+      "default": true
+    },
+    "keepArticlesCollapsed": {
+      "type": "boolean",
+      "default": false
+    },
+    "showViewDetails": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

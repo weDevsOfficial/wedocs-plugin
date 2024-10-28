@@ -65,7 +65,7 @@ const Edit = ({ attributes, setAttributes }) => {
             status: 'publish',
             per_page: -1,
             parent: 0,
-            orderby: attributes.orderBy,
+            orderby: orderBy,
             order: 'asc'
         });
 
@@ -242,19 +242,10 @@ const Edit = ({ attributes, setAttributes }) => {
     const getGridClass = () => {
         return `wedocs-docs-grid--${docStyle}`;
     };
-    console.log(docsOptions);
+
     return (
         <Fragment>
             <InspectorControls>
-                <PanelBody>
-                    <ToggleControl
-                        checked={hideDocGrid}
-                        label={__('Disable Doc Grid', 'wedocs')}
-                        onChange={updateAttribute('hideDocGrid')}
-                    />
-                </PanelBody>
-
-                {!hideDocGrid && (
                     <PanelBody
                         title={__('Doc List Styles', 'wedocs')}
                         icon={grid}
@@ -334,7 +325,6 @@ const Edit = ({ attributes, setAttributes }) => {
                             />
                         </PanelRow>
                     </PanelBody>
-                )}
             </InspectorControls>
 
             <div {...blockProps}>

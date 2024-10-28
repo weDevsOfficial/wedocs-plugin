@@ -1,18 +1,17 @@
-import { registerBlockType } from '@wordpress/blocks';
-import { __ } from  '@wordpress/i18n';
-import Edit from './edit';
-import Save from './save';
-import './style.scss';
+import { registerBlockType } from "@wordpress/blocks";
+import Edit from "./edit";
+import Save from "./save";
+import metadata from "./block.json";
+import "./style.scss";
 
-import attributes from './attributes';
+registerBlockType(metadata.name, {
+	/**
+	 * @see ./edit.js
+	 */
+	edit: Edit,
 
-registerBlockType( 'wedocs/wedocs-docs-grid', {
-    attributes,
-    save        : Save,
-    edit        : Edit,
-    icon        : 'grid-view',
-    title       : __( 'weDocs -  Docs Grid', 'wedocs' ),
-    keywords    : [ 'weDocs', 'Docs', 'Grid' ],
-    category    : 'widgets',
-    description : __( 'Display all the docs in a grid view', 'wedocs' ),
+	/**
+	 * @see ./save.js
+	 */
+	save: () => Save,
 });
