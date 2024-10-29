@@ -80,6 +80,14 @@
       "type": "string",
       "default": "#0073aa"
     },
+    "borderWidth": {
+      "type": "string",
+      "default": "1px"
+    },
+    "borderColor": {
+      "type": "string",
+      "default": "rgba(0, 0, 0, 0.1)"
+    },
     "borderType": {
       "type": "string",
       "default": "solid"
@@ -137,6 +145,10 @@
     "paginationHoverColor": {
       "type": "string",
       "default": "#f5f5f5"
+    },
+    "paginationBorderColor": {
+      "type": "string",
+      "default": "#dddddd"
     }
   }
 }
