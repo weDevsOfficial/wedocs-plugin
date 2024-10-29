@@ -246,85 +246,85 @@ const Edit = ({ attributes, setAttributes }) => {
     return (
         <Fragment>
             <InspectorControls>
-                    <PanelBody
-                        title={__('Doc List Styles', 'wedocs')}
-                        icon={grid}
-                        initialOpen={false}
-                    >
-                        <SelectControl
-                            value={docStyle}
-                            options={docStyles}
-                            label={__('Doc Styles', 'wedocs')}
-                            onChange={updateAttribute('docStyle')}
+                <PanelBody
+                    title={__('Doc List Styles', 'wedocs')}
+                    icon={grid}
+                    initialOpen={false}
+                >
+                    <SelectControl
+                        value={docStyle}
+                        options={docStyles}
+                        label={__('Doc Styles', 'wedocs')}
+                        onChange={updateAttribute('docStyle')}
+                    />
+
+                    <SelectControl
+                        value={docsPerPage}
+                        options={docsPerPageOptions}
+                        label={__('Docs per page', 'wedocs')}
+                        onChange={updateAttribute('docsPerPage')}
+                    />
+
+                    <FormTokenField
+                        value={excludeDocsDisplay}
+                        suggestions={Object.values(docsMap)}
+                        label={__('Exclude Docs', 'wedocs')}
+                        onChange={handleExcludeDocsChange}
+                    />
+                    <SelectControl
+                        value={orderBy}
+                        options={orderByOptions}
+                        label={__('Order by', 'wedocs')}
+                        onChange={updateAttribute('orderBy')}
+                    />
+
+                    <SelectControl
+                        value={sectionsPerDoc}
+                        options={countOptions}
+                        label={__('Sections per doc', 'wedocs')}
+                        onChange={updateAttribute('sectionsPerDoc')}
+                    />
+
+                    <SelectControl
+                        value={articlesPerSection}
+                        options={countOptions}
+                        label={__('Articles per section', 'wedocs')}
+                        onChange={updateAttribute('articlesPerSection')}
+                    />
+
+                    <PanelRow>
+                        <ToggleControl
+                            checked={enablePagination}
+                            label={__('Enable pagination', 'wedocs')}
+                            onChange={updateAttribute('enablePagination')}
                         />
+                    </PanelRow>
 
-                        <SelectControl
-                            value={docsPerPage}
-                            options={docsPerPageOptions}
-                            label={__('Docs per page', 'wedocs')}
-                            onChange={updateAttribute('docsPerPage')}
+                    <PanelRow>
+                        <ToggleControl
+                            checked={showDocArticle}
+                            label={__('Show doc article count', 'wedocs')}
+                            onChange={updateAttribute('showDocArticle')}
                         />
+                    </PanelRow>
 
-                        <FormTokenField
-                            value={excludeDocsDisplay}
-                            suggestions={Object.values(docsMap)}
-                            label={__('Exclude Docs', 'wedocs')}
-                            onChange={handleExcludeDocsChange}
+                    <PanelRow>
+                        <ToggleControl
+                            checked={keepArticlesCollapsed}
+                            label={__('Keep article collapsed', 'wedocs')}
+                            onChange={updateAttribute(
+                                'keepArticlesCollapsed')}
                         />
-                        <SelectControl
-                            value={orderBy}
-                            options={orderByOptions}
-                            label={__('Order by', 'wedocs')}
-                            onChange={updateAttribute('orderBy')}
+                    </PanelRow>
+
+                    <PanelRow>
+                        <ToggleControl
+                            checked={showViewDetails}
+                            label={__('Show view details button', 'wedocs')}
+                            onChange={updateAttribute('showViewDetails')}
                         />
-
-                        <SelectControl
-                            value={sectionsPerDoc}
-                            options={countOptions}
-                            label={__('Sections per doc', 'wedocs')}
-                            onChange={updateAttribute('sectionsPerDoc')}
-                        />
-
-                        <SelectControl
-                            value={articlesPerSection}
-                            options={countOptions}
-                            label={__('Articles per section', 'wedocs')}
-                            onChange={updateAttribute('articlesPerSection')}
-                        />
-
-                        <PanelRow>
-                            <ToggleControl
-                                checked={enablePagination}
-                                label={__('Enable pagination', 'wedocs')}
-                                onChange={updateAttribute('enablePagination')}
-                            />
-                        </PanelRow>
-
-                        <PanelRow>
-                            <ToggleControl
-                                checked={showDocArticle}
-                                label={__('Show doc article count', 'wedocs')}
-                                onChange={updateAttribute('showDocArticle')}
-                            />
-                        </PanelRow>
-
-                        <PanelRow>
-                            <ToggleControl
-                                checked={keepArticlesCollapsed}
-                                label={__('Keep article collapsed', 'wedocs')}
-                                onChange={updateAttribute(
-                                    'keepArticlesCollapsed')}
-                            />
-                        </PanelRow>
-
-                        <PanelRow>
-                            <ToggleControl
-                                checked={showViewDetails}
-                                label={__('Show view details button', 'wedocs')}
-                                onChange={updateAttribute('showViewDetails')}
-                            />
-                        </PanelRow>
-                    </PanelBody>
+                    </PanelRow>
+                </PanelBody>
             </InspectorControls>
 
             <div {...blockProps}>
