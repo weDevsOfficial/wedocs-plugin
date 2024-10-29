@@ -1,11 +1,56 @@
 // Variables
-$grid-gap: 1.5rem;
-$border-radius: 8px;
 $transition-duration: 0.2s;
-$primary-color: #2271b1;
-$text-color: #1e1e1e;
-$text-secondary: #757575;
 $shadow-color: rgba(0, 0, 0, 0.1);
+
+// Style Controls UI
+.wedocs-color-control {
+    margin: 1em 0;
+
+    label {
+        display: block;
+        margin-bottom: 0.5em;
+    }
+}
+
+// Pagination Styles
+.wedocs-docs-pagination {
+    margin: 30px 0;
+    text-align: center;
+
+    ul {
+        display: inline-flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: 5px;
+    }
+
+    li {
+        margin: 0;
+    }
+
+    button {
+        display: inline-block;
+        padding: 8px 12px;
+        border: 1px solid var(--wedocs-pagination-border-color, #ddd);
+        border-radius: var(--wedocs-border-radius, 4px);
+        text-decoration: none;
+        color: var(--wedocs-pagination-text-color, #333);
+        background: var(--wedocs-pagination-background-color, #fff);
+        cursor: pointer;
+        transition: all $transition-duration;
+
+        &:hover {
+            background: var(--wedocs-pagination-hover-color, #f5f5f5);
+            color: var(--wedocs-pagination-text-hover-color, #0073aa);
+        }
+
+        &.is-active {
+            background: var(--wedocs-pagination-hover-color, #f5f5f5);
+            border-color: var(--wedocs-pagination-hover-color, #ccc);
+        }
+    }
+}
 
 // Block wrapper
 .wedocs-block-wrapper {
@@ -18,14 +63,16 @@ $shadow-color: rgba(0, 0, 0, 0.1);
 .wedocs-preview-title {
     margin-bottom: 1rem;
     font-size: 1.1rem;
-    color: $text-secondary;
+    color: var(--wedocs-text-secondary-color, #757575);
 }
 
 // Grid container
 .wedocs-docs-grid {
     display: grid;
-    gap: $grid-gap;
+    gap: 1.5rem;
     width: 100%;
+    padding: var(--wedocs-grid-padding, 0);
+    margin: var(--wedocs-grid-margin, 0);
 
     // Grid variants
     &--1x1 {
@@ -43,9 +90,9 @@ $shadow-color: rgba(0, 0, 0, 0.1);
     // Grid items
     &__item {
         background-color: #fff;
-        border-radius: $border-radius;
+        border-radius: var(--wedocs-border-radius, 8px);
         padding: 1.5rem;
-        border: 1px solid rgba(0, 0, 0, 0.1);
+        border: 1px var(--wedocs-border-type, solid) var(--wedocs-border-color, rgba(0, 0, 0, 0.1));
         transition: transform $transition-duration, box-shadow $transition-duration;
 
         &:hover {
@@ -57,15 +104,43 @@ $shadow-color: rgba(0, 0, 0, 0.1);
     &__title {
         font-size: 1.5rem;
         font-weight: 800;
-        color: $text-color;
+        color: var(--wedocs-doc-title-color, #1e1e1e);
         margin: 0 0 0.75rem;
         line-height: 1.4;
     }
 
     &__article-count {
         font-size: 0.875rem;
-        color: $text-secondary;
+        color: var(--wedocs-text-secondary-color, #757575);
         margin: 0;
+    }
+
+    &__sections {
+        margin-top: 1rem;
+
+        &.is-collapsed {
+            .wedocs-docs-grid__articles {
+                display: none;
+            }
+        }
+    }
+
+    &__section-title {
+        font-size: 1rem;
+        color: var(--wedocs-doc-title-color, #1e1e1e);
+        margin: 0.5rem 0;
+    }
+
+    &__articles {
+        list-style: none;
+        margin: 0.5rem 0 0.5rem 1rem;
+        padding: 0;
+
+        li {
+            color: var(--wedocs-doc-children-active-color, #0073aa);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
     }
 
     &__details {
@@ -75,13 +150,19 @@ $shadow-color: rgba(0, 0, 0, 0.1);
     }
 
     &__details-link {
-        color: $primary-color;
+        display: inline-block;
+        padding: var(--wedocs-button-padding, 8px 12px);
+        margin: var(--wedocs-button-margin, 0);
+        background-color: var(--wedocs-button-color, #0073aa);
+        color: var(--wedocs-button-text-color, #fff);
+        border-radius: var(--wedocs-border-radius, 4px);
         font-size: 0.875rem;
         cursor: pointer;
-        transition: color $transition-duration;
+        transition: all $transition-duration;
 
         &:hover {
-            color: darken($primary-color, 10%);
+            background-color: var(--wedocs-button-hover-color, #005177);
+            color: var(--wedocs-button-hover-text-color, #fff);
         }
     }
 }

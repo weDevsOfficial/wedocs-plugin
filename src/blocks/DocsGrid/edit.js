@@ -9,6 +9,7 @@ import {
     PanelRow,
     FormTokenField
 } from '@wordpress/components';
+import StyleControls from './StyleControls';
 
 const Edit = ({ attributes, setAttributes }) => {
     const blockProps = useBlockProps();
@@ -28,7 +29,50 @@ const Edit = ({ attributes, setAttributes }) => {
         showDocArticle,
         keepArticlesCollapsed,
         showViewDetails,
+        gridPadding,
+        gridMargin,
+        docTitleColor,
+        docChildrenActiveColor,
+        borderType,
+        borderRadius,
+        buttonPadding,
+        buttonMargin,
+        buttonColor,
+        buttonHoverColor,
+        buttonTextColor,
+        buttonHoverTextColor,
+        paginationTextColor,
+        paginationTextHoverColor,
+        paginationBackgroundColor,
+        paginationHoverColor
     } = attributes;
+
+    const applyStyles = () => {
+        // Convert BoxControl values to CSS
+        const paddings = gridPadding ? `${gridPadding.top} ${gridPadding.right} ${gridPadding.bottom} ${gridPadding.left}` : '';
+        const margins = gridMargin ? `${gridMargin.top} ${gridMargin.right} ${gridMargin.bottom} ${gridMargin.left}` : '';
+        const btnPaddings = buttonPadding ? `${buttonPadding.top} ${buttonPadding.right} ${buttonPadding.bottom} ${buttonPadding.left}` : '';
+        const btnMargins = buttonMargin ? `${buttonMargin.top} ${buttonMargin.right} ${buttonMargin.bottom} ${buttonMargin.left}` : '';
+
+        return {
+            '--wedocs-grid-padding': paddings,
+            '--wedocs-grid-margin': margins,
+            '--wedocs-doc-title-color': docTitleColor,
+            '--wedocs-doc-children-active-color': docChildrenActiveColor,
+            '--wedocs-border-type': borderType,
+            '--wedocs-border-radius': borderRadius,
+            '--wedocs-button-padding': btnPaddings,
+            '--wedocs-button-margin': btnMargins,
+            '--wedocs-button-color': buttonColor,
+            '--wedocs-button-hover-color': buttonHoverColor,
+            '--wedocs-button-text-color': buttonTextColor,
+            '--wedocs-button-hover-text-color': buttonHoverTextColor,
+            '--wedocs-pagination-text-color': paginationTextColor,
+            '--wedocs-pagination-text-hover-color': paginationTextHoverColor,
+            '--wedocs-pagination-background-color': paginationBackgroundColor,
+            '--wedocs-pagination-hover-color': paginationHoverColor,
+        };
+    };
 
     // Control options
     const docStyles = [
@@ -326,13 +370,16 @@ const Edit = ({ attributes, setAttributes }) => {
                     </PanelRow>
                 </PanelBody>
             </InspectorControls>
+            <InspectorControls>
+                <StyleControls attributes={attributes} setAttributes={setAttributes} />
+            </InspectorControls>
 
-            <div {...blockProps}>
+            <div {...blockProps} style={applyStyles()}>
                 {hideDocGrid ? (
-                    <div className="backdrop"></div>
+                    <div className='backdrop'></div>
                 ) : (
-                    <div className="wedocs-block-wrapper">
-                        <p className="wedocs-preview-title">
+                    <div className='wedocs-block-wrapper'>
+                        <p className='wedocs-preview-title'>
                             {__('Docs Grid Preview', 'wedocs')}
                         </p>
                         <div className={`wedocs-docs-grid ${getGridClass()}`}>
@@ -342,21 +389,21 @@ const Edit = ({ attributes, setAttributes }) => {
                                 displayDocs.map((doc) => (
                                     <div
                                         key={doc.id}
-                                        className="wedocs-docs-grid__item"
+                                        className='wedocs-docs-grid__item'
                                     >
-                                        <h3 className="wedocs-docs-grid__title">
+                                        <h3 className='wedocs-docs-grid__title'>
                                             {doc.title.rendered}
                                         </h3>
                                         {showDocArticle && (
-                                            <p className="wedocs-docs-grid__article-count">
+                                            <p className='wedocs-docs-grid__article-count'>
                                                 {doc.articleCount} {__(
                                                 'articles', 'wedocs')}
                                             </p>
                                         )}
                                         {renderSections(doc)}
                                         {showViewDetails && (
-                                            <div className="wedocs-docs-grid__details">
-                                                <span className="wedocs-docs-grid__details-link">
+                                            <div className='wedocs-docs-grid__details'>
+                                                <span className='wedocs-docs-grid__details-link'>
                                                     {__('View Details',
                                                         'wedocs')} →
                                                 </span>
