@@ -28,7 +28,7 @@
     },
     "orderBy": {
       "type": "string",
-      "default": "date"
+      "default": "menu_order"
     },
     "sectionsPerDoc": {
       "type": "string",

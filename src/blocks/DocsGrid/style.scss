@@ -12,7 +12,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem;
+    padding: .5rem;
 }
 
 .wedocs-preview-title {
@@ -45,7 +45,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
         background-color: #fff;
         border-radius: $border-radius;
         padding: 1.5rem;
-        box-shadow: 0 2px 4px $shadow-color;
+        border: 1px solid rgba(0, 0, 0, 0.1);
         transition: transform $transition-duration, box-shadow $transition-duration;
 
         &:hover {
@@ -55,8 +55,8 @@ $shadow-color: rgba(0, 0, 0, 0.1);
     }
 
     &__title {
-        font-size: 1.25rem;
-        font-weight: 600;
+        font-size: 1.5rem;
+        font-weight: 800;
         color: $text-color;
         margin: 0 0 0.75rem;
         line-height: 1.4;
