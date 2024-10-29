@@ -97,15 +97,7 @@ const Edit = ({ attributes, setAttributes }) => {
         >
             {doc.title.rendered}
         </h3>
-            {showDocArticle && (
-                <p
-                    className="wedocs-docs-grid__article-count"
-                    style={styles.children}
-                >
-                {doc.articleCount} {__('articles', 'wedocs')}
-            </p>
-            )}
-            {renderSections(doc, styles)}
+            {showDocArticle && renderSections(doc, styles)}
             {showViewDetails && (
                 <div className="wedocs-docs-grid__details">
                 <span
@@ -127,9 +119,25 @@ const Edit = ({ attributes, setAttributes }) => {
                 <div key={section.id} className="wedocs-docs-grid__section">
                     <h4
                         className="wedocs-docs-grid__section-title"
-                        style={styles.title}
+                        style={{ ...styles.title, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                     >
-                        {section.title.rendered}
+                        <span>{section.title.rendered}</span>
+                        {section.articles && section.articles.length > 0 && (
+                            <svg
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                width="16"
+                                strokeWidth="2"
+                                stroke="#acb8c4"
+                                className={keepArticlesCollapsed ? '' : 'active'}
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                                />
+                            </svg>
+                        )}
                     </h4>
                     {!keepArticlesCollapsed && section.articles && (
                         <ul className="wedocs-docs-grid__articles">
@@ -146,6 +154,18 @@ const Edit = ({ attributes, setAttributes }) => {
                     )}
                 </div>
             ))}
+                {doc.sections.length === 0 && (
+                    <span className="inside">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                            ></path>
+                        </svg>
+                            {__('This document has no sections yet. Check back later or wait for the author to add content.', 'wedocs')}
+                    </span>
+                )}
         </div>
         );
     };

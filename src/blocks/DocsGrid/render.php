@@ -107,11 +107,17 @@ function render_wedocs_docs_grid($attributes) {
     // Add dynamic styles for hover states
     $hover_styles = sprintf(
         '<style>
-            .wedocs-docs-grid__details-link:hover {
-                background-color: %s !important;
-                color: %s !important;
-            }
-        </style>',
+        .wedocs-docs-grid__details-link:hover {
+            background-color: %s !important;
+            color: %s !important;
+        }
+        .wedocs-docs-grid__section-title svg {
+            transition: transform 0.3s ease;
+        }
+        .wedocs-docs-grid__section-title svg.active {
+            transform: rotate(180deg);
+        }
+    </style>',
         esc_attr($button_hover_color),
         esc_attr($button_hover_text_color)
     );
@@ -173,7 +179,7 @@ function render_wedocs_docs_grid($attributes) {
                         </a>
                     </h3>
 
-                    <?php if ($show_doc_article || !empty($sections)) : ?>
+                    <?php if ($show_doc_article && !empty($sections)) : ?>
                         <?php
                         foreach ($sections as $section) {
                             // Get articles for this section with limit
@@ -192,16 +198,34 @@ function render_wedocs_docs_grid($attributes) {
                             if (!$keep_articles_collapsed) : ?>
                                 <div class="wedocs-docs-grid__sections">
                                     <div class="wedocs-docs-grid__section">
-                                        <h4 class="wedocs-docs-grid__section-title" style="<?php echo esc_attr($title_style); ?>">
-                                            <a href="<?php echo esc_url(get_permalink($section->ID)); ?>" style="<?php echo esc_attr($title_style); ?>">
-                                                <?php echo esc_html($section->post_title); ?>
-                                            </a>
+                                        <h4 class="wedocs-docs-grid__section-title"
+                                            style="<?php echo esc_attr($title_style); ?> display: flex; justify-content: space-between; align-items: center;">
+                                            <span>
+                                                <a href="<?php echo esc_url(get_permalink($section->ID)); ?>"
+                                                   style="<?php echo esc_attr($title_style); ?>">
+                                                    <?php echo esc_html($section->post_title); ?>
+                                                </a>
+                                            </span>
+                                            <?php if (!empty($articles)) : ?>
+                                                <svg fill="none"
+                                                     viewBox="0 0 24 24"
+                                                     width="16"
+                                                     stroke-width="2"
+                                                     stroke="#acb8c4"
+                                                     class="<?php echo $keep_articles_collapsed ? '' : 'active'; ?>">
+                                                    <path stroke-linecap="round"
+                                                          stroke-linejoin="round"
+                                                          d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+                                                </svg>
+                                            <?php endif; ?>
                                         </h4>
                                         <?php if (!empty($articles)) : ?>
                                             <ul class="wedocs-docs-grid__articles">
                                                 <?php foreach ($articles as $article) : ?>
-                                                    <li class="wedocs-docs-grid__article" style="<?php echo esc_attr($children_style); ?>">
-                                                        <a href="<?php echo esc_url(get_permalink($article->ID)); ?>" style="<?php echo esc_attr($children_style); ?>">
+                                                    <li class="wedocs-docs-grid__article"
+                                                        style="<?php echo esc_attr($children_style); ?>">
+                                                        <a href="<?php echo esc_url(get_permalink($article->ID)); ?>"
+                                                           style="<?php echo esc_attr($children_style); ?>">
                                                             <?php echo esc_html($article->post_title); ?>
                                                         </a>
                                                     </li>
@@ -211,18 +235,20 @@ function render_wedocs_docs_grid($attributes) {
                                     </div>
                                 </div>
                             <?php endif;
-                        }
-
-                        if ($show_doc_article) : ?>
-                            <p class="wedocs-docs-grid__article-count">
-                                <?php printf(
-                                    _n('%d article', '%d articles', $total_articles, 'wedocs'),
-                                    $total_articles
-                                ); ?>
-                            </p>
-                        <?php endif; ?>
+                        } ?>
+                    <?php else : ?>
+                        <span class='wedocs-docs-grid__article-count'>
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24"
+                                 height="24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                ></path>
+                            </svg>
+                            <?php esc_html_e('This document has no sections yet. Check back later or wait for the author to add content.', 'wedocs'); ?>
+                        </span>
                     <?php endif; ?>
-
                     <?php if ($show_view_details) : ?>
                         <div class="wedocs-docs-grid__details">
                             <a href="<?php echo esc_url(get_permalink($doc->ID)); ?>"

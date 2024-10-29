@@ -85,6 +85,16 @@ $shadow-color: rgba(0, 0, 0, 0.1);
         }
     }
 
+    .inside {
+        display: flex;
+        color: #063250;
+        font-size: 18px;
+        svg {
+            width: 64px;
+            height: 24px;
+            margin: 2px 0.5rem 0 0;
+        }
+    }
     // Grid items
     &__item {
         position: relative;
