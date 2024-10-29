@@ -48,30 +48,98 @@ const Edit = ({ attributes, setAttributes }) => {
     } = attributes;
 
     const applyStyles = () => {
-        // Convert BoxControl values to CSS
         const paddings = gridPadding ? `${gridPadding.top} ${gridPadding.right} ${gridPadding.bottom} ${gridPadding.left}` : '';
         const margins = gridMargin ? `${gridMargin.top} ${gridMargin.right} ${gridMargin.bottom} ${gridMargin.left}` : '';
         const btnPaddings = buttonPadding ? `${buttonPadding.top} ${buttonPadding.right} ${buttonPadding.bottom} ${buttonPadding.left}` : '';
         const btnMargins = buttonMargin ? `${buttonMargin.top} ${buttonMargin.right} ${buttonMargin.bottom} ${buttonMargin.left}` : '';
 
         return {
-            '--wedocs-grid-padding': paddings,
-            '--wedocs-grid-margin': margins,
-            '--wedocs-doc-title-color': docTitleColor,
-            '--wedocs-doc-children-active-color': docChildrenActiveColor,
-            '--wedocs-border-type': borderType,
-            '--wedocs-border-radius': borderRadius,
-            '--wedocs-button-padding': btnPaddings,
-            '--wedocs-button-margin': btnMargins,
-            '--wedocs-button-color': buttonColor,
-            '--wedocs-button-hover-color': buttonHoverColor,
-            '--wedocs-button-text-color': buttonTextColor,
-            '--wedocs-button-hover-text-color': buttonHoverTextColor,
-            '--wedocs-pagination-text-color': paginationTextColor,
-            '--wedocs-pagination-text-hover-color': paginationTextHoverColor,
-            '--wedocs-pagination-background-color': paginationBackgroundColor,
-            '--wedocs-pagination-hover-color': paginationHoverColor,
+            item: {
+                padding: paddings,
+                margin: margins,
+                borderStyle: borderType,
+                borderRadius: borderRadius,
+            },
+            title: {
+                color: docTitleColor
+            },
+            children: {
+                color: docChildrenActiveColor
+            },
+            button: {
+                padding: btnPaddings,
+                margin: btnMargins,
+                backgroundColor: buttonColor,
+                color: buttonTextColor,
+                '--hover-bg': buttonHoverColor,
+                '--hover-color': buttonHoverTextColor
+            }
         };
+    };
+
+    const renderGridItem = (doc, styles) => (
+        <div
+            key={doc.id}
+            className="wedocs-docs-grid__item"
+            style={styles.item}
+        >
+        <h3
+            className="wedocs-docs-grid__title"
+            style={styles.title}
+        >
+            {doc.title.rendered}
+        </h3>
+            {showDocArticle && (
+                <p
+                    className="wedocs-docs-grid__article-count"
+                    style={styles.children}
+                >
+                {doc.articleCount} {__('articles', 'wedocs')}
+            </p>
+            )}
+            {renderSections(doc, styles)}
+            {showViewDetails && (
+                <div className="wedocs-docs-grid__details">
+                <span
+                    className="wedocs-docs-grid__details-link"
+                    style={styles.button}
+                >
+                    {__('View Details', 'wedocs')} →
+                </span>
+            </div>
+            )}
+    </div>
+    );
+    const renderSections = (doc, styles) => {
+        if (!doc.sections || !showViewDetails) return null;
+
+        return (
+            <div className={`wedocs-docs-grid__sections ${keepArticlesCollapsed ? 'is-collapsed' : ''}`}>
+            {doc.sections.map(section => (
+                <div key={section.id} className="wedocs-docs-grid__section">
+                    <h4
+                        className="wedocs-docs-grid__section-title"
+                        style={styles.title}
+                    >
+                        {section.title.rendered}
+                    </h4>
+                    {!keepArticlesCollapsed && section.articles && (
+                        <ul className="wedocs-docs-grid__articles">
+                            {section.articles.map(article => (
+                                <li
+                                    key={article.id}
+                                    className="wedocs-docs-grid__article"
+                                    style={styles.children}
+                                >
+                                    {article.title.rendered}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            ))}
+        </div>
+        );
     };
 
     // Control options
@@ -224,32 +292,6 @@ const Edit = ({ attributes, setAttributes }) => {
         );
     };
 
-    // Render section preview
-    const renderSections = (doc) => {
-        if (!doc.sections || !showViewDetails) return null;
-
-        return (
-            <div className={`wedocs-docs-grid__sections ${keepArticlesCollapsed ? 'is-collapsed' : ''}`}>
-                {doc.sections.map(section => (
-                    <div key={section.id} className="wedocs-docs-grid__section">
-                        <h4 className="wedocs-docs-grid__section-title">
-                            {section.title.rendered}
-                        </h4>
-                        {!keepArticlesCollapsed && section.articles && (
-                            <ul className="wedocs-docs-grid__articles">
-                                {section.articles.map(article => (
-                                    <li key={article.id} className="wedocs-docs-grid__article">
-                                        {article.title.rendered}
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
     const displayDocs = getDisplayDocs();
     // Create a mapping of ID to title for suggestions
     const docsMap = pages ? pages.reduce((acc, page) => {
@@ -374,49 +416,25 @@ const Edit = ({ attributes, setAttributes }) => {
                 <StyleControls attributes={attributes} setAttributes={setAttributes} />
             </InspectorControls>
 
-            <div {...blockProps} style={applyStyles()}>
-                {hideDocGrid ? (
-                    <div className='backdrop'></div>
-                ) : (
-                    <div className='wedocs-block-wrapper'>
-                        <p className='wedocs-preview-title'>
-                            {__('Docs Grid Preview', 'wedocs')}
-                        </p>
-                        <div className={`wedocs-docs-grid ${getGridClass()}`}>
-                            {loading ? (
-                                <Spinner />
-                            ) : (
-                                displayDocs.map((doc) => (
-                                    <div
-                                        key={doc.id}
-                                        className='wedocs-docs-grid__item'
-                                    >
-                                        <h3 className='wedocs-docs-grid__title'>
-                                            {doc.title.rendered}
-                                        </h3>
-                                        {showDocArticle && (
-                                            <p className='wedocs-docs-grid__article-count'>
-                                                {doc.articleCount} {__(
-                                                'articles', 'wedocs')}
-                                            </p>
-                                        )}
-                                        {renderSections(doc)}
-                                        {showViewDetails && (
-                                            <div className='wedocs-docs-grid__details'>
-                                                <span className='wedocs-docs-grid__details-link'>
-                                                    {__('View Details',
-                                                        'wedocs')} →
-                                                </span>
-                                            </div>
-                                        )}
-                                    </div>
-                                ))
-                            )}
-                        </div>
-                        {renderPagination(processDocsData())}
+            <div {...blockProps}>
+            {hideDocGrid ? (
+                <div className="backdrop"></div>
+            ) : (
+                <div className="wedocs-block-wrapper">
+                    <p className="wedocs-preview-title">
+                        {__('Docs Grid Preview', 'wedocs')}
+                    </p>
+                    <div className={`wedocs-docs-grid ${getGridClass()}`}>
+                        {loading ? (
+                            <Spinner />
+                        ) : (
+                            displayDocs.map((doc) => renderGridItem(doc, applyStyles()))
+                        )}
                     </div>
-                )}
-            </div>
+                    {renderPagination(processDocsData())}
+                </div>
+            )}
+        </div>
         </Fragment>
     );
 };
