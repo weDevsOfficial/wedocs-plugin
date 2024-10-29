@@ -3,7 +3,7 @@ import {
     PanelBody,
     __experimentalBoxControl as BoxControl,
     SelectControl,
-    ColorPicker
+    ColorPicker, TextControl
 } from '@wordpress/components';
 
 // Add these to your attributes in block.json
@@ -225,6 +225,10 @@ const StyleControls = ({ attributes, setAttributes }) => {
                         onChange={updateAttribute('buttonHoverColor')}
                         enableAlpha
                     />
+                </div>
+                <div className="wedocs-color-control">
+                    <label>{__('Button Text', 'wedocs')}</label>
+                    <TextControl value={attributes.buttonText} onChange={updateAttribute('buttonText')} />
                 </div>
                 <div className="wedocs-color-control">
                     <label>{__('Button Text Color', 'wedocs')}</label>

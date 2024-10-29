@@ -42,6 +42,7 @@ const Edit = ({ attributes, setAttributes }) => {
         buttonColor,
         buttonHoverColor,
         buttonTextColor,
+        buttonText,
         buttonHoverTextColor,
         paginationTextColor,
         paginationTextHoverColor,
@@ -76,6 +77,7 @@ const Edit = ({ attributes, setAttributes }) => {
                 margin: btnMargins,
                 backgroundColor: buttonColor || '#0073aa',
                 color: buttonTextColor || '#ffffff',
+                text: buttonText || __('View Details', 'wedocs'),
                 borderRadius: borderRadius || '8px',
                 '--hover-bg': buttonHoverColor || '#005177',
                 '--hover-color': buttonHoverTextColor || '#ffffff'
@@ -110,7 +112,7 @@ const Edit = ({ attributes, setAttributes }) => {
                     className="wedocs-docs-grid__details-link"
                     style={styles.button}
                 >
-                    {__('View Details', 'wedocs')} →
+                    {styles.button.text}
                 </span>
             </div>
             )}
