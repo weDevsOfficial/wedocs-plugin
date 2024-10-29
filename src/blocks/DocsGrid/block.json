@@ -53,6 +53,90 @@
     "showViewDetails": {
       "type": "boolean",
       "default": true
+    },
+    "gridPadding": {
+      "type": "object",
+      "default": {
+        "top": "20px",
+        "right": "20px",
+        "bottom": "20px",
+        "left": "20px"
+      }
+    },
+    "gridMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "docTitleColor": {
+      "type": "string",
+      "default": "#333333"
+    },
+    "docChildrenActiveColor": {
+      "type": "string",
+      "default": "#0073aa"
+    },
+    "borderType": {
+      "type": "string",
+      "default": "solid"
+    },
+    "borderRadius": {
+      "type": "string",
+      "default": "4px"
+    },
+    "buttonPadding": {
+      "type": "object",
+      "default": {
+        "top": "10px",
+        "right": "20px",
+        "bottom": "10px",
+        "left": "20px"
+      }
+    },
+    "buttonMargin": {
+      "type": "object",
+      "default": {
+        "top": "10px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "buttonColor": {
+      "type": "string",
+      "default": "#0073aa"
+    },
+    "buttonHoverColor": {
+      "type": "string",
+      "default": "#005177"
+    },
+    "buttonTextColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "buttonHoverTextColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "paginationTextColor": {
+      "type": "string",
+      "default": "#333333"
+    },
+    "paginationTextHoverColor": {
+      "type": "string",
+      "default": "#0073aa"
+    },
+    "paginationBackgroundColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "paginationHoverColor": {
+      "type": "string",
+      "default": "#f5f5f5"
     }
   }
 }
