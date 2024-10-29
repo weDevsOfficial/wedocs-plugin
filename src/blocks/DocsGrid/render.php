@@ -29,6 +29,7 @@ function render_wedocs_docs_grid($attributes) {
     $doc_title_color = $attributes['docTitleColor'] ?? '#1e1e1e';
     $doc_children_active_color = $attributes['docChildrenActiveColor'] ?? '#0073aa';
     $button_color = $attributes['buttonColor'] ?? '#0073aa';
+    $button_text = $attributes['buttonText'] ?? __('View Details', 'wedocs');
     $button_text_color = $attributes['buttonTextColor'] ?? '#ffffff';
     $button_hover_color = $attributes['buttonHoverColor'] ?? '#005177';
     $button_hover_text_color = $attributes['buttonHoverTextColor'] ?? '#ffffff';
@@ -227,7 +228,7 @@ function render_wedocs_docs_grid($attributes) {
                             <a href="<?php echo esc_url(get_permalink($doc->ID)); ?>"
                                class="wedocs-docs-grid__details-link"
                                style="<?php echo esc_attr($button_style); ?>">
-                                <?php esc_html_e('View Details', 'wedocs'); ?> →
+                                <?php echo esc_html($button_text); ?>
                             </a>
                         </div>
                     <?php endif; ?>
