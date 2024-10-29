@@ -35,6 +35,8 @@ const Edit = ({ attributes, setAttributes }) => {
         docChildrenActiveColor,
         borderType,
         borderRadius,
+        borderWidth,
+        borderColor,
         buttonPadding,
         buttonMargin,
         buttonColor,
@@ -57,22 +59,26 @@ const Edit = ({ attributes, setAttributes }) => {
             item: {
                 padding: paddings,
                 margin: margins,
-                borderStyle: borderType,
-                borderRadius: borderRadius,
+                borderStyle: borderType || 'solid',
+                borderWidth: borderWidth || '1px',
+                borderColor: borderColor || 'rgba(0, 0, 0, 0.1)',
+                borderRadius: borderRadius || '8px',
+                backgroundColor: '#fff'
             },
             title: {
-                color: docTitleColor
+                color: docTitleColor || '#1e1e1e'
             },
             children: {
-                color: docChildrenActiveColor
+                color: docChildrenActiveColor || '#0073aa'
             },
             button: {
                 padding: btnPaddings,
                 margin: btnMargins,
-                backgroundColor: buttonColor,
-                color: buttonTextColor,
-                '--hover-bg': buttonHoverColor,
-                '--hover-color': buttonHoverTextColor
+                backgroundColor: buttonColor || '#0073aa',
+                color: buttonTextColor || '#ffffff',
+                borderRadius: borderRadius || '8px',
+                '--hover-bg': buttonHoverColor || '#005177',
+                '--hover-color': buttonHoverTextColor || '#ffffff'
             }
         };
     };
@@ -277,18 +283,98 @@ const Edit = ({ attributes, setAttributes }) => {
 
         const totalPages = Math.ceil(totalDocs.length / parseInt(docsPerPage));
 
+        // Create style objects for pagination buttons
+        const paginationBaseStyle = {
+            padding: '8px 12px',
+            margin: '0 4px',
+            backgroundColor: attributes.paginationBackgroundColor || '#fff',
+            color: attributes.paginationTextColor || '#333',
+            border: `1px solid ${attributes.paginationBorderColor || '#ddd'}`,
+            borderRadius: attributes.borderRadius || '4px',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            textDecoration: 'none',
+            display: 'inline-block',
+            minWidth: '32px',
+            textAlign: 'center',
+            fontFamily: 'inherit',
+            fontSize: '14px',
+            lineHeight: '1.4'
+        };
+
+        // Active button style
+        const activeStyle = {
+            ...paginationBaseStyle,
+            backgroundColor: attributes.paginationHoverColor || '#f5f5f5',
+            borderColor: attributes.paginationHoverColor || '#ccc',
+            color: attributes.paginationTextHoverColor || '#0073aa'
+        };
+
+        // Hover styles will be handled by CSS custom properties
+        const customProperties = {
+            '--pagination-hover-bg': attributes.paginationHoverColor || '#f5f5f5',
+            '--pagination-hover-color': attributes.paginationTextHoverColor || '#0073aa',
+            '--pagination-hover-border': attributes.paginationHoverColor || '#ccc'
+        };
+
         return (
-            <div className="wedocs-docs-pagination">
-                {Array.from({ length: totalPages }, (_, i) => (
+            <div
+                className="wedocs-docs-pagination"
+                style={{
+                    margin: '30px 0',
+                    textAlign: 'center',
+                    ...customProperties
+                }}
+            >
+            {/* Previous button */}
+                {currentPage > 1 && (
                     <button
-                        key={i + 1}
-                        className={`wedocs-docs-pagination__button ${currentPage === i + 1 ? 'is-active' : ''}`}
-                        onClick={() => setCurrentPage(i + 1)}
+                        style={paginationBaseStyle}
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        className="wedocs-docs-pagination__button"
                     >
-                        {i + 1}
+                    ←
+                </button>
+                )}
+
+                {/* Page numbers */}
+                {Array.from({ length: totalPages }, (_, i) => {
+                    const pageNum = i + 1;
+                    const isCurrentPage = currentPage === pageNum;
+
+                    return (
+                        <button
+                            key={pageNum}
+                            style={isCurrentPage ? activeStyle : paginationBaseStyle}
+                            className={`wedocs-docs-pagination__button ${isCurrentPage ? 'is-active' : ''}`}
+                            onClick={() => setCurrentPage(pageNum)}
+                        >
+                        {pageNum}
                     </button>
-                ))}
-            </div>
+                    );
+                })}
+
+                {/* Next button */}
+                {currentPage < totalPages && (
+                    <button
+                        style={paginationBaseStyle}
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        className="wedocs-docs-pagination__button"
+                    >
+                    →
+                </button>
+                )}
+
+                <style>
+                {`
+                    .wedocs-docs-pagination__button:hover:not(.is-active) {
+                        background-color: var(--pagination-hover-bg) !important;
+                        color: var(--pagination-hover-color) !important;
+                        border-color: var(--pagination-hover-border) !important;
+                    }
+                `}
+            </style>
+        </div>
         );
     };
 
@@ -389,7 +475,7 @@ const Edit = ({ attributes, setAttributes }) => {
                     <PanelRow>
                         <ToggleControl
                             checked={showDocArticle}
-                            label={__('Show doc article count', 'wedocs')}
+                            label={__('Show doc article', 'wedocs')}
                             onChange={updateAttribute('showDocArticle')}
                         />
                     </PanelRow>

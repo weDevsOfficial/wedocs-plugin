@@ -38,6 +38,14 @@ const styleAttributes = {
         type: "string",
         default: "solid"
     },
+    borderWidth: {
+        type: "string",
+        default: "1px"
+    },
+    borderColor: {
+        type: "string",
+        default: "#dddddd"
+    },
     borderRadius: {
         type: "string",
         default: "4px"
@@ -108,60 +116,97 @@ const StyleControls = ({ attributes, setAttributes }) => {
 
     return (
         <>
-            <PanelBody title={__('Grid Styles', 'wedocs')} initialOpen={false}>
+            <PanelBody
+              title={__('Grid Styles', 'wedocs')}
+              initialOpen={false}
+            >
                 <BoxControl
-                    label={__('Grid Padding', 'wedocs')}
-                    values={attributes.gridPadding}
-                    onChange={updateAttribute('gridPadding')}
+                  label={__('Grid Padding', 'wedocs')}
+                  values={attributes.gridPadding}
+                  onChange={updateAttribute('gridPadding')}
                 />
                 <BoxControl
-                    label={__('Grid Margin', 'wedocs')}
-                    values={attributes.gridMargin}
-                    onChange={updateAttribute('gridMargin')}
+                  label={__('Grid Margin', 'wedocs')}
+                  values={attributes.gridMargin}
+                  onChange={updateAttribute('gridMargin')}
                 />
-                <div className="wedocs-color-control">
+                <div className='wedocs-color-control'>
                     <label>{__('Doc Title Color', 'wedocs')}</label>
                     <ColorPicker
-                        color={attributes.docTitleColor}
-                        onChange={updateAttribute('docTitleColor')}
-                        enableAlpha
+                      color={attributes.docTitleColor}
+                      onChange={updateAttribute('docTitleColor')}
+                      enableAlpha
                     />
                 </div>
-                <div className="wedocs-color-control">
+                <div className='wedocs-color-control'>
                     <label>{__('Doc Children Active Color', 'wedocs')}</label>
                     <ColorPicker
-                        color={attributes.docChildrenActiveColor}
-                        onChange={updateAttribute('docChildrenActiveColor')}
-                        enableAlpha
+                      color={attributes.docChildrenActiveColor}
+                      onChange={updateAttribute('docChildrenActiveColor')}
+                      enableAlpha
                     />
                 </div>
                 <SelectControl
-                    label={__('Border Type', 'wedocs')}
-                    value={attributes.borderType}
-                    options={borderTypes}
-                    onChange={updateAttribute('borderType')}
+                  label={__('Border Type', 'wedocs')}
+                  value={attributes.borderType}
+                  options={[
+                      { label: __('Solid', 'wedocs'), value: 'solid' },
+                      { label: __('Dashed', 'wedocs'), value: 'dashed' },
+                      { label: __('Dotted', 'wedocs'), value: 'dotted' },
+                      { label: __('None', 'wedocs'), value: 'none' }
+                  ]}
+                  onChange={value => setAttributes({ borderType: value })}
                 />
+
                 <SelectControl
-                    label={__('Border Radius', 'wedocs')}
-                    value={attributes.borderRadius}
-                    options={[
-                        { label: '0px', value: '0px' },
-                        { label: '4px', value: '4px' },
-                        { label: '8px', value: '8px' },
-                        { label: '12px', value: '12px' }
-                    ]}
-                    onChange={updateAttribute('borderRadius')}
+                  label={__('Border Width', 'wedocs')}
+                  value={attributes.borderWidth}
+                  options={[
+                      { label: '0px', value: '0px' },
+                      { label: '1px', value: '1px' },
+                      { label: '2px', value: '2px' },
+                      { label: '3px', value: '3px' },
+                      { label: '4px', value: '4px' },
+                      { label: '5px', value: '5px' }
+                  ]}
+                  onChange={value => setAttributes({ borderWidth: value })}
+                />
+
+                <div className="wedocs-color-control">
+                    <label>{__('Border Color', 'wedocs')}</label>
+                    <ColorPicker
+                      color={attributes.borderColor}
+                      onChange={value => setAttributes({ borderColor: value })}
+                      enableAlpha
+                    />
+                </div>
+
+                <SelectControl
+                  label={__('Border Radius', 'wedocs')}
+                  value={attributes.borderRadius}
+                  options={[
+                      { label: '0px', value: '0px' },
+                      { label: '4px', value: '4px' },
+                      { label: '8px', value: '8px' },
+                      { label: '12px', value: '12px' },
+                      { label: '16px', value: '16px' },
+                      { label: '20px', value: '20px' }
+                  ]}
+                  onChange={value => setAttributes({ borderRadius: value })}
                 />
             </PanelBody>
 
-            <PanelBody title={__('Button Styles', 'wedocs')} initialOpen={false}>
+            <PanelBody
+              title={__('Button Styles', 'wedocs')}
+              initialOpen={false}
+            >
                 <BoxControl
-                    label={__('Button Padding', 'wedocs')}
-                    values={attributes.buttonPadding}
-                    onChange={updateAttribute('buttonPadding')}
+                  label={__('Button Padding', 'wedocs')}
+                  values={attributes.buttonPadding}
+                  onChange={updateAttribute('buttonPadding')}
                 />
                 <BoxControl
-                    label={__('Button Margin', 'wedocs')}
+                  label={__('Button Margin', 'wedocs')}
                     values={attributes.buttonMargin}
                     onChange={updateAttribute('buttonMargin')}
                 />
