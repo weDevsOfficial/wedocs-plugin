@@ -38,6 +38,7 @@ const Edit = ({ attributes, setAttributes }) => {
         borderRadius,
         borderWidth,
         borderColor,
+        buttonBorderRadius,
         buttonPadding,
         buttonMargin,
         buttonColor,
@@ -55,6 +56,7 @@ const Edit = ({ attributes, setAttributes }) => {
         const paddings = gridPadding ? `${gridPadding.top} ${gridPadding.right} ${gridPadding.bottom} ${gridPadding.left}` : '';
         const margins = gridMargin ? `${gridMargin.top} ${gridMargin.right} ${gridMargin.bottom} ${gridMargin.left}` : '';
         const btnPaddings = buttonPadding ? `${buttonPadding.top} ${buttonPadding.right} ${buttonPadding.bottom} ${buttonPadding.left}` : '';
+        const btnradius = buttonBorderRadius || '8px';
         const btnMargins = buttonMargin ? `${buttonMargin.top} ${buttonMargin.right} ${buttonMargin.bottom} ${buttonMargin.left}` : '';
 
         return {
@@ -79,7 +81,7 @@ const Edit = ({ attributes, setAttributes }) => {
                 backgroundColor: buttonColor || '#0073aa',
                 color: buttonTextColor || '#ffffff',
                 text: buttonText || __('View Details', 'wedocs'),
-                borderRadius: borderRadius || '8px',
+                borderRadius: btnradius || '8px',
                 '--hover-bg': buttonHoverColor || '#005177',
                 '--hover-color': buttonHoverTextColor || '#ffffff'
             }
@@ -497,13 +499,13 @@ const Edit = ({ attributes, setAttributes }) => {
                         onChange={updateAttribute('articlesPerSection')}
                     />
 
-                    <PanelRow>
-                        <ToggleControl
-                            checked={enablePagination}
-                            label={__('Enable pagination', 'wedocs')}
-                            onChange={updateAttribute('enablePagination')}
-                        />
-                    </PanelRow>
+                    {/*<PanelRow>*/}
+                    {/*    <ToggleControl*/}
+                    {/*        checked={enablePagination}*/}
+                    {/*        label={__('Enable pagination', 'wedocs')}*/}
+                    {/*        onChange={updateAttribute('enablePagination')}*/}
+                    {/*    />*/}
+                    {/*</PanelRow>*/}
 
                     <PanelRow>
                         <ToggleControl
@@ -550,7 +552,7 @@ const Edit = ({ attributes, setAttributes }) => {
                             displayDocs.map((doc) => renderGridItem(doc, applyStyles()))
                         )}
                     </div>
-                    {renderPagination(processDocsData())}
+                    {/*{renderPagination(processDocsData())}*/}
                 </div>
             )}
         </div>

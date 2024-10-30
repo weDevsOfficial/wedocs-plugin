@@ -50,6 +50,10 @@ const styleAttributes = {
         type: "string",
         default: "4px"
     },
+    buttonBorderRadius: {
+        type: "string",
+        default: "4px"
+    },
     buttonPadding: {
         type: "object",
         default: {
@@ -202,6 +206,19 @@ const StyleControls = ({ attributes, setAttributes }) => {
               icon="admin-appearance"
               initialOpen={false}
             >
+                <SelectControl
+                    label={__('Button Border Radius', 'wedocs')}
+                    value={attributes.buttonBorderRadius}
+                    options={[
+                        { label: '0px', value: '0px' },
+                        { label: '4px', value: '4px' },
+                        { label: '8px', value: '8px' },
+                        { label: '12px', value: '12px' },
+                        { label: '16px', value: '16px' },
+                        { label: '20px', value: '20px' }
+                    ]}
+                    onChange={value => setAttributes({ buttonBorderRadius: value })}
+                />
                 <BoxControl
                   label={__('Button Padding', 'wedocs')}
                   values={attributes.buttonPadding}
@@ -250,44 +267,44 @@ const StyleControls = ({ attributes, setAttributes }) => {
                 </div>
             </PanelBody>
 
-            <PanelBody
-                title={__('Pagination Styles', 'wedocs')}
-                icon="admin-appearance"
-                initialOpen={false}
-            >
-                <div className="wedocs-color-control">
-                    <label>{__('Text Color', 'wedocs')}</label>
-                    <ColorPicker
-                        color={attributes.paginationTextColor}
-                        onChange={updateAttribute('paginationTextColor')}
-                        enableAlpha
-                    />
-                </div>
-                <div className="wedocs-color-control">
-                    <label>{__('Text Hover Color', 'wedocs')}</label>
-                    <ColorPicker
-                        color={attributes.paginationTextHoverColor}
-                        onChange={updateAttribute('paginationTextHoverColor')}
-                        enableAlpha
-                    />
-                </div>
-                <div className="wedocs-color-control">
-                    <label>{__('Background Color', 'wedocs')}</label>
-                    <ColorPicker
-                        color={attributes.paginationBackgroundColor}
-                        onChange={updateAttribute('paginationBackgroundColor')}
-                        enableAlpha
-                    />
-                </div>
-                <div className="wedocs-color-control">
-                    <label>{__('Hover Color', 'wedocs')}</label>
-                    <ColorPicker
-                        color={attributes.paginationHoverColor}
-                        onChange={updateAttribute('paginationHoverColor')}
-                        enableAlpha
-                    />
-                </div>
-            </PanelBody>
+            {/*<PanelBody*/}
+            {/*    title={__('Pagination Styles', 'wedocs')}*/}
+            {/*    icon="admin-appearance"*/}
+            {/*    initialOpen={false}*/}
+            {/*>*/}
+            {/*    <div className="wedocs-color-control">*/}
+            {/*        <label>{__('Text Color', 'wedocs')}</label>*/}
+            {/*        <ColorPicker*/}
+            {/*            color={attributes.paginationTextColor}*/}
+            {/*            onChange={updateAttribute('paginationTextColor')}*/}
+            {/*            enableAlpha*/}
+            {/*        />*/}
+            {/*    </div>*/}
+            {/*    <div className="wedocs-color-control">*/}
+            {/*        <label>{__('Text Hover Color', 'wedocs')}</label>*/}
+            {/*        <ColorPicker*/}
+            {/*            color={attributes.paginationTextHoverColor}*/}
+            {/*            onChange={updateAttribute('paginationTextHoverColor')}*/}
+            {/*            enableAlpha*/}
+            {/*        />*/}
+            {/*    </div>*/}
+            {/*    <div className="wedocs-color-control">*/}
+            {/*        <label>{__('Background Color', 'wedocs')}</label>*/}
+            {/*        <ColorPicker*/}
+            {/*            color={attributes.paginationBackgroundColor}*/}
+            {/*            onChange={updateAttribute('paginationBackgroundColor')}*/}
+            {/*            enableAlpha*/}
+            {/*        />*/}
+            {/*    </div>*/}
+            {/*    <div className="wedocs-color-control">*/}
+            {/*        <label>{__('Hover Color', 'wedocs')}</label>*/}
+            {/*        <ColorPicker*/}
+            {/*            color={attributes.paginationHoverColor}*/}
+            {/*            onChange={updateAttribute('paginationHoverColor')}*/}
+            {/*            enableAlpha*/}
+            {/*        />*/}
+            {/*    </div>*/}
+            {/*</PanelBody>*/}
         </>
     );
 };
