@@ -118,6 +118,7 @@ const StyleControls = ({ attributes, setAttributes }) => {
         <>
             <PanelBody
               title={__('Grid Styles', 'wedocs')}
+              icon="admin-appearance"
               initialOpen={false}
             >
                 <BoxControl
@@ -198,6 +199,7 @@ const StyleControls = ({ attributes, setAttributes }) => {
 
             <PanelBody
               title={__('Button Styles', 'wedocs')}
+              icon="admin-appearance"
               initialOpen={false}
             >
                 <BoxControl
@@ -248,7 +250,11 @@ const StyleControls = ({ attributes, setAttributes }) => {
                 </div>
             </PanelBody>
 
-            <PanelBody title={__('Pagination Styles', 'wedocs')} initialOpen={false}>
+            <PanelBody
+                title={__('Pagination Styles', 'wedocs')}
+                icon="admin-appearance"
+                initialOpen={false}
+            >
                 <div className="wedocs-color-control">
                     <label>{__('Text Color', 'wedocs')}</label>
                     <ColorPicker

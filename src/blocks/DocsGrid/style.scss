@@ -92,7 +92,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
         display: flex;
         color: #063250;
         font-size: 18px;
-        height: 240px;
+        min-height: 240px;
         list-style: none;
         svg {
             width: 64px;
@@ -135,7 +135,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
     }
 
     &__container {
-        height: 240px;
+        min-height: 240px;
     }
 
     &__sections {
