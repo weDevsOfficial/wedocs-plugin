@@ -269,3 +269,104 @@ $shadow-color: rgba(0, 0, 0, 0.1);
         }
     }
 }
+
+// Pagination Variables
+$transition-duration: 0.2s;
+
+.wedocs-docs-pagination {
+    margin: 30px 0;
+    text-align: center;
+
+    // Style for PHP's paginate_links()
+    .page-numbers {
+        display: inline-flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: 5px;
+
+        li {
+            margin: 0;
+            display: inline-block;
+        }
+
+        // Default link styles (includes numbers and prev/next)
+        a,
+        span {
+            display: inline-block;
+            padding: 8px 12px;
+            min-width: 32px;
+            margin: 0 4px;
+            border: 1px solid var(--wedocs-pagination-border-color, #ddd);
+            border-radius: var(--wedocs-border-radius, 4px);
+            background-color: var(--wedocs-pagination-background-color, #fff);
+            color: var(--wedocs-pagination-text-color, #333);
+            text-decoration: none;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.4;
+            text-align: center;
+            transition: all $transition-duration ease;
+            cursor: pointer;
+
+            // Hover state
+            &:hover:not(.current) {
+                background-color: var(--wedocs-pagination-hover-color, #f5f5f5);
+                color: var(--wedocs-pagination-text-hover-color, #0073aa);
+                border-color: var(--wedocs-pagination-hover-color, #ccc);
+            }
+        }
+
+        // Current/active page
+        .current {
+            background-color: var(--wedocs-pagination-hover-color, #f5f5f5);
+            border-color: var(--wedocs-pagination-hover-color, #ccc);
+            color: var(--wedocs-pagination-text-hover-color, #0073aa);
+            cursor: default;
+        }
+
+        // Disabled state (dots)
+        .dots {
+            border: none;
+            padding: 8px;
+            cursor: default;
+
+            &:hover {
+                background: none;
+                color: inherit;
+            }
+        }
+    }
+
+    // Styles for React component buttons
+    &__button {
+        display: inline-block;
+        padding: 8px 12px;
+        min-width: 32px;
+        margin: 0 4px;
+        border: 1px solid var(--wedocs-pagination-border-color, #ddd);
+        border-radius: var(--wedocs-border-radius, 4px);
+        background-color: var(--wedocs-pagination-background-color, #fff);
+        color: var(--wedocs-pagination-text-color, #333);
+        text-decoration: none;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.4;
+        text-align: center;
+        transition: all $transition-duration ease;
+        cursor: pointer;
+
+        &:hover:not(.is-active) {
+            background-color: var(--wedocs-pagination-hover-color, #f5f5f5) !important;
+            color: var(--wedocs-pagination-text-hover-color, #0073aa) !important;
+            border-color: var(--wedocs-pagination-hover-color, #ccc) !important;
+        }
+
+        &.is-active {
+            background-color: var(--wedocs-pagination-hover-color, #f5f5f5);
+            border-color: var(--wedocs-pagination-hover-color, #ccc);
+            color: var(--wedocs-pagination-text-hover-color, #0073aa);
+            cursor: default;
+        }
+    }
+}

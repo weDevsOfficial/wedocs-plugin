@@ -105,6 +105,34 @@ function render_wedocs_docs_grid($attributes) {
         $button_margin_style
     );
 
+    function get_pagination_style_tag($attributes) {
+        $background_color = $attributes['paginationBackgroundColor'] ?? '#fff';
+        $text_color = $attributes['paginationTextColor'] ?? '#333';
+        $border_color = $attributes['paginationBorderColor'] ?? '#ddd';
+        $hover_color = $attributes['paginationHoverColor'] ?? '#f5f5f5';
+        $text_hover_color = $attributes['paginationTextHoverColor'] ?? '#0073aa';
+        $border_radius = $attributes['borderRadius'] ?? '4px';
+
+        return sprintf(
+            '<style>
+            :root {
+                --wedocs-pagination-background-color: %s;
+                --wedocs-pagination-text-color: %s;
+                --wedocs-pagination-border-color: %s;
+                --wedocs-pagination-hover-color: %s;
+                --wedocs-pagination-text-hover-color: %s;
+                --wedocs-border-radius: %s;
+            }
+        </style>',
+            esc_attr($background_color),
+            esc_attr($text_color),
+            esc_attr($border_color),
+            esc_attr($hover_color),
+            esc_attr($text_hover_color),
+            esc_attr($border_radius)
+        );
+    }
+
     // Add dynamic styles for hover states
     $hover_styles = sprintf(
         '<style>
@@ -286,7 +314,10 @@ SCRIPT;
             <?php endforeach; ?>
         </div>
 
-        <?php if ($enable_pagination && $total_pages > 1) : ?>
+        <?php if ($enable_pagination && $total_pages > 1) :
+            // Output the CSS variables
+            echo get_pagination_style_tag($attributes);
+            ?>
             <div class="wedocs-docs-pagination">
                 <?php
                 $pagenum_link = html_entity_decode(get_pagenum_link());
