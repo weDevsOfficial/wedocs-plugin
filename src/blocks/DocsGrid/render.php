@@ -11,6 +11,7 @@ function render_wedocs_docs_grid($attributes) {
     $doc_style = $attributes['docStyle'] ?? '1x1';
     $docs_per_page = $attributes['docsPerPage'] ?? 'all';
     $exclude_docs = $attributes['excludeDocs'] ?? [];
+    $order = $attributes['order'] ?? 'ASC';
     $order_by = $attributes['orderBy'] ?? 'menu_order';
     $sections_per_doc = $attributes['sectionsPerDoc'] ?? 'all';
     $articles_per_section = $attributes['articlesPerSection'] ?? 'all';
@@ -131,7 +132,7 @@ function render_wedocs_docs_grid($attributes) {
         'post_status' => 'publish',
         'post_parent' => 0,
         'orderby' => $order_by,
-        'order' => 'ASC',
+        'order' => $order,
         'post__not_in' => array_map('intval', $exclude_docs)
     );
 
@@ -148,10 +149,33 @@ function render_wedocs_docs_grid($attributes) {
     $docs_query = new WP_Query($args);
     $docs = $docs_query->posts;
     $total_pages = $docs_query->max_num_pages;
+    $toggle_script = <<<SCRIPT
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.wedocs-docs-grid__section-title').forEach(title => {
+        title.addEventListener('click', function(e) {
+            // Ignore clicks on links
+            if (e.target.tagName.toLowerCase() === 'a') {
+                return;
+            }
 
+            const section = this.closest('.wedocs-docs-grid__section');
+            const articlesList = section.querySelector('.wedocs-docs-grid__articles');
+            const toggleIcon = this.querySelector('svg');
+
+            if (articlesList) {
+                articlesList.classList.toggle('collapsed');
+                toggleIcon?.classList.toggle('active');
+            }
+        });
+    });
+});
+</script>
+SCRIPT;
     // Start output buffering
     ob_start();
 
+    echo $toggle_script;
     // Output hover styles
     echo $hover_styles;
     ?>
@@ -179,7 +203,8 @@ function render_wedocs_docs_grid($attributes) {
                         </a>
                     </h3>
 
-                    <?php if ($show_doc_article && !empty($sections)) : ?>
+                    <?php if (!empty($sections)) : ?>
+                    <div class='wedocs-docs-grid__container'>
                         <?php
                         foreach ($sections as $section) {
                             // Get articles for this section with limit
@@ -193,9 +218,7 @@ function render_wedocs_docs_grid($attributes) {
                             );
 
                             $articles = get_posts($articles_query_args);
-                            $total_articles += count($articles);
-
-                            if (!$keep_articles_collapsed) : ?>
+                            ?>
                                 <div class="wedocs-docs-grid__sections">
                                     <div class="wedocs-docs-grid__section">
                                         <h4 class="wedocs-docs-grid__section-title"
@@ -206,21 +229,21 @@ function render_wedocs_docs_grid($attributes) {
                                                     <?php echo esc_html($section->post_title); ?>
                                                 </a>
                                             </span>
-                                            <?php if (!empty($articles)) : ?>
+                                            <?php if ($show_doc_article && !empty($articles)) : ?>
                                                 <svg fill="none"
                                                      viewBox="0 0 24 24"
                                                      width="16"
                                                      stroke-width="2"
                                                      stroke="#acb8c4"
-                                                     class="<?php echo $keep_articles_collapsed ? '' : 'active'; ?>">
+                                                     class="<?php echo esc_attr($keep_articles_collapsed ? 'collapsed' : ''); ?>">
                                                     <path stroke-linecap="round"
                                                           stroke-linejoin="round"
                                                           d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
                                                 </svg>
                                             <?php endif; ?>
                                         </h4>
-                                        <?php if (!empty($articles)) : ?>
-                                            <ul class="wedocs-docs-grid__articles">
+                                        <?php if ($show_doc_article && !empty($articles)) : ?>
+                                            <ul class="wedocs-docs-grid__articles children has-icon <?php echo esc_attr($keep_articles_collapsed ? 'collapsed' : ''); ?>">
                                                 <?php foreach ($articles as $article) : ?>
                                                     <li class="wedocs-docs-grid__article"
                                                         style="<?php echo esc_attr($children_style); ?>">
@@ -234,10 +257,11 @@ function render_wedocs_docs_grid($attributes) {
                                         <?php endif; ?>
                                     </div>
                                 </div>
-                            <?php endif;
+                            <?php
                         } ?>
+                    </div>
                     <?php else : ?>
-                        <span class='wedocs-docs-grid__article-count'>
+                        <span class='inside'>
                             <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24"
                                  height="24" xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -298,4 +322,3 @@ function render_wedocs_docs_grid($attributes) {
     <?php
     return ob_get_clean();
 }
-

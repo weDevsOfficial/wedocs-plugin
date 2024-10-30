@@ -26,6 +26,10 @@
       "type": "array",
       "default": []
     },
+    "order": {
+      "type": "string",
+      "default": "asc"
+    },
     "orderBy": {
       "type": "string",
       "default": "menu_order"
