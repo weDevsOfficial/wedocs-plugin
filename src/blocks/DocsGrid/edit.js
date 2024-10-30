@@ -22,6 +22,7 @@ const Edit = ({ attributes, setAttributes }) => {
         docStyle,
         docsPerPage,
         excludeDocs,
+        order,
         orderBy,
         sectionsPerDoc,
         articlesPerSection,
@@ -97,7 +98,7 @@ const Edit = ({ attributes, setAttributes }) => {
         >
             {doc.title.rendered}
         </h3>
-            {showDocArticle && renderSections(doc, styles)}
+            {renderSections(doc, styles)}
             {showViewDetails && (
                 <div className="wedocs-docs-grid__details">
                 <span
@@ -111,7 +112,7 @@ const Edit = ({ attributes, setAttributes }) => {
     </div>
     );
     const renderSections = (doc, styles) => {
-        if (!doc.sections || !showViewDetails) return null;
+        if (!doc.sections) return null;
 
         return (
             <div className={`wedocs-docs-grid__sections ${keepArticlesCollapsed ? 'is-collapsed' : ''}`}>
@@ -122,7 +123,7 @@ const Edit = ({ attributes, setAttributes }) => {
                         style={{ ...styles.title, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                     >
                         <span>{section.title.rendered}</span>
-                        {section.articles && section.articles.length > 0 && (
+                        {showDocArticle && section.articles && section.articles.length > 0 && (
                             <svg
                                 fill="none"
                                 viewBox="0 0 24 24"
@@ -139,7 +140,7 @@ const Edit = ({ attributes, setAttributes }) => {
                             </svg>
                         )}
                     </h4>
-                    {!keepArticlesCollapsed && section.articles && (
+                    {(showDocArticle && !keepArticlesCollapsed && section.articles) && (
                         <ul className="wedocs-docs-grid__articles">
                             {section.articles.map(article => (
                                 <li
@@ -187,7 +188,11 @@ const Edit = ({ attributes, setAttributes }) => {
     const orderByOptions = [
         { label: __('weDocs Order', 'wedocs'), value: 'menu_order' },
         { label: __('ID', 'wedocs'), value: 'id' },
-        { label: __('Name', 'wedocs'), value: 'name' },
+        { label: __('Name', 'wedocs'), value: 'title' },
+    ];
+    const orderOptions = [
+        { label: __('Ascending', 'wedocs'), value: 'asc' },
+        { label: __('Descending', 'wedocs'), value: 'desc' },
     ];
 
     const countOptions = [
@@ -206,7 +211,7 @@ const Edit = ({ attributes, setAttributes }) => {
             per_page: -1,
             parent: 0,
             orderby: orderBy,
-            order: 'asc'
+            order: order
         });
 
         // Get all sections (docs children)
@@ -228,7 +233,7 @@ const Edit = ({ attributes, setAttributes }) => {
             sections: allSections,
             articles: allArticles
         };
-    });
+    }, [orderBy, order]);
 
     const processDocsData = () => {
         if (!pages || !sections || !articles) return [];
@@ -464,6 +469,12 @@ const Edit = ({ attributes, setAttributes }) => {
                         suggestions={Object.values(docsMap)}
                         label={__('Exclude Docs', 'wedocs')}
                         onChange={handleExcludeDocsChange}
+                    />
+                    <SelectControl
+                        value={order}
+                        options={orderOptions}
+                        label={__('Order', 'wedocs')}
+                        onChange={updateAttribute('order')}
                     />
                     <SelectControl
                         value={orderBy}

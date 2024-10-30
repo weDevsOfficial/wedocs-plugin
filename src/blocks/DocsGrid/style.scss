@@ -71,6 +71,9 @@ $shadow-color: rgba(0, 0, 0, 0.1);
     display: grid;
     gap: 1.5rem;
     width: 100%;
+    margin: 0; // Reset ul margin
+    padding: 0; // Reset ul padding
+    list-style: none; // Remove bullets
 
     // Grid variants
     &--1x1 {
@@ -89,28 +92,27 @@ $shadow-color: rgba(0, 0, 0, 0.1);
         display: flex;
         color: #063250;
         font-size: 18px;
+        height: 240px;
+        list-style: none;
         svg {
             width: 64px;
             height: 24px;
             margin: 2px 0.5rem 0 0;
         }
     }
+
     // Grid items
     &__item {
         position: relative;
         background-color: #fff;
         transition: transform $transition-duration, box-shadow $transition-duration;
-
-        // Dynamic styles applied to individual grid items
-        .wedocs-grid-content {
-            padding: var(--wedocs-grid-padding, 1.5rem);
-            margin: var(--wedocs-grid-margin, 0);
-            border-width: var(--wedocs-border-width, 1px);
-            border-style: var(--wedocs-border-type, solid);
-            border-color: var(--wedocs-border-color, rgba(0, 0, 0, 0.1));
-            border-radius: var(--wedocs-border-radius, 8px);
-            height: 100%;
-        }
+        list-style: none; // Remove bullets
+        padding: var(--wedocs-grid-padding, 1.5rem);
+        margin: var(--wedocs-grid-margin, 0);
+        border-width: var(--wedocs-border-width, 1px);
+        border-style: var(--wedocs-border-type, solid);
+        border-color: var(--wedocs-border-color, rgba(0, 0, 0, 0.1));
+        border-radius: var(--wedocs-border-radius, 8px);
 
         &:hover {
             transform: translateY(-2px);
@@ -132,14 +134,72 @@ $shadow-color: rgba(0, 0, 0, 0.1);
         margin: 0;
     }
 
+    &__container {
+        height: 240px;
+    }
+
     &__sections {
         margin-top: 1rem;
+        padding: 0; // Reset ul padding
 
         &.is-collapsed {
             .wedocs-docs-grid__articles {
                 display: none;
             }
         }
+    }
+
+    &__section {
+        &-title {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            a {
+                pointer-events: auto;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            svg {
+                transition: transform 0.3s ease;
+                cursor: pointer;
+                flex-shrink: 0;
+
+                &.active {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+    }
+
+    &__articles {
+        max-height: 1000px;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+
+        &.collapsed {
+            max-height: 0;
+        }
+
+        // Optional: Add smooth height animation for better UX
+        li {
+            opacity: 1;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        &.collapsed li {
+            opacity: 0;
+        }
+    }
+
+    &__section {
+        margin-bottom: 1rem; // Add spacing between sections
     }
 
     &__section-title {
@@ -149,7 +209,6 @@ $shadow-color: rgba(0, 0, 0, 0.1);
     }
 
     &__articles {
-        list-style: none;
         margin: 0.5rem 0 0.5rem 1rem;
         padding: 0;
 
@@ -157,6 +216,12 @@ $shadow-color: rgba(0, 0, 0, 0.1);
             color: var(--wedocs-doc-children-active-color, #0073aa);
             font-size: 0.875rem;
             margin-bottom: 0.25rem;
+            margin-left: 1rem;
+            ::marker {
+                content: "•";
+                color: var(--wedocs-doc-children-active-color, #0073aa);
+                margin-right: 0.5rem;
+            }
         }
     }
 
@@ -176,6 +241,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
         font-size: 0.875rem;
         cursor: pointer;
         transition: all $transition-duration;
+        text-decoration: none; // Ensure links don't have underline
 
         &:hover {
             background-color: var(--wedocs-button-hover-color, #005177);
