@@ -6,6 +6,34 @@
  * @param string $content    Block content
  * @return string Rendered block content
  */
+
+function get_pagination_style_tag($attributes) {
+    $background_color = $attributes['paginationBackgroundColor'] ?? '#fff';
+    $text_color = $attributes['paginationTextColor'] ?? '#333';
+    $border_color = $attributes['paginationBorderColor'] ?? '#ddd';
+    $hover_color = $attributes['paginationHoverColor'] ?? '#f5f5f5';
+    $text_hover_color = $attributes['paginationTextHoverColor'] ?? '#0073aa';
+    $border_radius = $attributes['borderRadius'] ?? '4px';
+
+    return sprintf(
+        '<style>
+            :root {
+                --wedocs-pagination-background-color: %s;
+                --wedocs-pagination-text-color: %s;
+                --wedocs-pagination-border-color: %s;
+                --wedocs-pagination-hover-color: %s;
+                --wedocs-pagination-text-hover-color: %s;
+                --wedocs-border-radius: %s;
+            }
+        </style>',
+        esc_attr($background_color),
+        esc_attr($text_color),
+        esc_attr($border_color),
+        esc_attr($hover_color),
+        esc_attr($text_hover_color),
+        esc_attr($border_radius)
+    );
+}
 function render_wedocs_docs_grid($attributes) {
     // Extract attributes with defaults
     $doc_style = $attributes['docStyle'] ?? '1x1';
@@ -105,34 +133,6 @@ function render_wedocs_docs_grid($attributes) {
         $button_margin_style
     );
 
-    function get_pagination_style_tag($attributes) {
-        $background_color = $attributes['paginationBackgroundColor'] ?? '#fff';
-        $text_color = $attributes['paginationTextColor'] ?? '#333';
-        $border_color = $attributes['paginationBorderColor'] ?? '#ddd';
-        $hover_color = $attributes['paginationHoverColor'] ?? '#f5f5f5';
-        $text_hover_color = $attributes['paginationTextHoverColor'] ?? '#0073aa';
-        $border_radius = $attributes['borderRadius'] ?? '4px';
-
-        return sprintf(
-            '<style>
-            :root {
-                --wedocs-pagination-background-color: %s;
-                --wedocs-pagination-text-color: %s;
-                --wedocs-pagination-border-color: %s;
-                --wedocs-pagination-hover-color: %s;
-                --wedocs-pagination-text-hover-color: %s;
-                --wedocs-border-radius: %s;
-            }
-        </style>',
-            esc_attr($background_color),
-            esc_attr($text_color),
-            esc_attr($border_color),
-            esc_attr($hover_color),
-            esc_attr($text_hover_color),
-            esc_attr($border_radius)
-        );
-    }
-
     // Add dynamic styles for hover states
     $hover_styles = sprintf(
         '<style>
@@ -152,7 +152,7 @@ function render_wedocs_docs_grid($attributes) {
     );
 
     // Get current page for pagination
-    $current_page = max(1, get_query_var('paged'));
+    $current_page = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
     // Set up the main docs query
     $args = array(
@@ -335,7 +335,7 @@ SCRIPT;
 
                 echo paginate_links(array(
                     'base' => $pagenum_link . '%_%',
-                    'format' => '?page=%#%',
+                    'format' => '?paged=%#%',
                     'current' => $current_page,
                     'total' => $total_pages,
                     'prev_text' => __('&laquo; Previous', 'wedocs'),
