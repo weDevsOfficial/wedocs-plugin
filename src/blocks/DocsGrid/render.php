@@ -63,6 +63,7 @@ function render_wedocs_docs_grid($attributes) {
     $button_hover_color = $attributes['buttonHoverColor'] ?? '#005177';
     $button_hover_text_color = $attributes['buttonHoverTextColor'] ?? '#ffffff';
     $button_padding = $attributes['buttonPadding'] ?? null;
+    $button_radius = $attributes['buttonBorderRadius'] ?? '4px';
     $button_margin = $attributes['buttonMargin'] ?? null;
 
     // Format padding and margin styles
@@ -128,7 +129,7 @@ function render_wedocs_docs_grid($attributes) {
         'background-color: %s; color: %s; border-radius: %s; %s %s',
         esc_attr($button_color),
         esc_attr($button_text_color),
-        esc_attr($border_radius),
+        esc_attr($button_radius),
         $button_padding_style,
         $button_margin_style
     );
@@ -314,41 +315,41 @@ SCRIPT;
             <?php endforeach; ?>
         </div>
 
-        <?php if ($enable_pagination && $total_pages > 1) :
-            // Output the CSS variables
-            echo get_pagination_style_tag($attributes);
-            ?>
-            <div class="wedocs-docs-pagination">
-                <?php
-                $pagenum_link = html_entity_decode(get_pagenum_link());
-                $query_args   = array();
-                $url_parts    = explode('?', $pagenum_link);
-
-                if (isset($url_parts[1])) {
-                    wp_parse_str($url_parts[1], $query_args);
-                }
-
-                unset($query_args['paged']);
-                unset($query_args['page']);
-
-                $pagenum_link = esc_url(add_query_arg($query_args, $url_parts[0]));
-
-                echo paginate_links(array(
-                    'base' => $pagenum_link . '%_%',
-                    'format' => '?paged=%#%',
-                    'current' => $current_page,
-                    'total' => $total_pages,
-                    'prev_text' => __('&laquo; Previous', 'wedocs'),
-                    'next_text' => __('Next &raquo;', 'wedocs'),
-                    'type' => 'list',
-                    'add_args' => $query_args,
-                    'show_all' => false,
-                    'end_size' => 2,
-                    'mid_size' => 2
-                ));
-                ?>
-            </div>
-        <?php endif; ?>
+<!--        --><?php //if ($enable_pagination && $total_pages > 1) :
+//            // Output the CSS variables
+//            echo get_pagination_style_tag($attributes);
+//            ?>
+<!--            <div class="wedocs-docs-pagination">-->
+<!--                --><?php
+//                $pagenum_link = html_entity_decode(get_pagenum_link());
+//                $query_args   = array();
+//                $url_parts    = explode('?', $pagenum_link);
+//
+//                if (isset($url_parts[1])) {
+//                    wp_parse_str($url_parts[1], $query_args);
+//                }
+//
+//                unset($query_args['paged']);
+//                unset($query_args['page']);
+//
+//                $pagenum_link = esc_url(add_query_arg($query_args, $url_parts[0]));
+//
+//                echo paginate_links(array(
+//                    'base' => $pagenum_link . '%_%',
+//                    'format' => '?paged=%#%',
+//                    'current' => $current_page,
+//                    'total' => $total_pages,
+//                    'prev_text' => __('&laquo; Previous', 'wedocs'),
+//                    'next_text' => __('Next &raquo;', 'wedocs'),
+//                    'type' => 'list',
+//                    'add_args' => $query_args,
+//                    'show_all' => false,
+//                    'end_size' => 2,
+//                    'mid_size' => 2
+//                ));
+//                ?>
+<!--            </div>-->
+<!--        --><?php //endif; ?>
     </div>
     <?php
     return ob_get_clean();
