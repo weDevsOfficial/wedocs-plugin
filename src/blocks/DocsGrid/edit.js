@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { grid } from '@wordpress/icons';
+import { cog, grid } from '@wordpress/icons';
 import { Fragment, useState } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import {
@@ -26,7 +26,6 @@ const Edit = ({ attributes, setAttributes }) => {
         orderBy,
         sectionsPerDoc,
         articlesPerSection,
-        enablePagination,
         showDocArticle,
         keepArticlesCollapsed,
         showViewDetails,
@@ -291,7 +290,7 @@ const Edit = ({ attributes, setAttributes }) => {
     };
     // Handle pagination
     const getPagedDocs = (docs) => {
-        if (!enablePagination || docsPerPage === 'all') return docs;
+        if ( docsPerPage === 'all') return docs;
 
         const perPage = parseInt(docsPerPage);
         const start = (currentPage - 1) * perPage;
@@ -308,7 +307,7 @@ const Edit = ({ attributes, setAttributes }) => {
 
     // Pagination controls
     const renderPagination = (totalDocs) => {
-        if (!enablePagination || docsPerPage === 'all') return null;
+        if (docsPerPage === 'all') return null;
 
         const totalPages = Math.ceil(totalDocs.length / parseInt(docsPerPage));
 
@@ -448,14 +447,14 @@ const Edit = ({ attributes, setAttributes }) => {
         <Fragment>
             <InspectorControls>
                 <PanelBody
-                    title={__('Doc List Styles', 'wedocs')}
-                    icon={grid}
+                    title={__('Doc Grid Settings', 'wedocs')}
+                    icon={cog}
                     initialOpen={false}
                 >
                     <SelectControl
                         value={docStyle}
                         options={docStyles}
-                        label={__('Doc Styles', 'wedocs')}
+                        label={__('DOCS GRID COLUMN STYLE', 'wedocs')}
                         onChange={updateAttribute('docStyle')}
                     />
 
@@ -499,18 +498,10 @@ const Edit = ({ attributes, setAttributes }) => {
                         onChange={updateAttribute('articlesPerSection')}
                     />
 
-                    {/*<PanelRow>*/}
-                    {/*    <ToggleControl*/}
-                    {/*        checked={enablePagination}*/}
-                    {/*        label={__('Enable pagination', 'wedocs')}*/}
-                    {/*        onChange={updateAttribute('enablePagination')}*/}
-                    {/*    />*/}
-                    {/*</PanelRow>*/}
-
                     <PanelRow>
                         <ToggleControl
                             checked={showDocArticle}
-                            label={__('Show doc article', 'wedocs')}
+                            label={__('Show Doc Article', 'wedocs')}
                             onChange={updateAttribute('showDocArticle')}
                         />
                     </PanelRow>
@@ -518,7 +509,7 @@ const Edit = ({ attributes, setAttributes }) => {
                     <PanelRow>
                         <ToggleControl
                             checked={keepArticlesCollapsed}
-                            label={__('Keep article collapsed', 'wedocs')}
+                            label={__('Keep Article Collapsed', 'wedocs')}
                             onChange={updateAttribute(
                                 'keepArticlesCollapsed')}
                         />
@@ -527,7 +518,7 @@ const Edit = ({ attributes, setAttributes }) => {
                     <PanelRow>
                         <ToggleControl
                             checked={showViewDetails}
-                            label={__('Show view details button', 'wedocs')}
+                            label={__('Show View Details Button', 'wedocs')}
                             onChange={updateAttribute('showViewDetails')}
                         />
                     </PanelRow>

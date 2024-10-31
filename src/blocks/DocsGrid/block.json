@@ -43,10 +43,6 @@
       "type": "string",
       "default": "all"
     },
-    "enablePagination": {
-      "type": "boolean",
-      "default": false
-    },
     "showDocArticle": {
       "type": "boolean",
       "default": true
