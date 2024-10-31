@@ -3,8 +3,9 @@ import {
     PanelBody,
     __experimentalBoxControl as BoxControl,
     SelectControl,
-    ColorPicker, TextControl
+    TextControl
 } from '@wordpress/components';
+import { PanelColorSettings } from '@wordpress/block-editor';
 
 // Add these to your attributes in block.json
 const styleAttributes = {
@@ -117,14 +118,48 @@ const StyleControls = ({ attributes, setAttributes }) => {
         { label: __('Dotted', 'wedocs'), value: 'dotted' },
         { label: __('None', 'wedocs'), value: 'none' }
     ];
+    const colors = [
+        { name: 'Sweet', color: '#F43F5E' },
+        { name: 'Orange', color: '#F97316' },
+        { name: 'Yellow', color: '#FACC15' },
+        { name: 'Purple', color: '#8B5CF6' },
+        { name: 'Light Blue', color: '#3B82F6' },
+        { name: 'Light Green', color: '#10B981' },
+    ];
 
     return (
         <>
             <PanelBody
               title={__('Grid Styles', 'wedocs')}
-              icon="admin-appearance"
+              icon='admin-appearance'
               initialOpen={false}
             >
+              <div className='wedocs-color-control'>
+                  <label>{__('Colors', 'wedocs')}</label>
+                  <PanelColorSettings
+                      colors={colors}
+                      colorSettings={[
+                          {
+                              value: attributes.docTitleColor,
+                              label: __('Doc Title Color', 'wedocs'),
+                              onChange: (newBgColor) => updateAttribute(
+                                'docTitleColor')(newBgColor)
+                          },
+                          {
+                              value: attributes.docChildrenActiveColor,
+                              label: __('Doc Children Active Color', 'wedocs'),
+                              onChange: (newBgColor) => updateAttribute(
+                                'docChildrenActiveColor')(newBgColor)
+                          },
+                          {
+                              value: attributes.borderColor,
+                              label: __('Border Color', 'wedocs'),
+                              onChange: (newBorderColor) => updateAttribute(
+                                'borderColor')(newBorderColor)
+                          }
+                      ]}
+                  />
+                </div>
                 <BoxControl
                   label={__('Grid Padding', 'wedocs')}
                   values={attributes.gridPadding}
@@ -135,30 +170,14 @@ const StyleControls = ({ attributes, setAttributes }) => {
                   values={attributes.gridMargin}
                   onChange={updateAttribute('gridMargin')}
                 />
-                <div className='wedocs-color-control'>
-                    <label>{__('Doc Title Color', 'wedocs')}</label>
-                    <ColorPicker
-                      color={attributes.docTitleColor}
-                      onChange={updateAttribute('docTitleColor')}
-                      enableAlpha
-                    />
-                </div>
-                <div className='wedocs-color-control'>
-                    <label>{__('Doc Children Active Color', 'wedocs')}</label>
-                    <ColorPicker
-                      color={attributes.docChildrenActiveColor}
-                      onChange={updateAttribute('docChildrenActiveColor')}
-                      enableAlpha
-                    />
-                </div>
                 <SelectControl
                   label={__('Border Type', 'wedocs')}
                   value={attributes.borderType}
                   options={[
-                      { label: __('Solid', 'wedocs'), value: 'solid' },
-                      { label: __('Dashed', 'wedocs'), value: 'dashed' },
-                      { label: __('Dotted', 'wedocs'), value: 'dotted' },
-                      { label: __('None', 'wedocs'), value: 'none' }
+                    { label: __('Solid', 'wedocs'), value: 'solid' },
+                    { label: __('Dashed', 'wedocs'), value: 'dashed' },
+                    { label: __('Dotted', 'wedocs'), value: 'dotted' },
+                    { label: __('None', 'wedocs'), value: 'none' }
                   ]}
                   onChange={value => setAttributes({ borderType: value })}
                 />
@@ -167,35 +186,25 @@ const StyleControls = ({ attributes, setAttributes }) => {
                   label={__('Border Width', 'wedocs')}
                   value={attributes.borderWidth}
                   options={[
-                      { label: '0px', value: '0px' },
-                      { label: '1px', value: '1px' },
-                      { label: '2px', value: '2px' },
-                      { label: '3px', value: '3px' },
-                      { label: '4px', value: '4px' },
-                      { label: '5px', value: '5px' }
+                    { label: '0px', value: '0px' },
+                    { label: '1px', value: '1px' },
+                    { label: '2px', value: '2px' },
+                    { label: '3px', value: '3px' },
+                    { label: '4px', value: '4px' },
+                    { label: '5px', value: '5px' }
                   ]}
                   onChange={value => setAttributes({ borderWidth: value })}
                 />
-
-                <div className="wedocs-color-control">
-                    <label>{__('Border Color', 'wedocs')}</label>
-                    <ColorPicker
-                      color={attributes.borderColor}
-                      onChange={value => setAttributes({ borderColor: value })}
-                      enableAlpha
-                    />
-                </div>
-
                 <SelectControl
                   label={__('Border Radius', 'wedocs')}
                   value={attributes.borderRadius}
                   options={[
-                      { label: '0px', value: '0px' },
-                      { label: '4px', value: '4px' },
-                      { label: '8px', value: '8px' },
-                      { label: '12px', value: '12px' },
-                      { label: '16px', value: '16px' },
-                      { label: '20px', value: '20px' }
+                    { label: '0px', value: '0px' },
+                    { label: '4px', value: '4px' },
+                    { label: '8px', value: '8px' },
+                    { label: '12px', value: '12px' },
+                    { label: '16px', value: '16px' },
+                    { label: '20px', value: '20px' }
                   ]}
                   onChange={value => setAttributes({ borderRadius: value })}
                 />
@@ -203,21 +212,54 @@ const StyleControls = ({ attributes, setAttributes }) => {
 
             <PanelBody
               title={__('Button Styles', 'wedocs')}
-              icon="admin-appearance"
+              icon='admin-appearance'
               initialOpen={false}
             >
+                <div className='wedocs-color-control'>
+                    <label>{__('Button Colors', 'wedocs')}</label>
+                    <PanelColorSettings
+                      colors={colors}
+                      colorSettings={[
+                        {
+                          value: attributes.buttonColor,
+                          label: __('Button Color', 'wedocs'),
+                          onChange: (newBgColor) => updateAttribute(
+                            'buttonColor')(newBgColor)
+                        },
+                        {
+                          value: attributes.buttonHoverColor,
+                          label: __('Button Hover Color', 'wedocs'),
+                          onChange: (newBgColor) => updateAttribute(
+                            'buttonHoverColor')(newBgColor)
+                        },
+                        {
+                          value: attributes.buttonTextColor,
+                          label: __('Button Text Color', 'wedocs'),
+                          onChange: (newBorderColor) => updateAttribute(
+                                'buttonTextColor')(newBorderColor)
+                            },
+                            {
+                              value: attributes.buttonHoverTextColor,
+                              label: __('Button Hover Text Color', 'wedocs'),
+                              onChange: (newBorderColor) => updateAttribute(
+                                'buttonHoverTextColor')(newBorderColor)
+                            }
+                        ]}
+                    />
+                </div>
                 <SelectControl
-                    label={__('Button Border Radius', 'wedocs')}
-                    value={attributes.buttonBorderRadius}
-                    options={[
-                        { label: '0px', value: '0px' },
-                        { label: '4px', value: '4px' },
-                        { label: '8px', value: '8px' },
-                        { label: '12px', value: '12px' },
-                        { label: '16px', value: '16px' },
-                        { label: '20px', value: '20px' }
-                    ]}
-                    onChange={value => setAttributes({ buttonBorderRadius: value })}
+                  label={__('Button Border Radius', 'wedocs')}
+                  value={attributes.buttonBorderRadius}
+                  options={[
+                    { label: '0px', value: '0px' },
+                    { label: '4px', value: '4px' },
+                    { label: '8px', value: '8px' },
+                    { label: '12px', value: '12px' },
+                    { label: '16px', value: '16px' },
+                    { label: '20px', value: '20px' }
+                  ]}
+                  onChange={value => setAttributes(
+                    { buttonBorderRadius: value })}
                 />
                 <BoxControl
                   label={__('Button Padding', 'wedocs')}
@@ -226,79 +268,50 @@ const StyleControls = ({ attributes, setAttributes }) => {
                 />
                 <BoxControl
                   label={__('Button Margin', 'wedocs')}
-                    values={attributes.buttonMargin}
-                    onChange={updateAttribute('buttonMargin')}
+                  values={attributes.buttonMargin}
+                  onChange={updateAttribute('buttonMargin')}
                 />
-                <div className="wedocs-color-control">
-                    <label>{__('Button Color', 'wedocs')}</label>
-                    <ColorPicker
-                        color={attributes.buttonColor}
-                        onChange={updateAttribute('buttonColor')}
-                        enableAlpha
-                    />
-                </div>
-                <div className="wedocs-color-control">
-                    <label>{__('Button Hover Color', 'wedocs')}</label>
-                    <ColorPicker
-                        color={attributes.buttonHoverColor}
-                        onChange={updateAttribute('buttonHoverColor')}
-                        enableAlpha
-                    />
-                </div>
-                <div className="wedocs-color-control">
+                <div className='wedocs-color-control'>
                     <label>{__('Button Text', 'wedocs')}</label>
-                    <TextControl value={attributes.buttonText} onChange={updateAttribute('buttonText')} />
-                </div>
-                <div className="wedocs-color-control">
-                    <label>{__('Button Text Color', 'wedocs')}</label>
-                    <ColorPicker
-                        color={attributes.buttonTextColor}
-                        onChange={updateAttribute('buttonTextColor')}
-                        enableAlpha
-                    />
-                </div>
-                <div className="wedocs-color-control">
-                    <label>{__('Button Hover Text Color', 'wedocs')}</label>
-                    <ColorPicker
-                        color={attributes.buttonHoverTextColor}
-                        onChange={updateAttribute('buttonHoverTextColor')}
-                        enableAlpha
+                    <TextControl
+                      value={attributes.buttonText}
+                      onChange={updateAttribute('buttonText')}
                     />
                 </div>
             </PanelBody>
 
-            {/*<PanelBody*/}
-            {/*    title={__('Pagination Styles', 'wedocs')}*/}
-            {/*    icon="admin-appearance"*/}
-            {/*    initialOpen={false}*/}
-            {/*>*/}
-            {/*    <div className="wedocs-color-control">*/}
-            {/*        <label>{__('Text Color', 'wedocs')}</label>*/}
-            {/*        <ColorPicker*/}
-            {/*            color={attributes.paginationTextColor}*/}
-            {/*            onChange={updateAttribute('paginationTextColor')}*/}
-            {/*            enableAlpha*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*    <div className="wedocs-color-control">*/}
-            {/*        <label>{__('Text Hover Color', 'wedocs')}</label>*/}
-            {/*        <ColorPicker*/}
-            {/*            color={attributes.paginationTextHoverColor}*/}
-            {/*            onChange={updateAttribute('paginationTextHoverColor')}*/}
-            {/*            enableAlpha*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*    <div className="wedocs-color-control">*/}
-            {/*        <label>{__('Background Color', 'wedocs')}</label>*/}
-            {/*        <ColorPicker*/}
-            {/*            color={attributes.paginationBackgroundColor}*/}
-            {/*            onChange={updateAttribute('paginationBackgroundColor')}*/}
-            {/*            enableAlpha*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*    <div className="wedocs-color-control">*/}
-            {/*        <label>{__('Hover Color', 'wedocs')}</label>*/}
-            {/*        <ColorPicker*/}
+          {/*<PanelBody*/}
+          {/*    title={__('Pagination Styles', 'wedocs')}*/}
+          {/*    icon="admin-appearance"*/}
+          {/*    initialOpen={false}*/}
+          {/*>*/}
+          {/*    <div className="wedocs-color-control">*/}
+          {/*        <label>{__('Text Color', 'wedocs')}</label>*/}
+          {/*        <ColorPicker*/}
+          {/*            color={attributes.paginationTextColor}*/}
+          {/*            onChange={updateAttribute('paginationTextColor')}*/}
+          {/*            enableAlpha*/}
+          {/*        />*/}
+          {/*    </div>*/}
+          {/*    <div className="wedocs-color-control">*/}
+          {/*        <label>{__('Text Hover Color', 'wedocs')}</label>*/}
+          {/*        <ColorPicker*/}
+          {/*            color={attributes.paginationTextHoverColor}*/}
+          {/*            onChange={updateAttribute('paginationTextHoverColor')}*/}
+          {/*            enableAlpha*/}
+          {/*        />*/}
+          {/*    </div>*/}
+          {/*    <div className="wedocs-color-control">*/}
+          {/*        <label>{__('Background Color', 'wedocs')}</label>*/}
+          {/*        <ColorPicker*/}
+          {/*            color={attributes.paginationBackgroundColor}*/}
+          {/*            onChange={updateAttribute('paginationBackgroundColor')}*/}
+          {/*            enableAlpha*/}
+          {/*        />*/}
+          {/*    </div>*/}
+          {/*    <div className="wedocs-color-control">*/}
+          {/*        <label>{__('Hover Color', 'wedocs')}</label>*/}
+          {/*        <ColorPicker*/}
             {/*            color={attributes.paginationHoverColor}*/}
             {/*            onChange={updateAttribute('paginationHoverColor')}*/}
             {/*            enableAlpha*/}

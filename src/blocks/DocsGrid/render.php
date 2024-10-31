@@ -43,7 +43,6 @@ function render_wedocs_docs_grid($attributes) {
     $order_by = $attributes['orderBy'] ?? 'menu_order';
     $sections_per_doc = $attributes['sectionsPerDoc'] ?? 'all';
     $articles_per_section = $attributes['articlesPerSection'] ?? 'all';
-    $enable_pagination = $attributes['enablePagination'] ?? false;
     $show_doc_article = $attributes['showDocArticle'] ?? true;
     $keep_articles_collapsed = $attributes['keepArticlesCollapsed'] ?? false;
     $show_view_details = $attributes['showViewDetails'] ?? true;
@@ -166,7 +165,7 @@ function render_wedocs_docs_grid($attributes) {
     );
 
     // Handle pagination
-    if ($enable_pagination && $docs_per_page !== 'all') {
+    if ($docs_per_page !== 'all') {
         $args['posts_per_page'] = intval($docs_per_page);
         $args['paged'] = $current_page;
     } else {
@@ -314,42 +313,6 @@ SCRIPT;
                 </div>
             <?php endforeach; ?>
         </div>
-
-<!--        --><?php //if ($enable_pagination && $total_pages > 1) :
-//            // Output the CSS variables
-//            echo get_pagination_style_tag($attributes);
-//            ?>
-<!--            <div class="wedocs-docs-pagination">-->
-<!--                --><?php
-//                $pagenum_link = html_entity_decode(get_pagenum_link());
-//                $query_args   = array();
-//                $url_parts    = explode('?', $pagenum_link);
-//
-//                if (isset($url_parts[1])) {
-//                    wp_parse_str($url_parts[1], $query_args);
-//                }
-//
-//                unset($query_args['paged']);
-//                unset($query_args['page']);
-//
-//                $pagenum_link = esc_url(add_query_arg($query_args, $url_parts[0]));
-//
-//                echo paginate_links(array(
-//                    'base' => $pagenum_link . '%_%',
-//                    'format' => '?paged=%#%',
-//                    'current' => $current_page,
-//                    'total' => $total_pages,
-//                    'prev_text' => __('&laquo; Previous', 'wedocs'),
-//                    'next_text' => __('Next &raquo;', 'wedocs'),
-//                    'type' => 'list',
-//                    'add_args' => $query_args,
-//                    'show_all' => false,
-//                    'end_size' => 2,
-//                    'mid_size' => 2
-//                ));
-//                ?>
-<!--            </div>-->
-<!--        --><?php //endif; ?>
     </div>
     <?php
     return ob_get_clean();
