@@ -114,10 +114,10 @@ $shadow-color: rgba(0, 0, 0, 0.1);
         border-color: var(--wedocs-border-color, rgba(0, 0, 0, 0.1));
         border-radius: var(--wedocs-border-radius, 8px);
 
-        &:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px $shadow-color;
-        }
+        //&:hover {
+        //    transform: translateY(-2px);
+        //    box-shadow: 0 4px 8px $shadow-color;
+        //}
     }
 
     &__title {
