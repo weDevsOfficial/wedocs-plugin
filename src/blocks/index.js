@@ -1,2 +1,1 @@
 import './Search';
-import './DocsGrid'

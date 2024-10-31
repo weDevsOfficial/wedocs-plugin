@@ -4,6 +4,7 @@
 	"name": "wedocs/wedocs-docs-grid",
 	"version": "1.0.0",
 	"title": "weDocs - Docs Grid",
+  "icon": "grid-view",
 	"category": "widgets",
 	"description": "Display all the docs in a grid view",
 	"supports": {
