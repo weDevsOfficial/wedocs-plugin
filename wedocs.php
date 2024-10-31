@@ -3,7 +3,7 @@
 Plugin Name: weDocs
 Plugin URI: https://wedocs.co/
 Description: A documentation plugin for WordPress
-Version: 2.1.8
+Version: 2.1.9
 Author: weDevs
 Author URI: https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri
 License: GPL2
@@ -46,6 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
+require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid/render.php';
 
 /**
  * WeDocs class.
@@ -59,7 +60,7 @@ final class WeDocs {
      *
      * @var string
      */
-    const VERSION = '2.1.8';
+    const VERSION = '2.1.9';
 
     /**
      * The plugin url.
@@ -164,9 +165,20 @@ final class WeDocs {
 
         // Localize our plugin
         add_action( 'init', [ $this, 'localization_setup' ] );
+        add_action('init', [$this, 'register_blocks']);
 
         // registeer our widget
         add_action( 'widgets_init', [ $this, 'register_widget' ] );
+    }
+
+    public function register_blocks() {
+        // Register the DocsGrid block
+        register_block_type(
+            plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid',
+            array(
+                'render_callback' => 'render_wedocs_docs_grid'
+            )
+        );
     }
 
     /**
