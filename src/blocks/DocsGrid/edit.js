@@ -536,7 +536,6 @@ const Edit = ({ attributes, setAttributes }) => {
                             displayDocs.map((doc) => renderGridItem(doc, applyStyles()))
                         )}
                     </div>
-                    {/*{renderPagination(processDocsData())}*/}
                 </div>
             )}
         </div>
