@@ -542,9 +542,6 @@ const Edit = ({ attributes, setAttributes }) => {
                 <div className="backdrop"></div>
             ) : (
                 <div className="wedocs-block-wrapper">
-                    <p className="wedocs-preview-title">
-                        {__('Docs Grid Preview', 'wedocs')}
-                    </p>
                     <div className={`wedocs-docs-grid ${getGridClass()}`}>
                         {loading ? (
                             <Spinner />
