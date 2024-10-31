@@ -45,10 +45,6 @@ const Edit = ({ attributes, setAttributes }) => {
         buttonTextColor,
         buttonText,
         buttonHoverTextColor,
-        paginationTextColor,
-        paginationTextHoverColor,
-        paginationBackgroundColor,
-        paginationHoverColor
     } = attributes;
 
     const applyStyles = () => {
