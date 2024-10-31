@@ -1,0 +1,372 @@
+// Variables
+$transition-duration: 0.2s;
+$shadow-color: rgba(0, 0, 0, 0.1);
+
+// Style Controls UI
+.wedocs-color-control {
+    margin: 1em 0;
+
+    label {
+        display: block;
+        margin-bottom: 0.5em;
+    }
+}
+
+// Pagination Styles
+.wedocs-docs-pagination {
+    margin: 30px 0;
+    text-align: center;
+
+    ul {
+        display: inline-flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: 5px;
+    }
+
+    li {
+        margin: 0;
+    }
+
+    button {
+        display: inline-block;
+        padding: 8px 12px;
+        border: 1px solid var(--wedocs-pagination-border-color, #ddd);
+        border-radius: var(--wedocs-border-radius, 4px);
+        text-decoration: none;
+        color: var(--wedocs-pagination-text-color, #333);
+        background: var(--wedocs-pagination-background-color, #fff);
+        cursor: pointer;
+        transition: all $transition-duration;
+
+        &:hover {
+            background: var(--wedocs-pagination-hover-color, #f5f5f5);
+            color: var(--wedocs-pagination-text-hover-color, #0073aa);
+        }
+
+        &.is-active {
+            background: var(--wedocs-pagination-hover-color, #f5f5f5);
+            border-color: var(--wedocs-pagination-hover-color, #ccc);
+        }
+    }
+}
+
+// Block wrapper
+.wedocs-block-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: .5rem;
+}
+
+.wedocs-preview-title {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--wedocs-text-secondary-color, #757575);
+}
+
+// Grid container
+.wedocs-docs-grid {
+    display: grid;
+    gap: 1.5rem;
+    width: 100%;
+    margin: 0; // Reset ul margin
+    padding: 0; // Reset ul padding
+    list-style: none; // Remove bullets
+
+    // Grid variants
+    &--1x1 {
+        grid-template-columns: 1fr;
+    }
+
+    &--1x2 {
+        grid-template-columns: repeat(2, 1fr);
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .inside {
+        display: flex;
+        color: #063250;
+        font-size: 18px;
+        min-height: 240px;
+        list-style: none;
+        svg {
+            width: 64px;
+            height: 24px;
+            margin: 2px 0.5rem 0 0;
+        }
+    }
+
+    // Grid items
+    &__item {
+        position: relative;
+        background-color: #fff;
+        transition: transform $transition-duration, box-shadow $transition-duration;
+        list-style: none; // Remove bullets
+        padding: var(--wedocs-grid-padding, 1.5rem);
+        margin: var(--wedocs-grid-margin, 0);
+        border-width: var(--wedocs-border-width, 1px);
+        border-style: var(--wedocs-border-type, solid);
+        border-color: var(--wedocs-border-color, rgba(0, 0, 0, 0.1));
+        border-radius: var(--wedocs-border-radius, 8px);
+
+        //&:hover {
+        //    transform: translateY(-2px);
+        //    box-shadow: 0 4px 8px $shadow-color;
+        //}
+    }
+
+    &__title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--wedocs-doc-title-color, #1e1e1e);
+        margin: 0 0 0.75rem;
+        line-height: 1.4;
+    }
+
+    &__article-count {
+        font-size: 0.875rem;
+        color: var(--wedocs-text-secondary-color, #757575);
+        margin: 0;
+    }
+
+    &__container {
+        min-height: 240px;
+    }
+
+    &__sections {
+        margin-top: 1rem;
+        padding: 0; // Reset ul padding
+
+        &.is-collapsed {
+            .wedocs-docs-grid__articles {
+                display: none;
+            }
+        }
+    }
+
+    &__section {
+        &-title {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            a {
+                pointer-events: auto;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            svg {
+                transition: transform 0.3s ease;
+                cursor: pointer;
+                flex-shrink: 0;
+
+                &.active {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+    }
+
+    &__articles {
+        max-height: 1000px;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+
+        &.collapsed {
+            max-height: 0;
+        }
+
+        // Optional: Add smooth height animation for better UX
+        li {
+            opacity: 1;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        &.collapsed li {
+            opacity: 0;
+        }
+    }
+
+    &__section {
+        margin-bottom: 1rem; // Add spacing between sections
+    }
+
+    &__section-title {
+        font-size: 1rem;
+        color: var(--wedocs-doc-title-color, #1e1e1e);
+        margin: 0.5rem 0;
+    }
+
+    &__articles {
+        margin: 0.5rem 0 0.5rem 1rem;
+        padding: 0;
+
+        li {
+            color: var(--wedocs-doc-children-active-color, #0073aa);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+            margin-left: 1rem;
+            ::marker {
+                content: "•";
+                color: var(--wedocs-doc-children-active-color, #0073aa);
+                margin-right: 0.5rem;
+            }
+        }
+    }
+
+    &__details {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    &__details-link {
+        display: inline-block;
+        padding: var(--wedocs-button-padding, 8px 12px);
+        margin: var(--wedocs-button-margin, 0);
+        background-color: var(--wedocs-button-color, #0073aa);
+        color: var(--wedocs-button-text-color, #fff);
+        border-radius: var(--wedocs-border-radius, 4px);
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all $transition-duration;
+        text-decoration: none; // Ensure links don't have underline
+
+        &:hover {
+            background-color: var(--wedocs-button-hover-color, #005177);
+            color: var(--wedocs-button-hover-text-color, #fff);
+        }
+    }
+}
+
+// Editor specific styles
+.wp-block-wedocs-docs {
+    .wedocs-docs-grid {
+        &__item {
+            cursor: default;
+        }
+    }
+}
+
+// RTL support
+[dir="rtl"] {
+    .wedocs-docs-grid {
+        &__details-link {
+            &::after {
+                content: "←";
+            }
+        }
+    }
+}
+
+// Pagination Variables
+$transition-duration: 0.2s;
+
+.wedocs-docs-pagination {
+    margin: 30px 0;
+    text-align: center;
+
+    // Style for PHP's paginate_links()
+    .page-numbers {
+        display: inline-flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: 5px;
+
+        li {
+            margin: 0;
+            display: inline-block;
+        }
+
+        // Default link styles (includes numbers and prev/next)
+        a,
+        span {
+            display: inline-block;
+            padding: 8px 12px;
+            min-width: 32px;
+            margin: 0 4px;
+            border: 1px solid var(--wedocs-pagination-border-color, #ddd);
+            border-radius: var(--wedocs-border-radius, 4px);
+            background-color: var(--wedocs-pagination-background-color, #fff);
+            color: var(--wedocs-pagination-text-color, #333);
+            text-decoration: none;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.4;
+            text-align: center;
+            transition: all $transition-duration ease;
+            cursor: pointer;
+
+            // Hover state
+            &:hover:not(.current) {
+                background-color: var(--wedocs-pagination-hover-color, #f5f5f5);
+                color: var(--wedocs-pagination-text-hover-color, #0073aa);
+                border-color: var(--wedocs-pagination-hover-color, #ccc);
+            }
+        }
+
+        // Current/active page
+        .current {
+            background-color: var(--wedocs-pagination-hover-color, #f5f5f5);
+            border-color: var(--wedocs-pagination-hover-color, #ccc);
+            color: var(--wedocs-pagination-text-hover-color, #0073aa);
+            cursor: default;
+        }
+
+        // Disabled state (dots)
+        .dots {
+            border: none;
+            padding: 8px;
+            cursor: default;
+
+            &:hover {
+                background: none;
+                color: inherit;
+            }
+        }
+    }
+
+    // Styles for React component buttons
+    &__button {
+        display: inline-block;
+        padding: 8px 12px;
+        min-width: 32px;
+        margin: 0 4px;
+        border: 1px solid var(--wedocs-pagination-border-color, #ddd);
+        border-radius: var(--wedocs-border-radius, 4px);
+        background-color: var(--wedocs-pagination-background-color, #fff);
+        color: var(--wedocs-pagination-text-color, #333);
+        text-decoration: none;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.4;
+        text-align: center;
+        transition: all $transition-duration ease;
+        cursor: pointer;
+
+        &:hover:not(.is-active) {
+            background-color: var(--wedocs-pagination-hover-color, #f5f5f5) !important;
+            color: var(--wedocs-pagination-text-hover-color, #0073aa) !important;
+            border-color: var(--wedocs-pagination-hover-color, #ccc) !important;
+        }
+
+        &.is-active {
+            background-color: var(--wedocs-pagination-hover-color, #f5f5f5);
+            border-color: var(--wedocs-pagination-hover-color, #ccc);
+            color: var(--wedocs-pagination-text-hover-color, #0073aa);
+            cursor: default;
+        }
+    }
+}
