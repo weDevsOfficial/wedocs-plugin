@@ -5,7 +5,7 @@ Tags: WordPress documentation plugin, WordPress docs plugin, Documentation, Know
 Requires at least: 5.6
 Tested up to: 6.6.2
 Requires PHP: 7.4
-Stable tag: 2.1.9
+Stable tag: 2.1.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Discover weDocs, the ultimate WordPress documentation plugin. Easily create, manage, and organize content with seamless integration and a user-friendly interface.
@@ -236,6 +236,10 @@ Can’t wait to join us?
 
 
 == Changelog ==
+
+= v2.1.10 (05th Dec, 2024) =
+
+* 🛠️ [FIX] Resolves "TranslatePress" conflict with editor's trash capability.
 
 = v2.1.9 (31th Oct, 2024) =
 
