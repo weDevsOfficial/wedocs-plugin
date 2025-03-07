@@ -10,14 +10,16 @@ class Promotion {
     public function __construct()
     {
         add_action( 'admin_notices', [ $this, 'promotional_offer' ] );
-        error_log( 'flag: ' . json_encode( "CONST" ) );
+        
+        add_action( 'wedocs_notices', [ $this, 'promotional_offer' ] );
     }
 
     public function promotional_offer() {
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! current_user_can( 'manage_options' ) ) { // || 'toplevel_page_wedocs' !== get_current_screen()->id ) {
             return;
         }
-        
+
+        // error_log( 'CR SCR: ' . json_encode( get_current_screen()->id ) );
 
         $promo_notice_url = 'https://raw.githubusercontent.com/welabs-ltd/wedocs-util/master/promotion.json';
         $response         = wp_remote_get( $promo_notice_url, array( 'timeout' => 15 ) );
@@ -66,12 +68,27 @@ class Promotion {
                 display: flex;
                 padding: 0;
             }
+
+            #wedocs-promotion-notice {
+                height: 128px !important;
+            }
             .wedocs-logo-wrapper {
                 display: flex;
                 margin-right: 20px;
+                height: 128px !important;
             }
             .wedocs-notice-content-wrapper h3 {
+                font-size: 1.3em;
+                font-weight: 600;
+                margin-top: 1em;
                 margin-bottom: 0.5em;
+            }
+
+            @media screen and (max-width: 768px) {
+                .wedocs-notice-content-wrapper {
+                    margin-top: 30px;
+                    padding-right: 5px;
+                }
             }
         </style>
 
