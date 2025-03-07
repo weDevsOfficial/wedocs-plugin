@@ -17,6 +17,11 @@ class Admin {
         add_filter( 'submenu_file', [ $this, 'highlight_admin_submenu' ] );
         add_filter( 'admin_footer_text', [ $this, 'admin_footer_text' ], 1 );
         add_action( 'admin_notices', [ $this, 'show_wedocs_pro_available_notice' ] );
+
+        // check only for free users
+        // if ( ! class_exists( 'WeDocs_Pro' ) ) {
+            new Promotion();
+        // }
     }
 
     /**
