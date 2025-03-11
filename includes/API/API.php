@@ -233,6 +233,14 @@ class API extends WP_REST_Controller {
                 ],
             ],
         ] );
+
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/promotion-notice', [
+            [
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => [ $this, 'get_promotional_notice' ],
+                'permission_callback' => '__return_true',
+            ]
+        ] );
     }
 
     /**
@@ -834,5 +842,20 @@ class API extends WP_REST_Controller {
                 wp_delete_post( $child_post->ID );
             }
         }
+    }
+
+    public function get_promotional_notice() {
+        if ( ! current_user_can( 'manage_options' ) ) { // || 'toplevel_page_wedocs' !== get_current_screen()->id ) {
+            return false;
+        }
+
+        $promo_notice_url = 'https://raw.githubusercontent.com/welabs-ltd/wedocs-util/master/promotion.json';
+        $response         = wp_remote_get( $promo_notice_url, array( 'timeout' => 15 ) );
+        $promos           = wp_remote_retrieve_body( $response );
+
+        $promos             = json_decode( $promos, true );
+        $promos['logo_url'] = WEDOCS_URL . '/assets/img/wedocs-logo.svg';
+
+        return $promos;
     }
 }
