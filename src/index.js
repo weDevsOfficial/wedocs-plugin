@@ -1,5 +1,6 @@
 import './data/store';
 import './assets/css/index.css';
+import './hooks';
 import App from './components/App';
 import menuFix from './utils/menuFix';
 import { render } from '@wordpress/element';

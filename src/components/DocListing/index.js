@@ -19,6 +19,7 @@ import settingsStore from '../../data/settings';
 import Swal from "sweetalert2";
 import { userIsAdmin } from "../../utils/helper";
 import NotFound from '../NotFound';
+import WedocsPromoNotice from "../WedocsPromoNotice";
 
 const ListingPage = () => {
   const { id } = useParams();
@@ -63,6 +64,8 @@ const ListingPage = () => {
     ( select ) => select( docsStore ).getDocArticles( parseInt( id ) ),
     []
   );
+
+  const [promoNotices, setPromoNotices] = useState(null);
 
   const filteredArticles = docArticles?.filter( ( article ) => {
     let matched = article?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() );
@@ -153,6 +156,14 @@ const ListingPage = () => {
     }
   }, [ needSortingStatus ] );
 
+  useEffect(() => {
+    wp.hooks.applyFilters( 'wedocs_promo_notice' ).then((result) => {
+      if( false != result ) {
+        setPromoNotices(result);
+      }
+    });
+  }, []);
+
   return (
     <Fragment>
       { validParam ? (
@@ -167,6 +178,8 @@ const ListingPage = () => {
               handleChange={ handleChange }
             />
           </div>
+
+          {promoNotices && <WedocsPromoNotice promos={promoNotices} />}
 
           <ListingHeader doc={ parentDoc } />
 

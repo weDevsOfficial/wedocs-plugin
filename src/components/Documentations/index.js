@@ -13,6 +13,7 @@ import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import settingsStore from '../../data/settings';
 import Swal from "sweetalert2";
 import { userIsAdmin } from "../../utils/helper";
+import WedocsPromoNotice from '../WedocsPromoNotice';
 
 const Documentations = () => {
   const docs = useSelect(
@@ -56,6 +57,8 @@ const Documentations = () => {
       setSearchValue( event.target.value );
     }
   };
+
+  const [promoNotices, setPromoNotices] = useState(null);
 
   const isAdmin = userIsAdmin();
   const showActions = wp.hooks.applyFilters(
@@ -123,6 +126,14 @@ const Documentations = () => {
       .catch( ( err ) => {} );
   }
 
+  useEffect(() => {
+    wp.hooks.applyFilters( 'wedocs_promo_notice' ).then((result) => {
+      if( false != result ) {
+        setPromoNotices(result);
+      }
+    });
+  }, []);
+
   return (
     <>
       <div className="documentation-header my-7">
@@ -142,6 +153,8 @@ const Documentations = () => {
           ) }
         </h1>
       </div>
+
+      {promoNotices && <WedocsPromoNotice promos={promoNotices} />}
 
       { !loading && showActions && need_upgrade && <Upgrade status={ status } /> }
 

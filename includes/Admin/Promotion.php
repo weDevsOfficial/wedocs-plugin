@@ -27,7 +27,7 @@ class Promotion {
 
         $promos = json_decode( $promos, true );
 
-        error_log( 'PROMOS JSON: ' . json_encode( $promos ) );
+        // error_log( 'PROMOS JSON: ' . json_encode( $promos ) );
 
         $this->generate_notice( $promos );
     }
@@ -88,6 +88,19 @@ class Promotion {
                 .wedocs-notice-content-wrapper {
                     margin-top: 30px;
                     padding-right: 5px;
+                }
+
+                #wedocs-promotion-notice {
+                    height: 145px !important;
+                }
+
+                .wedocs-logo-wrapper {
+                    height: auto !important;
+                    margin-right: 2px !important;
+                }
+
+                .wedocs-notice-content-wrapper {
+                    margin: 0px !important;
                 }
             }
         </style>
