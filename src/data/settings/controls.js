@@ -1,5 +1,10 @@
 import apiFetch from '@wordpress/api-fetch';
 
+const isProLoaded = wp.hooks.applyFilters(
+  'wedocs_pro_loaded',
+  false
+);
+
 const controls = {
   FETCH_SETTINGS() {
     return apiFetch( {
@@ -34,6 +39,10 @@ const controls = {
   },
 
   FETCH_PROMO_NOTICE() {
+    if ( isProLoaded ) {
+      return null;
+    }
+
     return apiFetch( {
       path: '/wp/v2/docs/promotion-notice',
     } );
