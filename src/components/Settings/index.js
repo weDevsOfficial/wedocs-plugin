@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { __ } from '@wordpress/i18n';
 import Upgrade from '../Upgrade';
 import { useParams } from 'react-router-dom';
+import WedocsPromoNotice from '../WedocsPromoNotice';
 
 const SettingsPage = () => {
   const { panel } = useParams();
@@ -25,6 +26,11 @@ const SettingsPage = () => {
 
   const { need_upgrade, status } = useSelect(
     ( select ) => select( settingsStore ).getUpgradeInfo(),
+    []
+  );
+
+  const promoNotice = useSelect(
+    ( select ) => select( settingsStore ).getPromoNotice(),
     []
   );
 
@@ -137,7 +143,7 @@ const SettingsPage = () => {
   return (
     <div className="min-h-full pt-7">
       { showActions && need_upgrade && <Upgrade status={ status } /> }
-
+      {promoNotice && <WedocsPromoNotice promos={promoNotice} />}
       <main>
         <div className="pb-10 pt-3 sm:px-0">
           <div className="h-100">
