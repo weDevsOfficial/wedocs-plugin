@@ -238,7 +238,7 @@ class API extends WP_REST_Controller {
             [
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => [ $this, 'get_promotional_notice' ],
-                'permission_callback' => '__return_true',
+                'permission_callback' => [ $this, 'get_promotional_notice_check' ],
             ]
         ] );
     }
@@ -844,18 +844,43 @@ class API extends WP_REST_Controller {
         }
     }
 
+    /**
+     * Check permissions for getting
+     *  promotion notice.
+     *
+     * @since 2.0.0
+     *
+     * @param WP_REST_Request $request Current request.
+     *
+     * @return bool|WP_Error
+     */
+    public function get_promotional_notice_check( $request ) {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return new WP_Error(
+                'wedocs_permission_failure',
+                __( 'You cannot see promotion notices.', 'wedocs' )
+            );
+        }
+
+        return true;
+    }
+
+    /**
+     * Get the data needed for promotional notice.
+     *
+     * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
+     */
     public function get_promotional_notice() {
-        if ( ! current_user_can( 'manage_options' ) ) { // || 'toplevel_page_wedocs' !== get_current_screen()->id ) {
+        if ( ! current_user_can( 'manage_options' ) ) {
             return false;
         }
 
-        $promo_notice_url = 'https://raw.githubusercontent.com/welabs-ltd/wedocs-util/master/promotion.json';
-        $response         = wp_remote_get( $promo_notice_url, array( 'timeout' => 15 ) );
-        $promos           = wp_remote_retrieve_body( $response );
-
+        $promo_notice_url   = 'https://raw.githubusercontent.com/welabs-ltd/wedocs-util/master/promotion.json';
+        $response           = wp_remote_get( $promo_notice_url, array( 'timeout'  => 15 ) );
+        $promos             = wp_remote_retrieve_body( $response );
         $promos             = json_decode( $promos, true );
         $promos['logo_url'] = WEDOCS_URL . '/assets/img/wedocs-logo.svg';
 
-        return $promos;
+        return rest_ensure_response( $promos );
     }
 }
