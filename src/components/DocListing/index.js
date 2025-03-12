@@ -49,6 +49,11 @@ const ListingPage = () => {
     []
   );
 
+  const promoNotice = useSelect(
+    ( select ) => select( settingsStore ).getPromoNotice(),
+    []
+  );
+
   const [ searchValue, setSearchValue ] = useState( '' );
   const [ needSortingStatus, setNeedSortingStatus ] = useState( needSortableStatus );
 
@@ -64,8 +69,6 @@ const ListingPage = () => {
     ( select ) => select( docsStore ).getDocArticles( parseInt( id ) ),
     []
   );
-
-  const [promoNotices, setPromoNotices] = useState(null);
 
   const filteredArticles = docArticles?.filter( ( article ) => {
     let matched = article?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() );
@@ -156,14 +159,6 @@ const ListingPage = () => {
     }
   }, [ needSortingStatus ] );
 
-  useEffect(() => {
-    wp.hooks.applyFilters( 'wedocs_promo_notice' ).then((result) => {
-      if( false != result ) {
-        setPromoNotices(result);
-      }
-    });
-  }, []);
-
   return (
     <Fragment>
       { validParam ? (
@@ -179,7 +174,7 @@ const ListingPage = () => {
             />
           </div>
 
-          {promoNotices && <WedocsPromoNotice promos={promoNotices} />}
+          { promoNotice && <WedocsPromoNotice promos={promoNotice} /> }
 
           <ListingHeader doc={ parentDoc } />
 

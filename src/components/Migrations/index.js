@@ -5,8 +5,10 @@ import MigrationProgressModal from './Modals/MigrationProgressModal';
 import MigrationSelectionModal from './Modals/MigrationSelectionModal';
 import { dispatch, resolveSelect, useSelect } from '@wordpress/data';
 import docsStore from '../../data/docs';
+import settingsStore from '../../data/settings';
 import MigrationContentMappingModal from './Modals/MigrationContentMappingModal';
 import apiFetch from '@wordpress/api-fetch';
+import WedocsPromoNotice from '../WedocsPromoNotice';
 
 const Migrate = () => {
     const [ migratedId, setMigratedId ] = useState( 0 );
@@ -40,6 +42,11 @@ const Migrate = () => {
         .then( ( doc ) => setMigratedDocTitle( doc?.title?.rendered ) )
         .catch( ( err ) => {} );
     }, [ migratedId ] )
+
+    const promoNotice = useSelect(
+        ( select ) => select( settingsStore ).getPromoNotice(),
+        []
+      );
 
     const handleMigrateClick = ( parentTitle = '', progressData = {} ) => {
         if ( ! openProgressModal ) {
@@ -92,6 +99,7 @@ const Migrate = () => {
 
     return (
         <div className='w-full mt-7'>
+          {promoNotice && <WedocsPromoNotice promos={promoNotice} />}
             <div className='shadow sm:overflow-hidden sm:rounded-md'>
                 <div className='space-y-6 h-[80vh] flex justify-center align-center bg-white px-4 py-5 sm:p-6'>
                     <div className='w-[800px] text-center self-center mt-1 px-6 py-12'>

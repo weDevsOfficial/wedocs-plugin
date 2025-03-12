@@ -82,6 +82,8 @@ const reducer = ( state = DEFAULT_SETTINGS_STATE, action ) => {
       };
     case 'SET_UPGRADE_INFO':
       return { ...state, needUpgrade: action.needUpgrade };
+    case 'SET_PROMO_NOTICE':
+      return { ...state, promoNotice: action.promoNotice };
     case 'SET_SAVING':
       return { ...state, saving: action.saving };
     case 'SET_TURNSTILE_SITE_KEY':

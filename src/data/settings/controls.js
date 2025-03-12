@@ -32,6 +32,12 @@ const controls = {
       method: 'POST',
     } );
   },
+
+  FETCH_PROMO_NOTICE() {
+    return apiFetch( {
+      path: '/wp/v2/docs/promotion-notice',
+    } );
+  },
 };
 
 export default controls;
