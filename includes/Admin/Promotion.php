@@ -2,6 +2,9 @@
 
 namespace Wedevs\WeDocs\Admin;
 
+/**
+ * Promotional offer class
+ */
 class Promotion {
 
 	/**
@@ -11,18 +14,49 @@ class Promotion {
 		add_action( 'admin_notices', array( $this, 'promotional_offer' ) );
 	}
 
+	/**
+	 * Promotional offer notice
+	 *
+	 * @since 2.1.11
+	 *
+	 * @return void
+	 */
 	public function promotional_offer() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
-		$promo_notice_url = 'https://raw.githubusercontent.com/welabs-ltd/wedocs-util/master/promotion.json';
-		$response         = wp_remote_get( $promo_notice_url, array( 'timeout' => 15 ) );
-		$promos           = wp_remote_retrieve_body( $response );
+		$promos = get_transient( WEDOCS_PROMO_KEY );
 
-		$promos = json_decode( $promos, true );
+		if ( false === $promos ) {
+			$promo_notice_url   = WEDOCS_PROMO_URL;
+			$response           = wp_remote_get( $promo_notice_url, array( 'timeout' => 15 ) );
+			$promos             = wp_remote_retrieve_body( $response );
+			$promos['logo_url'] = WEDOCS_URL . '/assets/img/wedocs-logo.svg';
 
-		$this->generate_notice( $promos );
+			if ( is_wp_error( $response ) || $response['response']['code'] !== 200 ) {
+                $promos = '[]';
+            }
+
+            set_transient( WEDOCS_PROMO_KEY, $promos, DAY_IN_SECONDS );
+		}
+		
+		$promos = ! is_array( $promos ) ? json_decode( $promos, true ) : $promos;
+
+		if ( empty( $promos ) || ! is_array( $promos ) ) {
+            return;
+        }
+
+		$current_time = wedocs_convert_utc_to_est();
+
+		if (
+			isset( $promos['start_date'] )
+			&& $promos['end_date']
+            && strtotime( $promos['start_date'] ) < strtotime( $current_time )
+            && strtotime( $current_time ) < strtotime( $promos['end_date'] )
+            ) {
+            $this->generate_notice( $promos );
+        }
 	}
 
 	/**
