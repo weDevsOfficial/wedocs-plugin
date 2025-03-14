@@ -848,7 +848,7 @@ class API extends WP_REST_Controller {
      * Check permissions for getting
      *  promotion notice.
      *
-     * @since 2.0.0
+     * @since 2.1.11
      *
      * @param WP_REST_Request $request Current request.
      *
@@ -867,6 +867,8 @@ class API extends WP_REST_Controller {
 
     /**
      * Get the data needed for promotional notice.
+     * 
+     * @since 2.1.11
      *
      * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
      */
@@ -875,12 +877,39 @@ class API extends WP_REST_Controller {
             return false;
         }
 
-        $promo_notice_url   = 'https://raw.githubusercontent.com/welabs-ltd/wedocs-util/master/promotion.json';
-        $response           = wp_remote_get( $promo_notice_url, array( 'timeout'  => 15 ) );
-        $promos             = wp_remote_retrieve_body( $response );
-        $promos             = json_decode( $promos, true );
-        $promos['logo_url'] = WEDOCS_URL . '/assets/img/wedocs-logo.svg';
+		$promos = get_transient( WEDOCS_PROMO_KEY );
 
-        return rest_ensure_response( $promos );
+		if ( false === $promos ) {
+            $promo_notice_url   = WEDOCS_PROMO_URL;
+            $response           = wp_remote_get( $promo_notice_url, array( 'timeout'  => 15 ) );
+            $promos             = wp_remote_retrieve_body( $response );
+            $promos             = json_decode( $promos, true );
+            $promos['logo_url'] = WEDOCS_URL . '/assets/img/wedocs-logo.svg';
+
+            if ( is_wp_error( $response ) || $response['response']['code'] !== 200 ) {
+                $promos = '[]';
+            }
+
+            set_transient( WEDOCS_PROMO_KEY, $promos, DAY_IN_SECONDS );
+        }
+
+        $promos = ! is_array( $promos ) ? json_decode( $promos, true ) : $promos;
+
+        if ( empty( $promos ) || ! is_array( $promos ) ) {
+            return false;
+        }
+
+		$current_time = wedocs_convert_utc_to_est();
+
+		if (
+			isset( $promos['start_date'] )
+			&& $promos['end_date']
+            && strtotime( $promos['start_date'] ) < strtotime( $current_time )
+            && strtotime( $current_time ) < strtotime( $promos['end_date'] )
+            ) {
+            return rest_ensure_response( $promos );
+        }
+
+        return false;
     }
 }
