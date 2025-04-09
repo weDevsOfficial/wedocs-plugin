@@ -241,6 +241,14 @@ class API extends WP_REST_Controller {
                 'permission_callback' => [ $this, 'get_promotional_notice_check' ],
             ]
         ] );
+
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/hide-promotion-notice', [
+            [
+                'methods'             => WP_REST_Server::CREATABLE,
+                'callback'            => [ $this, 'handle_hide_promotion_notice' ],
+                'permission_callback' => [ $this, 'get_promotional_notice_check' ],
+            ]
+        ] );
     }
 
     /**
@@ -870,7 +878,7 @@ class API extends WP_REST_Controller {
      * 
      * @since 2.1.11
      *
-     * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
+     * @return bool|WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
      */
     public function get_promotional_notice() {
         if ( ! current_user_can( 'manage_options' ) ) {
@@ -898,6 +906,10 @@ class API extends WP_REST_Controller {
             return false;
         }
 
+        if ( ! isset( $promos['key'] ) || 'hide' === get_option( $promos['key'], 'no' ) ) {
+            return false;
+        }
+
         $promos['logo_url'] = WEDOCS_LOGO_URL;
 
 		$current_time = wedocs_convert_utc_to_est();
@@ -912,5 +924,25 @@ class API extends WP_REST_Controller {
         }
 
         return false;
+    }
+
+     /**
+     * Handle promotional notice hidden action
+     * 
+     * @since 2.1.11
+     * 
+     * @param WP_REST_Request $request Current request.
+     *
+     */
+    public function handle_hide_promotion_notice( $request ) {
+        if ( ! empty( $request->get_param('option_name') ) ) {
+			$offer_key = sanitize_text_field( wp_unslash( $request->get_param('option_name') ) );
+
+			update_option( $offer_key, 'hide' );
+
+            return rest_ensure_response( 'Success' );
+		}
+
+        return rest_ensure_response( 'Option name is missing.' );
     }
 }
