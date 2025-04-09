@@ -29,40 +29,43 @@ class Promotion {
 		$promos = get_transient( WEDOCS_PROMO_KEY );
 
 		if ( false === $promos ) {
-			$promo_notice_url   = WEDOCS_PROMO_URL;
-			$response           = wp_remote_get( $promo_notice_url, array( 'timeout' => 15 ) );
-			$promos             = wp_remote_retrieve_body( $response );
-			$promos['logo_url'] = WEDOCS_URL . '/assets/img/wedocs-logo.svg';
+			$promo_notice_url = WEDOCS_PROMO_URL;
+			$response         = wp_remote_get( $promo_notice_url, array( 'timeout' => 15 ) );
+			$promos           = wp_remote_retrieve_body( $response );
 
 			if ( is_wp_error( $response ) || $response['response']['code'] !== 200 ) {
-                $promos = '[]';
-            }
+				$promos = '[]';
+			}
 
-            set_transient( WEDOCS_PROMO_KEY, $promos, DAY_IN_SECONDS );
+			set_transient( WEDOCS_PROMO_KEY, $promos, DAY_IN_SECONDS );
 		}
-		
-		$promos = ! is_array( $promos ) ? json_decode( $promos, true ) : $promos;
+
+				$promos = ! is_array( $promos ) ? json_decode( $promos, true ) : $promos;
 
 		if ( empty( $promos ) || ! is_array( $promos ) ) {
-            return;
-        }
+			return;
+		}
+
+		$promos['logo_url'] = WEDOCS_LOGO_URL;
 
 		$current_time = wedocs_convert_utc_to_est();
 
 		if (
 			isset( $promos['start_date'] )
 			&& $promos['end_date']
-            && strtotime( $promos['start_date'] ) < strtotime( $current_time )
-            && strtotime( $current_time ) < strtotime( $promos['end_date'] )
-            ) {
-            $this->generate_notice( $promos );
-        }
+			&& strtotime( $promos['start_date'] ) < strtotime( $current_time )
+			&& strtotime( $current_time ) < strtotime( $promos['end_date'] )
+			) {
+			$this->generate_notice( $promos );
+		}
 	}
 
 	/**
 	 * Show admin notice
 	 *
-	 * @since WPUF @param $message and @param $option_name replaced with $args
+	 * @since WPUF
+	 *
+	 * @param array $args arguments for notice template.
 	 *
 	 * @return void
 	 */
@@ -80,7 +83,7 @@ class Promotion {
 		?>
 		<div class="notice notice-success wedocs-notice" id="wedocs-promotion-notice">
 			<div class="wedocs-logo-wrapper">
-				<img src="<?php echo WEDOCS_URL . '/assets/img/wedocs-logo.svg'; ?>" alt="weDocs Icon">
+				<img src="<?php echo esc_url( WEDOCS_LOGO_URL ); ?>" alt="weDocs Icon">
 			</div>
 			<div class="wedocs-notice-content-wrapper">
 				<h3><?php echo esc_html( $title ); ?></h3>
@@ -96,13 +99,9 @@ class Promotion {
 				padding: 0;
 			}
 
-			#wedocs-promotion-notice {
-				height: 128px !important;
-			}
 			.wedocs-logo-wrapper {
 				display: flex;
 				margin-right: 20px;
-				height: 128px !important;
 			}
 			.wedocs-notice-content-wrapper h3 {
 				font-size: 1.3em;
@@ -117,13 +116,8 @@ class Promotion {
 					padding-right: 5px;
 				}
 
-				#wedocs-promotion-notice {
-					height: 145px !important;
-				}
-
 				.wedocs-logo-wrapper {
 					height: auto !important;
-					margin-right: 2px !important;
 				}
 
 				.wedocs-notice-content-wrapper {

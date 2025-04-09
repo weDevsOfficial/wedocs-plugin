@@ -140,7 +140,7 @@ final class WeDocs {
         define( 'WEDOCS_ASSETS', WEDOCS_URL . '/assets' );
         define( 'WEDOCS_PROMO_KEY', 'wedocs_promo_notices' );
         define( 'WEDOCS_PROMO_URL', 'https://raw.githubusercontent.com/welabs-ltd/wedocs-util/master/promotion.json' );
-
+        define( 'WEDOCS_LOGO_URL', WEDOCS_URL . '/assets/images/wedocs-icon-128x128.png' );
     }
 
     /**

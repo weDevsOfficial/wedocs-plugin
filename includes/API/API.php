@@ -884,7 +884,6 @@ class API extends WP_REST_Controller {
             $response           = wp_remote_get( $promo_notice_url, array( 'timeout'  => 15 ) );
             $promos             = wp_remote_retrieve_body( $response );
             $promos             = json_decode( $promos, true );
-            $promos['logo_url'] = WEDOCS_URL . '/assets/img/wedocs-logo.svg';
 
             if ( is_wp_error( $response ) || $response['response']['code'] !== 200 ) {
                 $promos = '[]';
@@ -898,6 +897,8 @@ class API extends WP_REST_Controller {
         if ( empty( $promos ) || ! is_array( $promos ) ) {
             return false;
         }
+
+        $promos['logo_url'] = WEDOCS_LOGO_URL;
 
 		$current_time = wedocs_convert_utc_to_est();
 
