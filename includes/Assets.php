@@ -36,6 +36,15 @@ class Assets {
             true
         );
 
+        wp_localize_script(
+            'wedocs-admin-script',
+            'weDocsAdminScriptVars',
+            array(
+                'ajaxurl' => admin_url( 'admin-ajax.php' ),
+                'nonce'   => wp_create_nonce( 'wedocs-ajax' ),
+            ),
+        );
+
         if ( file_exists( WEDOCS_PATH . '/assets/build/index.asset.php' ) ) {
             $react_dependencies = require WEDOCS_PATH . '/assets/build/index.asset.php';
 

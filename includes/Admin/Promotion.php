@@ -11,6 +11,7 @@ class Promotion {
 	 * Constructor
 	 */
 	public function __construct() {
+		add_action( 'wp_ajax_wedocs_dismiss_promotional_offer_notice', array( $this, 'dismiss_promotional_offer' ) );
 		add_action( 'admin_notices', array( $this, 'promotional_offer' ) );
 	}
 
@@ -62,8 +63,6 @@ class Promotion {
 
 	/**
 	 * Show admin notice
-	 *
-	 * @since WPUF
 	 *
 	 * @param array $args arguments for notice template.
 	 *
@@ -127,11 +126,53 @@ class Promotion {
 		</style>
 
 		<script type='text/javascript'>
-			jQuery('body').on('click', '#wedocs-promotion-notice .notice-dismiss', function (e) {
-				e.preventDefault();
-				jQuery('#wedocs-promotion-notice').remove();
+			jQuery(function($) {
+				$('body').on('click', '#wedocs-promotion-notice .notice-dismiss', function (e) {
+					e.preventDefault();
+					$('#wedocs-promotion-notice').remove();
+					
+					const data = {
+						action   : 'wedocs_dismiss_promotional_offer_notice',
+						_wpnonce : weDocsAdminScriptVars.nonce,
+						dismissed: true,
+						option_name: '<?php echo esc_html( $option_name ); ?>',
+					};
+
+					$.ajax({
+						data,
+						url      : weDocsAdminScriptVars.ajaxurl,
+						type     : 'POST',
+					});
+				});
 			});
 		</script>
 		<?php
+	}
+
+	/**
+	 * Dismiss promotion notice
+	 *
+	 * @since 2.1.11
+	 *
+	 * @return void
+	 */
+	public function dismiss_promotional_offer() {
+		if ( empty( $_POST['_wpnonce'] ) ) {
+			wp_send_json_error( __( 'Unauthorized operation', 'wedocs' ) );
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( __( 'Unauthorized operation', 'wedocs' ) );
+		}
+
+		if ( isset( $_POST['_wpnonce'] ) && ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'wedocs-ajax' ) ) {
+			wp_send_json_error( __( 'Unauthorized operation', 'wedocs' ) );
+		}
+
+		if ( ! empty( $_POST['dismissed'] ) ) {
+			$offer_key = ! empty( $_POST['option_name'] ) ? sanitize_text_field( wp_unslash( $_POST['option_name'] ) ) : '';
+
+			update_option( $offer_key, 'hide' );
+		}
 	}
 }
