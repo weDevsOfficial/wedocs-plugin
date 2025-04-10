@@ -29,11 +29,6 @@ const SettingsPage = () => {
     []
   );
 
-  const promoNotice = useSelect(
-    ( select ) => select( settingsStore ).getPromoNotice(),
-    []
-  );
-
   const [ saving, setSaving ] = useState( false );
 
   const handleSettingsSave = () => {
@@ -143,7 +138,7 @@ const SettingsPage = () => {
   return (
     <div className="min-h-full pt-7">
       { showActions && need_upgrade && <Upgrade status={ status } /> }
-      {promoNotice && <WedocsPromoNotice promos={promoNotice} />}
+      { <WedocsPromoNotice />}
       <main>
         <div className="pb-10 pt-3 sm:px-0">
           <div className="h-100">

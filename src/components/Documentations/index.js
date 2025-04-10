@@ -36,11 +36,6 @@ const Documentations = () => {
     []
   );
 
-  const promoNotice = useSelect(
-    ( select ) => select( settingsStore ).getPromoNotice(),
-    []
-  );
-
   const sortableStatus = useSelect(
     ( select ) => select( docsStore ).getSortingStatus(),
     []
@@ -149,7 +144,7 @@ const Documentations = () => {
         </h1>
       </div>
 
-      { promoNotice && <WedocsPromoNotice promos={promoNotice} /> }
+      { <WedocsPromoNotice /> }
 
       { !loading && showActions && need_upgrade && <Upgrade status={ status } /> }
 

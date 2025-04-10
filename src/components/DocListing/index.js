@@ -49,11 +49,6 @@ const ListingPage = () => {
     []
   );
 
-  const promoNotice = useSelect(
-    ( select ) => select( settingsStore ).getPromoNotice(),
-    []
-  );
-
   const [ searchValue, setSearchValue ] = useState( '' );
   const [ needSortingStatus, setNeedSortingStatus ] = useState( needSortableStatus );
 
@@ -174,7 +169,7 @@ const ListingPage = () => {
             />
           </div>
 
-          { promoNotice && <WedocsPromoNotice promos={promoNotice} /> }
+          { <WedocsPromoNotice /> }
 
           <ListingHeader doc={ parentDoc } />
 
