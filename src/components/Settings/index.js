@@ -138,7 +138,7 @@ const SettingsPage = () => {
   return (
     <div className="min-h-full pt-7">
       { showActions && need_upgrade && <Upgrade status={ status } /> }
-      { <WedocsPromoNotice />}
+      <WedocsPromoNotice />
       <main>
         <div className="pb-10 pt-3 sm:px-0">
           <div className="h-100">

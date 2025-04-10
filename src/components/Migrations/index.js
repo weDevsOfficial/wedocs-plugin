@@ -93,7 +93,7 @@ const Migrate = () => {
 
     return (
         <div className='w-full mt-7'>
-          { <WedocsPromoNotice />}
+          <WedocsPromoNotice />
             <div className='shadow sm:overflow-hidden sm:rounded-md'>
                 <div className='space-y-6 h-[80vh] flex justify-center align-center bg-white px-4 py-5 sm:p-6'>
                     <div className='w-[800px] text-center self-center mt-1 px-6 py-12'>

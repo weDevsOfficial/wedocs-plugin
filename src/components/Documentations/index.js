@@ -144,7 +144,7 @@ const Documentations = () => {
         </h1>
       </div>
 
-      { <WedocsPromoNotice /> }
+      <WedocsPromoNotice />
 
       { !loading && showActions && need_upgrade && <Upgrade status={ status } /> }
 
