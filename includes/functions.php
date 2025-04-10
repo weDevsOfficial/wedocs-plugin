@@ -581,7 +581,7 @@ function wedocs_apply_extracted_content( $content, $max_content_number ) {
 }
 
 /**
- * Convert EST Time zone to UTC timezone
+ * Convert UTC Time zone to EST timezone
  *
  * @param string $date_time
  * @return string
