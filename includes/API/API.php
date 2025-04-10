@@ -940,9 +940,9 @@ class API extends WP_REST_Controller {
 
 			update_option( $offer_key, 'hide' );
 
-            return rest_ensure_response( 'Success' );
+            wp_send_json_success( 'Successfully dismissed.' );
 		}
 
-        return rest_ensure_response( 'Option name is missing.' );
+        wp_send_json_error( 'Faild to dismiss.' );
     }
 }

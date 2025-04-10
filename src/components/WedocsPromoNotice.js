@@ -21,7 +21,7 @@ const WedocsPromoNotice = () => {
     dispatch(docStore)
     .dismissPromoNotice(promoNotice.key)
     .then( (result) => {
-      if ( 'Success' !== result ) {
+      if ( ! result.success ) {
         return;
       }
       
@@ -38,16 +38,16 @@ const WedocsPromoNotice = () => {
   }
 
   return (
-    <div class="notice notice-success wedocs-notice flex p-0 relative" id="wedocs-promotion-notice">
-        <div class="wedocs-logo-wrapper flex mr-[20px]">
-            <img src={promoNotice.logo_url} alt="weDocs Icon" class="max-w-none"/>
+    <div className="notice notice-success wedocs-notice flex p-0 relative" id="wedocs-promotion-notice">
+        <div className="wedocs-logo-wrapper flex mr-[20px]">
+            <img src={promoNotice.logo_url} alt="weDocs Icon" className="max-w-none"/>
         </div>
-        <div class="wedocs-notice-content-wrapper pr-[5px]">
-            <h3 class="text-lg font-semibold mt-4 mb-2">{ promoNotice.title }</h3>
-            <p><b class="text-#3c434a font-[600]">{ promoNotice.content }</b></p>
-            <a href={ promoNotice.action_url } class="button button-primary">{ promoNotice.action_title }</a>
+        <div className="wedocs-notice-content-wrapper pr-[5px]">
+            <h3 className="text-lg font-semibold mt-4 mb-2">{ promoNotice.title }</h3>
+            <p><b className="text-#3c434a font-[600]">{ promoNotice.content }</b></p>
+            <a href={ promoNotice.action_url } className="button button-primary">{ promoNotice.action_title }</a>
         </div>
-        <button type="button" class="notice-dismiss" onClick={handleDismiss}><span class="screen-reader-text">{ __( 'Dismiss this notice', 'wedocs' ) }</span></button>
+        <button type="button" className="notice-dismiss" onClick={handleDismiss}><span className="screen-reader-text">{ __( 'Dismiss this notice', 'wedocs' ) }</span></button>
     </div>
   );
 }
