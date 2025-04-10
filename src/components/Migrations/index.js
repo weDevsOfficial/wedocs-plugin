@@ -5,7 +5,6 @@ import MigrationProgressModal from './Modals/MigrationProgressModal';
 import MigrationSelectionModal from './Modals/MigrationSelectionModal';
 import { dispatch, resolveSelect, useSelect } from '@wordpress/data';
 import docsStore from '../../data/docs';
-import settingsStore from '../../data/settings';
 import MigrationContentMappingModal from './Modals/MigrationContentMappingModal';
 import apiFetch from '@wordpress/api-fetch';
 import WedocsPromoNotice from '../WedocsPromoNotice';
