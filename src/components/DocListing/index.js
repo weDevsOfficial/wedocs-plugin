@@ -169,7 +169,7 @@ const ListingPage = () => {
             />
           </div>
 
-          { <WedocsPromoNotice /> }
+          <WedocsPromoNotice />
 
           <ListingHeader doc={ parentDoc } />
 
