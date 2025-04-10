@@ -916,7 +916,7 @@ class API extends WP_REST_Controller {
 
 		if (
 			isset( $promos['start_date'] )
-			&& $promos['end_date']
+			&& isset( $promos['end_date'] )
             && strtotime( $promos['start_date'] ) < strtotime( $current_time )
             && strtotime( $current_time ) < strtotime( $promos['end_date'] )
             ) {

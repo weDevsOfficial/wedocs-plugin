@@ -4,7 +4,6 @@ import docStore from '../data/docs';
 import { useState } from '@wordpress/element';
 import settingsStore from '../data/settings';
 
-
 const WedocsPromoNotice = () => {
   const [ hideNotice, setHideNotice ] = useState( false );
   const promoNotice = useSelect(
