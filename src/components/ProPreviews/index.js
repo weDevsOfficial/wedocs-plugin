@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import PermissionSettings from './PermissionSettings';
 import { userIsAdmin } from '../../utils/helper';
-import Contributors from './common/Contributors';
+import ContributorUsers from '../Documentations/ContributorUsers';
 import UpgradePopup from './common/UpgradePopup';
 import LayoutSettings from './LayoutSettings';
 import AiChatBotSettings from './AssistantWidgetPanels/AiChatPanel';
@@ -227,20 +227,20 @@ if ( !isProLoaded ) {
     wp.hooks.addFilter(
         'wedocs_documentation_contributors',
         'wedocs_documentation_contributors_callback',
-        function () {
+        function ( content, id ) {
             if ( !userIsAdmin() ) return;
 
-            return <Contributors />;
+            return ( <ContributorUsers id={ id } /> );
         }
     );
 
     wp.hooks.addFilter(
         'wedocs_article_contributors',
         'wedocs_article_contributors_callback',
-        function () {
+        function ( content, id ) {
             if ( !userIsAdmin() ) return;
 
-            return <Contributors />;
+            return ( <ContributorUsers id={ id } /> );
         }
     );
 }
