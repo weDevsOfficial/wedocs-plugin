@@ -41,7 +41,7 @@ class Promotion {
 			set_transient( WEDOCS_PROMO_KEY, $promos, DAY_IN_SECONDS );
 		}
 
-				$promos = ! is_array( $promos ) ? json_decode( $promos, true ) : $promos;
+		$promos = ! is_array( $promos ) ? json_decode( $promos, true ) : $promos;
 
 		if ( empty( $promos ) || ! is_array( $promos ) ) {
 			return;
@@ -53,7 +53,7 @@ class Promotion {
 
 		if (
 			isset( $promos['start_date'] )
-			&& $promos['end_date']
+			&& isset( $promos['end_date'] )
 			&& strtotime( $promos['start_date'] ) < strtotime( $current_time )
 			&& strtotime( $current_time ) < strtotime( $promos['end_date'] )
 			) {
