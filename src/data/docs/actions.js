@@ -157,6 +157,18 @@ const actions = {
     const response = yield { type: 'UPDATE_TO_API', path, data };
     return response;
   },
+
+  *dismissPromoNotice( optionName ) {
+    const response = yield actions.dismissPromoNoticeAPI( optionName );
+
+    return response;
+  },
+
+  dismissPromoNoticeAPI( optionName ) {
+    const path = '/wp/v2/docs/hide-promotion-notice';
+
+    return { type: 'UPDATE_TO_API', path, data: { option_name: optionName } };
+  },
 };
 
 export default actions;

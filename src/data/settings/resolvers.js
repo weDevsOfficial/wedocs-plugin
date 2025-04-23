@@ -28,6 +28,13 @@ const resolvers = {
     yield actions.setTurnstileSiteKey( siteKey );
     return actions.setLoading( false );
   },
+
+  *getPromoNotice() {
+    yield actions.setLoading( true );
+    const promoNotice = yield { type: 'FETCH_PROMO_NOTICE' };
+    yield actions.setPromoNotice( promoNotice );
+    return actions.setLoading( false );
+  },
 };
 
 export default resolvers;
