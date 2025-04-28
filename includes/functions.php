@@ -579,3 +579,16 @@ function wedocs_apply_extracted_content( $content, $max_content_number ) {
     // Control content length by substr.
     return ( strlen( $content ) > $max_content_number ) ? substr( $content, 0, $max_content_number ) . '...' : $content;
 }
+
+/**
+ * Convert UTC Time zone to EST timezone
+ *
+ * @param string $date_time
+ * @return string
+ */
+function wedocs_convert_utc_to_est() {
+	$current_time = new DateTime( 'now', new DateTimeZone( 'UTC' ) );
+	$current_time->setTimezone( new DateTimeZone( 'EST' ) );
+
+	return $current_time->format( 'Y-m-d H:i:s T' );
+}

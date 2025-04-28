@@ -15,6 +15,10 @@ const actions = {
     return { type: 'SET_UPGRADE_INFO', needUpgrade };
   },
 
+  setPromoNotice( promoNotice ) {
+    return { type: 'SET_PROMO_NOTICE', promoNotice };
+  },
+
   setMigrateInfo( needMigrate ) {
     return { type: 'SET_MIGRATE_INFO', needMigrate };
   },
