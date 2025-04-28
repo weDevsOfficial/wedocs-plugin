@@ -346,7 +346,8 @@ Can’t wait to join us?
 
 = v2.1.11 (28th Apr, 2025) =
 
- * **Added:** Promotional Banner to weDocs Dashboard
+ * **Added:** Promotional Banner to weDocs Dashboard.
+ * **Fix:** Block theme deprecated error.
 
 = v2.1.10 (05th Dec, 2024) =
 
