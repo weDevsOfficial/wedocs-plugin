@@ -579,3 +579,91 @@ function wedocs_apply_extracted_content( $content, $max_content_number ) {
     // Control content length by substr.
     return ( strlen( $content ) > $max_content_number ) ? substr( $content, 0, $max_content_number ) . '...' : $content;
 }
+
+/**
+ * Update the list of documentation contributors.
+ *
+ * @since 2.1.12
+ *
+ * @param int   $article_id Article id.
+ * @param array $article_contributors Article contributor list.
+ *
+ * @return void
+ */
+function wedocs_update_documentation_contributors( $article_id, $article_contributors ) {
+	$ancestors               = get_post_ancestors( $article_id );
+	$grand_parent_id         = end( $ancestors );
+	$parent_contributors     = get_post_meta( $grand_parent_id, 'wedocs_contributors', true );
+	$parent_contributors     = ! empty( $parent_contributors ) ? $parent_contributors : array();
+	$additional_contributors = array_diff( $article_contributors, $parent_contributors );
+
+	if ( ! empty( $additional_contributors ) ) {
+		$updated_contributors = array_merge( $parent_contributors, $additional_contributors );
+		update_post_meta( $grand_parent_id, 'wedocs_contributors', (array) $updated_contributors );
+	}
+}
+
+/**
+ * Get documentation children ids by using children type.
+ *
+ * @since WEDOCS_SINCE_PRO
+ *
+ * @param int    $doc_id        Parent documentation id.
+ * @param string $children_type Children type.
+ *
+ * @return array Children (article/section) ids array
+ */
+function wedocs_get_documentation_children_by_type( $doc_id, $children_type = 'article', $custom_args = array() ) {
+	if ( empty( $doc_id ) ) {
+		return array();
+	}
+
+	if ( ! ( $children_type === 'article' || $children_type === 'section' ) ) {
+		return array();
+	}
+
+	$default = array(
+		'post_type'   => 'docs',
+		'post_status' => 'publish',
+		'post_parent' => $doc_id,
+	);
+
+	// Parse posts arguments.
+	$args     = wp_parse_args( $custom_args, $default );
+	$sections = get_children( $args );
+
+	$section_ids = wp_list_pluck( $sections, 'ID' );
+	if ( $children_type === 'section' ) {
+		return $section_ids;
+	}
+
+	$childrens    = wedocs_get_posts_children( $doc_id, 'docs', $custom_args );
+	$children_ids = wp_list_pluck( $childrens, 'ID' );
+	$article_ids  = array_diff( $children_ids, $section_ids );
+
+	return $article_ids;
+}
+
+/**
+ * Get the list of documentation contributors.
+ *
+ * @since 1.0.0
+ *
+ * @param int   $doc_id      Parent documentation id.
+ * @param array $article_ids Documentation article ids.
+ *
+ * @return array
+ */
+function wedocs_get_documentation_contributors( $doc_id, $article_ids ) {
+	$contributors = array( $doc_id );
+	foreach ( $article_ids as $article_id ) {
+		$article_contributors = get_post_meta( $article_id, 'wedocs_contributors', true );
+		foreach ( (array) $article_contributors as $contributor ) {
+			if ( ! empty( $contributor ) && ! in_array( $contributor, $contributors ) ) {
+				array_push( $contributors, absint( $contributor ) );
+			}
+		}
+	}
+
+	return $contributors;
+}
