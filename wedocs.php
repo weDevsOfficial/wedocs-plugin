@@ -120,7 +120,7 @@ final class WeDocs {
 	 */
 	public function check_for_wedocs_contributors() {
 		$wedocs_contributor = new WedocsContributor();
-		$wedocs_contributor->check();
+		$wedocs_contributor->check_and_add_docs_contributors();
 	}
 
     /**

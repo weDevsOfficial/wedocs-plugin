@@ -15,9 +15,9 @@ class WedocsContributor {
 	 * @return void
 	 */
 	public function check_and_add_docs_contributors() {
-		$contributors_updated = get_option( 'wedocs_contributors_added', null );
+		$contributors_added = get_option( 'wedocs_contributors_added', null );
 
-		if ( null === $contributors_updated ) {
+		if ( null === $contributors_added ) {
 			$this->add_article_contributors();
 			$this->add_documentation_contributors();
 
