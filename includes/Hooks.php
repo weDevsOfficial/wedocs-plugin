@@ -47,7 +47,7 @@ class Hooks {
 
 		// Save the doc contributors meta.
 		update_post_meta( $post_id, 'wedocs_contributors', (array) $contributors );
-		wedocs_update_documentation_contributors( $post_id, $contributors );
+		wedocs_plugin_update_documentation_contributors( $post_id, $contributors );
 	}
 
 	/**
@@ -60,8 +60,8 @@ class Hooks {
 	 * @return void
 	 */
 	public function save_parent_contributors( $post ) {
-		$article_ids  = wedocs_get_documentation_children_by_type( $post->ID );
-		$contributors = wedocs_get_documentation_contributors( $post->post_author, $article_ids );
+		$article_ids  = wedocs_plugin_get_documentation_children_by_type( $post->ID );
+		$contributors = wedocs_plugin_get_documentation_contributors( $post->post_author, $article_ids );
 
 		update_post_meta( $post->ID, 'wedocs_contributors', (array) $contributors );
 	}

@@ -590,7 +590,7 @@ function wedocs_apply_extracted_content( $content, $max_content_number ) {
  *
  * @return void
  */
-function wedocs_update_documentation_contributors( $article_id, $article_contributors ) {
+function wedocs_plugin_update_documentation_contributors( $article_id, $article_contributors ) {
 	$ancestors               = get_post_ancestors( $article_id );
 	$grand_parent_id         = end( $ancestors );
 	$parent_contributors     = get_post_meta( $grand_parent_id, 'wedocs_contributors', true );
@@ -606,14 +606,14 @@ function wedocs_update_documentation_contributors( $article_id, $article_contrib
 /**
  * Get documentation children ids by using children type.
  *
- * @since WEDOCS_SINCE_PRO
+ * @since 2.1.12
  *
  * @param int    $doc_id        Parent documentation id.
  * @param string $children_type Children type.
  *
  * @return array Children (article/section) ids array
  */
-function wedocs_get_documentation_children_by_type( $doc_id, $children_type = 'article', $custom_args = array() ) {
+function wedocs_plugin_get_documentation_children_by_type( $doc_id, $children_type = 'article', $custom_args = array() ) {
 	if ( empty( $doc_id ) ) {
 		return array();
 	}
@@ -647,14 +647,14 @@ function wedocs_get_documentation_children_by_type( $doc_id, $children_type = 'a
 /**
  * Get the list of documentation contributors.
  *
- * @since 1.0.0
+ * @since 2.1.12
  *
  * @param int   $doc_id      Parent documentation id.
  * @param array $article_ids Documentation article ids.
  *
  * @return array
  */
-function wedocs_get_documentation_contributors( $doc_id, $article_ids ) {
+function wedocs_plugin_get_documentation_contributors( $doc_id, $article_ids ) {
 	$contributors = array( $doc_id );
 	foreach ( $article_ids as $article_id ) {
 		$article_contributors = get_post_meta( $article_id, 'wedocs_contributors', true );

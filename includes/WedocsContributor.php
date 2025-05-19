@@ -69,8 +69,8 @@ class WedocsContributor {
 		foreach ( $documentations as $documentation ) {
 			$contributors = get_post_meta( $documentation->ID, 'wedocs_contributors', true );
 			if ( empty( $contributors ) ) {
-				$article_ids  = wedocs_get_documentation_children_by_type( $documentation->ID );
-				$contributors = wedocs_get_documentation_contributors( $documentation->post_author, $article_ids );
+				$article_ids  = wedocs_plugin_get_documentation_children_by_type( $documentation->ID );
+				$contributors = wedocs_plugin_get_documentation_contributors( $documentation->post_author, $article_ids );
 				update_post_meta( $documentation->ID, 'wedocs_contributors', (array) $contributors );
 			}
 		}
