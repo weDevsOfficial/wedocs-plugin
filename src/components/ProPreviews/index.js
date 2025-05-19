@@ -223,24 +223,24 @@ if ( !isProLoaded ) {
             );
         }
     );
-
-    wp.hooks.addFilter(
-        'wedocs_documentation_contributors',
-        'wedocs_documentation_contributors_callback',
-        function ( content, id ) {
-            if ( !userIsAdmin() ) return;
-
-            return ( <ContributorUsers id={ id } /> );
-        }
-    );
-
-    wp.hooks.addFilter(
-        'wedocs_article_contributors',
-        'wedocs_article_contributors_callback',
-        function ( content, id ) {
-            if ( !userIsAdmin() ) return;
-
-            return ( <ContributorUsers id={ id } /> );
-        }
-    );
 }
+
+wp.hooks.addFilter(
+    'wedocs_documentation_contributors',
+    'wedocs_documentation_contributors_callback',
+    function ( content, id ) {
+        if ( !userIsAdmin() ) return;
+
+        return ( <ContributorUsers id={ id } /> );
+    }
+);
+
+wp.hooks.addFilter(
+    'wedocs_article_contributors',
+    'wedocs_article_contributors_callback',
+    function ( content, id ) {
+        if ( !userIsAdmin() ) return;
+
+        return ( <ContributorUsers id={ id } /> );
+    }
+);
