@@ -3,7 +3,7 @@ Contributors: tareq1988, wedevs
 Donate link: http://wedocs.co/
 Tags: WordPress documentation plugin, WordPress docs plugin, Documentation, Knowledge base, Wiki
 Requires at least: 5.6
-Tested up to: 6.6.2
+Tested up to: 6.8
 Requires PHP: 7.4
 Stable tag: 2.1.12
 License: GPLv2 or later
@@ -342,6 +342,12 @@ Can’t wait to join us?
 
 
 == Changelog ==
+
+
+= v2.1.11 (28th Apr, 2025) =
+
+ * **Added:** Promotional Banner to weDocs Dashboard.
+ * **Fix:** Block theme deprecated error.
 
 = v2.1.10 (05th Dec, 2024) =
 

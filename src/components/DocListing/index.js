@@ -19,6 +19,7 @@ import settingsStore from '../../data/settings';
 import Swal from "sweetalert2";
 import { userIsAdmin } from "../../utils/helper";
 import NotFound from '../NotFound';
+import WedocsPromoNotice from "../WedocsPromoNotice";
 
 const ListingPage = () => {
   const { id } = useParams();
@@ -167,6 +168,8 @@ const ListingPage = () => {
               handleChange={ handleChange }
             />
           </div>
+
+          <WedocsPromoNotice />
 
           <ListingHeader doc={ parentDoc } />
 

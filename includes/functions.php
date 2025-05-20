@@ -667,3 +667,16 @@ function wedocs_plugin_get_documentation_contributors( $doc_id, $article_ids ) {
 
 	return $contributors;
 }
+
+
+/** Convert UTC Time zone to EST timezone
+ *
+ * @param string $date_time
+ * @return string
+ */
+function wedocs_convert_utc_to_est() {
+	$current_time = new DateTime( 'now', new DateTimeZone( 'UTC' ) );
+	$current_time->setTimezone( new DateTimeZone( 'EST' ) );
+
+	return $current_time->format( 'Y-m-d H:i:s T' );
+}

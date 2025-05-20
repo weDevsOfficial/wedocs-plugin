@@ -13,6 +13,7 @@ import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import settingsStore from '../../data/settings';
 import Swal from "sweetalert2";
 import { userIsAdmin } from "../../utils/helper";
+import WedocsPromoNotice from '../WedocsPromoNotice';
 
 const Documentations = () => {
   const docs = useSelect(
@@ -142,6 +143,8 @@ const Documentations = () => {
           ) }
         </h1>
       </div>
+
+      <WedocsPromoNotice />
 
       { !loading && showActions && need_upgrade && <Upgrade status={ status } /> }
 
