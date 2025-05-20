@@ -240,6 +240,8 @@ class API extends WP_REST_Controller {
                 'callback'            => array( $this, 'get_specific_documentation_contributors' ),
                 'permission_callback' => '__return_true',
             ],
+        ]);
+
         register_rest_route( $this->namespace, '/' . $this->rest_base . '/promotion-notice', [
             [
                 'methods'             => WP_REST_Server::READABLE,
@@ -876,7 +878,7 @@ class API extends WP_REST_Controller {
         return rest_ensure_response( $contributor_ids );
     }
 
-     * Check permissions for getting
+    /** Check permissions for getting
      *  promotion notice.
      *
      * @since 2.1.11
