@@ -847,7 +847,7 @@ class API extends WP_REST_Controller {
     /**
      * Get specific documentation contributors.
      *
-     * @since 2.1.11
+     * @since 2.1.12
      *
      * @param \WP_REST_Request $request
      *
