@@ -6,16 +6,23 @@ import SliderImgOneSrc from '../../../assets/img/popup-slider/slider-1.jpg';
 import SliderImgTwoSrc from '../../../assets/img/popup-slider/slider-2.jpg';
 import SliderImgFourSrc from '../../../assets/img/popup-slider/slider-3.jpg';
 import SliderImgThreeSrc from '../../../assets/img/popup-slider/slider-4.jpg';
+import { useEffect } from 'react';
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
-const UpgradePopup = ({ children }) => {
+const UpgradePopup = ({ children, autoOpen }) => {
   let [ isOpen, setIsOpen ] = useState( false );
 
   const closeModal = () => {
     setIsOpen( false );
   }
+
+  useEffect(() => {
+    if (typeof autoOpen === 'boolean' && true === autoOpen) {
+      setIsOpen(autoOpen);
+    }
+  }, [autoOpen]);
 
   const openModal = ( event ) => {
     event.preventDefault();
@@ -32,9 +39,11 @@ const UpgradePopup = ({ children }) => {
   return (
     <>
       {/* Pro upgrade button. */}
-      <UpgradeButton showPopup={ openModal }>
-        { children }
-      </UpgradeButton>
+      { typeof autoOpen === 'undefined' && false !== autoOpen ? (
+        <UpgradeButton showPopup={ openModal }>
+          { children }
+        </UpgradeButton>
+      ) : null }
 
       {/* Show premium features content via pop-up. */}
       <Transition appear show={ isOpen } as={ Fragment }>

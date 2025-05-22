@@ -42,6 +42,8 @@ const resolvers = {
   },
 
   *getUserDocIds() {
+    console.log('Resolvers');
+
     const userDocIds = yield actions.fetchFromAPI( `/wp/v2/docs/users/ids` );
     return actions.setUserDocIds( userDocIds );
   },
