@@ -3,7 +3,7 @@
 Plugin Name: weDocs
 Plugin URI: https://wedocs.co/
 Description: A documentation plugin for WordPress
-Version: 2.1.11
+Version: 2.1.12
 Author: weDevs
 Author URI: https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri
 License: GPL2
@@ -40,6 +40,8 @@ Domain Path: /languages
 // don't call the file directly
 use Appsero\Client;
 use WeDevs\WeDocs\Capability;
+use WeDevs\WeDocs\Hooks;
+use WeDevs\WeDocs\WedocsContributor;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -60,7 +62,7 @@ final class WeDocs {
      *
      * @var string
      */
-    const VERSION = '2.1.11';
+    const VERSION = '2.1.12';
 
     /**
      * The plugin url.
@@ -110,6 +112,16 @@ final class WeDocs {
 
         $this->init_action_scheduler();
     }
+
+    /**
+	 * Check and update docs contributors data.
+	 *
+	 * @return void
+	 */
+	public function check_for_wedocs_contributors() {
+		$wedocs_contributor = new WedocsContributor();
+		$wedocs_contributor->check_and_add_docs_contributors();
+	}
 
     /**
      * Initializes the WeDocs() class.
@@ -170,6 +182,8 @@ final class WeDocs {
         add_action( 'init', [ $this, 'localization_setup' ] );
         add_action('init', [$this, 'register_blocks']);
 
+		add_action( 'plugins_loaded', array( $this, 'check_for_wedocs_contributors' ) );
+
         // registeer our widget
         add_action( 'widgets_init', [ $this, 'register_widget' ] );
     }
@@ -224,6 +238,7 @@ final class WeDocs {
         $this->container['migrate']  = new WeDevs\WeDocs\Admin\Migrate();
         $this->container['upgrader'] = new WeDevs\WeDocs\Upgrader\Upgrader();
         $this->container['capability'] = new Capability();
+        $this->container['hooks']      = new Hooks();
     }
 
     /**

@@ -234,6 +234,14 @@ class API extends WP_REST_Controller {
             ],
         ] );
 
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)' . '/contributors', [
+            [
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => array( $this, 'get_specific_documentation_contributors' ),
+                'permission_callback' => '__return_true',
+            ],
+        ]);
+
         register_rest_route( $this->namespace, '/' . $this->rest_base . '/promotion-notice', [
             [
                 'methods'             => WP_REST_Server::READABLE,
@@ -853,7 +861,24 @@ class API extends WP_REST_Controller {
     }
 
     /**
-     * Check permissions for getting
+     * Get specific documentation contributors.
+     *
+     * @since 2.1.12
+     *
+     * @param \WP_REST_Request $request
+     *
+     * @return mixed
+     */
+    public function get_specific_documentation_contributors( $request ) {
+        $id  = absint( $request->get_param( 'id' ) );
+        $key = 'wedocs_contributors';
+
+        $contributor_ids = get_post_meta( $id, $key, true );
+        
+        return rest_ensure_response( $contributor_ids );
+    }
+
+    /** Check permissions for getting
      *  promotion notice.
      *
      * @since 2.1.11
