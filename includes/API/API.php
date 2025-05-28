@@ -252,6 +252,46 @@ class API extends WP_REST_Controller {
                 'permission_callback' => [ $this, 'get_promotional_notice_check' ],
             ]
         ] );
+
+     	register_rest_route(
+    		$this->namespace,
+    		'/' . $this->rest_base . '/(?P<id>[\d]+)/meta',
+    		array(
+                array(
+                    'methods'             => WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_items' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'key' => array(
+                            'type'              => 'string',
+                            'required'          => true,
+                            'sanitize_callback' => 'sanitize_key',
+                            'description'       => esc_html__( 'Meta key', 'wedocs-pro' ),
+                        )
+                    ),
+                ),
+    			array(
+    				'methods'             => WP_REST_Server::CREATABLE,
+    				'callback'            => array( $this, 'create_doc_meta_data' ),
+    				'permission_callback' => array( $this, 'create_documentation_meta_permissions_check' ),
+    				'args'                => array(
+    					'key'   => array(
+    						'type'              => 'string',
+    						'required'          => true,
+    						'sanitize_callback' => 'sanitize_key',
+    						'description'       => esc_html__( 'Meta key', 'wedocs-pro' ),
+    					),
+    					'value' => array(
+    						'required'          => true,
+    						'description'       => esc_html__( 'Meta value', 'wedocs-pro' ),
+    						'validate_callback' => function ( $param ) {
+    							return is_string( $param ) || is_numeric( $param ) || is_array( $param );
+    						},
+    					),
+    				),
+    			),
+    		)
+    	);
     }
 
     /**
@@ -947,5 +987,93 @@ class API extends WP_REST_Controller {
 		}
 
         wp_send_json_error( 'Faild to dismiss.' );
+    }
+
+    /**
+     * Create docs meta data.
+     *
+     * @since 1.0.0
+     *
+     * @param \WP_REST_Request $request
+     *
+     * @return \WP_Error|\WP_HTTP_Response|\WP_REST_Response
+     */
+    public function create_doc_meta_data( \WP_REST_Request $request ) {
+        $id    = absint( $request->get_param( 'id' ) );
+        $key   = $request->get_param( 'key' );
+        $value = $request->get_param( 'value' );
+
+        if ( ! wedocs_pro_exists() && 'wedocs_access_role_capabilities' === $key ) {
+            $current_meta = get_post_meta( $id, $key, true );
+
+            if ( ! is_array( $current_meta ) ) {
+                $current_meta = array();
+            }
+            
+            $new_meta = $current_meta;
+
+            if ( is_array( $value ) && isset( $value['administrator'] ) ) {
+                $new_meta['administrator'] = $value['administrator'];
+            }
+
+            if ( empty( $current_meta ) ) {
+                $new_meta = array( 'administrator' => isset( $value['administrator'] ) ? $value['administrator'] : 'view' );
+            }
+
+            update_post_meta( $id, $key, $new_meta );
+        } else {
+            update_post_meta( $id, $key, $value );
+        }
+
+        $meta = $this->get_items( $request );
+        return rest_ensure_response( $meta );
+    }
+
+    /**
+     * Collect docs meta data.
+     *
+     * @since 1.0.0
+     *
+     * @param \WP_REST_Request $request
+     *
+     * @return \WP_Error|\WP_HTTP_Response|\WP_REST_Response
+     */
+    public function get_items( $request ) {
+        $id  = absint( $request->get_param( 'id' ) );
+        $key = $request->get_param( 'key' );
+
+        $meta = get_post_meta( $id, $key, true );
+
+        return rest_ensure_response( $meta );
+    }
+
+    /**
+     * Check items creation permission.
+     *
+     * @since 1.0.0
+     *
+     * @param \WP_REST_Request $request
+     *
+     * @return true|\WP_Error
+     */
+    public function create_documentation_meta_permissions_check( \WP_REST_Request $request ) {
+        return $this->get_items_permissions_check( $request );
+    }
+
+    /**
+     * Check items creation permission.
+     *
+     * @since 1.0.0
+     *
+     * @param \WP_REST_Request $request
+     *
+     * @return true|\WP_Error
+     */
+    public function get_items_permissions_check( $request ) {
+        if ( current_user_can( 'read' ) ) {
+            return true;
+        }
+
+        return new \WP_Error( 'wedocs_permission_failure', __( "You don't have permission to create post meta", 'wedocs-pro' ) );
     }
 }

@@ -21,12 +21,15 @@ const SettingsSection = () => {
 		value: docPermission,
 	} );
 
+    const [ showPopup, setShowPopup ] = useState( false );
+
 	const roleCaps = {
 		editor: 'view',
 		author: 'view',
 		custom: 'view',
 		subscriber: 'view',
 		contributor: 'view',
+		administrator: 'view',
 	};
 
 	const [ roleCapSettings, setRoleCapSettings ] = useState( roleCaps );
@@ -58,8 +61,6 @@ const SettingsSection = () => {
 	const handlerClick = ( e ) => {
 		if ( !isProLoaded && 'private' === e.target.name ) {
 			setShowPopup( true );
-			
-			return;
 		}
 		
 		setDocStatus( e.target.name );
@@ -71,13 +72,7 @@ const SettingsSection = () => {
 		false
 	);
 
-    const [ showPopup, setShowPopup ] = useState( false );
-
 	useEffect( () => {
-		if ( !isProLoaded ) {
-			return;
-		}
-
 		// Update documentation permission meta.
 		apiFetch( {
 			path: '/wp/v2/docs/' + id + '/meta?key=' + permissionMeta.key,
@@ -104,6 +99,10 @@ const SettingsSection = () => {
 				}
 			} )
 			.catch( ( err ) => {} );
+
+		if ( !isProLoaded ) {
+			return;
+		}
 
 		apiFetch( {
 			path: '/wp/v2/docs/' + id,
@@ -226,7 +225,7 @@ const SettingsSection = () => {
 					</button>
 				</div>
 			</div>
-			<UpgradePopup autoOpen={ showPopup ? true : false } />
+			<UpgradePopup autoOpen={ showPopup } onClose={ () => setShowPopup( false ) } />
 		</div>
 	);
 };

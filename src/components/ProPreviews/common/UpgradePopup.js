@@ -11,16 +11,20 @@ import { useEffect } from 'react';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
-const UpgradePopup = ({ children, autoOpen }) => {
+const UpgradePopup = ({ children, autoOpen, onClose }) => {
   let [ isOpen, setIsOpen ] = useState( false );
 
   const closeModal = () => {
+    if (onClose) {
+      onClose();
+    }
+
     setIsOpen( false );
   }
 
   useEffect(() => {
     if (typeof autoOpen === 'boolean' && true === autoOpen) {
-      setIsOpen(autoOpen);
+      setIsOpen( autoOpen );
     }
   }, [autoOpen]);
 
