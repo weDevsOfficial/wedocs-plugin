@@ -592,3 +592,24 @@ function wedocs_convert_utc_to_est() {
 
 	return $current_time->format( 'Y-m-d H:i:s T' );
 }
+
+/**
+ * Get the value of permission settings.
+ *
+ * @since 1.0.0
+ *
+ * @param string $field_name permission settings field name.
+ * @param string $default    default data if settings not found.
+ *
+ * @return mixed
+ */
+function wedocs_get_permission_settings( $field_name = '', $default = '' ) {
+    $permission_settings  = wedocs_get_option( 'permission', 'wedocs_settings', [] );
+
+    if ( ! empty( $field_name ) ) {
+        // Check from general settings if not found then collect data from wedocs_settings.
+        return ! empty( $permission_settings[ $field_name ] ) ? $permission_settings[ $field_name ] : $default;
+    }
+
+    return $permission_settings;
+}

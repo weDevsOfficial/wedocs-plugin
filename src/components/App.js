@@ -11,6 +11,7 @@ import Documentations from './Documentations';
 import Migrate from './Migrations';
 import NotFound from './NotFound';
 import '../components/ProPreviews';
+import ManagerPage from './DocManager';
 
 const App = () => {
   let routes = [
@@ -19,6 +20,7 @@ const App = () => {
     { path: 'section/:id', component: ListingPage },
     { path: 'migrate', component: Migrate },
     { path: '*', component: NotFound },
+    { path: 'manager/:id', component: ManagerPage },
   ];
 
   routes = wp.hooks.applyFilters( 'wedocs_register_menu_routes', routes );
