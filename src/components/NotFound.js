@@ -22,7 +22,7 @@ const NotFound = () => {
                 />
               </svg>
               <p className="text-[#3B3F4A] font-bold text-2xl mx-auto mb-2">
-                { __( 'There’s Noting here...', 'wedocs' ) }
+                { __( 'There’s Nothing here...', 'wedocs' ) }
               </p>
               <p className="text-[#666B79] text-lg mx-auto">
                 { __( '...maybe the page you’re looking for is not found or never existed.', 'wedocs' ) }

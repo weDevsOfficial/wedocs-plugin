@@ -1,54 +1,75 @@
-# Copyright (C) 2024 weDevs
+# Copyright (C) 2025 weDevs
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 2.1.7\n"
+"Project-Id-Version: weDocs 2.1.12\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-05-24T10:57:24+00:00\n"
+"POT-Creation-Date: 2025-07-24T12:19:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.1\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wedocs\n"
 
 #. Plugin Name of the plugin
+#: wedocs.php
 #: includes/Admin/Menu.php:45
 #: includes/Admin/Menu.php:46
 msgid "weDocs"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: wedocs.php
 msgid "https://wedocs.co/"
 msgstr ""
 
 #. Description of the plugin
+#: wedocs.php
 msgid "A documentation plugin for WordPress"
 msgstr ""
 
 #. Author of the plugin
+#: wedocs.php
 msgid "weDevs"
 msgstr ""
 
 #. Author URI of the plugin
+#: wedocs.php
 msgid "https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri"
 msgstr ""
 
-#: includes/Admin/Admin.php:98
+#: assets/build/blocks/DocsGrid/render.php:60
+#: includes/Shortcode.php:48
+#: src/blocks/DocsGrid/render.php:60
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:78
+msgid "View Details"
+msgstr ""
+
+#: assets/build/blocks/DocsGrid/render.php:301
+#: src/blocks/DocsGrid/render.php:301
+#: templates/shortcode.php:89
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:164
+msgid "This document has no sections yet. Check back later or wait for the author to add content."
+msgstr ""
+
+#: includes/Admin/Admin.php:102
 msgid "Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
 msgstr ""
 
-#: includes/Admin/Admin.php:98
+#: includes/Admin/Admin.php:102
 msgid "Thanks :)"
 msgstr ""
 
-#: includes/Admin/Admin.php:109
+#: includes/Admin/Admin.php:113
 msgid "Thank you for using <strong>weDocs</strong>."
 msgstr ""
 
-#: includes/Admin/Admin.php:112
+#: includes/Admin/Admin.php:116
 msgid "Use the <a href=\"%s\">classic UI</a>."
 msgstr ""
 
@@ -97,8 +118,18 @@ msgstr ""
 msgid "Untitled Docs"
 msgstr ""
 
+#: includes/Admin/Promotion.php:92
+msgid "Dismiss this notice."
+msgstr ""
+
+#: includes/Admin/Promotion.php:161
+#: includes/Admin/Promotion.php:165
+#: includes/Admin/Promotion.php:169
+msgid "Unauthorized operation"
+msgstr ""
+
 #: includes/Ajax.php:112
-#: includes/API/API.php:741
+#: includes/API/API.php:757
 msgid "Sorry, we have already recorded your feedback!"
 msgstr ""
 
@@ -146,45 +177,49 @@ msgstr ""
 msgid "Collective documents object"
 msgstr ""
 
-#: includes/API/API.php:273
-#: includes/API/API.php:300
-#: includes/API/API.php:723
+#: includes/API/API.php:289
+#: includes/API/API.php:316
+#: includes/API/API.php:739
 msgid "You are not currently logged in."
 msgstr ""
 
-#: includes/API/API.php:277
-#: includes/API/API.php:305
-#: includes/API/API.php:370
+#: includes/API/API.php:293
+#: includes/API/API.php:321
+#: includes/API/API.php:386
 msgid "Unauthorized permission error"
 msgstr ""
 
-#: includes/API/API.php:281
-#: includes/API/API.php:310
+#: includes/API/API.php:297
+#: includes/API/API.php:326
 msgid "Currently sortable status not given"
 msgstr ""
 
-#: includes/API/API.php:616
+#: includes/API/API.php:632
 msgid "The page number requested is larger than the number of pages available."
 msgstr ""
 
-#: includes/API/API.php:702
+#: includes/API/API.php:718
 msgid "No name given"
 msgstr ""
 
-#: includes/API/API.php:706
+#: includes/API/API.php:722
 msgid "No email given"
 msgstr ""
 
-#: includes/API/API.php:732
+#: includes/API/API.php:748
 msgid "Doc status not valid for update helpful data"
 msgstr ""
 
-#: includes/API/API.php:788
+#: includes/API/API.php:804
 msgid "You cannot delete the documentation resource."
 msgstr ""
 
-#: includes/API/API.php:809
+#: includes/API/API.php:825
 msgid "Invalid Documentation."
+msgstr ""
+
+#: includes/API/API.php:869
+msgid "You cannot see promotion notices."
 msgstr ""
 
 #: includes/API/SettingsApi.php:79
@@ -409,10 +444,6 @@ msgstr ""
 msgid "Tags list navigation"
 msgstr ""
 
-#: includes/Shortcode.php:48
-msgid "View Details"
-msgstr ""
-
 #: includes/Widget.php:13
 msgid "Document Search Widget"
 msgstr ""
@@ -425,7 +456,7 @@ msgstr ""
 #: assets/build/index.js:1
 #: assets/build/index.js:7
 #: src/components/BackToDocsPage.js:25
-#: src/components/Documentations/index.js:130
+#: src/components/Documentations/index.js:131
 msgid "All Docs"
 msgstr ""
 
@@ -481,11 +512,13 @@ msgid "Yes"
 msgstr ""
 
 #: templates/content-modal.php:14
-#: templates/single-docs.php:100
+#: templates/single-docs.php:144
 msgid "How can we help?"
 msgstr ""
 
 #: templates/content-modal.php:22
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:188
 msgid "Name"
 msgstr ""
 
@@ -539,39 +572,35 @@ msgstr ""
 msgid "No, Thanks"
 msgstr ""
 
-#: templates/shortcode.php:89
-msgid "This document has no sections yet. Check back later or wait for the author to add content."
-msgstr ""
-
-#: templates/single-docs.php:40
+#: templates/single-docs.php:84
 msgid "Print this article"
 msgstr ""
 
 #. translators: %s: Name of current post.
-#: templates/single-docs.php:51
+#: templates/single-docs.php:95
 msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
-#: templates/single-docs.php:56
+#: templates/single-docs.php:100
 msgid "Docs:"
 msgstr ""
 
-#: templates/single-docs.php:64
+#: templates/single-docs.php:108
 #: assets/build/index.js:7
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:17
 msgid "Articles"
 msgstr ""
 
-#: templates/single-docs.php:75
+#: templates/single-docs.php:119
 msgctxt "Used before tag names."
 msgid "Tags"
 msgstr ""
 
-#: templates/single-docs.php:100
+#: templates/single-docs.php:144
 msgid "Still stuck? "
 msgstr ""
 
-#: templates/single-docs.php:108
+#: templates/single-docs.php:152
 #: assets/build/index.js:1
 #: src/components/DocListing/ArticleChildrens.js:202
 #: src/components/DocListing/SectionArticles.js:275
@@ -604,16 +633,22 @@ msgid "Align right"
 msgstr ""
 
 #: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:116
+#: src/blocks/DocsGrid/StyleControls.js:175
 #: src/blocks/Search/edit.js:117
 msgid "Solid"
 msgstr ""
 
 #: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:118
+#: src/blocks/DocsGrid/StyleControls.js:177
 #: src/blocks/Search/edit.js:118
 msgid "Dotted"
 msgstr ""
 
 #: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:117
+#: src/blocks/DocsGrid/StyleControls.js:176
 #: src/blocks/Search/edit.js:119
 msgid "Dashed"
 msgstr ""
@@ -644,6 +679,8 @@ msgid "Outset"
 msgstr ""
 
 #: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:119
+#: src/blocks/DocsGrid/StyleControls.js:178
 #: src/blocks/Search/edit.js:125
 msgid "None"
 msgstr ""
@@ -674,6 +711,7 @@ msgid "Field Hover Color"
 msgstr ""
 
 #: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:155
 #: src/blocks/Search/edit.js:159
 msgid "Border Color"
 msgstr ""
@@ -684,11 +722,13 @@ msgid "Icon Color"
 msgstr ""
 
 #: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:222
 #: src/blocks/Search/edit.js:169
 msgid "Button Color"
 msgstr ""
 
 #: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:228
 #: src/blocks/Search/edit.js:174
 msgid "Button Hover Color"
 msgstr ""
@@ -734,26 +774,31 @@ msgid "Field Margin"
 msgstr ""
 
 #: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:184
 #: src/blocks/Search/edit.js:231
 msgid "Border Width"
 msgstr ""
 
 #: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:197
 #: src/blocks/Search/edit.js:238
 msgid "Border Radius"
 msgstr ""
 
 #: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:172
 #: src/blocks/Search/edit.js:244
 msgid "Border Type"
 msgstr ""
 
 #: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:247
 #: src/blocks/Search/edit.js:255
 msgid "Button Padding"
 msgstr ""
 
 #: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:252
 #: src/blocks/Search/edit.js:265
 msgid "Button Margin"
 msgstr ""
@@ -771,6 +816,141 @@ msgstr ""
 #: assets/build/block.js:1
 #: src/blocks/Search/index.js:19
 msgid "Simple search forms for easy user guidance for your documentation"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:133
+msgid "Grid Styles"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:137
+msgid "Colors"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:143
+msgid "Doc Title Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:149
+msgid "Doc Children Active Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:162
+msgid "Grid Padding"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:167
+msgid "Grid Margin"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:212
+msgid "Button Styles"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:216
+msgid "Button Colors"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:234
+msgid "Button Text Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:240
+msgid "Button Hover Text Color"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:257
+msgid "Button Border Radius"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/StyleControls.js:271
+msgid "Button Text"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:186
+msgid "weDocs Order"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:187
+msgid "ID"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:191
+msgid "Ascending"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:192
+msgid "Descending"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:446
+msgid "Doc Grid Settings"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:453
+msgid "DOCS GRID COLUMN STYLE"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:460
+msgid "Docs per page"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:467
+msgid "Exclude Docs"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:473
+msgid "Order"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:479
+msgid "Order by"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:486
+msgid "Sections per doc"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:493
+msgid "Articles per section"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:500
+msgid "Show Doc Article"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:508
+msgid "Keep Article Collapsed"
+msgstr ""
+
+#: assets/build/block.js:1
+#: src/blocks/DocsGrid/edit.js:517
+msgid "Show View Details Button"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -844,7 +1024,7 @@ msgstr ""
 #: src/components/ConfirmationModal.js:24
 #: src/components/DocListing/QuickEditModal.js:97
 #: src/components/RestrictionModal.js:36
-#: src/components/Settings/index.js:53
+#: src/components/Settings/index.js:54
 msgid "Error"
 msgstr ""
 
@@ -1099,7 +1279,7 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/NotFound.js:25
-msgid "There’s Noting here..."
+msgid "There’s Nothing here..."
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1108,11 +1288,8 @@ msgid "...maybe the page you’re looking for is not found or never existed."
 msgstr ""
 
 #: assets/build/index.js:1
-#: assets/build/index.js:7
-#: src/components/DocListing/index.js:135
-#: src/components/Documentations/index.js:114
-#: src/components/Settings/index.js:125
-msgid "weDocs database has been updated successfully"
+#: src/components/WedocsPromoNotice.js:50
+msgid "Dismiss this notice"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1120,11 +1297,19 @@ msgstr ""
 #: src/components/DocListing/index.js:136
 #: src/components/Documentations/index.js:115
 #: src/components/Settings/index.js:126
+msgid "weDocs database has been updated successfully"
+msgstr ""
+
+#: assets/build/index.js:1
+#: assets/build/index.js:7
+#: src/components/DocListing/index.js:137
+#: src/components/Documentations/index.js:116
+#: src/components/Settings/index.js:127
 msgid "Database Updated!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/index.js:215
+#: src/components/DocListing/index.js:218
 msgid "No section or article found for this documentation"
 msgstr ""
 
@@ -1285,12 +1470,12 @@ msgid "Allow users to print articles directly from the website"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/index.js:42
+#: src/components/Settings/index.js:43
 msgid "Settings Data Saved!"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/index.js:43
+#: src/components/Settings/index.js:44
 msgid "Settings data has been saved successfully"
 msgstr ""
 
@@ -1327,7 +1512,7 @@ msgstr ""
 #: assets/build/index.js:1
 #: assets/build/index.js:7
 #: src/components/Documentations/EmptyDocs.js:84
-#: src/components/Migrations/index.js:201
+#: src/components/Migrations/index.js:203
 msgid "Learn more "
 msgstr ""
 
@@ -1359,12 +1544,12 @@ msgid "Add"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/Documentations/index.js:134
+#: src/components/Documentations/index.js:135
 msgid "New doc"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/Documentations/index.js:155
+#: src/components/Documentations/index.js:158
 msgid "Oops! It seems that your search did not match any existing documents. Please try again..."
 msgstr ""
 
@@ -1475,42 +1660,42 @@ msgid "Continue"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/Migrations/index.js:191
+#: src/components/Migrations/index.js:193
 msgid "Migration has been successful"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/Migrations/index.js:191
+#: src/components/Migrations/index.js:193
 msgid "Migrate existing docs from BetterDocs to weDocs"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/Migrations/index.js:204
+#: src/components/Migrations/index.js:206
 msgid "All existing docs have been successfully migrated from BetterDocs to weDocs."
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/Migrations/index.js:204
+#: src/components/Migrations/index.js:206
 msgid "how to migrate docs"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/Migrations/index.js:225
+#: src/components/Migrations/index.js:227
 msgid "Already Migrated"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/Migrations/index.js:241
+#: src/components/Migrations/index.js:243
 msgid "Start Migration"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/Migrations/index.js:268
+#: src/components/Migrations/index.js:270
 msgid "Go back to Docs"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/Migrations/index.js:288
+#: src/components/Migrations/index.js:290
 msgid "Migration not required"
 msgstr ""
 
@@ -2375,4 +2560,16 @@ msgstr ""
 
 #: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:89
 msgid "Select page"
+msgstr ""
+
+#: assets/build/blocks/DocsGrid/block.json
+#: src/blocks/DocsGrid/block.json
+msgctxt "block title"
+msgid "weDocs - Docs Grid"
+msgstr ""
+
+#: assets/build/blocks/DocsGrid/block.json
+#: src/blocks/DocsGrid/block.json
+msgctxt "block description"
+msgid "Display all the docs in a grid view"
 msgstr ""

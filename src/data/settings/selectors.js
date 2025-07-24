@@ -48,6 +48,11 @@ const selectors = {
     const { settings } = state;
     return settings?.assistant?.message?.turnstile_site_key;
   },
+
+  getPromoNotice( state ) {
+    const { promoNotice } = state;
+    return promoNotice;
+  },
 };
 
 export default selectors;
