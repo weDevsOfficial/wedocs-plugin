@@ -5,7 +5,7 @@ Tags: Documentation, Knowledge base, Wiki, Contact form, docs
 Requires at least: 5.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.1.11
+Stable tag: 2.1.12
 License: GPLv2 or later
 License URI: [GPLv2](https://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -108,7 +108,11 @@ Yes, weDocs allows you to set up custom permalinks for your documentation pages.
 
 == Changelog ==
 
-**v2.1.11 (28th Apr, 2025**
+**v2.1.12 (25th July, 2025**)
+– **Added:** Removed contributors section.
+– **Updated:** Updated Plugin .ORG Banner
+
+**v2.1.11 (28th Apr, 2025**)
 – **Added:** Promotional Banner to weDocs Dashboard.
 – **Fix:** Block theme deprecated error.
 
