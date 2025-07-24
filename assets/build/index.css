@@ -3426,6 +3426,9 @@ select {
 .wedocs-document :is(.mr-6) {
   margin-right: 1.5rem;
 }
+.wedocs-document :is(.mr-\[20px\]) {
+  margin-right: 20px;
+}
 .wedocs-document :is(.mr-auto) {
   margin-right: auto;
 }
@@ -3770,6 +3773,9 @@ select {
 .wedocs-document :is(.max-w-md) {
   max-width: 28rem;
 }
+.wedocs-document :is(.max-w-none) {
+  max-width: none;
+}
 .wedocs-document :is(.flex-1) {
   flex: 1 1 0%;
 }
@@ -3895,6 +3901,9 @@ select {
 }
 .wedocs-document :is(.\!gap-6) {
   gap: 1.5rem !important;
+}
+.wedocs-document :is(.gap-0) {
+  gap: 0px;
 }
 .wedocs-document :is(.gap-1) {
   gap: 0.25rem;
@@ -4585,6 +4594,9 @@ select {
 .wedocs-document :is(.pr-9) {
   padding-right: 2.25rem;
 }
+.wedocs-document :is(.pr-\[5px\]) {
+  padding-right: 5px;
+}
 .wedocs-document :is(.pt-0) {
   padding-top: 0px;
 }
@@ -4670,6 +4682,9 @@ select {
 }
 .wedocs-document :is(.\!font-normal) {
   font-weight: 400 !important;
+}
+.wedocs-document :is(.font-\[600\]) {
+  font-weight: 600;
 }
 .wedocs-document :is(.font-bold) {
   font-weight: 700;
