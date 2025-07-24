@@ -229,6 +229,7 @@ if ( !isProLoaded ) {
         'wedocs_documentation_contributors_callback',
         function () {
             if ( !userIsAdmin() ) return;
+            if(!isProLoaded) return;
 
             return <Contributors />;
         }
@@ -239,6 +240,7 @@ if ( !isProLoaded ) {
         'wedocs_article_contributors_callback',
         function () {
             if ( !userIsAdmin() ) return;
+              if(!isProLoaded) return;
 
             return <Contributors />;
         }

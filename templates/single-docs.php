@@ -1,4 +1,48 @@
 <?php
+// Helper function to render header blocks
+if (!function_exists('block_header_area')) {
+    function block_header_area() {
+        if (function_exists('block_template_part')) {
+            block_template_part('header');
+        } elseif (function_exists('wp_block_template_part')) {
+            wp_block_template_part('header');
+        }
+    }
+}
+
+// Helper function to render footer blocks
+if (!function_exists('block_footer_area')) {
+    function block_footer_area() {
+        if (function_exists('block_template_part')) {
+            block_template_part('footer');
+        } elseif (function_exists('wp_block_template_part')) {
+            wp_block_template_part('footer');
+        }
+    }
+}
+
+/**
+ * The template for displaying a single doc
+ */
+
+// For block themes, we need to output the minimal HTML structure
+if (function_exists('wp_is_block_theme') && wp_is_block_theme()) {
+    ?>
+    <!DOCTYPE html>
+    <html <?php language_attributes(); ?>>
+    <head>
+        <meta charset="<?php bloginfo( 'charset' ); ?>">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?php wp_head(); ?>
+    </head>
+    <body <?php body_class(); ?>>
+    <?php wp_body_open(); ?>
+    <div class="wp-site-blocks">
+        <?php block_header_area(); ?>
+<?php
+} else {
+    get_header();
+}
 /**
  * The template for displaying a single doc
  *
@@ -6,7 +50,7 @@
  */
 $skip_sidebar = ( get_post_meta( $post->ID, 'skip_sidebar', true ) == 'yes' ) ? true : false;
 
-get_header(); ?>
+?>
 
     <?php
         /**
@@ -145,4 +189,16 @@ get_header(); ?>
         do_action( 'wedocs_after_main_content' );
     ?>
 
-<?php get_footer(); ?>
+    <?php
+    // Close out based on theme type
+    if (function_exists('wp_is_block_theme') && wp_is_block_theme()) {
+        ?>
+            <?php block_footer_area(); ?>
+        </div><!-- .wp-site-blocks -->
+        <?php wp_footer(); ?>
+        </body>
+        </html>
+        <?php
+    } else {
+        get_footer();
+    }
