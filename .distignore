@@ -1,0 +1,8 @@
+.bablerc.js
+.eslintrc
+.github/
+.prettierrc
+.wordpress-org/
+tailwind.config.js
+postcss.config.js
+webpack.config.js
