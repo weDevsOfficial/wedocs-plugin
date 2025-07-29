@@ -1,0 +1,23 @@
+{
+  "landingPage": "/wp-admin/admin.php?page=wedocs",
+  "preferredVersions": {
+    "wp": "latest",
+    "php": "8.0"
+  },
+  "plugins": [
+    "wedocs"
+  ],
+  "steps": [
+    {
+      "step": "login",
+      "username": "admin"
+    },
+    {
+      "step": "importWxr",
+      "file": {
+        "resource": "url",
+        "url": "https://raw.githubusercontent.com/weDevsOfficial/wedocs-plugin/06807b409c0f1bca0a5a2f85eb4ba043a46d0439/.wordpress-org/blueprints/wedocs.WordPress.mini.xml"
+      }
+    }
+  ]
+}
