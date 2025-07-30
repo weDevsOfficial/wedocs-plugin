@@ -6,6 +6,11 @@
     ".phpcs.xml.dist",
     ".svnignore",
     ".travis.yml",
+    ".bablerc.js",
+    ".prettierrc",
+    "postcss.config.js",
+    "tailwind.config.js",
+    "webpack.config.js",
     "LICENSE",
     "readme.md",
     "appsero.json",
@@ -16,6 +21,7 @@
     "phpunit.xml.dist",
     "bin",
     "tests",
-    "src"
+    "src",
+    ".wordpress-org"
   ]
 }
