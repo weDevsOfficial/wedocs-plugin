@@ -22,6 +22,7 @@
     "bin",
     "tests",
     "src",
-    ".wordpress-org"
+    ".wordpress-org",
+    ".github"
   ]
 }
