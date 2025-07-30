@@ -1,0 +1,13 @@
+.bablerc.js
+.eslintrc
+.github/
+.prettierrc
+.wordpress-org/
+tailwind.config.js
+postcss.config.js
+webpack.config.js
+.eslintrc.js
+.eslintrc.json
+.travis.ci
+tests/
+.wordpress-org
