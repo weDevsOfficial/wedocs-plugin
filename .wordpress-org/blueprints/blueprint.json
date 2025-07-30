@@ -16,7 +16,7 @@
       "step": "importWxr",
       "file": {
         "resource": "url",
-        "url": "https://raw.githubusercontent.com/weDevsOfficial/wedocs-plugin/06807b409c0f1bca0a5a2f85eb4ba043a46d0439/.wordpress-org/blueprints/wedocs.WordPress.mini.xml"
+        "url": "https://raw.githubusercontent.com/weDevsOfficial/wedocs-util/refs/heads/master/wedocs.WordPress.xml"
       }
     }
   ]
