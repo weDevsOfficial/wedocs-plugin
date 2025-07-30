@@ -6,3 +6,7 @@
 tailwind.config.js
 postcss.config.js
 webpack.config.js
+.eslintrc.js
+.eslintrc.json
+tests/
+.travis.ci
