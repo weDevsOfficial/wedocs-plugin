@@ -8,7 +8,7 @@ const UpgradeButton = ( { classes, showPopup, children } ) => {
       ) : (
         <a
           target='_blank'
-          href='//wedocs.co/'
+          href='//wedocs.co/pricing/?utm_source=wordpress-dashboard+&utm_medium=update_to_pro_pop-up&utm_campaign=free2pro_pop-up'
           onClick={ showPopup }
           className={ `upgrade-button text-white hover:text-white focus:text-white focus:ring-0 px-4 py-2.5 inline-flex items-center rounded-md bg-[#ff9000] hover:bg-[#cf7500] font-semibold text-sm gap-2.5 ${ classes ? classes : '' }` }
         >
