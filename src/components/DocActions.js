@@ -47,8 +47,8 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
     <Fragment>
       <div
         className="documentation-ellipsis-actions relative"
-        onMouseEnter={ () => setShowActions( true ) }
         onMouseLeave={ () => setShowActions( false ) }
+        onClick={()=>setShowActions(!showActions)}
       >
         <span
           className="dashicons dashicons-ellipsis d-block cursor-pointer text-sm rotate-90 text-gray-500"
