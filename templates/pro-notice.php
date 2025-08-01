@@ -1,4 +1,6 @@
-<div style='border-radius: 3px; padding: 8px 12px; padding-right: 38px;' class='notice notice-info is-dismissible' id='wedocs-pro-notice'>
+<!-- might resue later -->
+
+<!-- <div style='border-radius: 3px; padding: 8px 12px; padding-right: 38px;' class='notice notice-info is-dismissible' id='wedocs-pro-notice'>
     <div class='wd-pro-notice' style='display: flex; gap: 16px; align-items: center;'>
         <div class='logo-img' style='line-height: 1;'>
             <img
@@ -18,4 +20,4 @@
             </p>
         </div>
     </div>
-</div>
+</div> -->
