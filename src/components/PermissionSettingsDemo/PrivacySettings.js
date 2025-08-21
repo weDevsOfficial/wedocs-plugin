@@ -12,7 +12,7 @@ const PrivacySettings = ( ) => {
 					htmlFor="public"
 					className="text-base font-medium text-gray-900 mr-5"
 				>
-					{ __( 'Viewing Privacy', 'wedocs-pro' ) }
+					{ __( 'Viewing Privacy', 'wedocs' ) }
 				</label>
 				<div className="privacy-fields relative flex space-x-12 !mt-1">
 					<div className="field flex">
@@ -31,7 +31,7 @@ const PrivacySettings = ( ) => {
 								htmlFor="public"
 								className="font-medium text-gray-700"
 							>
-								{ __( 'Public', 'wedocs-pro' ) }
+								{ __( 'Public', 'wedocs' ) }
 								<p className="font-normal text-[#6B7280] pt-0.5">
 									{ __(
 										'Everyone can see this doc',
@@ -55,18 +55,18 @@ const PrivacySettings = ( ) => {
 						<div className="ml-2 text-sm">
 							<label
 								htmlFor="privacy"
-								className="font-medium text-gray-700"
+								className="font-medium text-gray-700 relative"
 							>
-								{ __( 'Private', 'wedocs-pro' ) }
+								{ __( 'Private', 'wedocs' ) }
 								<p className="font-normal text-[#6B7280] pt-0.5">
 									{ __(
 										'Only logged-in users can see this doc',
 										'wedocs'
 									) }
 								</p>
+								<Badge position='absolute' top="-5px" left="45px" heading="Permission Management is a Premium Feature" description="To see who contributed to the documents, you must upgrade to the pro edition."/>
 							</label>
 						</div>
-						<Badge/>
 					</div>
 				</div>
 			</div>

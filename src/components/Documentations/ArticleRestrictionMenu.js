@@ -38,7 +38,7 @@ const ArticleRestrictionMenu = ( { id, type } ) => {
 							href={ `${weDocsAdminVars?.weDocsUrl}manager/${ id }` }
 							className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
 						>
-							<span>{ __( 'Permission Management', 'wedocs-pro' ) }</span>
+							<span>{ __( 'Permission Management', 'wedocs' ) }</span>
 						</a>
 					) }
 					{ !Boolean( isAdminRestricted ) && type === 'article' && (
@@ -49,7 +49,7 @@ const ArticleRestrictionMenu = ( { id, type } ) => {
 						>
 							{ __(
 								'Restrict editing for admin only',
-								'wedocs-pro'
+								'wedocs'
 							) }
 						</PrivacyModal>
 					) }
