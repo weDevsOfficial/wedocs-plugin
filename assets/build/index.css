@@ -1993,6 +1993,21 @@ select {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+.checkbox {
+  flex-shrink: 0;
+  --chkbg: var(--bc);
+  --chkfg: var(--b1);
+  height: 1.5rem;
+  width: 1.5rem;
+  cursor: pointer;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-width: 1px;
+  border-color: hsl(var(--bc) / var(--tw-border-opacity));
+  --tw-border-opacity: 0.2;
+  border-radius: var(--rounded-btn, 0.5rem);
+}
 .divider {
   display: flex;
   flex-direction: row;
@@ -2476,6 +2491,33 @@ select {
 .carousel::-webkit-scrollbar {
   display: none;
 }
+.checkbox:focus-visible {
+  outline: 2px solid hsl(var(--bc));
+  outline-offset: 2px;
+}
+.checkbox:checked,
+  .checkbox[checked="true"],
+  .checkbox[aria-checked="true"] {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--bc) / var(--tw-bg-opacity));
+  background-repeat: no-repeat;
+  animation: checkmark var(--animation-input, 0.2s) ease-in-out;
+  background-image: linear-gradient(-45deg, transparent 65%, hsl(var(--chkbg)) 65.99%), linear-gradient(45deg, transparent 75%, hsl(var(--chkbg)) 75.99%), linear-gradient(-45deg, hsl(var(--chkbg)) 40%, transparent 40.99%), linear-gradient(45deg, hsl(var(--chkbg)) 30%, hsl(var(--chkfg)) 30.99%, hsl(var(--chkfg)) 40%, transparent 40.99%), linear-gradient(-45deg, hsl(var(--chkfg)) 50%, hsl(var(--chkbg)) 50.99%);
+}
+.checkbox:indeterminate {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--bc) / var(--tw-bg-opacity));
+  background-repeat: no-repeat;
+  animation: checkmark var(--animation-input, 0.2s) ease-in-out;
+  background-image: linear-gradient(90deg, transparent 80%, hsl(var(--chkbg)) 80%), linear-gradient(-90deg, transparent 80%, hsl(var(--chkbg)) 80%), linear-gradient(0deg, hsl(var(--chkbg)) 43%, hsl(var(--chkfg)) 43%, hsl(var(--chkfg)) 57%, hsl(var(--chkbg)) 57%);
+}
+.checkbox:disabled {
+  cursor: not-allowed;
+  border-color: transparent;
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--bc) / var(--tw-bg-opacity));
+  opacity: 0.2;
+}
 @keyframes checkmark {
 
   0% {
@@ -2489,6 +2531,11 @@ select {
   100% {
     background-position-y: 0;
   }
+}
+[dir="rtl"] .checkbox:checked,
+    [dir="rtl"] .checkbox[checked="true"],
+    [dir="rtl"] .checkbox[aria-checked="true"] {
+  background-image: linear-gradient(45deg, transparent 65%, hsl(var(--chkbg)) 65.99%), linear-gradient(-45deg, transparent 75%, hsl(var(--chkbg)) 75.99%), linear-gradient(45deg, hsl(var(--chkbg)) 40%, transparent 40.99%), linear-gradient(-45deg, hsl(var(--chkbg)) 30%, hsl(var(--chkfg)) 30.99%, hsl(var(--chkfg)) 40%, transparent 40.99%), linear-gradient(45deg, hsl(var(--chkfg)) 50%, hsl(var(--chkbg)) 50.99%);
 }
 .divider:before {
   background-color: hsl(var(--bc) / var(--tw-bg-opacity));
@@ -3072,6 +3119,9 @@ select {
 .wedocs-document :is(.invisible) {
   visibility: hidden;
 }
+.wedocs-document :is(.static) {
+  position: static;
+}
 .wedocs-document :is(.fixed) {
   position: fixed;
 }
@@ -3273,6 +3323,9 @@ select {
 }
 .wedocs-document :is(.\!mr-2) {
   margin-right: 0.5rem !important;
+}
+.wedocs-document :is(.\!mt-0) {
+  margin-top: 0px !important;
 }
 .wedocs-document :is(.\!mt-1) {
   margin-top: 0.25rem !important;
@@ -4098,6 +4151,9 @@ select {
 .wedocs-document :is(.whitespace-break-spaces) {
   white-space: break-spaces;
 }
+.wedocs-document :is(.\!rounded-full) {
+  border-radius: 9999px !important;
+}
 .wedocs-document :is(.\!rounded-md) {
   border-radius: 0.375rem !important;
 }
@@ -4163,6 +4219,14 @@ select {
 .wedocs-document :is(.\!border-gray-300) {
   --tw-border-opacity: 1 !important;
   border-color: rgb(209 213 219 / var(--tw-border-opacity)) !important;
+}
+.wedocs-document :is(.\!border-indigo-400) {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(129 140 248 / var(--tw-border-opacity)) !important;
+}
+.wedocs-document :is(.\!border-indigo-700) {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(67 56 202 / var(--tw-border-opacity)) !important;
 }
 .wedocs-document :is(.\!border-red-500) {
   --tw-border-opacity: 1 !important;
@@ -4230,9 +4294,17 @@ select {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(144 144 145 / var(--tw-bg-opacity)) !important;
 }
+.wedocs-document :is(.\!bg-gray-100) {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity)) !important;
+}
 .wedocs-document :is(.\!bg-gray-200) {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity)) !important;
+}
+.wedocs-document :is(.\!bg-indigo-700) {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(67 56 202 / var(--tw-bg-opacity)) !important;
 }
 .wedocs-document :is(.\!bg-transparent) {
   background-color: transparent !important;
@@ -4764,6 +4836,12 @@ select {
 .wedocs-document :is(.leading-8) {
   line-height: 2rem;
 }
+.wedocs-document :is(.leading-\[20px\]) {
+  line-height: 20px;
+}
+.wedocs-document :is(.leading-\[21px\]) {
+  line-height: 21px;
+}
 .wedocs-document :is(.leading-\[3rem\]) {
   line-height: 3rem;
 }
@@ -5026,6 +5104,11 @@ select {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+.wedocs-document :is(.transition-opacity) {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
 .wedocs-document :is(.transition-transform) {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -5201,6 +5284,11 @@ html.wp-toolbar {
   left: 0px;
 }
 
+.wedocs-document :is(.before\:\!-mt-\[1px\])::before {
+  content: var(--tw-content);
+  margin-top: -1px !important;
+}
+
 .wedocs-document :is(.before\:\!ml-1)::before {
   content: var(--tw-content);
   margin-left: 0.25rem !important;
@@ -5214,6 +5302,11 @@ html.wp-toolbar {
 .wedocs-document :is(.before\:mt-3)::before {
   content: var(--tw-content);
   margin-top: 0.75rem;
+}
+
+.wedocs-document :is(.before\:block)::before {
+  content: var(--tw-content);
+  display: block;
 }
 
 .wedocs-document :is(.before\:\!hidden)::before {
@@ -5285,6 +5378,11 @@ html.wp-toolbar {
   content: var(--tw-content);
   --tw-bg-opacity: 1 !important;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity)) !important;
+}
+
+.wedocs-document :is(.before\:\!content-none)::before {
+  --tw-content: none !important;
+  content: var(--tw-content) !important;
 }
 
 .wedocs-document :is(.before\:content-\[\'\'\])::before {
@@ -5437,12 +5535,46 @@ html.wp-toolbar {
   background-color: rgb(79 70 229 / var(--tw-bg-opacity)) !important;
 }
 
+.wedocs-document :is(.checked\:bg-none:checked) {
+  background-image: none;
+}
+
+.wedocs-document :is(.checked\:before\:\!ml-0:checked)::before {
+  content: var(--tw-content);
+  margin-left: 0px !important;
+}
+
+.wedocs-document :is(.checked\:before\:flex:checked)::before {
+  content: var(--tw-content);
+  display: flex;
+}
+
+.wedocs-document :is(.checked\:before\:\!w-full:checked)::before {
+  content: var(--tw-content);
+  width: 100% !important;
+}
+
+.wedocs-document :is(.checked\:before\:items-center:checked)::before {
+  content: var(--tw-content);
+  align-items: center;
+}
+
+.wedocs-document :is(.checked\:before\:justify-center:checked)::before {
+  content: var(--tw-content);
+  justify-content: center;
+}
+
 .wedocs-document :is(.hover\:block:hover) {
   display: block;
 }
 
 .wedocs-document :is(.hover\:cursor-pointer:hover) {
   cursor: pointer;
+}
+
+.wedocs-document :is(.hover\:bg-\[\#443aff\]:hover) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(68 58 255 / var(--tw-bg-opacity));
 }
 
 .wedocs-document :is(.hover\:bg-\[\#F9FAFB\]:hover) {
@@ -5463,6 +5595,11 @@ html.wp-toolbar {
 .wedocs-document :is(.hover\:bg-gray-200:hover) {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+.wedocs-document :is(.hover\:bg-gray-300:hover) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
 
 .wedocs-document :is(.hover\:bg-gray-50:hover) {
@@ -5493,10 +5630,6 @@ html.wp-toolbar {
 .wedocs-document :is(.hover\:bg-slate-300:hover) {
   --tw-bg-opacity: 1;
   background-color: rgb(203 213 225 / var(--tw-bg-opacity));
-}
-
-.wedocs-document :is(.hover\:fill-\[\#cf7500\]:hover) {
-  fill: #cf7500;
 }
 
 .wedocs-document :is(.hover\:stroke-indigo-700:hover) {
@@ -5696,6 +5829,10 @@ html.wp-toolbar {
 
 .wedocs-document :is(.group:hover .group-hover\:underline) {
   text-decoration-line: underline;
+}
+
+.wedocs-document :is(.group:hover .group-hover\:opacity-100) {
+  opacity: 1;
 }
 
 .wedocs-document :is(.aria-selected\:bg-gray-100[aria-selected="true"]) {
