@@ -10,7 +10,7 @@ const UpgradeButton = ( { classes, showPopup, children } ) => {
           target='_blank'
           href='//wedocs.co/'
           onClick={ showPopup }
-          className={ `upgrade-button text-white hover:text-white focus:text-white focus:ring-0 px-4 py-2.5 inline-flex items-center rounded-md bg-[#ff9000] hover:bg-[#cf7500] font-semibold text-sm gap-2.5 ${ classes ? classes : '' }` }
+          className={ `upgrade-button text-white hover:text-white focus:text-white focus:ring-0 px-4 py-2.5 inline-flex items-center rounded-md bg-[#5046e6] hover:bg-[#3d36b4] font-semibold text-sm gap-2.5 ${ classes ? classes : '' }` }
         >
           { __( 'Upgrade to PRO ', 'wedocs' ) }
           <svg className='crown-icon' xmlns="http://www.w3.org/2000/svg" width="20" fill="#fff" height="15">

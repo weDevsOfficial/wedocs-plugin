@@ -68,7 +68,9 @@ class Assets {
                 'weDocsAdminVars',
                 array(
                     'adminUrl'     => admin_url(),
+                    'weDocsUrl'              => admin_url( 'admin.php?page=wedocs#/' ),
                     'hasManageCap' => current_user_can( 'manage_options' ),
+                    'weDocsProBadgeUrl' => WEDOCS_URL . '/assets/img/wedocs-pro-badge.svg',
                 ),
             );
         }
