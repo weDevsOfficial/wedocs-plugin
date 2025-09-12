@@ -6,14 +6,6 @@ export default function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
 	const { separator, hideHomeIcon } = attributes;
 
-	// Console log all attributes
-	console.log('Breadcrumb Block Attributes:', attributes);
-
-	// Extract style system colors
-	const backgroundColor = attributes.backgroundColor;
-	const textColor = attributes.textColor;
-	const linkColor = attributes.style?.elements?.link?.color?.text;
-
 	// Helper function to convert WordPress color format to CSS variable
 	const getColorValue = (color) => {
 		if (!color) return undefined;
@@ -23,6 +15,11 @@ export default function Edit({ attributes, setAttributes }) {
 		}
 		return color;
 	};
+
+	// Extract style system colors
+	const backgroundColor = attributes.backgroundColor;
+	const textColor = attributes.textColor;
+	const linkColor = attributes.style?.elements?.link?.color?.text;
 
 	const getSeparatorIcon = () => {
 		switch (separator) {
@@ -81,12 +78,21 @@ export default function Edit({ attributes, setAttributes }) {
 										!hideHomeIcon && index === 0 ? (
 											<a 
 												href={breadcrumb.url} 
-												className="hover:opacity-80"
+												className="hover:opacity-80 flex items-center"
 												style={{
 													color: getColorValue(linkColor) || (textColor ? `var(--wp--preset--color--${textColor})` : undefined)
 												}}
 											>
-												<svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" className="size-5 shrink-0">
+												<svg 
+													viewBox="0 0 20 20" 
+													fill="currentColor" 
+													data-slot="icon" 
+													aria-hidden="true" 
+													className="w-5 h-5 shrink-0 mr-1"
+													style={{
+														color: getColorValue(linkColor) || (textColor ? `var(--wp--preset--color--${textColor})` : undefined)
+													}}
+												>
 													<path d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z" clipRule="evenodd" fillRule="evenodd" />
 												</svg>
 												<span className="sr-only">{breadcrumb.title}</span>

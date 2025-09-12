@@ -16,3 +16,5 @@ Thumbs.db
 
 .vscode/
 .idea/
+
+/assets/build/
