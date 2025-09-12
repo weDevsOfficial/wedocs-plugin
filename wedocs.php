@@ -182,7 +182,13 @@ final class WeDocs {
                 'render_callback' => 'render_wedocs_docs_grid'
             )
         );
+
+        // Register the Breadcrumb block
+        register_block_type(
+            plugin_dir_path(__FILE__) . 'assets/build/blocks/Breadcrumb'
+        );
     }
+
 
     /**
      * The plugin activation function.
