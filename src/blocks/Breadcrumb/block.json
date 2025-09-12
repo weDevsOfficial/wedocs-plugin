@@ -15,18 +15,6 @@
 			"type": "boolean",
 			"default": false
 		},
-		"breadcrumbContainer": {
-			"type": "object",
-			"default": {
-				"alignment": "flex-start",
-				"background": "",
-				"color": "",
-				"border": "",
-				"borderRadius": "",
-				"padding": "",
-				"margin": ""
-			}
-		},
 		"breadcrumbSeparator": {
 			"type": "object",
 			"default": {
@@ -36,17 +24,11 @@
 	},
 	"supports": {
 		"html": false,
-		"background": {
-			"backgroundImage": true,
-			"backgroundSize": true,
-			"__experimentalDefaultControls": {
-				"backgroundImage": true
-			}
-		},
 		"color": {
 			"background": true,
 			"text": true,
-			"link": true
+			"link": true,
+			"border": true
 		},
 		"shadow": true,
 		"spacing": {
