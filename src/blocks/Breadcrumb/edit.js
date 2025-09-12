@@ -4,7 +4,7 @@ import "./style.scss";
 
 export default function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
-	const { separator, hideHomeIcon } = attributes;
+	const { separator, hideHomeIcon, breadcrumbSeparator } = attributes;
 
 	// Helper function to convert WordPress color format to CSS variable
 	const getColorValue = (color) => {
@@ -58,6 +58,7 @@ export default function Edit({ attributes, setAttributes }) {
 			<div className="wedocs-document">
 				<nav aria-label="Breadcrumb" className="flex">
 					<ol 
+                        {...blockProps}
 						role="list" 
 						className="flex space-x-4 rounded-md px-6 shadow"
 						style={{
@@ -69,9 +70,14 @@ export default function Edit({ attributes, setAttributes }) {
 							<li key={index} className="flex">
 								<div className="flex items-center">
 									{index > 0 && (
-										<svg viewBox="0 0 24 44" fill="currentColor" preserveAspectRatio="none" aria-hidden="true" className="h-full w-6 shrink-0 text-gray-200">
-											<path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
-										</svg>
+										<span 
+											className="mx-2 text-gray-400"
+											style={{
+												color: getColorValue(breadcrumbSeparator?.color) || undefined
+											}}
+										>
+											{getSeparatorIcon()}
+										</span>
 									)}
 
 									{breadcrumb.url ? (

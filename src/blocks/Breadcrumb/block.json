@@ -7,10 +7,6 @@
   "category": "widgets",
 	"description": "Display the breadcrumbs for the current page.",
 	"attributes": {
-		"layout": {
-			"type": "string",
-			"default": "100%"
-		},
 		"separator": {
 			"type": "string",
 			"default": "slash"
@@ -35,23 +31,6 @@
 			"type": "object",
 			"default": {
 				"color": ""
-			}
-		},
-		"separatorSpacing": {
-			"type": "object",
-			"default": {
-				"desktop": {
-					"margin": "",
-					"padding": ""
-				},
-				"tablet": {
-					"margin": "",
-					"padding": ""
-				},
-				"mobile": {
-					"margin": "",
-					"padding": ""
-				}
 			}
 		}
 	},

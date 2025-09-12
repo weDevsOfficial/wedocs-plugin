@@ -14,7 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Extract attributes with defaults
 $separator = $attributes['separator'] ?? 'slash';
 $hide_home_icon = $attributes['hideHomeIcon'] ?? false;
-$layout = $attributes['layout'] ?? '100%';
 
 // Get separator icon
 if (!function_exists('get_separator_icon')) {
