@@ -6,6 +6,7 @@
   "title": "weDocs Breadcrumbs",
   "category": "widgets",
   "description": "Display the breadcrumbs for the current page.",
+  "icon": "arrow-right-alt",
   "attributes": {
     "separator": {
       "type": "string",
@@ -19,6 +20,15 @@
       "type": "object",
       "default": {
         "color": ""
+      }
+    }
+  },
+  "example": {
+    "attributes": {
+      "separator": "slash",
+      "hideHomeIcon": false,
+      "breadcrumbSeparator": {
+        "color": "#666666"
       }
     }
   },
