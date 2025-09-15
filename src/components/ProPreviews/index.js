@@ -196,7 +196,7 @@ if ( !isProLoaded ) {
                             ) }
                             { type === 'article' && (
                               
-                <a href={`${weDocsAdminVars.weDocsUrl}permission_settings`} className='group w-full flex items-center py-2 px-4 space-x-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 !shadow-none'>
+                <a href={`${weDocsAdminVars.weDocsUrl}permission_settings`} className='group w-full flex items-center py-2 px-4 space-x-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none'>
                   <span>{ __( 'Restrict editing for admin only', 'wedocs' ) }</span>
                   <span className={ `crown cursor-pointer relative text-white text-[10px] py-[3px] px-[5px] leading-none ml-2.5` }>
                   </span>
