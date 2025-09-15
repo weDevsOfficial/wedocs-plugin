@@ -206,48 +206,85 @@ if (!function_exists('get_breadcrumb_items')) {
             'title' => __('Documentation', 'wedocs'),
             'url' => null
         ];
-    } else {
-        // For testing: Show breadcrumbs on any page
-        if (is_singular()) {
-            global $post;
-            // Add a parent page for testing
-            $breadcrumbs[] = [
-                'title' => __('Documentation', 'wedocs'),
-                'url' => '#'
-            ];
-            $breadcrumbs[] = [
-                'title' => $post->post_title,
-                'url' => null
-            ];
-        } elseif (is_home() || is_front_page()) {
+    } elseif (is_page()) {
+        // Handle regular pages with proper hierarchy
+        global $post;
+        
+        // Get page ancestors using WordPress built-in function
+        $ancestors = get_post_ancestors($post->ID);
+        
+        // Add ancestor pages in correct order
+        foreach ($ancestors as $ancestor_id) {
+            $ancestor = get_post($ancestor_id);
+            if ($ancestor) {
+                $breadcrumbs[] = [
+                    'title' => $ancestor->post_title,
+                    'url' => get_permalink($ancestor->ID)
+                ];
+            }
+        }
+        
+        // Add current page (no URL for current page)
+        $breadcrumbs[] = [
+            'title' => $post->post_title,
+            'url' => null
+        ];
+    } elseif (is_singular('post')) {
+        // Handle blog posts
+        global $post;
+        
+        // Add blog archive page
+        $blog_page_id = get_option('page_for_posts');
+        if ($blog_page_id) {
+            $blog_page = get_post($blog_page_id);
+            if ($blog_page) {
+                $breadcrumbs[] = [
+                    'title' => $blog_page->post_title,
+                    'url' => get_permalink($blog_page->ID)
+                ];
+            }
+        } else {
+            // Fallback to blog home
             $breadcrumbs[] = [
                 'title' => __('Blog', 'wedocs'),
-                'url' => null
+                'url' => get_option('home')
             ];
-        } elseif (is_category()) {
-            $breadcrumbs[] = [
-                'title' => single_cat_title('', false),
-                'url' => null
-            ];
-        } elseif (is_page()) {
+        }
+        
+        // Add current post (no URL for current page)
+        $breadcrumbs[] = [
+            'title' => $post->post_title,
+            'url' => null
+        ];
+    } elseif (is_category()) {
+        // Handle category pages
+        $category = get_queried_object();
+        $breadcrumbs[] = [
+            'title' => $category->name,
+            'url' => null
+        ];
+    } elseif (is_tag()) {
+        // Handle tag pages
+        $tag = get_queried_object();
+        $breadcrumbs[] = [
+            'title' => $tag->name,
+            'url' => null
+        ];
+    } elseif (is_archive()) {
+        // Handle other archive pages
+        $breadcrumbs[] = [
+            'title' => get_the_archive_title(),
+            'url' => null
+        ];
+    } elseif (is_home() || is_front_page()) {
+        // Handle home page - no additional breadcrumb needed
+        // The home breadcrumb is already added at the beginning
+    } else {
+        // Fallback for any other page type
+        if (is_singular()) {
             global $post;
-            // Add a parent page for testing
-            $breadcrumbs[] = [
-                'title' => __('Documentation', 'wedocs'),
-                'url' => '#'
-            ];
             $breadcrumbs[] = [
                 'title' => $post->post_title,
-                'url' => null
-            ];
-        } else {
-            // Fallback for any other page type - show sample breadcrumbs
-            $breadcrumbs[] = [
-                'title' => __('Documentation', 'wedocs'),
-                'url' => '#'
-            ];
-            $breadcrumbs[] = [
-                'title' => __('Getting Started', 'wedocs'),
                 'url' => null
             ];
         }
@@ -346,7 +383,7 @@ $breadcrumbs = get_breadcrumb_items();
                                 }
                                 ?>
                                 <a href="<?php echo esc_url($breadcrumb['url']); ?>" class="<?php echo esc_attr(implode(' ', $home_link_classes)); ?>" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?>">
-                                    <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 shrink-0">
+                                    <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="w-5 h-5 shrink-0 mr-1">
                                         <path d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z" clip-rule="evenodd" fill-rule="evenodd" />
                                     </svg>
                                     <span class="sr-only"><?php echo esc_html($breadcrumb['title']); ?></span>

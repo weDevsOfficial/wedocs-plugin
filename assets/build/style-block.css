@@ -2051,9 +2051,6 @@ select {
   .input-group > .textarea,
   .input-group > .select {
   border-radius: 0px;
-}
-  .input-group > .\!select {
-  border-radius: 0px !important;
 }.link {
   cursor: pointer;
   text-decoration-line: underline;
@@ -2112,34 +2109,6 @@ select {
   border-width: 1px;
   border-color: hsl(var(--bc) / var(--tw-border-opacity));
   --tw-border-opacity: 0.2;
-}.\!select {
-  display: inline-flex !important;
-  flex-shrink: 0 !important;
-  cursor: pointer !important;
-  -webkit-user-select: none !important;
-     -moz-user-select: none !important;
-          user-select: none !important;
-  -webkit-appearance: none !important;
-     -moz-appearance: none !important;
-          appearance: none !important;
-  height: 3rem !important;
-  padding-left: 1rem !important;
-  padding-right: 2.5rem !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
-  line-height: 2 !important;
-  min-height: 3rem !important;
-  border-width: 1px !important;
-  border-color: hsl(var(--bc) / var(--tw-border-opacity)) !important;
-  --tw-border-opacity: 0 !important;
-  --tw-bg-opacity: 1 !important;
-  background-color: hsl(var(--b1) / var(--tw-bg-opacity)) !important;
-  font-weight: 600 !important;
-  border-radius: var(--rounded-btn, 0.5rem) !important;
-  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%) !important;
-  background-position: calc(100% - 20px) calc(1px + 50%), calc(100% - 16px) calc(1px + 50%) !important;
-  background-size: 4px 4px, 4px 4px !important;
-  background-repeat: no-repeat !important;
 }.select {
   display: inline-flex;
   flex-shrink: 0;
@@ -2168,8 +2137,6 @@ select {
   background-position: calc(100% - 20px) calc(1px + 50%), calc(100% - 16px) calc(1px + 50%);
   background-size: 4px 4px, 4px 4px;
   background-repeat: no-repeat;
-}.\!select[multiple] {
-  height: auto !important;
 }.select[multiple] {
   height: auto;
 }.tabs {
@@ -2574,20 +2541,9 @@ select {
   100% {
     transform: translateY(0);
   }
-}.\!select:focus {
-  outline: 2px solid hsla(var(--bc) / 0.2) !important;
-  outline-offset: 2px !important;
 }.select:focus {
   outline: 2px solid hsla(var(--bc) / 0.2);
   outline-offset: 2px;
-}
-  .\!select[disabled] {
-  cursor: not-allowed !important;
-  --tw-border-opacity: 1 !important;
-  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity)) !important;
-  --tw-bg-opacity: 1 !important;
-  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity)) !important;
-  --tw-text-opacity: 0.2 !important;
 }.select-disabled,
   .select[disabled] {
   cursor: not-allowed;
@@ -2596,14 +2552,6 @@ select {
   --tw-bg-opacity: 1;
   background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));
   --tw-text-opacity: 0.2;
-}
-  .\!select[disabled]::-moz-placeholder {
-  color: hsl(var(--bc) / var(--tw-placeholder-opacity)) !important;
-  --tw-placeholder-opacity: 0.2 !important;
-}
-  .\!select[disabled]::placeholder {
-  color: hsl(var(--bc) / var(--tw-placeholder-opacity)) !important;
-  --tw-placeholder-opacity: 0.2 !important;
 }.select-disabled::-moz-placeholder, .select[disabled]::-moz-placeholder {
   color: hsl(var(--bc) / var(--tw-placeholder-opacity));
   --tw-placeholder-opacity: 0.2;
@@ -2611,23 +2559,11 @@ select {
   .select[disabled]::placeholder {
   color: hsl(var(--bc) / var(--tw-placeholder-opacity));
   --tw-placeholder-opacity: 0.2;
-}
-  .\!select[multiple],
-  .\!select[size].\!select:not([size="1"]) {
-  background-image: none !important;
-  padding-right: 1rem !important;
 }.select-multiple,
   .select[multiple],
   .select[size].select:not([size="1"]) {
   background-image: none;
   padding-right: 1rem;
-}
-  .\!select[multiple],
-  .\!select[size].\!select:not([size="1"]) {
-  background-image: none !important;
-  padding-right: 1rem !important;
-}[dir="rtl"] .\!select {
-  background-position: calc(0% + 12px) calc(1px + 50%), calc(0% + 16px) calc(1px + 50%) !important;
 }[dir="rtl"] .select {
   background-position: calc(0% + 12px) calc(1px + 50%), calc(0% + 16px) calc(1px + 50%);
 }.\!tab:hover {
@@ -3057,6 +2993,9 @@ select {
 }.wedocs-document :is(.mx-1) {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
+}.wedocs-document :is(.mx-2) {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }.wedocs-document :is(.mx-auto) {
   margin-left: auto;
   margin-right: auto;
@@ -4181,9 +4120,6 @@ select {
 }.wedocs-document :is(.text-black) {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
-}.wedocs-document :is(.text-gray-200) {
-  --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
 }.wedocs-document :is(.text-gray-400) {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
@@ -4341,7 +4277,7 @@ select {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }.wedocs-document :is(.ease-out) {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
-}.wp-block-wedocs-fse-support-wedocs-breadcrumbs{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}.wedocs-document :is(.before\:absolute)::before {
+}.wedocs-document :is(.before\:absolute)::before {
   content: var(--tw-content);
   position: absolute;
 }.wedocs-document :is(.before\:-right-\[1px\])::before {
@@ -4530,9 +4466,6 @@ select {
 }.wedocs-document :is(.hover\:text-black:hover) {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
-}.wedocs-document :is(.hover\:text-gray-500:hover) {
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
 }.wedocs-document :is(.hover\:text-gray-600:hover) {
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity));

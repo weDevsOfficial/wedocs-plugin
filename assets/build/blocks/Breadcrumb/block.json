@@ -7,10 +7,6 @@
   "category": "widgets",
   "description": "Display the breadcrumbs for the current page.",
   "attributes": {
-    "layout": {
-      "type": "string",
-      "default": "100%"
-    },
     "separator": {
       "type": "string",
       "default": "slash"
@@ -19,55 +15,20 @@
       "type": "boolean",
       "default": false
     },
-    "breadcrumbContainer": {
-      "type": "object",
-      "default": {
-        "alignment": "flex-start",
-        "background": "",
-        "color": "",
-        "border": "",
-        "borderRadius": "",
-        "padding": "",
-        "margin": ""
-      }
-    },
     "breadcrumbSeparator": {
       "type": "object",
       "default": {
         "color": ""
       }
-    },
-    "separatorSpacing": {
-      "type": "object",
-      "default": {
-        "desktop": {
-          "margin": "",
-          "padding": ""
-        },
-        "tablet": {
-          "margin": "",
-          "padding": ""
-        },
-        "mobile": {
-          "margin": "",
-          "padding": ""
-        }
-      }
     }
   },
   "supports": {
     "html": false,
-    "background": {
-      "backgroundImage": true,
-      "backgroundSize": true,
-      "__experimentalDefaultControls": {
-        "backgroundImage": true
-      }
-    },
     "color": {
       "background": true,
       "text": true,
-      "link": true
+      "link": true,
+      "border": true
     },
     "shadow": true,
     "spacing": {
