@@ -122,15 +122,34 @@ export default function Edit({ attributes, setAttributes }) {
 		return typographyValue;
 	};
 
+	// Helper function to convert WordPress shadow to CSS
+	const getShadowValue = (shadowValue) => {
+		if (!shadowValue) return undefined;
+		
+		// Handle preset shadow format: var:preset|shadow|natural
+		if (shadowValue.startsWith('var:preset|shadow|')) {
+			const shadowName = shadowValue.replace('var:preset|shadow|', '');
+			return `var(--wp--preset--shadow--${shadowName})`;
+		}
+		
+		// Handle direct preset shadow names: natural, deep, sharp, outlined, crisp
+		if (/^(natural|deep|sharp|outlined|crisp)$/.test(shadowValue)) {
+			return `var(--wp--preset--shadow--${shadowValue})`;
+		}
+		
+		return shadowValue;
+	};
+
 	// Extract style system colors and spacing
 	const backgroundColor = attributes.backgroundColor;
 	const textColor = attributes.textColor;
 	const linkColor = attributes.style?.elements?.link?.color?.text;
 
-	// Extract spacing, border, and typography from style object
+	// Extract spacing, border, typography, and shadow from style object
 	const spacing = attributes.style?.spacing || {};
 	const border = attributes.style?.border || {};
 	const typography = attributes.style?.typography || {};
+	const shadow = attributes.style?.shadow || '';
 	const padding = spacing.padding;
 	const margin = spacing.margin;
 	const borderRadius = border.radius;
@@ -185,7 +204,7 @@ export default function Edit({ attributes, setAttributes }) {
 				<nav aria-label="Breadcrumb" className="flex">
 					<ol
 						role="list"
-						className="flex space-x-4 shadow"
+						className="flex space-x-4"
 						style={{
 							backgroundColor: backgroundColor ? `var(--wp--preset--color--${backgroundColor})` : undefined,
 							color: textColor ? `var(--wp--preset--color--${textColor})` : undefined,
@@ -195,6 +214,7 @@ export default function Edit({ attributes, setAttributes }) {
 							borderWidth: borderWidth ? borderWidth : undefined,
 							borderStyle: borderStyle ? borderStyle : (borderWidth || borderColor || attributes.borderColor ? 'solid' : undefined),
 							borderColor: borderColor ? getColorValue(borderColor) : (attributes.borderColor ? getColorValue(attributes.borderColor) : undefined),
+							boxShadow: shadow ? getShadowValue(shadow) : undefined,
 							lineHeight: lineHeight ? lineHeight : undefined,
 							fontFamily: fontFamily ? getTypographyValue(fontFamily) : undefined,
 							fontWeight: fontWeight ? fontWeight : undefined,

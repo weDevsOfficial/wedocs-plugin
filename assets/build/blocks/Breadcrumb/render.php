@@ -44,6 +44,9 @@ $link_color = $elements['link']['color']['text'] ?? '';
 $breadcrumb_separator = $attributes['breadcrumbSeparator'] ?? [];
 $separator_color = $breadcrumb_separator['color'] ?? '';
 
+// Extract shadow attributes
+$shadow = $style['shadow'] ?? '';
+
 // Helper function to convert WordPress spacing to CSS
 if (!function_exists('get_spacing_value')) {
     function get_spacing_value($spacing_value) {
@@ -151,6 +154,28 @@ if (!function_exists('get_typography_value')) {
         }
         
         return $typography_value;
+    }
+}
+
+// Helper function to convert WordPress shadow to CSS
+if (!function_exists('get_shadow_value')) {
+    function get_shadow_value($shadow_value) {
+        if (empty($shadow_value)) {
+            return '';
+        }
+        
+        // Handle preset shadow format: var:preset|shadow|natural
+        if (strpos($shadow_value, 'var:preset|shadow|') === 0) {
+            $shadow_name = str_replace('var:preset|shadow|', '', $shadow_value);
+            return "var(--wp--preset--shadow--{$shadow_name})";
+        }
+        
+        // Handle direct preset shadow names: natural, deep, sharp, outlined, crisp
+        if (preg_match('/^(natural|deep|sharp|outlined|crisp)$/', $shadow_value)) {
+            return "var(--wp--preset--shadow--{$shadow_value})";
+        }
+        
+        return $shadow_value;
     }
 }
 
@@ -354,6 +379,7 @@ $breadcrumbs = get_breadcrumb_items();
             <?php if ($border_width): ?>border-width: <?php echo esc_attr(get_border_width_value($border_width)); ?>;<?php endif; ?>
             <?php if ($border_style): ?>border-style: <?php echo esc_attr($border_style); ?>;<?php elseif ($border_width || $effective_border_color): ?>border-style: solid;<?php endif; ?>
             <?php if ($effective_border_color): ?>border-color: <?php echo esc_attr(get_color_value($effective_border_color)); ?>;<?php endif; ?>
+            <?php if ($shadow): ?>box-shadow: <?php echo esc_attr(get_shadow_value($shadow)); ?>;<?php endif; ?>
             <?php if ($line_height): ?>line-height: <?php echo esc_attr($line_height); ?>;<?php endif; ?>
             <?php if ($font_family): ?>font-family: <?php echo esc_attr(get_typography_value($font_family)); ?>;<?php endif; ?>
             <?php if ($font_weight): ?>font-weight: <?php echo esc_attr($font_weight); ?>;<?php endif; ?>
