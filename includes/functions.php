@@ -592,3 +592,80 @@ function wedocs_convert_utc_to_est() {
 
 	return $current_time->format( 'Y-m-d H:i:s T' );
 }
+
+/**
+ * Get the maximum allowed hierarchy depth for weDocs.
+ *
+ * @since 2.1.13
+ *
+ * @return int Maximum depth allowed (default 7 levels)
+ */
+function wedocs_get_max_hierarchy_depth() {
+    return apply_filters( 'wedocs_max_hierarchy_depth', 7 );
+}
+
+/**
+ * Get hierarchy level name based on depth.
+ *
+ * @since 2.1.13
+ *
+ * @param int $depth The current depth level
+ * @return string The human-readable level name
+ */
+function wedocs_get_hierarchy_level_name( $depth ) {
+    $levels = array(
+        0 => __( 'Doc', 'wedocs' ),
+        1 => __( 'Section', 'wedocs' ),
+        2 => __( 'Article', 'wedocs' ),
+        3 => __( 'Sub-Article', 'wedocs' ),
+        4 => __( 'Sub-Sub-Article', 'wedocs' ),
+        5 => __( 'Sub-Sub-Sub-Article', 'wedocs' ),
+        6 => __( 'Sub-Sub-Sub-Sub-Article', 'wedocs' ),
+    );
+
+    if ( isset( $levels[ $depth ] ) ) {
+        return $levels[ $depth ];
+    }
+
+    return sprintf( __( 'Level %d', 'wedocs' ), $depth );
+}
+
+/**
+ * Check if a document can have children based on current depth.
+ *
+ * @since 2.1.13
+ *
+ * @param int $doc_id The document ID
+ * @return bool Whether the document can have children
+ */
+function wedocs_can_have_children( $doc_id ) {
+    $depth = wedocs_get_document_depth( $doc_id );
+    $max_depth = wedocs_get_max_hierarchy_depth();
+    
+    return $depth < $max_depth;
+}
+
+/**
+ * Get the depth of a document in the hierarchy.
+ *
+ * @since 2.1.13
+ *
+ * @param int $doc_id The document ID
+ * @return int The depth level (0 for root docs)
+ */
+function wedocs_get_document_depth( $doc_id ) {
+    $depth = 0;
+    $post = get_post( $doc_id );
+    
+    while ( $post && $post->post_parent ) {
+        $depth++;
+        $post = get_post( $post->post_parent );
+        
+        // Prevent infinite loops
+        if ( $depth > 20 ) {
+            break;
+        }
+    }
+    
+    return $depth;
+}

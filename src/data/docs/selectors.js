@@ -90,6 +90,52 @@ const selectors = {
     return sortableChildrens;
   },
 
+  // New selectors for deeper hierarchy levels
+  getSubArticleChildrens: ( state, id ) => {
+    const { docs } = state;
+    const childrens = docs?.filter( ( doc ) => doc.parent === id )?.reverse();
+
+    const sortableChildrens = childrens?.sort(
+      ( a, b ) => a.menu_order - b.menu_order
+    );
+
+    return sortableChildrens;
+  },
+
+  getSubSubArticleChildrens: ( state, id ) => {
+    const { docs } = state;
+    const childrens = docs?.filter( ( doc ) => doc.parent === id )?.reverse();
+
+    const sortableChildrens = childrens?.sort(
+      ( a, b ) => a.menu_order - b.menu_order
+    );
+
+    return sortableChildrens;
+  },
+
+  getSubSubSubArticleChildrens: ( state, id ) => {
+    const { docs } = state;
+    const childrens = docs?.filter( ( doc ) => doc.parent === id )?.reverse();
+
+    const sortableChildrens = childrens?.sort(
+      ( a, b ) => a.menu_order - b.menu_order
+    );
+
+    return sortableChildrens;
+  },
+
+  // Generic function to get children at any level
+  getDocumentChildrens: ( state, id ) => {
+    const { docs } = state;
+    const childrens = docs?.filter( ( doc ) => doc.parent === id )?.reverse();
+
+    const sortableChildrens = childrens?.sort(
+      ( a, b ) => a.menu_order - b.menu_order
+    );
+
+    return sortableChildrens;
+  },
+
   getHelpfulDocs: ( state ) => {
     const { helpfulDocs } = state;
     return helpfulDocs;

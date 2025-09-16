@@ -3,17 +3,80 @@ import DocActions from '../DocActions';
 import { CSS } from '@dnd-kit/utilities';
 import { __, sprintf } from '@wordpress/i18n';
 import QuickEditModal from './QuickEditModal';
-import { useSortable } from '@dnd-kit/sortable';
+import {
+  useSortable,
+  SortableContext,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import extractedTitle from '../../utils/extractedTitle';
-import { Fragment, useState } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
+import { Fragment, useState, useEffect } from '@wordpress/element';
+import { useSelect, dispatch } from '@wordpress/data';
 import docStore from '../../data/docs';
-import ArticleChildrens from './ArticleChildrens';
+import NestedArticles from './NestedArticles';
 import AddArticleModal from '../AddArticleModal';
+import DraggableDocs from '../DraggableDocs';
 
-const SectionArticles = ( { article, articles, isAdmin, section, sections, searchValue, setShowArticles, isAllowComments } ) => {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
-    useSortable( { id: article?.id } );
+const SectionArticles = ( {
+  article,
+  articles,
+  section,
+  sections,
+  searchValue,
+  setShowArticles,
+  isAllowComments,
+  setNeedSortingStatus,
+} ) => {
+  const articleChildrens = useSelect(
+    ( select ) =>
+      select( docStore ).getArticleChildrens( parseInt( article?.id ) ),
+    [ article?.id ]
+  );
+
+  const [ childrenArticles, setChildrenArticles ] = useState(
+    articleChildrens || []
+  );
+
+  const sortableStatus = useSelect(
+    ( select ) => select( docStore ).getSortingStatus(),
+    []
+  );
+
+  const needSortableStatus = useSelect(
+    ( select ) => select( docStore ).getNeedSortingStatus(),
+    []
+  );
+
+  const [ needSortingStatusLocal, setNeedSortingStatusLocal ] = useState( needSortableStatus );
+
+  // Update children items when articleChildrens changes
+  useEffect( () => {
+    if ( articleChildrens ) {
+      setChildrenArticles( articleChildrens );
+    }
+  }, [ articleChildrens ] );
+
+  // Sync local sorting status with global status
+  useEffect( () => {
+    setNeedSortingStatusLocal( needSortableStatus );
+  }, [ needSortableStatus ] );
+
+  // Handle sorting when needed
+  useEffect( () => {
+    if ( needSortingStatusLocal && childrenArticles.length > 0 ) {
+      dispatch( docStore )
+        .updateSortingStatus( { sortable_status: sortableStatus, documentations: childrenArticles } )
+        .then( ( result ) => setNeedSortingStatusLocal( result?.sorting ) )
+        .catch( ( err ) => {} );
+    }
+  }, [ needSortingStatusLocal, childrenArticles, sortableStatus ] );
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable( { id: article?.id } );
 
   const style = {
     transform: CSS?.Transform?.toString( transform ),
@@ -31,13 +94,10 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
     return date?.toLocaleDateString( 'en-US', options );
   };
 
-  const articleChildrens = useSelect(
-    ( select ) => select( docStore ).getArticleChildrens( parseInt( article?.id ) ),
-    []
-  );
-
-  const filteredArticleChildrens = articleChildrens?.filter(
-    ( children ) => children?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() )
+  const filteredArticleChildrens = articleChildrens?.filter( ( children ) =>
+    children?.title?.rendered
+      ?.toLowerCase()
+      .includes( searchValue.toLowerCase() )
   );
 
   const isAdminRestrictedArticle = wp?.hooks?.applyFilters(
@@ -92,13 +152,17 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
                   <a
                     target="_blank"
                     href={
-                      ! Boolean( parseInt( wp?.hooks?.applyFilters(
-                        'wedocs_check_is_admin_restricted_article',
-                        false,
-                        article?.id
-                      ) ) ) ?
-                        `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit` :
-                        `${ window.location.origin }/?p=${ article?.id }`
+                      ! Boolean(
+                        parseInt(
+                          wp?.hooks?.applyFilters(
+                            'wedocs_check_is_admin_restricted_article',
+                            false,
+                            article?.id
+                          )
+                        )
+                      )
+                        ? `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit`
+                        : `${ window.location.origin }/?p=${ article?.id }`
                     }
                     className={ `flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none` }
                     rel="noreferrer"
@@ -119,7 +183,9 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
                   </a>
 
                   { article?.status === 'draft' && (
-                    <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5 mr-5` }>
+                    <div
+                      className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5 mr-5` }
+                    >
                       { __( 'Draft', 'wedocs' ) }
                     </div>
                   ) }
@@ -130,7 +196,7 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
                     defaultSection={ article }
                   >
                     <div
-                      className='tooltip cursor-pointer flex items-center justify-center w-3.5 h-3.5'
+                      className="tooltip cursor-pointer flex items-center justify-center w-3.5 h-3.5"
                       data-tip={ __( 'Create', 'wedocs' ) }
                     >
                       <span className="flex items-center dashicons dashicons-plus-alt2 hidden group-hover:inline-flex text-2xl font-medium text-[#d1d5db] hover:text-indigo-700"></span>
@@ -140,15 +206,23 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
                   <a
                     target="_blank"
                     href={
-                      ! Boolean( parseInt( wp?.hooks?.applyFilters(
-                        'wedocs_check_is_admin_restricted_article',
-                        false,
-                        article?.id
-                      ) ) ) ?
-                        `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit` :
-                        `${ window.location.origin }/?p=${ article?.id }`
+                      ! Boolean(
+                        parseInt(
+                          wp?.hooks?.applyFilters(
+                            'wedocs_check_is_admin_restricted_article',
+                            false,
+                            article?.id
+                          )
+                        )
+                      )
+                        ? `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit`
+                        : `${ window.location.origin }/?p=${ article?.id }`
                     }
-                    className={ `${ ! Boolean( parseInt( isAdminRestrictedArticle ) ) ? 'mr-4' : '' } flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none` }
+                    className={ `${
+                      ! Boolean( parseInt( isAdminRestrictedArticle ) )
+                        ? 'mr-4'
+                        : ''
+                    } flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none` }
                     rel="noreferrer"
                   >
                     { ! Boolean( parseInt( isAdminRestrictedArticle ) ) && (
@@ -280,11 +354,15 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
               </div>
             </div>
             <div className="ml-8 flex-shrink-0 w-5 h-5">
-              { ! Boolean( parseInt( wp?.hooks?.applyFilters(
-                'wedocs_check_is_admin_restricted_article',
-                false,
-                article?.id
-              ) ) ) && (
+              { ! Boolean(
+                parseInt(
+                  wp?.hooks?.applyFilters(
+                    'wedocs_check_is_admin_restricted_article',
+                    false,
+                    article?.id
+                  )
+                )
+              ) && (
                 <DocActions
                   type="article"
                   doc={ article }
@@ -297,21 +375,33 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
           </div>
         </div>
 
-        { !isDragging && ( filteredArticleChildrens?.length > 0 ) && (
-          <div
-            style={ style }
-            className={ `my-1 article-children pl-4 sm:pl-16 bg-white` }
-          >
-            { filteredArticleChildrens?.map( ( childrenDoc ) => (
-              <ArticleChildrens
-                section={ article }
-                sections={ articles }
-                key={ childrenDoc.id }
-                article={ childrenDoc }
-                setShowArticles={ setShowArticles }
-                isAllowComments={ isAllowComments }
-              />
-            ) ) }
+        { ! isDragging && filteredArticleChildrens?.length > 0 && (
+          <div className={ `my-1 article-children pl-4 sm:pl-16 bg-white` }>
+            <DraggableDocs
+              setItems={ setChildrenArticles }
+              setNeedSortingStatus={ setNeedSortingStatusLocal }
+              parentId={ article?.id }
+            >
+              <SortableContext
+                items={ childrenArticles }
+                strategy={ verticalListSortingStrategy }
+              >
+                { filteredArticleChildrens?.map( ( childrenDoc ) => (
+                  <NestedArticles
+                    section={ article }
+                    sections={ articles }
+                    key={ childrenDoc.id }
+                    article={ childrenDoc }
+                    setShowArticles={ setShowArticles }
+                    isAllowComments={ isAllowComments }
+                    depth={ 3 } // Starting at depth 3 (Sub-Article level)
+                    searchValue={ searchValue }
+                    setNeedSortingStatus={ setNeedSortingStatus }
+                    isDragging={ isDragging }
+                  />
+                ) ) }
+              </SortableContext>
+            </DraggableDocs>
           </div>
         ) }
       </Fragment>

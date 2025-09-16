@@ -15,6 +15,7 @@ const AddArticleModal = ( {
   defaultSection,
   docId,
   setShowArticles,
+  parentId, // New prop to specify direct parent
 } ) => {
   const docCreateBtnRef = useRef( null );
 
@@ -23,7 +24,7 @@ const AddArticleModal = ( {
 
   const [ newArticle, setNewArticle ] = useState( {
     title: { raw: '' },
-    parent: sectionId ? parseInt( sectionId ) : '',
+    parent: parentId ? parseInt( parentId ) : ( sectionId ? parseInt( sectionId ) : '' ),
     status: 'publish',
   } );
 
@@ -51,7 +52,7 @@ const AddArticleModal = ( {
       return;
     }
 
-    if ( ! sectionId ) {
+    if ( ! parentId && ! sectionId ) {
       setFormError( { ...formError, sectionId: true } );
       return;
     }
@@ -106,10 +107,10 @@ const AddArticleModal = ( {
   useEffect( () => {
     setNewArticle( {
       ...newArticle,
-      parent: sectionId,
+      parent: parentId ? parseInt( parentId ) : sectionId,
     } );
     setFormError( { ...formError, sectionId: false } );
-  }, [ sectionId ] );
+  }, [ sectionId, parentId ] );
 
   useEffect( () => {
     setNewArticle( { ...newArticle, menu_order: articles?.length } );
