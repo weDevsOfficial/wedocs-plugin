@@ -9,6 +9,7 @@ import {
     ToggleControl,
     __experimentalBoxControl as BoxControl,
 } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
 
 const Edit = ({ attributes, setAttributes }) => {
     const blockProps = useBlockProps();
@@ -23,6 +24,15 @@ const Edit = ({ attributes, setAttributes }) => {
         searchBoxStyles,
         modalStyles,
     } = attributes;
+
+    // Fetch theme colors and gradients
+    const { themeColors, themeGradients } = useSelect((select) => {
+        const editorSettings = select('core/block-editor').getSettings();
+        return {
+            themeColors: editorSettings.colors,
+            themeGradients: editorSettings.gradients,
+        };
+    });
 
     const modalDocsSourceOptions = [
         { label: __( 'None', 'wedocs' ), value: 'none' },
@@ -103,7 +113,7 @@ const Edit = ({ attributes, setAttributes }) => {
                         placeholder={__('Enter placeholder text', 'wedocs')}
                         onChange={(newPlaceholder) => setAttributes({ modalPlaceholder: newPlaceholder })}
                     />
-                    
+
                     <SelectControl
                         value={modalDocsSource}
                         options={modalDocsSourceOptions}
@@ -112,7 +122,7 @@ const Edit = ({ attributes, setAttributes }) => {
                             setAttributes({ modalDocsSource: newSource });
                         }}
                     />
-                    
+
                     {modalDocsSource === 'sections' && (
                         <TextControl
                             value={sectionIds}
@@ -121,7 +131,7 @@ const Edit = ({ attributes, setAttributes }) => {
                             onChange={(newIds) => setAttributes({ sectionIds: newIds })}
                         />
                     )}
-                    
+
                     {modalDocsSource === 'articles' && (
                         <TextControl
                             value={articleIds}
@@ -130,7 +140,7 @@ const Edit = ({ attributes, setAttributes }) => {
                             onChange={(newIds) => setAttributes({ articleIds: newIds })}
                         />
                     )}
-                    
+
                     {modalDocsSource === 'helpful' && (
                         <RangeControl
                             value={helpfulDocsCount}
@@ -141,101 +151,114 @@ const Edit = ({ attributes, setAttributes }) => {
                         />
                     )}
                 </PanelBody>
-                <PanelBody title={__('Search Box Styling', 'wedocs')} initialOpen={false}>
-                    <PanelColorSettings
-                        colors={colorOptions}
-                        colorSettings={[
-                            {
-                                value: searchBoxStyles.placeholderColor,
-                                label: __('Placeholder Color', 'wedocs'),
-                                onChange: (newColor) => updateSearchBoxStyles('placeholderColor', newColor),
-                            },
-                            {
-                                value: searchBoxStyles.iconColor,
-                                label: __('Icon & Command Key Color', 'wedocs'),
-                                onChange: (newColor) => updateSearchBoxStyles('iconColor', newColor),
-                            },
-                            {
-                                value: searchBoxStyles.backgroundColor,
-                                label: __('Background Color', 'wedocs'),
-                                onChange: (newColor) => updateSearchBoxStyles('backgroundColor', newColor),
-                            },
-                            {
-                                value: searchBoxStyles.borderColor,
-                                label: __('Border Color', 'wedocs'),
-                                onChange: (newColor) => updateSearchBoxStyles('borderColor', newColor),
-                            },
-                        ]}
-                    />
-                    
-                    <RangeControl
-                        value={parseInt(searchBoxStyles.borderWidth)}
-                        min={0}
-                        max={10}
-                        label={__('Border Width', 'wedocs')}
-                        onChange={(newWidth) => updateSearchBoxStyles('borderWidth', `${newWidth}px`)}
-                    />
-                    
-                    <RangeControl
-                        value={parseInt(searchBoxStyles.borderRadius)}
-                        min={0}
-                        max={50}
-                        label={__('Border Radius', 'wedocs')}
-                        onChange={(newRadius) => updateSearchBoxStyles('borderRadius', `${newRadius}px`)}
-                    />
-                    
-                    <BoxControl
-                        values={searchBoxStyles.padding}
-                        label={__('Padding', 'wedocs')}
-                        onChange={(newPadding) => updateSearchBoxStyles('padding', newPadding)}
-                    />
-                    
-                    <BoxControl
-                        values={searchBoxStyles.margin}
-                        label={__('Margin', 'wedocs')}
-                        onChange={(newMargin) => updateSearchBoxStyles('margin', newMargin)}
-                    />
-                    
-                    <RangeControl
-                        value={parseInt(searchBoxStyles.fontSize)}
-                        min={12}
-                        max={24}
-                        label={__('Font Size', 'wedocs')}
-                        onChange={(newSize) => updateSearchBoxStyles('fontSize', `${newSize}px`)}
-                    />
-                    
-                    <RangeControl
-                        value={parseInt(searchBoxStyles.fontWeight)}
-                        min={100}
-                        max={900}
-                        step={100}
-                        label={__('Font Weight', 'wedocs')}
-                        onChange={(newWeight) => updateSearchBoxStyles('fontWeight', newWeight.toString())}
-                    />
-                    
-                    <RangeControl
-                        value={parseFloat(searchBoxStyles.letterSpacing)}
-                        min={-2}
-                        max={5}
-                        step={0.1}
-                        label={__('Letter Spacing', 'wedocs')}
-                        onChange={(newSpacing) => updateSearchBoxStyles('letterSpacing', `${newSpacing}px`)}
-                    />
-                    
-                    <RangeControl
-                        value={parseFloat(searchBoxStyles.lineHeight)}
-                        min={1}
-                        max={3}
-                        step={0.1}
-                        label={__('Line Height', 'wedocs')}
-                        onChange={(newHeight) => updateSearchBoxStyles('lineHeight', newHeight.toString())}
-                    />
+            </InspectorControls>
+
+            <InspectorControls group="styles">
+                <PanelBody title={__('Search Box Styling', 'wedocs')} initialOpen={true}>
+                        <PanelColorSettings
+                            colors={[
+                                {
+                                    colors: themeColors,
+                                    name: __('Theme', 'wedocs'),
+                                }
+                            ]}
+                            colorSettings={[
+                                {
+                                    value: searchBoxStyles.placeholderColor,
+                                    label: __('Placeholder Color', 'wedocs'),
+                                    onChange: (newColor) => updateSearchBoxStyles('placeholderColor', newColor),
+                                },
+                                {
+                                    value: searchBoxStyles.iconColor,
+                                    label: __('Icon & Command Key Color', 'wedocs'),
+                                    onChange: (newColor) => updateSearchBoxStyles('iconColor', newColor),
+                                },
+                                {
+                                    value: searchBoxStyles.backgroundColor,
+                                    label: __('Background Color', 'wedocs'),
+                                    onChange: (newColor) => updateSearchBoxStyles('backgroundColor', newColor),
+                                },
+                                {
+                                    value: searchBoxStyles.borderColor,
+                                    label: __('Border Color', 'wedocs'),
+                                    onChange: (newColor) => updateSearchBoxStyles('borderColor', newColor),
+                                },
+                            ]}
+                        />
+
+                        <RangeControl
+                            value={parseInt(searchBoxStyles.borderWidth)}
+                            min={0}
+                            max={10}
+                            label={__('Border Width', 'wedocs')}
+                            onChange={(newWidth) => updateSearchBoxStyles('borderWidth', `${newWidth}px`)}
+                        />
+
+                        <RangeControl
+                            value={parseInt(searchBoxStyles.borderRadius)}
+                            min={0}
+                            max={50}
+                            label={__('Border Radius', 'wedocs')}
+                            onChange={(newRadius) => updateSearchBoxStyles('borderRadius', `${newRadius}px`)}
+                        />
+
+                        <BoxControl
+                            values={searchBoxStyles.padding}
+                            label={__('Padding', 'wedocs')}
+                            onChange={(newPadding) => updateSearchBoxStyles('padding', newPadding)}
+                        />
+
+                        <BoxControl
+                            values={searchBoxStyles.margin}
+                            label={__('Margin', 'wedocs')}
+                            onChange={(newMargin) => updateSearchBoxStyles('margin', newMargin)}
+                        />
+
+                        <RangeControl
+                            value={parseInt(searchBoxStyles.fontSize)}
+                            min={12}
+                            max={24}
+                            label={__('Font Size', 'wedocs')}
+                            onChange={(newSize) => updateSearchBoxStyles('fontSize', `${newSize}px`)}
+                        />
+
+                        <RangeControl
+                            value={parseInt(searchBoxStyles.fontWeight)}
+                            min={100}
+                            max={900}
+                            step={100}
+                            label={__('Font Weight', 'wedocs')}
+                            onChange={(newWeight) => updateSearchBoxStyles('fontWeight', newWeight.toString())}
+                        />
+
+                        <RangeControl
+                            value={parseFloat(searchBoxStyles.letterSpacing)}
+                            min={-2}
+                            max={5}
+                            step={0.1}
+                            label={__('Letter Spacing', 'wedocs')}
+                            onChange={(newSpacing) => updateSearchBoxStyles('letterSpacing', `${newSpacing}px`)}
+                        />
+
+                        <RangeControl
+                            value={parseFloat(searchBoxStyles.lineHeight)}
+                            min={1}
+                            max={3}
+                            step={0.1}
+                            label={__('Line Height', 'wedocs')}
+                            onChange={(newHeight) => updateSearchBoxStyles('lineHeight', newHeight.toString())}
+                        />
                 </PanelBody>
 
                 <PanelBody title={__('Search Modal Styling', 'wedocs')} initialOpen={false}>
                     <p className="'mb-0'">{__('The styling will be shown in the frontend, not in the editor', 'wedocs')}</p>
                     <PanelColorSettings
-                        colors={colorOptions}
+                        colors={[
+                            {
+                                colors: themeColors,
+                                name: __('Theme', 'wedocs'),
+                            }
+                        ]}
                         colorSettings={[
                             {
                                 value: modalStyles.placeholderColor,
@@ -263,6 +286,11 @@ const Edit = ({ attributes, setAttributes }) => {
                                 onChange: (newColor) => updateModalStyles('listItemIconColor', newColor),
                             },
                             {
+                                value: modalStyles.listItemIconBackgroundColor,
+                                label: __('List Item Icon Background Color', 'wedocs'),
+                                onChange: (newColor) => updateModalStyles('listItemIconBackgroundColor', newColor),
+                            },
+                            {
                                 value: modalStyles.listItemTextColor,
                                 label: __('List Item Text Color', 'wedocs'),
                                 onChange: (newColor) => updateModalStyles('listItemTextColor', newColor),
@@ -277,24 +305,6 @@ const Edit = ({ attributes, setAttributes }) => {
                                 label: __('Section Label Color', 'wedocs'),
                                 onChange: (newColor) => updateModalStyles('sectionLabelColor', newColor),
                             },
-                        ]}
-                    />
-                    
-                    <BoxControl
-                        values={modalStyles.listItemPadding}
-                        label={__('List Item Padding', 'wedocs')}
-                        onChange={(newPadding) => updateModalStyles('listItemPadding', newPadding)}
-                    />
-                    
-                    <BoxControl
-                        values={modalStyles.listItemMargin}
-                        label={__('List Item Margin', 'wedocs')}
-                        onChange={(newMargin) => updateModalStyles('listItemMargin', newMargin)}
-                    />
-                    
-                    <PanelColorSettings
-                        colors={colorOptions}
-                        colorSettings={[
                             {
                                 value: modalStyles.listItemBorderColor,
                                 label: __('List Item Border Color', 'wedocs'),
@@ -302,7 +312,20 @@ const Edit = ({ attributes, setAttributes }) => {
                             },
                         ]}
                     />
-                    
+
+                    <BoxControl
+                        values={modalStyles.listItemPadding}
+                        label={__('List Item Padding', 'wedocs')}
+                        onChange={(newPadding) => updateModalStyles('listItemPadding', newPadding)}
+                    />
+
+                    <BoxControl
+                        values={modalStyles.listItemMargin}
+                        label={__('List Item Margin', 'wedocs')}
+                        onChange={(newMargin) => updateModalStyles('listItemMargin', newMargin)}
+                    />
+
+
                     <RangeControl
                         value={parseInt(modalStyles.listItemBorderWidth)}
                         min={0}
@@ -310,7 +333,7 @@ const Edit = ({ attributes, setAttributes }) => {
                         label={__('List Item Border Width', 'wedocs')}
                         onChange={(newWidth) => updateModalStyles('listItemBorderWidth', `${newWidth}px`)}
                     />
-                    
+
                     <RangeControl
                         value={parseInt(modalStyles.listItemBorderRadius)}
                         min={0}
@@ -341,8 +364,8 @@ const Edit = ({ attributes, setAttributes }) => {
                             <input
                                 id="wedocs-quick-search"
                                 placeholder={searchBoxPlaceholder}
-                                type="text" 
-                                name="search" 
+                                type="text"
+                                name="search"
                                 disabled="disabled"
                                 className="block min-w-0 grow focus:outline focus:outline-0 !border-none focus:!shadow-none disabled:!shadow-none"
                                 style={{
@@ -376,7 +399,7 @@ const Edit = ({ attributes, setAttributes }) => {
                                 `}
                             </style>
                             <div className="flex py-1.5 pr-1.5">
-                                <kbd 
+                                <kbd
                                     className="inline-flex items-center rounded border px-1 font-sans text-xs"
                                     style={{
                                         color: searchBoxStyles.iconColor,
