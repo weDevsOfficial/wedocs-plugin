@@ -95,6 +95,31 @@ function render_wedocs_quick_search( $attributes ) {
     ];
     $data_attributes_string = implode( ' ', $data_attributes );
 
+    /**
+     * Load QuickSearch template
+     *
+     * @param string $template_name Template name without .php extension
+     * @param array $args Template arguments
+     * @return string Rendered template HTML
+     */
+    function wedocs_quick_search_get_template( $template_name, $args = [] ) {
+        $template_path = plugin_dir_path( __FILE__ ) . 'templates/' . $template_name . '.php';
+        
+        if ( ! file_exists( $template_path ) ) {
+            return '';
+        }
+        
+        // Extract variables for template
+        extract( $args );
+        
+        ob_start();
+        include $template_path;
+        return ob_get_clean();
+    }
+
+    // Enqueue frontend assets to get access to weDocs_Vars
+    \WeDevs\WeDocs\Frontend::enqueue_assets();
+
     ob_start();
     ?>
     <div class="<?php echo esc_attr( $css_classes_string ); ?>" style="<?php echo esc_attr( $css_vars_string ); ?>">
@@ -198,6 +223,9 @@ function render_wedocs_quick_search( $attributes ) {
         // Create modal dynamically
         const modal = document.createElement('div');
         modal.className = 'wedocs-quick-search-modal wedocs-document';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-label', '<?php echo esc_attr( $modal_placeholder ); ?>');
         modal.innerHTML = `
             <div class="bg-white rounded-lg w-[90%] max-w-2xl max-h-[80vh] overflow-y-auto shadow-xl" style="
                 background-color: <?php echo esc_attr( $modal_styles['backgroundColor'] ?? '#FFFFFF' ); ?>;
@@ -218,6 +246,10 @@ function render_wedocs_quick_search( $attributes ) {
                                 color: <?php echo esc_attr( $modal_styles['fieldTextColor'] ?? '#111827' ); ?>;
                                 background-color: transparent;
                             "
+                            aria-label="<?php echo esc_attr( $modal_placeholder ); ?>"
+                            aria-describedby="search-results"
+                            autocomplete="off"
+                            spellcheck="false"
                         />
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center space-x-2">
                             <button class="text-gray-400 hover:text-gray-600 p-1" type="button">
@@ -241,8 +273,8 @@ function render_wedocs_quick_search( $attributes ) {
                 
                 <!-- Search Results -->
                 <div class="p-4">
-                    <div class="space-y-2">
-                        <p class="text-gray-500 text-center py-4">Type at least 2 characters to search...</p>
+                    <div id="search-results" class="space-y-2" role="listbox" aria-label="Search results">
+                        <?php echo wedocs_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>
                     </div>
                 </div>
             </div>
@@ -254,11 +286,41 @@ function render_wedocs_quick_search( $attributes ) {
         const openModal = () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            
+            // Focus management for accessibility
+            const previousActiveElement = document.activeElement;
+            modal.setAttribute('data-previous-active-element', previousActiveElement ? previousActiveElement.id || 'body' : 'body');
+            
+            // Announce modal opening to screen readers
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.className = 'sr-only';
+            announcement.textContent = '<?php echo esc_js( __("Search modal opened. Use arrow keys to navigate results, Enter to select, Escape to close.", "wedocs") ); ?>';
+            modal.appendChild(announcement);
+            
+            setTimeout(() => {
+                announcement.remove();
+            }, 1000);
         };
         
         const closeModal = () => {
             modal.classList.remove('active');
             document.body.style.overflow = '';
+            
+            // Restore focus to previous element
+            const previousElementId = modal.getAttribute('data-previous-active-element');
+            if (previousElementId && previousElementId !== 'body') {
+                const previousElement = document.getElementById(previousElementId);
+                if (previousElement) {
+                    previousElement.focus();
+                }
+            }
+            
+            // Reset search state
+            searchInput.value = '';
+            currentResults = [];
+            selectedIndex = -1;
         };
         
         // Click trigger to open modal
@@ -287,77 +349,127 @@ function render_wedocs_quick_search( $attributes ) {
         const searchInput = modal.querySelector('input[type="text"]');
         const resultsContainer = modal.querySelector('.space-y-2');
         let searchTimeout;
+        let currentResults = [];
+        let selectedIndex = -1;
         
         const performSearch = async (query) => {
             if (!query || query.length < 2) {
-                resultsContainer.innerHTML = '<p class="text-gray-500 text-center py-4">Type at least 2 characters to search...</p>';
+                resultsContainer.innerHTML = '<?php echo wedocs_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>';
                 return;
             }
             
-            // Show loading state
-            resultsContainer.innerHTML = '<div class="flex justify-center py-4"><div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div></div>';
+            // Show enhanced loading state
+            resultsContainer.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-8">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-3"></div>
+                    <p class="text-sm text-gray-500"><?php echo esc_js( __("Searching...", "wedocs") ); ?></p>
+                </div>
+            `;
             
             try {
-                const response = await fetch(`<?php echo rest_url('wp/v2/docs/search'); ?>?query=${encodeURIComponent(query)}&per_page=10`);
+                // Use our new AJAX endpoint with HTML format
+                const formData = new FormData();
+                formData.append('action', 'wedocs_quick_search');
+                formData.append('query', query);
+                formData.append('per_page', '10');
+                formData.append('format', 'html');
+                formData.append('_wpnonce', weDocs_Vars.nonce);
+                
+                const response = await fetch(weDocs_Vars.ajaxurl, {
+                    method: 'POST',
+                    body: formData
+                });
                 
                 if (!response.ok) {
                     throw new Error('Search failed');
                 }
                 
                 const data = await response.json();
-                displaySearchResults(data);
+                
+                if (data.success && data.data.html) {
+                    resultsContainer.innerHTML = data.data.html;
+                    currentResults = data.data.results || [];
+                    selectedIndex = -1;
+                    updateResultSelection();
+                    
+                    // Announce results to screen readers
+                    const resultCount = currentResults.length;
+                    const announcement = document.createElement('div');
+                    announcement.setAttribute('aria-live', 'polite');
+                    announcement.setAttribute('aria-atomic', 'true');
+                    announcement.className = 'sr-only';
+                    
+                    if (resultCount === 0) {
+                        announcement.textContent = '<?php echo esc_js( __("No results found.", "wedocs") ); ?>';
+                    } else {
+                        announcement.textContent = `<?php echo esc_js( __("Found", "wedocs") ); ?> ${resultCount} <?php echo esc_js( __("results", "wedocs") ); ?>. <?php echo esc_js( __("Use arrow keys to navigate.", "wedocs") ); ?>`;
+                    }
+                    
+                    modal.appendChild(announcement);
+                    setTimeout(() => announcement.remove(), 2000);
+                } else {
+                    throw new Error(data.data || 'Search failed');
+                }
                 
             } catch (error) {
                 console.error('Search error:', error);
-                resultsContainer.innerHTML = '<p class="text-red-500 text-center py-4">Search failed. Please try again.</p>';
+                resultsContainer.innerHTML = '<?php echo wedocs_quick_search_get_template("empty-state", ["message" => __("Search failed. Please try again.", "wedocs")]); ?>';
             }
+        };
+
+        // Update result selection highlighting
+        const updateResultSelection = () => {
+            const resultItems = resultsContainer.querySelectorAll('.flex.items-start.p-3');
+            resultItems.forEach((item, index) => {
+                if (index === selectedIndex) {
+                    item.classList.add('bg-blue-50', 'ring-2', 'ring-blue-500');
+                    item.classList.remove('bg-gray-50');
+                } else {
+                    item.classList.remove('bg-blue-50', 'ring-2', 'ring-blue-500');
+                    item.classList.add('bg-gray-50');
+                }
+            });
+        };
+
+        // Navigate results with keyboard
+        const navigateResults = (direction) => {
+            const resultItems = resultsContainer.querySelectorAll('.flex.items-start.p-3');
+            if (resultItems.length === 0) return;
+
+            if (direction === 'down') {
+                selectedIndex = Math.min(selectedIndex + 1, resultItems.length - 1);
+            } else if (direction === 'up') {
+                selectedIndex = Math.max(selectedIndex - 1, -1);
+            }
+
+            updateResultSelection();
+
+            // Scroll selected item into view
+            if (selectedIndex >= 0) {
+                resultItems[selectedIndex].scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest' 
+                });
+            }
+        };
+
+        // Open selected result
+        const openSelectedResult = () => {
+            if (selectedIndex >= 0 && currentResults[selectedIndex]) {
+                const result = currentResults[selectedIndex];
+                window.open(result.permalink, '_blank');
+                closeModal();
+            }
+        };
+
+        // Highlight search terms in text
+        const highlightSearchTerms = (text, query) => {
+            if (!query || query.length < 2) return text;
+            
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<mark class="bg-yellow-200 px-1 rounded">$1</mark>');
         };
         
-        const displaySearchResults = (results) => {
-            if (!results || results.length === 0) {
-                resultsContainer.innerHTML = '<p class="text-gray-500 text-center py-4">No results found. Try different keywords.</p>';
-                return;
-            }
-            
-            const resultsHTML = results.map(doc => {
-                const isParent = doc.parent === 0;
-                const isSection = doc.parent > 0 && !isParent;
-                const isArticle = doc.parent > 0 && isSection;
-                
-                let docType = 'Doc';
-                let docTypeColor = '<?php echo esc_attr( $modal_styles['docLabelColor'] ?? '#3B82F6' ); ?>';
-                
-                if (isSection) {
-                    docType = 'Section';
-                    docTypeColor = '<?php echo esc_attr( $modal_styles['sectionLabelColor'] ?? '#10B981' ); ?>';
-                } else if (isArticle) {
-                    docType = 'Article';
-                    docTypeColor = '<?php echo esc_attr( $modal_styles['articleLabelColor'] ?? '#8B5CF6' ); ?>';
-                }
-                
-                return `
-                    <div class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors" onclick="window.open('${doc.permalink}', '_blank')">
-                        <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                            <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                            </svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-sm font-medium text-gray-900 truncate" style="color: <?php echo esc_attr( $modal_styles['listItemTextColor'] ?? '#111827' ); ?>;">
-                                ${doc.title.rendered}
-                            </p>
-                            <div class="mt-1 flex flex-wrap gap-1">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium" style="background-color: ${docTypeColor}20; color: ${docTypeColor};">
-                                    ${docType}: ${docType}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            resultsContainer.innerHTML = resultsHTML;
-        };
         
         // Debounced search input
         searchInput.addEventListener('input', (e) => {
@@ -372,7 +484,7 @@ function render_wedocs_quick_search( $attributes ) {
         if (clearButton) {
             clearButton.addEventListener('click', () => {
                 searchInput.value = '';
-                resultsContainer.innerHTML = '<p class="text-gray-500 text-center py-4">Type at least 2 characters to search...</p>';
+                resultsContainer.innerHTML = '<?php echo wedocs_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>';
             });
         }
         
@@ -383,21 +495,52 @@ function render_wedocs_quick_search( $attributes ) {
             }
         };
         
-        // Keyboard shortcut (Cmd/Ctrl + K)
+        // Enhanced keyboard navigation
         document.addEventListener('keydown', (e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-                e.preventDefault();
-                if (modal.classList.contains('active')) {
-                    closeModal();
-                } else {
+            // Only handle keyboard events when modal is active
+            if (!modal.classList.contains('active')) {
+                // Cmd/Ctrl + K to open modal
+                if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                    e.preventDefault();
                     openModal();
                     setTimeout(focusSearchInput, 100);
                 }
+                return;
             }
-            
-            // Close modal with Escape key
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
+
+            // Modal is active - handle navigation
+            switch (e.key) {
+                case 'Escape':
+                    e.preventDefault();
+                    closeModal();
+                    break;
+                    
+                case 'ArrowDown':
+                    e.preventDefault();
+                    navigateResults('down');
+                    break;
+                    
+                case 'ArrowUp':
+                    e.preventDefault();
+                    navigateResults('up');
+                    break;
+                    
+                case 'Enter':
+                    e.preventDefault();
+                    if (selectedIndex >= 0) {
+                        openSelectedResult();
+                    } else {
+                        // If no result selected, perform search
+                        performSearch(searchInput.value);
+                    }
+                    break;
+                    
+                case 'k':
+                    if (e.metaKey || e.ctrlKey) {
+                        e.preventDefault();
+                        closeModal();
+                    }
+                    break;
             }
         });
     })();
