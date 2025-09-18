@@ -18,6 +18,8 @@ const Inspector = ({ attributes, setAttributes }) => {
 		margin,
 		backgroundColor,
 		textColor,
+        hoverBackgroundColor,
+        hoverTextColor,
 		borderRadius,
 		borderWidth,
 		borderColor,
@@ -88,6 +90,22 @@ const Inspector = ({ attributes, setAttributes }) => {
 								value: backgroundColor,
 								onChange: updateAttribute('backgroundColor'),
 								label: __('Background Color', 'wedocs'),
+							},
+						]}
+					/>
+					<PanelColorSettings
+						title={__('Hover Color Settings', 'wedocs')}
+						initialOpen={false}
+						colorSettings={[
+							{
+								value: hoverTextColor,
+								onChange: updateAttribute('hoverTextColor'),
+								label: __('Hover Text Color', 'wedocs'),
+							},
+							{
+								value: hoverBackgroundColor,
+								onChange: updateAttribute('hoverBackgroundColor'),
+								label: __('Hover Background Color', 'wedocs'),
 							},
 						]}
 					/>
