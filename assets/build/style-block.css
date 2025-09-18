@@ -4211,6 +4211,9 @@ select {
 .wedocs-document :is(.max-h-\[80vh\]) {
   max-height: 80vh;
 }
+.wedocs-document :is(.max-h-\[85vh\]) {
+  max-height: 85vh;
+}
 .wedocs-document :is(.min-h-\[200px\]) {
   min-height: 200px;
 }
@@ -4347,6 +4350,9 @@ select {
 .wedocs-document :is(.w-\[90\%\]) {
   width: 90%;
 }
+.wedocs-document :is(.w-\[95\%\]) {
+  width: 95%;
+}
 .wedocs-document :is(.min-w-0) {
   min-width: 0px;
 }
@@ -4373,6 +4379,9 @@ select {
 }
 .wedocs-document :is(.max-w-2xl) {
   max-width: 42rem;
+}
+.wedocs-document :is(.max-w-4xl) {
+  max-width: 56rem;
 }
 .wedocs-document :is(.flex-1) {
   flex: 1 1 0%;
@@ -4458,6 +4467,9 @@ select {
 }
 .wedocs-document :is(.cursor-pointer) {
   cursor: pointer;
+}
+.wedocs-document :is(.cursor-wait) {
+  cursor: wait;
 }
 .wedocs-document :is(.select-none) {
   -webkit-user-select: none;
@@ -5561,6 +5573,9 @@ select {
 .wedocs-document :is(.opacity-50) {
   opacity: 0.5;
 }
+.wedocs-document :is(.opacity-75) {
+  opacity: 0.75;
+}
 .wedocs-document :is(.\!shadow-none) {
   --tw-shadow: 0 0 #0000 !important;
   --tw-shadow-colored: 0 0 #0000 !important;
@@ -6207,6 +6222,10 @@ select {
     margin-top: 0px;
   }
 
+  .wedocs-document :is(.sm\:inline) {
+    display: inline;
+  }
+
   .wedocs-document :is(.sm\:flex) {
     display: flex;
   }
@@ -6215,8 +6234,24 @@ select {
     height: 2.5rem;
   }
 
+  .wedocs-document :is(.sm\:h-5) {
+    height: 1.25rem;
+  }
+
+  .wedocs-document :is(.sm\:max-h-\[80vh\]) {
+    max-height: 80vh;
+  }
+
   .wedocs-document :is(.sm\:w-10) {
     width: 2.5rem;
+  }
+
+  .wedocs-document :is(.sm\:w-\[90\%\]) {
+    width: 90%;
+  }
+
+  .wedocs-document :is(.sm\:w-5) {
+    width: 1.25rem;
   }
 
   .wedocs-document :is(.sm\:grid-cols-2) {
@@ -6252,6 +6287,12 @@ select {
          column-gap: 1rem;
   }
 
+  .wedocs-document :is(.sm\:space-x-2 > :not([hidden]) ~ :not([hidden])) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+    margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+  }
+
   .wedocs-document :is(.sm\:overflow-hidden) {
     overflow: hidden;
   }
@@ -6284,12 +6325,25 @@ select {
     padding-bottom: 1rem;
   }
 
+  .wedocs-document :is(.sm\:py-3) {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
   .wedocs-document :is(.sm\:pl-16) {
     padding-left: 4rem;
   }
 
   .wedocs-document :is(.sm\:pl-6) {
     padding-left: 1.5rem;
+  }
+
+  .wedocs-document :is(.sm\:pr-20) {
+    padding-right: 5rem;
+  }
+
+  .wedocs-document :is(.sm\:pr-3) {
+    padding-right: 0.75rem;
   }
 
   .wedocs-document :is(.sm\:text-left) {
@@ -6310,11 +6364,20 @@ select {
     font-size: 0.875rem;
     line-height: 1.5rem;
   }
+
+  .wedocs-document :is(.sm\:text-lg) {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
 }
 @media (min-width: 768px) {
 
   .wedocs-document :is(.md\:mb-6) {
     margin-bottom: 1.5rem;
+  }
+
+  .wedocs-document :is(.md\:w-\[80\%\]) {
+    width: 80%;
   }
 
   .wedocs-document :is(.md\:min-w-\[300px\]) {
@@ -6333,6 +6396,10 @@ select {
 
   .wedocs-document :is(.lg\:grid) {
     display: grid;
+  }
+
+  .wedocs-document :is(.lg\:w-\[70\%\]) {
+    width: 70%;
   }
 
   .wedocs-document :is(.lg\:grid-cols-12) {
@@ -6356,6 +6423,12 @@ select {
   .wedocs-document :is(.lg\:py-0) {
     padding-top: 0px;
     padding-bottom: 0px;
+  }
+}
+@media (min-width: 1280px) {
+
+  .wedocs-document :is(.xl\:w-\[60\%\]) {
+    width: 60%;
   }
 }
 @media (min-width: 1536px) {
