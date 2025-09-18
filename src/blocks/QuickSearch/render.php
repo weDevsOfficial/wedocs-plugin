@@ -11,6 +11,126 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Get modal docs source data based on the selected source type
+ *
+ * @param string $modal_docs_source Source type (none, sections, articles, helpful)
+ * @param string $section_ids Comma-separated section IDs
+ * @param string $article_ids Comma-separated article IDs
+ * @param int $helpful_docs_count Number of helpful docs to show
+ * @return array Modal docs data
+ */
+function get_modal_docs_data( $modal_docs_source, $section_ids, $article_ids, $helpful_docs_count ) {
+    $modal_docs_data = [
+        'type' => $modal_docs_source,
+        'items' => []
+    ];
+
+    switch ( $modal_docs_source ) {
+        case 'none':
+            // No items to show
+            break;
+
+        case 'sections':
+            if ( ! empty( $section_ids ) ) {
+                $section_ids_array = array_map( 'intval', explode( ',', $section_ids ) );
+                $sections = get_posts([
+                    'post_type' => 'docs',
+                    'post__in' => $section_ids_array,
+                    'post_status' => 'publish',
+                    'orderby' => 'menu_order',
+                    'order' => 'ASC'
+                ]);
+
+                foreach ( $sections as $section ) {
+                    $modal_docs_data['items'][] = [
+                        'id' => $section->ID,
+                        'title' => $section->post_title,
+                        'permalink' => get_permalink( $section->ID ),
+                        'type' => 'section'
+                    ];
+                }
+            }
+            break;
+
+        case 'articles':
+            if ( ! empty( $article_ids ) ) {
+                $article_ids_array = array_map( 'intval', explode( ',', $article_ids ) );
+                $articles = get_posts([
+                    'post_type' => 'docs',
+                    'post__in' => $article_ids_array,
+                    'post_status' => 'publish',
+                    'orderby' => 'menu_order',
+                    'order' => 'ASC'
+                ]);
+
+                foreach ( $articles as $article ) {
+                    $modal_docs_data['items'][] = [
+                        'id' => $article->ID,
+                        'title' => $article->post_title,
+                        'permalink' => get_permalink( $article->ID ),
+                        'type' => 'article'
+                    ];
+                }
+            }
+            break;
+
+        case 'helpful':
+            // Get helpful docs using the same logic as the API
+            $docs = get_posts([
+                'post_type' => 'docs',
+                'posts_per_page' => -1,
+                'post_status' => 'publish'
+            ]);
+
+            // Create an array to store the vote counts
+            $vote_counts = [];
+
+            // Loop through each post and calculate the vote count
+            foreach ( $docs as $doc ) {
+                if ( empty( $doc->ID ) ) {
+                    continue;
+                }
+
+                $positive = (int) get_post_meta( $doc->ID, 'positive', true );
+                $negative = (int) get_post_meta( $doc->ID, 'negative', true );
+                if ( empty( $positive ) && empty( $negative ) ) {
+                    continue;
+                }
+
+                $vote_count = $positive - $negative;
+                $vote_counts[ $doc->ID ] = $vote_count;
+            }
+
+            // Sort the vote counts in descending order
+            arsort( $vote_counts );
+
+            // Get the top helpful docs (limited by count)
+            $top_helpful_ids = array_slice( array_keys( $vote_counts ), 0, $helpful_docs_count );
+            
+            if ( ! empty( $top_helpful_ids ) ) {
+                $helpful_docs = get_posts([
+                    'post_type' => 'docs',
+                    'post__in' => $top_helpful_ids,
+                    'post_status' => 'publish',
+                    'orderby' => 'post__in' // Maintain the helpful order
+                ]);
+
+                foreach ( $helpful_docs as $doc ) {
+                    $modal_docs_data['items'][] = [
+                        'id' => $doc->ID,
+                        'title' => $doc->post_title,
+                        'permalink' => get_permalink( $doc->ID ),
+                        'type' => 'helpful'
+                    ];
+                }
+            }
+            break;
+    }
+
+    return $modal_docs_data;
+}
+
+/**
  * Render callback for the Quick Search block
  *
  * @param array $attributes Block attributes
@@ -28,6 +148,9 @@ function render_wedocs_quick_search( $attributes ) {
     // Get styling attributes
     $search_box_styles = $attributes['searchBoxStyles'] ?? [];
     $modal_styles = $attributes['modalStyles'] ?? [];
+
+    // Get modal docs source data
+    $modal_docs_data = get_modal_docs_data( $modal_docs_source, $section_ids, $article_ids, $helpful_docs_count );
 
     // Build CSS variables for styling
     $search_box_css_vars = [];
@@ -281,14 +404,19 @@ function render_wedocs_quick_search( $attributes ) {
                     </div>
                 </div>
 
-                <!-- Modal Data Source -->
+                <!-- Modal Docs Source -->
+                <?php if ( $modal_docs_data['type'] !== 'none' && ! empty( $modal_docs_data['items'] ) ) : ?>
                 <div class="p-4">
-                    <span class="inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">Badge</span>
-                    <span class="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">Badge</span>
-                    <span class="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">Badge</span>
-                    <span class="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">Badge</span>
-                    <span class="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">Badge</span>
+                    <?php foreach ( $modal_docs_data['items'] as $item ) : ?>
+                        <a href="<?php echo esc_url( $item['permalink'] ); ?>" 
+                           class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium mr-2 mb-2 transition-colors hover:opacity-80"
+                           style="background-color: <?php echo esc_attr( $modal_styles['docLabelColor'] ?? '#3B82F6' ); ?>20; color: <?php echo esc_attr( $modal_styles['docLabelColor'] ?? '#3B82F6' ); ?>;"
+                           target="_blank">
+                            <?php echo esc_html( $item['title'] ); ?>
+                        </a>
+                    <?php endforeach; ?>
                 </div>
+                <?php endif; ?>
 
                 <!-- Search Results -->
                 <div class="p-4">
@@ -420,7 +548,7 @@ function render_wedocs_quick_search( $attributes ) {
             try {
                 // Use our new AJAX endpoint with HTML format
                 const modalStyles = <?php echo json_encode( $modal_styles ); ?>;
-                
+
                 const requestData = {
                     action: 'wedocs_quick_search',
                     query: query,
