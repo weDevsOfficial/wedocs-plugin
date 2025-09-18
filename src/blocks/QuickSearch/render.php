@@ -82,7 +82,7 @@ function render_wedocs_quick_search( $attributes ) {
     $css_vars_string = implode( '; ', $all_css_vars );
 
     // Build CSS classes
-    $css_classes_string = 'wedocs-quick-search-block';
+    $css_classes_string = 'wedocs-quick-search-block wedocs-document';
 
     // Build data attributes
     $data_attributes = [
@@ -122,6 +122,7 @@ function render_wedocs_quick_search( $attributes ) {
                         background-color: transparent;
                         border: none;
                         outline: none;
+                        box-shadow: none;
                         font-size: <?php echo esc_attr( $search_box_styles['fontSize'] ?? '16px' ); ?>;
                         font-weight: <?php echo esc_attr( $search_box_styles['fontWeight'] ?? '400' ); ?>;
                         letter-spacing: <?php echo esc_attr( $search_box_styles['letterSpacing'] ?? '0px' ); ?>;
@@ -166,7 +167,102 @@ function render_wedocs_quick_search( $attributes ) {
         .wedocs-quick-search-input:-ms-input-placeholder {
             color: <?php echo esc_attr( $search_box_styles['placeholderColor'] ?? '#9CA3AF' ); ?> !important;
         }
+        
+        /* Modal Styles */
+        .wedocs-quick-search-modal {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .wedocs-quick-search-modal.active {
+            display: flex;
+        }
     </style>
+    
+    <!-- Modal will be dynamically added to body -->
+    
+    <script>
+    (function() {
+        const trigger = document.querySelector('.wedocs-quick-search-trigger');
+        
+        if (!trigger) return;
+        
+        // Create modal dynamically
+        const modal = document.createElement('div');
+        modal.className = 'wedocs-quick-search-modal wedocs-document';
+        modal.innerHTML = `
+            <div class="bg-white p-5 rounded-lg w-[90%] max-w-2xl max-h-[80vh] overflow-y-auto shadow-xl">
+                <div class="flex justify-between items-center mb-5">
+                    <h3 class="text-lg font-semibold m-0"><?php echo esc_html( $modal_placeholder ); ?></h3>
+                    <button class="wedocs-quick-search-modal-close bg-transparent border-0 text-2xl cursor-pointer p-0 w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded" type="button">&times;</button>
+                </div>
+                <div class="wedocs-quick-search-modal-body">
+                    <p>Modal content will be implemented here...</p>
+                </div>
+            </div>
+        `;
+        
+        // Append modal to body
+        document.body.appendChild(modal);
+        
+        const openModal = () => {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+        
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+        
+        // Click trigger to open modal
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+        });
+        
+        // Close modal when clicking close button
+        const closeButton = modal.querySelector('.wedocs-quick-search-modal-close');
+        if (closeButton) {
+            closeButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                closeModal();
+            });
+        }
+        
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Keyboard shortcut (Cmd/Ctrl + K)
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                if (modal.classList.contains('active')) {
+                    closeModal();
+                } else {
+                    openModal();
+                }
+            }
+            
+            // Close modal with Escape key
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    })();
+    </script>
     <?php
     return ob_get_clean();
 }

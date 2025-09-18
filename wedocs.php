@@ -46,8 +46,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
-require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid/render.php';
-require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/QuickSearch/render.php';
 
 /**
  * WeDocs class.
@@ -169,10 +167,29 @@ final class WeDocs {
 
         // Localize our plugin
         add_action( 'init', [ $this, 'localization_setup' ] );
+        add_action( 'init', [ $this, 'load_block_render_files' ] );
         add_action('init', [$this, 'register_blocks']);
 
         // registeer our widget
         add_action( 'widgets_init', [ $this, 'register_widget' ] );
+    }
+
+    /**
+     * Auto-load all block render files
+     *
+     * @return void
+     */
+    public function load_block_render_files() {
+        $blocks_dir = plugin_dir_path(__FILE__) . 'assets/build/blocks/';
+        if (is_dir($blocks_dir)) {
+            $block_dirs = glob($blocks_dir . '*', GLOB_ONLYDIR);
+            foreach ($block_dirs as $block_dir) {
+                $render_file = $block_dir . '/render.php';
+                if (file_exists($render_file)) {
+                    require_once $render_file;
+                }
+            }
+        }
     }
 
     public function register_blocks() {
