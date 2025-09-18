@@ -53,10 +53,25 @@ $empty_message = $empty_message ?? __( 'No results found. Try different keywords
             }
             ?>
             
-            <div class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors" 
+            <div class="flex items-start cursor-pointer transition-colors" 
+                 style="
+                     padding-top: <?php echo esc_attr( $modal_styles['listItemPadding']['top'] ?? '12px' ); ?>;
+                     padding-right: <?php echo esc_attr( $modal_styles['listItemPadding']['right'] ?? '16px' ); ?>;
+                     padding-bottom: <?php echo esc_attr( $modal_styles['listItemPadding']['bottom'] ?? '12px' ); ?>;
+                     padding-left: <?php echo esc_attr( $modal_styles['listItemPadding']['left'] ?? '16px' ); ?>;
+                     margin-top: <?php echo esc_attr( $modal_styles['listItemMargin']['top'] ?? '0px' ); ?>;
+                     margin-right: <?php echo esc_attr( $modal_styles['listItemMargin']['right'] ?? '0px' ); ?>;
+                     margin-bottom: <?php echo esc_attr( $modal_styles['listItemMargin']['bottom'] ?? '0px' ); ?>;
+                     margin-left: <?php echo esc_attr( $modal_styles['listItemMargin']['left'] ?? '0px' ); ?>;
+                     background-color: #F9FAFB;
+                     border: <?php echo esc_attr( $modal_styles['listItemBorderWidth'] ?? '1px' ); ?> solid <?php echo esc_attr( $modal_styles['listItemBorderColor'] ?? '#E5E7EB' ); ?>;
+                     border-radius: <?php echo esc_attr( $modal_styles['listItemBorderRadius'] ?? '4px' ); ?>;
+                 "
+                 onmouseover="this.style.backgroundColor='#F3F4F6'"
+                 onmouseout="this.style.backgroundColor='#F9FAFB'"
                  onclick="window.open('<?php echo esc_url( $permalink ); ?>', '_blank')">
                 <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                    <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" style="color: <?php echo esc_attr( $modal_styles['listItemIconColor'] ?? '#3B82F6' ); ?>;">
                         <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
                     </svg>
                 </div>

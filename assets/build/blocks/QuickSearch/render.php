@@ -95,14 +95,16 @@ function render_wedocs_quick_search( $attributes ) {
     ];
     $data_attributes_string = implode( ' ', $data_attributes );
 
-    /**
-     * Load QuickSearch template
-     *
-     * @param string $template_name Template name without .php extension
-     * @param array $args Template arguments
-     * @return string Rendered template HTML
-     */
-    function wedocs_quick_search_get_template( $template_name, $args = [] ) {
+/**
+ * Load QuickSearch template
+ *
+ * @param string $template_name Template name without .php extension
+ * @param array $args Template arguments
+ * @return string Rendered template HTML
+ */
+
+ if( ! function_exists( 'wedocs_block_quick_search_get_template' ) ) {
+    function wedocs_block_quick_search_get_template( $template_name, $args = [] ) {
         $template_path = plugin_dir_path( __FILE__ ) . 'templates/' . $template_name . '.php';
         
         if ( ! file_exists( $template_path ) ) {
@@ -116,6 +118,7 @@ function render_wedocs_quick_search( $attributes ) {
         include $template_path;
         return ob_get_clean();
     }
+}
 
     // Enqueue frontend assets to get access to weDocs_Vars
     \WeDevs\WeDocs\Frontend::enqueue_assets();
@@ -226,22 +229,24 @@ function render_wedocs_quick_search( $attributes ) {
         modal.setAttribute('role', 'dialog');
         modal.setAttribute('aria-modal', 'true');
         modal.setAttribute('aria-label', '<?php echo esc_attr( $modal_placeholder ); ?>');
-        modal.innerHTML = `
-            <div class="bg-white rounded-lg w-[90%] max-w-2xl max-h-[80vh] overflow-y-auto shadow-xl" style="
+           modal.innerHTML = `
+               <div class="rounded-lg w-[95%] sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%] max-w-4xl max-h-[85vh] sm:max-h-[80vh] overflow-y-auto shadow-xl" style="
                 background-color: <?php echo esc_attr( $modal_styles['backgroundColor'] ?? '#FFFFFF' ); ?>;
+                border: <?php echo esc_attr( $modal_styles['listItemBorderWidth'] ?? '1px' ); ?> solid <?php echo esc_attr( $modal_styles['listItemBorderColor'] ?? '#E5E7EB' ); ?>;
+                border-radius: <?php echo esc_attr( $modal_styles['listItemBorderRadius'] ?? '8px' ); ?>;
             ">
                 <!-- Search Input -->
                 <div class="p-6 border-b border-gray-200">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: <?php echo esc_attr( $modal_styles['searchIconColor'] ?? '#6B7280' ); ?>;">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                         </div>
-                        <input 
-                            type="text" 
-                            placeholder="<?php echo esc_attr( $modal_placeholder ); ?>"
-                            class="block w-full pl-10 pr-20 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                           <input 
+                               type="text" 
+                               placeholder="<?php echo esc_attr( $modal_placeholder ); ?>"
+                               class="block w-full pl-10 pr-16 sm:pr-20 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base sm:text-lg"
                             style="
                                 color: <?php echo esc_attr( $modal_styles['fieldTextColor'] ?? '#111827' ); ?>;
                                 background-color: transparent;
@@ -251,13 +256,27 @@ function render_wedocs_quick_search( $attributes ) {
                             autocomplete="off"
                             spellcheck="false"
                         />
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center space-x-2">
+                        <style>
+                            .wedocs-quick-search-modal input::placeholder {
+                                color: <?php echo esc_attr( $modal_styles['placeholderColor'] ?? '#9CA3AF' ); ?> !important;
+                            }
+                            .wedocs-quick-search-modal input::-webkit-input-placeholder {
+                                color: <?php echo esc_attr( $modal_styles['placeholderColor'] ?? '#9CA3AF' ); ?> !important;
+                            }
+                            .wedocs-quick-search-modal input::-moz-placeholder {
+                                color: <?php echo esc_attr( $modal_styles['placeholderColor'] ?? '#9CA3AF' ); ?> !important;
+                            }
+                            .wedocs-quick-search-modal input:-ms-input-placeholder {
+                                color: <?php echo esc_attr( $modal_styles['placeholderColor'] ?? '#9CA3AF' ); ?> !important;
+                            }
+                        </style>
+                        <div class="absolute inset-y-0 right-0 pr-2 sm:pr-3 flex items-center space-x-1 sm:space-x-2">
                             <button class="text-gray-400 hover:text-gray-600 p-1" type="button">
-                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                 </svg>
                             </button>
-                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">ESC</span>
+                            <span class="hidden sm:inline text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">ESC</span>
                         </div>
                     </div>
                 </div>
@@ -274,7 +293,7 @@ function render_wedocs_quick_search( $attributes ) {
                 <!-- Search Results -->
                 <div class="p-4">
                     <div id="search-results" class="space-y-2" role="listbox" aria-label="Search results">
-                        <?php echo wedocs_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>
+                        <?php echo wedocs_block_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>
                     </div>
                 </div>
             </div>
@@ -286,6 +305,18 @@ function render_wedocs_quick_search( $attributes ) {
         const openModal = () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            
+            // Add opening animation
+            const modalContent = modal.querySelector('.rounded-lg');
+            if (modalContent) {
+                modalContent.style.transform = 'scale(0.95)';
+                modalContent.style.opacity = '0';
+                setTimeout(() => {
+                    modalContent.style.transition = 'all 0.2s ease-out';
+                    modalContent.style.transform = 'scale(1)';
+                    modalContent.style.opacity = '1';
+                }, 10);
+            }
             
             // Focus management for accessibility
             const previousActiveElement = document.activeElement;
@@ -305,8 +336,25 @@ function render_wedocs_quick_search( $attributes ) {
         };
         
         const closeModal = () => {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
+            // Add closing animation
+            const modalContent = modal.querySelector('.rounded-lg');
+            if (modalContent) {
+                modalContent.style.transition = 'all 0.15s ease-in';
+                modalContent.style.transform = 'scale(0.95)';
+                modalContent.style.opacity = '0';
+                
+                setTimeout(() => {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                    // Reset animation styles
+                    modalContent.style.transition = '';
+                    modalContent.style.transform = '';
+                    modalContent.style.opacity = '';
+                }, 150);
+            } else {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
             
             // Restore focus to previous element
             const previousElementId = modal.getAttribute('data-previous-active-element');
@@ -354,7 +402,7 @@ function render_wedocs_quick_search( $attributes ) {
         
         const performSearch = async (query) => {
             if (!query || query.length < 2) {
-                resultsContainer.innerHTML = '<?php echo wedocs_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>';
+                resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>';
                 return;
             }
             
@@ -365,6 +413,9 @@ function render_wedocs_quick_search( $attributes ) {
                     <p class="text-sm text-gray-500"><?php echo esc_js( __("Searching...", "wedocs") ); ?></p>
                 </div>
             `;
+            
+            // Add loading class to search input
+            searchInput.classList.add('opacity-75', 'cursor-wait');
             
             try {
                 // Use our new AJAX endpoint with HTML format
@@ -386,11 +437,12 @@ function render_wedocs_quick_search( $attributes ) {
                 
                 const data = await response.json();
                 
-                if (data.success && data.data.html) {
-                    resultsContainer.innerHTML = data.data.html;
-                    currentResults = data.data.results || [];
-                    selectedIndex = -1;
-                    updateResultSelection();
+                   if (data.success && data.data.html) {
+                       resultsContainer.innerHTML = data.data.html;
+                       currentResults = data.data.results || [];
+                       selectedIndex = -1;
+                       updateResultSelection();
+                       addResultHoverSupport();
                     
                     // Announce results to screen readers
                     const resultCount = currentResults.length;
@@ -413,27 +465,34 @@ function render_wedocs_quick_search( $attributes ) {
                 
             } catch (error) {
                 console.error('Search error:', error);
-                resultsContainer.innerHTML = '<?php echo wedocs_quick_search_get_template("empty-state", ["message" => __("Search failed. Please try again.", "wedocs")]); ?>';
+                resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template("empty-state", ["message" => __("Search failed. Please try again.", "wedocs")]); ?>';
+            } finally {
+                // Remove loading state
+                searchInput.classList.remove('opacity-75', 'cursor-wait');
             }
         };
 
         // Update result selection highlighting
         const updateResultSelection = () => {
-            const resultItems = resultsContainer.querySelectorAll('.flex.items-start.p-3');
+            const resultItems = resultsContainer.querySelectorAll('.flex.items-start');
             resultItems.forEach((item, index) => {
                 if (index === selectedIndex) {
-                    item.classList.add('bg-blue-50', 'ring-2', 'ring-blue-500');
-                    item.classList.remove('bg-gray-50');
+                    item.style.backgroundColor = '#EBF8FF';
+                    item.style.borderColor = '#3B82F6';
+                    item.style.borderWidth = '2px';
+                    item.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
                 } else {
-                    item.classList.remove('bg-blue-50', 'ring-2', 'ring-blue-500');
-                    item.classList.add('bg-gray-50');
+                    item.style.backgroundColor = '#F9FAFB';
+                    item.style.borderColor = '<?php echo esc_js( $modal_styles['listItemBorderColor'] ?? '#E5E7EB' ); ?>';
+                    item.style.borderWidth = '<?php echo esc_js( $modal_styles['listItemBorderWidth'] ?? '1px' ); ?>';
+                    item.style.boxShadow = 'none';
                 }
             });
         };
 
         // Navigate results with keyboard
         const navigateResults = (direction) => {
-            const resultItems = resultsContainer.querySelectorAll('.flex.items-start.p-3');
+            const resultItems = resultsContainer.querySelectorAll('.flex.items-start');
             if (resultItems.length === 0) return;
 
             if (direction === 'down') {
@@ -459,6 +518,12 @@ function render_wedocs_quick_search( $attributes ) {
                 const result = currentResults[selectedIndex];
                 window.open(result.permalink, '_blank');
                 closeModal();
+            } else if (selectedIndex >= 0) {
+                // Fallback: try to click the selected result element
+                const resultItems = resultsContainer.querySelectorAll('.flex.items-start');
+                if (resultItems[selectedIndex]) {
+                    resultItems[selectedIndex].click();
+                }
             }
         };
 
@@ -478,13 +543,28 @@ function render_wedocs_quick_search( $attributes ) {
                 performSearch(e.target.value);
             }, 300);
         });
+
+        // Add mouse hover support for results
+        const addResultHoverSupport = () => {
+            const resultItems = resultsContainer.querySelectorAll('.flex.items-start');
+            resultItems.forEach((item, index) => {
+                item.addEventListener('mouseenter', () => {
+                    selectedIndex = index;
+                    updateResultSelection();
+                });
+                
+                item.addEventListener('mouseleave', () => {
+                    // Don't reset selectedIndex on mouse leave to maintain keyboard navigation
+                });
+            });
+        };
         
         // Clear search button
         const clearButton = modal.querySelector('button[type="button"]');
         if (clearButton) {
             clearButton.addEventListener('click', () => {
                 searchInput.value = '';
-                resultsContainer.innerHTML = '<?php echo wedocs_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>';
+                resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>';
             });
         }
         
