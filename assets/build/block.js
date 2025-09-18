@@ -2488,7 +2488,6 @@ const Edit = ({
   setAttributes
 }) => {
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)();
-  const [isModalOpen, setIsModalOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
   const {
     searchBoxPlaceholder,
     modalPlaceholder,
@@ -2693,7 +2692,9 @@ const Edit = ({
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Search Modal Styling', 'wedocs'),
     initialOpen: false
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "'mb-0'"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('The styling will be shown in the frontend, not in the editor', 'wedocs')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
     colors: colorOptions,
     colorSettings: [{
       value: modalStyles.placeholderColor,
@@ -2756,66 +2757,64 @@ const Edit = ({
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('List Item Border Radius', 'wedocs'),
     onChange: newRadius => updateModalStyles('listItemBorderRadius', `${newRadius}px`)
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    ...blockProps,
+    ...blockProps
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wedocs-document"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wedocs-quick-search-editor",
-    style: searchBoxStyle,
-    onClick: () => setIsModalOpen(true)
+    className: "wedocs-quick-search-editor wedocs-quick-search-block-editor"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wedocs-quick-search-input"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: "wedocs-quick-search-placeholder"
-  }, searchBoxPlaceholder), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: "wedocs-quick-search-command"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
-    width: "16",
-    height: "16",
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: "2"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
-    d: "M9 9l6 6m0-6l-6 6"
-  })), "K"))), isModalOpen && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wedocs-quick-search-modal-editor"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wedocs-quick-search-modal-content"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wedocs-quick-search-modal-header"
+    className: "flex rounded-md",
+    style: {
+      backgroundColor: searchBoxStyles.backgroundColor,
+      borderColor: searchBoxStyles.borderColor,
+      borderWidth: searchBoxStyles.borderWidth,
+      borderRadius: searchBoxStyles.borderRadius,
+      marginTop: searchBoxStyles.margin.top,
+      marginRight: searchBoxStyles.margin.right,
+      marginBottom: searchBoxStyles.margin.bottom,
+      marginLeft: searchBoxStyles.margin.left
+    }
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    id: "wedocs-quick-search",
+    placeholder: searchBoxPlaceholder,
     type: "text",
-    placeholder: modalPlaceholder,
-    className: "wedocs-quick-search-modal-input"
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    className: "wedocs-quick-search-modal-close",
-    onClick: () => setIsModalOpen(false)
-  }, "ESC")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wedocs-quick-search-modal-body"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wedocs-quick-search-modal-results"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wedocs-quick-search-modal-item"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wedocs-quick-search-modal-item-icon"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
-    width: "16",
-    height: "16",
-    viewBox: "0 0 24 24",
-    fill: "currentColor"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
-    d: "M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wedocs-quick-search-modal-item-content"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wedocs-quick-search-modal-item-title"
-  }, "Sample Documentation Article"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wedocs-quick-search-modal-item-meta"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: "wedocs-quick-search-modal-item-doc"
-  }, "Doc: Sample Doc"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: "wedocs-quick-search-modal-item-section"
-  }, "Section: Getting Started"))))))))));
+    name: "search",
+    disabled: "disabled",
+    className: "block min-w-0 grow focus:outline focus:outline-0 !border-none focus:!shadow-none disabled:!shadow-none",
+    style: {
+      color: searchBoxStyles.placeholderColor,
+      backgroundColor: 'transparent',
+      borderRadius: searchBoxStyles.borderRadius,
+      fontSize: searchBoxStyles.fontSize,
+      fontWeight: searchBoxStyles.fontWeight,
+      letterSpacing: searchBoxStyles.letterSpacing,
+      lineHeight: searchBoxStyles.lineHeight,
+      paddingTop: searchBoxStyles.padding.top,
+      paddingRight: searchBoxStyles.padding.right,
+      paddingBottom: searchBoxStyles.padding.bottom,
+      paddingLeft: searchBoxStyles.padding.left
+    }
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("style", null, `
+                                    #wedocs-quick-search::placeholder {
+                                        color: ${searchBoxStyles.placeholderColor} !important;
+                                    }
+                                    #wedocs-quick-search::-webkit-input-placeholder {
+                                        color: ${searchBoxStyles.placeholderColor} !important;
+                                    }
+                                    #wedocs-quick-search::-moz-placeholder {
+                                        color: ${searchBoxStyles.placeholderColor} !important;
+                                    }
+                                    #wedocs-quick-search:-ms-input-placeholder {
+                                        color: ${searchBoxStyles.placeholderColor} !important;
+                                    }
+                                `), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "flex py-1.5 pr-1.5"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("kbd", {
+    className: "inline-flex items-center rounded border px-1 font-sans text-xs",
+    style: {
+      color: searchBoxStyles.iconColor
+    }
+  }, "\u2318K")))))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Edit);
 

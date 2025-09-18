@@ -29,7 +29,6 @@ function render_wedocs_quick_search( $attributes ) {
     $search_box_styles = $attributes['searchBoxStyles'] ?? [];
     $modal_styles = $attributes['modalStyles'] ?? [];
 
-
     // Build CSS variables for styling
     $search_box_css_vars = [];
     if ( ! empty( $search_box_styles ) ) {
@@ -100,19 +99,74 @@ function render_wedocs_quick_search( $attributes ) {
     ?>
     <div class="<?php echo esc_attr( $css_classes_string ); ?>" style="<?php echo esc_attr( $css_vars_string ); ?>">
         <div class="wedocs-quick-search-trigger" <?php echo $data_attributes_string; ?>>
-            <div class="wedocs-quick-search-input">
-                <span class="wedocs-quick-search-placeholder">
-                    <?php echo esc_html( $search_box_placeholder ); ?>
-                </span>
-                <span class="wedocs-quick-search-command">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 9l6 6m0-6l-6 6"/>
-                    </svg>
-                    K
-                </span>
+            <div class="wedocs-quick-search-container" style="
+                display: flex;
+                background-color: <?php echo esc_attr( $search_box_styles['backgroundColor'] ?? '#FFFFFF' ); ?>;
+                border-color: <?php echo esc_attr( $search_box_styles['borderColor'] ?? '#D1D5DB' ); ?>;
+                border-width: <?php echo esc_attr( $search_box_styles['borderWidth'] ?? '1px' ); ?>;
+                border-style: solid;
+                border-radius: <?php echo esc_attr( $search_box_styles['borderRadius'] ?? '8px' ); ?>;
+                margin-top: <?php echo esc_attr( $search_box_styles['margin']['top'] ?? '0px' ); ?>;
+                margin-right: <?php echo esc_attr( $search_box_styles['margin']['right'] ?? '0px' ); ?>;
+                margin-bottom: <?php echo esc_attr( $search_box_styles['margin']['bottom'] ?? '0px' ); ?>;
+                margin-left: <?php echo esc_attr( $search_box_styles['margin']['left'] ?? '0px' ); ?>;
+            ">
+                <input 
+                    type="text" 
+                    placeholder="<?php echo esc_attr( $search_box_placeholder ); ?>"
+                    class="wedocs-quick-search-input"
+                    style="
+                        flex: 1;
+                        min-width: 0;
+                        color: <?php echo esc_attr( $search_box_styles['placeholderColor'] ?? '#9CA3AF' ); ?>;
+                        background-color: transparent;
+                        border: none;
+                        outline: none;
+                        font-size: <?php echo esc_attr( $search_box_styles['fontSize'] ?? '16px' ); ?>;
+                        font-weight: <?php echo esc_attr( $search_box_styles['fontWeight'] ?? '400' ); ?>;
+                        letter-spacing: <?php echo esc_attr( $search_box_styles['letterSpacing'] ?? '0px' ); ?>;
+                        line-height: <?php echo esc_attr( $search_box_styles['lineHeight'] ?? '1.5' ); ?>;
+                        padding-top: <?php echo esc_attr( $search_box_styles['padding']['top'] ?? '12px' ); ?>;
+                        padding-right: <?php echo esc_attr( $search_box_styles['padding']['right'] ?? '16px' ); ?>;
+                        padding-bottom: <?php echo esc_attr( $search_box_styles['padding']['bottom'] ?? '12px' ); ?>;
+                        padding-left: <?php echo esc_attr( $search_box_styles['padding']['left'] ?? '16px' ); ?>;
+                    "
+                />
+                <div class="wedocs-quick-search-command" style="
+                    display: flex;
+                    padding: 6px 6px 6px 0;
+                ">
+                    <kbd style="
+                        display: inline-flex;
+                        align-items: center;
+                        border-radius: 4px;
+                        border: 1px solid #ddd;
+                        padding: 2px 4px;
+                        font-family: sans-serif;
+                        font-size: 12px;
+                        color: <?php echo esc_attr( $search_box_styles['iconColor'] ?? '#6B7280' ); ?>;
+                    ">
+                        ⌘K
+                    </kbd>
+                </div>
             </div>
         </div>
     </div>
+    
+    <style>
+        .wedocs-quick-search-input::placeholder {
+            color: <?php echo esc_attr( $search_box_styles['placeholderColor'] ?? '#9CA3AF' ); ?> !important;
+        }
+        .wedocs-quick-search-input::-webkit-input-placeholder {
+            color: <?php echo esc_attr( $search_box_styles['placeholderColor'] ?? '#9CA3AF' ); ?> !important;
+        }
+        .wedocs-quick-search-input::-moz-placeholder {
+            color: <?php echo esc_attr( $search_box_styles['placeholderColor'] ?? '#9CA3AF' ); ?> !important;
+        }
+        .wedocs-quick-search-input:-ms-input-placeholder {
+            color: <?php echo esc_attr( $search_box_styles['placeholderColor'] ?? '#9CA3AF' ); ?> !important;
+        }
+    </style>
     <?php
     return ob_get_clean();
 }
