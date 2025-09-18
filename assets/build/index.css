@@ -3998,6 +3998,15 @@ select {
 .wedocs-document :is(.animate-pulse) {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+@keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+.wedocs-document :is(.animate-spin) {
+  animation: spin 1s linear infinite;
+}
 .wedocs-document :is(.cursor-grab) {
   cursor: grab;
 }
@@ -4187,6 +4196,11 @@ select {
   margin-top: calc(22px * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(22px * var(--tw-space-y-reverse));
 }
+.wedocs-document :is(.space-y-2 > :not([hidden]) ~ :not([hidden])) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
 .wedocs-document :is(.divide-x > :not([hidden]) ~ :not([hidden])) {
   --tw-divide-x-reverse: 0;
   border-right-width: calc(1px * var(--tw-divide-x-reverse));
@@ -4277,6 +4291,9 @@ select {
 .wedocs-document :is(.border-t) {
   border-top-width: 1px;
 }
+.wedocs-document :is(.border-b-2) {
+  border-bottom-width: 2px;
+}
 .wedocs-document :is(.\!border-none) {
   border-style: none !important;
 }
@@ -4341,6 +4358,10 @@ select {
 .wedocs-document :is(.border-yellow-400) {
   --tw-border-opacity: 1;
   border-color: rgb(250 204 21 / var(--tw-border-opacity));
+}
+.wedocs-document :is(.border-blue-600) {
+  --tw-border-opacity: 1;
+  border-color: rgb(37 99 235 / var(--tw-border-opacity));
 }
 .wedocs-document :is(.border-t-\[\#DBDBDB\]) {
   --tw-border-opacity: 1;
@@ -4466,6 +4487,14 @@ select {
 }
 .wedocs-document :is(.bg-transparent) {
   background-color: transparent;
+}
+.wedocs-document :is(.bg-blue-100) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(219 234 254 / var(--tw-bg-opacity));
+}
+.wedocs-document :is(.bg-green-100) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 252 231 / var(--tw-bg-opacity));
 }
 .wedocs-document :is(.bg-opacity-25) {
   --tw-bg-opacity: 0.25;
@@ -4791,6 +4820,12 @@ select {
 .wedocs-document :is(.pt-\[1px\]) {
   padding-top: 1px;
 }
+.wedocs-document :is(.pl-10) {
+  padding-left: 2.5rem;
+}
+.wedocs-document :is(.pr-20) {
+  padding-right: 5rem;
+}
 .wedocs-document :is(.text-left) {
   text-align: left;
 }
@@ -5009,6 +5044,22 @@ select {
 .wedocs-document :is(.text-white) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.wedocs-document :is(.text-blue-600) {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+.wedocs-document :is(.text-blue-800) {
+  --tw-text-opacity: 1;
+  color: rgb(30 64 175 / var(--tw-text-opacity));
+}
+.wedocs-document :is(.text-green-800) {
+  --tw-text-opacity: 1;
+  color: rgb(22 101 52 / var(--tw-text-opacity));
+}
+.wedocs-document :is(.text-blue-700) {
+  --tw-text-opacity: 1;
+  color: rgb(29 78 216 / var(--tw-text-opacity));
 }
 .wedocs-document :is(.underline) {
   text-decoration-line: underline;
@@ -5713,6 +5764,10 @@ html.wp-toolbar {
 .wedocs-document :is(.focus\:border-red-500:focus) {
   --tw-border-opacity: 1;
   border-color: rgb(239 68 68 / var(--tw-border-opacity));
+}
+
+.wedocs-document :is(.focus\:border-transparent:focus) {
+  border-color: transparent;
 }
 
 .wedocs-document :is(.focus\:text-white:focus) {

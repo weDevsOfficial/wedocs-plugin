@@ -25,6 +25,7 @@ const Edit = ({ attributes, setAttributes }) => {
     } = attributes;
 
     const modalDocsSourceOptions = [
+        { label: __( 'None', 'wedocs' ), value: 'none' },
         { label: __( 'Sections', 'wedocs' ), value: 'sections' },
         { label: __( 'Articles', 'wedocs' ), value: 'articles' },
         { label: __( 'Helpful Docs', 'wedocs' ), value: 'helpful' },
@@ -108,7 +109,6 @@ const Edit = ({ attributes, setAttributes }) => {
                         options={modalDocsSourceOptions}
                         label={__('Modal Docs Source', 'wedocs')}
                         onChange={(newSource) => {
-                            console.log('Updating modal docs source:', newSource);
                             setAttributes({ modalDocsSource: newSource });
                         }}
                     />
@@ -135,7 +135,7 @@ const Edit = ({ attributes, setAttributes }) => {
                         <RangeControl
                             value={helpfulDocsCount}
                             min={1}
-                            max={50}
+                            max={10}
                             label={__('Number of Helpful Docs', 'wedocs')}
                             onChange={(newCount) => setAttributes({ helpfulDocsCount: newCount })}
                         />

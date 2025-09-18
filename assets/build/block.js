@@ -2499,6 +2499,9 @@ const Edit = ({
     modalStyles
   } = attributes;
   const modalDocsSourceOptions = [{
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('None', 'wedocs'),
+    value: 'none'
+  }, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sections', 'wedocs'),
     value: 'sections'
   }, {
@@ -2593,7 +2596,6 @@ const Edit = ({
     options: modalDocsSourceOptions,
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Modal Docs Source', 'wedocs'),
     onChange: newSource => {
-      console.log('Updating modal docs source:', newSource);
       setAttributes({
         modalDocsSource: newSource
       });
@@ -2615,7 +2617,7 @@ const Edit = ({
   }), modalDocsSource === 'helpful' && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.RangeControl, {
     value: helpfulDocsCount,
     min: 1,
-    max: 50,
+    max: 10,
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Number of Helpful Docs', 'wedocs'),
     onChange: newCount => setAttributes({
       helpfulDocsCount: newCount
