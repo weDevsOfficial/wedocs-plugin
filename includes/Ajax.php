@@ -262,6 +262,19 @@ class Ajax {
         $query = isset( $_POST['query'] ) ? sanitize_text_field( $_POST['query'] ) : '';
         $per_page = isset( $_POST['per_page'] ) ? intval( $_POST['per_page'] ) : 10;
         $format = isset( $_POST['format'] ) ? sanitize_text_field( $_POST['format'] ) : 'json';
+        $modal_styles = isset( $_POST['modal_styles'] ) ? $_POST['modal_styles'] : [];
+        
+        // If modal_styles is a string (JSON), decode it
+        if ( is_string( $modal_styles ) ) {
+            // Remove slashes that WordPress adds to escaped quotes
+            $modal_styles = stripslashes( $modal_styles );
+            $modal_styles = json_decode( $modal_styles, true );
+        }
+        
+        // Ensure it's an array
+        if ( ! is_array( $modal_styles ) ) {
+            $modal_styles = [];
+        }
 
         if ( empty( $query ) || strlen( $query ) < 2 ) {
             wp_send_json_error( __( 'Query must be at least 2 characters long.', 'wedocs' ) );
@@ -296,12 +309,7 @@ class Ajax {
             $template_args = [
                 'results'      => $results,
                 'query'        => $query,
-                'modal_styles' => [
-                    'listItemTextColor' => '#111827',
-                    'docLabelColor'     => '#3B82F6',
-                    'sectionLabelColor' => '#10B981',
-                    'articleLabelColor' => '#8B5CF6',
-                ],
+                'modal_styles' => $modal_styles,
                 'empty_message' => __( 'No results found. Try different keywords.', 'wedocs' ),
             ];
 

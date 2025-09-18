@@ -2478,6 +2478,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_5__);
+
 
 
 
@@ -2498,6 +2501,18 @@ const Edit = ({
     searchBoxStyles,
     modalStyles
   } = attributes;
+
+  // Fetch theme colors and gradients
+  const {
+    themeColors,
+    themeGradients
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
+    const editorSettings = select('core/block-editor').getSettings();
+    return {
+      themeColors: editorSettings.colors,
+      themeGradients: editorSettings.gradients
+    };
+  });
   const modalDocsSourceOptions = [{
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('None', 'wedocs'),
     value: 'none'
@@ -2622,11 +2637,16 @@ const Edit = ({
     onChange: newCount => setAttributes({
       helpfulDocsCount: newCount
     })
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, {
+    group: "styles"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Search Box Styling', 'wedocs'),
-    initialOpen: false
+    initialOpen: true
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
-    colors: colorOptions,
+    colors: [{
+      colors: themeColors,
+      name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Theme', 'wedocs')
+    }],
     colorSettings: [{
       value: searchBoxStyles.placeholderColor,
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Placeholder Color', 'wedocs'),
@@ -2697,7 +2717,10 @@ const Edit = ({
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "'mb-0'"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('The styling will be shown in the frontend, not in the editor', 'wedocs')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
-    colors: colorOptions,
+    colors: [{
+      colors: themeColors,
+      name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Theme', 'wedocs')
+    }],
     colorSettings: [{
       value: modalStyles.placeholderColor,
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Placeholder Color', 'wedocs'),
@@ -2719,6 +2742,10 @@ const Edit = ({
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('List Item Icon Color', 'wedocs'),
       onChange: newColor => updateModalStyles('listItemIconColor', newColor)
     }, {
+      value: modalStyles.listItemIconBackgroundColor,
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('List Item Icon Background Color', 'wedocs'),
+      onChange: newColor => updateModalStyles('listItemIconBackgroundColor', newColor)
+    }, {
       value: modalStyles.listItemTextColor,
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('List Item Text Color', 'wedocs'),
       onChange: newColor => updateModalStyles('listItemTextColor', newColor)
@@ -2730,6 +2757,10 @@ const Edit = ({
       value: modalStyles.sectionLabelColor,
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Section Label Color', 'wedocs'),
       onChange: newColor => updateModalStyles('sectionLabelColor', newColor)
+    }, {
+      value: modalStyles.listItemBorderColor,
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('List Item Border Color', 'wedocs'),
+      onChange: newColor => updateModalStyles('listItemBorderColor', newColor)
     }]
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.__experimentalBoxControl, {
     values: modalStyles.listItemPadding,
@@ -2739,13 +2770,6 @@ const Edit = ({
     values: modalStyles.listItemMargin,
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('List Item Margin', 'wedocs'),
     onChange: newMargin => updateModalStyles('listItemMargin', newMargin)
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
-    colors: colorOptions,
-    colorSettings: [{
-      value: modalStyles.listItemBorderColor,
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('List Item Border Color', 'wedocs'),
-      onChange: newColor => updateModalStyles('listItemBorderColor', newColor)
-    }]
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.RangeControl, {
     value: parseInt(modalStyles.listItemBorderWidth),
     min: 0,
@@ -3755,6 +3779,16 @@ module.exports = window["wp"]["blocks"];
 /***/ ((module) => {
 
 module.exports = window["wp"]["components"];
+
+/***/ }),
+
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["data"];
 
 /***/ }),
 

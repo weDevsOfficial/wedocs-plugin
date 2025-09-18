@@ -2553,23 +2553,6 @@ select {
 .menu > :where(li.disabled > *:not(ul):focus) {
   cursor: auto;
 }
-.modal {
-  pointer-events: none;
-  visibility: hidden;
-  position: fixed;
-  inset: 0px;
-  display: flex;
-  justify-content: center;
-  opacity: 0;
-  z-index: 999;
-  background-color: hsl(var(--nf, var(--n)) / var(--tw-bg-opacity));
-  --tw-bg-opacity: 0.4;
-  transition-duration: 200ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-property: transform, opacity, visibility;
-  overflow-y: hidden;
-  overscroll-behavior: contain;
-}
 .\!modal {
   pointer-events: none !important;
   visibility: hidden !important;
@@ -2587,11 +2570,35 @@ select {
   overflow-y: hidden !important;
   overscroll-behavior: contain !important;
 }
-:where(.modal) {
-  align-items: center;
+.modal {
+  pointer-events: none;
+  visibility: hidden;
+  position: fixed;
+  inset: 0px;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  z-index: 999;
+  background-color: hsl(var(--nf, var(--n)) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.4;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: transform, opacity, visibility;
+  overflow-y: hidden;
+  overscroll-behavior: contain;
 }
 :where(.\!modal) {
   align-items: center !important;
+}
+:where(.modal) {
+  align-items: center;
+}
+
+.\!modal:target,
+.modal-toggle:checked + .\!modal {
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 .modal-open,
 .modal:target,
@@ -3054,6 +3061,14 @@ select {
   overflow: hidden;
   border-radius: 40px;
   margin-top: -25px;
+}
+
+.modal-toggle:checked + .\!modal .modal-box,
+.\!modal:target .modal-box {
+  --tw-translate-y: 0px !important;
+  --tw-scale-x: 1 !important;
+  --tw-scale-y: 1 !important;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
 }
 .modal-open .modal-box,
 .modal-toggle:checked + .modal .modal-box,
@@ -4208,9 +4223,6 @@ select {
 .wedocs-document :is(.max-h-60) {
   max-height: 15rem;
 }
-.wedocs-document :is(.max-h-\[80vh\]) {
-  max-height: 80vh;
-}
 .wedocs-document :is(.max-h-\[85vh\]) {
   max-height: 85vh;
 }
@@ -4337,6 +4349,9 @@ select {
 .wedocs-document :is(.w-\[900px\]) {
   width: 900px;
 }
+.wedocs-document :is(.w-\[95\%\]) {
+  width: 95%;
+}
 .wedocs-document :is(.w-auto) {
   width: auto;
 }
@@ -4346,12 +4361,6 @@ select {
 }
 .wedocs-document :is(.w-full) {
   width: 100%;
-}
-.wedocs-document :is(.w-\[90\%\]) {
-  width: 90%;
-}
-.wedocs-document :is(.w-\[95\%\]) {
-  width: 95%;
 }
 .wedocs-document :is(.min-w-0) {
   min-width: 0px;
@@ -4365,6 +4374,9 @@ select {
 .wedocs-document :is(.min-w-\[150px\]) {
   min-width: 150px;
 }
+.wedocs-document :is(.max-w-4xl) {
+  max-width: 56rem;
+}
 .wedocs-document :is(.max-w-\[1008px\]) {
   max-width: 1008px;
 }
@@ -4376,12 +4388,6 @@ select {
 }
 .wedocs-document :is(.max-w-none) {
   max-width: none;
-}
-.wedocs-document :is(.max-w-2xl) {
-  max-width: 42rem;
-}
-.wedocs-document :is(.max-w-4xl) {
-  max-width: 56rem;
 }
 .wedocs-document :is(.flex-1) {
   flex: 1 1 0%;
@@ -4624,6 +4630,11 @@ select {
   margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
 }
+.wedocs-document :is(.space-y-2 > :not([hidden]) ~ :not([hidden])) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
 .wedocs-document :is(.space-y-3 > :not([hidden]) ~ :not([hidden])) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
@@ -4653,11 +4664,6 @@ select {
   --tw-space-y-reverse: 0;
   margin-top: calc(22px * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(22px * var(--tw-space-y-reverse));
-}
-.wedocs-document :is(.space-y-2 > :not([hidden]) ~ :not([hidden])) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 .wedocs-document :is(.divide-x > :not([hidden]) ~ :not([hidden])) {
   --tw-divide-x-reverse: 0;
@@ -4743,14 +4749,14 @@ select {
 .wedocs-document :is(.border-b) {
   border-bottom-width: 1px;
 }
+.wedocs-document :is(.border-b-2) {
+  border-bottom-width: 2px;
+}
 .wedocs-document :is(.border-l-4) {
   border-left-width: 4px;
 }
 .wedocs-document :is(.border-t) {
   border-top-width: 1px;
-}
-.wedocs-document :is(.border-b-2) {
-  border-bottom-width: 2px;
 }
 .wedocs-document :is(.\!border-none) {
   border-style: none !important;
@@ -4794,6 +4800,10 @@ select {
   --tw-border-opacity: 1;
   border-color: rgb(251 191 36 / var(--tw-border-opacity));
 }
+.wedocs-document :is(.border-blue-600) {
+  --tw-border-opacity: 1;
+  border-color: rgb(37 99 235 / var(--tw-border-opacity));
+}
 .wedocs-document :is(.border-gray-200) {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
@@ -4816,10 +4826,6 @@ select {
 .wedocs-document :is(.border-yellow-400) {
   --tw-border-opacity: 1;
   border-color: rgb(250 204 21 / var(--tw-border-opacity));
-}
-.wedocs-document :is(.border-blue-600) {
-  --tw-border-opacity: 1;
-  border-color: rgb(37 99 235 / var(--tw-border-opacity));
 }
 .wedocs-document :is(.border-t-\[\#DBDBDB\]) {
   --tw-border-opacity: 1;
@@ -4899,6 +4905,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
+.wedocs-document :is(.bg-blue-100) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(219 234 254 / var(--tw-bg-opacity));
+}
 .wedocs-document :is(.bg-gray-100) {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -4939,28 +4949,13 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
-.wedocs-document :is(.bg-yellow-50) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 252 232 / var(--tw-bg-opacity));
-}
-.wedocs-document :is(.bg-transparent) {
-  background-color: transparent;
-}
-.wedocs-document :is(.bg-blue-100) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(219 234 254 / var(--tw-bg-opacity));
-}
-.wedocs-document :is(.bg-green-100) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(220 252 231 / var(--tw-bg-opacity));
-}
-.wedocs-document :is(.bg-blue-50) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 246 255 / var(--tw-bg-opacity));
-}
 .wedocs-document :is(.bg-yellow-200) {
   --tw-bg-opacity: 1;
   background-color: rgb(254 240 138 / var(--tw-bg-opacity));
+}
+.wedocs-document :is(.bg-yellow-50) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 252 232 / var(--tw-bg-opacity));
 }
 .wedocs-document :is(.bg-opacity-25) {
   --tw-bg-opacity: 0.25;
@@ -5202,6 +5197,9 @@ select {
 .wedocs-document :is(.pb-7) {
   padding-bottom: 1.75rem;
 }
+.wedocs-document :is(.pl-10) {
+  padding-left: 2.5rem;
+}
 .wedocs-document :is(.pl-2) {
   padding-left: 0.5rem;
 }
@@ -5285,12 +5283,6 @@ select {
 }
 .wedocs-document :is(.pt-\[1px\]) {
   padding-top: 1px;
-}
-.wedocs-document :is(.pl-10) {
-  padding-left: 2.5rem;
-}
-.wedocs-document :is(.pr-20) {
-  padding-right: 5rem;
 }
 .wedocs-document :is(.text-left) {
   text-align: left;
@@ -5467,6 +5459,14 @@ select {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
+.wedocs-document :is(.text-blue-600) {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+.wedocs-document :is(.text-blue-700) {
+  --tw-text-opacity: 1;
+  color: rgb(29 78 216 / var(--tw-text-opacity));
+}
 .wedocs-document :is(.text-gray-400) {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
@@ -5510,22 +5510,6 @@ select {
 .wedocs-document :is(.text-white) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-.wedocs-document :is(.text-blue-600) {
-  --tw-text-opacity: 1;
-  color: rgb(37 99 235 / var(--tw-text-opacity));
-}
-.wedocs-document :is(.text-blue-800) {
-  --tw-text-opacity: 1;
-  color: rgb(30 64 175 / var(--tw-text-opacity));
-}
-.wedocs-document :is(.text-green-800) {
-  --tw-text-opacity: 1;
-  color: rgb(22 101 52 / var(--tw-text-opacity));
-}
-.wedocs-document :is(.text-blue-700) {
-  --tw-text-opacity: 1;
-  color: rgb(29 78 216 / var(--tw-text-opacity));
 }
 .wedocs-document :is(.underline) {
   text-decoration-line: underline;
@@ -5619,15 +5603,6 @@ select {
 .wedocs-document :is(.outline-0) {
   outline-width: 0px;
 }
-.wedocs-document :is(.outline-1) {
-  outline-width: 1px;
-}
-.wedocs-document :is(.-outline-offset-1) {
-  outline-offset: -1px;
-}
-.wedocs-document :is(.outline-gray-300) {
-  outline-color: #d1d5db;
-}
 .wedocs-document :is(.ring-0) {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
@@ -5654,10 +5629,6 @@ select {
 .wedocs-document :is(.ring-white) {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity));
-}
-.wedocs-document :is(.ring-blue-500) {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity));
 }
 .wedocs-document :is(.ring-opacity-5) {
   --tw-ring-opacity: 0.05;
@@ -5709,6 +5680,10 @@ select {
 .wedocs-document :is(.ease-out) {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
+.components-grid.components-tools-panel.block-editor-panel-color-gradient-settings {
+  padding: 0;
+  margin-bottom: 1rem;
+}
 .btn-outline .focus\:outline:focus.badge {
   --tw-border-opacity: 1;
   border-color: hsl(var(--nf, var(--n)) / var(--tw-border-opacity));
@@ -5743,14 +5718,6 @@ select {
   background-color: hsl(var(--af, var(--a)) / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: hsl(var(--ac) / var(--tw-text-opacity));
-}
-.wedocs-document :is(.placeholder\:text-gray-400)::-moz-placeholder {
-  --tw-text-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-text-opacity));
-}
-.wedocs-document :is(.placeholder\:text-gray-400)::placeholder {
-  --tw-text-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 .wedocs-document :is(.before\:absolute)::before {
   content: var(--tw-content);
@@ -6114,15 +6081,15 @@ select {
 .wedocs-document :is(.disabled\:opacity-75:disabled) {
   opacity: 0.75;
 }
-.wedocs-document :is(.disabled\:shadow-none:disabled) {
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
 .wedocs-document :is(.disabled\:\!shadow-none:disabled) {
   --tw-shadow: 0 0 #0000 !important;
   --tw-shadow-colored: 0 0 #0000 !important;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+.wedocs-document :is(.disabled\:shadow-none:disabled) {
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 .wedocs-document :is(.disabled\:hover\:bg-indigo-600:hover:disabled) {
   --tw-bg-opacity: 1;
@@ -6246,12 +6213,12 @@ select {
     width: 2.5rem;
   }
 
-  .wedocs-document :is(.sm\:w-\[90\%\]) {
-    width: 90%;
-  }
-
   .wedocs-document :is(.sm\:w-5) {
     width: 1.25rem;
+  }
+
+  .wedocs-document :is(.sm\:w-\[90\%\]) {
+    width: 90%;
   }
 
   .wedocs-document :is(.sm\:grid-cols-2) {
@@ -6320,14 +6287,14 @@ select {
     padding-right: 2rem;
   }
 
-  .wedocs-document :is(.sm\:py-4) {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-
   .wedocs-document :is(.sm\:py-3) {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
+  }
+
+  .wedocs-document :is(.sm\:py-4) {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   .wedocs-document :is(.sm\:pl-16) {
@@ -6355,19 +6322,14 @@ select {
     line-height: 1.5rem;
   }
 
-  .wedocs-document :is(.sm\:text-sm) {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-  }
-
-  .wedocs-document :is(.sm\:text-sm\/6) {
-    font-size: 0.875rem;
-    line-height: 1.5rem;
-  }
-
   .wedocs-document :is(.sm\:text-lg) {
     font-size: 1.125rem;
     line-height: 1.75rem;
+  }
+
+  .wedocs-document :is(.sm\:text-sm) {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 }
 @media (min-width: 768px) {

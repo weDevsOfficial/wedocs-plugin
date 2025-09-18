@@ -106,14 +106,14 @@ function render_wedocs_quick_search( $attributes ) {
  if( ! function_exists( 'wedocs_block_quick_search_get_template' ) ) {
     function wedocs_block_quick_search_get_template( $template_name, $args = [] ) {
         $template_path = plugin_dir_path( __FILE__ ) . 'templates/' . $template_name . '.php';
-        
+
         if ( ! file_exists( $template_path ) ) {
             return '';
         }
-        
+
         // Extract variables for template
         extract( $args );
-        
+
         ob_start();
         include $template_path;
         return ob_get_clean();
@@ -139,8 +139,8 @@ function render_wedocs_quick_search( $attributes ) {
                 margin-bottom: <?php echo esc_attr( $search_box_styles['margin']['bottom'] ?? '0px' ); ?>;
                 margin-left: <?php echo esc_attr( $search_box_styles['margin']['left'] ?? '0px' ); ?>;
             ">
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     placeholder="<?php echo esc_attr( $search_box_placeholder ); ?>"
                     class="wedocs-quick-search-input"
                     style="
@@ -181,7 +181,7 @@ function render_wedocs_quick_search( $attributes ) {
             </div>
         </div>
     </div>
-    
+
     <style>
         .wedocs-quick-search-input::placeholder {
             color: <?php echo esc_attr( $search_box_styles['placeholderColor'] ?? '#9CA3AF' ); ?> !important;
@@ -195,7 +195,7 @@ function render_wedocs_quick_search( $attributes ) {
         .wedocs-quick-search-input:-ms-input-placeholder {
             color: <?php echo esc_attr( $search_box_styles['placeholderColor'] ?? '#9CA3AF' ); ?> !important;
         }
-        
+
         /* Modal Styles */
         .wedocs-quick-search-modal {
             display: none;
@@ -209,20 +209,20 @@ function render_wedocs_quick_search( $attributes ) {
             justify-content: center;
             align-items: center;
         }
-        
+
         .wedocs-quick-search-modal.active {
             display: flex;
         }
     </style>
-    
+
     <!-- Modal will be dynamically added to body -->
-    
+
     <script>
     (function() {
         const trigger = document.querySelector('.wedocs-quick-search-trigger');
-        
+
         if (!trigger) return;
-        
+
         // Create modal dynamically
         const modal = document.createElement('div');
         modal.className = 'wedocs-quick-search-modal wedocs-document';
@@ -243,8 +243,8 @@ function render_wedocs_quick_search( $attributes ) {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                         </div>
-                           <input 
-                               type="text" 
+                           <input
+                               type="text"
                                placeholder="<?php echo esc_attr( $modal_placeholder ); ?>"
                                class="block w-full pl-10 pr-16 sm:pr-20 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base sm:text-lg"
                             style="
@@ -289,7 +289,7 @@ function render_wedocs_quick_search( $attributes ) {
                     <span class="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">Badge</span>
                     <span class="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">Badge</span>
                 </div>
-                
+
                 <!-- Search Results -->
                 <div class="p-4">
                     <div id="search-results" class="space-y-2" role="listbox" aria-label="Search results">
@@ -298,14 +298,14 @@ function render_wedocs_quick_search( $attributes ) {
                 </div>
             </div>
         `;
-        
+
         // Append modal to body
         document.body.appendChild(modal);
-        
+
         const openModal = () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
+
             // Add opening animation
             const modalContent = modal.querySelector('.rounded-lg');
             if (modalContent) {
@@ -317,11 +317,11 @@ function render_wedocs_quick_search( $attributes ) {
                     modalContent.style.opacity = '1';
                 }, 10);
             }
-            
+
             // Focus management for accessibility
             const previousActiveElement = document.activeElement;
             modal.setAttribute('data-previous-active-element', previousActiveElement ? previousActiveElement.id || 'body' : 'body');
-            
+
             // Announce modal opening to screen readers
             const announcement = document.createElement('div');
             announcement.setAttribute('aria-live', 'polite');
@@ -329,12 +329,12 @@ function render_wedocs_quick_search( $attributes ) {
             announcement.className = 'sr-only';
             announcement.textContent = '<?php echo esc_js( __("Search modal opened. Use arrow keys to navigate results, Enter to select, Escape to close.", "wedocs") ); ?>';
             modal.appendChild(announcement);
-            
+
             setTimeout(() => {
                 announcement.remove();
             }, 1000);
         };
-        
+
         const closeModal = () => {
             // Add closing animation
             const modalContent = modal.querySelector('.rounded-lg');
@@ -342,7 +342,7 @@ function render_wedocs_quick_search( $attributes ) {
                 modalContent.style.transition = 'all 0.15s ease-in';
                 modalContent.style.transform = 'scale(0.95)';
                 modalContent.style.opacity = '0';
-                
+
                 setTimeout(() => {
                     modal.classList.remove('active');
                     document.body.style.overflow = '';
@@ -355,7 +355,7 @@ function render_wedocs_quick_search( $attributes ) {
                 modal.classList.remove('active');
                 document.body.style.overflow = '';
             }
-            
+
             // Restore focus to previous element
             const previousElementId = modal.getAttribute('data-previous-active-element');
             if (previousElementId && previousElementId !== 'body') {
@@ -364,19 +364,19 @@ function render_wedocs_quick_search( $attributes ) {
                     previousElement.focus();
                 }
             }
-            
+
             // Reset search state
             searchInput.value = '';
             currentResults = [];
             selectedIndex = -1;
         };
-        
+
         // Click trigger to open modal
         trigger.addEventListener('click', (e) => {
             e.preventDefault();
             openModal();
         });
-        
+
         // Close modal when clicking close button
         const closeButton = modal.querySelector('.wedocs-quick-search-modal-close');
         if (closeButton) {
@@ -385,27 +385,27 @@ function render_wedocs_quick_search( $attributes ) {
                 closeModal();
             });
         }
-        
+
         // Close modal when clicking outside
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 closeModal();
             }
         });
-        
+
         // Search functionality
         const searchInput = modal.querySelector('input[type="text"]');
         const resultsContainer = modal.querySelector('.space-y-2');
         let searchTimeout;
         let currentResults = [];
         let selectedIndex = -1;
-        
+
         const performSearch = async (query) => {
             if (!query || query.length < 2) {
                 resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>';
                 return;
             }
-            
+
             // Show enhanced loading state
             resultsContainer.innerHTML = `
                 <div class="flex flex-col items-center justify-center py-8">
@@ -413,56 +413,63 @@ function render_wedocs_quick_search( $attributes ) {
                     <p class="text-sm text-gray-500"><?php echo esc_js( __("Searching...", "wedocs") ); ?></p>
                 </div>
             `;
-            
+
             // Add loading class to search input
             searchInput.classList.add('opacity-75', 'cursor-wait');
-            
+
             try {
                 // Use our new AJAX endpoint with HTML format
-                const formData = new FormData();
-                formData.append('action', 'wedocs_quick_search');
-                formData.append('query', query);
-                formData.append('per_page', '10');
-                formData.append('format', 'html');
-                formData.append('_wpnonce', weDocs_Vars.nonce);
+                const modalStyles = <?php echo json_encode( $modal_styles ); ?>;
                 
+                const requestData = {
+                    action: 'wedocs_quick_search',
+                    query: query,
+                    per_page: '10',
+                    format: 'html',
+                    modal_styles: JSON.stringify(modalStyles),
+                    _wpnonce: weDocs_Vars.nonce
+                };
+
                 const response = await fetch(weDocs_Vars.ajaxurl, {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams(requestData)
                 });
-                
+
                 if (!response.ok) {
                     throw new Error('Search failed');
                 }
-                
+
                 const data = await response.json();
-                
+
                    if (data.success && data.data.html) {
                        resultsContainer.innerHTML = data.data.html;
                        currentResults = data.data.results || [];
                        selectedIndex = -1;
                        updateResultSelection();
                        addResultHoverSupport();
-                    
+
                     // Announce results to screen readers
                     const resultCount = currentResults.length;
                     const announcement = document.createElement('div');
                     announcement.setAttribute('aria-live', 'polite');
                     announcement.setAttribute('aria-atomic', 'true');
                     announcement.className = 'sr-only';
-                    
+
                     if (resultCount === 0) {
                         announcement.textContent = '<?php echo esc_js( __("No results found.", "wedocs") ); ?>';
                     } else {
                         announcement.textContent = `<?php echo esc_js( __("Found", "wedocs") ); ?> ${resultCount} <?php echo esc_js( __("results", "wedocs") ); ?>. <?php echo esc_js( __("Use arrow keys to navigate.", "wedocs") ); ?>`;
                     }
-                    
+
                     modal.appendChild(announcement);
                     setTimeout(() => announcement.remove(), 2000);
                 } else {
                     throw new Error(data.data || 'Search failed');
                 }
-                
+
             } catch (error) {
                 console.error('Search error:', error);
                 resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template("empty-state", ["message" => __("Search failed. Please try again.", "wedocs")]); ?>';
@@ -505,9 +512,9 @@ function render_wedocs_quick_search( $attributes ) {
 
             // Scroll selected item into view
             if (selectedIndex >= 0) {
-                resultItems[selectedIndex].scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'nearest' 
+                resultItems[selectedIndex].scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest'
                 });
             }
         };
@@ -530,12 +537,12 @@ function render_wedocs_quick_search( $attributes ) {
         // Highlight search terms in text
         const highlightSearchTerms = (text, query) => {
             if (!query || query.length < 2) return text;
-            
+
             const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
             return text.replace(regex, '<mark class="bg-yellow-200 px-1 rounded">$1</mark>');
         };
-        
-        
+
+
         // Debounced search input
         searchInput.addEventListener('input', (e) => {
             clearTimeout(searchTimeout);
@@ -552,13 +559,13 @@ function render_wedocs_quick_search( $attributes ) {
                     selectedIndex = index;
                     updateResultSelection();
                 });
-                
+
                 item.addEventListener('mouseleave', () => {
                     // Don't reset selectedIndex on mouse leave to maintain keyboard navigation
                 });
             });
         };
-        
+
         // Clear search button
         const clearButton = modal.querySelector('button[type="button"]');
         if (clearButton) {
@@ -567,14 +574,14 @@ function render_wedocs_quick_search( $attributes ) {
                 resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>';
             });
         }
-        
+
         // Focus search input when modal opens
         const focusSearchInput = () => {
             if (modal.classList.contains('active')) {
                 searchInput.focus();
             }
         };
-        
+
         // Enhanced keyboard navigation
         document.addEventListener('keydown', (e) => {
             // Only handle keyboard events when modal is active
@@ -594,17 +601,17 @@ function render_wedocs_quick_search( $attributes ) {
                     e.preventDefault();
                     closeModal();
                     break;
-                    
+
                 case 'ArrowDown':
                     e.preventDefault();
                     navigateResults('down');
                     break;
-                    
+
                 case 'ArrowUp':
                     e.preventDefault();
                     navigateResults('up');
                     break;
-                    
+
                 case 'Enter':
                     e.preventDefault();
                     if (selectedIndex >= 0) {
@@ -614,7 +621,7 @@ function render_wedocs_quick_search( $attributes ) {
                         performSearch(searchInput.value);
                     }
                     break;
-                    
+
                 case 'k':
                     if (e.metaKey || e.ctrlKey) {
                         e.preventDefault();
