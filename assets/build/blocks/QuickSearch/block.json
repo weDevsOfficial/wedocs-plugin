@@ -36,10 +36,6 @@
       "type": "number",
       "default": 10
     },
-    "customCssClass": {
-      "type": "string",
-      "default": ""
-    },
     "searchBoxStyles": {
       "type": "object",
       "default": {
@@ -95,10 +91,6 @@
         "listItemBorderWidth": "1px",
         "listItemBorderRadius": "4px"
       }
-    },
-    "additionalCssClass": {
-      "type": "string",
-      "default": ""
     }
   }
 }
