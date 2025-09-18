@@ -2135,8 +2135,28 @@ select {
   overflow-y: hidden;
   overscroll-behavior: contain;
 }
+.\!modal {
+  pointer-events: none !important;
+  visibility: hidden !important;
+  position: fixed !important;
+  inset: 0px !important;
+  display: flex !important;
+  justify-content: center !important;
+  opacity: 0 !important;
+  z-index: 999 !important;
+  background-color: hsl(var(--nf, var(--n)) / var(--tw-bg-opacity)) !important;
+  --tw-bg-opacity: 0.4 !important;
+  transition-duration: 200ms !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-property: transform, opacity, visibility !important;
+  overflow-y: hidden !important;
+  overscroll-behavior: contain !important;
+}
 :where(.modal) {
   align-items: center;
+}
+:where(.\!modal) {
+  align-items: center !important;
 }
 .modal-open,
 .modal:target,
@@ -2144,6 +2164,13 @@ select {
   pointer-events: auto;
   visibility: visible;
   opacity: 1;
+}
+
+.\!modal:target,
+.modal-toggle:checked + .\!modal {
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 .progress {
   position: relative;
@@ -2600,6 +2627,14 @@ select {
   --tw-scale-x: 1;
   --tw-scale-y: 1;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.modal-toggle:checked + .\!modal .modal-box,
+.\!modal:target .modal-box {
+  --tw-translate-y: 0px !important;
+  --tw-scale-x: 1 !important;
+  --tw-scale-y: 1 !important;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
 }
 .progress::-moz-progress-bar {
   --tw-bg-opacity: 1;
@@ -3727,6 +3762,9 @@ select {
 .wedocs-document :is(.max-h-60) {
   max-height: 15rem;
 }
+.wedocs-document :is(.max-h-\[80vh\]) {
+  max-height: 80vh;
+}
 .wedocs-document :is(.min-h-\[200px\]) {
   min-height: 200px;
 }
@@ -3860,6 +3898,9 @@ select {
 .wedocs-document :is(.w-full) {
   width: 100%;
 }
+.wedocs-document :is(.w-\[90\%\]) {
+  width: 90%;
+}
 .wedocs-document :is(.min-w-0) {
   min-width: 0px;
 }
@@ -3883,6 +3924,9 @@ select {
 }
 .wedocs-document :is(.max-w-none) {
   max-width: none;
+}
+.wedocs-document :is(.max-w-2xl) {
+  max-width: 42rem;
 }
 .wedocs-document :is(.flex-1) {
   flex: 1 1 0%;
@@ -4419,6 +4463,9 @@ select {
 .wedocs-document :is(.bg-yellow-50) {
   --tw-bg-opacity: 1;
   background-color: rgb(254 252 232 / var(--tw-bg-opacity));
+}
+.wedocs-document :is(.bg-transparent) {
+  background-color: transparent;
 }
 .wedocs-document :is(.bg-opacity-25) {
   --tw-bg-opacity: 0.25;
