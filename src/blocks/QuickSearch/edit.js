@@ -21,6 +21,7 @@ const Edit = ({ attributes, setAttributes }) => {
         sectionIds,
         articleIds,
         helpfulDocsCount,
+        showIconInResults,
         searchBoxStyles,
         modalStyles,
     } = attributes;
@@ -150,6 +151,13 @@ const Edit = ({ attributes, setAttributes }) => {
                             onChange={(newCount) => setAttributes({ helpfulDocsCount: newCount })}
                         />
                     )}
+
+                    <ToggleControl
+                        label={__('Show Icon in Quick Search Results', 'wedocs')}
+                        checked={showIconInResults}
+                        onChange={(newValue) => setAttributes({ showIconInResults: newValue })}
+                        help={__('Display icons next to search results in the modal', 'wedocs')}
+                    />
                 </PanelBody>
             </InspectorControls>
 
@@ -280,20 +288,27 @@ const Edit = ({ attributes, setAttributes }) => {
                                 label: __('Field Text Color', 'wedocs'),
                                 onChange: (newColor) => updateModalStyles('fieldTextColor', newColor),
                             },
-                            {
-                                value: modalStyles.listItemIconColor,
-                                label: __('List Item Icon Color', 'wedocs'),
-                                onChange: (newColor) => updateModalStyles('listItemIconColor', newColor),
-                            },
-                            {
-                                value: modalStyles.listItemIconBackgroundColor,
-                                label: __('List Item Icon Background Color', 'wedocs'),
-                                onChange: (newColor) => updateModalStyles('listItemIconBackgroundColor', newColor),
-                            },
+                            ...(showIconInResults ? [
+                                {
+                                    value: modalStyles.listItemIconColor,
+                                    label: __('List Item Icon Color', 'wedocs'),
+                                    onChange: (newColor) => updateModalStyles('listItemIconColor', newColor),
+                                },
+                                {
+                                    value: modalStyles.listItemIconBackgroundColor,
+                                    label: __('List Item Icon Background Color', 'wedocs'),
+                                    onChange: (newColor) => updateModalStyles('listItemIconBackgroundColor', newColor),
+                                },
+                            ] : []),
                             {
                                 value: modalStyles.listItemTextColor,
                                 label: __('List Item Text Color', 'wedocs'),
                                 onChange: (newColor) => updateModalStyles('listItemTextColor', newColor),
+                            },
+                            {
+                                value: modalStyles.listItemBackgroundColor,
+                                label: __('List Item Background Color', 'wedocs'),
+                                onChange: (newColor) => updateModalStyles('listItemBackgroundColor', newColor),
                             },
                             {
                                 value: modalStyles.docLabelColor,

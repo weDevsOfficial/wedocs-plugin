@@ -9,6 +9,7 @@ const Save = ({ attributes }) => {
         sectionIds,
         articleIds,
         helpfulDocsCount,
+        showIconInResults,
         customCssClass,
         searchBoxStyles,
         modalStyles,
@@ -65,6 +66,7 @@ const Save = ({ attributes }) => {
         '--wedocs-modal-list-item-border-color': modalStyles.listItemBorderColor,
         '--wedocs-modal-list-item-border-width': modalStyles.listItemBorderWidth,
         '--wedocs-modal-list-item-border-radius': modalStyles.listItemBorderRadius,
+        '--wedocs-modal-list-item-background-color': modalStyles.listItemBackgroundColor,
     };
 
     return (
@@ -77,6 +79,7 @@ const Save = ({ attributes }) => {
                 data-section-ids={sectionIds}
                 data-article-ids={articleIds}
                 data-helpful-docs-count={helpfulDocsCount}
+                data-show-icon-in-results={showIconInResults}
                 style={modalStyle}
             >
                 <div className="wedocs-quick-search-input">

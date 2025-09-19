@@ -263,6 +263,8 @@ class Ajax {
         $per_page = isset( $_POST['per_page'] ) ? intval( $_POST['per_page'] ) : 10;
         $format = isset( $_POST['format'] ) ? sanitize_text_field( $_POST['format'] ) : 'json';
         $modal_styles = isset( $_POST['modal_styles'] ) ? $_POST['modal_styles'] : [];
+        $show_icon_in_results = isset( $_POST['show_icon_in_results'] ) ? filter_var( $_POST['show_icon_in_results'], FILTER_VALIDATE_BOOLEAN ) : true;
+    
         
         // If modal_styles is a string (JSON), decode it
         if ( is_string( $modal_styles ) ) {
@@ -311,6 +313,7 @@ class Ajax {
                 'query'        => $query,
                 'modal_styles' => $modal_styles,
                 'empty_message' => __( 'No results found. Try different keywords.', 'wedocs' ),
+                'show_icon_in_results' => $show_icon_in_results,
             ];
 
             // Load the template
