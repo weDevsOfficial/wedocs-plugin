@@ -176,16 +176,18 @@ final class WeDocs {
 
     /**
      * Auto-load all block render files
+     * 
+     * @since WEDOCS_SINCE
      *
      * @return void
      */
     public function load_block_render_files() {
-        $blocks_dir = plugin_dir_path(__FILE__) . 'assets/build/blocks/';
-        if (is_dir($blocks_dir)) {
-            $block_dirs = glob($blocks_dir . '*', GLOB_ONLYDIR);
-            foreach ($block_dirs as $block_dir) {
+        $blocks_dir = plugin_dir_path( __FILE__ ) . 'assets/build/blocks/';
+        if ( is_dir( $blocks_dir ) ) {
+            $block_dirs = glob( $blocks_dir . '*', GLOB_ONLYDIR );
+            foreach ( $block_dirs as $block_dir ) {
                 $render_file = $block_dir . '/render.php';
-                if (file_exists($render_file)) {
+                if ( file_exists( $render_file ) ) {
                     require_once $render_file;
                 }
             }
