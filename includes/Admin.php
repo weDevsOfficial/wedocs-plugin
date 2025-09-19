@@ -23,9 +23,9 @@ class Admin {
         add_action('load-edit.php', array($this, 'trashed_docs_redirect'));
 
          // 1. Add links in the installed plugins list page
-        add_filter( 'plugin_action_links_' . plugin_basename(WEDOCS_FILE ), [$this, 'plugin_instalation_page_links'], 10, 3 );
+        add_filter( 'plugin_action_links_' . plugin_basename(WEDOCS_FILE ), [$this, 'plugin_instalation_page_link'], 10, 3 );
         // 2. Add links in the plugin install/info popup page
-        add_filter( 'plugins_api_result', [$this, 'plugin_details_popup_links']);
+        add_filter( 'plugins_api_result', [$this, 'plugin_details_popup_link']);
     }
 
     /**
@@ -87,9 +87,9 @@ class Admin {
     }
 
 
-     function plugin_instalation_page_links( $links ) {
+     function plugin_instalation_page_link( $links ) {
         $pro_link     = '<a href="https://wedocs.co/pricing/" target="_blank" style="font-weight:bold; color:#17b517;">'. esc_html__( 'Upgrade to Pro', 'wedocs' ) .'</a> ';
-        $discount_link = '<a href="https://wedocs.co/pricing/" target="_blank" style="color:#d63638;">'. esc_html__( 'Check Discount', 'wedocs' ) .'</a>';
+        $discount_link = '<a href="https://wedevs.com/coupons/ target="_blank" style="color:#d63638;">'. esc_html__( 'Check Discount', 'wedocs' ) .'</a>';
         $docs_link = '<a href="https://wedocs.co/docs/" target="_blank">'. esc_html__( 'Docs', 'wedocs' ) .'</a> ';
         $support_link = '<a href="https://wedocs.co/get-support/" target="_blank">'. esc_html__( 'Get Support', 'wedocs' ) .'</a>';
         $items = [
@@ -110,7 +110,7 @@ class Admin {
                 $extra_html  = '<p style="margin-top:10px;">';
                 if(!is_plugin_active('wedocs-pro/wedocs-pro.php')){
                     $extra_html .= '<a href="https://wedocs.co/pricing/" target="_blank" style="margin-right:6px;color:green;">'. esc_html__( 'Upgrade to Pro', 'wedocs' ) .'</a> | ';
-                    $extra_html .= '<a href="https://wedocs.co/pricing/" target="_blank">'. esc_html__( 'Check Discount', 'wedocs' ) .'</a> | ';
+                    $extra_html .= '<a href="https://wedevs.com/coupons/" target="_blank">'. esc_html__( 'Check Discount', 'wedocs' ) .'</a> | ';
                 }
                 $extra_html .= '<a href="https://wedocs.co/docs/" target="_blank">'. esc_html__( 'Docs', 'wedocs' ) .'</a> | ';
                 $extra_html .= '<a href="https://wedocs.co/get-support/" target="_blank">'. esc_html__( 'Get Support', 'wedocs' ) .'</a>';
