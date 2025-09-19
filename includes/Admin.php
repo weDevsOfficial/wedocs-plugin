@@ -89,7 +89,7 @@ class Admin {
 
      function plugin_instalation_page_link( $links ) {
         $pro_link     = '<a href="https://wedocs.co/pricing/" target="_blank" style="font-weight:bold; color:#17b517;">'. esc_html__( 'Upgrade to Pro', 'wedocs' ) .'</a> ';
-        $discount_link = '<a href="https://wedevs.com/coupons/ target="_blank" style="color:#d63638;">'. esc_html__( 'Check Discount', 'wedocs' ) .'</a>';
+        $discount_link = '<a href="https://wedevs.com/coupons/" target="_blank" style="color:#d63638;">'. esc_html__( 'Check Discount', 'wedocs' ) .'</a>';
         $docs_link = '<a href="https://wedocs.co/docs/" target="_blank">'. esc_html__( 'Docs', 'wedocs' ) .'</a> ';
         $support_link = '<a href="https://wedocs.co/get-support/" target="_blank">'. esc_html__( 'Get Support', 'wedocs' ) .'</a>';
         $items = [
