@@ -42,11 +42,11 @@ $margin_defaults = [
 
 // Merge with defaults to handle empty/undefined individual properties
 $padding = array_merge($padding_defaults, isset($attributes['padding']) ? array_filter($attributes['padding'], function($value) {
-    return !empty($value);
+    return !($value === null || $value === '');
 }) : []);
 
 $margin = array_merge($margin_defaults, isset($attributes['margin']) ? array_filter($attributes['margin'], function($value) {
-    return !empty($value);
+    return !($value === null || $value === '');
 }) : []);
 
 // Color and style attributes

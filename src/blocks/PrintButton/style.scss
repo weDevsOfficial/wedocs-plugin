@@ -67,6 +67,10 @@
             text-decoration: none;
             transform: translateY(-1px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            
+            // Use CSS custom properties for hover colors (set via inline styles)
+            background-color: var(--hover-bg-color) !important;
+            color: var(--hover-text-color) !important;
         }
 
         &:active {
@@ -240,14 +244,6 @@
     *[title*="print"],
     *[aria-label*="Print"],
     *[aria-label*="print"] {
-        display: none !important;
-    }
-    
-    // Hide based on common print button text content
-    *:contains("Print"),
-    *:contains("print"),
-    a:contains("Print this article"),
-    a:contains("Print Article") {
         display: none !important;
     }
 }
