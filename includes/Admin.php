@@ -25,7 +25,7 @@ class Admin {
          // 1. Add links in the installed plugins list page
         add_filter( 'plugin_action_links_' . plugin_basename(WEDOCS_FILE ), [$this, 'plugin_instalation_page_link'], 10, 3 );
         // 2. Add links in the plugin install/info popup page
-        add_filter( 'plugins_api_result', [$this, 'plugin_details_popup_link']);
+        add_filter( 'plugins_api_result', [$this, 'plugin_details_popup_link'], 10, 3 );
     }
 
     /**
