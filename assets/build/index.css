@@ -2096,6 +2096,13 @@ select {
   -webkit-mask-position: center;
   mask-position: center;
 }
+.menu.horizontal {
+  display: inline-flex;
+  flex-direction: row;
+}
+.menu.horizontal :where(li) {
+  flex-direction: row;
+}
 .menu > :where(li.disabled > *:not(ul):focus) {
   cursor: auto;
 }
@@ -2542,6 +2549,14 @@ select {
   -webkit-mask-image: url("data:image/svg+xml,%3csvg width=%27200%27 height=%27200%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M100 0C20 0 0 20 0 100s20 100 100 100 100-20 100-100S180 0 100 0Z%27/%3e%3c/svg%3e");
   mask-image: url("data:image/svg+xml,%3csvg width=%27200%27 height=%27200%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M100 0C20 0 0 20 0 100s20 100 100 100 100-20 100-100S180 0 100 0Z%27/%3e%3c/svg%3e");
 }
+.menu.horizontal > li.bordered > a,
+        .menu.horizontal > li.bordered > button,
+        .menu.horizontal > li.bordered > span {
+  border-left-width: 0px;
+  border-bottom-width: 4px;
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--p) / var(--tw-border-opacity));
+}
 .menu :where(li:not(.menu-title):not(:empty)) > :where(:not(ul).active),
   .menu :where(li:not(.menu-title):not(:empty)) > :where(*:not(ul):active) {
   --tw-bg-opacity: 1;
@@ -2935,6 +2950,36 @@ select {
 }
 .prose :where(tbody tr, thead):not(:where([class~="not-prose"] *)) {
   border-bottom-color: hsl(var(--bc) / 20%);
+}
+.artboard.phone-1.horizontal,
+      .artboard.phone-1.artboard-horizontal {
+  width: 568px;
+  height: 320px;
+}
+.artboard.phone-2.horizontal,
+      .artboard.phone-2.artboard-horizontal {
+  width: 667px;
+  height: 375px;
+}
+.artboard.phone-3.horizontal,
+      .artboard.phone-3.artboard-horizontal {
+  width: 736px;
+  height: 414px;
+}
+.artboard.phone-4.horizontal,
+      .artboard.phone-4.artboard-horizontal {
+  width: 812px;
+  height: 375px;
+}
+.artboard.phone-5.horizontal,
+      .artboard.phone-5.artboard-horizontal {
+  width: 896px;
+  height: 414px;
+}
+.artboard.phone-6.horizontal,
+      .artboard.phone-6.artboard-horizontal {
+  width: 1024px;
+  height: 320px;
 }
 .btm-nav-xs>*:where(.active) {
   border-top-width: 1px;

@@ -39,6 +39,10 @@ class Ajax {
         // Handle weDocs pro notice.
         add_action( 'wp_ajax_hide_wedocs_pro_notice', [ $this, 'hide_pro_notice' ] );
         add_action( 'wp_ajax_nopriv_hide_wedocs_pro_notice', [ $this, 'hide_pro_notice' ] );
+
+        // Handle weDocs helpful feedback voting.
+        add_action( 'wp_ajax_wedocs_helpful_feedback_vote', [ $this, 'handle_helpful_feedback_vote' ] );
+        add_action( 'wp_ajax_nopriv_wedocs_helpful_feedback_vote', [ $this, 'handle_helpful_feedback_vote' ] );
     }
 
     /**
@@ -243,5 +247,99 @@ class Ajax {
      */
     public function is_a_parent_doc( $doc_id ) {
         return (int) wp_get_post_parent_id( $doc_id ) === 0;
+    }
+
+    /**
+     * Handle helpful feedback voting.
+     *
+     * @since 2.1.0
+     *
+     * @return void
+     */
+    public function handle_helpful_feedback_vote() {
+        // Verify nonce for security
+        if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'wedocs_helpful_feedback_nonce' ) ) {
+            wp_send_json_error( [
+                'message' => __( 'Security verification failed.', 'wedocs' )
+            ] );
+        }
+
+        // Validate required fields
+        $post_id = intval( $_POST['post_id'] ?? 0 );
+        $vote = sanitize_text_field( $_POST['vote'] ?? '' );
+        $allow_anonymous = filter_var( $_POST['allow_anonymous'] ?? true, FILTER_VALIDATE_BOOLEAN );
+
+        if ( ! $post_id || ! in_array( $vote, [ 'yes', 'no' ] ) ) {
+            wp_send_json_error( [
+                'message' => __( 'Invalid voting data.', 'wedocs' )
+            ] );
+        }
+
+        // Verify this is a docs post
+        if ( get_post_type( $post_id ) !== 'docs' ) {
+            wp_send_json_error( [
+                'message' => __( 'Invalid post type.', 'wedocs' )
+            ] );
+        }
+
+        // Get current user ID and IP
+        $user_id = get_current_user_id();
+        $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
+
+        // Check if user can vote
+        if ( ! $user_id && ! $allow_anonymous ) {
+            wp_send_json_error( [
+                'message' => __( 'You must be logged in to vote.', 'wedocs' )
+            ] );
+        }
+
+        // Check if user has already voted
+        $has_voted = false;
+        if ( $user_id ) {
+            // Check by user ID
+            $user_vote = get_post_meta( $post_id, "wedocs_helpful_vote_user_{$user_id}", true );
+            if ( $user_vote ) {
+                $has_voted = true;
+            }
+        } elseif ( $allow_anonymous && $user_ip ) {
+            // Check by IP for anonymous users
+            $ip_vote = get_post_meta( $post_id, "wedocs_helpful_vote_ip_" . md5( $user_ip ), true );
+            if ( $ip_vote ) {
+                $has_voted = true;
+            }
+        }
+
+        if ( $has_voted ) {
+            wp_send_json_error( [
+                'message' => __( 'You have already voted on this article.', 'wedocs' )
+            ] );
+        }
+
+        // Record the vote
+        $vote_meta_key = $vote === 'yes' ? 'postive' : 'negative';
+        $current_votes = (int) get_post_meta( $post_id, $vote_meta_key, true );
+        update_post_meta( $post_id, $vote_meta_key, $current_votes + 1 );
+
+        // Record user vote to prevent duplicate voting
+        if ( $user_id ) {
+            update_post_meta( $post_id, "wedocs_helpful_vote_user_{$user_id}", $vote );
+        } elseif ( $allow_anonymous && $user_ip ) {
+            update_post_meta( $post_id, "wedocs_helpful_vote_ip_" . md5( $user_ip ), $vote );
+        }
+
+        // Get updated vote counts
+        $yes_votes = (int) get_post_meta( $post_id, 'positive', true );
+        $no_votes = (int) get_post_meta( $post_id, 'negetive', true );
+
+        // Fire action hook for extensibility
+        do_action( 'wedocs_helpful_feedback_voted', $post_id, $vote, $user_id, $user_ip );
+
+        // Return success response
+        wp_send_json_success( [
+            'vote' => $vote,
+            'yes_votes' => $yes_votes,
+            'no_votes' => $no_votes,
+            'message' => __( 'Thank you for your feedback!', 'wedocs' )
+        ] );
     }
 }
