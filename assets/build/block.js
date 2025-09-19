@@ -1466,6 +1466,7 @@ function Inspector({
   const {
     separator,
     hideHomeIcon,
+    alignment,
     breadcrumbSeparator
   } = attributes;
 
@@ -1513,7 +1514,26 @@ function Inspector({
     onChange: () => setAttributes({
       hideHomeIcon: !hideHomeIcon
     })
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalToggleGroupControl, {
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true,
+    isBlock: true,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Alignment", "wedocs-blocks"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Select the alignment for the breadcrumbs.", "wedocs-blocks"),
+    onChange: value => setAttributes({
+      alignment: value
+    }),
+    value: alignment
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalToggleGroupControlOption, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Left", "wedocs-blocks"),
+    value: "left"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalToggleGroupControlOption, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Center", "wedocs-blocks"),
+    value: "center"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalToggleGroupControlOption, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Right", "wedocs-blocks"),
+    value: "right"
+  })))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
     group: "styles"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Breadcrumb Separator", "wedocs-blocks"),
@@ -1653,6 +1673,7 @@ function Edit({
   const {
     separator,
     hideHomeIcon,
+    alignment,
     breadcrumbSeparator
   } = attributes;
 
@@ -1790,6 +1811,19 @@ function Edit({
     }
   };
 
+  // Helper function to get alignment class
+  const getAlignmentClass = () => {
+    switch (alignment) {
+      case "center":
+        return "justify-center";
+      case "right":
+        return "justify-end";
+      case "left":
+      default:
+        return "justify-start";
+    }
+  };
+
   // Mock breadcrumb data for preview
   const breadcrumbs = [{
     title: "Home",
@@ -1807,11 +1841,10 @@ function Edit({
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wedocs-document"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("nav", {
-    "aria-label": "Breadcrumb",
-    className: "flex"
+    "aria-label": "Breadcrumb"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ol", {
     role: "list",
-    className: "flex space-x-4",
+    className: `flex ${getAlignmentClass()}`,
     style: {
       backgroundColor: backgroundColor ? `var(--wp--preset--color--${backgroundColor})` : undefined,
       color: textColor ? `var(--wp--preset--color--${textColor})` : undefined,
@@ -3650,7 +3683,7 @@ module.exports = window["wp"]["primitives"];
   \******************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"wedocs/wedocs-breadcrumbs","version":"1.0.0","title":"weDocs Breadcrumbs","category":"widgets","description":"Display the breadcrumbs for the current page.","icon":"arrow-right-alt","attributes":{"separator":{"type":"string","default":"slash"},"hideHomeIcon":{"type":"boolean","default":false},"breadcrumbSeparator":{"type":"object","default":{"color":""}}},"example":{"attributes":{"separator":"slash","hideHomeIcon":false,"breadcrumbSeparator":{"color":"#666666"}}},"supports":{"html":false,"color":{"background":true,"text":true,"link":true,"border":true},"shadow":true,"spacing":{"margin":true,"padding":true,"__experimentalDefaultControls":{"margin":true,"padding":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}}},"render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"wedocs/wedocs-breadcrumbs","version":"1.0.0","title":"weDocs Breadcrumbs","category":"widgets","description":"Display the breadcrumbs for the current page.","icon":"arrow-right-alt","attributes":{"separator":{"type":"string","default":"slash"},"hideHomeIcon":{"type":"boolean","default":false},"alignment":{"type":"string","default":"left"},"breadcrumbSeparator":{"type":"object","default":{"color":""}}},"example":{"attributes":{"separator":"slash","hideHomeIcon":false,"alignment":"left","breadcrumbSeparator":{"color":"#666666"}}},"supports":{"html":false,"color":{"background":true,"text":true,"link":true,"border":true},"shadow":true,"spacing":{"margin":true,"padding":true,"__experimentalDefaultControls":{"margin":true,"padding":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}}},"render":"file:./render.php"}');
 
 /***/ }),
 

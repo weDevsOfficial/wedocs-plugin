@@ -39,7 +39,7 @@ export default function Edit({ attributes, setAttributes }) {
 	}, []); // Empty dependency array means this runs once on mount
 
 	const blockProps = useBlockProps();
-	const { separator, hideHomeIcon, breadcrumbSeparator } = attributes;
+	const { separator, hideHomeIcon, alignment, breadcrumbSeparator } = attributes;
 
 
 	// Helper function to convert WordPress color format to CSS variable
@@ -181,6 +181,19 @@ export default function Edit({ attributes, setAttributes }) {
 		}
 	};
 
+	// Helper function to get alignment class
+	const getAlignmentClass = () => {
+		switch (alignment) {
+			case "center":
+				return "justify-center";
+			case "right":
+				return "justify-end";
+			case "left":
+			default:
+				return "justify-start";
+		}
+	};
+
 	// Mock breadcrumb data for preview
 	const breadcrumbs = [
 		{
@@ -201,10 +214,10 @@ export default function Edit({ attributes, setAttributes }) {
 		<>
 			<Inspector attributes={attributes} setAttributes={setAttributes} />
 			<div className="wedocs-document">
-				<nav aria-label="Breadcrumb" className="flex">
+				<nav aria-label="Breadcrumb">
 					<ol
 						role="list"
-						className="flex space-x-4"
+						className={`flex ${getAlignmentClass()}`}
 						style={{
 							backgroundColor: backgroundColor ? `var(--wp--preset--color--${backgroundColor})` : undefined,
 							color: textColor ? `var(--wp--preset--color--${textColor})` : undefined,

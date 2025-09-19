@@ -21,6 +21,7 @@ export default function Inspector({ attributes, setAttributes }) {
 	const {
 		separator,
 		hideHomeIcon,
+		alignment,
 		breadcrumbSeparator,
 	} = attributes;
 
@@ -67,6 +68,22 @@ export default function Inspector({ attributes, setAttributes }) {
 						checked={hideHomeIcon}
 						onChange={() => setAttributes({ hideHomeIcon: !hideHomeIcon })}
 					/>
+					<ToggleGroupControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
+						isBlock
+						label={__("Alignment", "wedocs-blocks")}
+						help={__(
+							"Select the alignment for the breadcrumbs.",
+							"wedocs-blocks",
+						)}
+						onChange={(value) => setAttributes({ alignment: value })}
+						value={alignment}
+					>
+						<ToggleGroupControlOption label={__("Left", "wedocs-blocks")} value="left" />
+						<ToggleGroupControlOption label={__("Center", "wedocs-blocks")} value="center" />
+						<ToggleGroupControlOption label={__("Right", "wedocs-blocks")} value="right" />
+					</ToggleGroupControl>
 				</PanelBody>
 			</InspectorControls>
 			<InspectorControls group="styles">

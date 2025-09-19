@@ -16,6 +16,10 @@
       "type": "boolean",
       "default": false
     },
+    "alignment": {
+      "type": "string",
+      "default": "left"
+    },
     "breadcrumbSeparator": {
       "type": "object",
       "default": {
@@ -27,6 +31,7 @@
     "attributes": {
       "separator": "slash",
       "hideHomeIcon": false,
+      "alignment": "left",
       "breadcrumbSeparator": {
         "color": "#666666"
       }

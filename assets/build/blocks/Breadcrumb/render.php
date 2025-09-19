@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Extract attributes with defaults
 $separator = $attributes['separator'] ?? 'slash';
 $hide_home_icon = $attributes['hideHomeIcon'] ?? false;
+$alignment = $attributes['alignment'] ?? 'left';
 
 // Extract style attributes
 $background_color = $attributes['backgroundColor'] ?? '';
@@ -197,6 +198,21 @@ if (!function_exists('get_separator_icon')) {
     }
 }
 
+// Get alignment class
+if (!function_exists('get_alignment_class')) {
+    function get_alignment_class($alignment) {
+        switch ($alignment) {
+            case 'center':
+                return 'justify-center';
+            case 'right':
+                return 'justify-end';
+            case 'left':
+            default:
+                return 'justify-start';
+        }
+    }
+}
+
 // Get current page info for breadcrumbs
 if (!function_exists('get_breadcrumb_items')) {
     function get_breadcrumb_items() {
@@ -341,13 +357,12 @@ if (!function_exists('get_doc_ancestors')) {
 $separator_icon = get_separator_icon($separator);
 $breadcrumbs = get_breadcrumb_items();
 
-
 ?>
 <div class="wedocs-document">
-    <nav aria-label="Breadcrumb" class="flex">
+    <nav aria-label="Breadcrumb">
         <?php
         // Build CSS classes for WordPress style system
-        $ol_classes = ['flex', 'space-x-4'];
+        $ol_classes = ['flex', get_alignment_class($alignment)];
         
         // Add color classes
         if ($background_color) {
