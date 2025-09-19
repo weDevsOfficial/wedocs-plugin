@@ -25,6 +25,10 @@ const attributes = {
         type: 'number',
         default: 10,
     },
+    showIconInResults: {
+        type: 'boolean',
+        default: true,
+    },
     searchBoxStyles: {
         type: 'object',
         default: {
@@ -79,6 +83,7 @@ const attributes = {
             listItemBorderColor: '#E5E7EB',
             listItemBorderWidth: '1px',
             listItemBorderRadius: '4px',
+            listItemBackgroundColor: '#F9FAFB',
         },
     },
 };

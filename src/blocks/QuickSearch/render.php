@@ -195,6 +195,7 @@ function render_wedocs_quick_search( $attributes ) {
     $section_ids = $attributes['sectionIds'] ?? '';
     $article_ids = $attributes['articleIds'] ?? '';
     $helpful_docs_count = $attributes['helpfulDocsCount'] ?? 10;
+    $show_icon_in_results = $attributes['showIconInResults'] ?? true;
 
     // Get styling attributes
     $search_box_styles = $attributes['searchBoxStyles'] ?? [];
@@ -249,6 +250,7 @@ function render_wedocs_quick_search( $attributes ) {
         $modal_css_vars[] = '--wedocs-modal-list-item-border-color: ' . ( $modal_styles['listItemBorderColor'] ?? '#E5E7EB' );
         $modal_css_vars[] = '--wedocs-modal-list-item-border-width: ' . ( $modal_styles['listItemBorderWidth'] ?? '1px' );
         $modal_css_vars[] = '--wedocs-modal-list-item-border-radius: ' . ( $modal_styles['listItemBorderRadius'] ?? '4px' );
+        $modal_css_vars[] = '--wedocs-modal-list-item-background-color: ' . ( $modal_styles['listItemBackgroundColor'] ?? '' );
     }
 
     // Combine all CSS variables
@@ -266,6 +268,7 @@ function render_wedocs_quick_search( $attributes ) {
         'data-section-ids="' . esc_attr( $section_ids ) . '"',
         'data-article-ids="' . esc_attr( $article_ids ) . '"',
         'data-helpful-docs-count="' . esc_attr( $helpful_docs_count ) . '"',
+        'data-show-icon-in-results="' . esc_attr( $show_icon_in_results ? 'true' : 'false' ) . '"',
     ];
     $data_attributes_string = implode( ' ', $data_attributes );
 
@@ -600,12 +603,15 @@ function render_wedocs_quick_search( $attributes ) {
                 // Use our new AJAX endpoint with HTML format
                 const modalStyles = <?php echo json_encode( $modal_styles ); ?>;
 
+                const showIconInResults = trigger.getAttribute('data-show-icon-in-results') === 'true';
+                
                 const requestData = {
                     action: 'wedocs_quick_search',
                     query: query,
                     per_page: '10',
                     format: 'html',
                     modal_styles: JSON.stringify(modalStyles),
+                    show_icon_in_results: showIconInResults,
                     _wpnonce: weDocs_Vars.nonce
                 };
 
