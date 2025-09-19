@@ -11,6 +11,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Check if a docs post is a parent doc (top-level documentation)
+ * Uses the same logic as the existing Ajax::is_a_parent_doc() method
+ *
+ * @param int $doc_id Post ID
+ * @return bool True if parent doc, false otherwise
+ */
+function wedocs_is_parent_doc( $doc_id ) {
+    return (int) wp_get_post_parent_id( $doc_id ) === 0;
+}
+
+/**
+ * Check if a docs post is a section (child of a parent doc)
+ *
+ * @param int $doc_id Post ID
+ * @return bool True if section, false otherwise
+ */
+function wedocs_is_section_doc( $doc_id ) {
+    $parent_id = wp_get_post_parent_id( $doc_id );
+    return $parent_id > 0 && wedocs_is_parent_doc( $parent_id );
+}
+
+/**
+ * Check if a docs post is an article (child of a section)
+ *
+ * @param int $doc_id Post ID
+ * @return bool True if article, false otherwise
+ */
+function wedocs_is_article_doc( $doc_id ) {
+    $parent_id = wp_get_post_parent_id( $doc_id );
+    return $parent_id > 0 && wedocs_is_section_doc( $parent_id );
+}
+
+/**
  * Get modal docs source data based on the selected source type
  *
  * @param string $modal_docs_source Source type (none, sections, articles, helpful)
@@ -42,12 +75,16 @@ function get_modal_docs_data( $modal_docs_source, $section_ids, $article_ids, $h
                 ]);
 
                 foreach ( $sections as $section ) {
-                    $modal_docs_data['items'][] = [
-                        'id' => $section->ID,
-                        'title' => $section->post_title,
-                        'permalink' => get_permalink( $section->ID ),
-                        'type' => 'section'
-                    ];
+                    // Validate that this is actually a section
+                    if ( wedocs_is_section_doc( $section->ID ) ) {
+                        $modal_docs_data['items'][] = [
+                            'id' => $section->ID,
+                            'title' => $section->post_title,
+                            'permalink' => get_permalink( $section->ID ),
+                            'type' => 'section'
+                        ];
+                    }
+                    // Note: Posts that are not sections (e.g., articles or parent docs) are silently filtered out
                 }
             }
             break;
@@ -64,12 +101,16 @@ function get_modal_docs_data( $modal_docs_source, $section_ids, $article_ids, $h
                 ]);
 
                 foreach ( $articles as $article ) {
-                    $modal_docs_data['items'][] = [
-                        'id' => $article->ID,
-                        'title' => $article->post_title,
-                        'permalink' => get_permalink( $article->ID ),
-                        'type' => 'article'
-                    ];
+                    // Validate that this is actually an article
+                    if ( wedocs_is_article_doc( $article->ID ) ) {
+                        $modal_docs_data['items'][] = [
+                            'id' => $article->ID,
+                            'title' => $article->post_title,
+                            'permalink' => get_permalink( $article->ID ),
+                            'type' => 'article'
+                        ];
+                    }
+                    // Note: Posts that are not articles (e.g., sections or parent docs) are silently filtered out
                 }
             }
             break;
@@ -116,11 +157,21 @@ function get_modal_docs_data( $modal_docs_source, $section_ids, $article_ids, $h
                 ]);
 
                 foreach ( $helpful_docs as $doc ) {
+                    // Determine the actual document type for helpful docs
+                    $doc_type = 'helpful';
+                    if ( wedocs_is_parent_doc( $doc->ID ) ) {
+                        $doc_type = 'parent';
+                    } elseif ( wedocs_is_section_doc( $doc->ID ) ) {
+                        $doc_type = 'section';
+                    } elseif ( wedocs_is_article_doc( $doc->ID ) ) {
+                        $doc_type = 'article';
+                    }
+
                     $modal_docs_data['items'][] = [
                         'id' => $doc->ID,
                         'title' => $doc->post_title,
                         'permalink' => get_permalink( $doc->ID ),
-                        'type' => 'helpful'
+                        'type' => $doc_type
                     ];
                 }
             }
@@ -409,7 +460,7 @@ function render_wedocs_quick_search( $attributes ) {
                 <div class="p-4">
                     <?php foreach ( $modal_docs_data['items'] as $item ) : ?>
                         <a href="<?php echo esc_url( $item['permalink'] ); ?>" 
-                           class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium mr-2 mb-2 transition-colors hover:opacity-80"
+                           class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium mr-2 mb-2 transition-colors hover:opacity-80 no-underline"
                            style="background-color: <?php echo esc_attr( $modal_styles['docLabelColor'] ?? '#3B82F6' ); ?>20; color: <?php echo esc_attr( $modal_styles['docLabelColor'] ?? '#3B82F6' ); ?>;"
                            target="_blank">
                             <?php echo esc_html( $item['title'] ); ?>
