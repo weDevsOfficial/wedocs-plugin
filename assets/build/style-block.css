@@ -5448,6 +5448,90 @@ select {
   padding: 0;
   margin-bottom: 2rem;
 }
+
+/* Frontend Doc Navigation Styles - Fallback for when Tailwind is not loaded */
+.wedocs-doc-navigation-preview .wedocs-doc-navigation,
+.wedocs-doc-navigation {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  margin: 1rem 0 !important;
+}
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-prev,
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-next,
+.wedocs-doc-navigation .wedocs-doc-nav-prev,
+.wedocs-doc-navigation .wedocs-doc-nav-next {
+  display: flex !important;
+  align-items: center !important;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-prev a,
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-next a,
+.wedocs-doc-navigation .wedocs-doc-nav-prev a,
+.wedocs-doc-navigation .wedocs-doc-nav-next a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-prev a:hover,
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-next a:hover,
+.wedocs-doc-navigation .wedocs-doc-nav-prev a:hover,
+.wedocs-doc-navigation .wedocs-doc-nav-next a:hover {
+  text-decoration: none;
+}
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-prev .wedocs-doc-nav-arrow,
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-next .wedocs-doc-nav-arrow,
+.wedocs-doc-navigation .wedocs-doc-nav-prev .wedocs-doc-nav-arrow,
+.wedocs-doc-navigation .wedocs-doc-nav-next .wedocs-doc-nav-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-prev .wedocs-doc-nav-title,
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-next .wedocs-doc-nav-title,
+.wedocs-doc-navigation .wedocs-doc-nav-prev .wedocs-doc-nav-title,
+.wedocs-doc-navigation .wedocs-doc-nav-next .wedocs-doc-nav-title {
+  display: inline-block;
+  line-height: 1.4;
+}
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-prev,
+.wedocs-doc-navigation .wedocs-doc-nav-prev {
+  text-align: left;
+}
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-prev .wedocs-doc-nav-arrow,
+.wedocs-doc-navigation .wedocs-doc-nav-prev .wedocs-doc-nav-arrow {
+  margin-right: 0.5rem;
+}
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-next,
+.wedocs-doc-navigation .wedocs-doc-nav-next {
+  text-align: right;
+  margin-left: auto;
+}
+.wedocs-doc-navigation-preview .wedocs-doc-navigation .wedocs-doc-nav-next .wedocs-doc-nav-arrow,
+.wedocs-doc-navigation .wedocs-doc-nav-next .wedocs-doc-nav-arrow {
+  margin-left: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .wedocs-doc-navigation {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .wedocs-doc-navigation .wedocs-doc-nav-prev,
+  .wedocs-doc-navigation .wedocs-doc-nav-next {
+    width: 100%;
+    justify-content: center;
+  }
+  .wedocs-doc-navigation .wedocs-doc-nav-next {
+    margin-left: 0;
+  }
+}
 .wedocs-document :is(.before\:absolute)::before {
   content: var(--tw-content);
   position: absolute;

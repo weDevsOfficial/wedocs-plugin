@@ -7,7 +7,7 @@
  * @return string Rendered block content
  */
 function render_wedocs_doc_navigation($attributes, $content = '') {
-    // Extract attributes with defaults
+    // Extract custom attributes with defaults
     $seo_links = $attributes['seoLinks'] ?? 'none';
     $nav_padding = $attributes['navPadding'] ?? null;
     $nav_margin = $attributes['navMargin'] ?? null;
@@ -57,10 +57,87 @@ function render_wedocs_doc_navigation($attributes, $content = '') {
         return '';
     }
 
-    // Format navigation item padding and margin styles
-    $nav_padding_style = '';
+    // Get WordPress style system classes and styles
+    $wrapper_attributes = get_block_wrapper_attributes();
+    
+    // Extract WordPress style system attributes
+    $wp_style = $attributes['style'] ?? [];
+    $wp_background_color = $attributes['backgroundColor'] ?? null;
+    $wp_text_color = $attributes['textColor'] ?? null;
+    $wp_class_name = $attributes['className'] ?? '';
+    
+    // Build WordPress style system styles
+    $wp_styles = [];
+    
+    // Handle WordPress background color
+    if ($wp_background_color) {
+        $wp_styles[] = sprintf('background-color: var(--wp--preset--color--%s);', esc_attr($wp_background_color));
+    }
+    
+    // Handle WordPress text color
+    if ($wp_text_color) {
+        $wp_styles[] = sprintf('color: var(--wp--preset--color--%s);', esc_attr($wp_text_color));
+    }
+    
+    // Handle WordPress spacing (padding/margin from style system)
+    if (isset($wp_style['spacing']['padding'])) {
+        $padding = $wp_style['spacing']['padding'];
+        if (is_array($padding)) {
+            $wp_styles[] = sprintf(
+                'padding: %s %s %s %s;',
+                esc_attr($padding['top'] ?? '0'),
+                esc_attr($padding['right'] ?? '0'),
+                esc_attr($padding['bottom'] ?? '0'),
+                esc_attr($padding['left'] ?? '0')
+            );
+        } else {
+            $wp_styles[] = sprintf('padding: %s;', esc_attr($padding));
+        }
+    }
+    
+    if (isset($wp_style['spacing']['margin'])) {
+        $margin = $wp_style['spacing']['margin'];
+        if (is_array($margin)) {
+            $wp_styles[] = sprintf(
+                'margin: %s %s %s %s;',
+                esc_attr($margin['top'] ?? '0'),
+                esc_attr($margin['right'] ?? '0'),
+                esc_attr($margin['bottom'] ?? '0'),
+                esc_attr($margin['left'] ?? '0')
+            );
+        } else {
+            $wp_styles[] = sprintf('margin: %s;', esc_attr($margin));
+        }
+    }
+    
+    // Handle WordPress border styles
+    if (isset($wp_style['border']['color'])) {
+        $wp_styles[] = sprintf('border-color: %s;', esc_attr($wp_style['border']['color']));
+    }
+    if (isset($wp_style['border']['width'])) {
+        $wp_styles[] = sprintf('border-width: %s;', esc_attr($wp_style['border']['width']));
+    }
+    if (isset($wp_style['border']['style'])) {
+        $wp_styles[] = sprintf('border-style: %s;', esc_attr($wp_style['border']['style']));
+    }
+    if (isset($wp_style['border']['radius'])) {
+        $wp_styles[] = sprintf('border-radius: %s;', esc_attr($wp_style['border']['radius']));
+    }
+    
+    // Handle WordPress shadow
+    if (isset($wp_style['shadow'])) {
+        $wp_styles[] = sprintf('box-shadow: var(--wp--preset--shadow--%s);', esc_attr($wp_style['shadow']));
+    }
+    
+    // Combine WordPress styles
+    $wp_style_string = implode(' ', $wp_styles);
+    
+    // Build custom styles for navigation items
+    $custom_nav_styles = [];
+    
+    // Handle custom padding (always apply since WordPress style system doesn't have spacing in this case)
     if ($nav_padding) {
-        $nav_padding_style = sprintf(
+        $custom_nav_styles[] = sprintf(
             'padding: %s %s %s %s;',
             esc_attr($nav_padding['top'] ?? '12px'),
             esc_attr($nav_padding['right'] ?? '16px'),
@@ -68,10 +145,10 @@ function render_wedocs_doc_navigation($attributes, $content = '') {
             esc_attr($nav_padding['left'] ?? '16px')
         );
     }
-
-    $nav_margin_style = '';
+    
+    // Handle custom margin (always apply since WordPress style system doesn't have spacing in this case)
     if ($nav_margin) {
-        $nav_margin_style = sprintf(
+        $custom_nav_styles[] = sprintf(
             'margin: %s %s %s %s;',
             esc_attr($nav_margin['top'] ?? '0px'),
             esc_attr($nav_margin['right'] ?? '0px'),
@@ -79,41 +156,27 @@ function render_wedocs_doc_navigation($attributes, $content = '') {
             esc_attr($nav_margin['left'] ?? '0px')
         );
     }
-
-    $arrow_padding_style = '';
-    if ($arrow_padding) {
-        $arrow_padding_style = sprintf(
-            'padding: %s %s %s %s;',
-            esc_attr($arrow_padding['top'] ?? '8px'),
-            esc_attr($arrow_padding['right'] ?? '8px'),
-            esc_attr($arrow_padding['bottom'] ?? '8px'),
-            esc_attr($arrow_padding['left'] ?? '8px')
+    
+    // Handle custom border styles
+    if ($nav_border_style !== 'none') {
+        $custom_nav_styles[] = sprintf(
+            'border: %s %s %s; border-radius: %s;',
+            esc_attr($nav_border_width),
+            esc_attr($nav_border_style),
+            esc_attr($nav_border_color),
+            esc_attr($nav_border_radius)
         );
     }
-
-    $arrow_margin_style = '';
-    if ($arrow_margin) {
-        $arrow_margin_style = sprintf(
-            'margin: %s %s %s %s;',
-            esc_attr($arrow_margin['top'] ?? '0px'),
-            esc_attr($arrow_margin['right'] ?? '8px'),
-            esc_attr($arrow_margin['bottom'] ?? '0px'),
-            esc_attr($arrow_margin['left'] ?? '0px')
-        );
+    
+    // Handle custom box shadow
+    if ($nav_box_shadow !== 'none') {
+        $custom_nav_styles[] = sprintf('box-shadow: %s;', esc_attr($nav_box_shadow));
     }
-
-    // Create inline styles
-    $nav_item_style = sprintf(
-        '%s %s border: %s %s %s; border-radius: %s; box-shadow: %s;',
-        $nav_padding_style,
-        $nav_margin_style,
-        esc_attr($nav_border_width),
-        esc_attr($nav_border_style),
-        esc_attr($nav_border_color),
-        esc_attr($nav_border_radius),
-        esc_attr($nav_box_shadow)
-    );
-
+    
+    // Combine custom navigation styles
+    $nav_item_style = implode(' ', $custom_nav_styles);
+    
+    // Build navigation text styles
     $navigation_style = sprintf(
         'color: %s; font-size: %s; font-weight: %s; font-style: %s;',
         esc_attr($navigation_text_color),
@@ -121,49 +184,76 @@ function render_wedocs_doc_navigation($attributes, $content = '') {
         esc_attr($navigation_font_weight),
         esc_attr($navigation_font_style)
     );
-
-    $arrow_style = sprintf(
-        'font-size: %s; color: %s; background-color: %s; %s %s',
-        esc_attr($arrow_size),
-        esc_attr($arrow_color),
-        esc_attr($arrow_background_color),
-        $arrow_padding_style,
-        $arrow_margin_style
-    );
-
-    // Get WordPress style system classes and styles
-    $wrapper_attributes = get_block_wrapper_attributes();
+    
+    // Add hover color CSS
+    $hover_css = '';
+    if ($navigation_text_hover_color && $navigation_text_hover_color !== $navigation_text_color) {
+        $hover_css = sprintf(
+            '<style>.wedocs-doc-navigation a:hover .wedocs-doc-nav-title { color: %s !important; }</style>',
+            esc_attr($navigation_text_hover_color)
+        );
+    }
+    
+    // Build arrow styles
+    $arrow_styles = [];
+    $arrow_styles[] = sprintf('font-size: %s;', esc_attr($arrow_size));
+    $arrow_styles[] = sprintf('color: %s;', esc_attr($arrow_color));
+    $arrow_styles[] = sprintf('background-color: %s;', esc_attr($arrow_background_color));
+    
+    if ($arrow_padding) {
+        $arrow_styles[] = sprintf(
+            'padding: %s %s %s %s;',
+            esc_attr($arrow_padding['top'] ?? '8px'),
+            esc_attr($arrow_padding['right'] ?? '8px'),
+            esc_attr($arrow_padding['bottom'] ?? '8px'),
+            esc_attr($arrow_padding['left'] ?? '8px')
+        );
+    }
+    
+    if ($arrow_margin) {
+        $arrow_styles[] = sprintf(
+            'margin: %s %s %s %s;',
+            esc_attr($arrow_margin['top'] ?? '0px'),
+            esc_attr($arrow_margin['right'] ?? '8px'),
+            esc_attr($arrow_margin['bottom'] ?? '0px'),
+            esc_attr($arrow_margin['left'] ?? '0px')
+        );
+    }
+    
+    $arrow_style = implode(' ', $arrow_styles);
     
     // Start output buffering
     ob_start();
     ?>
-    <nav class="wedocs-doc-navigation wedocs-hide-print" <?php echo $wrapper_attributes; ?>>
-        <h3 class="assistive-text screen-reader-text"><?php esc_html_e('Doc navigation', 'wedocs'); ?></h3>
-
-        <?php if ($prev_post) : ?>
-            <div class="wedocs-doc-nav-prev" style="<?php echo esc_attr($nav_item_style); ?>">
-                <a href="<?php echo esc_url(get_permalink($prev_post->ID)); ?>" 
-                   <?php echo ($seo_links === 'prev_next') ? 'rel="prev"' : ''; ?>>
-                    <span class="wedocs-doc-nav-arrow" style="<?php echo esc_attr($arrow_style); ?>">←</span>
-                    <span class="wedocs-doc-nav-title" style="<?php echo esc_attr($navigation_style); ?>">
-                        <?php echo esc_html(apply_filters('wedocs_translate_text', $prev_post->post_title)); ?>
-                    </span>
-                </a>
-            </div>
-        <?php endif; ?>
-
-        <?php if ($next_post) : ?>
-            <div class="wedocs-doc-nav-next" style="<?php echo esc_attr($nav_item_style); ?>">
-                <a href="<?php echo esc_url(get_permalink($next_post->ID)); ?>" 
-                   <?php echo ($seo_links === 'prev_next') ? 'rel="next"' : ''; ?>>
-                    <span class="wedocs-doc-nav-title" style="<?php echo esc_attr($navigation_style); ?>">
-                        <?php echo esc_html(apply_filters('wedocs_translate_text', $next_post->post_title)); ?>
-                    </span>
-                    <span class="wedocs-doc-nav-arrow" style="<?php echo esc_attr($arrow_style); ?>">→</span>
-                </a>
-            </div>
-        <?php endif; ?>
-    </nav>
+    <?php echo $hover_css; ?>
+    <div class="wedocs-document wedocs-doc-navigation-preview" <?php echo $wrapper_attributes; ?>>
+        <div class="wedocs-doc-navigation flex justify-between"<?php echo $wp_style_string ? ' style="' . esc_attr($wp_style_string) . '"' : ''; ?>>
+            <?php if ($prev_post) : ?>
+                <div class="wedocs-doc-nav-prev"<?php echo $nav_item_style ? ' style="' . esc_attr($nav_item_style) . '"' : ''; ?>>
+                    <a href="<?php echo esc_url(get_permalink($prev_post->ID)); ?>" 
+                       <?php echo ($seo_links === 'prev_next') ? 'rel="prev"' : ''; ?>>
+                        <span class="wedocs-doc-nav-arrow" style="<?php echo esc_attr($arrow_style); ?>">←</span>
+                        <span class="wedocs-doc-nav-title" style="<?php echo esc_attr($navigation_style); ?>">
+                            <?php echo esc_html(apply_filters('wedocs_translate_text', $prev_post->post_title)); ?>
+                        </span>
+                    </a>
+                </div>
+            <?php endif; ?>
+            
+            <?php if ($next_post) : ?>
+                <div class="wedocs-doc-nav-next"<?php echo $nav_item_style ? ' style="' . esc_attr($nav_item_style) . '"' : ''; ?>>
+                    <a href="<?php echo esc_url(get_permalink($next_post->ID)); ?>" 
+                       <?php echo ($seo_links === 'prev_next') ? 'rel="next"' : ''; ?>>
+                        <span class="wedocs-doc-nav-title" style="<?php echo esc_attr($navigation_style); ?>">
+                            <?php echo esc_html(apply_filters('wedocs_translate_text', $next_post->post_title)); ?>
+                        </span>
+                        <span class="wedocs-doc-nav-arrow" style="<?php echo esc_attr($arrow_style); ?>">→</span>
+                    </a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    
     <?php
     return ob_get_clean();
 }
