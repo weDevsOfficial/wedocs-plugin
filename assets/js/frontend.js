@@ -14,6 +14,9 @@
       // Load single doc page search modal.
       this.loadSingleDocSearchModal();
 
+      // Initialize Quick Search blocks
+      this.initializeQuickSearch();
+
       // Handle modal actions.
       $( 'a#wedocs-stuck-modal' ).on( 'click', this.showModal );
       $( 'a#wedocs-modal-close' ).on( 'click', this.closeModal );
