@@ -34,26 +34,13 @@ function render_wedocs_doc_navigation($attributes, $content = '') {
         return '';
     }
 
-    $next_query = "SELECT ID, post_title FROM {$wpdb->posts}
-        WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish' and menu_order > {$post->menu_order}
-        ORDER BY menu_order ASC
-        LIMIT 0, 1";
-
-    $prev_query = "SELECT ID, post_title FROM {$wpdb->posts}
-        WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish' and menu_order < {$post->menu_order}
-        ORDER BY menu_order DESC
-        LIMIT 0, 1";
-
-    $next_post = $wpdb->get_row($next_query);
-    $prev_post = $wpdb->get_row($prev_query);
+    // Use improved navigation logic that handles menu_order = 0
+    $navigation_posts = wedocs_get_doc_navigation_posts($post);
+    $next_post = $navigation_posts['next'];
+    $prev_post = $navigation_posts['prev'];
 
     // Check if we have any navigation to show
-    $has_navigation = false;
-    if ($prev_post || $next_post) {
-        $has_navigation = true;
-    }
-
-    if (!$has_navigation) {
+    if (!$prev_post && !$next_post) {
         return '';
     }
 
