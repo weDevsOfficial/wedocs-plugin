@@ -1993,6 +1993,21 @@ select {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+.checkbox {
+  flex-shrink: 0;
+  --chkbg: var(--bc);
+  --chkfg: var(--b1);
+  height: 1.5rem;
+  width: 1.5rem;
+  cursor: pointer;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-width: 1px;
+  border-color: hsl(var(--bc) / var(--tw-border-opacity));
+  --tw-border-opacity: 0.2;
+  border-radius: var(--rounded-btn, 0.5rem);
+}
 .divider {
   display: flex;
   flex-direction: row;
@@ -2095,6 +2110,13 @@ select {
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
+}
+.menu.horizontal {
+  display: inline-flex;
+  flex-direction: row;
+}
+.menu.horizontal :where(li) {
+  flex-direction: row;
 }
 .menu > :where(li.disabled > *:not(ul):focus) {
   cursor: auto;
@@ -2476,6 +2498,33 @@ select {
 .carousel::-webkit-scrollbar {
   display: none;
 }
+.checkbox:focus-visible {
+  outline: 2px solid hsl(var(--bc));
+  outline-offset: 2px;
+}
+.checkbox:checked,
+  .checkbox[checked="true"],
+  .checkbox[aria-checked="true"] {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--bc) / var(--tw-bg-opacity));
+  background-repeat: no-repeat;
+  animation: checkmark var(--animation-input, 0.2s) ease-in-out;
+  background-image: linear-gradient(-45deg, transparent 65%, hsl(var(--chkbg)) 65.99%), linear-gradient(45deg, transparent 75%, hsl(var(--chkbg)) 75.99%), linear-gradient(-45deg, hsl(var(--chkbg)) 40%, transparent 40.99%), linear-gradient(45deg, hsl(var(--chkbg)) 30%, hsl(var(--chkfg)) 30.99%, hsl(var(--chkfg)) 40%, transparent 40.99%), linear-gradient(-45deg, hsl(var(--chkfg)) 50%, hsl(var(--chkbg)) 50.99%);
+}
+.checkbox:indeterminate {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--bc) / var(--tw-bg-opacity));
+  background-repeat: no-repeat;
+  animation: checkmark var(--animation-input, 0.2s) ease-in-out;
+  background-image: linear-gradient(90deg, transparent 80%, hsl(var(--chkbg)) 80%), linear-gradient(-90deg, transparent 80%, hsl(var(--chkbg)) 80%), linear-gradient(0deg, hsl(var(--chkbg)) 43%, hsl(var(--chkfg)) 43%, hsl(var(--chkfg)) 57%, hsl(var(--chkbg)) 57%);
+}
+.checkbox:disabled {
+  cursor: not-allowed;
+  border-color: transparent;
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--bc) / var(--tw-bg-opacity));
+  opacity: 0.2;
+}
 @keyframes checkmark {
 
   0% {
@@ -2489,6 +2538,11 @@ select {
   100% {
     background-position-y: 0;
   }
+}
+[dir="rtl"] .checkbox:checked,
+    [dir="rtl"] .checkbox[checked="true"],
+    [dir="rtl"] .checkbox[aria-checked="true"] {
+  background-image: linear-gradient(45deg, transparent 65%, hsl(var(--chkbg)) 65.99%), linear-gradient(-45deg, transparent 75%, hsl(var(--chkbg)) 75.99%), linear-gradient(45deg, hsl(var(--chkbg)) 40%, transparent 40.99%), linear-gradient(-45deg, hsl(var(--chkbg)) 30%, hsl(var(--chkfg)) 30.99%, hsl(var(--chkfg)) 40%, transparent 40.99%), linear-gradient(45deg, hsl(var(--chkfg)) 50%, hsl(var(--chkbg)) 50.99%);
 }
 .divider:before {
   background-color: hsl(var(--bc) / var(--tw-bg-opacity));
@@ -2541,6 +2595,14 @@ select {
 .mask-squircle {
   -webkit-mask-image: url("data:image/svg+xml,%3csvg width=%27200%27 height=%27200%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M100 0C20 0 0 20 0 100s20 100 100 100 100-20 100-100S180 0 100 0Z%27/%3e%3c/svg%3e");
   mask-image: url("data:image/svg+xml,%3csvg width=%27200%27 height=%27200%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M100 0C20 0 0 20 0 100s20 100 100 100 100-20 100-100S180 0 100 0Z%27/%3e%3c/svg%3e");
+}
+.menu.horizontal > li.bordered > a,
+        .menu.horizontal > li.bordered > button,
+        .menu.horizontal > li.bordered > span {
+  border-left-width: 0px;
+  border-bottom-width: 4px;
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--p) / var(--tw-border-opacity));
 }
 .menu :where(li:not(.menu-title):not(:empty)) > :where(:not(ul).active),
   .menu :where(li:not(.menu-title):not(:empty)) > :where(*:not(ul):active) {
@@ -2935,6 +2997,36 @@ select {
 }
 .prose :where(tbody tr, thead):not(:where([class~="not-prose"] *)) {
   border-bottom-color: hsl(var(--bc) / 20%);
+}
+.artboard.phone-1.horizontal,
+      .artboard.phone-1.artboard-horizontal {
+  width: 568px;
+  height: 320px;
+}
+.artboard.phone-2.horizontal,
+      .artboard.phone-2.artboard-horizontal {
+  width: 667px;
+  height: 375px;
+}
+.artboard.phone-3.horizontal,
+      .artboard.phone-3.artboard-horizontal {
+  width: 736px;
+  height: 414px;
+}
+.artboard.phone-4.horizontal,
+      .artboard.phone-4.artboard-horizontal {
+  width: 812px;
+  height: 375px;
+}
+.artboard.phone-5.horizontal,
+      .artboard.phone-5.artboard-horizontal {
+  width: 896px;
+  height: 414px;
+}
+.artboard.phone-6.horizontal,
+      .artboard.phone-6.artboard-horizontal {
+  width: 1024px;
+  height: 320px;
 }
 .btm-nav-xs>*:where(.active) {
   border-top-width: 1px;
@@ -4701,6 +4793,15 @@ select {
 .wedocs-document :is(.font-semibold) {
   font-weight: 600;
 }
+.wedocs-document :is(.uppercase) {
+  text-transform: uppercase;
+}
+.wedocs-document :is(.lowercase) {
+  text-transform: lowercase;
+}
+.wedocs-document :is(.capitalize) {
+  text-transform: capitalize;
+}
 .wedocs-document :is(.italic) {
   font-style: italic;
 }
@@ -4843,6 +4944,12 @@ select {
 .wedocs-document :is(.underline) {
   text-decoration-line: underline;
 }
+.wedocs-document :is(.overline) {
+  text-decoration-line: overline;
+}
+.wedocs-document :is(.line-through) {
+  text-decoration-line: line-through;
+}
 .wedocs-document :is(.decoration-1) {
   text-decoration-thickness: 1px;
 }
@@ -4958,6 +5065,10 @@ select {
 }
 .wedocs-document :is(.ring-opacity-5) {
   --tw-ring-opacity: 0.05;
+}
+.wedocs-document :is(.blur) {
+  --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 .wedocs-document :is(.grayscale) {
   --tw-grayscale: grayscale(100%);

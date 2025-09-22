@@ -1,0 +1,361 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "wedocs/contributors",
+  "version": "1.0.0",
+  "title": "Doc Contributors",
+  "icon": "groups",
+  "category": "widgets",
+  "description": "Display the author(s)/contributors of a doc along with the last updated date.",
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "showTitle": {
+      "type": "boolean",
+      "default": true
+    },
+    "title": {
+      "type": "string",
+      "default": "Contributors"
+    },
+    "titleColor": {
+      "type": "string",
+      "default": "#fff"
+    },
+    "contributorDisplayMode": {
+      "type": "string",
+      "default": "all",
+      "enum": [
+        "all",
+        "manual",
+        "main_author"
+      ]
+    },
+    "selectedContributors": {
+      "type": "array",
+      "default": []
+    },
+    "showLastUpdated": {
+      "type": "boolean",
+      "default": true
+    },
+    "dateFormat": {
+      "type": "string",
+      "default": "wp_default"
+    },
+    "customDateFormat": {
+      "type": "string",
+      "default": "F j, Y"
+    },
+    "datePrefix": {
+      "type": "string",
+      "default": "Updated on"
+    },
+    "backgroundType": {
+      "type": "string",
+      "default": "classic",
+      "enum": [
+        "classic",
+        "gradient"
+      ]
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#f9f9f9"
+    },
+    "backgroundGradient": {
+      "type": "string",
+      "default": ""
+    },
+    "backgroundImage": {
+      "type": "object",
+      "default": {
+        "url": "",
+        "alt": ""
+      }
+    },
+    "padding": {
+      "type": "object",
+      "default": {
+        "top": "15px",
+        "right": "15px",
+        "bottom": "15px",
+        "left": "15px"
+      }
+    },
+    "margin": {
+      "type": "object",
+      "default": {
+        "top": "10px",
+        "right": "0px",
+        "bottom": "10px",
+        "left": "0px"
+      }
+    },
+    "borderStyle": {
+      "type": "string",
+      "default": "solid",
+      "enum": [
+        "none",
+        "solid",
+        "dashed",
+        "dotted"
+      ]
+    },
+    "borderWidth": {
+      "type": "object",
+      "default": {
+        "top": "1px",
+        "right": "1px",
+        "bottom": "1px",
+        "left": "1px"
+      }
+    },
+    "borderColor": {
+      "type": "string",
+      "default": "#dddddd"
+    },
+    "borderRadius": {
+      "type": "string",
+      "default": "4px"
+    },
+    "boxShadow": {
+      "type": "object",
+      "default": {
+        "enabled": false,
+        "horizontal": "0px",
+        "vertical": "2px",
+        "blur": "4px",
+        "spread": "0px",
+        "color": "rgba(0,0,0,0.1)"
+      }
+    },
+    "showAvatar": {
+      "type": "boolean",
+      "default": true
+    },
+    "avatarType": {
+      "type": "string",
+      "default": "user_avatar",
+      "enum": [
+        "user_avatar",
+        "common_icon"
+      ]
+    },
+    "avatarSize": {
+      "type": "string",
+      "default": "32px"
+    },
+    "avatarShape": {
+      "type": "string",
+      "default": "circle",
+      "enum": [
+        "circle",
+        "rounded",
+        "square"
+      ]
+    },
+    "avatarBorderStyle": {
+      "type": "string",
+      "default": "none",
+      "enum": [
+        "none",
+        "solid",
+        "dashed"
+      ]
+    },
+    "avatarBorderColor": {
+      "type": "string",
+      "default": "#dddddd"
+    },
+    "avatarBorderRadius": {
+      "type": "string",
+      "default": "50%"
+    },
+    "avatarHoverEffect": {
+      "type": "boolean",
+      "default": false
+    },
+    "nameColor": {
+      "type": "string",
+      "default": "#333333"
+    },
+    "nameTypography": {
+      "type": "object",
+      "default": {
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "fontStyle": "normal",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "textDecoration": "none",
+        "fontFamily": "default"
+      }
+    },
+    "nameHoverColor": {
+      "type": "string",
+      "default": "#0073aa"
+    },
+    "contributorTitleColor": {
+      "type": "string",
+      "default": "#333333"
+    },
+    "contributorTitleTypography": {
+      "type": "object",
+      "default": {
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "fontStyle": "normal",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "textDecoration": "none",
+        "fontFamily": "default"
+      }
+    },
+    "contributorTitleHoverColor": {
+      "type": "string",
+      "default": "#0073aa"
+    },
+    "dateColor": {
+      "type": "string",
+      "default": "#666666"
+    },
+    "dateTypography": {
+      "type": "object",
+      "default": {
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "textDecoration": "none",
+        "fontFamily": "default"
+      }
+    },
+    "additionalCssClass": {
+      "type": "string",
+      "default": ""
+    },
+    "enableSchema": {
+      "type": "boolean",
+      "default": false
+    },
+    "linkBehavior": {
+      "type": "string",
+      "default": "user_profile",
+      "enum": [
+        "user_profile",
+        "no_link",
+        "custom_link"
+      ]
+    },
+    "customLinkUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "avatarPadding": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "avatarMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "8px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "avatarBorderWidth": {
+      "type": "object",
+      "default": {
+        "top": "2px",
+        "right": "2px",
+        "bottom": "2px",
+        "left": "2px"
+      }
+    },
+    "avatarBoxShadow": {
+      "type": "object",
+      "default": {
+        "enabled": false,
+        "horizontal": "0px",
+        "vertical": "2px",
+        "blur": "4px",
+        "spread": "0px",
+        "color": "rgba(0,0,0,0.1)"
+      }
+    },
+    "namePadding": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "nameMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "datePadding": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "dateMargin": {
+      "type": "object",
+      "default": {
+        "top": "10px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "contributorGap": {
+      "type": "string",
+      "default": "10px"
+    },
+    "titlePadding": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "10px",
+        "left": "0px"
+      }
+    },
+    "titleMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@ const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const path = require( 'path' );
 const isProduction = process.env.NODE_ENV === 'production';
 const MiniCSSExtractPlugin = require( 'mini-css-extract-plugin' );
+const { image } = require('@wordpress/icons');
 
 const updatedConfig = {
   ...defaultConfig,
