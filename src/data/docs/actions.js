@@ -169,6 +169,25 @@ const actions = {
 
     return { type: 'UPDATE_TO_API', path, data: { option_name: optionName } };
   },
+
+  *duplicateDoc( docId ) {
+    const path = `/wp/v2/docs/${docId}/duplicate`;
+    const response = yield { type: 'UPDATE_TO_API', path, data: {} };
+    
+    // Refresh the docs list after duplication
+    const getDocsPath = wp.hooks.applyFilters(
+      'wedocs_documentation_fetching_path',
+      `/wp/v2/docs?per_page=-1&status=publish${ typeof weDocsAdminVars !== 'undefined' ? ',draft' : ''}`
+    );
+    const updatedDocs = yield actions.fetchFromAPI( getDocsPath );
+    const parentDocs = updatedDocs.filter( ( doc ) => ! doc.parent );
+    const sortableDocs = parentDocs?.sort( ( a, b ) => a.menu_order - b.menu_order );
+    
+    yield actions.setParentDocs( sortableDocs );
+    yield actions.setDocs( updatedDocs );
+    
+    return response;
+  },
 };
 
 export default actions;

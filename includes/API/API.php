@@ -110,6 +110,14 @@ class API extends WP_REST_Controller {
             ],
         ] );
 
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)/duplicate', [
+            [
+                'methods'             => WP_REST_Server::CREATABLE,
+                'callback'            => [ $this, 'duplicate_doc' ],
+                'permission_callback' => [ $this, 'create_item_permissions_check' ],
+            ],
+        ] );
+
         register_rest_route( $this->namespace, '/' . $this->rest_base . '/helpfulness', [
             [
                 'methods'             => WP_REST_Server::READABLE,
@@ -875,7 +883,7 @@ class API extends WP_REST_Controller {
 
     /**
      * Get the data needed for promotional notice.
-     * 
+     *
      * @since 2.1.11
      *
      * @return bool|WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
@@ -928,9 +936,9 @@ class API extends WP_REST_Controller {
 
      /**
      * Handle promotional notice hidden action
-     * 
+     *
      * @since 2.1.11
-     * 
+     *
      * @param WP_REST_Request $request Current request.
      *
      */
@@ -944,5 +952,110 @@ class API extends WP_REST_Controller {
 		}
 
         wp_send_json_error( 'Faild to dismiss.' );
+    }
+
+    /**
+     * Duplicate a document and all its children
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param WP_REST_Request $request Current request.
+     *
+     * @return WP_REST_Response|WP_Error
+     */
+    public function duplicate_doc( $request ) {
+        $doc_id = $request->get_param( 'id' );
+
+        if ( ! $doc_id ) {
+            return new WP_Error( 'missing_doc_id', __( 'Document ID is required.', 'wedocs' ), [ 'status' => 400 ] );
+        }
+
+        $original_doc = get_post( $doc_id );
+        if ( ! $original_doc || $original_doc->post_type !== 'docs' ) {
+            return new WP_Error( 'doc_not_found', __( 'Document not found.', 'wedocs' ), [ 'status' => 404 ] );
+        }
+
+        // Duplicate the document and all its children
+        $duplicated_id = $this->duplicate_document_recursive( $original_doc );
+
+        if ( is_wp_error( $duplicated_id ) ) {
+            return $duplicated_id;
+        }
+
+        $duplicated_doc = get_post( $duplicated_id );
+        $data = $this->prepare_item_for_response( $duplicated_doc, $request );
+
+        return rest_ensure_response( $data );
+    }
+
+    /**
+     * Recursively duplicate a document and all its children
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param WP_Post $original_doc The original document to duplicate
+     * @param int $new_parent_id The new parent ID for child documents
+     *
+     * @return int|WP_Error The new document ID or WP_Error on failure
+     */
+    private function duplicate_document_recursive( $original_doc, $new_parent_id = 0 ) {
+        // Prepare new post data
+        $new_post_data = [
+            'post_title'     => $original_doc->post_title . ' (Copy)',
+            'post_content'   => $original_doc->post_content,
+            'post_status'    => 'draft',
+            'post_type'      => $original_doc->post_type,
+            'post_author'    => get_current_user_id(),
+            'post_parent'    => $new_parent_id,
+            'menu_order'     => $original_doc->menu_order,
+        ];
+
+        // For the root document, maintain the original parent relationship
+        if ( $new_parent_id === 0 && $original_doc->post_parent > 0 ) {
+            $new_post_data['post_parent'] = $original_doc->post_parent;
+        }
+
+        // Create the new document
+        $new_doc_id = wp_insert_post( $new_post_data );
+        
+        if ( is_wp_error( $new_doc_id ) ) {
+            return $new_doc_id;
+        }
+
+        // Copy meta data
+        $meta_data = get_post_meta( $original_doc->ID );
+        foreach ( $meta_data as $key => $values ) {
+            foreach ( $values as $value ) {
+                add_post_meta( $new_doc_id, $key, maybe_unserialize( $value ) );
+            }
+        }
+
+        // Copy taxonomies
+        $taxonomies = get_object_taxonomies( $original_doc->post_type );
+        foreach ( $taxonomies as $taxonomy ) {
+            $post_terms = wp_get_object_terms( $original_doc->ID, $taxonomy, [ 'fields' => 'slugs' ] );
+            if ( ! is_wp_error( $post_terms ) && ! empty( $post_terms ) ) {
+                wp_set_object_terms( $new_doc_id, $post_terms, $taxonomy, false );
+            }
+        }
+
+        // Copy featured image
+        $thumbnail_id = get_post_thumbnail_id( $original_doc->ID );
+        if ( $thumbnail_id ) {
+            set_post_thumbnail( $new_doc_id, $thumbnail_id );
+        }
+
+        // Get and duplicate all child documents
+        $children = get_children( [
+            'post_parent' => $original_doc->ID,
+            'post_type'   => 'docs',
+            'post_status' => 'any',
+        ] );
+
+        foreach ( $children as $child ) {
+            $this->duplicate_document_recursive( $child, $new_doc_id );
+        }
+
+        return $new_doc_id;
     }
 }
