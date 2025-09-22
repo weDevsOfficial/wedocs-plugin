@@ -43,6 +43,37 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
       .catch( err => console.log( err ) );
   }
 
+  // Duplicate documentation
+  const duplicateDoc = () => {
+    dispatch( 'wedocs/docs' )
+      .duplicateDoc( doc?.id )
+      .then( ( response ) => {
+        Swal.fire( {
+          icon              : 'success',
+          toast             : true,
+          title             : __( 'Documentation duplicated successfully!', 'wedocs' ),
+          timer             : 3000,
+          position          : 'bottom-end',
+          showConfirmButton : false,
+          text              : __( 'The document and all its child articles have been duplicated as drafts.', 'wedocs' ),
+        } );
+      } )
+      .catch( err => {
+        Swal.fire( {
+          icon              : 'error',
+          toast             : true,
+          title             : __( 'Duplication failed!', 'wedocs' ),
+          timer             : 3000,
+          position          : 'bottom-end',
+          showConfirmButton : false,
+          text              : __( 'There was an error duplicating the document. Please try again.', 'wedocs' ),
+        } );
+      } )
+      .finally( () => {
+        setShowArticles( true );
+      } );
+  }
+
   return (
     <Fragment>
       <div
@@ -96,6 +127,17 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           >
             { doc?.status === 'draft' ? __( 'Publish Now', 'wedocs' ) : __( 'Switch to Draft', 'wedocs' ) }
           </span>
+
+          { isAdmin && type === 'article' && (
+            <>
+              <span
+                onClick={ duplicateDoc }
+                className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
+              >
+                { __( 'Duplicate', 'wedocs' ) }
+              </span>
+            </>
+          ) }
 
           { /* Add external actions */ }
           { wp.hooks.applyFilters(
