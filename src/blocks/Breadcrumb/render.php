@@ -42,8 +42,11 @@ $text_transform = $typography['textTransform'] ?? '';
 $text_decoration = $typography['textDecoration'] ?? '';
 $letter_spacing = $typography['letterSpacing'] ?? '';
 $link_color = $elements['link']['color']['text'] ?? '';
+$link_hover_color = $elements['link'][':hover']['color']['text'] ?? '';
+$link_hover_background = $elements['link'][':hover']['color']['background'] ?? '';
 $breadcrumb_separator = $attributes['breadcrumbSeparator'] ?? [];
 $separator_color = $breadcrumb_separator['color'] ?? '';
+
 
 // Extract shadow attributes
 $shadow = $style['shadow'] ?? '';
@@ -358,8 +361,18 @@ $separator_icon = get_separator_icon($separator);
 $breadcrumbs = get_breadcrumb_items();
 
 ?>
+<style>
+.wedocs-breadcrumb a:hover {
+    <?php if ($link_hover_color): ?>color: var(--hover-color) !important;<?php endif; ?>
+    <?php if ($link_hover_background): ?>background-color: var(--hover-background) !important;<?php endif; ?>
+}
+.wedocs-breadcrumb span:hover {
+    <?php if ($link_hover_color): ?>color: var(--hover-color) !important;<?php endif; ?>
+    <?php if ($link_hover_background): ?>background-color: var(--hover-background) !important;<?php endif; ?>
+}
+</style>
 <div class="wedocs-document">
-    <nav aria-label="Breadcrumb">
+    <nav aria-label="Breadcrumb" class="wedocs-breadcrumb">
         <?php
         // Build CSS classes for WordPress style system
         $ol_classes = ['flex', get_alignment_class($alignment)];
@@ -417,13 +430,13 @@ $breadcrumbs = get_breadcrumb_items();
                             <!-- Link with home icon for first item -->
                             <?php if (!$hide_home_icon && $index === 0): ?>
                                 <?php
-                                $home_link_classes = ['hover:opacity-80', 'flex', 'items-center'];
+                                $home_link_classes = ['flex', 'items-center'];
                                 if ($link_color) {
                                     $home_link_classes[] = 'has-link-color';
                                     $home_link_classes[] = 'has-' . sanitize_key(str_replace('var:preset|color|', '', $link_color)) . '-link-color';
                                 }
                                 ?>
-                                <a href="<?php echo esc_url($breadcrumb['url']); ?>" class="<?php echo esc_attr(implode(' ', $home_link_classes)); ?>" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?>">
+                                <a href="<?php echo esc_url($breadcrumb['url']); ?>" class="<?php echo esc_attr(implode(' ', $home_link_classes)); ?>" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?><?php if ($link_color): ?>color: <?php echo esc_attr(get_color_value($link_color)); ?>;<?php endif; ?><?php if ($link_hover_color): ?> --hover-color: <?php echo esc_attr(get_color_value($link_hover_color)); ?>;<?php endif; ?><?php if ($link_hover_background): ?> --hover-background: <?php echo esc_attr(get_color_value($link_hover_background)); ?>;<?php endif; ?>">
                                     <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="w-5 h-5 shrink-0 mr-1">
                                         <path d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z" clip-rule="evenodd" fill-rule="evenodd" />
                                     </svg>
@@ -432,22 +445,18 @@ $breadcrumbs = get_breadcrumb_items();
                             <?php else: ?>
                                 <!-- Regular link -->
                                 <?php
-                                $link_classes = ['text-sm', 'font-medium', 'hover:opacity-80'];
+                                $link_classes = ['no-underline'];
                                 if ($index > 0) {
-                                    $link_classes[] = 'ml-4';
-                                }
-                                if ($link_color) {
-                                    $link_classes[] = 'has-link-color';
-                                    $link_classes[] = 'has-' . sanitize_key(str_replace('var:preset|color|', '', $link_color)) . '-link-color';
+                                    $link_classes[] = '';
                                 }
                                 ?>
-                                <a href="<?php echo esc_url($breadcrumb['url']); ?>" class="<?php echo esc_attr(implode(' ', $link_classes)); ?>" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?>">
+                                <a href="<?php echo esc_url($breadcrumb['url']); ?>" class="<?php echo esc_attr(implode(' ', $link_classes)); ?>" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?><?php if ($link_color): ?>color: <?php echo esc_attr(get_color_value($link_color)); ?>;<?php endif; ?><?php if ($link_hover_color): ?> --hover-color: <?php echo esc_attr(get_color_value($link_hover_color)); ?>;<?php endif; ?><?php if ($link_hover_background): ?> --hover-background: <?php echo esc_attr(get_color_value($link_hover_background)); ?>;<?php endif; ?>">
                                     <?php echo esc_html($breadcrumb['title']); ?>
                                 </a>
                             <?php endif; ?>
                         <?php else: ?>
                             <!-- Current page (no link) -->
-                            <span <?php echo $index === 0 ? '' : 'class="ml-4"'; ?> aria-current="page" class="text-sm font-medium text-gray-500 hover:text-gray-700" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?>">
+                            <span <?php echo $index === 0 ? '' : 'class=""'; ?> aria-current="page" class="" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?>">
                                 <?php echo esc_html($breadcrumb['title']); ?>
                             </span>
                         <?php endif; ?>

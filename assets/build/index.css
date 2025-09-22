@@ -4874,6 +4874,9 @@ select {
 .wedocs-document :is(.underline) {
   text-decoration-line: underline;
 }
+.wedocs-document :is(.no-underline) {
+  text-decoration-line: none;
+}
 .wedocs-document :is(.decoration-1) {
   text-decoration-thickness: 1px;
 }
