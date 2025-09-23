@@ -21,8 +21,6 @@ $layout = isset($attributes['layout']) ? $attributes['layout'] : 'layout1';
 $alignment = isset($attributes['alignment']) ? $attributes['alignment'] : 'left';
 $button_text = isset($attributes['buttonText']) ? $attributes['buttonText'] : __('Print', 'wedocs');
 $show_icon = isset($attributes['showIcon']) ? $attributes['showIcon'] : true;
-$button_style = isset($attributes['buttonStyle']) ? $attributes['buttonStyle'] : 'primary';
-$button_size = isset($attributes['buttonSize']) ? $attributes['buttonSize'] : 'medium';
 $additional_classes = isset($attributes['additionalClasses']) ? $attributes['additionalClasses'] : '';
 
 // Spacing attributes with proper defaults for empty values
@@ -68,10 +66,8 @@ $block_id = 'wedocs-print-btn-' . wp_generate_uuid4();
 $container_styles = sprintf('text-align: %s; width: 100%%;', esc_attr($alignment));
 
 // Build CSS classes
-$css_classes = sprintf('wedocs-print-article wedocs-print-button %s %s-size %s %s', 
+$css_classes = sprintf('wedocs-print-article wedocs-print-button %s %s', 
     esc_attr($layout), 
-    esc_attr($button_size),
-    esc_attr($button_style),
     esc_attr($additional_classes)
 );
 

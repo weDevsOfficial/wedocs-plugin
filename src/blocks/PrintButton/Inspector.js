@@ -51,31 +51,6 @@ const Inspector = ({ attributes, setAttributes }) => {
 					title={__('Style Settings', 'wedocs')}
 					initialOpen={false}
 				>
-					<SelectControl
-						label={__('Button Style', 'wedocs')}
-						value={attributes.buttonStyle}
-						options={[
-							{ label: __('Primary', 'wedocs'), value: 'primary' },
-							{
-								label: __('Secondary', 'wedocs'),
-								value: 'secondary',
-							},
-							{ label: __('Outline', 'wedocs'), value: 'outline' },
-							{ label: __('Ghost', 'wedocs'), value: 'ghost' },
-						]}
-						onChange={updateAttribute('buttonStyle')}
-					/>
-
-					<SelectControl
-						label={__('Button Size', 'wedocs')}
-						value={attributes.buttonSize}
-						options={[
-							{ label: __('Small', 'wedocs'), value: 'small' },
-							{ label: __('Medium', 'wedocs'), value: 'medium' },
-							{ label: __('Large', 'wedocs'), value: 'large' },
-						]}
-						onChange={updateAttribute('buttonSize')}
-					/>
 
 					<PanelColorSettings
 						title={__('Color Settings', 'wedocs')}

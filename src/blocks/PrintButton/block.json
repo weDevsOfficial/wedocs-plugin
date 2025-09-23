@@ -33,14 +33,6 @@
 			"type": "boolean",
 			"default": true
 		},
-		"buttonStyle": {
-			"type": "string",
-			"default": "primary"
-		},
-		"buttonSize": {
-			"type": "string",
-			"default": "medium"
-		},
 		"padding": {
 			"type": "object",
 			"default": {
