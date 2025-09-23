@@ -10,12 +10,12 @@ const PlacementSettings = () => {
 	return (
 		<div className={ `placement-settings` }>
 			<div className={ `placement-label` }>
-				<div className={ 'flex items-center' }>
-					<h3 className={ `text-base text-[#111827] font-medium leading-5` }>
+				<div className={ 'wedocs-flex wedocs-items-center' }>
+					<h3 className={ `wedocs-text-base wedocs-text-[#111827] wedocs-font-medium wedocs-leading-5` }>
 						{ __( 'Drag your tabs and place orders', 'wedocs' ) }
 					</h3>
 					<div
-						className="tooltip cursor-pointer ml-2 z-[9999]"
+						className="tooltip wedocs-cursor-pointer wedocs-ml-2 wedocs-z-[9999]"
 						data-tip={ __(
 							'Prevent the widget from appearing on specific pages',
 							'wedocs'
@@ -37,12 +37,12 @@ const PlacementSettings = () => {
 						</svg>
 					</div>
 				</div>
-				<hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200 mt-5 mb-6" />
+				<hr className="wedocs-h-px !wedocs-bg-gray-200 wedocs-border-0 dark:!wedocs-bg-gray-200 wedocs-mt-5 wedocs-mb-6" />
 			</div>
 
-			<div className="tab-order-settings relative flex items-start min-h-[200px] gap-4">
+			<div className="tab-order-settings wedocs-relative wedocs-flex wedocs-items-start wedocs-min-h-[200px] wedocs-gap-4">
 				{ tabs?.map( ( tab ) => (
-					<div key={ tab?.id } className={ `bg-[#F3F4F6] text-[#111827] text-sm font-medium leading-5 rounded-md px-3.5 py-2 flex items-center gap-3 cursor-grab shadow` }>
+					<div key={ tab?.id } className={ `wedocs-bg-[#F3F4F6] wedocs-text-[#111827] wedocs-text-sm wedocs-font-medium wedocs-leading-5 wedocs-rounded-md wedocs-px-3.5 wedocs-py-2 wedocs-flex wedocs-items-center wedocs-gap-3 wedocs-cursor-grab wedocs-shadow` }>
 						<svg width='16' height='16' fill='none'>
 							<path
 								fill='#9ca3af'

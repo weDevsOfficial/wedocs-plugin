@@ -47,9 +47,9 @@ const FontSettings = ( { name, classes, setSettings, settingsData } ) => {
 	};
 
 	return (
-		<div className={ `${ classes ? classes : '' } flex space-x-2.5` }>
+		<div className={ `${ classes ? classes : '' } wedocs-flex wedocs-space-x-2.5` }>
 			<SelectBox
-				classes="w-[108px]"
+				classes="wedocs-w-[108px]"
 				options={ fontWeights }
 				fieldName={ 'weight' }
 				setSettings={ setSettings }
@@ -58,7 +58,7 @@ const FontSettings = ( { name, classes, setSettings, settingsData } ) => {
 				defaultValue={ defaultWeight }
 			/>
 			<SelectBox
-				classes="w-[72px]"
+				classes="wedocs-w-[72px]"
 				options={ fontSizes }
 				fieldName={ 'size' }
 				setSettings={ setSettings }
@@ -68,7 +68,7 @@ const FontSettings = ( { name, classes, setSettings, settingsData } ) => {
 			/>
 			<button
 				onClick={ handleResetFonts }
-				className="relative cursor-pointer rounded-md border border-gray-300 bg-white py-2 px-3 text-left shadow-sm hover:bg-indigo-700 hover:text-white sm:text-sm"
+				className="wedocs-relative wedocs-cursor-pointer wedocs-rounded-md wedocs-border wedocs-border-gray-300 wedocs-bg-white wedocs-py-2 wedocs-px-3 wedocs-text-left wedocs-shadow-sm hover:wedocs-bg-indigo-700 hover:wedocs-text-white sm:wedocs-text-sm"
 			>
 				{ __( 'Reset', 'wedocs' ) }
 			</button>

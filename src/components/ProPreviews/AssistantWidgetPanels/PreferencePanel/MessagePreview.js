@@ -110,18 +110,18 @@ const MessagePreview = ( { settings, previewColors } ) => {
     ];
 
     return (
-        <div className={ `w-[26rem] palette-preview-container relative` }>
-            <div className={ `palette-preview-content transition-all` }>
-                <div className={ `pb-6 palette-preview bg-white rounded-[10px] shadow-xl mb-5 overflow-hidden` }>
+        <div className={ `wedocs-w-[26rem] palette-preview-container wedocs-relative` }>
+            <div className={ `palette-preview-content wedocs-transition-all` }>
+                <div className={ `wedocs-pb-6 palette-preview wedocs-bg-white wedocs-rounded-[10px] wedocs-shadow-xl wedocs-mb-5 wedocs-overflow-hidden` }>
                     <div
-                        className="preview-header flex items-center justify-center h-48"
+                        className="preview-header wedocs-flex wedocs-items-center wedocs-justify-center wedocs-h-48"
                         style={ {
                             background: `rgba(${ widgetBg?.r }, ${ widgetBg?.g }, ${ widgetBg?.b }, ${ widgetBg?.a })`,
                         } }
                     >
-                        <div className="text-center">
+                        <div className="wedocs-text-center">
                             <div
-                                className="tabs flex items-center font-medium text-sm leading-5 w-fit h-10 shadow-sm rounded-[10px] mb-5 mx-auto"
+                                className="tabs wedocs-flex wedocs-items-center wedocs-font-medium wedocs-text-sm wedocs-leading-5 wedocs-w-fit wedocs-h-10 wedocs-shadow-sm wedocs-rounded-[10px] wedocs-mb-5 wedocs-mx-auto"
                                 style={ {
                                     color: `rgba(${ inactiveTabFont?.r }, ${ inactiveTabFont?.g }, ${ inactiveTabFont?.b }, ${ inactiveTabFont?.a })`,
                                     background: `rgba(${ inactiveTabBg?.r }, ${ inactiveTabBg?.g }, ${ inactiveTabBg?.b }, ${ inactiveTabBg?.a })`,
@@ -130,7 +130,7 @@ const MessagePreview = ( { settings, previewColors } ) => {
                                 { tabs?.map( ( tab ) => (
                                     <div
                                         key={ tab?.key }
-                                        className={ `tab flex items-center justify-center mx-auto gap-2 py-2.5 px-5 rounded-[10px] cursor-pointer outline-none h-[100%] leading-4` }
+                                        className={ `tab wedocs-flex wedocs-items-center wedocs-justify-center wedocs-mx-auto wedocs-gap-2 wedocs-py-2.5 wedocs-px-5 wedocs-rounded-[10px] wedocs-cursor-pointer wedocs-outline-none wedocs-h-[100%] wedocs-leading-4` }
                                         style={
                                             selectedTab === tab?.key
                                                 ? activeTabStyleRef.current
@@ -150,7 +150,7 @@ const MessagePreview = ( { settings, previewColors } ) => {
                                                         `${ tab.key }_tab_icon`
                                                     ]?.name
                                                 }
-                                                className="max-h-5 max-w-5"
+                                                className="wedocs-max-h-5 wedocs-max-w-5"
                                             />
                                         ) : (
                                             tab?.icon
@@ -167,14 +167,14 @@ const MessagePreview = ( { settings, previewColors } ) => {
                                 ) ) }
                             </div>
                             <div
-                                className={ `preview-heading mb-1.5 ${
+                                className={ `preview-heading wedocs-mb-1.5 ${
                                     settings?.preference?.widget_title_font?.size
-                                        ? `text-${ settings?.preference?.widget_title_font?.size }`
-                                        : 'text-lg'
+                                        ? `wedocs-text-${ settings?.preference?.widget_title_font?.size }`
+                                        : 'wedocs-text-lg'
                                 } ${
                                     settings?.preference?.widget_title_font?.weight
-                                        ? `font-${ settings?.preference?.widget_title_font?.weight }`
-                                        : 'font-medium'
+                                        ? `wedocs-font-${ settings?.preference?.widget_title_font?.weight }`
+                                        : 'wedocs-font-medium'
                                 }` }
                                 style={ {
                                     color: `rgba(${ tabTitleFont?.r }, ${ tabTitleFont?.g }, ${ tabTitleFont?.b }, ${ tabTitleFont?.a })`,
@@ -190,14 +190,14 @@ const MessagePreview = ( { settings, previewColors } ) => {
                                     : __( 'Explore Feature', 'wedocs' ) }
                             </div>
                             <div
-                                className={ `preview-description w-80 ${
+                                className={ `preview-description wedocs-w-80 ${
                                     settings?.preference?.widget_description_font?.size
-                                        ? `text-${ settings?.preference?.widget_description_font?.size }`
-                                        : 'text-sm'
+                                        ? `wedocs-text-${ settings?.preference?.widget_description_font?.size }`
+                                        : 'wedocs-text-sm'
                                 } ${
                                     settings?.preference?.widget_description_font?.weight
-                                        ? `font-${ settings?.preference?.widget_description_font?.weight }`
-                                        : 'font-normal'
+                                        ? `wedocs-font-${ settings?.preference?.widget_description_font?.weight }`
+                                        : 'wedocs-font-normal'
                                 }` }
                                 style={ {
                                     color: `rgba(${ tabDescriptionFont?.r }, ${ tabDescriptionFont?.g }, ${ tabDescriptionFont?.b }, ${ tabDescriptionFont?.a })`,
@@ -220,15 +220,15 @@ const MessagePreview = ( { settings, previewColors } ) => {
 
                     <div
                         className={ `${
-                            selectedTab !== 'explore' && 'hidden'
-                        } explore-tab -mt-5` }
+                            selectedTab !== 'explore' && 'wedocs-hidden'
+                        } explore-tab wedocs--mt-5` }
                     >
                         <div className={ `listing-docs` }>
-                            <div className={ `search-panel px-3 py-1 doc-search-panel relative flex items-center justify-center border border-[#D1D5DB] bg-white rounded-md w-80 mx-auto shadow-sm mb-8` }>
+                            <div className={ `search-panel wedocs-px-3 wedocs-py-1 doc-search-panel wedocs-relative wedocs-flex wedocs-items-center wedocs-justify-center wedocs-border wedocs-border-[#D1D5DB] wedocs-bg-white wedocs-rounded-md wedocs-w-80 wedocs-mx-auto wedocs-shadow-sm wedocs-mb-8` }>
                                 <input
                                     id="doc-search"
                                     type="text"
-                                    className="!border-0 !border-transparent !bg-white text-sm text-gray-900 placeholder-gray-400 w-full focus:!shadow-transparent !px-0 !py-0 disabled:shadow-none"
+                                    className="!wedocs-border-0 !wedocs-border-transparent !wedocs-bg-white wedocs-text-sm wedocs-text-gray-900 wedocs-placeholder-gray-400 wedocs-w-full focus:!wedocs-shadow-transparent !wedocs-px-0 !wedocs-py-0 disabled:wedocs-shadow-none"
                                     placeholder={ __( 'Search', 'wedocs' ) }
                                     readOnly={ true }
                                     value=''
@@ -239,7 +239,7 @@ const MessagePreview = ( { settings, previewColors } ) => {
                                         width="18"
                                         height="18"
                                         fill="none"
-                                        className="cursor-pointer"
+                                        className="wedocs-cursor-pointer"
                                     >
                                         <path
                                             d="M16.661 16.094l-5-5m1.667-4.167c0 3.222-2.612 5.833-5.833 5.833s-5.833-2.612-5.833-5.833 2.612-5.833 5.833-5.833 5.833 2.612 5.833 5.833z"
@@ -253,18 +253,18 @@ const MessagePreview = ( { settings, previewColors } ) => {
                             </div>
 
                             <div
-                                className={ `h-80 explore-docs` }
+                                className={ `wedocs-h-80 explore-docs` }
                             >
                                 { dummyDocs?.map( ( docTitle, index ) => (
                                     <div
                                         key={ index }
                                         className={ `${
                                             selectedTab !== 'explore' &&
-                                            'hidden'
-                                        } doc-section border border-[#D1D5DB] box-border p-4 mb-2.5 last:mb-0 rounded-md w-[340px] mx-auto` }
+                                            'wedocs-hidden'
+                                        } doc-section wedocs-border wedocs-border-[#D1D5DB] box-border wedocs-p-4 wedocs-mb-2.5 last:wedocs-mb-0 wedocs-rounded-md wedocs-w-[340px] wedocs-mx-auto` }
                                     >
                                         <div
-                                            className="breadcrumbs text-sm mb-2 p-0"
+                                            className="breadcrumbs wedocs-text-sm wedocs-mb-2 wedocs-p-0"
                                             style={ {
                                                 color: `rgba(${ breadcrumbColor?.r }, ${ breadcrumbColor?.g }, ${ breadcrumbColor?.b }, ${ breadcrumbColor?.a })`,
                                             } }
@@ -274,10 +274,10 @@ const MessagePreview = ( { settings, previewColors } ) => {
                                                 'wedocs'
                                             ) }
                                         </div>
-                                        <div className="doc-heading text-lg text-gray-900 mb-1.5">
+                                        <div className="doc-heading wedocs-text-lg wedocs-text-gray-900 wedocs-mb-1.5">
                                             { docTitle }
                                         </div>
-                                        <div className="doc-description text-sm font-normal text-gray-500 leading-5">
+                                        <div className="doc-description wedocs-text-sm wedocs-font-normal wedocs-text-gray-500 wedocs-leading-5">
                                             { __(
                                                 'Here you will find everything about WP User Frontend, what it offers and its',
                                                 'wedocs'
@@ -291,7 +291,7 @@ const MessagePreview = ( { settings, previewColors } ) => {
                 </div>
             </div>
             <div
-                className={ `msg-icon w-16 h-16 rounded-full ml-auto flex items-center justify-center` }
+                className={ `msg-icon wedocs-w-16 wedocs-h-16 wedocs-rounded-full wedocs-ml-auto wedocs-flex wedocs-items-center wedocs-justify-center` }
                 style={ {
                     background: `rgba(${ bubbleBg?.r }, ${ bubbleBg?.g }, ${ bubbleBg?.b }, ${ bubbleBg?.a })`,
                 } }
@@ -300,7 +300,7 @@ const MessagePreview = ( { settings, previewColors } ) => {
                     width="25"
                     height="24"
                     xmlns="http://www.w3.org/2000/svg"
-                    className="rotate-360 transition-all"
+                    className="wedocs-rotate-360 wedocs-transition-all"
                     style={ {
                         fill: `rgba(${ bubbleIcon?.r }, ${ bubbleIcon?.g }, ${ bubbleIcon?.b }, ${ bubbleIcon?.a })`,
                     } }

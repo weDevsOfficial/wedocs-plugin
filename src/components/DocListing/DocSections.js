@@ -94,17 +94,17 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
 
   return (
     <div
-      className="space-y-4 mb-3"
+      className="wedocs-space-y-4 wedocs-mb-3"
       style={ style }
       { ...attributes }
     >
-      <div className="bg-white shadow sm:rounded-md">
-        <div className="doc-section cursor-pointer px-4 py-5 sm:px-6">
+      <div className="wedocs-bg-white wedocs-shadow sm:wedocs-rounded-md">
+        <div className="doc-section wedocs-cursor-pointer wedocs-px-4 wedocs-py-5 sm:wedocs-px-6">
           <div
-            className="flex items-center group"
+            className="wedocs-flex wedocs-items-center group"
             onClick={ () => setShowArticles( ! showArticles ) }
           >
-            <div className={ `pr-3.5 py-0.5 cursor-grab` }>
+            <div className={ `wedocs-pr-3.5 wedocs-py-0.5 wedocs-cursor-grab` }>
               <svg
                 width="20"
                 height="21"
@@ -120,13 +120,13 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                 />
               </svg>
             </div>
-            <div className="flex items-center w-full">
-              <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-                <div className="flex items-center">
-                  <div className="flex items-center text-sm pr-5">
+            <div className="wedocs-flex wedocs-items-center wedocs-w-full">
+              <div className="wedocs-min-w-0 wedocs-flex-1 sm:wedocs-flex sm:wedocs-items-center sm:wedocs-justify-between">
+                <div className="wedocs-flex wedocs-items-center">
+                  <div className="wedocs-flex wedocs-items-center wedocs-text-sm wedocs-pr-5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-auto pr-3.5"
+                      className="wedocs-w-auto wedocs-pr-3.5"
                       width="20"
                       height="17"
                       fill="none"
@@ -141,12 +141,12 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                     <a
                       target="_blank"
                       href={ `${ weDocsAdminVars.adminUrl }post.php?post=${ id }&action=edit` }
-                      className="tooltip cursor-pointer before:max-w-xl flex items-center flex-shrink-0 text-base font-medium text-black !shadow-none z-[9980]"
+                      className="tooltip wedocs-cursor-pointer before:wedocs-max-w-xl wedocs-flex wedocs-items-center wedocs-flex-shrink-0 wedocs-text-base wedocs-font-medium wedocs-text-black !wedocs-shadow-none wedocs-z-[9980]"
                       data-tip={ he.decode( __( title?.rendered, 'wedocs' ) ) }
                       rel="noreferrer"
                     >
                       <span
-                        className="hover:underline group-hover:text-black"
+                        className="hover:wedocs-underline group-hover:wedocs-text-black"
                         dangerouslySetInnerHTML={ {
                           __html: extractedTitle( title?.rendered ),
                         } }
@@ -155,37 +155,37 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                   </div>
                   <div
                     className={ `${
-                      showArticles ? 'bg-[#00A1E4]' : 'bg-gray-400'
-                    } article-counter grid place-content-center text-white font-medium text-sm w-7 h-7 group-hover:bg-[#00A1E4] rounded-full` }
+                      showArticles ? 'wedocs-bg-[#00A1E4]' : 'wedocs-bg-gray-400'
+                    } article-counter wedocs-grid wedocs-place-content-center wedocs-text-white wedocs-font-medium wedocs-text-sm wedocs-w-7 wedocs-h-7 group-hover:wedocs-bg-[#00A1E4] wedocs-rounded-full` }
                   >
                     { filteredArticles.length }
                   </div>
                   { section?.status === 'draft' && (
-                    <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5 !ml-5` }>
+                    <div className={ `docs-draft-status wedocs-font-medium wedocs-text-sm wedocs-text-gray-800 wedocs-leading-5 wedocs-bg-[#E3E5E7] wedocs-rounded-[42px] wedocs-py-0.5 wedocs-px-2.5 !wedocs-ml-5` }>
                       { __( 'Draft', 'wedocs' ) }
                     </div>
                   ) }
                   <AddArticleModal
                     sections={ sections }
-                    className={ `ml-6 mr-1` }
+                    className={ `wedocs-ml-6 wedocs-mr-1` }
                     defaultSection={ section }
                     setShowArticles={ setShowArticles }
                   >
                     <div
-                      className='tooltip cursor-pointer flex items-center justify-center w-3.5 h-3.5'
+                      className='tooltip wedocs-cursor-pointer wedocs-flex wedocs-items-center wedocs-justify-center wedocs-w-3.5 wedocs-h-3.5'
                       data-tip={ __( 'Create', 'wedocs' ) }
                     >
-                      <span className="flex items-center dashicons dashicons-plus-alt2 hidden group-hover:inline-flex text-2xl font-medium text-[#d1d5db] hover:text-indigo-700"></span>
+                      <span className="wedocs-flex wedocs-items-center dashicons dashicons-plus-alt2 wedocs-hidden group-hover:wedocs-inline-flex wedocs-text-2xl wedocs-font-medium wedocs-text-[#d1d5db] hover:wedocs-text-indigo-700"></span>
                     </div>
                   </AddArticleModal>
                   <a
                     target="_blank"
-                    className="ml-4 hidden group-hover:block !shadow-none"
+                    className="wedocs-ml-4 wedocs-hidden group-hover:wedocs-block !wedocs-shadow-none"
                     rel="noreferrer"
                     href={ `${ weDocsAdminVars.adminUrl }post.php?post=${ id }&action=edit` }
                   >
                     <span
-                      className={ `tooltip cursor-pointer` }
+                      className={ `tooltip wedocs-cursor-pointer` }
                       data-tip={ __( 'Edit', 'wedocs' ) }
                     >
                       <svg
@@ -193,7 +193,7 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                         width="18"
                         height="18"
                         fill="none"
-                        className="tooltip cursor-pointer stroke-gray-300 hover:stroke-indigo-700"
+                        className="tooltip wedocs-cursor-pointer wedocs-stroke-gray-300 hover:wedocs-stroke-indigo-700"
                       >
                         <path
                           d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
@@ -208,14 +208,14 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                     target="_blank"
                     rel="noreferrer"
                     href={ section?.link }
-                    className="flex items-center flex-shrink-0 text-base font-medium text-black !shadow-none ml-4"
+                    className="wedocs-flex wedocs-items-center wedocs-flex-shrink-0 wedocs-text-base wedocs-font-medium wedocs-text-black !wedocs-shadow-none wedocs-ml-4"
                   >
                     <span
-                      className={ `tooltip cursor-pointer flex items-center` }
+                      className={ `tooltip wedocs-cursor-pointer wedocs-flex wedocs-items-center` }
                       data-tip={ __( 'View on Web', 'wedocs' ) }
                     >
                       <svg
-                        className="hidden group-hover:block stroke-gray-300 hover:stroke-indigo-700"
+                        className="wedocs-hidden group-hover:wedocs-block wedocs-stroke-gray-300 hover:wedocs-stroke-indigo-700"
                         xmlns="http://www.w3.org/2000/svg"
                         width="18"
                         height="18"
@@ -234,10 +234,10 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                   <RestrictionModal
                     docId={ section.id }
                     type="section"
-                    classes="ml-4 hidden group-hover:block"
+                    classes="wedocs-ml-4 wedocs-hidden group-hover:wedocs-block"
                   >
                     <span
-                      className={ `tooltip cursor-pointer flex items-center` }
+                      className={ `tooltip wedocs-cursor-pointer wedocs-flex wedocs-items-center` }
                       data-tip={ __( 'Delete', 'wedocs' ) }
                     >
                       <svg
@@ -246,7 +246,7 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                         viewBox="0 0 24 24"
                         strokeWidth="1.5"
                         stroke="currentColor"
-                        className="w-5 h-5 stroke-gray-300 hover:stroke-red-700"
+                        className="wedocs-w-5 wedocs-h-5 wedocs-stroke-gray-300 hover:wedocs-stroke-red-700"
                       >
                         <path
                           strokeWidth="2"
@@ -261,15 +261,15 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
               </div>
 
               { articles && articles.length > 0 && (
-                <div className="ml-5 flex-shrink-0">
+                <div className="wedocs-ml-5 wedocs-flex-shrink-0">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
                     className={ `${
-                      showArticles ? 'rotate-90 transform' : ''
-                    } group-hover:text-[#00A1E4] h-5 w-5 text-gray-400` }
+                      showArticles ? 'wedocs-rotate-90 wedocs-transform' : ''
+                    } group-hover:wedocs-text-[#00A1E4] wedocs-h-5 wedocs-w-5 wedocs-text-gray-400` }
                   >
                     <path d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" />
                   </svg>
@@ -279,7 +279,7 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
           </div>
 
           { showArticles && ! Boolean( isDragging ) && (
-            <div className={ `mt-3 section-article pl-4 sm:pl-6` }>
+            <div className={ `wedocs-mt-3 section-article wedocs-pl-4 sm:wedocs-pl-6` }>
               { ( articles?.length > 0 ) ? (
                 <DraggableDocs
                   setItems={ setArticles }
@@ -310,9 +310,9 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                 sections={ sections }
                 defaultSection={ section }
                 setShowArticles={ setShowArticles }
-                className="py-2.5 px-4 mt-7 mb-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 text-sm text-white hover:text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                className="wedocs-py-2.5 wedocs-px-4 wedocs-mt-7 wedocs-mb-2 wedocs-h-fit wedocs-inline-flex wedocs-items-center wedocs-rounded-md wedocs-border wedocs-border-transparent wedocs-bg-indigo-600 wedocs-px-4 wedocs-text-sm wedocs-text-white hover:wedocs-text-white wedocs-shadow-sm hover:wedocs-bg-indigo-700 focus:wedocs-outline-none focus:wedocs-ring-2 focus:wedocs-ring-indigo-500 focus:wedocs-ring-offset-2"
               >
-                <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-3 text-base flex items-center"></span>
+                <span className="dashicons dashicons-plus-alt2 wedocs-w-3.5 wedocs-h-3.5 wedocs-mr-3 wedocs-text-base wedocs-flex wedocs-items-center"></span>
                 { __( 'Add article', 'wedocs' ) }
               </AddArticleModal>
             </div>

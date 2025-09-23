@@ -173,14 +173,14 @@ const ColorPaletteSettings = () => {
     ];
 
     return (
-        <div className="w-80 settings-palette-options">
+        <div className="wedocs-w-80 settings-palette-options">
             <div className="palette-options">
                 { paletteOptions?.map( ( palette ) => (
                     <div
                         key={ palette.key }
-                        className="palette-option flex items-center justify-between mb-4 last:mb-0 border border-[#E2E2E2] px-5 py-6 rounded-lg hover:cursor-pointer"
+                        className="palette-option wedocs-flex wedocs-items-center wedocs-justify-between wedocs-mb-4 last:wedocs-mb-0 wedocs-border wedocs-border-[#E2E2E2] wedocs-px-5 wedocs-py-6 wedocs-rounded-lg hover:wedocs-cursor-pointer"
                     >
-                        <h4 className="flex items-center font-medium text-gray-600 text-sm">
+                        <h4 className="wedocs-flex wedocs-items-center wedocs-font-medium wedocs-text-gray-600 wedocs-text-sm">
                             <input
                                 type="radio"
                                 id={ palette.key }
@@ -190,25 +190,25 @@ const ColorPaletteSettings = () => {
                                 }
                                 className={ `${
                                     palette.key === 'default'
-                                        ? 'checked:!border-transparent checked:!bg-indigo-600 before:!hidden'
-                                        : '!bg-transparent !border-[#8c8f94] before:!bg-transparent'
-                                } h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600 !mr-2 !-mt-[0.5px]` }
+                                        ? 'checked:!wedocs-border-transparent checked:!wedocs-bg-indigo-600 before:!wedocs-hidden'
+                                        : '!wedocs-bg-transparent !wedocs-border-[#8c8f94] before:!wedocs-bg-transparent'
+                                } wedocs-h-4 wedocs-w-4 wedocs-border-gray-300 wedocs-text-indigo-600 focus:wedocs-ring-indigo-600 !wedocs-mr-2 !wedocs--mt-[0.5px]` }
                             />
                             { palette.title }
                         </h4>
-                        <div className="colors flex items-center gap-2">
+                        <div className="colors wedocs-flex wedocs-items-center wedocs-gap-2">
                             <div
-                                className="tooltip flex cursor-pointer ml-2"
+                                className="tooltip wedocs-flex wedocs-cursor-pointer wedocs-ml-2"
                                 data-tip={ __(
                                     'Widget Background',
                                     'wedocs'
                                 ) }
                             >
                                 <span
-                                    className={ `palette-first-color w-10 h-4 rounded-[55px] ${
+                                    className={ `palette-first-color wedocs-w-10 wedocs-h-4 wedocs-rounded-[55px] ${
                                         palette.widgetColors.color1 ===
                                         '#FFFFFF'
-                                            ? 'border border-[#DBDBDB]'
+                                            ? 'wedocs-border wedocs-border-[#DBDBDB]'
                                             : ''
                                     }` }
                                     style={ {
@@ -217,9 +217,9 @@ const ColorPaletteSettings = () => {
                                 ></span>
                             </div>
                             <span
-                                className={ `w-4 h-4 rounded-full ${
+                                className={ `wedocs-w-4 wedocs-h-4 wedocs-rounded-full ${
                                     palette.widgetColors.color2 === '#FFFFFF'
-                                        ? 'border border-[#DBDBDB]'
+                                        ? 'wedocs-border wedocs-border-[#DBDBDB]'
                                         : ''
                                 }` }
                                 style={ {
@@ -227,9 +227,9 @@ const ColorPaletteSettings = () => {
                                 } }
                             ></span>
                             <span
-                                className={ `w-4 h-4 rounded-full ${
+                                className={ `wedocs-w-4 wedocs-h-4 wedocs-rounded-full ${
                                     palette.widgetColors.color3 === '#FFFFFF'
-                                        ? 'border border-[#DBDBDB]'
+                                        ? 'wedocs-border wedocs-border-[#DBDBDB]'
                                         : ''
                                 }` }
                                 style={ {
@@ -237,9 +237,9 @@ const ColorPaletteSettings = () => {
                                 } }
                             ></span>
                             <span
-                                className={ `w-4 h-4 rounded-full ${
+                                className={ `wedocs-w-4 wedocs-h-4 wedocs-rounded-full ${
                                     palette.widgetColors.color4 === '#FFFFFF'
-                                        ? 'border border-[#DBDBDB]'
+                                        ? 'wedocs-border wedocs-border-[#DBDBDB]'
                                         : ''
                                 }` }
                                 style={ {

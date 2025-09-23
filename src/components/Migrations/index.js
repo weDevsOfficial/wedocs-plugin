@@ -92,14 +92,14 @@ const Migrate = () => {
     };
 
     return (
-        <div className='w-full mt-7'>
+        <div className='wedocs-w-full wedocs-mt-7'>
           <WedocsPromoNotice />
-            <div className='shadow sm:overflow-hidden sm:rounded-md'>
-                <div className='space-y-6 h-[80vh] flex justify-center align-center bg-white px-4 py-5 sm:p-6'>
-                    <div className='w-[800px] text-center self-center mt-1 px-6 py-12'>
-                        <h2 className='mb-16'>
+            <div className='wedocs-shadow sm:wedocs-overflow-hidden sm:wedocs-rounded-md'>
+                <div className='wedocs-space-y-6 wedocs-h-[80vh] wedocs-flex wedocs-justify-center wedocs-align-center wedocs-bg-white wedocs-px-4 wedocs-py-5 sm:wedocs-p-6'>
+                    <div className='wedocs-w-[800px] wedocs-text-center wedocs-self-center wedocs-mt-1 wedocs-px-6 wedocs-py-12'>
+                        <h2 className='wedocs-mb-16'>
                             { migrationSuccess ? (
-                                <svg width='65' height='65' viewBox='0 0 65 65' fill='none' className='mx-auto mb-10'>
+                                <svg width='65' height='65' viewBox='0 0 65 65' fill='none' className='wedocs-mx-auto wedocs-mb-10'>
                                     <circle cx='32.0957' cy='32.8599' r='32' fill='url(#paint0_linear_3069_18418)' />
                                     <path d='M24.9883 31.2202L30.0747 36.3066L39.1784 27.2029' stroke='white' strokeWidth='5' strokeLinecap='round' />
                                     <defs>
@@ -110,7 +110,7 @@ const Migrate = () => {
                                     </defs>
                                 </svg>
                             ) : (
-                                <svg width='280' className='mx-auto mb-10' height='157' fill='none'>
+                                <svg width='280' className='wedocs-mx-auto wedocs-mb-10' height='157' fill='none'>
                                     <path
                                         fill='url(#A)'
                                         fillOpacity='.1'
@@ -189,14 +189,14 @@ const Migrate = () => {
                                     </defs>
                                 </svg>
                             ) }
-                            <p className={ `${ migrationSuccess ? 'text-[#111827]' : 'text-[#3B3F4A]' } font-bold text-2xl mx-auto mb-3` }>
+                            <p className={ `${ migrationSuccess ? 'wedocs-text-[#111827]' : 'wedocs-text-[#3B3F4A]' } wedocs-font-bold wedocs-text-2xl wedocs-mx-auto wedocs-mb-3` }>
                                 { migrationSuccess ? __( 'Migration has been successful', 'wedocs' ) : __( 'Migrate existing docs from BetterDocs to weDocs', 'wedocs' ) }
                             </p>
-                            <p className='text-[#666B79] text-lg mx-auto'>
+                            <p className='wedocs-text-[#666B79] wedocs-text-lg wedocs-mx-auto'>
                                 { !migrationSuccess && (
                                     <a
                                         href='//wedocs.co/docs/wedocs/migration/how-to-migrate-documentation-from-betterdocs-to-wedocs/'
-                                        className='text-[#0043FF] !shadow-none'
+                                        className='wedocs-text-[#0043FF] !wedocs-shadow-none'
                                         target='_blank'
                                         rel='noreferrer'
                                     >
@@ -213,7 +213,7 @@ const Migrate = () => {
                                     isMigrationDone={ needMigrate === 'done' }
                                     setShowMigrationMap={ setShowMigraitonMap }
                                     setOpenSelectionModal={ setOpenSelectionModal }
-                                    className={ `bg-indigo-600 inline-flex gap-3 cursor-pointer items-center focus:ring-0 rounded-md border border-transparent px-6 py-2.5 text-base text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2` }
+                                    className={ `wedocs-bg-indigo-600 wedocs-inline-flex wedocs-gap-3 wedocs-cursor-pointer wedocs-items-center focus:wedocs-ring-0 wedocs-rounded-md wedocs-border wedocs-border-transparent wedocs-px-6 wedocs-py-2.5 wedocs-text-base wedocs-text-white wedocs-shadow-sm hover:wedocs-bg-indigo-700 focus:wedocs-outline-none focus:wedocs-ring-2 focus:wedocs-ring-indigo-500 focus:wedocs-ring-offset-2` }
                                 >
                                     { needMigrate === 'done' ? (
                                         <Fragment>
@@ -262,7 +262,7 @@ const Migrate = () => {
                                     <a
                                         href={ '#' }
                                         onClick={ handleBackToDocPageClick }
-                                        className="inline-flex gap-3 items-center rounded-md border border-transparent bg-indigo-600 hover:text-white focus:text-white px-6 py-2.5 text-base text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                        className="wedocs-inline-flex wedocs-gap-3 wedocs-items-center wedocs-rounded-md wedocs-border wedocs-border-transparent wedocs-bg-indigo-600 hover:wedocs-text-white focus:wedocs-text-white wedocs-px-6 wedocs-py-2.5 wedocs-text-base wedocs-text-white wedocs-shadow-sm hover:wedocs-bg-indigo-700 focus:wedocs-outline-none focus:wedocs-ring-2 focus:wedocs-ring-indigo-500 focus:wedocs-ring-offset-2"
                                     >
                                         <svg width="17" height="11" viewBox="0 0 17 11" fill="none">
                                             <path fillRule="evenodd" clipRule="evenodd" d="M6.30281 10.567C5.91229 10.9575 5.27912 10.9575 4.8886 10.567L0.888597 6.56697C0.498072 6.17645 0.498072 5.54328 0.888597 5.15276L4.8886 1.15276C5.27912 0.762232 5.91229 0.762232 6.30281 1.15276C6.69334 1.54328 6.69334 2.17645 6.30281 2.56697L4.00992 4.85986L15.5957 4.85986C16.148 4.85986 16.5957 5.30758 16.5957 5.85986C16.5957 6.41215 16.148 6.85986 15.5957 6.85986L4.00992 6.85986L6.30281 9.15276C6.69334 9.54328 6.69334 10.1764 6.30281 10.567Z" fill="white" />
@@ -273,7 +273,7 @@ const Migrate = () => {
                                     <button
                                         type='submit'
                                         disabled={ true }
-                                        className={ `disabled:bg-[#F2F2F2] inline-flex gap-3 items-center focus:ring-0 rounded-md border border-transparent px-6 py-2.5 text-base text-[#B4BBD6] shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2` }
+                                        className={ `disabled:wedocs-bg-[#F2F2F2] wedocs-inline-flex wedocs-gap-3 wedocs-items-center focus:wedocs-ring-0 wedocs-rounded-md wedocs-border wedocs-border-transparent wedocs-px-6 wedocs-py-2.5 wedocs-text-base wedocs-text-[#B4BBD6] wedocs-shadow-sm hover:wedocs-bg-indigo-700 focus:wedocs-outline-none focus:wedocs-ring-2 focus:wedocs-ring-indigo-500 focus:wedocs-ring-offset-2` }
                                     >
                                         <svg
                                             width='21'

@@ -12,34 +12,34 @@ const Contributors = () => {
   };
 
   return (
-    <div className="isolate relative w-[108px] ml-4 flex -space-x-2 h-7">
+    <div className="wedocs-isolate wedocs-relative wedocs-w-[108px] wedocs-ml-4 wedocs-flex wedocs--space-x-2 wedocs-h-7">
       <img
         src={ avatarOne }
         alt={ __( 'Fourth Contributor', 'wedocs' ) }
-        className="relative z-0 inline-block h-full w-7 rounded-full ring-2 ring-white"
+        className="wedocs-relative wedocs-z-0 wedocs-inline-block wedocs-h-full wedocs-w-7 wedocs-rounded-full wedocs-ring-2 wedocs-ring-white"
       />
       <img
         src={ avatarTwo }
         alt={ __( 'Fourth Contributor', 'wedocs' ) }
-        className="relative z-0 inline-block h-full w-7 rounded-full ring-2 ring-white"
+        className="wedocs-relative wedocs-z-0 wedocs-inline-block wedocs-h-full wedocs-w-7 wedocs-rounded-full wedocs-ring-2 wedocs-ring-white"
       />
       <img
         src={ avatarThree }
         alt={ __( 'Fourth Contributor', 'wedocs' ) }
-        className="relative z-0 inline-block h-full w-7 rounded-full ring-2 ring-white"
+        className="wedocs-relative wedocs-z-0 wedocs-inline-block wedocs-h-full wedocs-w-7 wedocs-rounded-full wedocs-ring-2 wedocs-ring-white"
       />
       <img
         src={ avatarFour }
         alt={ __( 'Fourth Contributor', 'wedocs' ) }
-        className="relative z-0 inline-block h-full w-7 rounded-full ring-2 ring-white"
+        className="wedocs-relative wedocs-z-0 wedocs-inline-block wedocs-h-full wedocs-w-7 wedocs-rounded-full wedocs-ring-2 wedocs-ring-white"
       />
-      <div className="relative z-0 inline-block h-full w-7 rounded-full ring-2 ring-white bg-indigo-700 text-white">
-        <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -mt-[1px]">+5</span>
+      <div className="wedocs-relative wedocs-z-0 wedocs-inline-block wedocs-h-full wedocs-w-7 wedocs-rounded-full wedocs-ring-2 wedocs-ring-white wedocs-bg-indigo-700 wedocs-text-white">
+        <span className="wedocs-absolute wedocs-top-1/2 wedocs-left-1/2 wedocs-transform wedocs--translate-x-1/2 wedocs--translate-y-1/2 wedocs--mt-[1px]">+5</span>
       </div>
-      <div className={ `overlay absolute opacity-0 hover:opacity-100 flex items-center justify-center w-[160px] h-[50px] -mt-3 !ml-[-26px] rounded bg-[#00000080]` }>
+      <div className={ `overlay wedocs-absolute wedocs-opacity-0 hover:wedocs-opacity-100 wedocs-flex wedocs-items-center wedocs-justify-center wedocs-w-[160px] wedocs-h-[50px] wedocs--mt-3 !wedocs-ml-[-26px] wedocs-rounded wedocs-bg-[#00000080]` }>
         <span
           onClick={ ( event ) => handleUpgradeClick( event ) }
-          className={ `upgrade-button text-white hover:text-white px-4 py-1.5 focus:text-white focus:ring-0 inline-flex items-center rounded-md bg-[#ff9000] hover:bg-[#cf7500] font-semibold text-[13px] gap-2.5` }
+          className={ `upgrade-button wedocs-text-white hover:wedocs-text-white wedocs-px-4 wedocs-py-1.5 focus:wedocs-text-white focus:wedocs-ring-0 wedocs-inline-flex wedocs-items-center wedocs-rounded-md wedocs-bg-[#ff9000] hover:wedocs-bg-[#cf7500] wedocs-font-semibold wedocs-text-[13px] wedocs-gap-2.5` }
         >
           { __( 'Upgrade', 'wedocs' ) }
           <svg className='crown-icon' width='20' fill='#fff' height='15'>

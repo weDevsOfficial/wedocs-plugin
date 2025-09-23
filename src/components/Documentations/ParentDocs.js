@@ -67,20 +67,20 @@ const ParentDocs = ( { doc } ) => {
       style={ style }
       { ...attributes }
       ref={ setNodeRef }
-      className="col-span-1 rounded bg-white shadow"
+      className="wedocs-col-span-1 wedocs-rounded wedocs-bg-white wedocs-shadow"
     >
       { /* Documentation Header Start */ }
-      <div className="flex w-full items-center justify-between px-6 h-[4.5rem]">
-        <div className="flex-1">
-          <div className="inline-flex items-center space-x-3">
-            <div className="flex items-center space-x-3 flex-1 group">
+      <div className="wedocs-flex wedocs-w-full wedocs-items-center wedocs-justify-between wedocs-px-6 wedocs-h-[4.5rem]">
+        <div className="wedocs-flex-1">
+          <div className="wedocs-inline-flex wedocs-items-center wedocs-space-x-3">
+            <div className="wedocs-flex wedocs-items-center wedocs-space-x-3 wedocs-flex-1 group">
               <div
-                className="tooltip cursor-pointer before:max-w-xl z-[0]"
+                className="tooltip wedocs-cursor-pointer before:wedocs-max-w-xl wedocs-z-[0]"
                 data-tip={ he.decode( __( doc?.title?.rendered, 'wedocs' ) ) }
               >
                 <Link to={ `/section/${ doc.id }` }>
                   <h3
-                    className="truncate hover:underline text-lg font-medium text-[#3B3F4A]"
+                    className="wedocs-truncate hover:wedocs-underline wedocs-text-lg wedocs-font-medium wedocs-text-[#3B3F4A]"
                     dangerouslySetInnerHTML={ {
                       __html: extractedTitle( doc?.title?.rendered, doc.status !== 'publish' ? 12 : 20 ),
                     } }
@@ -90,9 +90,9 @@ const ParentDocs = ( { doc } ) => {
             </div>
           </div>
         </div>
-        <div className="flex items-center">
+        <div className="wedocs-flex wedocs-items-center">
           { doc?.status === 'draft' && (
-            <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5` }>
+            <div className={ `docs-draft-status wedocs-font-medium wedocs-text-sm wedocs-text-gray-800 wedocs-leading-5 wedocs-bg-[#E3E5E7] wedocs-rounded-[42px] wedocs-py-0.5 wedocs-px-2.5` }>
               { __( 'Draft', 'wedocs' ) }
             </div>
           ) }
@@ -104,7 +104,7 @@ const ParentDocs = ( { doc } ) => {
                 height="17"
                 fill="none"
                 { ...listeners }
-                className={ `cursor-grab p-5 box-content` }
+                className={ `wedocs-cursor-grab wedocs-p-5 wedocs-box-content` }
               >
                 <path
                   fill="#9ca3af"
@@ -115,18 +115,18 @@ const ParentDocs = ( { doc } ) => {
             </Fragment>
           ) }
         </div>
-        <div className="flex items-center">
+        <div className="wedocs-flex wedocs-items-center">
           { privacyIcon }
           { showActions && <DocActions doc={ doc } type="doc" disabled /> }
         </div>
       </div>
       <Link to={ `/section/${ doc.id }` }>
         { /* Documentation Body Start */ }
-        <div className="w-full p-6 pt-0 pb-7">
-          <ul role="list" className="mb-6 rounded-md">
-            <li className="flex items-center justify-between mb-0 py-1.5 pl-3 pr-4 text-sm">
-              <div className="w-full inline-flex items-center">
-                <div className="w-6 flex-none -mt-1">
+        <div className="wedocs-w-full wedocs-p-6 wedocs-pt-0 wedocs-pb-7">
+          <ul role="list" className="wedocs-mb-6 wedocs-rounded-md">
+            <li className="wedocs-flex wedocs-items-center wedocs-justify-between wedocs-mb-0 wedocs-py-1.5 wedocs-pl-3 wedocs-pr-4 wedocs-text-sm">
+              <div className="wedocs-w-full wedocs-inline-flex wedocs-items-center">
+                <div className="wedocs-w-6 wedocs-flex-none wedocs--mt-1">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -141,7 +141,7 @@ const ParentDocs = ( { doc } ) => {
                     />
                   </svg>
                 </div>
-                <span className="ml-2 flex-1 truncate text-[#3B3F4A] hover:underline decoration-1">
+                <span className="wedocs-ml-2 wedocs-flex-1 wedocs-truncate wedocs-text-[#3B3F4A] hover:wedocs-underline wedocs-decoration-1">
                   { sprintf(
                     // translators: %d: Length of documentation sections
                     __( '%d Sections', 'wedocs' ),
@@ -150,9 +150,9 @@ const ParentDocs = ( { doc } ) => {
                 </span>
               </div>
             </li>
-            <li className="flex items-center justify-between mb-0 py-1.5 pl-3 pr-4 text-sm">
-              <div className="flex w-0 flex-1 items-center">
-                <div className="w-6 flex justify-center -mt-0.5">
+            <li className="wedocs-flex wedocs-items-center wedocs-justify-between wedocs-mb-0 wedocs-py-1.5 wedocs-pl-3 wedocs-pr-4 wedocs-text-sm">
+              <div className="wedocs-flex wedocs-w-0 wedocs-flex-1 wedocs-items-center">
+                <div className="wedocs-w-6 wedocs-flex wedocs-justify-center wedocs--mt-0.5">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -168,7 +168,7 @@ const ParentDocs = ( { doc } ) => {
                     />
                   </svg>
                 </div>
-                <span className="ml-2 w-0 flex-1 truncate text-[#3B3F4A] hover:underline decoration-1">
+                <span className="wedocs-ml-2 wedocs-w-0 wedocs-flex-1 wedocs-truncate wedocs-text-[#3B3F4A] hover:wedocs-underline wedocs-decoration-1">
                   { sprintf(
                     // translators: %d: Length of documentation articles
                     __( '%d Articles', 'wedocs' ),
@@ -186,20 +186,20 @@ const ParentDocs = ( { doc } ) => {
 
       { /* Documentation Footer Start */ }
       { showActions && (
-        <div className="border-t border-gray-200">
-          <div className="-mt-px flex divide-x divide-gray-200">
+        <div className="wedocs-border-t wedocs-border-gray-200">
+          <div className="wedocs--mt-px wedocs-flex wedocs-divide-x wedocs-divide-gray-200">
             <div
               className={ `${
-                footerLeft[ 0 ] ? 'justify-between' : 'justify-end'
-              } flex w-0 flex-1 items-center py-4 px-6` }
+                footerLeft[ 0 ] ? 'wedocs-justify-between' : 'wedocs-justify-end'
+              } wedocs-flex wedocs-w-0 wedocs-flex-1 wedocs-items-center wedocs-py-4 wedocs-px-6` }
             >
               { footerLeft }
               <AddChildrens
                 docId={ doc?.id }
                 sections={ sections }
-                className="py-2 inline-flex items-center bg-indigo-600 text-white rounded-md border border-gray-200 ease-in-out duration-200 shadow-gray-100 px-4 text-sm text-gray shadow-sm cursor-pointer"
+                className="wedocs-py-2 wedocs-inline-flex wedocs-items-center wedocs-bg-indigo-600 wedocs-text-white wedocs-rounded-md wedocs-border wedocs-border-gray-200 wedocs-ease-in-out wedocs-duration-200 wedocs-shadow-gray-100 wedocs-px-4 wedocs-text-sm wedocs-text-gray wedocs-shadow-sm wedocs-cursor-pointer"
               >
-                <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-2 text-base flex items-center"></span>
+                <span className="dashicons dashicons-plus-alt2 wedocs-w-3.5 wedocs-h-3.5 wedocs-mr-2 wedocs-text-base wedocs-flex wedocs-items-center"></span>
                 { __( 'Add', 'wedocs' ) }
               </AddChildrens>
             </div>

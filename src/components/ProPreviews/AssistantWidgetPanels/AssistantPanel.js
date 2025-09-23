@@ -9,33 +9,33 @@ const AssistantPanel = ( { children } ) => {
 
 	return (
 		<section>
-			<div className="shadow sm:rounded-md bg-white min-h-[500px] overflow-hidden">
-				<div className="flex justify-between items-center py-4 px-8 sm:px-8 sm:py-4">
-					<div className="flex items-center space-x-3">
-						<h2 className="text-gray-900 font-medium text-lg">
+			<div className="wedocs-shadow sm:wedocs-rounded-md wedocs-bg-white wedocs-min-h-[500px] wedocs-overflow-hidden">
+				<div className="wedocs-flex wedocs-justify-between wedocs-items-center wedocs-py-4 wedocs-px-8 sm:wedocs-px-8 sm:wedocs-py-4">
+					<div className="wedocs-flex wedocs-items-center wedocs-space-x-3">
+						<h2 className="wedocs-text-gray-900 wedocs-font-medium wedocs-text-lg">
 							{ __( 'Assistant Widget', 'wedocs' ) }
 						</h2>
 					</div>
-					<div className="flex items-center">
+					<div className="wedocs-flex wedocs-items-center">
 						<DummySwitch setChange={ setEnabled } isEnabled={ true } />
 					</div>
 				</div>
-				<hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200" />
+				<hr className="wedocs-h-px !wedocs-bg-gray-200 wedocs-border-0 dark:!wedocs-bg-gray-200" />
 
 				{/* Render panels body. */}
 				<div
-					className={ `pt-6 pb-20 px-8 relative` }
+					className={ `wedocs-pt-6 wedocs-pb-20 wedocs-px-8 wedocs-relative` }
 					onMouseEnter={ () => setShowOverlay( true ) }
 					onMouseLeave={ () => setShowOverlay( false ) }
 				>
 					{ children }
 					{ !enabled && (
 						<div
-							className="backdrop absolute z-0 top-0 left-0 w-full h-full"
+							className="backdrop wedocs-absolute wedocs-z-0 wedocs-top-0 wedocs-left-0 wedocs-w-full wedocs-h-full"
 							style={ { backgroundColor: 'white', opacity: 0.5 } }
 						/>
 					) }
-					<Overlay classes={ `${ showOverlay ? 'flex items-center justify-center mt-[70px]' : 'hidden' }` } />
+					<Overlay classes={ `${ showOverlay ? 'wedocs-flex wedocs-items-center wedocs-justify-center wedocs-mt-[70px]' : 'wedocs-hidden' }` } />
 				</div>
 			</div>
 		</section>

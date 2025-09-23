@@ -4,19 +4,19 @@ import DummySwitch from '../DummySwitch';
 const ExploreEnable = () => {
 	return (
 		<>
-			<div className="grid grid-cols-4 gap-5">
-				<div className="col-span-4">
-					<div className="settings-content flex items-center justify-between">
-						<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+			<div className="wedocs-grid wedocs-grid-cols-4 wedocs-gap-5">
+				<div className="wedocs-col-span-4">
+					<div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
+						<div className="settings-field-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
 							<label
-								className="block text-sm font-medium text-gray-600"
+								className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
 								id="headlessui-listbox-label-15"
 								data-headlessui-state="open"
 							>
 								{ __( 'Enable Explore Tab', 'wedocs' ) }
 							</label>
 							<div
-								className="tooltip cursor-pointer ml-2"
+								className="tooltip wedocs-cursor-pointer wedocs-ml-2"
 								data-tip={ __(
 									'Explore tab helps keep all the crucial and indispensable information at the forefront, making it easier for the readers to access and utilize',
 									'wedocs'
@@ -38,15 +38,15 @@ const ExploreEnable = () => {
 								</svg>
 							</div>
 						</div>
-						<div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
-							<div className="relative flex items-center">
+						<div className="settings-field wedocs-w-full wedocs-max-w-[490px] wedocs-mt-1 wedocs-ml-auto wedocs-flex-2">
+							<div className="wedocs-relative wedocs-flex wedocs-items-center">
 								<DummySwitch isEnabled={ true } />
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200 my-5" />
+			<hr className="wedocs-h-px !wedocs-bg-gray-200 wedocs-border-0 dark:!wedocs-bg-gray-200 wedocs-my-5" />
 		</>
 	);
 }

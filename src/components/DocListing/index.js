@@ -160,7 +160,7 @@ const ListingPage = () => {
         <div className="docs-section-listing wrap py-5">
           { ! loading && showActions && need_upgrade && <Upgrade status={ status } /> }
 
-          <div className="flex items-center justify-between mb-7">
+          <div className="wedocs-flex wedocs-items-center wedocs-justify-between wedocs-mb-7">
             <BackToDocsPage />
             <SearchFilter
               listing={ true }
@@ -199,15 +199,15 @@ const ListingPage = () => {
               </DraggableDocs>
             ) : (
               <div className="space-y-4 mb-3">
-                <div className="bg-white shadow sm:rounded-md">
-                  <div className="flex items-center cursor-pointer text-base px-4 py-5 sm:px-6">
+                <div className="wedocs-bg-white wedocs-shadow sm:wedocs-rounded-md">
+                  <div className="wedocs-flex wedocs-items-center wedocs-cursor-pointer wedocs-text-base wedocs-px-4 wedocs-py-5 sm:wedocs-px-6">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
                       stroke="currentColor"
-                      className="w-6 h-6 mr-2"
+                      className="wedocs-w-6 wedocs-h-6 wedocs-mr-2"
                     >
                       <path
                         strokeLinecap="round"

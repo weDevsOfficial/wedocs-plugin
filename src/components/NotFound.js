@@ -2,12 +2,12 @@ import { __ } from '@wordpress/i18n';
 
 const NotFound = () => {
   return (
-    <div className="w-full mt-7">
-      <div className="shadow sm:overflow-hidden sm:rounded-md">
-        <div className="space-y-6 h-[80vh] flex justify-center align-center bg-white px-4 py-5 sm:p-6">
-          <div className="w-[600px] text-center self-center mt-1 px-6 py-12">
-            <h2 className="mb-6">
-              <svg xmlns='http://www.w3.org/2000/svg' width='252' height='95' fill='none' className="mx-auto mb-6">
+    <div className="wedocs-w-full wedocs-mt-7">
+      <div className="wedocs-shadow sm:wedocs-overflow-hidden sm:wedocs-rounded-md">
+        <div className="wedocs-space-y-6 wedocs-h-[80vh] wedocs-flex wedocs-justify-center wedocs-align-center wedocs-bg-white wedocs-px-4 wedocs-py-5 sm:wedocs-p-6">
+          <div className="wedocs-w-[600px] wedocs-text-center wedocs-self-center wedocs-mt-1 wedocs-px-6 wedocs-py-12">
+            <h2 className="wedocs-mb-6">
+              <svg xmlns='http://www.w3.org/2000/svg' width='252' height='95' fill='none' className="wedocs-mx-auto wedocs-mb-6">
                 <path fillRule='evenodd'
                   d='M89.147 94.491h44.489c19.042-.023 34.469-15.284 34.492-34.115V34.63C168.105 15.8 152.674.542 133.636.516h-9.997C104.597.538 89.169 15.8 89.147 34.63v59.86zm44.489-9.419H98.671V34.634c.019-13.63 11.187-24.677 24.968-24.692h9.997c13.781.019 24.948 11.062 24.967 24.692V60.38c-.015 13.63-11.183 24.673-24.967 24.692z'
                   fill='#4f46e5'
@@ -21,10 +21,10 @@ const NotFound = () => {
                   fill='#4f46e5'
                 />
               </svg>
-              <p className="text-[#3B3F4A] font-bold text-2xl mx-auto mb-2">
-                { __( 'There’s Nothing here...', 'wedocs' ) }
+              <p className="wedocs-text-[#3B3F4A] wedocs-font-bold wedocs-text-2xl wedocs-mx-auto wedocs-mb-2">
+                { __( "There's Nothing here...", 'wedocs' ) }
               </p>
-              <p className="text-[#666B79] text-lg mx-auto">
+              <p className="wedocs-text-[#666B79] wedocs-text-lg wedocs-mx-auto">
                 { __( '...maybe the page you’re looking for is not found or never existed.', 'wedocs' ) }
               </p>
             </h2>

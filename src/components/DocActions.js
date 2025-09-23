@@ -51,13 +51,13 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
         onMouseLeave={ () => setShowActions( false ) }
       >
         <span
-          className="dashicons dashicons-ellipsis d-block cursor-pointer text-sm rotate-90 text-gray-500"
+          className="dashicons dashicons-ellipsis d-block wedocs-cursor-pointer wedocs-text-sm wedocs-rotate-90 wedocs-text-gray-500"
         ></span>
         <div
           id="action-menus"
           className={ `${
             type === 'article' ? articleActionMenuWidth : documentationActionMenuWidth
-          } ${ showActions ? 'block' : 'hidden' } z-40 bg-white border border-[#DBDBDB] absolute shadow -right-3.5 py-1 rounded-md mt-2.5 hover:block after:content-[''] before:content-[''] after:absolute before:absolute after:w-[13px] before:w-full after:h-[13px] before:h-2.5 after:top-[-7px] before:-top-2.5 after:right-4 after:z-[-1] after:bg-white after:border after:border-[#DBDBDB] after:!rotate-45 after:border-r-0 after:border-b-0` }
+          } ${ showActions ? 'wedocs-block' : 'wedocs-hidden' } wedocs-z-40 wedocs-bg-white wedocs-border wedocs-border-[#DBDBDB] wedocs-absolute wedocs-shadow -wedocs-right-3.5 wedocs-py-1 wedocs-rounded-md wedocs-mt-2.5 hover:wedocs-block after:content-[''] before:content-[''] after:wedocs-absolute before:wedocs-absolute after:wedocs-w-[13px] before:wedocs-w-full after:wedocs-h-[13px] before:wedocs-h-2.5 after:wedocs-top-[-7px] before:-wedocs-top-2.5 after:wedocs-right-4 after:wedocs-z-[-1] after:wedocs-bg-white after:wedocs-border after:wedocs-border-[#DBDBDB] after:!wedocs-rotate-45 after:wedocs-border-r-0 after:wedocs-border-b-0` }
         >
           { isAdmin && type === 'article' && (
             <QuickEditModal
@@ -65,7 +65,7 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
               sections={ sections }
               defaultSection={ section }
               setShowArticles={ setShowArticles }
-              className={ `group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none w-full` }
+              className={ `wedocs-group wedocs-flex wedocs-items-center wedocs-py-2 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-gray-700 hover:wedocs-bg-indigo-700 hover:wedocs-text-white !wedocs-shadow-none wedocs-w-full` }
             >
               { __( 'Quick Edit', 'wedocs' ) }
             </QuickEditModal>
@@ -75,7 +75,7 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           <a
             href={ `${ weDocsAdminVars.adminUrl }post.php?post=${ doc?.id }&action=edit` }
             target="_blank"
-            className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
+            className="wedocs-group wedocs-flex wedocs-items-center wedocs-py-2 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-gray-700 hover:wedocs-bg-indigo-700 hover:wedocs-text-white !wedocs-shadow-none"
             rel="noreferrer"
           >
             { __( 'Edit', 'wedocs' ) }
@@ -85,14 +85,14 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
             target="_blank"
             href={ doc?.link }
             rel="noreferrer"
-            className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
+            className="wedocs-group wedocs-flex wedocs-items-center wedocs-py-2 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-gray-700 hover:wedocs-bg-indigo-700 hover:wedocs-text-white !wedocs-shadow-none"
           >
             { __( 'View', 'wedocs' ) }
           </a>
 
           <span
             onClick={ updateDocStatus }
-            className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
+            className="wedocs-group wedocs-flex wedocs-items-center wedocs-py-2 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-gray-700 hover:wedocs-bg-indigo-700 hover:wedocs-text-white !wedocs-shadow-none"
           >
             { doc?.status === 'draft' ? __( 'Publish Now', 'wedocs' ) : __( 'Switch to Draft', 'wedocs' ) }
           </span>
@@ -109,7 +109,7 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           <RestictionModal
             type={ type }
             docId={ doc?.id }
-            classes="w-full group flex items-center py-2 px-4 text-sm font-medium text-red-500 hover:bg-indigo-700 hover:text-white"
+            classes="wedocs-w-full wedocs-group wedocs-flex wedocs-items-center wedocs-py-2 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-red-500 hover:wedocs-bg-indigo-700 hover:wedocs-text-white"
           >
             { __( 'Delete', 'wedocs' ) }
           </RestictionModal>

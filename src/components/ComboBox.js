@@ -81,7 +81,7 @@ const ComboBox = ( {
       value={ selectedSection }
       onChange={ setSelectedSection }
     >
-      <div className="relative mb-5">
+      <div className="wedocs-relative wedocs-mb-5">
         <Combobox.Input
           placeholder={
             type && type === 'article' ? __( 'Type an article name', 'wedocs' ) :
@@ -90,30 +90,30 @@ const ComboBox = ( {
           required
           className={ `${
             isFormError
-              ? '!border-red-500 focus:ring-red-500 focus:border-red-500'
-              : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500'
-          } h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white` }
+              ? '!wedocs-border-red-500 focus:wedocs-ring-red-500 focus:wedocs-border-red-500'
+              : '!wedocs-border-gray-300 focus:wedocs-ring-blue-500 focus:wedocs-border-blue-500'
+          } wedocs-h-11 wedocs-bg-gray-50 wedocs-text-gray-900 wedocs-text-base !wedocs-rounded-md wedocs-block wedocs-w-full !wedocs-py-2 !wedocs-px-3 dark:wedocs-bg-gray-600 dark:wedocs-border-gray-500 dark:wedocs-placeholder-gray-400 dark:wedocs-text-white` }
           onChange={ handleSectionTitle }
           displayValue={ ( title ) => he.decode( title ) }
         />
 
         { isFormError ? (
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+          <div className="wedocs-pointer-events-none wedocs-absolute wedocs-inset-y-0 wedocs-right-0 wedocs-flex wedocs-items-center wedocs-pr-3">
             <ExclamationCircleIcon
-              className="h-5 w-5 text-red-500"
+              className="wedocs-h-5 wedocs-w-5 wedocs-text-red-500"
               aria-hidden="true"
             />
           </div>
         ) : (
-          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+          <Combobox.Button className="wedocs-absolute wedocs-inset-y-0 wedocs-right-0 wedocs-flex wedocs-items-center wedocs-rounded-r-md wedocs-px-2 focus:wedocs-outline-none">
             <ChevronUpDownIcon
-              className="h-5 w-5 text-gray-400"
+              className="wedocs-h-5 wedocs-w-5 wedocs-text-gray-400"
               aria-hidden="true"
             />
           </Combobox.Button>
         ) }
 
-        <Combobox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white text-base text-left shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+        <Combobox.Options className="wedocs-absolute wedocs-z-50 wedocs-mt-1 wedocs-max-h-60 wedocs-w-full wedocs-overflow-auto wedocs-rounded-md wedocs-bg-white wedocs-text-base wedocs-text-left wedocs-shadow-lg wedocs-ring-1 wedocs-ring-black wedocs-ring-opacity-5 focus:wedocs-outline-none sm:wedocs-text-sm">
           { filteredSections &&
             filteredSections.length > 0 &&
             filteredSections.map( ( section ) => (
@@ -122,8 +122,8 @@ const ComboBox = ( {
                 value={ section.name }
                 className={ ( { active } ) =>
                   classNames(
-                    'relative cursor-pointer select-none py-2.5 pl-3 pr-9 mb-0',
-                    active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                    'wedocs-relative wedocs-cursor-pointer wedocs-select-none wedocs-py-2.5 wedocs-pl-3 wedocs-pr-9 wedocs-mb-0',
+                    active ? 'wedocs-bg-indigo-600 wedocs-text-white' : 'wedocs-text-gray-900'
                   )
                 }
                 onClick={ () => handleOptionSet( section.id ) }
@@ -132,8 +132,8 @@ const ComboBox = ( {
                   <>
                     <span
                       className={ classNames(
-                        'block truncate',
-                        selected && 'font-semibold'
+                        'wedocs-block wedocs-truncate',
+                        selected && 'wedocs-font-semibold'
                       ) }
                       dangerouslySetInnerHTML={ {
                         __html: section?.name,
@@ -143,11 +143,11 @@ const ComboBox = ( {
                     { selected && (
                       <span
                         className={ classNames(
-                          'absolute inset-y-0 right-0 flex items-center pr-4',
-                          active ? 'text-white' : 'text-indigo-600'
+                          'wedocs-absolute wedocs-inset-y-0 wedocs-right-0 wedocs-flex wedocs-items-center wedocs-pr-4',
+                          active ? 'wedocs-text-white' : 'wedocs-text-indigo-600'
                         ) }
                       >
-                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                        <CheckIcon className="wedocs-h-5 wedocs-w-5" aria-hidden="true" />
                       </span>
                     ) }
                   </>
@@ -156,13 +156,13 @@ const ComboBox = ( {
             ) ) }
 
           <Combobox.Option
-            className="flex items-center bg-gray-100 relative cursor-pointer text-base text-indigo-600 mb-0 select-none py-2 pl-3 pr-9"
+            className="wedocs-flex wedocs-items-center wedocs-bg-gray-100 wedocs-relative wedocs-cursor-pointer wedocs-text-base wedocs-text-indigo-600 wedocs-mb-0 wedocs-select-none wedocs-py-2 wedocs-pl-3 wedocs-pr-9"
             value={ newSection?.title?.raw }
             onClick={ handleArticleSection }
           >
             { sectionTitle ? (
               <>
-                <span className="dashicons dashicons-plus text-xs mt-1.5"></span>
+                <span className="dashicons dashicons-plus wedocs-text-xs wedocs-mt-1.5"></span>
                 { sectionTitle }
               </>
             ) : (

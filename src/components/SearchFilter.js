@@ -31,17 +31,17 @@ const SearchFilter = ( { handleChange, searchValue, listing } ) => {
       <span
         id={ `HW_badge_container` }
         onClick={ openHeadwayWidget }
-        className={ `flex items-center justify-center tooltip ml-auto` }
+        className={ `wedocs-flex wedocs-items-center wedocs-justify-center tooltip wedocs-ml-auto` }
       ></span>
-      <div className={ `flex items-center space-x-4 text-xl` }>
+      <div className={ `wedocs-flex wedocs-items-center wedocs-space-x-4 wedocs-text-xl` }>
         <a
           target={ `_blank` }
           href={ `https://wedocs.canny.io/ideas` }
-          className={ `hover:!text-indigo-800 focus:shadow-none` }
+          className={ `hover:!wedocs-text-indigo-800 focus:wedocs-shadow-none` }
         >
           { __( '💡 Feedback', 'wedocs' ) }
         </a>
-        <div className="relative rounded-md shadow-sm ml-auto">
+        <div className="wedocs-relative wedocs-rounded-md wedocs-shadow-sm wedocs-ml-auto">
           <input
             type="text"
             placeholder={ sprintf(
@@ -50,19 +50,19 @@ const SearchFilter = ( { handleChange, searchValue, listing } ) => {
             ) }
             value={ searchValue }
             onChange={ handleChange }
-            className="w-80 h-10 text-sm focus:!border-indigo-300 !pl-4 !rounded-md !border-gray-300"
+            className="wedocs-w-80 wedocs-h-10 wedocs-text-sm focus:!wedocs-border-indigo-300 !wedocs-pl-4 !wedocs-rounded-md !wedocs-border-gray-300"
           />
           { searchValue && searchValue.length > 0 && (
             <div
               onClick={ ( e ) => handleChange( e, true ) }
-              className="cursor-pointer absolute inset-y-0 right-9 flex items-center pr-3"
+              className="wedocs-cursor-pointer wedocs-absolute wedocs-inset-y-0 wedocs-right-9 wedocs-flex wedocs-items-center wedocs-pr-3"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={ 1.5 }
-                className="w-5 h-5 stroke-[#6b7280]"
+                className="wedocs-w-5 wedocs-h-5 wedocs-stroke-[#6b7280]"
               >
                 <path
                   strokeLinecap="round"
@@ -72,13 +72,13 @@ const SearchFilter = ( { handleChange, searchValue, listing } ) => {
               </svg>
             </div>
           ) }
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+          <div className="wedocs-pointer-events-none wedocs-absolute wedocs-inset-y-0 wedocs-right-0 wedocs-flex wedocs-items-center wedocs-pr-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={ 1.5 }
-              className="w-6 h-6 stroke-[#6b7280]"
+              className="wedocs-w-6 wedocs-h-6 wedocs-stroke-[#6b7280]"
             >
               <path
                 strokeLinecap="round"

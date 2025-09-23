@@ -56,12 +56,12 @@ const SelectBox = ( { name, setSettings, settingsData, settingsPanel } ) => {
     <Fragment>
       { selectedPage && Object.keys( selectedPage ).length > 0 ? (
         <Listbox value={ selectedPage } onChange={ setSelectedPage }>
-          <div className="relative mt-1">
-            <Listbox.Button className="relative w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-              <span className="block truncate">{ selectedPage?.name }</span>
-              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+          <div className="wedocs-relative wedocs-mt-1">
+            <Listbox.Button className="wedocs-relative wedocs-w-full wedocs-cursor-pointer wedocs-rounded-md wedocs-border wedocs-border-gray-300 wedocs-bg-white wedocs-py-2 wedocs-pl-3 wedocs-pr-10 wedocs-text-left wedocs-shadow-sm focus:wedocs-border-indigo-500 focus:wedocs-outline-none focus:wedocs-ring-1 focus:wedocs-ring-indigo-500 sm:wedocs-text-sm">
+              <span className="wedocs-block wedocs-truncate">{ selectedPage?.name }</span>
+              <span className="wedocs-pointer-events-none wedocs-absolute wedocs-inset-y-0 wedocs-right-0 wedocs-flex wedocs-items-center wedocs-pr-2">
                 <ChevronDownIcon
-                  className="h-5 w-5 text-gray-400"
+                  className="wedocs-h-5 wedocs-w-5 wedocs-text-gray-400"
                   aria-hidden="true"
                 />
               </span>
@@ -72,13 +72,13 @@ const SelectBox = ( { name, setSettings, settingsData, settingsPanel } ) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="wedocs-absolute wedocs-z-10 wedocs-mt-1 wedocs-max-h-60 wedocs-w-full wedocs-overflow-auto wedocs-rounded-md wedocs-bg-white wedocs-py-1 wedocs-text-base wedocs-shadow-lg wedocs-ring-1 wedocs-ring-black wedocs-ring-opacity-5 focus:wedocs-outline-none sm:wedocs-text-sm">
                 { pageOptions?.map( ( page ) => (
                   <Listbox.Option
                     key={ page?.id }
                     className={ ( { active } ) =>
-                      `cursor-pointer relative select-none py-2 pl-3 pr-9 ${
-                        active ? 'text-white bg-indigo-600' : 'text-gray-900'
+                      `wedocs-cursor-pointer wedocs-relative wedocs-select-none wedocs-py-2 wedocs-pl-3 wedocs-pr-9 ${
+                        active ? 'wedocs-text-white wedocs-bg-indigo-600' : 'wedocs-text-gray-900'
                       }`
                     }
                     value={ page }
@@ -86,19 +86,19 @@ const SelectBox = ( { name, setSettings, settingsData, settingsPanel } ) => {
                     { ( { selected, active } ) => (
                       <>
                         <span
-                          className={ `block truncate ${
-                            selected ? 'font-semibold' : 'font-normal'
+                          className={ `wedocs-block wedocs-truncate ${
+                            selected ? 'wedocs-font-semibold' : 'wedocs-font-normal'
                           }` }
                         >
                           { page?.name }
                         </span>
                         { selected && (
                           <span
-                            className={ `absolute inset-y-0 right-0 flex items-center pr-4 ${
-                              active ? 'text-white' : 'text-indigo-600'
+                            className={ `wedocs-absolute wedocs-inset-y-0 wedocs-right-0 wedocs-flex wedocs-items-center wedocs-pr-4 ${
+                              active ? 'wedocs-text-white' : 'wedocs-text-indigo-600'
                             }` }
                           >
-                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                            <CheckIcon className="wedocs-h-5 wedocs-w-5" aria-hidden="true" />
                           </span>
                         ) }
                       </>
@@ -110,9 +110,9 @@ const SelectBox = ( { name, setSettings, settingsData, settingsPanel } ) => {
           </div>
         </Listbox>
       ) : (
-        <div className="relative mt-1">
+        <div className="wedocs-relative wedocs-mt-1">
           <input
-            className="relative !w-full cursor-pointer !rounded-md border !border-gray-300 bg-white !py-2 !pl-3 !pr-10 text-left shadow-sm sm:text-sm"
+            className="wedocs-relative !wedocs-w-full wedocs-cursor-pointer !wedocs-rounded-md wedocs-border !wedocs-border-gray-300 wedocs-bg-white !wedocs-py-2 !wedocs-pl-3 !wedocs-pr-10 wedocs-text-left wedocs-shadow-sm sm:wedocs-text-sm"
             placeholder={ __( 'Page not found', 'wedocs' ) }
             disabled
           />

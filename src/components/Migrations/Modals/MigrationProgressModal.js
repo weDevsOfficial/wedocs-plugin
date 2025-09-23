@@ -16,7 +16,7 @@ const MigrationProgressModal = ( {
         >
             <Dialog
                 as="div"
-                className="wedocs-document relative z-[9999]"
+                className="wedocs-document wedocs-relative wedocs-z-[9999]"
                 onClose={ () => setOpenProgressModal( false ) }
             >
                 <Transition.Child
@@ -28,11 +28,11 @@ const MigrationProgressModal = ( {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="fixed inset-0 bg-black bg-opacity-25 z-[50]" />
+                    <div className="wedocs-fixed wedocs-inset-0 wedocs-bg-black wedocs-bg-opacity-25 wedocs-z-[50]" />
                 </Transition.Child>
 
-                <div className="fixed inset-0 overflow-y-auto z-[100]">
-                    <div className="flex min-h-full items-center justify-center p-4">
+                <div className="wedocs-fixed wedocs-inset-0 wedocs-overflow-y-auto wedocs-z-[100]">
+                    <div className="wedocs-flex wedocs-min-h-full wedocs-items-center wedocs-justify-center wedocs-p-4">
                         <Transition.Child
                             as={ Fragment }
                             enter="ease-out duration-300"
@@ -42,16 +42,16 @@ const MigrationProgressModal = ( {
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-[900px] transform overflow-hidden rounded-2xl bg-white align-middle shadow-xl transition-all">
-                                <div className="sm:flex sm:items-start sm:justify-center py-12 px-9">
-                                    <div className="mt-3 text-center sm:mt-0 sm:text-left">
+                            <Dialog.Panel className="wedocs-w-[900px] wedocs-transform wedocs-overflow-hidden wedocs-rounded-2xl wedocs-bg-white wedocs-align-middle wedocs-shadow-xl wedocs-transition-all">
+                                <div className="sm:wedocs-flex sm:wedocs-items-start sm:wedocs-justify-center wedocs-py-12 wedocs-px-9">
+                                    <div className="wedocs-mt-3 wedocs-text-center sm:wedocs-mt-0 sm:wedocs-text-left">
                                         <Dialog.Title
                                             as="h3"
-                                            className="text-2xl text-center font-bold leading-7 text-gray-900 mb-4 text-[#111827]"
+                                            className="wedocs-text-2xl wedocs-text-center wedocs-font-bold wedocs-leading-7 wedocs-text-gray-900 wedocs-mb-4 wedocs-text-[#111827]"
                                         >
                                             { __( 'Migrating Docs...', 'wedocs' ) }
                                         </Dialog.Title>
-                                        <p className="text-gray-500 text-center text-base leading-6">
+                                        <p className="wedocs-text-gray-500 wedocs-text-center wedocs-text-base wedocs-leading-6">
                                             { __(
                                                 'Migrating existing docs from BetterDocs to weDocs',
                                                 'wedocs'
@@ -60,9 +60,9 @@ const MigrationProgressModal = ( {
                                     </div>
                                 </div>
 
-                                <div className={ `progressing-body px-16` }>
+                                <div className={ `progressing-body wedocs-px-16` }>
                                     {/* Render migrating svg. */}
-                                    <svg width='280' className='mx-auto mb-6' height='157' fill='none'>
+                                    <svg width='280' className='wedocs-mx-auto wedocs-mb-6' height='157' fill='none'>
                                         <path
                                             fill='url(#A)'
                                             fillOpacity='.1'
@@ -145,11 +145,11 @@ const MigrationProgressModal = ( {
                                     <ProgressBar progress={ migrationProgress } />
                                 </div>
 
-                                <hr className={ `mt-14 w-full` } />
-                                <div className="space-x-3.5 text-center px-[70px] mb-5 sm:flex sm:items-start sm:justify-end">
-                                    <div className="mt-5 space-x-3.5 text-center">
+                                <hr className={ `wedocs-mt-14 wedocs-w-full` } />
+                                <div className="wedocs-space-x-3.5 wedocs-text-center wedocs-px-[70px] wedocs-mb-5 sm:wedocs-flex sm:wedocs-items-start sm:wedocs-justify-end">
+                                    <div className="wedocs-mt-5 wedocs-space-x-3.5 wedocs-text-center">
                                         <button
-                                            className="bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md"
+                                            className="wedocs-bg-white hover:wedocs-bg-gray-200 wedocs-text-gray-700 wedocs-font-medium wedocs-text-base wedocs-py-2 wedocs-px-5 wedocs-border wedocs-border-gray-300 wedocs-rounded-md"
                                             onClick={ () => setOpenProgressModal( false ) }
                                         >
                                             { __( 'Cancel', 'wedocs' ) }

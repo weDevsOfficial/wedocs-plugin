@@ -34,11 +34,11 @@ const ExploreSettings = () => {
 	];
 
 	return (
-		<div className="explore-settings relative">
+		<div className="explore-settings wedocs-relative">
 			<RadioGroup
 				value={ exploreBy[ 1 ] }
 			>
-				<div className="my-5 grid grid-cols-3 !gap-6 sm:grid-cols-3 sm:gap-x-4">
+				<div className="wedocs-my-5 wedocs-grid wedocs-grid-cols-3 !wedocs-gap-6 sm:wedocs-grid-cols-3 sm:wedocs-gap-x-4">
 					{ exploreBy.map( ( explore, index ) => (
 						<RadioGroup.Option
 							key={ index }
@@ -46,38 +46,38 @@ const ExploreSettings = () => {
 							className={ ( { checked, active } ) =>
 								classNames(
 									checked
-										? 'border-transparent'
-										: 'border-gray-300',
+										? 'wedocs-border-transparent'
+										: 'wedocs-border-gray-300',
 									active
-										? 'border-indigo-600 ring-2 ring-indigo-600'
+										? 'wedocs-border-indigo-600 wedocs-ring-2 wedocs-ring-indigo-600'
 										: '',
-									'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none'
+									'wedocs-relative wedocs-flex wedocs-cursor-pointer wedocs-rounded-lg wedocs-border wedocs-bg-white wedocs-p-4 wedocs-shadow-sm focus:wedocs-outline-none'
 								)
 							}
 						>
-							<span className="flex">
-								<span className="flex flex-col">
+							<span className="wedocs-flex">
+								<span className="wedocs-flex wedocs-flex-col">
 									<RadioGroup.Label
 										as="span"
-										className="flex items-center text-sm font-medium text-gray-600 mb-0.5"
+										className="wedocs-flex wedocs-items-center wedocs-text-sm wedocs-font-medium wedocs-text-gray-600 wedocs-mb-0.5"
 									>
 										{ explore?.title }
 										<div
 											className={ classNames(
 												exploreBy[ 1 ]?.field !==
 												explore?.field
-													? 'border border-gray-400'
+													? 'wedocs-border wedocs-border-gray-400'
 													: '',
-												'ml-auto rounded-full w-4 h-4'
+												'wedocs-ml-auto wedocs-rounded-full wedocs-w-4 wedocs-h-4'
 											) }
 										>
 											<CheckCircleIcon
 												className={ classNames(
 													exploreBy[ 1 ]?.field !==
 													explore?.field
-														? 'invisible'
-														: '-mt-0.5',
-													'h-5 w-5 text-indigo-600'
+														? 'wedocs-invisible'
+														: 'wedocs--mt-0.5',
+													'wedocs-h-5 wedocs-w-5 wedocs-text-indigo-600'
 												) }
 												aria-hidden="true"
 											/>
@@ -85,7 +85,7 @@ const ExploreSettings = () => {
 									</RadioGroup.Label>
 									<RadioGroup.Description
 										as="span"
-										className="mt-1 flex items-center font-medium text-xs !leading-5 text-[#6B7280]"
+										className="wedocs-mt-1 wedocs-flex wedocs-items-center wedocs-font-medium wedocs-text-xs !wedocs-leading-5 wedocs-text-[#6B7280]"
 									>
 										{ explore?.description }
 									</RadioGroup.Description>
@@ -93,13 +93,13 @@ const ExploreSettings = () => {
 										className={ classNames(
 											exploreBy[ 1 ]?.id ===
 											explore?.id
-												? 'border'
-												: 'border-2',
+												? 'wedocs-border'
+												: 'wedocs-border-2',
 											exploreBy[ 1 ]?.id ===
 											explore?.id
-												? 'border-indigo-600'
-												: 'border-transparent',
-											'pointer-events-none absolute -inset-px rounded-lg'
+												? 'wedocs-border-indigo-600'
+												: 'wedocs-border-transparent',
+											'wedocs-pointer-events-none wedocs-absolute wedocs--inset-px wedocs-rounded-lg'
 										) }
 										aria-hidden="true"
 									/>
@@ -110,12 +110,12 @@ const ExploreSettings = () => {
 				</div>
 			</RadioGroup>
 			{ exploreBy[ 1 ]?.field === 'selected' && (
-					<div className="grid grid-cols-4 gap-5 my-6">
-						<div className="col-span-4">
-							<div className="settings-content flex items-center justify-between">
-								<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+					<div className="wedocs-grid wedocs-grid-cols-4 wedocs-gap-5 wedocs-my-6">
+						<div className="wedocs-col-span-4">
+							<div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
+								<div className="settings-field-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
 									<label
-										className="block text-sm font-medium text-gray-600"
+										className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
 										id="headlessui-listbox-label-15"
 										data-headlessui-state="open"
 									>
@@ -125,7 +125,7 @@ const ExploreSettings = () => {
 										) }
 									</label>
 									<div
-										className="tooltip cursor-pointer ml-2"
+										className="tooltip wedocs-cursor-pointer wedocs-ml-2"
 										data-tip={ __(
 											'Handpick content to showcase in the explore tab',
 											'wedocs'
@@ -147,20 +147,20 @@ const ExploreSettings = () => {
 										</svg>
 									</div>
 								</div>
-								<div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+								<div className="settings-field wedocs-w-full wedocs-max-w-[490px] wedocs-ml-auto flex-2">
 									<div id="select-articles" className="multiSelectBox">
-										<div className="relative">
-											<button className="w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-                                                    <span className="block multiSelectBox truncate">
+										<div className="wedocs-relative">
+											<button className="wedocs-w-full wedocs-cursor-pointer wedocs-rounded-md wedocs-border wedocs-border-gray-300 wedocs-bg-white wedocs-py-2 wedocs-pl-3 wedocs-pr-10 wedocs-text-left wedocs-shadow-sm focus:wedocs-border-indigo-500 focus:wedocs-outline-none focus:wedocs-ring-1 focus:wedocs-ring-indigo-500 sm:wedocs-text-sm">
+                                                    <span className="wedocs-block multiSelectBox wedocs-truncate">
                                                         { __( 'Select Articles', 'wedocs' ) }
                                                     </span>
-												<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+												<span className="wedocs-pointer-events-none wedocs-absolute wedocs-inset-y-0 wedocs-right-0 wedocs-flex wedocs-items-center wedocs-pr-2">
                                                         <svg
 																													xmlns="http://www.w3.org/2000/svg"
 																													viewBox="0 0 20 20"
 																													fill="currentColor"
 																													aria-hidden="true"
-																													className="h-5 w-5 text-gray-400"
+																													className="wedocs-h-5 wedocs-w-5 wedocs-text-gray-400"
 																												>
                                                             <path
 																															d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -175,50 +175,50 @@ const ExploreSettings = () => {
 							</div>
 							{ articles &&
 								articles?.length > 0 && (
-									<div className="selected-articles rounded-md mt-6 max-w-[490px] ml-auto border border-gray-300 bg-white text-left shadow-sm">
-										<div className="w-full py-2 pl-6 pr-10 bg-gray-200 text-xs font-medium text-gray-500 tracking-wider">
+									<div className="selected-articles wedocs-rounded-md wedocs-mt-6 wedocs-max-w-[490px] wedocs-ml-auto wedocs-border wedocs-border-gray-300 wedocs-bg-white wedocs-text-left wedocs-shadow-sm">
+										<div className="wedocs-w-full wedocs-py-2 wedocs-pl-6 wedocs-pr-10 wedocs-bg-gray-200 wedocs-text-xs wedocs-font-medium wedocs-text-gray-500 wedocs-tracking-wider">
 											{ __(
 												'Selected Articles',
 												'wedocs'
 											) }
 										</div>
-										<div className="relative px-3">
-											<ul className="z-10 my-1.5">
+										<div className="wedocs-relative wedocs-px-3">
+											<ul className="wedocs-z-10 wedocs-my-1.5">
 												{ articles?.map(
 													( article, index ) => (
 														<li
 															key={
 																article?.id
 															}
-															className={ `${ index === 1 && 'rounded-md border border-[#E5E7EB] py-1' } cursor-pointer text-gray-900 select-none !mb-0.5` }
+															className={ `${ index === 1 && 'wedocs-rounded-md wedocs-border wedocs-border-[#E5E7EB] wedocs-py-1' } wedocs-cursor-pointer wedocs-text-gray-900 wedocs-select-none !wedocs-mb-0.5` }
 														>
 															<nav
-																className={ `${ index === 1 ? 'block' : 'hidden' } flex px-3.5 pt-2.5` }
+																className={ `${ index === 1 ? 'wedocs-block' : 'wedocs-hidden' } wedocs-flex wedocs-px-3.5 wedocs-pt-2.5` }
 																aria-label="Breadcrumb"
 															>
 																<ol
 																	role="list"
-																	className="flex items-center"
+																	className="wedocs-flex wedocs-items-center"
 																>
-																	<li className="m-0">
-																		<div className="flex items-center">
+																	<li className="wedocs-m-0">
+																		<div className="wedocs-flex wedocs-items-center">
 																			<a
 																				href='#'
-																				className="text-xs leading-5 text-gray-500 text-indigo-700 cursor-pointer"
+																				className="wedocs-text-xs wedocs-leading-5 wedocs-text-gray-500 wedocs-text-indigo-700 wedocs-cursor-pointer"
 																			>
 																				{ __( 'Parent Documentation', 'wedocs' ) }
 																			</a>
 																			<ChevronRightIcon
-																				className="h-3.5 w-3.5 mx-1 flex-shrink-0 text-gray-400"
+																				className="wedocs-h-3.5 wedocs-w-3.5 wedocs-mx-1 wedocs-flex-shrink-0 wedocs-text-gray-400"
 																				aria-hidden="true"
 																			/>
 																		</div>
 																	</li>
-																	<li className="m-0">
-																		<div className="flex items-center">
+																	<li className="wedocs-m-0">
+																		<div className="wedocs-flex wedocs-items-center">
 																			<a
 																				href='#'
-																				className="text-xs leading-5 text-gray-500 text-indigo-700 cursor-pointer"
+																				className="wedocs-text-xs wedocs-leading-5 wedocs-text-gray-500 wedocs-text-indigo-700 wedocs-cursor-pointer"
 																			>
 																				{ __( 'Section Documentation', 'wedocs' ) }
 																			</a>
@@ -228,14 +228,14 @@ const ExploreSettings = () => {
 															</nav>
 															<label
 																htmlFor="multi-select"
-																className="py-2.5 px-3.5 font-normal block truncate flex items-center w-full group text-sm leading-5 text-gray-500"
+																className="wedocs-py-2.5 wedocs-px-3.5 wedocs-font-normal wedocs-block wedocs-truncate wedocs-flex wedocs-items-center wedocs-w-full wedocs-group wedocs-text-sm wedocs-leading-5 wedocs-text-gray-500"
 															>
 																<svg
 																	xmlns="http://www.w3.org/2000/svg"
 																	width="14"
 																	height="18"
 																	fill="none"
-																	className="mr-2.5"
+																	className="wedocs-mr-2.5"
 																>
 																	<path
 																		d="M4.5 9h5m-5 3.333h5m1.667 4.167H2.833c-.92 0-1.667-.746-1.667-1.667V3.167c0-.92.746-1.667 1.667-1.667h4.655c.221 0 .433.088.589.244l4.512 4.512c.156.156.244.368.244.589v7.988c0 .921-.746 1.667-1.667 1.667z"
@@ -258,7 +258,7 @@ const ExploreSettings = () => {
 																			?.rendered
 																	) }
 																</a>
-																<button className={ `${ index === 1 ? 'flex items-center' : 'hidden' } cursor-pointer ml-auto bg-gray-100 rounded px-2 py-0.5 text-gray-500 text-sm` }>
+																<button className={ `${ index === 1 ? 'wedocs-flex wedocs-items-center' : 'wedocs-hidden' } wedocs-cursor-pointer wedocs-ml-auto wedocs-bg-gray-100 wedocs-rounded wedocs-px-2 wedocs-py-0.5 wedocs-text-gray-500 wedocs-text-sm` }>
 																	{ __(
 																		'Remove',
 																		'wedocs'
@@ -271,7 +271,7 @@ const ExploreSettings = () => {
 																			1.5
 																		}
 																		stroke="currentColor"
-																		className="w-3 h-3 ml-1"
+																		className="wedocs-w-3 wedocs-h-3 wedocs-ml-1"
 																	>
 																		<path
 																			strokeLinecap="round"

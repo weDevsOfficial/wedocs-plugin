@@ -22,17 +22,17 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
 
   if ( section ) {
     return (
-      <div key={ section?.id } className="flex items-center bg-white border-b border-[#D9D9D9] py-4">
-        <div className="flex items-center w-full group">
-          <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-            <div className="flex items-center">
-              <div className="flex items-center pr-5">
+      <div key={ section?.id } className="wedocs-flex wedocs-items-center wedocs-bg-white wedocs-border-b wedocs-border-[#D9D9D9] wedocs-py-4">
+        <div className="wedocs-flex wedocs-items-center wedocs-w-full group">
+          <div className="wedocs-min-w-0 wedocs-flex-1 sm:wedocs-flex sm:wedocs-items-center sm:wedocs-justify-between">
+            <div className="wedocs-flex wedocs-items-center">
+              <div className="wedocs-flex wedocs-items-center wedocs-pr-5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="21"
                   fill="none"
-                  className="w-auto pr-3.5"
+                  className="wedocs-w-auto wedocs-pr-3.5"
                 >
                   <path
                     strokeWidth="2"
@@ -53,17 +53,17 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                       `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit` :
                       `${ window.location.origin }/?p=${ article?.id }`
                   }
-                  className={ `${ ! Boolean( parseInt( isAdminRestrictedArticle ) ) ? 'mr-4' : '' } flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none` }
+                  className={ `${ ! Boolean( parseInt( isAdminRestrictedArticle ) ) ? 'wedocs-mr-4' : '' } wedocs-flex wedocs-items-center wedocs-flex-shrink-0 wedocs-text-base group wedocs-font-medium wedocs-text-gray-700 !wedocs-shadow-none` }
                   rel="noreferrer"
                 >
                   <div
-                    className="tooltip mr-6 cursor-pointer before:max-w-xl flex items-center flex-shrink-0 text-base font-medium text-gray-700 !shadow-none z-[9999]"
+                    className="tooltip wedocs-mr-6 wedocs-cursor-pointer before:wedocs-max-w-xl wedocs-flex wedocs-items-center wedocs-flex-shrink-0 wedocs-text-base wedocs-font-medium wedocs-text-gray-700 !wedocs-shadow-none wedocs-z-[9999]"
                     data-tip={ he.decode(
                       __( article?.title?.rendered, 'wedocs' )
                     ) }
                   >
                     <span
-                      className="hover:underline group-hover:text-black"
+                      className="hover:wedocs-underline group-hover:wedocs-text-black"
                       dangerouslySetInnerHTML={ {
                         __html: extractedTitle( article?.title?.rendered ),
                       } }
@@ -71,7 +71,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                   </div>
 
                   { article?.status === 'draft' && (
-                    <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5 mr-5` }>
+                    <div className={ `docs-draft-status wedocs-font-medium wedocs-text-sm wedocs-text-gray-800 wedocs-leading-5 wedocs-bg-[#E3E5E7] wedocs-rounded-[42px] wedocs-py-0.5 wedocs-px-2.5 wedocs-mr-5` }>
                       { __( 'Draft', 'wedocs' ) }
                     </div>
                   ) }
@@ -85,10 +85,10 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                         docId={ section?.parent }
                         defaultSection={ section }
                         setShowArticles={ setShowArticles }
-                        className={ `hidden group-hover:block mr-4` }
+                        className={ `wedocs-hidden group-hover:wedocs-block wedocs-mr-4` }
                       >
                         <span
-                          className={ `tooltip cursor-pointer` }
+                          className={ `tooltip wedocs-cursor-pointer` }
                           data-tip={ __( 'Quick Edit', 'wedocs' ) }
                         >
                           <svg
@@ -98,7 +98,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                             strokeWidth="2"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
-                            className="tooltip cursor-pointer stroke-gray-300 hover:stroke-indigo-700 -mt-[3px]"
+                            className="tooltip wedocs-cursor-pointer wedocs-stroke-gray-300 hover:wedocs-stroke-indigo-700 wedocs--mt-[3px]"
                           >
                             <path
                               strokeLinecap="round"
@@ -109,7 +109,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                         </span>
                       </QuickEditModal>
                       <div
-                        className="tooltip cursor-pointer flex items-center mr-0.5"
+                        className="tooltip wedocs-cursor-pointer wedocs-flex wedocs-items-center wedocs-mr-0.5"
                         data-tip={ __( 'Edit', 'wedocs' ) }
                       >
                         <svg
@@ -117,7 +117,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                           width="18"
                           height="18"
                           fill="none"
-                          className="hidden group-hover:block stroke-gray-300 hover:stroke-indigo-700"
+                          className="wedocs-hidden group-hover:wedocs-block wedocs-stroke-gray-300 hover:wedocs-stroke-indigo-700"
                         >
                           <path
                             d="M13.303 1.322a2.4 2.4 0 1 1 3.394 3.394l-.951.951-3.394-3.394.951-.951zm-2.648 2.649L.6 14.025v3.394h3.394L14.049 7.365l-3.394-3.394z"
@@ -131,17 +131,17 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                   ) }
                 </a>
                 <div
-                  className="tooltip cursor-pointer flex items-center"
+                  className="tooltip wedocs-cursor-pointer wedocs-flex wedocs-items-center"
                   data-tip={ __( 'View on Web', 'wedocs' ) }
                 >
                   <a
                     target="_blank"
-                    className="hidden group-hover:block !shadow-none"
+                    className="wedocs-hidden group-hover:wedocs-block !wedocs-shadow-none"
                     rel="noreferrer"
                     href={ article?.link }
                   >
                     <svg
-                      className="hidden group-hover:block stroke-gray-300 hover:stroke-indigo-700"
+                      className="wedocs-hidden group-hover:wedocs-block wedocs-stroke-gray-300 hover:wedocs-stroke-indigo-700"
                       xmlns="http://www.w3.org/2000/svg"
                       width="18"
                       height="18"
@@ -158,8 +158,8 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-5 flex-shrink-0 mt-4 sm:mt-0 sm:ml-5">
-              <div className="flex items-center gap-10">
+            <div className="wedocs-flex wedocs-items-center wedocs-gap-5 wedocs-flex-shrink-0 wedocs-mt-4 sm:wedocs-mt-0 sm:wedocs-ml-5">
+              <div className="wedocs-flex wedocs-items-center wedocs-gap-10">
                 { /* Render admin restriction icon. */ }
                 { wp?.hooks?.applyFilters(
                   'wedocs_article_privacy_action',
@@ -169,7 +169,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
 
                 { ( isAllowComments === 'on' ||
                   ! Boolean( isAllowComments ) ) && (
-                  <div className="article-comments flex gap-2 items-center">
+                  <div className="article-comments wedocs-flex wedocs-gap-2 wedocs-items-center">
                     <svg
                       width="20"
                       height="19"
@@ -185,7 +185,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <p className="comments-counter font-medium text-sm text-[#6B7280]">
+                    <p className="comments-counter wedocs-font-medium wedocs-text-sm wedocs-text-[#6B7280]">
                       { commentCount }
                     </p>
                   </div>
@@ -196,7 +196,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                   '',
                   article?.id
                 ) }
-                <div className="article-updated-date w-44 text-sm text-[#969696]">
+                <div className="article-updated-date wedocs-w-44 wedocs-text-sm wedocs-text-[#969696]">
                   { /* translators: %s: Formatted datetime string */ }
                   { sprintf(
                     __( 'Updated on %s', 'wedocs' ),
@@ -206,7 +206,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
               </div>
             </div>
           </div>
-          <div className="ml-8 flex-shrink-0 w-5 h-5">
+          <div className="wedocs-ml-8 wedocs-flex-shrink-0 wedocs-w-5 wedocs-h-5">
             { ! Boolean( parseInt( wp?.hooks?.applyFilters(
               'wedocs_check_is_admin_restricted_article',
               false,

@@ -1,23 +1,23 @@
 const DocsPlaceholder = () => {
   return (
-    <div className={ `documentation relative mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7` }>
+    <div className={ `documentation wedocs-relative wedocs-mx-auto wedocs-grid wedocs-grid-cols-1 sm:wedocs-grid-cols-2 lg:wedocs-grid-cols-3 2xl:wedocs-grid-cols-4 wedocs-gap-7` }>
       { [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ].map( ( value, index ) => (
         <div
           key={ index }
-          className="animate-pulse bg-white border-b hover:bg-gray-50 font-extrabold"
+          className="animate-pulse wedocs-bg-white wedocs-border-b hover:wedocs-bg-gray-50 wedocs-font-extrabold"
         >
-          <div className="flex w-full items-center justify-between space-x-6 p-6 pt-5">
-            <div className="flex-1 truncate">
-              <div className="inline-flex items-center space-x-3">
-                <div className="flex items-center space-x-3 flex-1 group">
-                  <a href="#" className="mt-1.5 !shadow-none">
-                    <h3 className="animate-pulse bg-slate-200 rounded h-4 w-64 border-b hover:bg-slate-300"></h3>
+          <div className="wedocs-flex wedocs-w-full wedocs-items-center wedocs-justify-between wedocs-space-x-6 wedocs-p-6 wedocs-pt-5">
+            <div className="wedocs-flex-1 wedocs-truncate">
+              <div className="wedocs-inline-flex wedocs-items-center wedocs-space-x-3">
+                <div className="wedocs-flex wedocs-items-center wedocs-space-x-3 wedocs-flex-1 group">
+                  <a href="#" className="wedocs-mt-1.5 !wedocs-shadow-none">
+                    <h3 className="animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-64 wedocs-border-b hover:wedocs-bg-slate-300"></h3>
                   </a>
                   <a
                     target="_blank"
                     href="#"
                     rel="noreferrer"
-                    className="mt-[-2px] hidden group-hover:block !shadow-none"
+                    className="wedocs-mt-[-2px] wedocs-hidden group-hover:wedocs-block !wedocs-shadow-none"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -37,37 +37,37 @@ const DocsPlaceholder = () => {
                 </div>
               </div>
             </div>
-            <div className="flex gap-5 items-center">
-              <div className="documentation-ellipsis-actions relative h-4 w-8">
-                <span className="animate-pulse bg-slate-200 w-full h-full rounded absolute border-b hover:bg-slate-300"></span>
+            <div className="wedocs-flex wedocs-gap-5 wedocs-items-center">
+              <div className="documentation-ellipsis-actions wedocs-relative wedocs-h-4 wedocs-w-8">
+                <span className="animate-pulse wedocs-bg-slate-200 wedocs-w-full wedocs-h-full wedocs-rounded wedocs-absolute wedocs-border-b hover:wedocs-bg-slate-300"></span>
               </div>
             </div>
           </div>
-          <div className="w-full p-6 pt-0 pb-7">
-            <ul role="list" className="mb-6 rounded-md">
-              <li className="flex items-center justify-between mb-0 py-1.5 pl-3 pr-4 text-sm">
-                <div className="w-full inline-flex items-center">
-                  <div className="w-6 flex justify-center">
-                    <span className="mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-8 border-b hover:bg-slate-300"></span>
+          <div className="wedocs-w-full wedocs-p-6 wedocs-pt-0 wedocs-pb-7">
+            <ul role="list" className="wedocs-mb-6 wedocs-rounded-md">
+              <li className="wedocs-flex wedocs-items-center wedocs-justify-between wedocs-mb-0 wedocs-py-1.5 wedocs-pl-3 wedocs-pr-4 wedocs-text-sm">
+                <div className="wedocs-w-full wedocs-inline-flex wedocs-items-center">
+                  <div className="wedocs-w-6 wedocs-flex wedocs-justify-center">
+                    <span className="wedocs-mt-0.5 animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-8 wedocs-border-b hover:wedocs-bg-slate-300"></span>
                   </div>
-                  <span className="ml-2 mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-52 border-b hover:bg-slate-300"></span>
+                  <span className="wedocs-ml-2 wedocs-mt-0.5 animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-52 wedocs-border-b hover:wedocs-bg-slate-300"></span>
                 </div>
               </li>
-              <li className="flex items-center justify-between mb-0 py-1.5 pl-3 pr-4 text-sm">
-                <div className="flex w-0 flex-1 items-center">
-                  <div className="w-6 flex justify-center">
-                    <span className="mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-8 border-b hover:bg-slate-300"></span>
+              <li className="wedocs-flex wedocs-items-center wedocs-justify-between wedocs-mb-0 wedocs-py-1.5 wedocs-pl-3 wedocs-pr-4 wedocs-text-sm">
+                <div className="wedocs-flex wedocs-w-0 wedocs-flex-1 wedocs-items-center">
+                  <div className="wedocs-w-6 wedocs-flex wedocs-justify-center">
+                    <span className="wedocs-mt-0.5 animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-8 wedocs-border-b hover:wedocs-bg-slate-300"></span>
                   </div>
-                  <span className="ml-2 mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-52 border-b hover:bg-slate-300"></span>
+                  <span className="wedocs-ml-2 wedocs-mt-0.5 animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-52 wedocs-border-b hover:wedocs-bg-slate-300"></span>
                 </div>
               </li>
             </ul>
           </div>
-          <div className="border-t border-gray-200">
-            <div className="-mt-px flex divide-x divide-gray-200">
-              <div className="flex w-0 flex-1 justify-end items-center py-4 px-6">
-                <button className="py-2 inline-flex items-center h-8 w-16 hover:text-white rounded-md border border-gray-200 ease-in-out duration-200 shadow-gray-100 px-4 text-sm text-gray shadow-sm">
-                  <span className="animate-pulse bg-slate-200 w-10 h-4 rounded absolute border-b hover:bg-slate-300"></span>
+          <div className="wedocs-border-t wedocs-border-gray-200">
+            <div className="wedocs--mt-px wedocs-flex wedocs-divide-x wedocs-divide-gray-200">
+              <div className="wedocs-flex wedocs-w-0 wedocs-flex-1 wedocs-justify-end wedocs-items-center wedocs-py-4 wedocs-px-6">
+                <button className="wedocs-py-2 wedocs-inline-flex wedocs-items-center wedocs-h-8 wedocs-w-16 hover:wedocs-text-white wedocs-rounded-md wedocs-border wedocs-border-gray-200 wedocs-ease-in-out wedocs-duration-200 wedocs-shadow-gray-100 wedocs-px-4 wedocs-text-sm wedocs-text-gray wedocs-shadow-sm">
+                  <span className="animate-pulse wedocs-bg-slate-200 wedocs-w-10 wedocs-h-4 wedocs-rounded wedocs-absolute wedocs-border-b hover:wedocs-bg-slate-300"></span>
                 </button>
               </div>
             </div>

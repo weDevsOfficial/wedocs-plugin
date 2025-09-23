@@ -56,30 +56,30 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 
 	return (
 		<section>
-			<div className="shadow sm:rounded-md bg-white overflow-hidden min-h-[500px]">
-				<div className="py-4 px-8 sm:px-8 sm:py-4">
-					<h2 className="text-gray-900 font-medium text-lg">
+			<div className="wedocs-shadow sm:wedocs-rounded-md wedocs-bg-white wedocs-overflow-hidden wedocs-min-h-[500px]">
+				<div className="wedocs-py-4 wedocs-px-8 sm:wedocs-px-8 sm:wedocs-py-4">
+					<h2 className="wedocs-text-gray-900 wedocs-font-medium wedocs-text-lg">
 						{ __( 'Layout Settings', 'wedocs' ) }
 					</h2>
 				</div>
-				<hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200" />
+				<hr className="wedocs-h-px !wedocs-bg-gray-200 wedocs-border-0 dark:!wedocs-bg-gray-200" />
 				<div
-					className="pt-6 pb-20 px-8 grid grid-cols-4 gap-5 relative"
+					className="wedocs-pt-6 wedocs-pb-20 wedocs-px-8 wedocs-grid wedocs-grid-cols-4 wedocs-gap-5 wedocs-relative"
 					onMouseEnter={ () => setShowOverlay( true ) }
 					onMouseLeave={ () => setShowOverlay( false ) }
 				>
-					<div className='col-span-12' >
-						<div className="settings-content flex items-center justify-between">
-							<div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
+					<div className='wedocs-col-span-12' >
+						<div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
+							<div className="settings-heading md:wedocs-min-w-[300px] wedocs-space-x-2 wedocs-items-center wedocs-flex wedocs-flex-1">
 								<label
-									className="block text-sm font-medium text-gray-600"
+									className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
 									id="headlessui-listbox-label-15"
 									data-headlessui-state="open"
 								>
 									{ __( 'Choose Doc List Column Style', 'wedocs' ) }
 								</label>
 								<div
-									className="tooltip cursor-pointer ml-2 z-[9999]"
+									className="tooltip wedocs-cursor-pointer wedocs-ml-2 wedocs-z-[9999]"
 									data-tip={ __(
 										'Choose how your document list columns should appear',
 										'wedocs'
@@ -103,9 +103,9 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 							</div>
 						</div>
 					</div>
-					<div className="settings-field flex items-center mb-2">
+					<div className="settings-field wedocs-flex wedocs-items-center wedocs-mb-2">
 						<RadioGroup value={ columnOptions[ 1 ] }>
-							<div className="flex items-center space-x-6">
+							<div className="wedocs-flex wedocs-items-center wedocs-space-x-6">
 								{ columnOptions.map( ( column, index ) => (
 									<RadioGroup.Option
 										key={ index }
@@ -113,12 +113,12 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 										className={ ( { checked, active } ) =>
 											classNames(
 												checked
-													? 'border-transparent'
-													: 'border-gray-300',
+													? 'wedocs-border-transparent'
+													: 'wedocs-border-gray-300',
 												active
-													? 'border-indigo-600 ring-2 ring-indigo-600'
+													? 'wedocs-border-indigo-600 wedocs-ring-2 wedocs-ring-indigo-600'
 													: '',
-												'relative w-24 h-20 flex items-center justify-center cursor-pointer rounded-lg border bg-white shadow-sm focus:outline-none p-1.5'
+												'wedocs-relative wedocs-w-24 wedocs-h-20 wedocs-flex wedocs-items-center wedocs-justify-center wedocs-cursor-pointer wedocs-rounded-lg wedocs-border wedocs-bg-white wedocs-shadow-sm focus:wedocs-outline-none wedocs-p-1.5'
 											)
 										}
 									>
@@ -139,27 +139,27 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 											) }
 										</svg>
 										<span className="flex">
-										<span className="flex flex-col">
+										<span className="wedocs-flex wedocs-flex-col">
 											<RadioGroup.Label
 												as="span"
-												className="flex items-center text-sm font-medium text-gray-600 mb-0.5 absolute top-2.5 right-2.5"
+												className="wedocs-flex wedocs-items-center wedocs-text-sm wedocs-font-medium wedocs-text-gray-600 wedocs-mb-0.5 wedocs-absolute wedocs-top-2.5 wedocs-right-2.5"
 											>
 												<div
 													className={ classNames(
 														columnOptions[ 1 ]?.name !==
 														column?.name
-															? 'border border-gray-400'
+															? 'wedocs-border wedocs-border-gray-400'
 															: '',
-														'ml-auto rounded-full w-4 h-4'
+														'wedocs-ml-auto wedocs-rounded-full wedocs-w-4 wedocs-h-4'
 													) }
 												>
 													<CheckCircleIcon
 														className={ classNames(
 															columnOptions[ 1 ]?.name !==
 															column?.name
-																? 'invisible'
-																: '-mt-0.5',
-															'h-5 w-5 text-indigo-600'
+																? 'wedocs-invisible'
+																: 'wedocs--mt-0.5',
+															'wedocs-h-5 wedocs-w-5 wedocs-text-indigo-600'
 														) }
 														aria-hidden="true"
 													/>
@@ -169,9 +169,9 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 												className={ classNames(
 													columnOptions[ 1 ]?.name !==
 													column?.name
-														? 'border-transparent'
-														: 'border-indigo-600',
-													'pointer-events-none absolute -inset-px rounded-lg border'
+														? 'wedocs-border-transparent'
+														: 'wedocs-border-indigo-600',
+													'wedocs-pointer-events-none wedocs-absolute wedocs--inset-px wedocs-rounded-lg wedocs-border'
 												) }
 												aria-hidden="true"
 											/>
@@ -182,13 +182,13 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 							</div>
 						</RadioGroup>
 					</div>
-					<div className="col-span-12">
-						<div className="settings-content flex items-center justify-between">
-							<div className="settings-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+					<div className="wedocs-col-span-12">
+						<div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
+							<div className="settings-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
 								<label
 									data-headlessui-state="open"
 									id="headlessui-listbox-label-15"
-									className="block text-sm font-medium text-gray-700"
+									className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-700"
 								>
 									{ __( 'Choose Single Doc Template', 'wedocs' ) }
 								</label>
@@ -199,7 +199,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 											'wedocs'
 										)
 									}
-									className="tooltip cursor-pointer ml-2"
+									className="tooltip wedocs-cursor-pointer wedocs-ml-2"
 								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -219,9 +219,9 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 							</div>
 						</div>
 					</div>
-					<div className="settings-field flex items-center">
+					<div className="settings-field wedocs-flex wedocs-items-center">
 						<RadioGroup value={ templateOptions[ 2 ] }>
-							<div className="flex items-center space-x-6">
+							<div className="wedocs-flex wedocs-items-center wedocs-space-x-6">
 								{ templateOptions.map( ( template, index ) => (
 									<RadioGroup.Option
 										key={ template?.name }
@@ -229,12 +229,12 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 										className={ ( { checked, active } ) =>
 											classNames(
 												checked
-													? 'border-transparent'
-													: 'border-gray-300',
+													? 'wedocs-border-transparent'
+													: 'wedocs-border-gray-300',
 												active
-													? 'border-indigo-600 ring-2 ring-indigo-600'
+													? 'wedocs-border-indigo-600 wedocs-ring-2 wedocs-ring-indigo-600'
 													: '',
-												'relative w-32 h-[135px] flex items-center justify-center cursor-pointer rounded-lg border bg-white shadow-sm focus:outline-none'
+												'wedocs-relative wedocs-w-32 wedocs-h-[135px] wedocs-flex wedocs-items-center wedocs-justify-center wedocs-cursor-pointer wedocs-rounded-lg wedocs-border wedocs-bg-white wedocs-shadow-sm focus:wedocs-outline-none'
 											)
 										}
 									>
@@ -455,27 +455,27 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 										) }
 
 										<span className="flex">
-										<span className="flex flex-col">
+										<span className="wedocs-flex wedocs-flex-col">
 											<RadioGroup.Label
 												as="span"
-												className="flex items-center text-sm font-medium text-gray-600 mb-0.5 absolute top-2.5 right-2.5"
+												className="wedocs-flex wedocs-items-center wedocs-text-sm wedocs-font-medium wedocs-text-gray-600 wedocs-mb-0.5 wedocs-absolute wedocs-top-2.5 wedocs-right-2.5"
 											>
 												<div
 													className={ classNames(
 														templateOptions[ 2 ]?.name !==
 														template?.name
-															? 'border border-gray-400'
+															? 'wedocs-border wedocs-border-gray-400'
 															: '',
-														'ml-auto rounded-full w-4 h-4'
+														'wedocs-ml-auto wedocs-rounded-full wedocs-w-4 wedocs-h-4'
 													) }
 												>
 													<CheckCircleIcon
 														className={ classNames(
 															templateOptions[ 2 ]?.name !==
 															template?.name
-																? 'invisible'
-																: '-mt-0.5',
-															'h-5 w-5 text-indigo-600'
+																? 'wedocs-invisible'
+																: 'wedocs--mt-0.5',
+															'wedocs-h-5 wedocs-w-5 wedocs-text-indigo-600'
 														) }
 														aria-hidden="true"
 													/>
@@ -485,9 +485,9 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 												className={ classNames(
 													templateOptions[ 2 ]?.name ===
 													template?.name
-														? 'border-indigo-600'
-														: 'border-transparent',
-													'pointer-events-none absolute -inset-px rounded-lg border'
+														? 'wedocs-border-indigo-600'
+														: 'wedocs-border-transparent',
+													'wedocs-pointer-events-none wedocs-absolute wedocs--inset-px wedocs-rounded-lg wedocs-border'
 												) }
 												aria-hidden="true"
 											/>
@@ -499,18 +499,18 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 						</RadioGroup>
 					</div>
 					{ layoutColorOptions?.map( ( option ) => (
-						<div className={ `col-span-12 mt-2` } key={ option?.key }>
-							<div className="settings-content flex items-center justify-between">
-								<div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
+						<div className={ `wedocs-col-span-12 wedocs-mt-2` } key={ option?.key }>
+							<div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
+								<div className="settings-heading md:wedocs-min-w-[300px] wedocs-space-x-2 wedocs-items-center wedocs-flex wedocs-flex-1">
 									<label
-										className="block text-sm font-medium text-gray-600"
+										className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
 										id="headlessui-listbox-label-15"
 										data-headlessui-state="open"
 									>
 										{ option?.title }
 									</label>
 									<div
-										className="tooltip cursor-pointer ml-2 z-[9999]"
+										className="tooltip wedocs-cursor-pointer wedocs-ml-2 wedocs-z-[9999]"
 										data-tip={ option?.tooltip }
 									>
 										<svg
@@ -529,11 +529,11 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 										</svg>
 									</div>
 								</div>
-								<div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
-									<div className="color-container flex gap-2.5">
-										<div className="flex justify-center items-center space-x-1 px-2 py-1.5 rounded-md bg-white border border-[#E2E2E2] cursor-pointer relative">
-											<div className={ `${option?.key === 'active_nav_text' ? 'bg-white border border-[#E2E2E2]' : 'bg-[#06B6D4]' } w-6 h-6 rounded-full flex justify-center items-center` }></div>
-											<svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4 stroke-gray-500" strokeWidth="1">
+								<div className="settings-field wedocs-flex wedocs-items-center wedocs-w-full wedocs-max-w-[490px] wedocs-ml-auto flex-2">
+									<div className="color-container wedocs-flex wedocs-gap-2.5">
+										<div className="wedocs-flex wedocs-justify-center wedocs-items-center wedocs-space-x-1 wedocs-px-2 wedocs-py-1.5 wedocs-rounded-md wedocs-bg-white wedocs-border wedocs-border-[#E2E2E2] wedocs-cursor-pointer wedocs-relative">
+											<div className={ `${option?.key === 'active_nav_text' ? 'wedocs-bg-white wedocs-border wedocs-border-[#E2E2E2]' : 'wedocs-bg-[#06B6D4]' } wedocs-w-6 wedocs-h-6 wedocs-rounded-full wedocs-flex wedocs-justify-center wedocs-items-center` }></div>
+											<svg viewBox="0 0 20 20" fill="currentColor" className="wedocs-h-4 wedocs-w-4 wedocs-stroke-gray-500" strokeWidth="1">
 												<path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path>
 											</svg>
 										</div>
@@ -542,18 +542,18 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 							</div>
 						</div>
 					) ) }
-					<div className={ `col-span-12 mt-2` } >
-						<div className="settings-content flex items-center justify-between">
-							<div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
+					<div className={ `wedocs-col-span-12 wedocs-mt-2` } >
+						<div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
+							<div className="settings-heading md:wedocs-min-w-[300px] wedocs-space-x-2 wedocs-items-center wedocs-flex wedocs-flex-1">
 								<label
-									className="block text-sm font-medium text-gray-600"
+									className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
 									id="headlessui-listbox-label-15"
 									data-headlessui-state="open"
 								>
 									{ __( 'Enable Navigation Icon', 'wedocs' ) }
 								</label>
 								<div
-									className="tooltip cursor-pointer ml-2 z-[9999]"
+									className="tooltip wedocs-cursor-pointer wedocs-ml-2 wedocs-z-[9999]"
 									data-tip={ __(
 										'Enable/Disable navigation icons for a user-friendly experience on your single document pages',
 										'wedocs'
@@ -575,7 +575,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 									</svg>
 								</div>
 							</div>
-							<div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+							<div className="settings-field wedocs-flex wedocs-items-center wedocs-w-full wedocs-max-w-[490px] wedocs-ml-auto flex-2">
 								<Switcher
 									name="nav_icon"
 									settingsPanel={ layout }
@@ -586,18 +586,18 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 							</div>
 						</div>
 					</div>
-					<div className={ `col-span-12 mt-2` } >
-						<div className="settings-content flex items-center justify-between">
-							<div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
+					<div className={ `wedocs-col-span-12 wedocs-mt-2` } >
+						<div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
+							<div className="settings-heading md:wedocs-min-w-[300px] wedocs-space-x-2 wedocs-items-center wedocs-flex wedocs-flex-1">
 								<label
-									className="block text-sm font-medium text-gray-600"
+									className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
 									id="headlessui-listbox-label-15"
 									data-headlessui-state="open"
 								>
 									{ __( 'Enable Table of Contents', 'wedocs' ) }
 								</label>
 								<div
-									className="tooltip cursor-pointer ml-2 z-[9999]"
+									className="tooltip wedocs-cursor-pointer wedocs-ml-2 wedocs-z-[9999]"
 									data-tip={ __(
 										'Improve content navigation. Turn on the table of contents feature for easy access to document sections',
 										'wedocs'
@@ -619,7 +619,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 									</svg>
 								</div>
 							</div>
-							<div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+							<div className="settings-field wedocs-flex wedocs-items-center wedocs-w-full wedocs-max-w-[490px] wedocs-ml-auto flex-2">
 								<Switcher
 									name="right_bar"
 									settingsPanel={ layout }
@@ -630,18 +630,18 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 							</div>
 						</div>
 					</div>
-                    <div className={ `col-span-12 block mt-2` }>
-                        <div className="settings-content flex items-center justify-between">
-                            <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
+                    <div className={ `wedocs-col-span-12 wedocs-block wedocs-mt-2` }>
+                        <div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
+                            <div className="settings-heading md:wedocs-min-w-[300px] wedocs-space-x-2 wedocs-items-center wedocs-flex wedocs-flex-1">
                                 <label
-                                    className="block text-sm font-medium text-gray-600"
+                                    className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
                                     id="headlessui-listbox-label-15"
                                     data-headlessui-state="open"
                                 >
                                     { __( 'Collapse Documentation Page Articles', 'wedocs' ) }
                                 </label>
                                 <div
-                                    className="tooltip cursor-pointer ml-2 z-[9999]"
+                                    className="tooltip wedocs-cursor-pointer wedocs-ml-2 wedocs-z-[9999]"
                                     data-tip={ __(
                                         'Choose if your sections should be collapsed or expanded in Doc Homepage',
                                         'wedocs'
@@ -663,7 +663,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
                                     </svg>
                                 </div>
                             </div>
-                            <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                            <div className="settings-field wedocs-flex wedocs-items-center wedocs-w-full wedocs-max-w-[490px] wedocs-ml-auto flex-2">
                                 <Switcher
                                     name='collapse_articles'
                                     settingsPanel={ general }
@@ -674,7 +674,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
                             </div>
                         </div>
                     </div>
-					<Overlay classes={ `${ showOverlay ? 'flex items-center justify-center' : 'hidden' }` } />
+					<Overlay classes={ `${ showOverlay ? 'wedocs-flex wedocs-items-center wedocs-justify-center' : 'wedocs-hidden' }` } />
 				</div>
 			</div>
 		</section>

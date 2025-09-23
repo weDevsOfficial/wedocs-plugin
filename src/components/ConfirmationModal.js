@@ -41,7 +41,7 @@ const ConfirmationModal = ( { className, children } ) => {
       <Transition appear show={ openModal } as={ Fragment }>
         <Dialog
           as="div"
-          className="wedocs-document relative z-[9999]"
+          className="wedocs-document wedocs-relative wedocs-z-[9999]"
           onClose={ () => setOpenModal( false ) }
         >
           <Transition.Child
@@ -53,11 +53,11 @@ const ConfirmationModal = ( { className, children } ) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25 z-[50]" />
+            <div className="wedocs-fixed wedocs-inset-0 wedocs-bg-black wedocs-bg-opacity-25 wedocs-z-[50]" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto z-[100]">
-            <div className="flex min-h-full items-center justify-center p-4">
+          <div className="wedocs-fixed wedocs-inset-0 wedocs-overflow-y-auto wedocs-z-[100]">
+            <div className="wedocs-flex wedocs-min-h-full wedocs-items-center wedocs-justify-center wedocs-p-4">
               <Transition.Child
                 as={ Fragment }
                 enter="ease-out duration-300"
@@ -67,9 +67,9 @@ const ConfirmationModal = ( { className, children } ) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-[512px] transform overflow-hidden rounded-2xl bg-white py-6 px-9 align-middle shadow-xl transition-all">
-                  <div className="sm:flex sm:items-start">
-                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#E7E6FF] sm:mx-0 sm:h-10 sm:w-10">
+                <Dialog.Panel className="wedocs-w-[512px] wedocs-transform wedocs-overflow-hidden wedocs-rounded-2xl wedocs-bg-white wedocs-py-6 wedocs-px-9 wedocs-align-middle wedocs-shadow-xl wedocs-transition-all">
+                  <div className="sm:wedocs-flex sm:wedocs-items-start">
+                    <div className="wedocs-mx-auto wedocs-flex wedocs-h-12 wedocs-w-12 wedocs-flex-shrink-0 wedocs-items-center wedocs-justify-center wedocs-rounded-full wedocs-bg-[#E7E6FF] sm:wedocs-mx-0 sm:wedocs-h-10 sm:wedocs-w-10">
                       <svg width="19" height="19" fill="none">
                         <path
                           d="M13.085 4.491c0 1.928-1.542 3.491-3.443 3.491S6.199 6.419 6.199 4.491 7.741 1 9.642 1s3.443 1.563 3.443 3.491z"
@@ -118,29 +118,29 @@ const ConfirmationModal = ( { className, children } ) => {
                         />
                       </svg>
                     </div>
-                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <div className="wedocs-mt-3 wedocs-text-center sm:wedocs-mt-0 sm:wedocs-ml-4 sm:wedocs-text-left">
                       <Dialog.Title
                         as="h3"
-                        className="text-lg font-medium text-gray-900 mb-2"
+                        className="wedocs-text-lg wedocs-font-medium wedocs-text-gray-900 wedocs-mb-2"
                       >
                         { __( 'Are you sure?', 'wedocs' ) }
                       </Dialog.Title>
-                      <p className="text-gray-500 text-base">
+                      <p className="wedocs-text-gray-500 wedocs-text-base">
                         { __(
                           'We recommend backing up your database before upgrading to ensure your data is safe. Are you sure you want to run the upgrade now?',
                           'wedocs'
                         ) }
                       </p>
 
-                      <div className="mt-6 space-x-3.5 text-right">
+                      <div className="wedocs-mt-6 wedocs-space-x-3.5 wedocs-text-right">
                         <button
-                          className="bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md"
+                          className="wedocs-bg-white hover:wedocs-bg-gray-200 wedocs-text-gray-700 wedocs-font-medium wedocs-text-base wedocs-py-2 wedocs-px-5 wedocs-border wedocs-border-gray-300 wedocs-rounded-md"
                           onClick={ () => setOpenModal( false ) }
                         >
                           { __( 'Cancel', 'wedocs' ) }
                         </button>
                         <button
-                          className="bg-indigo-700 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md"
+                          className="wedocs-bg-indigo-700 hover:wedocs-bg-indigo-800 wedocs-text-white wedocs-font-medium wedocs-text-base wedocs-py-2 wedocs-px-5 wedocs-rounded-md"
                           onClick={ handleUpgraderClick }
                         >
                           { __( "I'm sure", 'wedocs' ) }

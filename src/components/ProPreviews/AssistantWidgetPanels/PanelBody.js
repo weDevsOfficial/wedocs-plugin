@@ -10,12 +10,12 @@ const PanelBody = ({ tabs, panels, children } ) => {
 			selectedIndex={ selectedIndex }
 			onChange={ setSelectedIndex }
 		>
-			<Tab.List className="space-x-3.5 mb-8 font-medium text-sm">
+			<Tab.List className="wedocs-space-x-3.5 wedocs-mb-8 wedocs-font-medium wedocs-text-sm">
 				{ tabs &&
 					tabs?.map( ( tab, index ) => (
 						<Tab
 							className={
-								'px-3 py-2 aria-selected:bg-indigo-700 aria-selected:text-white hover:text-white hover:bg-indigo-700 rounded-md'
+								'wedocs-px-3 wedocs-py-2 aria-selected:wedocs-bg-indigo-700 aria-selected:wedocs-text-white hover:wedocs-text-white hover:wedocs-bg-indigo-700 wedocs-rounded-md'
 							}
 							key={ index }
 						>

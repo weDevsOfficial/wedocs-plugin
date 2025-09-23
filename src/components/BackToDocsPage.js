@@ -5,14 +5,14 @@ const BackToDocsPage = () => {
   return (
     <Link
       to="/"
-      className="inline-flex group items-center text-gray-700 hover:text-indigo-700 focus:shadow-none !font-medium !text-base"
+      className="wedocs-inline-flex wedocs-group wedocs-items-center wedocs-text-gray-700 hover:wedocs-text-indigo-700 focus:wedocs-shadow-none !wedocs-font-medium !wedocs-text-base"
     >
       <svg
         width="35"
         height="10"
         viewBox="0 0 20 10"
         fill="none"
-        className="pr-3 group-hover:!stroke-indigo-700 stroke-gray-500"
+        className="wedocs-pr-3 group-hover:!wedocs-stroke-indigo-700 wedocs-stroke-gray-500"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path

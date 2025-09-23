@@ -4,10 +4,10 @@ import AddDocModal from '../AddDocModal';
 const EmptyDocs = () => {
   return (
     <>
-      <div className="w-full">
-        <div className="shadow sm:overflow-hidden sm:rounded-md">
-          <div className="space-y-6 h-[75vh] flex justify-center align-center bg-white px-4 py-5 sm:p-6">
-            <div className="w-[500px] text-center self-center mt-1 px-6 py-12">
+      <div className="wedocs-w-full">
+        <div className="wedocs-shadow sm:wedocs-overflow-hidden sm:wedocs-rounded-md">
+          <div className="wedocs-space-y-6 wedocs-h-[75vh] wedocs-flex wedocs-justify-center align-center wedocs-bg-white wedocs-px-4 wedocs-py-5 sm:wedocs-p-6">
+            <div className="wedocs-w-[500px] wedocs-text-center wedocs-self-center wedocs-mt-1 wedocs-px-6 wedocs-py-12">
               <h2 className="mb-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -71,13 +71,13 @@ const EmptyDocs = () => {
                     </linearGradient>
                   </defs>
                 </svg>
-                <p className="text-[#3B3F4A] font-bold text-2xl mx-auto">
+                <p className="wedocs-text-[#3B3F4A] wedocs-font-bold wedocs-text-2xl wedocs-mx-auto">
                   { __( 'Get started by creating a new doc', 'wedocs' ) }
                 </p>
-                <p className="text-[#666B79] text-lg mx-auto">
+                <p className="wedocs-text-[#666B79] wedocs-text-lg wedocs-mx-auto">
                   <a
                     href="https://wedocs.co/docs/wedocs/how-to/how-to-create-a-doc/"
-                    className="text-[#0043FF] !shadow-none"
+                    className="wedocs-text-[#0043FF] !wedocs-shadow-none"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -86,8 +86,8 @@ const EmptyDocs = () => {
                   { __( 'how to create a new doc', 'wedocs' ) }
                 </p>
               </h2>
-              <AddDocModal className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-2.5 text-base text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-4 text-base flex items-center"></span>
+              <AddDocModal className="wedocs-inline-flex wedocs-items-center wedocs-rounded-md wedocs-border wedocs-border-transparent wedocs-bg-indigo-600 wedocs-px-6 wedocs-py-2.5 wedocs-text-base wedocs-text-white wedocs-shadow-sm hover:wedocs-bg-indigo-700 focus:wedocs-outline-none focus:wedocs-ring-2 focus:wedocs-ring-indigo-500 focus:wedocs-ring-offset-2">
+                <span className="dashicons dashicons-plus-alt2 wedocs-w-3.5 wedocs-h-3.5 wedocs-mr-4 wedocs-text-base wedocs-flex wedocs-items-center"></span>
                 { __( 'Create a new doc', 'wedocs' ) }
               </AddDocModal>
             </div>

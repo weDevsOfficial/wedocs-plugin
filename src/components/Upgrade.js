@@ -10,22 +10,22 @@ const Upgrade = ( { status } ) => {
   return (
     <>
       { showUpgrader && (
-        <div className="border-l-4 border-indigo-600 rounded-md bg-white p-4 mb-7">
-          <div className="flex space-x-8">
-            <div className="flex flex-shrink-0 relative items-center">
+        <div className="wedocs-border-l-4 wedocs-border-indigo-600 wedocs-rounded-md wedocs-bg-white wedocs-p-4 wedocs-mb-7">
+          <div className="wedocs-flex wedocs-space-x-8">
+            <div className="wedocs-flex wedocs-flex-shrink-0 wedocs-relative wedocs-items-center">
               <InformationCircleIcon
-                className="h-5 w-5 mt-0.5 text-indigo-600 bg-white absolute -right-1 -top-1 rounded-full z-[1]"
+                className="wedocs-h-5 wedocs-w-5 wedocs-mt-0.5 wedocs-text-indigo-600 wedocs-bg-white wedocs-absolute wedocs--right-1 wedocs--top-1 wedocs-rounded-full wedocs-z-[1]"
                 aria-hidden="true"
               />
               <div className="avatar">
-                <div className="w-24 h-24 mask mask-squircle">
+                <div className="wedocs-w-24 wedocs-h-24 mask mask-squircle">
                   <img src={ logo } alt={ __( 'Wedocs Logo', 'wedocs' ) } />
                 </div>
               </div>
             </div>
-            <div className="ml-3 w-full">
-              <div className="flex justify-between items-center">
-                <h3 className="text-base font-semibold">
+            <div className="wedocs-ml-3 wedocs-w-full">
+              <div className="wedocs-flex wedocs-justify-between wedocs-items-center">
+                <h3 className="wedocs-text-base wedocs-font-semibold">
                   { __( 'weDocs Data Update Required', 'wedocs' ) }
                 </h3>
                 <svg
@@ -35,7 +35,7 @@ const Upgrade = ( { status } ) => {
                   viewBox="0 0 24 24"
                   strokeWidth="2"
                   stroke="currentColor"
-                  className="w-6 h-6 text-white cursor-pointer"
+                  className="wedocs-w-6 wedocs-h-6 wedocs-text-white wedocs-cursor-pointer"
                 >
                   <path
                     strokeLinecap="round"
@@ -44,7 +44,7 @@ const Upgrade = ( { status } ) => {
                   />
                 </svg>
               </div>
-              <div className="mt-2 text-base">
+              <div className="wedocs-mt-2 wedocs-text-base">
                 <p>
                   { __(
                     "A database upgrade is required. If you don't upgrade, you may experience unexpected behaviour while using weDocs.",
@@ -52,9 +52,9 @@ const Upgrade = ( { status } ) => {
                   ) }
                 </p>
               </div>
-              <div className="mt-4">
-                <div className="-mx-1 -mt-1 flex">
-                  <ConfirmationModal className={ `px-2 py-1.5 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 ease-in-out duration-200 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-75 disabled:hover:bg-indigo-600` }>
+              <div className="wedocs-mt-4">
+                <div className="wedocs--mx-1 wedocs--mt-1 wedocs-flex">
+                  <ConfirmationModal className={ `wedocs-px-2 wedocs-py-1.5 wedocs-h-fit wedocs-inline-flex wedocs-items-center wedocs-rounded-md wedocs-border wedocs-border-transparent wedocs-bg-indigo-600 wedocs-ease-in-out wedocs-duration-200 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-white wedocs-shadow-sm hover:wedocs-bg-indigo-700 focus:wedocs-outline-none focus:wedocs-ring-2 focus:wedocs-ring-indigo-500 focus:wedocs-ring-offset-2 disabled:wedocs-opacity-75 disabled:hover:wedocs-bg-indigo-600` }>
                     { __( `Updat${ status === 'running' ? 'ing...' : 'e' }`, 'wedocs' ) }
                   </ConfirmationModal>
                 </div>

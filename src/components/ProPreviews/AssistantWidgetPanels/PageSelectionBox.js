@@ -50,17 +50,17 @@ const PageSelectionBox = ( { boxId, options, settingsData, setSettings } ) => {
 
 	return (
 		<div id={ boxId } className="pageSelectionBox">
-			<div className="relative mb-2">
+			<div className="wedocs-relative wedocs-mb-2">
 				<button
 					onClick={ () => setShow( ! show ) }
-					className="w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+					className="wedocs-w-full wedocs-cursor-pointer wedocs-rounded-md wedocs-border wedocs-border-gray-300 wedocs-bg-white wedocs-py-2 wedocs-pl-3 wedocs-pr-10 wedocs-text-left wedocs-shadow-sm focus:wedocs-border-indigo-500 focus:wedocs-outline-none focus:wedocs-ring-1 focus:wedocs-ring-indigo-500 sm:wedocs-text-sm"
 				>
 					{ selected?.length > 0 ? (
-						<div className="active-roles inline-flex flex-wrap items-center gap-2.5">
+						<div className="active-roles wedocs-inline-flex wedocs-flex-wrap wedocs-items-center wedocs-gap-2.5">
 							{ selected.map( ( page ) => (
 								<span
 									key={ page?.id }
-									className="inline-flex items-center gap-1 rounded-md bg-gray-100 px-2.5 py-0.5 text-sm text-gray-800"
+									className="wedocs-inline-flex wedocs-items-center wedocs-gap-1 wedocs-rounded-md wedocs-bg-gray-100 wedocs-px-2.5 wedocs-py-0.5 wedocs-text-sm wedocs-text-gray-800"
 								>
 									{ page?.title }
 									<svg
@@ -69,7 +69,7 @@ const PageSelectionBox = ( { boxId, options, settingsData, setSettings } ) => {
 										viewBox="0 0 24 24"
 										strokeWidth={ 3.5 }
 										stroke="currentColor"
-										className="w-3 h-3 cursor-pointer text-gray-400"
+										className="wedocs-w-3 wedocs-h-3 wedocs-cursor-pointer wedocs-text-gray-400"
 										onClick={ () =>
 											handleSelectBox( page )
 										}
@@ -85,16 +85,16 @@ const PageSelectionBox = ( { boxId, options, settingsData, setSettings } ) => {
 						</div>
 					) : (
 						<>
-							<span className="block multiSelectBox truncate">
+							<span className="wedocs-block multiSelectBox wedocs-truncate">
 								{ __( 'Select page', 'wedocs' ) }
 							</span>
-							<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+							<span className="wedocs-pointer-events-none wedocs-absolute wedocs-inset-y-0 wedocs-right-0 wedocs-flex wedocs-items-center wedocs-pr-2">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 20 20"
 									fill="currentColor"
 									aria-hidden="true"
-									className="h-5 w-5 text-gray-400"
+									className="wedocs-h-5 wedocs-w-5 wedocs-text-gray-400"
 								>
 									<path
 										d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -108,17 +108,17 @@ const PageSelectionBox = ( { boxId, options, settingsData, setSettings } ) => {
 			</div>
 
 			{ show && options && (
-				<div className="relative" onClick={ () => setShow( true ) }>
-					<ul className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+				<div className="wedocs-relative" onClick={ () => setShow( true ) }>
+					<ul className="wedocs-absolute wedocs-z-10 wedocs-mt-1 wedocs-max-h-60 wedocs-w-full wedocs-overflow-auto wedocs-rounded-md wedocs-bg-white wedocs-py-1 wedocs-text-base wedocs-shadow-lg wedocs-ring-1 wedocs-ring-black wedocs-ring-opacity-5 focus:wedocs-outline-none sm:wedocs-text-sm">
 						{ options?.map( ( page ) => (
 							<li
 								key={ page?.id }
 								onClick={ () => handleSelectBox( page ) }
-								className="cursor-pointer text-gray-900 flex hover:bg-[#F9FAFB] items-center select-none py-2 px-4"
+								className="wedocs-cursor-pointer wedocs-text-gray-900 wedocs-flex hover:wedocs-bg-[#F9FAFB] wedocs-items-center wedocs-select-none wedocs-py-2 wedocs-px-4"
 							>
 								<label
 									htmlFor="multi-select"
-									className="pl-2.5 font-normal block truncate d-block w-full"
+									className="wedocs-pl-2.5 wedocs-font-normal wedocs-block wedocs-truncate d-block wedocs-w-full"
 								>
 									{ sprintf(
 										__( '%s', 'wedocs' ),
@@ -130,7 +130,7 @@ const PageSelectionBox = ( { boxId, options, settingsData, setSettings } ) => {
 									?.map( ( pageObj ) => pageObj?.id )
 									.includes( page?.id ) && (
 									<CheckIcon
-										className="h-5 w-5 ml-auto text-indigo-700"
+										className="wedocs-h-5 wedocs-w-5 wedocs-ml-auto wedocs-text-indigo-700"
 										aria-hidden="true"
 									/>
 								) }

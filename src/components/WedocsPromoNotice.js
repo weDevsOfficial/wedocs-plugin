@@ -38,13 +38,13 @@ const WedocsPromoNotice = () => {
   }
 
   return (
-    <div className="notice notice-success wedocs-notice flex p-0 relative" id="wedocs-promotion-notice">
-        <div className="wedocs-logo-wrapper flex mr-[20px]">
-            <img src={promoNotice.logo_url} alt="weDocs Icon" className="max-w-none"/>
+    <div className="notice notice-success wedocs-notice wedocs-flex wedocs-p-0 wedocs-relative" id="wedocs-promotion-notice">
+        <div className="wedocs-logo-wrapper wedocs-flex wedocs-mr-[20px]">
+            <img src={promoNotice.logo_url} alt="weDocs Icon" className="wedocs-max-w-none"/>
         </div>
-        <div className="wedocs-notice-content-wrapper pr-[5px]">
-            <h3 className="text-lg font-semibold mt-4 mb-2">{ promoNotice.title }</h3>
-            <p><b className="text-#3c434a font-[600]">{ promoNotice.content }</b></p>
+        <div className="wedocs-notice-content-wrapper wedocs-pr-[5px]">
+            <h3 className="wedocs-text-lg wedocs-font-semibold wedocs-mt-4 wedocs-mb-2">{ promoNotice.title }</h3>
+            <p><b className="wedocs-text-#3c434a wedocs-font-[600]">{ promoNotice.content }</b></p>
             <a href={ promoNotice.action_url } className="button button-primary">{ promoNotice.action_title }</a>
         </div>
         <button type="button" className="notice-dismiss" onClick={handleDismiss}><span className="screen-reader-text">{ __( 'Dismiss this notice', 'wedocs' ) }</span></button>

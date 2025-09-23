@@ -29,32 +29,32 @@ const PermissionSettings = () => {
 
     return (
         <section>
-            <div className="shadow sm:rounded-md bg-white overflow-hidden min-h-[500px]">
-                <div className="py-4 px-8 sm:px-8 sm:py-4">
-                    <h2 className="text-gray-900 font-medium text-lg">
+            <div className="wedocs-shadow sm:wedocs-rounded-md wedocs-bg-white wedocs-overflow-hidden wedocs-min-h-[500px]">
+                <div className="wedocs-py-4 wedocs-px-8 sm:wedocs-px-8 sm:wedocs-py-4">
+                    <h2 className="wedocs-text-gray-900 wedocs-font-medium wedocs-text-lg">
                         { __( 'Permission Management', 'wedocs' ) }
                     </h2>
                 </div>
-                <hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200" />
+                <hr className="wedocs-h-px !wedocs-bg-gray-200 wedocs-border-0 dark:!wedocs-bg-gray-200" />
                 <div
-                    className='pt-6 pb-20 px-8 grid grid-cols-4 auto-rows-max gap-5 relative min-h-[439px]'
+                    className='wedocs-pt-6 wedocs-pb-20 wedocs-px-8 wedocs-grid wedocs-grid-cols-4 wedocs-auto-rows-max wedocs-gap-5 wedocs-relative wedocs-min-h-[439px]'
                     onMouseEnter={ () => setShowOverlay( true ) }
                     onMouseLeave={ () => setShowOverlay( false ) }
                 >
                     { permissionFields &&
                         permissionFields?.map( ( field, fieldIndex ) => (
-                        <div className="col-span-4" key={ fieldIndex }>
-                            <div className="settings-content flex items-center justify-between">
-                                <div className="settings-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+                        <div className="wedocs-col-span-4" key={ fieldIndex }>
+                            <div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
+                                <div className="settings-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
                                     <label
-                                        className="block text-sm font-medium text-gray-700"
+                                        className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-700"
                                         id="headlessui-listbox-label-15"
                                         data-headlessui-state="open"
                                     >
                                         { field?.title }
                                     </label>
                                     <div
-                                        className="tooltip cursor-pointer ml-2"
+                                        className="tooltip wedocs-cursor-pointer wedocs-ml-2"
                                         data-tip={ field?.tooltip }
                                     >
                                         <svg
@@ -73,20 +73,20 @@ const PermissionSettings = () => {
                                         </svg>
                                     </div>
                                 </div>
-                                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+                                <div className="settings-field wedocs-w-full wedocs-max-w-[490px] wedocs-mt-1 wedocs-ml-auto flex-2">
                                     <div className="multiSelectBox">
-                                        <div className="relative mb-2">
-                                            <button className="w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-                                                <span className="block multiSelectBox truncate">
+                                        <div className="wedocs-relative wedocs-mb-2">
+                                            <button className="wedocs-w-full wedocs-cursor-pointer wedocs-rounded-md wedocs-border wedocs-border-gray-300 wedocs-bg-white wedocs-py-2 wedocs-pl-3 wedocs-pr-10 wedocs-text-left wedocs-shadow-sm focus:wedocs-border-indigo-500 focus:wedocs-outline-none focus:wedocs-ring-1 focus:wedocs-ring-indigo-500 sm:wedocs-text-sm">
+                                                <span className="wedocs-block multiSelectBox wedocs-truncate">
                                                     { __( '6 roles selected', 'wedocs' ) }
                                                 </span>
-                                                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                <span className="wedocs-pointer-events-none wedocs-absolute wedocs-inset-y-0 wedocs-right-0 wedocs-flex wedocs-items-center wedocs-pr-2">
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         viewBox="0 0 20 20"
                                                         fill="currentColor"
                                                         aria-hidden="true"
-                                                        className="h-5 w-5 text-gray-400"
+                                                        className="wedocs-h-5 wedocs-w-5 wedocs-text-gray-400"
                                                     >
                                                         <path
                                                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -101,13 +101,13 @@ const PermissionSettings = () => {
                             </div>
                             { field?.permissionObj &&
                               field?.permissionObj?.length > 0 && (
-                                <div className="settings-description max-w-[490px] ml-auto">
-                                    <div className="active-roles inline-flex flex-wrap items-center gap-2.5">
+                                <div className="settings-description wedocs-max-w-[490px] wedocs-ml-auto">
+                                    <div className="active-roles wedocs-inline-flex wedocs-flex-wrap wedocs-items-center wedocs-gap-2.5">
                                         { field?.permissionObj?.map(
                                           ( role, index ) => (
                                             <span
                                               key={ index }
-                                              className="inline-flex items-center gap-1 rounded-md bg-gray-100 px-2.5 py-0.5 text-sm text-gray-800"
+                                              className="wedocs-inline-flex wedocs-items-center wedocs-gap-1 wedocs-rounded-md wedocs-bg-gray-100 wedocs-px-2.5 wedocs-py-0.5 wedocs-text-sm wedocs-text-gray-800"
                                             >
                                                 { sprintf(
                                                     __(
@@ -129,7 +129,7 @@ const PermissionSettings = () => {
                                                       1.5
                                                   }
                                                   stroke="currentColor"
-                                                  className="w-4 h-4 cursor-pointer"
+                                                  className="wedocs-w-4 wedocs-h-4 wedocs-cursor-pointer"
                                                 >
                                                     <path
                                                       strokeLinecap="round"
@@ -145,7 +145,7 @@ const PermissionSettings = () => {
                               ) }
                         </div>
                       ) ) }
-                    <Overlay classes={ `${ showOverlay ? 'flex items-center justify-center' : 'hidden' }` } />
+                    <Overlay classes={ `${ showOverlay ? 'wedocs-flex wedocs-items-center wedocs-justify-center' : 'wedocs-hidden' }` } />
                 </div>
             </div>
         </section>

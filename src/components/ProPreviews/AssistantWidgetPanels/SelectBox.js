@@ -46,21 +46,21 @@ const SelectBox = ( {
 	}, [ settingsData?.assistant?.preference?.[ settingsName ]?.[ fieldName ] ] );
 
 	return (
-		<div className={ `${ classes } h-8` }>
+		<div className={ `${ classes } wedocs-h-8` }>
 			<Listbox
 				value={ selected }
 				onChange={ ( selectedObj ) =>
 					handleOptionSelection( selectedObj )
 				}
 			>
-				<div className="relative">
-					<Listbox.Button className="relative w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-						<span className="block truncate">
+				<div className="wedocs-relative">
+					<Listbox.Button className="wedocs-relative wedocs-w-full wedocs-cursor-pointer wedocs-rounded-md wedocs-border wedocs-border-gray-300 wedocs-bg-white wedocs-py-2 wedocs-pl-3 wedocs-pr-10 wedocs-text-left wedocs-shadow-sm focus:wedocs-border-indigo-500 focus:wedocs-outline-none focus:wedocs-ring-1 focus:wedocs-ring-indigo-500 sm:wedocs-text-sm">
+						<span className="wedocs-block wedocs-truncate">
 							{ selected.value }
 						</span>
-						<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+						<span className="wedocs-pointer-events-none wedocs-absolute wedocs-inset-y-0 wedocs-right-0 wedocs-flex wedocs-items-center wedocs-pr-2">
 							<ChevronUpDownIcon
-								className="h-5 w-5 text-gray-400"
+								className="wedocs-h-5 wedocs-w-5 wedocs-text-gray-400"
 								aria-hidden="true"
 							/>
 						</span>
@@ -71,20 +71,20 @@ const SelectBox = ( {
 						leaveFrom="opacity-100"
 						leaveTo="opacity-0"
 					>
-						<Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+						<Listbox.Options className="wedocs-absolute wedocs-z-10 wedocs-mt-1 wedocs-max-h-60 wedocs-w-full wedocs-overflow-auto wedocs-rounded-md wedocs-bg-white wedocs-py-1 wedocs-text-base wedocs-shadow-lg wedocs-ring-1 wedocs-ring-black wedocs-ring-opacity-5 focus:wedocs-outline-none sm:wedocs-text-sm">
 							{ options.map( ( option ) => (
 								<Listbox.Option
 									key={ option?.key }
 									className={ ( { active } ) =>
-										`relative cursor-pointer select-none py-2 px-4 pr-4 ${
+										`wedocs-relative wedocs-cursor-pointer wedocs-select-none wedocs-py-2 wedocs-px-4 wedocs-pr-4 ${
 											active
-												? 'bg-indigo-700 text-white'
-												: 'text-gray-900'
+												? 'wedocs-bg-indigo-700 wedocs-text-white'
+												: 'wedocs-text-gray-900'
 										}`
 									}
 									value={ option }
 								>
-									<span className="block truncate text-sm font-normal">
+									<span className="wedocs-block wedocs-truncate wedocs-text-sm wedocs-font-normal">
 										{ option?.value }
 									</span>
 								</Listbox.Option>

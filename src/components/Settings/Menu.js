@@ -34,21 +34,21 @@ const Menu = () => {
       { Object.entries( menus ).map( ( tab, index ) => (
         <Fragment key={ index }>
           { !tab[ 1 ]?.disabled ? (
-            <Tab className="settings-tab w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer">
+            <Tab className="settings-tab wedocs-w-full focus:wedocs-outline-0 !wedocs-text-black aria-selected:wedocs-text-gray-600 aria-selected:wedocs-bg-gray-100 hover:wedocs-text-gray-600 hover:wedocs-bg-gray-100 wedocs-group wedocs-rounded-md wedocs-px-5 wedocs-py-3 wedocs-flex wedocs-items-center wedocs-text-sm wedocs-font-medium wedocs-cursor-pointer">
               { tab[ 1 ]?.icon }
-              <span className="truncate">{ __( tab[ 1 ]?.text, 'wedocs' ) }</span>
+              <span className="wedocs-truncate">{ __( tab[ 1 ]?.text, 'wedocs' ) }</span>
               { tab[ 1 ]?.pro && <Badge /> }
             </Tab>
           ) : (
             <Fragment>
               <div
                 onClick={ () => setShowSubTabs( !showSubTabs ) }
-                className={ `disable-tab-item settings-tab w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer` }
+                className={ `disable-tab-item settings-tab wedocs-w-full focus:wedocs-outline-0 !wedocs-text-black aria-selected:wedocs-text-gray-600 aria-selected:wedocs-bg-gray-100 hover:wedocs-text-gray-600 hover:wedocs-bg-gray-100 wedocs-group wedocs-rounded-md wedocs-px-5 wedocs-py-3 wedocs-flex wedocs-items-center wedocs-text-sm wedocs-font-medium wedocs-cursor-pointer` }
               >
                 { tab[ 1 ]?.icon }
-                <span className="truncate">{ tab[ 1 ]?.text }</span>
+                <span className="wedocs-truncate">{ tab[ 1 ]?.text }</span>
                 { tab[ 1 ]?.pro && <Badge /> }
-                <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#6b7280" className="w-5 h-5 ml-auto">
+                <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#6b7280" className="wedocs-w-5 wedocs-h-5 wedocs-ml-auto">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                 </svg>
               </div>
@@ -56,11 +56,11 @@ const Menu = () => {
                 <Tab
                   key={ index }
                   disabled={ subtab?.disabled }
-                  className={ `${ showSubTabs ? '' : 'hidden' } settings-sub-tab w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium` }
+                  className={ `${ showSubTabs ? '' : 'wedocs-hidden' } settings-sub-tab wedocs-w-full focus:wedocs-outline-0 !wedocs-text-black aria-selected:wedocs-text-gray-600 aria-selected:wedocs-bg-gray-100 hover:wedocs-text-gray-600 hover:wedocs-bg-gray-100 wedocs-group wedocs-rounded-md wedocs-px-5 wedocs-py-3 wedocs-flex wedocs-items-center wedocs-text-sm wedocs-font-medium` }
                 >
-                  <div className={ `pro-sub-settings ml-9 flex items-center w-full` }>
+                  <div className={ `pro-sub-settings wedocs-ml-9 wedocs-flex wedocs-items-center wedocs-w-full` }>
                     { subtab?.icon }
-                    <span className="truncate">{ subtab?.text }</span>
+                    <span className="wedocs-truncate">{ subtab?.text }</span>
                     { subtab?.pro && <Badge /> }
                   </div>
                 </Tab>

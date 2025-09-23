@@ -48,11 +48,11 @@ const UpgradePopup = ({ children }) => {
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <div className='fixed inset-0 bg-black bg-opacity-25' />
+            <div className='wedocs-fixed wedocs-inset-0 wedocs-bg-black wedocs-bg-opacity-25' />
           </Transition.Child>
 
-          <div className='fixed inset-0 overflow-y-auto'>
-            <div className='flex min-h-full items-center justify-center p-4 text-center'>
+          <div className='wedocs-fixed wedocs-inset-0 wedocs-overflow-y-auto'>
+            <div className='wedocs-flex wedocs-min-h-full wedocs-items-center wedocs-justify-center wedocs-p-4 wedocs-text-center'>
               <Transition.Child
                 as={ Fragment }
                 enter='ease-out duration-300'
@@ -62,10 +62,10 @@ const UpgradePopup = ({ children }) => {
                 leaveFrom='opacity-100 scale-100'
                 leaveTo='opacity-0 scale-95'
               >
-                <Dialog.Panel className='w-full fixed max-w-[1008px] transform overflow-hidden rounded-md bg-white py-10 px-20 text-left align-middle shadow-xl transition-all'>
-                  <div className='modal-body grid grid-flow-col auto-cols-[1fr] items-end mx-auto'>
-                    <div className='content-area space-y-[22px]'>
-                      <div className='popup-close-button absolute top-10 right-10 cursor-pointer' onClick={ closeModal }>
+                <Dialog.Panel className='wedocs-w-full wedocs-fixed wedocs-max-w-[1008px] wedocs-transform wedocs-overflow-hidden wedocs-rounded-md wedocs-bg-white wedocs-py-10 wedocs-px-20 wedocs-text-left wedocs-align-middle wedocs-shadow-xl wedocs-transition-all'>
+                  <div className='modal-body wedocs-grid wedocs-grid-flow-col wedocs-auto-cols-[1fr] wedocs-items-end wedocs-mx-auto'>
+                    <div className='content-area wedocs-space-y-[22px]'>
+                      <div className='popup-close-button wedocs-absolute wedocs-top-10 wedocs-right-10 wedocs-cursor-pointer' onClick={ closeModal }>
                         <svg width='16' height='16' fill='#999'>
                           <path d='M.781 16a.78.78 0 0 1-.722-.482.78.78 0 0 1 .169-.851L14.666.229a.78.78 0 0 1 1.105 0 .78.78 0 0 1 0 1.105L1.334 15.771A.78.78 0 0 1 .781 16z '/>
                           <path d='M15.219 16a.78.78 0 0 1-.553-.229L.229 1.334a.78.78 0 0 1 0-1.105.78.78 0 0 1 1.105 0l14.437 14.437a.78.78 0 0 1 .169.851.78.78 0 0 1-.722.482z' />
@@ -73,11 +73,11 @@ const UpgradePopup = ({ children }) => {
                       </div>
                       <Dialog.Title
                         as='h2'
-                        className='text-lg font-medium leading-6 text-gray-900 !mt-1'
+                        className='wedocs-text-lg wedocs-font-medium wedocs-leading-6 wedocs-text-gray-900 !wedocs-mt-1'
                       >
                         <div className='popup-header'>
-                          <div className='popup-diamond flex items-center space-x-3'>
-                            <div className='diamond-img p-1.5 rounded-md'>
+                          <div className='popup-diamond wedocs-flex wedocs-items-center wedocs-space-x-3'>
+                            <div className='diamond-img wedocs-p-1.5 wedocs-rounded-md'>
                               <svg width='32' height='30' fill='none'>
                                 <path d='M22.365 16l-6.286 14 15.455-14h-9.169z' fill='#fbdd7e' />
                                 <path d='M7.112 8L.624 15.347h9.302L7.112 8z' fill='#ffcd73' />
@@ -92,95 +92,95 @@ const UpgradePopup = ({ children }) => {
                                 <path d='M15.889 1v4M8.351 2l3.122 2.828M23.427 2l-3.122 2.828' stroke='#ff8c5a' strokeLinecap='round' />
                               </svg>
                             </div>
-                            <h2 className='font-orange header-one font-semibold text-3xl text-[#ff9000] leading-[3rem]'>{ __( 'Upgrade to', 'wedocs' ) }</h2>
+                            <h2 className='font-orange header-one wedocs-font-semibold wedocs-text-3xl wedocs-text-[#ff9000] wedocs-leading-[3rem]'>{ __( 'Upgrade to', 'wedocs' ) }</h2>
                           </div>
-                          <h2 className='header-two text-3xl font-normal leading-[3rem]'>
-                            weDocs <span className='font-bold'>Pro</span>
+                          <h2 className='header-two wedocs-text-3xl wedocs-font-normal wedocs-leading-[3rem]'>
+                            weDocs <span className='wedocs-font-bold'>Pro</span>
                           </h2>
-                          <h2 className='header-three text-[#656668] mb-0.5 pr-16 font-normal text-xl leading-8'>
+                          <h2 className='header-three wedocs-text-[#656668] wedocs-mb-0.5 wedocs-pr-16 wedocs-font-normal wedocs-text-xl wedocs-leading-8'>
                             { __( 'to experience even more Powerful features 🎉', 'wedocs' ) }
                           </h2>
                         </div>
                       </Dialog.Title>
-                      <div className='popup-list-area mb-[60px] space-y-0.5'>
-                        <div className='single-checklist flex'>
-                          <div className='check-icon mt-[13px] mr-3.5'>
-                            <div className='check-img bg-[#139f84] py-1.5 px-[5px] rounded-full'>
+                      <div className='popup-list-area wedocs-mb-[60px] wedocs-space-y-0.5'>
+                        <div className='single-checklist wedocs-flex'>
+                          <div className='check-icon wedocs-mt-[13px] wedocs-mr-3.5'>
+                            <div className='check-img wedocs-bg-[#139f84] wedocs-py-1.5 wedocs-px-[5px] wedocs-rounded-full'>
                               <svg width='10' height='8' fill='none'>
                                 <path fillRule='evenodd' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z' fill='#fff' />
                               </svg>
                             </div>
                           </div>
                           <div className='check-list'>
-                            <p className='text-[#656668] mb-0.5 mt-[13px] pr-8 text-[13px] leading-normal font-normal'>
-                              <span className='font-medium text-black'>{ __( 'Role based permission management ', 'wedocs' ) }</span>
+                            <p className='wedocs-text-[#656668] wedocs-mb-0.5 wedocs-mt-[13px] wedocs-pr-8 wedocs-text-[13px] wedocs-leading-normal wedocs-font-normal'>
+                              <span className='wedocs-font-medium wedocs-text-black'>{ __( 'Role based permission management ', 'wedocs' ) }</span>
                               { __( 'or viewing, managing, and configuring permission settings.', 'wedocs' ) }
                             </p>
                           </div>
                         </div>
-                        <div className='single-checklist flex'>
-                          <div className='check-icon mt-[13px] mr-3.5'>
-                            <div className='check-img bg-[#139f84] py-1.5 px-[5px] rounded-full'>
+                        <div className='single-checklist wedocs-flex'>
+                          <div className='check-icon wedocs-mt-[13px] wedocs-mr-3.5'>
+                            <div className='check-img wedocs-bg-[#139f84] wedocs-py-1.5 wedocs-px-[5px] wedocs-rounded-full'>
                               <svg width='10' height='8' fill='none'>
                                 <path fillRule='evenodd' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z' fill='#fff' />
                               </svg>
                             </div>
                           </div>
                           <div className='check-list'>
-                            <p className='text-[#656668] mb-0.5 mt-[13px] pr-8 text-[13px] leading-normal font-normal'>
-                              <span className='font-medium text-black'>{ __( 'Arrange content automatically or manually ', 'wedocs' ) }</span>
+                            <p className='wedocs-text-[#656668] wedocs-mb-0.5 wedocs-mt-[13px] wedocs-pr-8 wedocs-text-[13px] wedocs-leading-normal wedocs-font-normal'>
+                              <span className='wedocs-font-medium wedocs-text-black'>{ __( 'Arrange content automatically or manually ', 'wedocs' ) }</span>
                               { __( 'giving you full control over its presentation.', 'wedocs' ) }
                             </p>
                           </div>
                         </div>
-                        <div className='single-checklist flex'>
-                          <div className='check-icon mt-[13px] mr-3.5'>
-                            <div className='check-img bg-[#139f84] py-1.5 px-[5px] rounded-full'>
+                        <div className='single-checklist wedocs-flex'>
+                          <div className='check-icon wedocs-mt-[13px] wedocs-mr-3.5'>
+                            <div className='check-img wedocs-bg-[#139f84] wedocs-py-1.5 wedocs-px-[5px] wedocs-rounded-full'>
                               <svg width='10' height='8' fill='none'>
                                 <path fillRule='evenodd' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z' fill='#fff' />
                               </svg>
                             </div>
                           </div>
                           <div className='check-list'>
-                            <p className='text-[#656668] mb-0.5 mt-[13px] pr-8 text-[13px] leading-normal font-normal'>
-                              <span className='font-medium text-black'>{ __( 'Personalize messaging tab with custom titles ', 'wedocs' ) }</span>
+                            <p className='wedocs-text-[#656668] wedocs-mb-0.5 wedocs-mt-[13px] wedocs-pr-8 wedocs-text-[13px] wedocs-leading-normal wedocs-font-normal'>
+                              <span className='wedocs-font-medium wedocs-text-black'>{ __( 'Personalize messaging tab with custom titles ', 'wedocs' ) }</span>
                               { __( 'and messages for seamless communication.', 'wedocs' ) }
                             </p>
                           </div>
                         </div>
-                        <div className='single-checklist flex'>
-                          <div className='check-icon mt-[13px] mr-3.5'>
-                            <div className='check-img bg-[#139f84] py-1.5 px-[5px] rounded-full'>
+                        <div className='single-checklist wedocs-flex'>
+                          <div className='check-icon wedocs-mt-[13px] wedocs-mr-3.5'>
+                            <div className='check-img wedocs-bg-[#139f84] wedocs-py-1.5 wedocs-px-[5px] wedocs-rounded-full'>
                               <svg width='10' height='8' fill='none'>
                                 <path fillRule='evenodd' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z' fill='#fff' />
                               </svg>
                             </div>
                           </div>
                           <div className='check-list'>
-                            <p className='text-[#656668] mb-0.5 mt-[13px] pr-14 text-[13px] leading-normal font-normal'>
+                            <p className='wedocs-text-[#656668] wedocs-mb-0.5 wedocs-mt-[13px] wedocs-pr-14 wedocs-text-[13px] wedocs-leading-normal wedocs-font-normal'>
                               { __( 'Customize with ', 'wedocs' ) }
-                              <span className='font-medium text-black'>{ __( 'design widgets, colors, and pre-built options ', 'wedocs' ) }</span>
+                              <span className='wedocs-font-medium wedocs-text-black'>{ __( 'design widgets, colors, and pre-built options ', 'wedocs' ) }</span>
                               { __( 'for an appealing interface.', 'wedocs' ) }
                             </p>
                           </div>
                         </div>
-                        <div className='single-checklist flex'>
-                          <div className='check-icon mt-[13px] mr-3.5'>
-                            <div className='check-img bg-[#139f84] py-1.5 px-[5px] rounded-full'>
+                        <div className='single-checklist wedocs-flex'>
+                          <div className='check-icon wedocs-mt-[13px] wedocs-mr-3.5'>
+                            <div className='check-img wedocs-bg-[#139f84] wedocs-py-1.5 wedocs-px-[5px] wedocs-rounded-full'>
                               <svg width='10' height='8' fill='none'>
                                 <path fillRule='evenodd' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z' fill='#fff' />
                               </svg>
                             </div>
                           </div>
                           <div className='check-list'>
-                            <p className='text-[#656668] mb-0.5 mt-[13px] pr-14 text-[13px] leading-normal font-normal'>
-                              <span className='font-medium text-black'>{ __( 'Get assisted by A.I. Powered Chatbot ', 'wedocs' ) }</span>
+                            <p className='wedocs-text-[#656668] wedocs-mb-0.5 wedocs-mt-[13px] wedocs-pr-14 wedocs-text-[13px] wedocs-leading-normal wedocs-font-normal'>
+                              <span className='wedocs-font-medium wedocs-text-black'>{ __( 'Get assisted by A.I. Powered Chatbot ', 'wedocs' ) }</span>
                               { __( '24/7 with updated information and support.', 'wedocs' ) }
                             </p>
                           </div>
                         </div>
                       </div>
-                      <UpgradeButton classes={ `px-6 py-3.5 !font-normal !mt-14` } />
+                      <UpgradeButton classes={ `wedocs-px-6 wedocs-py-3.5 !wedocs-font-normal !wedocs-mt-14` } />
                     </div>
                     <div className='modal-window-inner'>
                       <div className='slider-area'>
@@ -203,28 +203,28 @@ const UpgradePopup = ({ children }) => {
                                 tabIndex={ 0 }
                                 aria-label={ `${label} ${index + 1}` }
                               >
-                                <span className={ `${ isSelected ? '!bg-[#007f69]' : '!bg-[#909091]' } indicator rounded-full w-2 h-2` }></span>
+                                <span className={ `${ isSelected ? '!wedocs-bg-[#007f69]' : '!wedocs-bg-[#909091]' } indicator wedocs-rounded-full wedocs-w-2 wedocs-h-2` }></span>
                               </span>
                             );
                           }}
                         >
                           { images?.map( ( image, index ) => (
-                            <img key={ index } className='ml-auto !w-[381px] h-[407px]' src={ image?.src } alt={ image?.text } />
+                            <img key={ index } className='wedocs-ml-auto !wedocs-w-[381px] wedocs-h-[407px]' src={ image?.src } alt={ image?.text } />
                           ) ) }
                         </Carousel>
                       </div>
                     </div>
                   </div>
-                  <div className='modal-footer mt-8 mb-0.5'>
-                    <div className='footer-feature flex justify-between'>
-                      <p className='flex items-center'>
-                        <svg className='mr-3.5 mt-0.5' width='10' height='8'>
+                  <div className='modal-footer wedocs-mt-8 wedocs-mb-0.5'>
+                    <div className='footer-feature wedocs-flex wedocs-justify-between'>
+                      <p className='wedocs-flex wedocs-items-center'>
+                        <svg className='wedocs-mr-3.5 wedocs-mt-0.5' width='10' height='8'>
                           <path fillRule='evenodd' fill='#139F84' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z'/>
                         </svg>
                         { __( '10,000+ successful businesses', 'wedocs' ) }
                       </p>
-                      <p className='flex items-center'>
-                        <svg className='mr-3.5 mt-0.5' width='10' height='8'>
+                      <p className='wedocs-flex wedocs-items-center'>
+                        <svg className='wedocs-mr-3.5 wedocs-mt-0.5' width='10' height='8'>
                           <path
                             fill='#139F84'
                             fillRule='evenodd'
@@ -233,8 +233,8 @@ const UpgradePopup = ({ children }) => {
                         </svg>
                         { __( '14 days no questions asked refund policy', 'wedocs' ) }
                       </p>
-                      <p className='flex items-center'>
-                        <svg className='mr-3.5 mt-0.5' width='10' height='8'>
+                      <p className='wedocs-flex wedocs-items-center'>
+                        <svg className='wedocs-mr-3.5 wedocs-mt-0.5' width='10' height='8'>
                           <path
                             fill='#139F84'
                             fillRule='evenodd'

@@ -127,11 +127,11 @@ const Documentations = () => {
   return (
     <>
       <div className="documentation-header my-7">
-        <h1 className="w-full !flex items-center justify-between">
+        <h1 className="wedocs-w-full !wedocs-flex wedocs-items-center wedocs-justify-between">
           { __( 'All Docs', 'wedocs' ) }
           { showActions && (
-            <AddDocModal className="ml-5 mr-auto py-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 ease-in-out duration-200 px-4 text-sm text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-              <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-2 text-base flex items-center"></span>
+            <AddDocModal className="wedocs-ml-5 wedocs-mr-auto wedocs-py-2 wedocs-h-fit wedocs-inline-flex wedocs-items-center wedocs-rounded-md wedocs-border wedocs-border-transparent wedocs-bg-indigo-600 wedocs-ease-in-out wedocs-duration-200 wedocs-px-4 wedocs-text-sm wedocs-text-white wedocs-shadow-sm hover:wedocs-bg-indigo-700 focus:wedocs-outline-none focus:wedocs-ring-2 focus:wedocs-ring-indigo-500 focus:wedocs-ring-offset-2">
+              <span className="dashicons dashicons-plus-alt2 wedocs-w-3.5 wedocs-h-3.5 wedocs-mr-2 wedocs-text-base wedocs-flex wedocs-items-center"></span>
               { __( `New doc`, 'wedocs' ) }
             </AddDocModal>
           ) }
@@ -151,10 +151,10 @@ const Documentations = () => {
       { loading ? <DocsPlaceholder /> : (
         <div
           role="list"
-          className={ `${ documentations.length > 0 ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7' : '' } documentation relative mx-auto` }
+          className={ `${ documentations.length > 0 ? 'wedocs-grid wedocs-grid-cols-1 sm:wedocs-grid-cols-2 lg:wedocs-grid-cols-3 2xl:wedocs-grid-cols-4 wedocs-gap-7' : '' } documentation wedocs-relative wedocs-mx-auto` }
         >
           { searchValue && documentations.length === 0 && (
-            <h2 className="float-left text-lg mt-4">
+            <h2 className="wedocs-float-left wedocs-text-lg wedocs-mt-4">
               { __(
                 'Oops! It seems that your search did not match any existing documents. Please try again...',
                 'wedocs'

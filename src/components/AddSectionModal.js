@@ -90,7 +90,7 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
       </button>
 
       <Transition appear show={ isOpen } as={ Fragment }>
-        <Dialog as="div" className="wedocs-document relative z-[9999]" onClose={ closeModal }>
+        <Dialog as="div" className="wedocs-document wedocs-relative wedocs-z-[9999]" onClose={ closeModal }>
           <Transition.Child
             as={ Fragment }
             enter="ease-out duration-300"
@@ -100,11 +100,11 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25 z-[50]" />
+            <div className="wedocs-fixed wedocs-inset-0 wedocs-bg-black wedocs-bg-opacity-25 wedocs-z-[50]" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto z-[100]">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="wedocs-fixed wedocs-inset-0 wedocs-overflow-y-auto wedocs-z-[100]">
+            <div className="wedocs-flex wedocs-min-h-full wedocs-items-center wedocs-justify-center wedocs-p-4 wedocs-text-center">
               <Transition.Child
                 as={ Fragment }
                 enter="ease-out duration-300"
@@ -114,15 +114,15 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-visible rounded-2xl bg-white py-6 px-9 text-center align-middle shadow-xl transition-all">
+                <Dialog.Panel className="wedocs-w-full wedocs-max-w-md wedocs-transform wedocs-overflow-visible wedocs-rounded-2xl wedocs-bg-white wedocs-py-6 wedocs-px-9 wedocs-text-center wedocs-align-middle wedocs-shadow-xl wedocs-transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-bold text-gray-900 mb-2"
+                    className="wedocs-text-lg wedocs-font-bold wedocs-text-gray-900 wedocs-mb-2"
                   >
                     { __( 'Enter your section title', 'wedocs' ) }
                   </Dialog.Title>
 
-                  <p className="text-gray-500 text-base">
+                  <p className="wedocs-text-gray-500 wedocs-text-base">
                     { __(
                       'Use concise section titles for better navigation',
                       'wedocs'
@@ -131,7 +131,7 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
                     { __( 'E.g., Getting Started', 'wedocs' ) }
                   </p>
 
-                  <div className="relative mt-4 mb-5">
+                  <div className="wedocs-relative wedocs-mt-4 wedocs-mb-5">
                     <input
                       type="text"
                       name="doc_title"
@@ -140,33 +140,33 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
                       required
                       className={ `${
                         formError
-                          ? '!border-red-500 focus:ring-red-500 focus:border-red-500'
-                          : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500'
-                      } h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white` }
+                          ? '!wedocs-border-red-500 focus:wedocs-ring-red-500 focus:wedocs-border-red-500'
+                          : '!wedocs-border-gray-300 focus:wedocs-ring-blue-500 focus:wedocs-border-blue-500'
+                      } wedocs-h-11 wedocs-bg-gray-50 wedocs-text-gray-900 wedocs-text-base !wedocs-rounded-md wedocs-block wedocs-w-full !wedocs-py-2 !wedocs-px-3 dark:wedocs-bg-gray-600 dark:wedocs-border-gray-500 dark:wedocs-placeholder-gray-400 dark:wedocs-text-white` }
                       value={ newDoc.title.raw }
                       onChange={ onTitleChange }
                     />
 
                     { formError && (
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                      <div className="wedocs-pointer-events-none wedocs-absolute wedocs-inset-y-0 wedocs-right-0 wedocs-flex wedocs-items-center wedocs-pr-3">
                         <ExclamationCircleIcon
-                          className="h-5 w-5 text-red-500"
+                          className="wedocs-h-5 wedocs-w-5 wedocs-text-red-500"
                           aria-hidden="true"
                         />
                       </div>
                     ) }
                   </div>
 
-                  <div className="mt-6 flex items-center justify-center space-x-3.5">
+                  <div className="wedocs-mt-6 wedocs-flex wedocs-items-center wedocs-justify-center wedocs-space-x-3.5">
                     <button
-                      className="bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md"
+                      className="wedocs-bg-white hover:wedocs-bg-gray-200 wedocs-text-gray-700 wedocs-font-medium wedocs-text-base wedocs-py-2 wedocs-px-5 wedocs-border wedocs-border-gray-300 wedocs-rounded-md"
                       onClick={ closeModal }
                     >
                       { __( 'Cancel', 'wedocs' ) }
                     </button>
                     <div className={ `doc-publish-btn group relative` }>
                       <button
-                        className="inline-flex justify-between items-center cursor-pointer bg-indigo-600 hover:bg-indigo-800 text-white font-medium text-base py-2 px-5 rounded-md min-w-[122px]"
+                        className="wedocs-inline-flex wedocs-justify-between wedocs-items-center wedocs-cursor-pointer wedocs-bg-indigo-600 hover:wedocs-bg-indigo-800 wedocs-text-white wedocs-font-medium wedocs-text-base wedocs-py-2 wedocs-px-5 wedocs-rounded-md wedocs-min-w-[122px]"
                         ref={ docCreateBtnRef }
                         disabled={ disabled }
                         onClick={ createDoc }
@@ -175,19 +175,19 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
                           { newDoc?.status === 'publish' ? __( 'Publish', 'wedocs' ) : __( 'Draft', 'wedocs' ) }
                           { disabled ? __( 'ing...', 'wedocs' ) : '' }
                           <ChevronDownIcon
-                            className="h-5 w-5 text-white mt-[1px]"
+                            className="wedocs-h-5 wedocs-w-5 wedocs-text-white wedocs-mt-[1px]"
                             aria-hidden="true"
                           />
                         </Fragment>
                       </button>
                       <div
                         id='action-menus'
-                        className={ `hidden cursor-pointer w-44 z-40 bg-white border border-[#DBDBDB] absolute z-10 shadow right-0 py-1 rounded-md mt-0.5 group-hover:block after:content-[''] before:content-[''] after:absolute before:absolute after:w-[13px] before:w-[70%] before:-right-[1px] after:h-[13px] before:h-3 before:mt-3 after:top-[-7px] before:-top-6 after:right-[1.4rem] after:z-[-1] after:bg-white after:border after:border-[#DBDBDB] after:!rotate-45 after:border-r-0 after:border-b-0` }
+                        className={ `wedocs-hidden wedocs-cursor-pointer wedocs-w-44 wedocs-z-40 wedocs-bg-white wedocs-border wedocs-border-[#DBDBDB] wedocs-absolute wedocs-z-10 wedocs-shadow wedocs-right-0 wedocs-py-1 wedocs-rounded-md wedocs-mt-0.5 group-hover:wedocs-block after:content-[''] before:content-[''] after:wedocs-absolute before:wedocs-absolute after:wedocs-w-[13px] before:wedocs-w-[70%] before:-wedocs-right-[1px] after:wedocs-h-[13px] before:wedocs-h-3 before:wedocs-mt-3 after:wedocs-top-[-7px] before:-wedocs-top-6 after:wedocs-right-[1.4rem] after:wedocs-z-[-1] after:wedocs-bg-white after:wedocs-border after:wedocs-border-[#DBDBDB] after:!wedocs-rotate-45 after:wedocs-border-r-0 after:wedocs-border-b-0` }
                       >
-                      <span onClick={ () => sectionStatusHandler( 'draft' ) } className="flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none">
+                      <span onClick={ () => sectionStatusHandler( 'draft' ) } className="wedocs-flex wedocs-items-center wedocs-py-2 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-gray-700 hover:wedocs-bg-indigo-700 hover:wedocs-text-white !wedocs-shadow-none">
                         { __( 'Create and Draft', 'wedocs' ) }
                       </span>
-                      <span onClick={ () => sectionStatusHandler( 'publish' ) } className="flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none">
+                      <span onClick={ () => sectionStatusHandler( 'publish' ) } className="wedocs-flex wedocs-items-center wedocs-py-2 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-gray-700 hover:wedocs-bg-indigo-700 hover:wedocs-text-white !wedocs-shadow-none">
                         { __( 'Create and Publish', 'wedocs' ) }
                       </span>
                       </div>

@@ -55,25 +55,25 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 	return (
 		<div className={ `preference-settings` }>
 			<div className={ `preference-label` }>
-				<h3 className={ `text-base text-[#111827] font-medium leading-5` }>
+				<h3 className={ `wedocs-text-base wedocs-text-[#111827] wedocs-font-medium wedocs-leading-5` }>
 					{ __( 'Widget Settings', 'wedocs' ) }
 				</h3>
-				<hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200 mt-5 mb-6" />
+				<hr className="wedocs-h-px !wedocs-bg-gray-200 wedocs-border-0 dark:!wedocs-bg-gray-200 wedocs-mt-5 wedocs-mb-6" />
 			</div>
-			<div className="appearance-widget-settings relative">
-				<div className="grid grid-cols-4 gap-5">
-					<div className="col-span-4">
-						<div className="settings-content flex items-center justify-between">
-							<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+			<div className="appearance-widget-settings wedocs-relative">
+				<div className="wedocs-grid wedocs-grid-cols-4 wedocs-gap-5">
+					<div className="wedocs-col-span-4">
+						<div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
+							<div className="settings-field-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
 								<label
-									className="block text-sm font-medium text-gray-600"
+									className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
 									id="headlessui-listbox-label-15"
 									data-headlessui-state="open"
 								>
 									{ __( 'Hide from Pages', 'wedocs' ) }
 								</label>
 								<div
-									className="tooltip cursor-pointer ml-2"
+									className="tooltip wedocs-cursor-pointer wedocs-ml-2"
 									data-tip={ __(
 										'Prevent the widget from appearing on specific pages',
 										'wedocs'
@@ -95,15 +95,15 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 									</svg>
 								</div>
 							</div>
-							<div className="settings-field w-full max-w-[490px] ml-auto -mt-1 flex-2">
+							<div className="settings-field wedocs-w-full wedocs-max-w-[490px] wedocs-ml-auto wedocs--mt-1 wedocs-flex-2">
 								<div className="pageSelectionBox">
-									<div className="relative mb-2">
-										<button className="w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-											<div className="active-roles inline-flex flex-wrap items-center gap-2.5">
+									<div className="wedocs-relative wedocs-mb-2">
+										<button className="wedocs-w-full wedocs-cursor-pointer wedocs-rounded-md wedocs-border wedocs-border-gray-300 wedocs-bg-white wedocs-py-2 wedocs-pl-3 wedocs-pr-10 wedocs-text-left wedocs-shadow-sm focus:wedocs-border-indigo-500 focus:wedocs-outline-none focus:wedocs-ring-1 focus:wedocs-ring-indigo-500 sm:wedocs-text-sm">
+											<div className="active-roles wedocs-inline-flex wedocs-flex-wrap wedocs-items-center wedocs-gap-2.5">
 												{ pages.map( ( page ) => (
 													<span
 														key={ page?.id }
-														className="inline-flex items-center gap-1 rounded-md bg-gray-100 px-2.5 py-0.5 text-sm text-gray-800"
+														className="wedocs-inline-flex wedocs-items-center wedocs-gap-1 wedocs-rounded-md wedocs-bg-gray-100 wedocs-px-2.5 wedocs-py-0.5 wedocs-text-sm wedocs-text-gray-800"
 													>
 														{ page?.title?.rendered }
 														<svg
@@ -112,7 +112,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 															viewBox="0 0 24 24"
 															strokeWidth={ 3.5 }
 															stroke="currentColor"
-															className="w-3 h-3 cursor-pointer text-gray-400"
+															className="wedocs-w-3 wedocs-h-3 wedocs-cursor-pointer wedocs-text-gray-400"
 														>
 															<path
 																strokeLinecap="round"
@@ -131,9 +131,9 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 					</div>
 					<div className="col-span-4">
 						<div className="settings-content flex items-center justify-between">
-							<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+							<div className="settings-field-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
 								<label
-									className="block text-sm font-medium text-gray-600"
+									className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
 									id="headlessui-listbox-label-15"
 									data-headlessui-state="open"
 								>
@@ -143,7 +143,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 									) }
 								</label>
 								<div
-									className="tooltip cursor-pointer ml-2"
+									className="tooltip wedocs-cursor-pointer wedocs-ml-2"
 									data-tip={ __(
 										'Choose an appropriate font size for tab first sub-title',
 										'wedocs'
@@ -165,7 +165,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 									</svg>
 								</div>
 							</div>
-							<div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+							<div className="settings-field wedocs-w-full wedocs-max-w-[490px] wedocs-ml-auto wedocs-flex-2">
 								<FontSettings
 									name={ 'widget_title_font' }
 									classes={ `justify-end` }
@@ -177,9 +177,9 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 					</div>
 					<div className="col-span-4">
 						<div className="settings-content flex items-center justify-between">
-							<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+							<div className="settings-field-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
 								<label
-									className="block text-sm font-medium text-gray-600"
+									className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
 									id="headlessui-listbox-label-15"
 									data-headlessui-state="open"
 								>
@@ -189,7 +189,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 									) }
 								</label>
 								<div
-									className="tooltip cursor-pointer ml-2"
+									className="tooltip wedocs-cursor-pointer wedocs-ml-2"
 									data-tip={ __(
 										'Choose an appropriate font size for tab second sub-title',
 										'wedocs'
@@ -211,8 +211,8 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 									</svg>
 								</div>
 							</div>
-							<div className="settings-field w-full max-w-[490px] ml-auto flex-2">
-								<div className="relative">
+							<div className="settings-field wedocs-w-full wedocs-max-w-[490px] wedocs-ml-auto wedocs-flex-2">
+								<div className="wedocs-relative">
 									<FontSettings
 										name={ 'widget_description_font' }
 										classes={ `justify-end` }
@@ -226,13 +226,13 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 				</div>
 			</div>
 
-			<h2 className="text-gray-900 font-medium text-base leading-none mt-8">
+			<h2 className="wedocs-text-gray-900 wedocs-font-medium wedocs-text-base wedocs-leading-none wedocs-mt-8">
 				{ __( 'Color Palette Settings', 'wedocs' ) }
 			</h2>
-			<hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200 my-5" />
-			<div className="appearance-color-settings relative">
+			<hr className="wedocs-h-px !wedocs-bg-gray-200 wedocs-border-0 dark:!wedocs-bg-gray-200 wedocs-my-5" />
+			<div className="appearance-color-settings wedocs-relative">
 				<RadioGroup value={ colorBy[ 0 ] }>
-					<div className="mb-10 grid grid-cols-3 !gap-6 sm:grid-cols-3 sm:gap-x-4">
+					<div className="wedocs-mb-10 wedocs-grid wedocs-grid-cols-3 !wedocs-gap-6 sm:wedocs-grid-cols-3 sm:wedocs-gap-x-4">
 						{ colorBy.map( ( color ) => (
 							<RadioGroup.Option
 								key={ color?.field }
@@ -240,38 +240,38 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 								className={ ( { checked, active } ) =>
 									classNames(
 										checked
-											? 'border-transparent'
-											: 'border-gray-300',
+											? 'wedocs-border-transparent'
+											: 'wedocs-border-gray-300',
 										active
-											? 'border-indigo-600 ring-2 ring-indigo-600'
+											? 'wedocs-border-indigo-600 wedocs-ring-2 wedocs-ring-indigo-600'
 											: '',
-										'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none'
+										'wedocs-relative wedocs-flex wedocs-cursor-pointer wedocs-rounded-lg wedocs-border wedocs-bg-white wedocs-p-4 wedocs-shadow-sm focus:wedocs-outline-none'
 									)
 								}
 							>
-								<span className="flex">
-									<span className="flex flex-col">
+								<span className="wedocs-flex">
+									<span className="wedocs-flex wedocs-flex-col">
 										<RadioGroup.Label
 											as="span"
-											className="flex items-center text-sm font-medium text-gray-600 mb-0.5"
+											className="wedocs-flex wedocs-items-center wedocs-text-sm wedocs-font-medium wedocs-text-gray-600 wedocs-mb-0.5"
 										>
 											{ color?.title }
 											<div
 												className={ classNames(
 													colorBy[ 0 ]?.field !==
 													color?.field
-														? 'border border-gray-400'
+														? 'wedocs-border wedocs-border-gray-400'
 														: '',
-													'ml-auto rounded-full w-4 h-4'
+													'wedocs-ml-auto wedocs-rounded-full wedocs-w-4 wedocs-h-4'
 												) }
 											>
 												<CheckCircleIcon
 													className={ classNames(
 														colorBy[ 0 ]?.field !==
 														color?.field
-															? 'invisible'
-															: '-mt-0.5',
-														'h-5 w-5 text-indigo-600'
+															? 'wedocs-invisible'
+															: 'wedocs--mt-0.5',
+														'wedocs-h-5 wedocs-w-5 wedocs-text-indigo-600'
 													) }
 													aria-hidden="true"
 												/>
@@ -279,7 +279,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 										</RadioGroup.Label>
 										<RadioGroup.Description
 											as="span"
-											className="mt-1 flex items-center font-medium text-xs !leading-5 text-[#6B7280]"
+											className="wedocs-mt-1 wedocs-flex wedocs-items-center wedocs-font-medium wedocs-text-xs !wedocs-leading-5 wedocs-text-[#6B7280]"
 										>
 											{ color?.description }
 										</RadioGroup.Description>
@@ -287,13 +287,13 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 											className={ classNames(
 												colorBy[ 0 ]?.field ===
 												color?.field
-													? 'border'
-													: 'border-2',
+													? 'wedocs-border'
+													: 'wedocs-border-2',
 												colorBy[ 0 ]?.field ===
 												color?.field
-													? 'border-indigo-600'
-													: 'border-transparent',
-												'pointer-events-none absolute -inset-px rounded-lg'
+													? 'wedocs-border-indigo-600'
+													: 'wedocs-border-transparent',
+												'wedocs-pointer-events-none wedocs-absolute wedocs--inset-px wedocs-rounded-lg'
 											) }
 											aria-hidden="true"
 										/>
@@ -305,23 +305,23 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 				</RadioGroup>
 
 				{ colorBy[ 0 ]?.field === 'custom' && (
-					<div id="custom-heading" className="w-80">
-						<div className="settings-heading md:min-w-[300px] flex items-center justify-between mb-4">
-							<span className="font-bold text-sm text-gray-600">
+					<div id="custom-heading" className="wedocs-w-80">
+						<div className="settings-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-justify-between wedocs-mb-4">
+							<span className="wedocs-font-bold wedocs-text-sm wedocs-text-gray-600">
 								{ __(
 									'Choose Color: ',
 									'wedocs'
 								) }
 							</span>
-							<span className="reset-palette text-sm font-semibold text-indigo-600 hover:text-indigo-700 cursor-pointer">
+							<span className="reset-palette wedocs-text-sm wedocs-font-semibold wedocs-text-indigo-600 hover:wedocs-text-indigo-700 wedocs-cursor-pointer">
 								{ __( 'Reset All', 'wedocs' ) }
 							</span>
 						</div>
-						<hr className="border-t-[#DBDBDB]" />
+						<hr className="wedocs-border-t-[#DBDBDB]" />
 					</div>
 				) }
 
-				<div className="palette-options-container flex gap-24 my-6">
+				<div className="palette-options-container wedocs-flex wedocs-gap-24 wedocs-my-6">
 					<ColorPaletteSettings />
 					<MessagePreview settings={ settingsData } previewColors={ defaultColorPalette } />
 				</div>

@@ -12,13 +12,13 @@ const AddChildrens = ( { docId, sections, className, children } ) => {
         </span>
         <div
           id="action-menus"
-          className="w-40 bg-white border border-[#DBDBDB] mt-2.5 absolute z-[99999] shadow right-0 py-1 rounded-md hidden group-hover:block hover:block after:content-[''] before:content-[''] after:absolute before:absolute after:w-[13px] before:w-full after:h-[13px] before:h-2.5 after:top-[-7px] before:-top-2.5 after:right-[22px] after:z-[-1] after:bg-white after:border after:border-[#DBDBDB] after:!rotate-45 after:border-r-0 after:border-b-0"
+          className="wedocs-w-40 wedocs-bg-white wedocs-border wedocs-border-[#DBDBDB] wedocs-mt-2.5 wedocs-absolute wedocs-z-[99999] wedocs-shadow wedocs-right-0 wedocs-py-1 wedocs-rounded-md wedocs-hidden group-hover:wedocs-block hover:wedocs-block after:wedocs-content-[''] before:wedocs-content-[''] after:wedocs-absolute before:wedocs-absolute after:wedocs-w-[13px] before:wedocs-w-full after:wedocs-h-[13px] before:wedocs-h-2.5 after:wedocs-top-[-7px] before:wedocs--top-2.5 after:wedocs-right-[22px] after:wedocs-z-[-1] after:wedocs-bg-white after:wedocs-border after:wedocs-border-[#DBDBDB] after:!wedocs-rotate-45 after:wedocs-border-r-0 after:wedocs-border-b-0"
         >
           { /* Add article */ }
           <AddArticleModal
             sections={ sections }
             docId={ docId }
-            className="group w-full flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white"
+            className="group wedocs-w-full wedocs-flex wedocs-items-center wedocs-py-2 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-gray-700 hover:wedocs-bg-indigo-700 hover:wedocs-text-white"
           >
             { __( 'Add article', 'wedocs' ) }
           </AddArticleModal>
@@ -26,7 +26,7 @@ const AddChildrens = ( { docId, sections, className, children } ) => {
           <AddSectionModal
             parent={ docId }
             order={ sections?.length }
-            className="group w-full flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white"
+            className="group wedocs-w-full wedocs-flex wedocs-items-center wedocs-py-2 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-gray-700 hover:wedocs-bg-indigo-700 hover:wedocs-text-white"
           >
             { __( 'Add section', 'wedocs' ) }
           </AddSectionModal>

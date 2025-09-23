@@ -136,29 +136,29 @@ const SettingsPage = () => {
   }
 
   return (
-    <div className="min-h-full pt-7">
+    <div className="wedocs-min-h-full wedocs-pt-7">
       { showActions && need_upgrade && <Upgrade status={ status } /> }
       <WedocsPromoNotice />
       <main>
-        <div className="pb-10 pt-3 sm:px-0">
-          <div className="h-100">
-            <div className="h-full">
+        <div className="wedocs-pb-10 wedocs-pt-3 sm:wedocs-px-0">
+          <div className="wedocs-h-100">
+            <div className="wedocs-h-full">
               <main>
-                <div className="lg:grid lg:grid-cols-12 lg:gap-x-6">
+                <div className="lg:wedocs-grid lg:wedocs-grid-cols-12 lg:wedocs-gap-x-6">
                   <Tab.Group
                     vertical
                     onChange={ setSelectedIndex }
                     selectedIndex={ selectedIndex }
                   >
-                    <aside className="px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3 md:mb-6">
-                      <nav className="py-[18px] min-h-[500px] bg-white rounded-md">
-                        <Tab.List className="px-2 space-y-1">
+                    <aside className="wedocs-px-2 sm:wedocs-px-6 lg:wedocs-py-0 lg:wedocs-px-0 lg:wedocs-col-span-3 md:wedocs-mb-6">
+                      <nav className="wedocs-py-[18px] wedocs-min-h-[500px] wedocs-bg-white wedocs-rounded-md">
+                        <Tab.List className="wedocs-px-2 wedocs-space-y-1">
                           <Menu />
                         </Tab.List>
                       </nav>
                     </aside>
 
-                    <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
+                    <div className="wedocs-space-y-6 sm:wedocs-px-6 lg:wedocs-px-0 lg:wedocs-col-span-9">
                       <Tab.Panels>
                         { templates &&
                           templates?.map( ( value, index ) => (

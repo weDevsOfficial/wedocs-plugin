@@ -47,29 +47,29 @@ const AssistantSwitcher = ( {
 			<Switch
 				checked={ enabled }
 				onChange={ ()=>handleChange() }
-				className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer outline-0 items-center justify-center rounded-full"
+				className="wedocs-group wedocs-relative wedocs-inline-flex wedocs-h-5 wedocs-w-10 wedocs-flex-shrink-0 wedocs-cursor-pointer wedocs-outline-0 wedocs-items-center wedocs-justify-center wedocs-rounded-full"
 			>
 				<span
 					aria-hidden="true"
-					className="pointer-events-none absolute h-full w-full rounded-md bg-white"
+					className="wedocs-pointer-events-none wedocs-absolute wedocs-h-full wedocs-w-full wedocs-rounded-md wedocs-bg-white"
 				/>
 				<span
 					aria-hidden="true"
 					className={ classNames(
-						enabled ? 'bg-indigo-600' : 'bg-gray-200',
-						'pointer-events-none absolute mx-auto h-4 w-9 rounded-full transition-colors duration-200 ease-in-out'
+						enabled ? 'wedocs-bg-indigo-600' : 'wedocs-bg-gray-200',
+						'wedocs-pointer-events-none wedocs-absolute wedocs-mx-auto wedocs-h-4 wedocs-w-9 wedocs-rounded-full wedocs-transition-colors wedocs-duration-200 wedocs-ease-in-out'
 					) }
 				/>
 				<span
 					aria-hidden="true"
 					className={ classNames(
-						enabled ? 'translate-x-5' : 'translate-x-0',
-						'pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out'
+						enabled ? 'wedocs-translate-x-5' : 'wedocs-translate-x-0',
+						'wedocs-pointer-events-none wedocs-absolute wedocs-left-0 wedocs-inline-block wedocs-h-5 wedocs-w-5 wedocs-transform wedocs-rounded-full wedocs-border wedocs-border-gray-200 wedocs-bg-white wedocs-shadow wedocs-ring-0 wedocs-transition-transform wedocs-duration-200 wedocs-ease-in-out'
 					) }
 				/>
 			</Switch>
-			<span className={ `${ name === 'assist_enable' ? 'mt-0.5' : '' } ml-3` }>
-				<span className="text-sm text-gray-900">
+			<span className={ `${ name === 'assist_enable' ? 'wedocs-mt-0.5' : '' } wedocs-ml-3` }>
+				<span className="wedocs-text-sm wedocs-text-gray-900">
 					{ enabled ? __( 'Enable', 'wedocs' ) : __(  'Disable', 'wedocs' ) }
 				</span>
 		  	</span>

@@ -2,13 +2,13 @@ import { __ } from '@wordpress/i18n';
 
 const MessageSettings = () => {
 	return (
-		<div className="messaging-settings relative">
-			<div className="grid grid-cols-4 gap-5">
-				<div className="col-span-4">
-					<div className="settings-content flex items-center justify-between">
-						<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+		<div className="messaging-settings wedocs-relative">
+			<div className="wedocs-grid wedocs-grid-cols-4 wedocs-gap-5">
+				<div className="wedocs-col-span-4">
+					<div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
+						<div className="settings-field-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
 							<label
-								className="block text-sm font-medium text-gray-600"
+								className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
 								id="headlessui-listbox-label-15"
 								data-headlessui-state="open"
 							>
@@ -18,7 +18,7 @@ const MessageSettings = () => {
 								) }
 							</label>
 							<div
-								className="tooltip cursor-pointer ml-2"
+								className="tooltip wedocs-cursor-pointer wedocs-ml-2"
 								data-tip={ __(
 									'Set your cloudflare turnstile site key for sending message traffic free',
 									'wedocs'
@@ -40,8 +40,8 @@ const MessageSettings = () => {
 								</svg>
 							</div>
 						</div>
-						<div className="settings-field w-full max-w-[490px] ml-auto flex-2">
-							<div className="relative">
+						<div className="settings-field wedocs-w-full wedocs-max-w-[490px] wedocs-ml-auto wedocs-flex-2">
+							<div className="wedocs-relative">
 								<input
 									type="text"
 									name="turnstile_site_key"
@@ -50,15 +50,15 @@ const MessageSettings = () => {
 										'Enter your cloudflare turnstile site key',
 										'wedocs'
 									) }
-									className="w-full !rounded-md !bg-white !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+									className="wedocs-w-full !wedocs-rounded-md !wedocs-bg-white !wedocs-border-gray-300 wedocs-bg-white !wedocs-py-1 !wedocs-pl-3 !wedocs-pr-10 wedocs-text-left wedocs-shadow-sm focus:wedocs-border-indigo-500 focus:wedocs-outline-none focus:wedocs-ring-1 focus:wedocs-ring-indigo-500 sm:wedocs-text-sm"
 									value=''
 									readOnly={ true }
 								/>
 							</div>
 						</div>
 					</div>
-					<div className="settings-description w-full max-w-[490px] ml-auto mt-1">
-						<p className="text-sm text-[#6B7280]">
+					<div className="settings-description wedocs-w-full wedocs-max-w-[490px] wedocs-ml-auto wedocs-mt-1">
+						<p className="wedocs-text-sm wedocs-text-[#6B7280]">
 							{ __(
 								'How to set up ',
 								'wedocs'
@@ -66,7 +66,7 @@ const MessageSettings = () => {
 							<a
 								href="//developers.cloudflare.com/turnstile/get-started/"
 								target="_blank"
-								className="text-indigo-700 underline underline-offset-2 !shadow-none"
+								className="wedocs-text-indigo-700 wedocs-underline wedocs-underline-offset-2 !wedocs-shadow-none"
 								rel="noreferrer"
 							>
 								{ __( 'Cloudflare Turnstile', 'wedocs' ) }
@@ -76,9 +76,9 @@ const MessageSettings = () => {
 				</div>
 				<div className="col-span-4">
 					<div className="settings-content flex items-center justify-between">
-						<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+						<div className="settings-field-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
 							<label
-								className="block text-sm font-medium text-gray-600"
+								className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
 								id="headlessui-listbox-label-15"
 								data-headlessui-state="open"
 							>
@@ -88,7 +88,7 @@ const MessageSettings = () => {
 								) }
 							</label>
 							<div
-								className="tooltip cursor-pointer ml-2"
+								className="tooltip wedocs-cursor-pointer wedocs-ml-2"
 								data-tip={ __(
 									'Please enter the email addresses where you would like to receive contact from leads from your users. You can enter multiple emails separated by a comma.',
 									'wedocs'
@@ -110,8 +110,8 @@ const MessageSettings = () => {
 								</svg>
 							</div>
 						</div>
-						<div className="settings-field w-full max-w-[490px] ml-auto flex-2">
-							<div className="relative">
+						<div className="settings-field wedocs-w-full wedocs-max-w-[490px] wedocs-ml-auto wedocs-flex-2">
+							<div className="wedocs-relative">
 								<input
 									type="email"
 									name="email_address"
@@ -120,7 +120,7 @@ const MessageSettings = () => {
 										'Email Address',
 										'wedocs'
 									) }
-									className="w-full !rounded-md !bg-white !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+									className="wedocs-w-full !wedocs-rounded-md !wedocs-bg-white !wedocs-border-gray-300 wedocs-bg-white !wedocs-py-1 !wedocs-pl-3 !wedocs-pr-10 wedocs-text-left wedocs-shadow-sm focus:wedocs-border-indigo-500 focus:wedocs-outline-none focus:wedocs-ring-1 focus:wedocs-ring-indigo-500 sm:wedocs-text-sm"
 									value=''
 									readOnly={ true }
 								/>
@@ -130,9 +130,9 @@ const MessageSettings = () => {
 				</div>
 				<div className="col-span-4">
 					<div className="settings-content flex items-center justify-between">
-						<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+						<div className="settings-field-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
 							<label
-								className="block text-sm font-medium text-gray-600"
+								className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
 								id="headlessui-listbox-label-15"
 								data-headlessui-state="open"
 							>
@@ -142,7 +142,7 @@ const MessageSettings = () => {
 								) }
 							</label>
 							<div
-								className="tooltip cursor-pointer ml-2"
+								className="tooltip wedocs-cursor-pointer wedocs-ml-2"
 								data-tip={ __(
 									'Success message title when message is sent successfully',
 									'wedocs'
@@ -164,8 +164,8 @@ const MessageSettings = () => {
 								</svg>
 							</div>
 						</div>
-						<div className="settings-field w-full max-w-[490px] ml-auto flex-2">
-							<div className="relative">
+						<div className="settings-field wedocs-w-full wedocs-max-w-[490px] wedocs-ml-auto wedocs-flex-2">
+							<div className="wedocs-relative">
 								<input
 									type="text"
 									name="messaging_success_title"
@@ -174,7 +174,7 @@ const MessageSettings = () => {
 										'Messaging success title',
 										'wedocs'
 									) }
-									className="w-full !rounded-md !bg-white !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+									className="wedocs-w-full !wedocs-rounded-md !wedocs-bg-white !wedocs-border-gray-300 wedocs-bg-white !wedocs-py-1 !wedocs-pl-3 !wedocs-pr-10 wedocs-text-left wedocs-shadow-sm focus:wedocs-border-indigo-500 focus:wedocs-outline-none focus:wedocs-ring-1 focus:wedocs-ring-indigo-500 sm:wedocs-text-sm"
 									value=''
 									readOnly={ true }
 								/>
@@ -184,9 +184,9 @@ const MessageSettings = () => {
 				</div>
 				<div className="col-span-4">
 					<div className="settings-content flex items-center justify-between">
-						<div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+						<div className="settings-field-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
 							<label
-								className="block text-sm font-medium text-gray-600"
+								className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
 								id="headlessui-listbox-label-15"
 								data-headlessui-state="open"
 							>
@@ -196,7 +196,7 @@ const MessageSettings = () => {
 								) }
 							</label>
 							<div
-								className="tooltip cursor-pointer ml-2"
+								className="tooltip wedocs-cursor-pointer wedocs-ml-2"
 								data-tip={ __(
 									'Success message text when message is sent successfully',
 									'wedocs'
@@ -218,8 +218,8 @@ const MessageSettings = () => {
 								</svg>
 							</div>
 						</div>
-						<div className="settings-field w-full max-w-[490px] ml-auto flex-2">
-							<div className="relative">
+						<div className="settings-field wedocs-w-full wedocs-max-w-[490px] wedocs-ml-auto wedocs-flex-2">
+							<div className="wedocs-relative">
 								<input
 									type="text"
 									name="messaging_success_text"
@@ -228,7 +228,7 @@ const MessageSettings = () => {
 										'Messaging success text',
 										'wedocs'
 									) }
-									className="w-full !rounded-md !bg-white !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+									className="wedocs-w-full !wedocs-rounded-md !wedocs-bg-white !wedocs-border-gray-300 wedocs-bg-white !wedocs-py-1 !wedocs-pl-3 !wedocs-pr-10 wedocs-text-left wedocs-shadow-sm focus:wedocs-border-indigo-500 focus:wedocs-outline-none focus:wedocs-ring-1 focus:wedocs-ring-indigo-500 sm:wedocs-text-sm"
 									value=''
 									readOnly={ true }
 								/>

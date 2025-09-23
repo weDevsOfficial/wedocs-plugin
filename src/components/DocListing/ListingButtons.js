@@ -14,21 +14,21 @@ const ListingButtons = ( { sections } ) => {
   return (
     <>
       { showActions && (
-        <div className="doc-listing-buttons space-x-3.5 mt-10">
+        <div className="doc-listing-buttons wedocs-space-x-3.5 wedocs-mt-10">
           <AddSectionModal
             parent={ id }
             order={ sections?.length }
-            className="py-2.5 px-4 h-fit inline-flex items-center rounded-md border border-gray-300 bg-white text-gray-700 hover:text-white hover:bg-indigo-600 px-4 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="wedocs-py-2.5 wedocs-px-4 wedocs-h-fit wedocs-inline-flex wedocs-items-center wedocs-rounded-md wedocs-border wedocs-border-gray-300 wedocs-bg-white wedocs-text-gray-700 hover:wedocs-text-white hover:wedocs-bg-indigo-600 wedocs-px-4 wedocs-text-sm wedocs-shadow-sm hover:wedocs-bg-indigo-700 focus:wedocs-outline-none focus:wedocs-ring-2 focus:wedocs-ring-indigo-500 focus:wedocs-ring-offset-2"
           >
-            <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-3 text-base flex items-center"></span>
+            <span className="dashicons dashicons-plus-alt2 wedocs-w-3.5 wedocs-h-3.5 wedocs-mr-3 wedocs-text-base wedocs-flex wedocs-items-center"></span>
             { __( 'Add section', 'wedocs' ) }
           </AddSectionModal>
 
           <AddArticleModal
             sections={ sections }
-            className="py-2.5 px-4 h-fit inline-flex items-center rounded-md border border-gray-300 bg-white text-gray-700 hover:text-white hover:bg-indigo-600 px-4 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="wedocs-py-2.5 wedocs-px-4 wedocs-h-fit wedocs-inline-flex wedocs-items-center wedocs-rounded-md wedocs-border wedocs-border-gray-300 wedocs-bg-white wedocs-text-gray-700 hover:wedocs-text-white hover:wedocs-bg-indigo-600 wedocs-px-4 wedocs-text-sm wedocs-shadow-sm hover:wedocs-bg-indigo-700 focus:wedocs-outline-none focus:wedocs-ring-2 focus:wedocs-ring-indigo-500 focus:wedocs-ring-offset-2"
           >
-            <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-3 text-base flex items-center"></span>
+            <span className="dashicons dashicons-plus-alt2 wedocs-w-3.5 wedocs-h-3.5 wedocs-mr-3 wedocs-text-base wedocs-flex wedocs-items-center"></span>
             { __( 'Add article', 'wedocs' ) }
           </AddArticleModal>
         </div>
