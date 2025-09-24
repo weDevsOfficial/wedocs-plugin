@@ -127,7 +127,7 @@ const GeneralSettings = ( {
                   !Boolean(generalSettingsData?.email)) && (
                   <div className="wedocs-col-span-4">
                 <div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
-                  <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+                  <div className="settings-field-heading md:min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
                     <label
                         className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
                         id="headlessui-listbox-label-15"

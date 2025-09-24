@@ -138,7 +138,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 												</>
 											) }
 										</svg>
-										<span className="flex">
+										<span className="wedocs-flex">
 										<span className="wedocs-flex wedocs-flex-col">
 											<RadioGroup.Label
 												as="span"
@@ -454,7 +454,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 											</svg>
 										) }
 
-										<span className="flex">
+										<span className="wedocs-flex">
 										<span className="wedocs-flex wedocs-flex-col">
 											<RadioGroup.Label
 												as="span"

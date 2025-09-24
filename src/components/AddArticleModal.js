@@ -128,12 +128,12 @@ const AddArticleModal = ( {
         <Dialog as="div" className="wedocs-document wedocs-relative wedocs-z-[9999]" onClose={ closeModal }>
           <Transition.Child
             as={ Fragment }
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+            enter="wedocs-ease-out wedocs-duration-300"
+            enterFrom="wedocs-opacity-0"
+            enterTo="wedocs-opacity-100"
+            leave="wedocs-ease-in wedocs-duration-200"
+            leaveFrom="wedocs-opacity-100"
+            leaveTo="wedocs-opacity-0"
           >
             <div className="wedocs-fixed wedocs-inset-0 wedocs-bg-black wedocs-bg-opacity-25 wedocs-z-[50]" />
           </Transition.Child>
@@ -142,12 +142,12 @@ const AddArticleModal = ( {
             <div className="wedocs-flex wedocs-min-h-full wedocs-items-center wedocs-justify-center wedocs-p-4 wedocs-text-center">
               <Transition.Child
                 as={ Fragment }
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+                enter="wedocs-ease-out wedocs-duration-300"
+                enterFrom="wedocs-opacity-0 wedocs-scale-95"
+                enterTo="wedocs-opacity-100 wedocs-scale-100"
+                leave="wedocs-ease-in wedocs-duration-200"
+                leaveFrom="wedocs-opacity-100 wedocs-scale-100"
+                leaveTo="wedocs-opacity-0 wedocs-scale-95"
               >
                 <Dialog.Panel className="wedocs-w-full wedocs-max-w-md wedocs-transform wedocs-rounded-2xl wedocs-bg-white wedocs-py-6 wedocs-px-9 wedocs-text-center wedocs-align-middle wedocs-shadow-xl wedocs-transition-all wedocs-overflow-visible">
                   <Dialog.Title

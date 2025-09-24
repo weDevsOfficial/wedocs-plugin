@@ -61,7 +61,7 @@ const RestictionModal = ( { classes, children, docId, type } ) => {
       <Transition appear show={ isOpen } as={ Fragment }>
         <Dialog
           as="div"
-          className="wedocs-document relative z-[9999]"
+          className="wedocs-document wedocs-relative wedocs-z-[9999]"
           onClose={ () => setIsOpen( false ) }
         >
           <Transition.Child

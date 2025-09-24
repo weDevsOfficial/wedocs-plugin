@@ -93,12 +93,12 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
         <Dialog as="div" className="wedocs-document wedocs-relative wedocs-z-[9999]" onClose={ closeModal }>
           <Transition.Child
             as={ Fragment }
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+            enter="wedocs-ease-out wedocs-duration-300"
+            enterFrom="wedocs-opacity-0"
+            enterTo="wedocs-opacity-100"
+            leave="wedocs-ease-in wedocs-duration-200"
+            leaveFrom="wedocs-opacity-100"
+            leaveTo="wedocs-opacity-0"
           >
             <div className="wedocs-fixed wedocs-inset-0 wedocs-bg-black wedocs-bg-opacity-25 wedocs-z-[50]" />
           </Transition.Child>
@@ -107,12 +107,12 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
             <div className="wedocs-flex wedocs-min-h-full wedocs-items-center wedocs-justify-center wedocs-p-4 wedocs-text-center">
               <Transition.Child
                 as={ Fragment }
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+                enter="wedocs-ease-out wedocs-duration-300"
+                enterFrom="wedocs-opacity-0 wedocs-scale-95"
+                enterTo="wedocs-opacity-100 wedocs-scale-100"
+                leave="wedocs-ease-in wedocs-duration-200"
+                leaveFrom="wedocs-opacity-100 wedocs-scale-100"
+                leaveTo="wedocs-opacity-0 wedocs-scale-95"
               >
                 <Dialog.Panel className="wedocs-w-full wedocs-max-w-md wedocs-transform wedocs-overflow-visible wedocs-rounded-2xl wedocs-bg-white wedocs-py-6 wedocs-px-9 wedocs-text-center wedocs-align-middle wedocs-shadow-xl wedocs-transition-all">
                   <Dialog.Title
@@ -164,7 +164,7 @@ const AddSectionModal = ( { parent, order, className, children } ) => {
                     >
                       { __( 'Cancel', 'wedocs' ) }
                     </button>
-                    <div className={ `doc-publish-btn group relative` }>
+                    <div className={ `doc-publish-btn wedocs-group wedocs-relative` }>
                       <button
                         className="wedocs-inline-flex wedocs-justify-between wedocs-items-center wedocs-cursor-pointer wedocs-bg-indigo-600 hover:wedocs-bg-indigo-800 wedocs-text-white wedocs-font-medium wedocs-text-base wedocs-py-2 wedocs-px-5 wedocs-rounded-md wedocs-min-w-[122px]"
                         ref={ docCreateBtnRef }

@@ -2,7 +2,7 @@ import UpgradePopup from './UpgradePopup';
 
 const Overlay = ( { classes } ) => {
   return (
-    <div className={ `${classes} pro-content-overlay w-full h-full absolute top-0 left-0 bg-[#00000080]` }>
+    <div className={ `${classes} pro-content-overlay wedocs-w-full wedocs-h-full wedocs-absolute wedocs-top-0 wedocs-left-0 wedocs-bg-[#00000080]` }>
       <UpgradePopup />
     </div>
   );

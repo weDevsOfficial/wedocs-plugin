@@ -4,14 +4,14 @@ const DocsPlaceholder = () => {
       { [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ].map( ( value, index ) => (
         <div
           key={ index }
-          className="animate-pulse wedocs-bg-white wedocs-border-b hover:wedocs-bg-gray-50 wedocs-font-extrabold"
+          className="wedocs-animate-pulse wedocs-bg-white wedocs-border-b hover:wedocs-bg-gray-50 wedocs-font-extrabold"
         >
           <div className="wedocs-flex wedocs-w-full wedocs-items-center wedocs-justify-between wedocs-space-x-6 wedocs-p-6 wedocs-pt-5">
             <div className="wedocs-flex-1 wedocs-truncate">
               <div className="wedocs-inline-flex wedocs-items-center wedocs-space-x-3">
-                <div className="wedocs-flex wedocs-items-center wedocs-space-x-3 wedocs-flex-1 group">
+                <div className="wedocs-flex wedocs-items-center wedocs-space-x-3 wedocs-flex-1 wedocs-group">
                   <a href="#" className="wedocs-mt-1.5 !wedocs-shadow-none">
-                    <h3 className="animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-64 wedocs-border-b hover:wedocs-bg-slate-300"></h3>
+                    <h3 className="wedocs-animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-64 wedocs-border-b hover:wedocs-bg-slate-300"></h3>
                   </a>
                   <a
                     target="_blank"
@@ -39,7 +39,7 @@ const DocsPlaceholder = () => {
             </div>
             <div className="wedocs-flex wedocs-gap-5 wedocs-items-center">
               <div className="documentation-ellipsis-actions wedocs-relative wedocs-h-4 wedocs-w-8">
-                <span className="animate-pulse wedocs-bg-slate-200 wedocs-w-full wedocs-h-full wedocs-rounded wedocs-absolute wedocs-border-b hover:wedocs-bg-slate-300"></span>
+                <span className="wedocs-animate-pulse wedocs-bg-slate-200 wedocs-w-full wedocs-h-full wedocs-rounded wedocs-absolute wedocs-border-b hover:wedocs-bg-slate-300"></span>
               </div>
             </div>
           </div>
@@ -48,17 +48,17 @@ const DocsPlaceholder = () => {
               <li className="wedocs-flex wedocs-items-center wedocs-justify-between wedocs-mb-0 wedocs-py-1.5 wedocs-pl-3 wedocs-pr-4 wedocs-text-sm">
                 <div className="wedocs-w-full wedocs-inline-flex wedocs-items-center">
                   <div className="wedocs-w-6 wedocs-flex wedocs-justify-center">
-                    <span className="wedocs-mt-0.5 animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-8 wedocs-border-b hover:wedocs-bg-slate-300"></span>
+                    <span className="wedocs-mt-0.5 wedocs-animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-8 wedocs-border-b hover:wedocs-bg-slate-300"></span>
                   </div>
-                  <span className="wedocs-ml-2 wedocs-mt-0.5 animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-52 wedocs-border-b hover:wedocs-bg-slate-300"></span>
+                  <span className="wedocs-ml-2 wedocs-mt-0.5 wedocs-animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-52 wedocs-border-b hover:wedocs-bg-slate-300"></span>
                 </div>
               </li>
               <li className="wedocs-flex wedocs-items-center wedocs-justify-between wedocs-mb-0 wedocs-py-1.5 wedocs-pl-3 wedocs-pr-4 wedocs-text-sm">
                 <div className="wedocs-flex wedocs-w-0 wedocs-flex-1 wedocs-items-center">
                   <div className="wedocs-w-6 wedocs-flex wedocs-justify-center">
-                    <span className="wedocs-mt-0.5 animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-8 wedocs-border-b hover:wedocs-bg-slate-300"></span>
+                    <span className="wedocs-mt-0.5 wedocs-animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-8 wedocs-border-b hover:wedocs-bg-slate-300"></span>
                   </div>
-                  <span className="wedocs-ml-2 wedocs-mt-0.5 animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-52 wedocs-border-b hover:wedocs-bg-slate-300"></span>
+                  <span className="wedocs-ml-2 wedocs-mt-0.5 wedocs-animate-pulse wedocs-bg-slate-200 wedocs-rounded wedocs-h-4 wedocs-w-52 wedocs-border-b hover:wedocs-bg-slate-300"></span>
                 </div>
               </li>
             </ul>
@@ -67,7 +67,7 @@ const DocsPlaceholder = () => {
             <div className="wedocs--mt-px wedocs-flex wedocs-divide-x wedocs-divide-gray-200">
               <div className="wedocs-flex wedocs-w-0 wedocs-flex-1 wedocs-justify-end wedocs-items-center wedocs-py-4 wedocs-px-6">
                 <button className="wedocs-py-2 wedocs-inline-flex wedocs-items-center wedocs-h-8 wedocs-w-16 hover:wedocs-text-white wedocs-rounded-md wedocs-border wedocs-border-gray-200 wedocs-ease-in-out wedocs-duration-200 wedocs-shadow-gray-100 wedocs-px-4 wedocs-text-sm wedocs-text-gray wedocs-shadow-sm">
-                  <span className="animate-pulse wedocs-bg-slate-200 wedocs-w-10 wedocs-h-4 wedocs-rounded wedocs-absolute wedocs-border-b hover:wedocs-bg-slate-300"></span>
+                  <span className="wedocs-animate-pulse wedocs-bg-slate-200 wedocs-w-10 wedocs-h-4 wedocs-rounded wedocs-absolute wedocs-border-b hover:wedocs-bg-slate-300"></span>
                 </button>
               </div>
             </div>

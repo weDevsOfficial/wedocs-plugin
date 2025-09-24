@@ -126,7 +126,7 @@ const Documentations = () => {
 
   return (
     <>
-      <div className="documentation-header my-7">
+      <div className="documentation-header wedocs-my-7">
         <h1 className="wedocs-w-full !wedocs-flex wedocs-items-center wedocs-justify-between">
           { __( 'All Docs', 'wedocs' ) }
           { showActions && (

@@ -6,7 +6,7 @@ import AddSectionModal from '../AddSectionModal';
 const AddChildrens = ( { docId, sections, className, children } ) => {
   return (
     <>
-      <div className="documentation-ellipsis-actions relative group">
+      <div className="documentation-ellipsis-actions wedocs-relative wedocs-group">
         <span className={ className }>
           { children }
         </span>
@@ -18,7 +18,7 @@ const AddChildrens = ( { docId, sections, className, children } ) => {
           <AddArticleModal
             sections={ sections }
             docId={ docId }
-            className="group wedocs-w-full wedocs-flex wedocs-items-center wedocs-py-2 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-gray-700 hover:wedocs-bg-indigo-700 hover:wedocs-text-white"
+            className="wedocs-group wedocs-w-full wedocs-flex wedocs-items-center wedocs-py-2 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-gray-700 hover:wedocs-bg-indigo-700 hover:wedocs-text-white"
           >
             { __( 'Add article', 'wedocs' ) }
           </AddArticleModal>
@@ -26,7 +26,7 @@ const AddChildrens = ( { docId, sections, className, children } ) => {
           <AddSectionModal
             parent={ docId }
             order={ sections?.length }
-            className="group wedocs-w-full wedocs-flex wedocs-items-center wedocs-py-2 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-gray-700 hover:wedocs-bg-indigo-700 hover:wedocs-text-white"
+            className="wedocs-group wedocs-w-full wedocs-flex wedocs-items-center wedocs-py-2 wedocs-px-4 wedocs-text-sm wedocs-font-medium wedocs-text-gray-700 hover:wedocs-bg-indigo-700 hover:wedocs-text-white"
           >
             { __( 'Add section', 'wedocs' ) }
           </AddSectionModal>

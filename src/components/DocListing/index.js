@@ -157,7 +157,7 @@ const ListingPage = () => {
   return (
     <Fragment>
       { validParam ? (
-        <div className="docs-section-listing wrap py-5">
+        <div className="docs-section-listing wedocs-wrap wedocs-py-5">
           { ! loading && showActions && need_upgrade && <Upgrade status={ status } /> }
 
           <div className="wedocs-flex wedocs-items-center wedocs-justify-between wedocs-mb-7">

@@ -75,7 +75,7 @@ const MessageSettings = () => {
 					</div>
 				</div>
 				<div className="col-span-4">
-					<div className="settings-content flex items-center justify-between">
+					<div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
 						<div className="settings-field-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
 							<label
 								className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
@@ -129,7 +129,7 @@ const MessageSettings = () => {
 					</div>
 				</div>
 				<div className="col-span-4">
-					<div className="settings-content flex items-center justify-between">
+					<div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
 						<div className="settings-field-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
 							<label
 								className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"
@@ -183,7 +183,7 @@ const MessageSettings = () => {
 					</div>
 				</div>
 				<div className="col-span-4">
-					<div className="settings-content flex items-center justify-between">
+					<div className="settings-content wedocs-flex wedocs-items-center wedocs-justify-between">
 						<div className="settings-field-heading md:wedocs-min-w-[300px] wedocs-flex wedocs-items-center wedocs-space-x-2 wedocs-flex-1">
 							<label
 								className="wedocs-block wedocs-text-sm wedocs-font-medium wedocs-text-gray-600"

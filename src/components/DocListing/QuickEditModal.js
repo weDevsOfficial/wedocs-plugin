@@ -149,15 +149,15 @@ const QuickEditModal = ( {
       </button>
 
       <Transition appear show={ isOpen } as={ Fragment }>
-        <Dialog as="div" className="wedocs-document relative z-[9999]" onClose={ closeModal }>
+        <Dialog as="div" className="wedocs-document wedocs-relative wedocs-z-[9999]" onClose={ closeModal }>
           <Transition.Child
             as={ Fragment }
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+            enter="wedocs-ease-out wedocs-duration-300"
+            enterFrom="wedocs-opacity-0"
+            enterTo="wedocs-opacity-100"
+            leave="wedocs-ease-in wedocs-duration-200"
+            leaveFrom="wedocs-opacity-100"
+            leaveTo="wedocs-opacity-0"
           >
             <div className="wedocs-fixed wedocs-inset-0 wedocs-bg-black wedocs-bg-opacity-25" />
           </Transition.Child>
@@ -166,12 +166,12 @@ const QuickEditModal = ( {
             <div className="wedocs-flex wedocs-min-h-full wedocs-items-center wedocs-justify-center wedocs-p-4 wedocs-text-center">
               <Transition.Child
                 as={ Fragment }
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+                enter="wedocs-ease-out wedocs-duration-300"
+                enterFrom="wedocs-opacity-0 wedocs-scale-95"
+                enterTo="wedocs-opacity-100 wedocs-scale-100"
+                leave="wedocs-ease-in wedocs-duration-200"
+                leaveFrom="wedocs-opacity-100 wedocs-scale-100"
+                leaveTo="wedocs-opacity-0 wedocs-scale-95"
               >
                 <Dialog.Panel className="wedocs-w-full wedocs-max-w-md wedocs-transform wedocs-rounded-2xl wedocs-bg-white wedocs-py-8 wedocs-px-9 wedocs-text-center wedocs-align-middle wedocs-shadow-xl wedocs-transition-all wedocs-overflow-visible">
                   <Dialog.Title
@@ -194,9 +194,9 @@ const QuickEditModal = ( {
                       required
                       className={ `${
                         formError.title
-                          ? '!border-red-500 focus:ring-red-500 focus:border-red-500'
-                          : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500'
-                      } h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white` }
+                          ? '!wedocs-border-red-500 focus:wedocs-ring-red-500 focus:wedocs-border-red-500'
+                          : '!wedocs-border-gray-300 focus:wedocs-ring-blue-500 focus:wedocs-border-blue-500'
+                      } wedocs-h-11 wedocs-bg-gray-50 wedocs-text-gray-900 wedocs-text-base !wedocs-rounded-md wedocs-block wedocs-w-full !wedocs-py-2 !wedocs-px-3 dark:wedocs-bg-gray-600 dark:wedocs-border-gray-500 dark:wedocs-placeholder-gray-400 dark:wedocs-text-white` }
                       value={ inputValue }
                       onChange={ onTitleChange }
                     />
@@ -220,9 +220,9 @@ const QuickEditModal = ( {
                       required
                       className={ `${
                         formError.slug
-                          ? '!border-red-500 focus:ring-red-500 focus:border-red-500'
-                          : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500'
-                      } h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white` }
+                          ? '!wedocs-border-red-500 focus:wedocs-ring-red-500 focus:wedocs-border-red-500'
+                          : '!wedocs-border-gray-300 focus:wedocs-ring-blue-500 focus:wedocs-border-blue-500'
+                      } wedocs-h-11 wedocs-bg-gray-50 wedocs-text-gray-900 wedocs-text-base !wedocs-rounded-md wedocs-block wedocs-w-full !wedocs-py-2 !wedocs-px-3 dark:wedocs-bg-gray-600 dark:wedocs-border-gray-500 dark:wedocs-placeholder-gray-400 dark:wedocs-text-white` }
                       value={ newArticle?.slug }
                       onChange={ onSlugChange }
                     />
@@ -253,7 +253,7 @@ const QuickEditModal = ( {
                     >
                       { __( 'Cancel', 'wedocs' ) }
                     </button>
-                    <div className={ `doc-publish-btn group relative` }>
+                    <div className={ `doc-publish-btn wedocs-group wedocs-relative` }>
                       <button
                         className="wedocs-inline-flex wedocs-justify-between wedocs-items-center wedocs-cursor-pointer wedocs-bg-indigo-600 hover:wedocs-bg-indigo-800 wedocs-text-white wedocs-font-medium wedocs-text-base wedocs-py-2 wedocs-px-5 wedocs-rounded-md wedocs-min-w-[122px]"
                         ref={ docCreateBtnRef }

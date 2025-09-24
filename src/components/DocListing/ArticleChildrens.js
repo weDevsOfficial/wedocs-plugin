@@ -23,7 +23,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
   if ( section ) {
     return (
       <div key={ section?.id } className="wedocs-flex wedocs-items-center wedocs-bg-white wedocs-border-b wedocs-border-[#D9D9D9] wedocs-py-4">
-        <div className="wedocs-flex wedocs-items-center wedocs-w-full group">
+        <div className="wedocs-flex wedocs-items-center wedocs-w-full wedocs-group">
           <div className="wedocs-min-w-0 wedocs-flex-1 sm:wedocs-flex sm:wedocs-items-center sm:wedocs-justify-between">
             <div className="wedocs-flex wedocs-items-center">
               <div className="wedocs-flex wedocs-items-center wedocs-pr-5">
@@ -53,7 +53,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                       `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit` :
                       `${ window.location.origin }/?p=${ article?.id }`
                   }
-                  className={ `${ ! Boolean( parseInt( isAdminRestrictedArticle ) ) ? 'wedocs-mr-4' : '' } wedocs-flex wedocs-items-center wedocs-flex-shrink-0 wedocs-text-base group wedocs-font-medium wedocs-text-gray-700 !wedocs-shadow-none` }
+                  className={ `${ ! Boolean( parseInt( isAdminRestrictedArticle ) ) ? 'wedocs-mr-4' : '' } wedocs-flex wedocs-items-center wedocs-flex-shrink-0 wedocs-text-base wedocs-group wedocs-font-medium wedocs-text-gray-700 !wedocs-shadow-none` }
                   rel="noreferrer"
                 >
                   <div

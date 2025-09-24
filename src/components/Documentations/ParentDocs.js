@@ -73,7 +73,7 @@ const ParentDocs = ( { doc } ) => {
       <div className="wedocs-flex wedocs-w-full wedocs-items-center wedocs-justify-between wedocs-px-6 wedocs-h-[4.5rem]">
         <div className="wedocs-flex-1">
           <div className="wedocs-inline-flex wedocs-items-center wedocs-space-x-3">
-            <div className="wedocs-flex wedocs-items-center wedocs-space-x-3 wedocs-flex-1 group">
+            <div className="wedocs-flex wedocs-items-center wedocs-space-x-3 wedocs-flex-1 wedocs-group">
               <div
                 className="tooltip wedocs-cursor-pointer before:wedocs-max-w-xl wedocs-z-[0]"
                 data-tip={ he.decode( __( doc?.title?.rendered, 'wedocs' ) ) }

@@ -47,7 +47,7 @@ const ListingHeader = ( { doc } ) => {
                     width="18"
                     height="18"
                     fill="none"
-                    className={ `group` }
+                    className={ `wedocs-group` }
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
@@ -63,7 +63,7 @@ const ListingHeader = ( { doc } ) => {
               <a
                 target="_blank"
                 rel="noreferrer"
-                className={ `group tooltip cursor-pointer` }
+                className={ `wedocs-group tooltip cursor-pointer` }
                 href={ doc?.link }
                 data-tip={ __( 'View on Web', 'wedocs' ) }
               >
