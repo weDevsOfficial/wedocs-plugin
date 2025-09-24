@@ -9,6 +9,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import extractedTitle from '../../utils/extractedTitle';
+import { isArticleAccessible } from '../../utils/helper';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { useSelect, dispatch } from '@wordpress/data';
 import docStore from '../../data/docs';
@@ -66,7 +67,7 @@ const SectionArticles = ( {
       dispatch( docStore )
         .updateSortingStatus( { sortable_status: sortableStatus, documentations: childrenArticles } )
         .then( ( result ) => setNeedSortingStatusLocal( result?.sorting ) )
-        .catch( ( err ) => {} );
+        .catch( () => {} );
     }
   }, [ needSortingStatusLocal, childrenArticles, sortableStatus ] );
   const {
@@ -94,7 +95,7 @@ const SectionArticles = ( {
     return date?.toLocaleDateString( 'en-US', options );
   };
 
-  const filteredArticleChildrens = articleChildrens?.filter( ( children ) =>
+  const filteredChildren = childrenArticles?.filter( ( children ) =>
     children?.title?.rendered
       ?.toLowerCase()
       .includes( searchValue.toLowerCase() )
@@ -219,13 +220,13 @@ const SectionArticles = ( {
                         : `${ window.location.origin }/?p=${ article?.id }`
                     }
                     className={ `${
-                      ! Boolean( parseInt( isAdminRestrictedArticle ) )
+                      isArticleAccessible( isAdminRestrictedArticle )
                         ? 'mr-4'
                         : ''
                     } flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none` }
                     rel="noreferrer"
                   >
-                    { ! Boolean( parseInt( isAdminRestrictedArticle ) ) && (
+                    { isArticleAccessible( isAdminRestrictedArticle ) && (
                       <>
                         <QuickEditModal
                           article={ article }
@@ -375,7 +376,7 @@ const SectionArticles = ( {
           </div>
         </div>
 
-        { ! isDragging && filteredArticleChildrens?.length > 0 && (
+        { ! isDragging && filteredChildren?.length > 0 && (
           <div className={ `my-1 article-children pl-4 sm:pl-16 bg-white` }>
             <DraggableDocs
               setItems={ setChildrenArticles }
@@ -383,10 +384,10 @@ const SectionArticles = ( {
               parentId={ article?.id }
             >
               <SortableContext
-                items={ childrenArticles }
+                items={ filteredChildren.map( a => a.id ) }
                 strategy={ verticalListSortingStrategy }
               >
-                { filteredArticleChildrens?.map( ( childrenDoc ) => (
+                { filteredChildren?.map( ( childrenDoc ) => (
                   <NestedArticles
                     section={ article }
                     sections={ articles }

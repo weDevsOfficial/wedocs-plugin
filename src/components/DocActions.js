@@ -40,7 +40,9 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           ),
         } );
       } )
-      .catch( err => console.log( err ) );
+      .catch( () => {
+        // Error handled silently
+      } );
   }
 
   return (

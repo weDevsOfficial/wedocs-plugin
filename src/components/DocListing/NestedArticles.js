@@ -4,6 +4,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import QuickEditModal from './QuickEditModal';
 import AddArticleModal from '../AddArticleModal';
 import extractedTitle from '../../utils/extractedTitle';
+import { isArticleAccessible } from '../../utils/helper';
 import { useSelect } from '@wordpress/data';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import {
@@ -199,7 +200,7 @@ const NestedArticles = ( {
                         : `${ window.location.origin }/?p=${ article?.id }`
                     }
                     className={ `${
-                      ! Boolean( parseInt( isAdminRestrictedArticle ) )
+                      isArticleAccessible( isAdminRestrictedArticle )
                         ? 'mr-4'
                         : ''
                     } flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none` }
@@ -242,7 +243,7 @@ const NestedArticles = ( {
                   </a>
 
                   { /* Action buttons moved outside the main link */ }
-                  { ! Boolean( parseInt( isAdminRestrictedArticle ) ) && (
+                  { isArticleAccessible( isAdminRestrictedArticle ) && (
                     <>
                       { /* Add Sub-Article Button */ }
                       { depth < maxDepth - 1 && (
@@ -298,13 +299,11 @@ const NestedArticles = ( {
                       <a
                         target="_blank"
                         href={
-                          ! Boolean(
-                            parseInt(
-                              wp?.hooks?.applyFilters(
-                                'wedocs_check_is_admin_restricted_article',
-                                false,
-                                article?.id
-                              )
+                          isArticleAccessible(
+                            wp?.hooks?.applyFilters(
+                              'wedocs_check_is_admin_restricted_article',
+                              false,
+                              article?.id
                             )
                           )
                             ? `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit`
@@ -406,22 +405,20 @@ const NestedArticles = ( {
                     { /* translators: %s: Formatted datetime string */ }
                     { sprintf(
                       __( 'Updated on %s', 'wedocs' ),
-                      formattedDateString
+                      typeof formattedDateString === 'function' ? formattedDateString() : formattedDateString
                     ) }
                   </div>
                 </div>
               </div>
             </div>
             <div className="ml-8 flex-shrink-0 w-5 h-5">
-              { ! Boolean(
-                parseInt(
+              { isArticleAccessible(
                   wp?.hooks?.applyFilters(
                     'wedocs_check_is_admin_restricted_article',
                     false,
                     article?.id
                   )
-                )
-              ) && (
+                ) && (
                 <DocActions
                   type="article"
                   doc={ article }

@@ -605,47 +605,6 @@ function wedocs_get_max_hierarchy_depth() {
 }
 
 /**
- * Get hierarchy level name based on depth.
- *
- * @since 2.1.13
- *
- * @param int $depth The current depth level
- * @return string The human-readable level name
- */
-function wedocs_get_hierarchy_level_name( $depth ) {
-    $levels = array(
-        0 => __( 'Doc', 'wedocs' ),
-        1 => __( 'Section', 'wedocs' ),
-        2 => __( 'Article', 'wedocs' ),
-        3 => __( 'Sub-Article', 'wedocs' ),
-        4 => __( 'Sub-Sub-Article', 'wedocs' ),
-        5 => __( 'Sub-Sub-Sub-Article', 'wedocs' ),
-        6 => __( 'Sub-Sub-Sub-Sub-Article', 'wedocs' ),
-    );
-
-    if ( isset( $levels[ $depth ] ) ) {
-        return $levels[ $depth ];
-    }
-
-    return sprintf( __( 'Level %d', 'wedocs' ), $depth );
-}
-
-/**
- * Check if a document can have children based on current depth.
- *
- * @since 2.1.13
- *
- * @param int $doc_id The document ID
- * @return bool Whether the document can have children
- */
-function wedocs_can_have_children( $doc_id ) {
-    $depth = wedocs_get_document_depth( $doc_id );
-    $max_depth = wedocs_get_max_hierarchy_depth();
-    
-    return $depth < $max_depth;
-}
-
-/**
  * Get the depth of a document in the hierarchy.
  *
  * @since 2.1.13
@@ -657,7 +616,7 @@ function wedocs_get_document_depth( $doc_id ) {
     $depth = 0;
     $post = get_post( $doc_id );
     
-    while ( $post && $post->post_parent ) {
+    while ( $post?->post_parent ) {
         $depth++;
         $post = get_post( $post->post_parent );
         
@@ -668,4 +627,44 @@ function wedocs_get_document_depth( $doc_id ) {
     }
     
     return $depth;
+}
+
+/**
+ * Render nested articles recursively for shortcode template
+ *
+ * @since 2.1.13
+ *
+ * @param array $articles The articles to render
+ * @param array $all_pages All available pages for finding children
+ * @param int $col Column count for title truncation
+ * @param int $current_depth Current nesting depth
+ * @param int $max_depth Maximum allowed depth
+ */
+if ( ! function_exists( 'wedocs_render_nested_articles' ) ) {
+    function wedocs_render_nested_articles( $articles, $all_pages, $col, $current_depth = 0, $max_depth = null ) {
+        if ( $max_depth === null ) {
+            $max_depth = wedocs_get_max_hierarchy_depth() - 1; // Subtract 1 because we start from depth 0
+        }
+
+        foreach ( $articles as $article ) :
+            $article_children = get_page_children( $article->ID, $all_pages );
+            ?>
+            <li class="wedocs-hierarchy-level-<?php echo esc_attr( $current_depth ); ?>">
+                <a href="<?php echo esc_url( get_permalink( $article->ID ) ); ?>" target='_blank'>
+                    <?php echo esc_html( wedocs_apply_short_content( $article->post_title, $col > 1 ? 60 : 160 ) ); ?>
+                </a>
+
+                <?php if ( $article_children && $current_depth < $max_depth ) : ?>
+                    <ul class='children has-icon nested-level-<?php echo esc_attr( $current_depth + 1 ); ?>'>
+                        <?php wedocs_render_nested_articles( $article_children, $all_pages, $col, $current_depth + 1, $max_depth ); ?>
+                    </ul>
+                <?php elseif ( $article_children && $current_depth >= $max_depth ) : ?>
+                    <span class="wedocs-max-depth-indicator" title="<?php esc_attr_e( 'Maximum nesting depth reached', 'wedocs' ); ?>">
+                        <small><?php printf( esc_html__( '+ %d more items', 'wedocs' ), count( $article_children ) ); ?></small>
+                    </span>
+                <?php endif; ?>
+            </li>
+            <?php
+        endforeach;
+    }
 }

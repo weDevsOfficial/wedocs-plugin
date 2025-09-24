@@ -66,36 +66,7 @@ if ( $docs ) {
                                     <ul
                                         class='children has-icon <?php echo esc_attr( $collapse_section_articles !== 'on' ? 'active' : '' ); ?>'
                                     >
-                                        <?php 
-                                        // Function to render nested articles recursively
-                                        function wedocs_render_nested_articles( $articles, $all_pages, $col, $current_depth = 0, $max_depth = null ) {
-                                            if ( is_null( $max_depth ) ) {
-                                                $max_depth = wedocs_get_max_hierarchy_depth() - 1; // Subtract 1 because we start from depth 0
-                                            }
-                                            foreach ( $articles as $article ) : 
-                                                $article_children = get_page_children( $article->ID, $all_pages );
-                                                ?>
-                                                <li class="wedocs-hierarchy-level-<?php echo esc_attr( $current_depth ); ?>">
-                                                    <a href="<?php echo get_permalink( $article->ID ); ?>" target='_blank'>
-                                                        <?php echo esc_html( wedocs_apply_short_content( $article->post_title, $col > 1 ? 60 : 160 ) ); ?>
-                                                    </a>
-                                                    
-                                                    <?php if ( $article_children && $current_depth < $max_depth ) : ?>
-                                                        <ul class='children has-icon nested-level-<?php echo esc_attr( $current_depth + 1 ); ?>'>
-                                                            <?php wedocs_render_nested_articles( $article_children, $all_pages, $col, $current_depth + 1, $max_depth ); ?>
-                                                        </ul>
-                                                    <?php elseif ( $article_children && $current_depth >= $max_depth ) : ?>
-                                                        <span class="wedocs-max-depth-indicator" title="<?php esc_attr_e( 'Maximum nesting depth reached', 'wedocs' ); ?>">
-                                                            <small><?php printf( esc_html__( '+ %d more items', 'wedocs' ), count( $article_children ) ); ?></small>
-                                                        </span>
-                                                    <?php endif; ?>
-                                                </li>
-                                                <?php
-                                            endforeach;
-                                        }
-                                        
-                                        wedocs_render_nested_articles( $children_docs, $all_wp_pages, $col );
-                                        ?>
+                                        <?php wedocs_render_nested_articles( $children_docs, $all_wp_pages, $col ); ?>
                                     </ul>
                                 <?php endif; ?>
                             <?php } ?>

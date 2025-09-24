@@ -107,7 +107,7 @@ const AddArticleModal = ( {
   useEffect( () => {
     setNewArticle( {
       ...newArticle,
-      parent: parentId ? parseInt( parentId ) : sectionId,
+      parent: parentId ? parseInt( parentId, 10 ) : parseInt( sectionId, 10 ),
     } );
     setFormError( { ...formError, sectionId: false } );
   }, [ sectionId, parentId ] );
