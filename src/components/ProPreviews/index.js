@@ -9,6 +9,7 @@ import ExploreSettings from './AssistantWidgetPanels/ExplorePanel';
 import MessageSettings from './AssistantWidgetPanels/MessagePanel';
 import PlacementSettings from './AssistantWidgetPanels/PlacementPanel';
 import PreferenceSettings from './AssistantWidgetPanels/PreferencePanel';
+import SocialShareSettings from './SocialShareSettings';
 
 const isProLoaded = wp.hooks.applyFilters(
     'wedocs_pro_loaded',
@@ -145,6 +146,25 @@ if ( !isProLoaded ) {
                     </svg>
                 ),
             };
+            menus.social_share = {
+                pro: true,
+                text: __( 'Social Share', 'wedocs' ),
+                icon: (
+                    <svg
+                        width="20"
+                        height="20"
+                        fill="none"
+                        stroke="#6b7280"
+                        strokeWidth="2"
+                        strokeLinejoin="round"
+                        className="-ml-1 mr-4 pro-settings"
+                    >
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                        <rect width="4" height="12" x="2" y="9" rx="2" />
+                        <circle cx="4" cy="4" r="2" />
+                    </svg>
+                ),
+            };
 
             return menus;
         }
@@ -171,6 +191,11 @@ if ( !isProLoaded ) {
                 <PermissionSettings key={ index } />,
                 ...assistantWidgetSubPanels,
                 <LayoutSettings
+                    key={ index }
+                    settingsData={ docSettings }
+                    setSettings={ setDocSettings }
+                />,
+                <SocialShareSettings
                     key={ index }
                     settingsData={ docSettings }
                     setSettings={ setDocSettings }
