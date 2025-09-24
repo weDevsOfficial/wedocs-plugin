@@ -632,17 +632,22 @@ function wedocs_can_have_children( $doc_id ) {
 function wedocs_get_document_depth( $doc_id ) {
     $depth = 0;
     $post = get_post( $doc_id );
-    
-    while ( $post?->post_parent ) {
+
+    // Return 0 if post doesn't exist
+    if ( ! $post ) {
+        return 0;
+    }
+
+    while ( $post && $post->post_parent ) {
         $depth++;
         $post = get_post( $post->post_parent );
-        
+
         // Prevent infinite loops
         if ( $depth > 20 ) {
             break;
         }
     }
-    
+
     return $depth;
 }
 

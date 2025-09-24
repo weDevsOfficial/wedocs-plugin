@@ -40,8 +40,20 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           ),
         } );
       } )
-      .catch( () => {
-        // Error handled silently
+      .catch( ( error ) => {
+        // Log error for debugging
+        console.error( 'Failed to update document status:', error );
+
+        // Show user-friendly error notification
+        Swal.fire( {
+          icon              : 'error',
+          toast             : true,
+          title             : __( 'Update Failed', 'wedocs' ),
+          text              : __( `Failed to ${ doc?.status === 'draft' ? 'publish' : 'draft' } the ${ type === 'doc' ? 'documentation' : 'article' }. Please try again.`, 'wedocs' ),
+          timer             : 3000,
+          position          : 'bottom-end',
+          showConfirmButton : false,
+        } );
       } );
   }
 

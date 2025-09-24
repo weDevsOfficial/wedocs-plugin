@@ -67,7 +67,9 @@ const SectionArticles = ( {
       dispatch( docStore )
         .updateSortingStatus( { sortable_status: sortableStatus, documentations: childrenArticles } )
         .then( ( result ) => setNeedSortingStatusLocal( result?.sorting ) )
-        .catch( () => {} );
+        .catch( ( error ) => {
+          console.error( 'Failed to update sorting status:', error );
+        } );
     }
   }, [ needSortingStatusLocal, childrenArticles, sortableStatus ] );
   const {

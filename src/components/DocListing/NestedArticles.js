@@ -70,7 +70,9 @@ const NestedArticles = ( {
       dispatch( docsStore )
         .updateSortingStatus( { sortable_status: sortableStatus, documentations: childrenItems } )
         .then( ( result ) => setNeedSortingStatusLocal( result?.sorting ) )
-        .catch( () => {} );
+        .catch( ( error ) => {
+          console.error( 'Failed to update sorting status:', error );
+        } );
     }
   }, [ needSortingStatusLocal, childrenItems, sortableStatus ] );
 
@@ -224,12 +226,9 @@ const NestedArticles = ( {
                         __( article?.title?.rendered, 'wedocs' )
                       ) }
                     >
-                      <span
-                        className="hover:underline group-hover:text-black"
-                        dangerouslySetInnerHTML={ {
-                          __html: extractedTitle( article?.title?.rendered ),
-                        } }
-                      ></span>
+                      <span className="hover:underline group-hover:text-black">
+                        { he.decode( extractedTitle( article?.title?.rendered || '' ) ) }
+                      </span>
                     </div>
 
                     { article?.status === 'draft' && (
@@ -446,7 +445,7 @@ const NestedArticles = ( {
                 parentId={ article?.id }
               >
                 <SortableContext
-                  items={ childrenItems?.map(item => item.id) || [] }
+                  items={ filteredChildren?.map(item => item.id) || [] }
                   strategy={ verticalListSortingStrategy }
                 >
                   { filteredChildren?.map( ( childDoc ) => (
