@@ -598,10 +598,27 @@ function wedocs_convert_utc_to_est() {
  *
  * @since 2.1.13
  *
- * @return int Maximum depth allowed (default 7 levels)
+ * @return int Maximum depth count (default 7 levels total)
  */
 function wedocs_get_max_hierarchy_depth() {
     return apply_filters( 'wedocs_max_hierarchy_depth', 7 );
+}
+
+/**
+ * Check if a document can have children based on current depth.
+ *
+ * @since 2.1.13
+ *
+ * @param int $doc_id The document ID
+ * @return bool Whether the document can have children
+ */
+function wedocs_can_have_children( $doc_id ) {
+    $depth = wedocs_get_document_depth( $doc_id );
+    $max_index = max( 0, (int) wedocs_get_max_hierarchy_depth() - 1 );
+
+    // Document can have children if its depth is less than the max index
+    // This ensures a document at depth 6 (the 7th level) cannot have children
+    return $depth < $max_index;
 }
 
 /**
