@@ -1025,14 +1025,19 @@ class API extends WP_REST_Controller {
 
         // Copy meta data
         $meta_data     = get_post_meta( $original_doc->ID );
-        $excluded_meta = [ '_edit_lock', '_edit_last', '_wp_old_slug' ];
+        $excluded_meta = apply_filters(
+            'wedocs_duplicate_excluded_meta',
+            [ '_edit_lock', '_edit_last', '_wp_old_slug' ]
+        );
 
         foreach ( $meta_data as $key => $values ) {
             if ( in_array( $key, $excluded_meta ) ) {
                 continue; // Skip internal WordPress meta
             }
 
-            update_post_meta( $new_doc_id, $key, $values );
+            foreach ( $values as $value ) {
+                update_post_meta( $new_doc_id, $key, maybe_unserialize( $value ) );
+            }
         }
 
         // Copy taxonomies
