@@ -3,6 +3,7 @@ import DocActions from '../DocActions';
 import { __, sprintf } from '@wordpress/i18n';
 import QuickEditModal from './QuickEditModal';
 import extractedTitle from '../../utils/extractedTitle';
+import { isArticleAccessible } from '../../utils/helper';
 
 const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllowComments } ) => {
   const { modified: lastModifiedDate, comment_count: commentCount } = article;
@@ -45,15 +46,11 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                 <a
                   target="_blank"
                   href={
-                    ! Boolean( parseInt( wp?.hooks?.applyFilters(
-                      'wedocs_check_is_admin_restricted_article',
-                      false,
-                      article?.id
-                    ) ) ) ?
-                      `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit` :
-                      `${ window.location.origin }/?p=${ article?.id }`
+                    isArticleAccessible( isAdminRestrictedArticle )
+                      ? `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit`
+                      : `${ window.location.origin }/?p=${ article?.id }`
                   }
-                  className={ `${ ! Boolean( parseInt( isAdminRestrictedArticle ) ) ? 'mr-4' : '' } flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none` }
+                  className={ `${ isArticleAccessible( isAdminRestrictedArticle ) ? 'mr-4' : '' } flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none` }
                   rel="noreferrer"
                 >
                   <div
@@ -76,7 +73,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                     </div>
                   ) }
 
-                  { ! Boolean( parseInt( isAdminRestrictedArticle ) ) && (
+                  { isArticleAccessible( isAdminRestrictedArticle ) && (
                     <>
                       <QuickEditModal
                         type={ `article` }
@@ -207,11 +204,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
             </div>
           </div>
           <div className="ml-8 flex-shrink-0 w-5 h-5">
-            { ! Boolean( parseInt( wp?.hooks?.applyFilters(
-              'wedocs_check_is_admin_restricted_article',
-              false,
-              article?.id
-            ) ) ) && (
+            { isArticleAccessible( isAdminRestrictedArticle ) && (
               <DocActions
                 type="article"
                 doc={ article }

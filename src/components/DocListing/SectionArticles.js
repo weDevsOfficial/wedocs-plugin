@@ -155,15 +155,7 @@ const SectionArticles = ( {
                   <a
                     target="_blank"
                     href={
-                      ! Boolean(
-                        parseInt(
-                          wp?.hooks?.applyFilters(
-                            'wedocs_check_is_admin_restricted_article',
-                            false,
-                            article?.id
-                          )
-                        )
-                      )
+                      isArticleAccessible( isAdminRestrictedArticle )
                         ? `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit`
                         : `${ window.location.origin }/?p=${ article?.id }`
                     }
@@ -209,15 +201,7 @@ const SectionArticles = ( {
                   <a
                     target="_blank"
                     href={
-                      ! Boolean(
-                        parseInt(
-                          wp?.hooks?.applyFilters(
-                            'wedocs_check_is_admin_restricted_article',
-                            false,
-                            article?.id
-                          )
-                        )
-                      )
+                      isArticleAccessible( isAdminRestrictedArticle )
                         ? `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit`
                         : `${ window.location.origin }/?p=${ article?.id }`
                     }
@@ -357,15 +341,7 @@ const SectionArticles = ( {
               </div>
             </div>
             <div className="ml-8 flex-shrink-0 w-5 h-5">
-              { ! Boolean(
-                parseInt(
-                  wp?.hooks?.applyFilters(
-                    'wedocs_check_is_admin_restricted_article',
-                    false,
-                    article?.id
-                  )
-                )
-              ) && (
+              { isArticleAccessible( isAdminRestrictedArticle ) && (
                 <DocActions
                   type="article"
                   doc={ article }
