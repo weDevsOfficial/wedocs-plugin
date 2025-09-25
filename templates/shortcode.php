@@ -66,7 +66,13 @@ if ( $docs ) {
                                     <ul
                                         class='children has-icon <?php echo esc_attr( $collapse_section_articles !== 'on' ? 'active' : '' ); ?>'
                                     >
-                                        <?php wedocs_render_nested_articles( $children_docs, $all_wp_pages, $col ); ?>
+                                        <?php foreach ( $children_docs as $article ) : ?>
+                                            <li>
+                                                <a href="<?php echo get_permalink( $article->ID ); ?>" target='_blank'>
+                                                    <?php echo esc_html( wedocs_apply_short_content( $article->post_title, $col > 1 ? 60 : 160 ) ); ?>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
                                     </ul>
                                 <?php endif; ?>
                             <?php } ?>
