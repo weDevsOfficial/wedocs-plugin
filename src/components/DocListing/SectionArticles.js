@@ -157,7 +157,7 @@ const SectionArticles = ( {
                     href={
                       isArticleAccessible( isAdminRestrictedArticle )
                         ? `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit`
-                        : `${ window.location.origin }/?p=${ article?.id }`
+                        : article?.link
                     }
                     className={ `flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none` }
                     rel="noreferrer"
@@ -203,7 +203,7 @@ const SectionArticles = ( {
                     href={
                       isArticleAccessible( isAdminRestrictedArticle )
                         ? `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit`
-                        : `${ window.location.origin }/?p=${ article?.id }`
+                        : article?.link
                     }
                     className={ `${
                       isArticleAccessible( isAdminRestrictedArticle )
