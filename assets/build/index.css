@@ -3069,6 +3069,9 @@ select {
 .wedocs-document :is(.pointer-events-none) {
   pointer-events: none;
 }
+.wedocs-document :is(.pointer-events-auto) {
+  pointer-events: auto;
+}
 .wedocs-document :is(.invisible) {
   visibility: hidden;
 }

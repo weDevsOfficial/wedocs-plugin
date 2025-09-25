@@ -395,6 +395,22 @@ body.single.single-docs .content-area {
   color: #333333;
   font-weight: normal;
 }
+.wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li ul.children ul.children {
+  margin-left: 20px;
+  border-left-color: #e0e0e0;
+}
+.wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li ul.children ul.children ul.children {
+  margin-left: 15px;
+  border-left-color: #e8e8e8;
+}
+.wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li ul.children ul.children ul.children ul.children {
+  margin-left: 12px;
+  border-left-color: #f0f0f0;
+}
+.wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li ul.children ul.children ul.children ul.children ul.children {
+  margin-left: 10px;
+  border-left-color: #f5f5f5;
+}
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li.current_page_item > a > .wedocs-caret:hover,
 .wedocs-single-wrap .wedocs-sidebar ul.doc-nav-list li.current_page_parent > a > .wedocs-caret:hover {
   border-color: #fff;
@@ -743,6 +759,64 @@ body.single.single-docs .content-area {
 }
 .wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections ul.children:not(.active) {
   display: none;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections ul.children ul.children {
+  padding-left: 20px;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections ul.children ul.children > li {
+  list-style: disc;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections ul.children ul.children ul.children {
+  padding-left: 16px;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections ul.children ul.children ul.children > li {
+  list-style: square;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections ul.children ul.children ul.children ul.children {
+  padding-left: 12px;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections ul.children ul.children ul.children ul.children > li {
+  list-style: none;
+  position: relative;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections ul.children ul.children ul.children ul.children > li:before {
+  content: '→';
+  margin-right: 5px;
+  color: #999;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections ul.children ul.children ul.children ul.children ul.children {
+  padding-left: 10px;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list ul.wedocs-doc-sections ul.children ul.children ul.children ul.children ul.children > li:before {
+  content: '•';
+  color: #ccc;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list .wedocs-hierarchy-level-0 {
+  margin-left: 0;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list .wedocs-hierarchy-level-1 {
+  margin-left: 10px;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list .wedocs-hierarchy-level-2 {
+  margin-left: 20px;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list .wedocs-hierarchy-level-3 {
+  margin-left: 30px;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list .wedocs-hierarchy-level-4 {
+  margin-left: 40px;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list .wedocs-hierarchy-level-5 {
+  margin-left: 50px;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list .wedocs-hierarchy-level-6 {
+  margin-left: 60px;
+}
+.wedocs-shortcode-wrap ul.wedocs-docs-list .wedocs-max-depth-indicator {
+  font-style: italic;
+  color: #999;
+  padding-left: 10px;
+  font-size: 0.9em;
 }
 .wedocs-shortcode-wrap ul.wedocs-docs-list.col-2 > li {
   float: left;

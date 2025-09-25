@@ -102,6 +102,27 @@ body.single.single-docs .content-area {
                         color: #333333;
                         font-weight: normal;
                     }
+
+                    // Support for deeper hierarchy levels
+                    ul.children {
+                        margin-left: 20px;
+                        border-left-color: #e0e0e0;
+                        
+                        ul.children {
+                            margin-left: 15px;
+                            border-left-color: #e8e8e8;
+                            
+                            ul.children {
+                                margin-left: 12px;
+                                border-left-color: #f0f0f0;
+                                
+                                ul.children {
+                                    margin-left: 10px;
+                                    border-left-color: #f5f5f5;
+                                }
+                            }
+                        }
+                    }
                 }
 
                 &.current_page_item > a > .wedocs-caret,
@@ -349,7 +370,66 @@ body.single.single-docs .content-area {
                 &:not(.active) {
                     display: none;
                 }
+
+                // Support for deeper hierarchy levels
+                ul.children {
+                    padding-left: 20px;
+                    
+                    > li {
+                        list-style: disc;
+                    }
+                    
+                    ul.children {
+                        padding-left: 16px;
+                        
+                        > li {
+                            list-style: square;
+                        }
+                        
+                        ul.children {
+                            padding-left: 12px;
+                            
+                            > li {
+                                list-style: none;
+                                position: relative;
+                                
+                                &:before {
+                                    content: '→';
+                                    margin-right: 5px;
+                                    color: #999;
+                                }
+                            }
+                            
+                            ul.children {
+                                padding-left: 10px;
+                                
+                                > li {
+                                    &:before {
+                                        content: '•';
+                                        color: #ccc;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
+        }
+
+        // Hierarchy level indicators
+        .wedocs-hierarchy-level-0 { margin-left: 0; }
+        .wedocs-hierarchy-level-1 { margin-left: 10px; }
+        .wedocs-hierarchy-level-2 { margin-left: 20px; }
+        .wedocs-hierarchy-level-3 { margin-left: 30px; }
+        .wedocs-hierarchy-level-4 { margin-left: 40px; }
+        .wedocs-hierarchy-level-5 { margin-left: 50px; }
+        .wedocs-hierarchy-level-6 { margin-left: 60px; }
+
+        .wedocs-max-depth-indicator {
+            font-style: italic;
+            color: #999;
+            padding-left: 10px;
+            font-size: 0.9em;
         }
 
         &.col-2 > li {

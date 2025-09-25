@@ -284,6 +284,7 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                 <DraggableDocs
                   setItems={ setArticles }
                   setNeedSortingStatus={ setNeedSortingStatus }
+                  parentId={ section?.id }
                 >
                   <SortableContext
                     items={ articles }
@@ -300,6 +301,7 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                         searchValue={ searchValue }
                         setShowArticles={ setShowArticles }
                         isAllowComments={ isCommentsAllowed }
+                        setNeedSortingStatus={ setNeedSortingStatus }
                       />
                     ) ) }
                   </SortableContext>
@@ -310,7 +312,7 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                 sections={ sections }
                 defaultSection={ section }
                 setShowArticles={ setShowArticles }
-                className="py-2.5 px-4 mt-7 mb-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 text-sm text-white hover:text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                className="py-2.5 px-4 mt-7 mb-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 text-sm text-white hover:text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-3 text-base flex items-center"></span>
                 { __( 'Add article', 'wedocs' ) }

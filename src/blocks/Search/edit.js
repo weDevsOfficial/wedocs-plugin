@@ -41,8 +41,6 @@ const Edit = ({ attributes, setAttributes }) => {
         iconHoverColor,
     } = attributes;
 
-    console.log( 'editor panel:', bgColor );
-
     const alignmentOptions = [
         {
             value : 'left',
