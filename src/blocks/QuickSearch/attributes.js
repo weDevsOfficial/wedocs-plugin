@@ -25,9 +25,9 @@ const attributes = {
         type: 'number',
         default: 10,
     },
-    showIconInResults: {
-        type: 'boolean',
-        default: true,
+    resultImageType: {
+        type: 'string',
+        default: 'icon',
     },
     searchBoxStyles: {
         type: 'object',
