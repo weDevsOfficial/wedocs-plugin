@@ -195,7 +195,7 @@ function render_wedocs_quick_search( $attributes ) {
     $section_ids = $attributes['sectionIds'] ?? '';
     $article_ids = $attributes['articleIds'] ?? '';
     $helpful_docs_count = $attributes['helpfulDocsCount'] ?? 10;
-    $show_icon_in_results = $attributes['showIconInResults'] ?? true;
+    $result_image_type = $attributes['resultImageType'] ?? 'icon';
 
     // Get styling attributes
     $search_box_styles = $attributes['searchBoxStyles'] ?? [];
@@ -268,7 +268,7 @@ function render_wedocs_quick_search( $attributes ) {
         'data-section-ids="' . esc_attr( $section_ids ) . '"',
         'data-article-ids="' . esc_attr( $article_ids ) . '"',
         'data-helpful-docs-count="' . esc_attr( $helpful_docs_count ) . '"',
-        'data-show-icon-in-results="' . esc_attr( $show_icon_in_results ? 'true' : 'false' ) . '"',
+        'data-result-image-type="' . esc_attr( $result_image_type ) . '"',
     ];
     $data_attributes_string = implode( ' ', $data_attributes );
 
@@ -603,7 +603,7 @@ function render_wedocs_quick_search( $attributes ) {
                 // Use our new AJAX endpoint with HTML format
                 const modalStyles = <?php echo json_encode( $modal_styles ); ?>;
 
-                const showIconInResults = trigger.getAttribute('data-show-icon-in-results') === 'true';
+                const resultImageType = trigger.getAttribute('data-result-image-type') || 'icon';
                 
                 const requestData = {
                     action: 'wedocs_quick_search',
@@ -611,7 +611,7 @@ function render_wedocs_quick_search( $attributes ) {
                     per_page: '10',
                     format: 'html',
                     modal_styles: JSON.stringify(modalStyles),
-                    show_icon_in_results: showIconInResults,
+                    result_image_type: resultImageType,
                     _wpnonce: weDocs_Vars.nonce
                 };
 

@@ -21,7 +21,7 @@ const Edit = ({ attributes, setAttributes }) => {
         sectionIds,
         articleIds,
         helpfulDocsCount,
-        showIconInResults,
+        resultImageType,
         searchBoxStyles,
         modalStyles,
     } = attributes;
@@ -152,11 +152,16 @@ const Edit = ({ attributes, setAttributes }) => {
                         />
                     )}
 
-                    <ToggleControl
-                        label={__('Show Icon in Quick Search Results', 'wedocs')}
-                        checked={showIconInResults}
-                        onChange={(newValue) => setAttributes({ showIconInResults: newValue })}
-                        help={__('Display icons next to search results in the modal', 'wedocs')}
+                    <SelectControl
+                        label={__('Result Image Type', 'wedocs')}
+                        value={resultImageType}
+                        options={[
+                            { label: __('Featured Image', 'wedocs'), value: 'featured' },
+                            { label: __('Icon', 'wedocs'), value: 'icon' },
+                            { label: __('None', 'wedocs'), value: 'none' }
+                        ]}
+                        onChange={(newValue) => setAttributes({ resultImageType: newValue })}
+                        help={__('Choose what to display next to search results in the modal', 'wedocs')}
                     />
                 </PanelBody>
             </InspectorControls>
@@ -288,7 +293,7 @@ const Edit = ({ attributes, setAttributes }) => {
                                 label: __('Field Text Color', 'wedocs'),
                                 onChange: (newColor) => updateModalStyles('fieldTextColor', newColor),
                             },
-                            ...(showIconInResults ? [
+                            ...(resultImageType === 'icon' ? [
                                 {
                                     value: modalStyles.listItemIconColor,
                                     label: __('List Item Icon Color', 'wedocs'),
