@@ -97,10 +97,11 @@ function render_wedocs_contributors_block($attributes, $content, $block) {
 
     switch ($contributor_display_mode) {
         case 'main_author':
-            $author_id = get_post_field('post_author', $post->ID);
+            $author_id = get_post_field('wedocs_contributors', $post->ID);
             if ($author_id) {
                 $contributors[] = get_userdata($author_id);
             }
+
             break;
 
         case 'manual':
@@ -117,7 +118,13 @@ function render_wedocs_contributors_block($attributes, $content, $block) {
         case 'all':
         default:
             // Get all contributors who have edited the post
-            $author_id = get_post_field('post_author', $post->ID);
+            $author_id = get_post_field('wedocs_contributors', $post->ID);
+            $authors = array_values($author_id); // return auhtors id.
+            foreach($authors as $author){
+                $contributors[]= get_userdata($author);
+            }
+
+
             if ($author_id && ($author_user = get_userdata($author_id))) {
                 $contributors[] = $author_user;
             }
