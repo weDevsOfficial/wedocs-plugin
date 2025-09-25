@@ -1,19 +1,21 @@
 /*
+! tailwindcss v3.3.3 | MIT License | https://tailwindcss.com
+*//*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
 */
 
-*:where(.wedocs-document,.wedocs-document *),
-:where(.wedocs-document,.wedocs-document *)::before,
-:where(.wedocs-document,.wedocs-document *)::after {
+*,
+::before,
+::after {
   box-sizing: border-box; /* 1 */
   border-width: 0; /* 2 */
   border-style: solid; /* 2 */
   border-color: #e5e7eb; /* 2 */
 }
 
-:where(.wedocs-document,.wedocs-document *)::before,
-:where(.wedocs-document,.wedocs-document *)::after {
+::before,
+::after {
   --tw-content: '';
 }
 
@@ -26,7 +28,7 @@
 6. Use the user's configured `sans` font-variation-settings by default.
 */
 
-.wedocs-document {
+html {
   line-height: 1.5; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
   -moz-tab-size: 4; /* 3 */
@@ -42,7 +44,7 @@
 2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
 */
 
-.wedocs-document {
+body {
   margin: 0; /* 1 */
   line-height: inherit; /* 2 */
 }
@@ -53,7 +55,7 @@
 3. Ensure horizontal rules are visible by default.
 */
 
-hr:where(.wedocs-document,.wedocs-document *) {
+hr {
   height: 0; /* 1 */
   color: inherit; /* 2 */
   border-top-width: 1px; /* 3 */
@@ -63,7 +65,7 @@ hr:where(.wedocs-document,.wedocs-document *) {
 Add the correct text decoration in Chrome, Edge, and Safari.
 */
 
-abbr:where([title]):where(.wedocs-document,.wedocs-document *) {
+abbr:where([title]) {
   -webkit-text-decoration: underline dotted;
           text-decoration: underline dotted;
 }
@@ -72,12 +74,12 @@ abbr:where([title]):where(.wedocs-document,.wedocs-document *) {
 Remove the default font size and weight for headings.
 */
 
-h1:where(.wedocs-document,.wedocs-document *),
-h2:where(.wedocs-document,.wedocs-document *),
-h3:where(.wedocs-document,.wedocs-document *),
-h4:where(.wedocs-document,.wedocs-document *),
-h5:where(.wedocs-document,.wedocs-document *),
-h6:where(.wedocs-document,.wedocs-document *) {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-size: inherit;
   font-weight: inherit;
 }
@@ -86,7 +88,7 @@ h6:where(.wedocs-document,.wedocs-document *) {
 Reset links to optimize for opt-in styling instead of opt-out.
 */
 
-a:where(.wedocs-document,.wedocs-document *) {
+a {
   color: inherit;
   text-decoration: inherit;
 }
@@ -95,8 +97,8 @@ a:where(.wedocs-document,.wedocs-document *) {
 Add the correct font weight in Edge and Safari.
 */
 
-b:where(.wedocs-document,.wedocs-document *),
-strong:where(.wedocs-document,.wedocs-document *) {
+b,
+strong {
   font-weight: bolder;
 }
 
@@ -105,10 +107,10 @@ strong:where(.wedocs-document,.wedocs-document *) {
 2. Correct the odd `em` font sizing in all browsers.
 */
 
-code:where(.wedocs-document,.wedocs-document *),
-kbd:where(.wedocs-document,.wedocs-document *),
-samp:where(.wedocs-document,.wedocs-document *),
-pre:where(.wedocs-document,.wedocs-document *) {
+code,
+kbd,
+samp,
+pre {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* 1 */
   font-size: 1em; /* 2 */
 }
@@ -117,7 +119,7 @@ pre:where(.wedocs-document,.wedocs-document *) {
 Add the correct font size in all browsers.
 */
 
-small:where(.wedocs-document,.wedocs-document *) {
+small {
   font-size: 80%;
 }
 
@@ -125,19 +127,19 @@ small:where(.wedocs-document,.wedocs-document *) {
 Prevent `sub` and `sup` elements from affecting the line height in all browsers.
 */
 
-sub:where(.wedocs-document,.wedocs-document *),
-sup:where(.wedocs-document,.wedocs-document *) {
+sub,
+sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
   vertical-align: baseline;
 }
 
-sub:where(.wedocs-document,.wedocs-document *) {
+sub {
   bottom: -0.25em;
 }
 
-sup:where(.wedocs-document,.wedocs-document *) {
+sup {
   top: -0.5em;
 }
 
@@ -147,7 +149,7 @@ sup:where(.wedocs-document,.wedocs-document *) {
 3. Remove gaps between table borders by default.
 */
 
-table:where(.wedocs-document,.wedocs-document *) {
+table {
   text-indent: 0; /* 1 */
   border-color: inherit; /* 2 */
   border-collapse: collapse; /* 3 */
@@ -159,11 +161,11 @@ table:where(.wedocs-document,.wedocs-document *) {
 3. Remove default padding in all browsers.
 */
 
-button:where(.wedocs-document,.wedocs-document *),
-input:where(.wedocs-document,.wedocs-document *),
-optgroup:where(.wedocs-document,.wedocs-document *),
-select:where(.wedocs-document,.wedocs-document *),
-textarea:where(.wedocs-document,.wedocs-document *) {
+button,
+input,
+optgroup,
+select,
+textarea {
   font-family: inherit; /* 1 */
   font-feature-settings: inherit; /* 1 */
   font-variation-settings: inherit; /* 1 */
@@ -179,8 +181,8 @@ textarea:where(.wedocs-document,.wedocs-document *) {
 Remove the inheritance of text transform in Edge and Firefox.
 */
 
-button:where(.wedocs-document,.wedocs-document *),
-select:where(.wedocs-document,.wedocs-document *) {
+button,
+select {
   text-transform: none;
 }
 
@@ -189,10 +191,10 @@ select:where(.wedocs-document,.wedocs-document *) {
 2. Remove default button styles.
 */
 
-button:where(.wedocs-document,.wedocs-document *),
-[type='button']:where(.wedocs-document,.wedocs-document *),
-[type='reset']:where(.wedocs-document,.wedocs-document *),
-[type='submit']:where(.wedocs-document,.wedocs-document *) {
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
   -webkit-appearance: button; /* 1 */
   background-color: transparent; /* 2 */
   background-image: none; /* 2 */
@@ -202,7 +204,7 @@ button:where(.wedocs-document,.wedocs-document *),
 Use the modern Firefox focus style for all focusable elements.
 */
 
-:-moz-focusring:where(.wedocs-document,.wedocs-document *) {
+:-moz-focusring {
   outline: auto;
 }
 
@@ -210,7 +212,7 @@ Use the modern Firefox focus style for all focusable elements.
 Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
 */
 
-:-moz-ui-invalid:where(.wedocs-document,.wedocs-document *) {
+:-moz-ui-invalid {
   box-shadow: none;
 }
 
@@ -218,7 +220,7 @@ Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/
 Add the correct vertical alignment in Chrome and Firefox.
 */
 
-progress:where(.wedocs-document,.wedocs-document *) {
+progress {
   vertical-align: baseline;
 }
 
@@ -226,8 +228,8 @@ progress:where(.wedocs-document,.wedocs-document *) {
 Correct the cursor style of increment and decrement buttons in Safari.
 */
 
-:where(.wedocs-document,.wedocs-document *) ::-webkit-inner-spin-button,
-:where(.wedocs-document,.wedocs-document *) ::-webkit-outer-spin-button {
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
   height: auto;
 }
 
@@ -236,7 +238,7 @@ Correct the cursor style of increment and decrement buttons in Safari.
 2. Correct the outline style in Safari.
 */
 
-[type='search']:where(.wedocs-document,.wedocs-document *) {
+[type='search'] {
   -webkit-appearance: textfield; /* 1 */
   outline-offset: -2px; /* 2 */
 }
@@ -245,7 +247,7 @@ Correct the cursor style of increment and decrement buttons in Safari.
 Remove the inner padding in Chrome and Safari on macOS.
 */
 
-:where(.wedocs-document,.wedocs-document *) ::-webkit-search-decoration {
+::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -254,7 +256,7 @@ Remove the inner padding in Chrome and Safari on macOS.
 2. Change font properties to `inherit` in Safari.
 */
 
-:where(.wedocs-document,.wedocs-document *) ::-webkit-file-upload-button {
+::-webkit-file-upload-button {
   -webkit-appearance: button; /* 1 */
   font: inherit; /* 2 */
 }
@@ -263,7 +265,7 @@ Remove the inner padding in Chrome and Safari on macOS.
 Add the correct display in Chrome and Safari.
 */
 
-summary:where(.wedocs-document,.wedocs-document *) {
+summary {
   display: list-item;
 }
 
@@ -271,34 +273,34 @@ summary:where(.wedocs-document,.wedocs-document *) {
 Removes the default spacing and border for appropriate elements.
 */
 
-blockquote:where(.wedocs-document,.wedocs-document *),
-dl:where(.wedocs-document,.wedocs-document *),
-dd:where(.wedocs-document,.wedocs-document *),
-h1:where(.wedocs-document,.wedocs-document *),
-h2:where(.wedocs-document,.wedocs-document *),
-h3:where(.wedocs-document,.wedocs-document *),
-h4:where(.wedocs-document,.wedocs-document *),
-h5:where(.wedocs-document,.wedocs-document *),
-h6:where(.wedocs-document,.wedocs-document *),
-hr:where(.wedocs-document,.wedocs-document *),
-figure:where(.wedocs-document,.wedocs-document *),
-p:where(.wedocs-document,.wedocs-document *),
-pre:where(.wedocs-document,.wedocs-document *) {
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
   margin: 0;
 }
 
-fieldset:where(.wedocs-document,.wedocs-document *) {
+fieldset {
   margin: 0;
   padding: 0;
 }
 
-legend:where(.wedocs-document,.wedocs-document *) {
+legend {
   padding: 0;
 }
 
-ol:where(.wedocs-document,.wedocs-document *),
-ul:where(.wedocs-document,.wedocs-document *),
-menu:where(.wedocs-document,.wedocs-document *) {
+ol,
+ul,
+menu {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -307,7 +309,7 @@ menu:where(.wedocs-document,.wedocs-document *) {
 /*
 Reset default styling for dialogs.
 */
-dialog:where(.wedocs-document,.wedocs-document *) {
+dialog {
   padding: 0;
 }
 
@@ -315,7 +317,7 @@ dialog:where(.wedocs-document,.wedocs-document *) {
 Prevent resizing textareas horizontally by default.
 */
 
-textarea:where(.wedocs-document,.wedocs-document *) {
+textarea {
   resize: vertical;
 }
 
@@ -324,13 +326,13 @@ textarea:where(.wedocs-document,.wedocs-document *) {
 2. Set the default placeholder color to the user's configured gray 400 color.
 */
 
-:where(.wedocs-document,.wedocs-document *) input::-moz-placeholder, :where(.wedocs-document,.wedocs-document *) textarea::-moz-placeholder {
+input::-moz-placeholder, textarea::-moz-placeholder {
   opacity: 1; /* 1 */
   color: #9ca3af; /* 2 */
 }
 
-:where(.wedocs-document,.wedocs-document *) input::placeholder,
-:where(.wedocs-document,.wedocs-document *) textarea::placeholder {
+input::placeholder,
+textarea::placeholder {
   opacity: 1; /* 1 */
   color: #9ca3af; /* 2 */
 }
@@ -339,15 +341,15 @@ textarea:where(.wedocs-document,.wedocs-document *) {
 Set the default cursor for buttons.
 */
 
-button:where(.wedocs-document,.wedocs-document *),
-[role="button"]:where(.wedocs-document,.wedocs-document *) {
+button,
+[role="button"] {
   cursor: pointer;
 }
 
 /*
 Make sure disabled buttons don't get the pointer cursor.
 */
-:disabled:where(.wedocs-document,.wedocs-document *) {
+:disabled {
   cursor: default;
 }
 
@@ -357,14 +359,14 @@ Make sure disabled buttons don't get the pointer cursor.
    This can trigger a poorly considered lint error in some tools but is included by design.
 */
 
-img:where(.wedocs-document,.wedocs-document *),
-svg:where(.wedocs-document,.wedocs-document *),
-video:where(.wedocs-document,.wedocs-document *),
-canvas:where(.wedocs-document,.wedocs-document *),
-audio:where(.wedocs-document,.wedocs-document *),
-iframe:where(.wedocs-document,.wedocs-document *),
-embed:where(.wedocs-document,.wedocs-document *),
-object:where(.wedocs-document,.wedocs-document *) {
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
   display: block; /* 1 */
   vertical-align: middle; /* 2 */
 }
@@ -373,14 +375,14 @@ object:where(.wedocs-document,.wedocs-document *) {
 Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
 */
 
-img:where(.wedocs-document,.wedocs-document *),
-video:where(.wedocs-document,.wedocs-document *) {
+img,
+video {
   max-width: 100%;
   height: auto;
 }
 
 /* Make elements with the HTML hidden attribute stay hidden by default */
-[hidden]:where(.wedocs-document,.wedocs-document *) {
+[hidden] {
   display: none;
 }
 
