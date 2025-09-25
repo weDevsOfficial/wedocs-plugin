@@ -971,7 +971,8 @@ class API extends WP_REST_Controller {
         }
 
         $original_doc = get_post( $doc_id );
-        if ( ! $original_doc || $original_doc->post_type !== 'docs' ) {
+        // check $original_doc is a wp_post
+        if ( ! $original_doc || $original_doc->post_type !== 'docs' || ! is_a( $original_doc, 'WP_Post' ) ) {
             return new WP_Error( 'doc_not_found', __( 'Document not found.', 'wedocs' ), [ 'status' => 404 ] );
         }
 
@@ -1017,17 +1018,21 @@ class API extends WP_REST_Controller {
 
         // Create the new document
         $new_doc_id = wp_insert_post( $new_post_data );
-        
+
         if ( is_wp_error( $new_doc_id ) ) {
             return $new_doc_id;
         }
 
         // Copy meta data
-        $meta_data = get_post_meta( $original_doc->ID );
+        $meta_data     = get_post_meta( $original_doc->ID );
+        $excluded_meta = [ '_edit_lock', '_edit_last', '_wp_old_slug' ];
+
         foreach ( $meta_data as $key => $values ) {
-            foreach ( $values as $value ) {
-                add_post_meta( $new_doc_id, $key, maybe_unserialize( $value ) );
+            if ( in_array( $key, $excluded_meta ) ) {
+                continue; // Skip internal WordPress meta
             }
+
+            update_post_meta( $new_doc_id, $key, $values );
         }
 
         // Copy taxonomies
