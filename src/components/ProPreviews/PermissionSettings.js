@@ -4,6 +4,8 @@ import { useState } from '@wordpress/element';
 import MultiSelectBox from '../MultiSelectBox';
 
 const PermissionSettings = () => {
+
+    const [activeIndex, setActiveIndex] = useState(null);
    
     const roles = [ 'Administrator', 'Editor', 'Author', 'Contributor', 'Subscriber', 'Custom' ];
 
@@ -74,7 +76,7 @@ const PermissionSettings = () => {
                                 </div>
                                 <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
                                    
-                                                <MultiSelectBox options={roles}/>
+                                                <MultiSelectBox options={roles} index={fieldIndex} activeIndex={activeIndex} setActiveIndex={setActiveIndex}/>
                                                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
