@@ -70,43 +70,43 @@ const RoleManagementSettings = ({}) => {
                 </select>
               </div>
             </div>
-			<div className='other-roles relative'>
-				  <div className="sm:flex sm:pt-5 pointer-events-none">
+			<div className='other-roles'>
+				  <div className="sm:flex sm:pt-5">
               <label className="block text-sm font-semibold text-gray-900 flex mt-2.5">
                 {__('Authors', 'wedocs')}
               </label>
-              <div className="mt-1 ml-auto sm:col-span-2 sm:mt-0 opacity-40">
-                <select className="!px-3.5 !py-1 mb-1 block w-[312px] font-medium !text-gray-700 !rounded-md !border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+              <div className="group relative  mt-1 ml-auto sm:col-span-2 sm:mt-0">
+                <select disabled className="!px-3.5 !py-1 mb-1 block w-[312px] font-medium !text-gray-700 !rounded-md !border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
                   <option>{__('Can view', 'wedocs')}</option>
                   <option>{__('Can edit', 'wedocs')}</option>
                 </select>
-				
+					 <Badge position='absolute' top='1px' right={0} classes="opacity-0 group-hover:opacity-100 transition-opacity"/>
               </div>
-			
             </div>
-			  <div className="sm:flex sm:pt-5 opacity-40 pointer-events-none">
+              <div className="sm:flex sm:pt-5">
               <label className="block text-sm font-semibold text-gray-900 flex mt-2.5">
                 {__('Contributors', 'wedocs')}
               </label>
-              <div className="mt-1 ml-auto sm:col-span-2 sm:mt-0">
-                <select className="!px-3.5 !py-1 mb-1 block w-[312px] font-medium !text-gray-700 !rounded-md !border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+              <div className="group relative  mt-1 ml-auto sm:col-span-2 sm:mt-0">
+                <select disabled className="!px-3.5 !py-1 mb-1 block w-[312px] font-medium !text-gray-700 !rounded-md !border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
                   <option>{__('Can view', 'wedocs')}</option>
                   <option>{__('Can edit', 'wedocs')}</option>
                 </select>
+					 <Badge position='absolute' top='1px' right={0} classes="opacity-0 group-hover:opacity-100 transition-opacity"/>
               </div>
             </div>
-			  <div className="sm:flex sm:pt-5 opacity-40 pointer-events-none">
+              <div className="sm:flex sm:pt-5">
               <label className="block text-sm font-semibold text-gray-900 flex mt-2.5">
                 {__('Subscribers', 'wedocs')}
               </label>
-              <div className="mt-1 ml-auto sm:col-span-2 sm:mt-0">
-                <select className="!px-3.5 !py-1 mb-1 block w-[312px] font-medium !text-gray-700 !rounded-md !border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+              <div className="group relative  mt-1 ml-auto sm:col-span-2 sm:mt-0">
+                <select disabled className="!px-3.5 !py-1 mb-1 block w-[312px] font-medium !text-gray-700 !rounded-md !border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
                   <option>{__('Can view', 'wedocs')}</option>
                   <option>{__('Can edit', 'wedocs')}</option>
                 </select>
+					 <Badge position='absolute' top='1px' right={0} classes="opacity-0 group-hover:opacity-100 transition-opacity"/>
               </div>
             </div>
-			<Badge position='absolute right-[25px] top-1/2 -translate-y-1/2'/>
 			</div>
 			</>
           

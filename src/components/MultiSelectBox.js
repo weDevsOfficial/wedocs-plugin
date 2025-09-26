@@ -1,23 +1,24 @@
 import { __, sprintf, _n } from '@wordpress/i18n';
-import { useEffect, useState } from '@wordpress/element';
-import ProSvg from "./ProPreviews/common/ProSvg"
+import { useState } from '@wordpress/element';
 import Badge from './ProPreviews/common/Badge';
 
+
 const MultiSelectBox = ( {
-	options
+	options,
+	index, activeIndex, setActiveIndex
 } ) => {
-	const [ show, setShow ] = useState( false );
+	//const [ show, setShow ] = useState( false );
 
 	return (
 		<div  className="multiSelectBox">
 			<div className="relative mb-2">
 				<button
-					onClick={ () => setShow( ! show ) }
+					onClick={ () => index === activeIndex ? setActiveIndex(null): setActiveIndex(index) }
 					className="w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
 				>
 				
 						<span className="block multiSelectBox truncate">
-							{ __( '1 role selected', 'wedocs-pro' ) }
+							{ __( '1 role selected', 'wedocs' ) }
 						</span>
 					<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
 						<svg
@@ -36,8 +37,8 @@ const MultiSelectBox = ( {
 				</button>
 			</div>
 
-			{ show && options && (
-				<div className="relative" onClick={ () => setShow( true ) }>
+			{ (index ===activeIndex) && options && (
+				<div className="relative">
 					<ul className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
 						{ Object.entries( options ).map( ( option ) => (
 							<li
@@ -74,7 +75,7 @@ const MultiSelectBox = ( {
 										option[ 1 ]
 									) }
 								</label>
-								<ProSvg classes="opacity-0 group-hover:opacity-100 transition-opacity"/>
+								 <Badge classes="opacity-0 group-hover:opacity-100 transition-opacity"/>
 							</li>
 						) ) }
 					{/* <ProSvg position='absolute' top="50%" left="85%" transform="translateY(-50%)"/> */}

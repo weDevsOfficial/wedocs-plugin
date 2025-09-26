@@ -1,8 +1,8 @@
-import ProSvg from './ProSvg';
+import ProBadge from './ProBadge';
 import UpgradeTooltip from './UpgradeTooltip';
 import { useState } from '@wordpress/element';
 
-const Badge = ({ classes, position = 'relative', heading=null, description=null, top=null,left=null, transform=null }) => {
+const Badge = ({ classes, position = 'relative', heading=null, description=null, top=null,left=null, right=null, transform=null }) => {
   const [showTips, setShowTips] = useState(false);
 
   return (
@@ -12,9 +12,9 @@ const Badge = ({ classes, position = 'relative', heading=null, description=null,
       className={`${position} pro-badge cursor-pointer text-white text-[10px] py-[3px] px-[5px] leading-none ml-1.5 ${
         classes ? classes : ''
       }`}
-      style={{top: `${top}`, left: `${left}`, transform: `${transform}`}}
+      style={{top: `${top}`, left: `${left}`, right: `${right}`, transform: `${transform}`}}
     >
-      <ProSvg />
+      <ProBadge />
 
       <UpgradeTooltip classes={`${showTips ? 'block' : 'hidden'}`} heading={heading} description={description}/>
     </span>
