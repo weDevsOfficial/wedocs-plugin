@@ -1,13 +1,10 @@
 import { __, sprintf } from '@wordpress/i18n';
 import Overlay from './common/Overlay';
 import { useState } from '@wordpress/element';
-import MultiSelectBox from '../MultiSelectBox';
 
 const PermissionSettings = () => {
-
-    const [activeIndex, setActiveIndex] = useState(null);
-   
-    const roles = [ 'Administrator', 'Editor', 'Author', 'Contributor', 'Subscriber', 'Custom' ];
+    const [ showOverlay, setShowOverlay ] = useState( false );
+    const roles = [ 'administrator', 'editor', 'author', 'contributor', 'subscriber', 'custom' ];
 
     const permissionFields = [
         {
@@ -41,6 +38,8 @@ const PermissionSettings = () => {
                 <hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200" />
                 <div
                     className='pt-6 pb-20 px-8 grid grid-cols-4 auto-rows-max gap-5 relative min-h-[439px]'
+                    onMouseEnter={ () => setShowOverlay( true ) }
+                    onMouseLeave={ () => setShowOverlay( false ) }
                 >
                     { permissionFields &&
                         permissionFields?.map( ( field, fieldIndex ) => (
@@ -75,8 +74,12 @@ const PermissionSettings = () => {
                                     </div>
                                 </div>
                                 <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
-                                   
-                                                <MultiSelectBox options={roles} index={fieldIndex} activeIndex={activeIndex} setActiveIndex={setActiveIndex}/>
+                                    <div className="multiSelectBox">
+                                        <div className="relative mb-2">
+                                            <button className="w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+                                                <span className="block multiSelectBox truncate">
+                                                    { __( '6 roles selected', 'wedocs' ) }
+                                                </span>
                                                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -91,17 +94,33 @@ const PermissionSettings = () => {
                                                         ></path>
                                                     </svg>
                                                 </span>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            { field?.permissionObj &&
+                              field?.permissionObj?.length > 0 && (
                                 <div className="settings-description max-w-[490px] ml-auto">
                                     <div className="active-roles inline-flex flex-wrap items-center gap-2.5">
+                                        { field?.permissionObj?.map(
+                                          ( role, index ) => (
                                             <span
-                                              
+                                              key={ index }
                                               className="inline-flex items-center gap-1 rounded-md bg-gray-100 px-2.5 py-0.5 text-sm text-gray-800"
                                             >
-                                                {
-                                                   __("Administrator","wedocs")
-                                                }
+                                                { sprintf(
+                                                    __(
+                                                      '%s',
+                                                      'wedocs'
+                                                    ),
+                                                    role
+                                                      .charAt( 0 )
+                                                      .toUpperCase() +
+                                                    role.slice(
+                                                      1
+                                                    )
+                                                ) }
                                                 <svg
                                                   xmlns="http://www.w3.org/2000/svg"
                                                   fill="none"
@@ -119,11 +138,14 @@ const PermissionSettings = () => {
                                                     />
                                                 </svg>
                                             </span>
-                                         
+                                          )
+                                        ) }
                                     </div>
                                 </div>
+                              ) }
                         </div>
                       ) ) }
+                    <Overlay classes={ `${ showOverlay ? 'flex items-center justify-center' : 'hidden' }` } />
                 </div>
             </div>
         </section>
