@@ -1,0 +1,84 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/wedocs-breadcrumbs",
+	"version": "1.0.0",
+	"title": "weDocs Breadcrumbs",
+	"category": "widgets",
+	"description": "Display the breadcrumbs for the current page.",
+	"icon": "arrow-right-alt",
+	"attributes": {
+		"separator": {
+			"type": "string",
+			"default": "slash"
+		},
+		"hideHomeIcon": {
+			"type": "boolean",
+			"default": false
+		},
+		"alignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"breadcrumbSeparator": {
+			"type": "object",
+			"default": {
+				"color": ""
+			}
+		}
+	},
+	"example": {
+		"attributes": {
+			"separator": "slash",
+			"hideHomeIcon": false,
+			"alignment": "left",
+			"breadcrumbSeparator": {
+				"color": "#666666"
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true,
+			"border": true
+		},
+		"shadow": true,
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"margin": true,
+				"padding": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		}
+	},
+	"render": "file:./render.php"
+}
