@@ -76,11 +76,11 @@ class Assets {
 
         if ( file_exists( WEDOCS_PATH . '/assets/build/block.asset.php' ) ) {
             $block_dependencies = require WEDOCS_PATH . '/assets/build/block.asset.php';
-            wp_register_style(
-                'wedocs-block-style',
-                $assets_url . '/build/style-block.css',
-                $block_dependencies['version']
-            );
+            // wp_register_style(
+            //     'wedocs-block-style',
+            //     $assets_url . '/build/style-block.css',
+            //     $block_dependencies['version']
+            // );
 
             wp_register_script(
                 'wedocs-block-script',

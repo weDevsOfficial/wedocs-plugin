@@ -2,12 +2,12 @@ const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const path = require( 'path' );
 const isProduction = process.env.NODE_ENV === 'production';
 const MiniCSSExtractPlugin = require( 'mini-css-extract-plugin' );
-const { image } = require('@wordpress/icons');
 
 const updatedConfig = {
   ...defaultConfig,
   entry: {
-    ...defaultConfig.entry,
+    ...defaultConfig.entry(),
+    // Add your custom entries while preserving the automatic block detection
     index    : './src/index',
     block    : './src/block.js',
     store    : './src/data/store.js',
@@ -24,7 +24,7 @@ const updatedConfig = {
       {
         test: /\.less$/,
         use: [
-          { loader: MiniCSSExtractPlugin.loader, options: { emit: true } },
+          MiniCSSExtractPlugin.loader,
           'css-loader',
           'less-loader',
         ],

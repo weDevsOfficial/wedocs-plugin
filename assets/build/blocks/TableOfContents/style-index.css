@@ -1,0 +1,124 @@
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/TableOfContents/style.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+@charset "UTF-8";
+/**
+* The following styles get applied both on the front of your site
+* and in the editor.
+*/
+.wp-block-wedocs-table-of-contents {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  max-width: 100%;
+}
+.wp-block-wedocs-table-of-contents .toc-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  padding: 0;
+  color: inherit;
+}
+.wp-block-wedocs-table-of-contents .toc-content .toc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.wp-block-wedocs-table-of-contents .toc-content .toc-list.numbered {
+  counter-reset: toc-counter;
+}
+.wp-block-wedocs-table-of-contents .toc-content .toc-list.numbered li {
+  counter-increment: toc-counter;
+}
+.wp-block-wedocs-table-of-contents .toc-content .toc-list.bulleted li {
+  position: relative;
+  padding-left: 20px;
+}
+.wp-block-wedocs-table-of-contents .toc-content .toc-list.bulleted li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: inherit;
+}
+.wp-block-wedocs-table-of-contents .toc-content .toc-list li {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+.wp-block-wedocs-table-of-contents .toc-content .toc-list li a {
+  text-decoration: none;
+  color: var(--list-item-sytle, inherit);
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+.wp-block-wedocs-table-of-contents .toc-content .toc-list li a:hover {
+  text-decoration: underline;
+}
+.wp-block-wedocs-table-of-contents .toc-content .toc-list li a.active {
+  font-weight: 600;
+  border-left: 3px solid #0073aa;
+  padding-left: 10px;
+}
+.wp-block-wedocs-table-of-contents .toc-content .toc-list li .toc-number {
+  font-weight: 600;
+  margin-right: 5px;
+}
+.wp-block-wedocs-table-of-contents .toc-content .toc-empty-state {
+  color: #666;
+  font-style: italic;
+}
+.wp-block-wedocs-table-of-contents .toc-content .toc-empty-state p {
+  margin: 0;
+}
+.wp-block-wedocs-table-of-contents.sticky-mode {
+  position: sticky;
+  top: 20px;
+  z-index: 10;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.wp-block-wedocs-table-of-contents.sticky-mode .toc-content {
+  max-height: calc(80vh - 100px);
+  overflow-y: auto;
+}
+@media (max-width: 768px) {
+  .wp-block-wedocs-table-of-contents.collapsible-mobile .toc-title {
+    cursor: pointer;
+    position: relative;
+  }
+  .wp-block-wedocs-table-of-contents.collapsible-mobile .toc-title:after {
+    content: "▼";
+    float: right;
+    transition: transform 0.2s ease;
+  }
+  .wp-block-wedocs-table-of-contents.collapsible-mobile .toc-title.collapsed:after {
+    transform: rotate(-90deg);
+  }
+  .wp-block-wedocs-table-of-contents.collapsible-mobile .toc-content {
+    max-height: 1000px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .wp-block-wedocs-table-of-contents.collapsible-mobile .toc-content.collapsed {
+    max-height: 0;
+  }
+}
+
+html.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+.toc-loading .toc-content {
+  opacity: 0.5;
+}
+.toc-loading .toc-content:after {
+  content: "Loading headings...";
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  font-style: italic;
+  color: #666;
+}
+
+/*# sourceMappingURL=style-index.css.map*/
