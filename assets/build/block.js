@@ -1568,6 +1568,7 @@ const Edit = ({
     navBorderWidth,
     navBorderColor,
     navBoxShadow,
+    navShadow,
     navigationTextColor,
     navigationTextHoverColor,
     navigationFontSize,
@@ -1587,7 +1588,7 @@ const Edit = ({
       borderWidth: navBorderWidth || '1px',
       borderColor: navBorderColor || '#dddddd',
       borderRadius: navBorderRadius || '4px',
-      boxShadow: navBoxShadow || 'none'
+      boxShadow: navShadow || 'none'
     };
     const navigationStyle = {
       color: navigationTextColor || '#333333',
@@ -1787,6 +1788,29 @@ const Edit = ({
       value: '20px'
     }],
     onChange: updateAttribute('navBorderRadius')
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Shadow', 'wedocs'),
+    value: navShadow,
+    options: [{
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('None', 'wedocs'),
+      value: 'none'
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Natural', 'wedocs'),
+      value: '6px 6px 9px rgba(0, 0, 0, 0.2)'
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Deep', 'wedocs'),
+      value: '12px 12px 50px rgba(0, 0, 0, 0.4)'
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sharp', 'wedocs'),
+      value: '6px 6px 0px rgba(0, 0, 0, 0.2)'
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Outlined', 'wedocs'),
+      value: '6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1)'
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Crisp', 'wedocs'),
+      value: '6px 6px 0px rgba(0, 0, 0, 1)'
+    }],
+    onChange: updateAttribute('navShadow')
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Navigation Styles', 'wedocs'),
     initialOpen: false
@@ -3569,7 +3593,7 @@ module.exports = window["wp"]["primitives"];
   \*********************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"wedocs/wedocs-doc-navigation","version":"1.0.0","title":"weDocs - Doc Navigation","icon":"arrow-left-alt2","category":"widgets","description":"Display previous and next document navigation links","supports":{"html":false,"spacing":{"padding":true,"margin":true},"border":{"color":true,"radius":true,"style":true,"width":true},"color":{"background":true},"shadow":true},"render":"file:./render.php","attributes":{"seoLinks":{"type":"string","default":"none"},"navPadding":{"type":"object","default":{"top":"12px","right":"16px","bottom":"12px","left":"16px"}},"navMargin":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"navBorderStyle":{"type":"string","default":"none"},"navBorderRadius":{"type":"string","default":"4px"},"navBorderWidth":{"type":"string","default":"1px"},"navBorderColor":{"type":"string","default":"#dddddd"},"navBoxShadow":{"type":"string","default":"none"},"navigationTextColor":{"type":"string","default":"#333333"},"navigationTextHoverColor":{"type":"string","default":"#0073aa"},"navigationFontSize":{"type":"string","default":"16px"},"navigationFontWeight":{"type":"string","default":"400"},"navigationFontStyle":{"type":"string","default":"normal"},"arrowSize":{"type":"string","default":"16px"},"arrowColor":{"type":"string","default":"#333333"},"arrowBackgroundColor":{"type":"string","default":"transparent"},"arrowPadding":{"type":"object","default":{"top":"8px","right":"8px","bottom":"8px","left":"8px"}},"arrowMargin":{"type":"object","default":{"top":"0px","right":"8px","bottom":"0px","left":"0px"}}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"wedocs/wedocs-doc-navigation","version":"1.0.0","title":"weDocs - Doc Navigation","icon":"arrow-left-alt2","category":"widgets","description":"Display previous and next document navigation links","supports":{"html":false,"spacing":{"padding":true,"margin":true},"border":{"color":true,"radius":true,"style":true,"width":true},"color":{"background":true}},"render":"file:./render.php","attributes":{"seoLinks":{"type":"string","default":"none"},"navPadding":{"type":"object","default":{"top":"12px","right":"16px","bottom":"12px","left":"16px"}},"navMargin":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"navBorderStyle":{"type":"string","default":"none"},"navBorderRadius":{"type":"string","default":"4px"},"navBorderWidth":{"type":"string","default":"1px"},"navBorderColor":{"type":"string","default":"#dddddd"},"navBoxShadow":{"type":"string","default":"none"},"navShadow":{"type":"string","default":"none"},"navigationTextColor":{"type":"string","default":"#333333"},"navigationTextHoverColor":{"type":"string","default":"#0073aa"},"navigationFontSize":{"type":"string","default":"16px"},"navigationFontWeight":{"type":"string","default":"400"},"navigationFontStyle":{"type":"string","default":"normal"},"arrowSize":{"type":"string","default":"16px"},"arrowColor":{"type":"string","default":"#333333"},"arrowBackgroundColor":{"type":"string","default":"transparent"},"arrowPadding":{"type":"object","default":{"top":"8px","right":"8px","bottom":"8px","left":"8px"}},"arrowMargin":{"type":"object","default":{"top":"0px","right":"8px","bottom":"0px","left":"0px"}}}}');
 
 /***/ }),
 

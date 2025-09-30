@@ -21,8 +21,7 @@
 		},
 		"color": {
 			"background": true
-		},
-		"shadow": true
+		}
 	},
 	"render": "file:./render.php",
 	"attributes": {
@@ -65,6 +64,10 @@
 			"default": "#dddddd"
 		},
 		"navBoxShadow": {
+			"type": "string",
+			"default": "none"
+		},
+		"navShadow": {
 			"type": "string",
 			"default": "none"
 		},

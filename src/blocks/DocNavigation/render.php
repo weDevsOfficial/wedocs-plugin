@@ -16,6 +16,7 @@ function render_wedocs_doc_navigation($attributes, $content = '') {
     $nav_border_width = $attributes['navBorderWidth'] ?? '1px';
     $nav_border_color = $attributes['navBorderColor'] ?? '#dddddd';
     $nav_box_shadow = $attributes['navBoxShadow'] ?? 'none';
+    $nav_shadow = $attributes['navShadow'] ?? 'none';
     $navigation_text_color = $attributes['navigationTextColor'] ?? '#333333';
     $navigation_text_hover_color = $attributes['navigationTextHoverColor'] ?? '#0073aa';
     $navigation_font_size = $attributes['navigationFontSize'] ?? '16px';
@@ -111,10 +112,6 @@ function render_wedocs_doc_navigation($attributes, $content = '') {
         $wp_styles[] = sprintf('border-radius: %s;', esc_attr($wp_style['border']['radius']));
     }
     
-    // Handle WordPress shadow
-    if (isset($wp_style['shadow'])) {
-        $wp_styles[] = sprintf('box-shadow: var(--wp--preset--shadow--%s);', esc_attr($wp_style['shadow']));
-    }
     
     // Combine WordPress styles
     $wp_style_string = implode(' ', $wp_styles);
@@ -156,8 +153,8 @@ function render_wedocs_doc_navigation($attributes, $content = '') {
     }
     
     // Handle custom box shadow
-    if ($nav_box_shadow !== 'none') {
-        $custom_nav_styles[] = sprintf('box-shadow: %s;', esc_attr($nav_box_shadow));
+    if ($nav_shadow !== 'none') {
+        $custom_nav_styles[] = sprintf('box-shadow: %s;', esc_attr($nav_shadow));
     }
     
     // Combine custom navigation styles

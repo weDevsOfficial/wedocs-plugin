@@ -20,6 +20,7 @@ const Edit = ({ attributes, setAttributes }) => {
         navBorderWidth,
         navBorderColor,
         navBoxShadow,
+        navShadow,
         navigationTextColor,
         navigationTextHoverColor,
         navigationFontSize,
@@ -40,7 +41,7 @@ const Edit = ({ attributes, setAttributes }) => {
             borderWidth: navBorderWidth || '1px',
             borderColor: navBorderColor || '#dddddd',
             borderRadius: navBorderRadius || '4px',
-            boxShadow: navBoxShadow || 'none'
+            boxShadow: navShadow || 'none'
         };
 
         const navigationStyle = {
@@ -209,6 +210,20 @@ const Edit = ({ attributes, setAttributes }) => {
                              { label: '20px', value: '20px' }
                          ]}
                          onChange={updateAttribute('navBorderRadius')}
+                     />
+                     
+                     <SelectControl
+                         label={__('Shadow', 'wedocs')}
+                         value={navShadow}
+                         options={[
+                             { label: __('None', 'wedocs'), value: 'none' },
+                             { label: __('Natural', 'wedocs'), value: '6px 6px 9px rgba(0, 0, 0, 0.2)' },
+                             { label: __('Deep', 'wedocs'), value: '12px 12px 50px rgba(0, 0, 0, 0.4)' },
+                             { label: __('Sharp', 'wedocs'), value: '6px 6px 0px rgba(0, 0, 0, 0.2)' },
+                             { label: __('Outlined', 'wedocs'), value: '6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1)' },
+                             { label: __('Crisp', 'wedocs'), value: '6px 6px 0px rgba(0, 0, 0, 1)' }
+                         ]}
+                         onChange={updateAttribute('navShadow')}
                      />
                  </PanelBody>
 
