@@ -1,0 +1,122 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "wedocs/wedocs-doc-navigation",
+  "version": "1.0.0",
+  "title": "weDocs - Doc Navigation",
+  "icon": "arrow-left-alt2",
+  "category": "widgets",
+  "description": "Display previous and next document navigation links",
+  "supports": {
+    "html": false,
+    "spacing": {
+      "padding": true,
+      "margin": true
+    },
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true
+    },
+    "shadow": true
+  },
+  "render": "file:./render.php",
+  "attributes": {
+    "seoLinks": {
+      "type": "string",
+      "default": "none"
+    },
+    "navPadding": {
+      "type": "object",
+      "default": {
+        "top": "12px",
+        "right": "16px",
+        "bottom": "12px",
+        "left": "16px"
+      }
+    },
+    "navMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "navBorderStyle": {
+      "type": "string",
+      "default": "none"
+    },
+    "navBorderRadius": {
+      "type": "string",
+      "default": "4px"
+    },
+    "navBorderWidth": {
+      "type": "string",
+      "default": "1px"
+    },
+    "navBorderColor": {
+      "type": "string",
+      "default": "#dddddd"
+    },
+    "navBoxShadow": {
+      "type": "string",
+      "default": "none"
+    },
+    "navigationTextColor": {
+      "type": "string",
+      "default": "#333333"
+    },
+    "navigationTextHoverColor": {
+      "type": "string",
+      "default": "#0073aa"
+    },
+    "navigationFontSize": {
+      "type": "string",
+      "default": "16px"
+    },
+    "navigationFontWeight": {
+      "type": "string",
+      "default": "400"
+    },
+    "navigationFontStyle": {
+      "type": "string",
+      "default": "normal"
+    },
+    "arrowSize": {
+      "type": "string",
+      "default": "16px"
+    },
+    "arrowColor": {
+      "type": "string",
+      "default": "#333333"
+    },
+    "arrowBackgroundColor": {
+      "type": "string",
+      "default": "transparent"
+    },
+    "arrowPadding": {
+      "type": "object",
+      "default": {
+        "top": "8px",
+        "right": "8px",
+        "bottom": "8px",
+        "left": "8px"
+      }
+    },
+    "arrowMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "8px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    }
+  }
+}
