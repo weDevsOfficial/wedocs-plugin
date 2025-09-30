@@ -39,6 +39,10 @@ class Ajax {
         // Handle weDocs pro notice.
         add_action( 'wp_ajax_hide_wedocs_pro_notice', [ $this, 'hide_pro_notice' ] );
         add_action( 'wp_ajax_nopriv_hide_wedocs_pro_notice', [ $this, 'hide_pro_notice' ] );
+
+        // Handle QuickSearch.
+        add_action( 'wp_ajax_wedocs_quick_search', [ $this, 'quick_search' ] );
+        add_action( 'wp_ajax_nopriv_wedocs_quick_search', [ $this, 'quick_search' ] );
     }
 
     /**
@@ -243,5 +247,93 @@ class Ajax {
      */
     public function is_a_parent_doc( $doc_id ) {
         return (int) wp_get_post_parent_id( $doc_id ) === 0;
+    }
+
+    /**
+     * QuickSearch AJAX handler
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function quick_search() {
+        check_ajax_referer( 'wedocs-ajax' );
+
+        $query = isset( $_POST['query'] ) ? sanitize_text_field( $_POST['query'] ) : '';
+        $per_page = isset( $_POST['per_page'] ) ? intval( $_POST['per_page'] ) : 10;
+        $format = isset( $_POST['format'] ) ? sanitize_text_field( $_POST['format'] ) : 'json';
+        $modal_styles = isset( $_POST['modal_styles'] ) ? $_POST['modal_styles'] : [];
+        $result_image_type = isset( $_POST['result_image_type'] ) ? sanitize_text_field( $_POST['result_image_type'] ) : 'icon';
+    
+        
+        // If modal_styles is a string (JSON), decode it
+        if ( is_string( $modal_styles ) ) {
+            // Remove slashes that WordPress adds to escaped quotes
+            $modal_styles = stripslashes( $modal_styles );
+            $modal_styles = json_decode( $modal_styles, true );
+        }
+        
+        // Ensure it's an array
+        if ( ! is_array( $modal_styles ) ) {
+            $modal_styles = [];
+        }
+
+        if ( empty( $query ) || strlen( $query ) < 2 ) {
+            wp_send_json_error( __( 'Query must be at least 2 characters long.', 'wedocs' ) );
+        }
+
+        // Use existing search logic from API
+        $args = [
+            'post_type'      => 'docs',
+            'posts_per_page' => $per_page,
+            's'              => $query,
+            'post_status'    => 'publish',
+        ];
+
+        $query_obj = new \WP_Query( $args );
+        $docs = $query_obj->get_posts();
+        $results = [];
+
+        foreach ( $docs as $doc ) {
+            $results[] = [
+                'id'        => $doc->ID,
+                'title'     => [
+                    'rendered' => get_the_title( $doc->ID ),
+                ],
+                'permalink' => get_permalink( $doc->ID ),
+                'parent'    => $doc->post_parent,
+                'order'     => $doc->menu_order,
+            ];
+        }
+
+        if ( $format === 'html' ) {
+            // Load template for HTML response
+            $template_args = [
+                'results'      => $results,
+                'query'        => $query,
+                'modal_styles' => $modal_styles,
+                'empty_message' => __( 'No results found. Try different keywords.', 'wedocs' ),
+                'result_image_type' => $result_image_type,
+            ];
+
+            // Load the template
+            $template_path = plugin_dir_path( __FILE__ ) . '../src/blocks/QuickSearch/templates/search-results.php';
+            if ( file_exists( $template_path ) ) {
+                extract( $template_args );
+                ob_start();
+                include $template_path;
+                $html = ob_get_clean();
+                wp_send_json_success( [ 
+                    'html' => $html,
+                    'results' => $results,
+                    'query' => $query
+                ] );
+            } else {
+                wp_send_json_error( __( 'Template not found.', 'wedocs' ) );
+            }
+        } else {
+            // Return JSON response
+            wp_send_json_success( $results );
+        }
     }
 }
