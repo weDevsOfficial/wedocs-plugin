@@ -10,7 +10,7 @@ import SliderImgThreeSrc from '../../../assets/img/popup-slider/slider-4.jpg';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
-const UpgradePopup = ({ children}) => {
+const UpgradePopup = ({ children }) => {
   let [ isOpen, setIsOpen ] = useState( false );
 
   const closeModal = () => {
