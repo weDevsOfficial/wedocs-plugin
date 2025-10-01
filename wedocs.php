@@ -46,7 +46,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
+require_once plugin_dir_path(__FILE__) . 'src/blocks/helpers/block-styles.php';
 require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid/render.php';
+require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/Contributors/render.php';
 
 /**
  * WeDocs class.
@@ -182,6 +184,14 @@ final class WeDocs {
                 'render_callback' => 'render_wedocs_docs_grid'
             )
         );
+
+        // Register the Contributors block
+        register_block_type(
+            plugin_dir_path(__FILE__) . 'assets/build/blocks/Contributors',
+            array(
+                'render_callback' => 'render_wedocs_contributors_block'
+            )
+        );
     }
 
     /**
@@ -311,3 +321,16 @@ function wedocs() {
 
 // kick it off
 wedocs();
+
+
+/**
+ * Dequeue wedocs-pro-frontend-css on non-docs post types
+ */
+function dequeue_wedocs_pro_frontend_css() {
+    // Check if we're not on a docs post type
+    if ( ! is_singular( 'docs' ) && ! is_post_type_archive( 'docs' ) && ! is_tax( array( 'doc_category', 'doc_tag' ) ) ) {
+        wp_dequeue_style( 'wedocs-pro-frontend-css' );
+        wp_deregister_style( 'wedocs-pro-frontend-css' );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'dequeue_wedocs_pro_frontend_css', 20 );
