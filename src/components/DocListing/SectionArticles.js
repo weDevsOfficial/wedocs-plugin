@@ -71,7 +71,7 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
             </svg>
           </div>
           <div className="flex items-center w-full">
-            <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
+            <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between group">
               <div className="flex items-center">
                 <div className="flex items-center pr-5">
                   <svg
