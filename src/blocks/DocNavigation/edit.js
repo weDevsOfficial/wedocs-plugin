@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
-import { useBlockProps, InspectorControls, PanelColorSettings } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, PanelColorSettings, useBlockEditContext } from '@wordpress/block-editor';
 import {
     PanelBody,
     SelectControl,
@@ -12,6 +12,8 @@ import {
 
 const Edit = ({ attributes, setAttributes }) => {
     const blockProps = useBlockProps();
+    const { clientId } = useBlockEditContext();
+    const { selectBlock } = useDispatch('core/block-editor');
     const {
         seoLinks,
         navPadding,
@@ -80,7 +82,14 @@ const Edit = ({ attributes, setAttributes }) => {
         };
 
         return (
-            <div {...blockProps} className="wedocs-document wedocs-doc-navigation-preview">
+            <div 
+                {...blockProps} 
+                className="wedocs-document wedocs-doc-navigation-preview"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    selectBlock(clientId);
+                }}
+            >
                 <div className="wedocs-doc-navigation flex justify-between">
                     <div className="wedocs-doc-nav-prev" style={navItemStyle}>
                         <span className="wedocs-doc-nav-arrow" style={arrowStyle}>←</span>

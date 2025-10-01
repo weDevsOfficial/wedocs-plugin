@@ -1560,6 +1560,12 @@ const Edit = ({
 }) => {
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.useBlockProps)();
   const {
+    clientId
+  } = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.useBlockEditContext)();
+  const {
+    selectBlock
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)('core/block-editor');
+  const {
     seoLinks,
     navPadding,
     navMargin,
@@ -1620,7 +1626,11 @@ const Edit = ({
     };
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       ...blockProps,
-      className: "wedocs-document wedocs-doc-navigation-preview"
+      className: "wedocs-document wedocs-doc-navigation-preview",
+      onClick: e => {
+        e.stopPropagation();
+        selectBlock(clientId);
+      }
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "wedocs-doc-navigation flex justify-between"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {

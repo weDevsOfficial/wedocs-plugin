@@ -5228,9 +5228,6 @@ select {
 .wedocs-document :is(.font-semibold) {
   font-weight: 600;
 }
-.wedocs-document :is(.uppercase) {
-  text-transform: uppercase;
-}
 .wedocs-document :is(.italic) {
   font-style: italic;
 }
