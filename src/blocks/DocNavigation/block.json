@@ -63,13 +63,37 @@
 			"type": "string",
 			"default": "#dddddd"
 		},
-		"navBoxShadow": {
-			"type": "string",
-			"default": "none"
-		},
 		"navShadow": {
 			"type": "string",
 			"default": "none"
+		},
+		"customShadowHorizontal": {
+			"type": "number",
+			"default": 5
+		},
+		"customShadowVertical": {
+			"type": "number",
+			"default": 5
+		},
+		"customShadowBlur": {
+			"type": "number",
+			"default": 10
+		},
+		"customShadowSpread": {
+			"type": "number",
+			"default": 2
+		},
+		"customShadowColor": {
+			"type": "string",
+			"default": "#000000"
+		},
+		"customShadowOpacity": {
+			"type": "number",
+			"default": 10
+		},
+		"customShadowInset": {
+			"type": "boolean",
+			"default": false
 		},
 		"navigationTextColor": {
 			"type": "string",

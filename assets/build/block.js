@@ -1567,8 +1567,14 @@ const Edit = ({
     navBorderRadius,
     navBorderWidth,
     navBorderColor,
-    navBoxShadow,
     navShadow,
+    customShadowHorizontal,
+    customShadowVertical,
+    customShadowBlur,
+    customShadowSpread,
+    customShadowColor,
+    customShadowOpacity,
+    customShadowInset,
     navigationTextColor,
     navigationTextHoverColor,
     navigationFontSize,
@@ -1581,6 +1587,15 @@ const Edit = ({
     arrowMargin
   } = attributes;
   const renderPreview = () => {
+    // Build custom shadow if selected
+    let shadowValue = navShadow || 'none';
+    if (navShadow === 'custom') {
+      const opacity = (customShadowOpacity || 25) / 100;
+      const color = customShadowColor || '#000000';
+      const rgbaColor = color.startsWith('#') ? `rgba(${parseInt(color.slice(1, 3), 16)}, ${parseInt(color.slice(3, 5), 16)}, ${parseInt(color.slice(5, 7), 16)}, ${opacity})` : color;
+      const inset = customShadowInset ? 'inset ' : '';
+      shadowValue = `${inset}${customShadowHorizontal || 0}px ${customShadowVertical || 0}px ${customShadowBlur || 0}px ${customShadowSpread || 0}px ${rgbaColor}`;
+    }
     const navItemStyle = {
       padding: navPadding ? `${navPadding.top} ${navPadding.right} ${navPadding.bottom} ${navPadding.left}` : '12px 16px',
       margin: navMargin ? `${navMargin.top} ${navMargin.right} ${navMargin.bottom} ${navMargin.left}` : '0',
@@ -1588,7 +1603,7 @@ const Edit = ({
       borderWidth: navBorderWidth || '1px',
       borderColor: navBorderColor || '#dddddd',
       borderRadius: navBorderRadius || '4px',
-      boxShadow: navShadow || 'none'
+      boxShadow: shadowValue
     };
     const navigationStyle = {
       color: navigationTextColor || '#333333',
@@ -1809,9 +1824,73 @@ const Edit = ({
     }, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Crisp', 'wedocs'),
       value: '6px 6px 0px rgba(0, 0, 0, 1)'
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Custom', 'wedocs'),
+      value: 'custom'
     }],
     onChange: updateAttribute('navShadow')
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
+  }), navShadow === 'custom' && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.RangeControl, {
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Horizontal Offset', 'wedocs'),
+    value: customShadowHorizontal,
+    onChange: updateAttribute('customShadowHorizontal'),
+    min: -50,
+    max: 50,
+    step: 1
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.RangeControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Vertical Offset', 'wedocs'),
+    value: customShadowVertical,
+    onChange: updateAttribute('customShadowVertical'),
+    min: -50,
+    max: 50,
+    step: 1
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.RangeControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Blur Radius', 'wedocs'),
+    value: customShadowBlur,
+    onChange: updateAttribute('customShadowBlur'),
+    min: 0,
+    max: 50,
+    step: 1
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.RangeControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Spread Radius', 'wedocs'),
+    value: customShadowSpread,
+    onChange: updateAttribute('customShadowSpread'),
+    min: -20,
+    max: 20,
+    step: 1
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.PanelColorSettings, {
+    colors: [{
+      colors: themeColors,
+      name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Theme', 'wedocs')
+    }],
+    colorSettings: [{
+      value: customShadowColor,
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Shadow Color', 'wedocs'),
+      onChange: newColor => updateAttribute('customShadowColor')(newColor)
+    }]
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.RangeControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Opacity', 'wedocs'),
+    value: customShadowOpacity,
+    onChange: updateAttribute('customShadowOpacity'),
+    min: 0,
+    max: 100,
+    step: 5
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Inset Shadow', 'wedocs'),
+    checked: customShadowInset,
+    onChange: updateAttribute('customShadowInset'),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Create an inner shadow instead of an outer shadow', 'wedocs')
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    style: {
+      padding: '8px',
+      backgroundColor: '#f0f0f0',
+      borderRadius: '4px',
+      fontFamily: 'monospace',
+      fontSize: '12px',
+      marginTop: '8px'
+    }
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Preview:', 'wedocs')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), customShadowInset ? 'inset ' : '', customShadowHorizontal || 0, "px ", customShadowVertical || 0, "px ", customShadowBlur || 0, "px ", customShadowSpread || 0, "px ", customShadowColor || '#000000'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Navigation Styles', 'wedocs'),
     initialOpen: false
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.PanelColorSettings, {
@@ -3593,7 +3672,7 @@ module.exports = window["wp"]["primitives"];
   \*********************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"wedocs/wedocs-doc-navigation","version":"1.0.0","title":"weDocs - Doc Navigation","icon":"arrow-left-alt2","category":"widgets","description":"Display previous and next document navigation links","supports":{"html":false,"spacing":{"padding":true,"margin":true},"border":{"color":true,"radius":true,"style":true,"width":true},"color":{"background":true}},"render":"file:./render.php","attributes":{"seoLinks":{"type":"string","default":"none"},"navPadding":{"type":"object","default":{"top":"12px","right":"16px","bottom":"12px","left":"16px"}},"navMargin":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"navBorderStyle":{"type":"string","default":"none"},"navBorderRadius":{"type":"string","default":"4px"},"navBorderWidth":{"type":"string","default":"1px"},"navBorderColor":{"type":"string","default":"#dddddd"},"navBoxShadow":{"type":"string","default":"none"},"navShadow":{"type":"string","default":"none"},"navigationTextColor":{"type":"string","default":"#333333"},"navigationTextHoverColor":{"type":"string","default":"#0073aa"},"navigationFontSize":{"type":"string","default":"16px"},"navigationFontWeight":{"type":"string","default":"400"},"navigationFontStyle":{"type":"string","default":"normal"},"arrowSize":{"type":"string","default":"16px"},"arrowColor":{"type":"string","default":"#333333"},"arrowBackgroundColor":{"type":"string","default":"transparent"},"arrowPadding":{"type":"object","default":{"top":"8px","right":"8px","bottom":"8px","left":"8px"}},"arrowMargin":{"type":"object","default":{"top":"0px","right":"8px","bottom":"0px","left":"0px"}}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"wedocs/wedocs-doc-navigation","version":"1.0.0","title":"weDocs - Doc Navigation","icon":"arrow-left-alt2","category":"widgets","description":"Display previous and next document navigation links","supports":{"html":false,"spacing":{"padding":true,"margin":true},"border":{"color":true,"radius":true,"style":true,"width":true},"color":{"background":true}},"render":"file:./render.php","attributes":{"seoLinks":{"type":"string","default":"none"},"navPadding":{"type":"object","default":{"top":"12px","right":"16px","bottom":"12px","left":"16px"}},"navMargin":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"navBorderStyle":{"type":"string","default":"none"},"navBorderRadius":{"type":"string","default":"4px"},"navBorderWidth":{"type":"string","default":"1px"},"navBorderColor":{"type":"string","default":"#dddddd"},"navShadow":{"type":"string","default":"none"},"customShadowHorizontal":{"type":"number","default":5},"customShadowVertical":{"type":"number","default":5},"customShadowBlur":{"type":"number","default":10},"customShadowSpread":{"type":"number","default":2},"customShadowColor":{"type":"string","default":"#000000"},"customShadowOpacity":{"type":"number","default":10},"customShadowInset":{"type":"boolean","default":false},"navigationTextColor":{"type":"string","default":"#333333"},"navigationTextHoverColor":{"type":"string","default":"#0073aa"},"navigationFontSize":{"type":"string","default":"16px"},"navigationFontWeight":{"type":"string","default":"400"},"navigationFontStyle":{"type":"string","default":"normal"},"arrowSize":{"type":"string","default":"16px"},"arrowColor":{"type":"string","default":"#333333"},"arrowBackgroundColor":{"type":"string","default":"transparent"},"arrowPadding":{"type":"object","default":{"top":"8px","right":"8px","bottom":"8px","left":"8px"}},"arrowMargin":{"type":"object","default":{"top":"0px","right":"8px","bottom":"0px","left":"0px"}}}}');
 
 /***/ }),
 

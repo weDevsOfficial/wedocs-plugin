@@ -15,8 +15,14 @@ function render_wedocs_doc_navigation($attributes, $content = '') {
     $nav_border_radius = $attributes['navBorderRadius'] ?? '4px';
     $nav_border_width = $attributes['navBorderWidth'] ?? '1px';
     $nav_border_color = $attributes['navBorderColor'] ?? '#dddddd';
-    $nav_box_shadow = $attributes['navBoxShadow'] ?? 'none';
     $nav_shadow = $attributes['navShadow'] ?? 'none';
+    $custom_shadow_horizontal = $attributes['customShadowHorizontal'] ?? 0;
+    $custom_shadow_vertical = $attributes['customShadowVertical'] ?? 0;
+    $custom_shadow_blur = $attributes['customShadowBlur'] ?? 0;
+    $custom_shadow_spread = $attributes['customShadowSpread'] ?? 0;
+    $custom_shadow_color = $attributes['customShadowColor'] ?? '#000000';
+    $custom_shadow_opacity = $attributes['customShadowOpacity'] ?? 25;
+    $custom_shadow_inset = $attributes['customShadowInset'] ?? false;
     $navigation_text_color = $attributes['navigationTextColor'] ?? '#333333';
     $navigation_text_hover_color = $attributes['navigationTextHoverColor'] ?? '#0073aa';
     $navigation_font_size = $attributes['navigationFontSize'] ?? '16px';
@@ -154,7 +160,34 @@ function render_wedocs_doc_navigation($attributes, $content = '') {
     
     // Handle custom box shadow
     if ($nav_shadow !== 'none') {
-        $custom_nav_styles[] = sprintf('box-shadow: %s;', esc_attr($nav_shadow));
+        if ($nav_shadow === 'custom') {
+            // Build custom shadow
+            $opacity = $custom_shadow_opacity / 100;
+            $color = $custom_shadow_color;
+            
+            // Convert hex to rgba if needed
+            if (strpos($color, '#') === 0) {
+                $hex = str_replace('#', '', $color);
+                $r = hexdec(substr($hex, 0, 2));
+                $g = hexdec(substr($hex, 2, 2));
+                $b = hexdec(substr($hex, 4, 2));
+                $color = "rgba($r, $g, $b, $opacity)";
+            }
+            
+            $inset = $custom_shadow_inset ? 'inset ' : '';
+            $shadow_value = sprintf(
+                '%s%spx %spx %spx %spx %s',
+                $inset,
+                $custom_shadow_horizontal,
+                $custom_shadow_vertical,
+                $custom_shadow_blur,
+                $custom_shadow_spread,
+                $color
+            );
+            $custom_nav_styles[] = sprintf('box-shadow: %s;', esc_attr($shadow_value));
+        } else {
+            $custom_nav_styles[] = sprintf('box-shadow: %s;', esc_attr($nav_shadow));
+        }
     }
     
     // Combine custom navigation styles

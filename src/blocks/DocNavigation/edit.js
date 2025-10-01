@@ -5,8 +5,9 @@ import { useBlockProps, InspectorControls, PanelColorSettings } from '@wordpress
 import {
     PanelBody,
     SelectControl,
-    PanelRow,
-    __experimentalBoxControl as BoxControl
+    __experimentalBoxControl as BoxControl,
+    RangeControl,
+    ToggleControl
 } from '@wordpress/components';
 
 const Edit = ({ attributes, setAttributes }) => {
@@ -19,8 +20,14 @@ const Edit = ({ attributes, setAttributes }) => {
         navBorderRadius,
         navBorderWidth,
         navBorderColor,
-        navBoxShadow,
         navShadow,
+        customShadowHorizontal,
+        customShadowVertical,
+        customShadowBlur,
+        customShadowSpread,
+        customShadowColor,
+        customShadowOpacity,
+        customShadowInset,
         navigationTextColor,
         navigationTextHoverColor,
         navigationFontSize,
@@ -34,6 +41,19 @@ const Edit = ({ attributes, setAttributes }) => {
     } = attributes;
 
     const renderPreview = () => {
+        // Build custom shadow if selected
+        let shadowValue = navShadow || 'none';
+        if (navShadow === 'custom') {
+            const opacity = (customShadowOpacity || 25) / 100;
+            const color = customShadowColor || '#000000';
+            const rgbaColor = color.startsWith('#') 
+                ? `rgba(${parseInt(color.slice(1, 3), 16)}, ${parseInt(color.slice(3, 5), 16)}, ${parseInt(color.slice(5, 7), 16)}, ${opacity})`
+                : color;
+            
+            const inset = customShadowInset ? 'inset ' : '';
+            shadowValue = `${inset}${customShadowHorizontal || 0}px ${customShadowVertical || 0}px ${customShadowBlur || 0}px ${customShadowSpread || 0}px ${rgbaColor}`;
+        }
+
         const navItemStyle = {
             padding: navPadding ? `${navPadding.top} ${navPadding.right} ${navPadding.bottom} ${navPadding.left}` : '12px 16px',
             margin: navMargin ? `${navMargin.top} ${navMargin.right} ${navMargin.bottom} ${navMargin.left}` : '0',
@@ -41,7 +61,7 @@ const Edit = ({ attributes, setAttributes }) => {
             borderWidth: navBorderWidth || '1px',
             borderColor: navBorderColor || '#dddddd',
             borderRadius: navBorderRadius || '4px',
-            boxShadow: navShadow || 'none'
+            boxShadow: shadowValue
         };
 
         const navigationStyle = {
@@ -221,10 +241,98 @@ const Edit = ({ attributes, setAttributes }) => {
                              { label: __('Deep', 'wedocs'), value: '12px 12px 50px rgba(0, 0, 0, 0.4)' },
                              { label: __('Sharp', 'wedocs'), value: '6px 6px 0px rgba(0, 0, 0, 0.2)' },
                              { label: __('Outlined', 'wedocs'), value: '6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1)' },
-                             { label: __('Crisp', 'wedocs'), value: '6px 6px 0px rgba(0, 0, 0, 1)' }
+                             { label: __('Crisp', 'wedocs'), value: '6px 6px 0px rgba(0, 0, 0, 1)' },
+                             { label: __('Custom', 'wedocs'), value: 'custom' }
                          ]}
                          onChange={updateAttribute('navShadow')}
                      />
+                     
+                     {navShadow === 'custom' && (
+                         <>
+                             <RangeControl
+                                    __next40pxDefaultSize
+                                    __nextHasNoMarginBottom
+                                     label={__('Horizontal Offset', 'wedocs')}
+                                     value={customShadowHorizontal}
+                                     onChange={updateAttribute('customShadowHorizontal')}
+                                     min={-50}
+                                     max={50}
+                                     step={1}
+                                 />
+                             
+                             <RangeControl
+                                label={__('Vertical Offset', 'wedocs')}
+                                value={customShadowVertical}
+                                onChange={updateAttribute('customShadowVertical')}
+                                min={-50}
+                                max={50}
+                                step={1}
+                            />
+                             
+                            <RangeControl
+                                label={__('Blur Radius', 'wedocs')}
+                                value={customShadowBlur}
+                                onChange={updateAttribute('customShadowBlur')}
+                                min={0}
+                                max={50}
+                                step={1}
+                            />
+                             
+                            <RangeControl
+                                label={__('Spread Radius', 'wedocs')}
+                                value={customShadowSpread}
+                                onChange={updateAttribute('customShadowSpread')}
+                                min={-20}
+                                max={20}
+                                step={1}
+                            />
+                             
+                             <PanelColorSettings
+                                 colors={[
+                                     {
+                                         colors: themeColors,
+                                         name: __('Theme', 'wedocs'),
+                                     }
+                                 ]}
+                                 colorSettings={[
+                                     {
+                                         value: customShadowColor,
+                                         label: __('Shadow Color', 'wedocs'),
+                                         onChange: (newColor) => updateAttribute('customShadowColor')(newColor)
+                                     }
+                                 ]}
+                             />
+                             
+                            <RangeControl
+                                label={__('Opacity', 'wedocs')}
+                                value={customShadowOpacity}
+                                onChange={updateAttribute('customShadowOpacity')}
+                                min={0}
+                                max={100}
+                                step={5}
+                            />
+                             
+                            <ToggleControl
+                                label={__('Inset Shadow', 'wedocs')}
+                                checked={customShadowInset}
+                                onChange={updateAttribute('customShadowInset')}
+                                help={__('Create an inner shadow instead of an outer shadow', 'wedocs')}
+                            />
+                             
+                             <div style={{ 
+                                padding: '8px', 
+                                backgroundColor: '#f0f0f0', 
+                                borderRadius: '4px',
+                                fontFamily: 'monospace',
+                                fontSize: '12px',
+                                marginTop: '8px'
+                            }}>
+                                <strong>{__('Preview:', 'wedocs')}</strong><br/>
+                                {customShadowInset ? 'inset ' : ''}
+                                {customShadowHorizontal || 0}px {customShadowVertical || 0}px {customShadowBlur || 0}px {customShadowSpread || 0}px {customShadowColor || '#000000'}
+                            </div>
+                         </>
+                     )}
                  </PanelBody>
 
                 <PanelBody
