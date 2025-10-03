@@ -1,6 +1,7 @@
 # weDocs #
 
 The documentation plugin for WordPress. Create great looking documentation for your products.
+
 [Preview in WordPress Playground](https://playground.wordpress.net/?plugin=wedocs&blueprint-url=https%3A%2F%2Fwordpress.org%2Fplugins%2Fwp-json%2Fplugins%2Fv1%2Fplugin%2Fwedocs%2Fblueprint.json%3Frev%3D3372138%26lang%3Den_US)
 
 ![WordPress Plugin Version](https://img.shields.io/badge/PLUGIN_VERSION-V2.1.7-blue) ![WordPress Plugin Active Installs](https://img.shields.io/badge/ACTIVE_INSTALLS-6K-green) ![WordPress Plugin Rating](https://img.shields.io/badge/RATING-4.8/5_(61)-green) ![WordPress Plugin: Tested WP Version](https://img.shields.io/badge/WORDPRESS-V6.5_TESTED-orange) ![WordPress Plugin Last Updated](https://img.shields.io/badge/LAST_UPDATED-Aug_2024-orange)
