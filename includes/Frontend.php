@@ -37,10 +37,23 @@ class Frontend {
 
         // override the theme template
         add_filter( 'template_include', [ $this, 'template_loader' ], 20 );
-
+        add_filter('wedocs_should_use_block_theme', [$this, 'get_theme']);
         $this->init_classes();
     }
 
+    function get_theme($is_block_theme){
+        $user_set_option = get_option('wedocs_should_use_block_theme',true);
+        if($user_set_option == 'block_theme'){
+            if(!$is_block_theme()){
+                add_action('admin_notices', function(){ echo "<h3> WeDocs Detected a classic theme but your choice was block theme</h3>"; });
+            }
+            return true;
+        }
+        if(version_compare('1.2.1', WEDOCS_VERSION, '<') && $is_block_theme){
+            return $is_block_theme;
+        }
+        return false;
+    }
     /**
      * Initialize the classes
      *
@@ -78,6 +91,7 @@ class Frontend {
         wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', [
             'nonce'             => wp_create_nonce( 'wedocs-ajax' ),
             'style'             => WEDOCS_ASSETS . '/build/print.css?v=10',
+            'assetsUrl'         => WEDOCS_ASSETS,
             'ajaxurl'           => admin_url( 'admin-ajax.php' ),
             'powered'           => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs plugin for WordPress', 'wedocs' ), home_url() ),
             'isSingleDoc'       => is_singular( 'docs' ),
@@ -157,6 +171,9 @@ class Frontend {
      * @return string
      */
     public function template_loader( $template ) {
+        if(apply_filters('wedocs_should_use_block_theme', wp_is_block_theme(), )){
+            return $template;
+        }
         $find = [ 'docs.php' ];
         $file = '';
 
