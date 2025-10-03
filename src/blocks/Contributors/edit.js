@@ -25,6 +25,9 @@ import BackgroundControl from '../components/BackgroundControl';
 import ShadowControl from '../components/ShadowControl';
 import DimensionControl from '../components/DimensionControl';
 
+// Import demo avatars
+import avatar1 from '../../assets/img/avatar_1.png';
+import avatar2 from '../../assets/img/avatar_2.png';
 
 const Edit = (props) => {
 	const { attributes, setAttributes } = props;
@@ -32,6 +35,9 @@ const Edit = (props) => {
 	const [isLoadingUsers, setIsLoadingUsers] = useState(false);
 	const [actualContributors, setActualContributors] = useState([]);
 	const [isLoadingContributors, setIsLoadingContributors] = useState(false);
+
+	// Check if weDocs Pro is active
+	const isPro = window.weDocsAdminScriptVars?.isPro || false;
 
 	const blockProps = useBlockProps({
 		className: `wedocs-contributors ${attributes.additionalCssClass}`,
@@ -199,7 +205,7 @@ const Edit = (props) => {
 				{
 					id: 1,
 					name: 'Demo Author',
-					avatar_urls: { 48: weDocsAdminScriptVars.assetsUrl+"/img/demo_avatar/avatar_2.png" }
+					avatar_urls: { 48: avatar1 }
 				}
 			];
 		}
@@ -275,7 +281,7 @@ const Edit = (props) => {
 						const contributorName = contributor.name || contributor.display_name || 'Unknown';
 						const contributorId = contributor.id || contributor.ID || Math.random();
 						// Get avatar URL with fallbacks
-						let avatarUrl = weDocsAdminScriptVars.assetsUrl+"/img/demo_avatar/avatar_1.png" ;
+						let avatarUrl = avatar1;
 
 						if (contributor.avatar_urls) {
 							avatarUrl = contributor.avatar_urls[48] || contributor.avatar_urls[96] || contributor.avatar_urls[24];
@@ -287,7 +293,7 @@ const Edit = (props) => {
 								const emailHash = btoa(contributor.email.toLowerCase().trim());
 								avatarUrl = `https://www.gravatar.com/avatar/${emailHash}?s=48&d=identicon`;
 							} catch (e) {
-								avatarUrl = weDocsAdminScriptVars.assetsUrl+"/img/demo_avatar/avatar_1.png" ;
+								avatarUrl = avatar1;
 							}
 						}
 
@@ -651,6 +657,79 @@ const Edit = (props) => {
 			)}
 		</>
 	);
+
+	// If Pro is not active, show upgrade notice
+	if (!isPro) {
+		return (
+			<>
+				<InspectorControls>
+					<PanelBody title={__('Doc Contributors - PRO Feature', 'wedocs')} initialOpen={true}>
+						<div style={{ padding: '20px', textAlign: 'center' }}>
+							<div style={{ marginBottom: '15px' }}>
+								<svg width="48" height="48" fill="#4f47e6" viewBox="0 0 20 15">
+									<path d="M19.213 4.116c.003.054-.001.108-.015.162l-1.234 6.255a.56.56 0 0 1-.541.413l-7.402.036h-.003-7.402c-.257 0-.482-.171-.544-.414L.839 4.295a.53.53 0 0 1-.015-.166C.347 3.983 0 3.548 0 3.036c0-.632.528-1.145 1.178-1.145s1.178.514 1.178 1.145a1.13 1.13 0 0 1-.43.884L3.47 5.434c.39.383.932.602 1.486.602.655 0 1.28-.303 1.673-.81l2.538-3.272c-.213-.207-.345-.494-.345-.809C8.822.514 9.351 0 10 0s1.178.514 1.178 1.145c0 .306-.125.584-.327.79l.002.003 2.52 3.281c.393.512 1.02.818 1.677.818a2.11 2.11 0 0 0 1.481-.597l1.554-1.512c-.268-.21-.44-.531-.44-.892 0-.632.528-1.145 1.177-1.145S20 2.405 20 3.036c0 .498-.329.922-.787 1.079zm-1.369 8.575c0-.301-.251-.545-.561-.545H2.779c-.31 0-.561.244-.561.545V14c0 .301.251.546.561.546h14.505c.31 0 .561-.244.561-.546v-1.309z" />
+								</svg>
+							</div>
+							<h3 style={{ margin: '0 0 10px 0', fontSize: '16px', fontWeight: '600' }}>
+								{__('This is a PRO Feature', 'wedocs')}
+							</h3>
+							<p style={{ margin: '0 0 20px 0', color: '#666', fontSize: '14px' }}>
+								{__('The Contributors block requires weDocs Pro to be active.', 'wedocs')}
+							</p>
+							<a
+								href="https://wedocs.co/pricing/"
+								target="_blank"
+								rel="noopener noreferrer"
+								style={{
+									display: 'inline-block',
+									padding: '10px 20px',
+									backgroundColor: '#4f47e6',
+									color: '#fff',
+									textDecoration: 'none',
+									borderRadius: '4px',
+									fontWeight: '600',
+									fontSize: '14px'
+								}}
+							>
+								{__('Purchase weDocs Pro', 'wedocs')}
+							</a>
+						</div>
+					</PanelBody>
+				</InspectorControls>
+
+				<div {...blockProps}>
+					<Placeholder
+						icon={
+							<svg width="48" height="48" fill="#4f47e6" viewBox="0 0 20 15">
+								<path d="M19.213 4.116c.003.054-.001.108-.015.162l-1.234 6.255a.56.56 0 0 1-.541.413l-7.402.036h-.003-7.402c-.257 0-.482-.171-.544-.414L.839 4.295a.53.53 0 0 1-.015-.166C.347 3.983 0 3.548 0 3.036c0-.632.528-1.145 1.178-1.145s1.178.514 1.178 1.145a1.13 1.13 0 0 1-.43.884L3.47 5.434c.39.383.932.602 1.486.602.655 0 1.28-.303 1.673-.81l2.538-3.272c-.213-.207-.345-.494-.345-.809C8.822.514 9.351 0 10 0s1.178.514 1.178 1.145c0 .306-.125.584-.327.79l.002.003 2.52 3.281c.393.512 1.02.818 1.677.818a2.11 2.11 0 0 0 1.481-.597l1.554-1.512c-.268-.21-.44-.531-.44-.892 0-.632.528-1.145 1.177-1.145S20 2.405 20 3.036c0 .498-.329.922-.787 1.079zm-1.369 8.575c0-.301-.251-.545-.561-.545H2.779c-.31 0-.561.244-.561.545V14c0 .301.251.546.561.546h14.505c.31 0 .561-.244.561-.546v-1.309z" />
+							</svg>
+						}
+						label={__('Doc Contributors - PRO Feature', 'wedocs')}
+						instructions={__('This block requires weDocs Pro to be active.', 'wedocs')}
+					>
+						<a
+							href="https://wedocs.co/pricing/"
+							target="_blank"
+							rel="noopener noreferrer"
+							style={{
+								display: 'inline-block',
+								padding: '10px 20px',
+								backgroundColor: '#4f47e6',
+								color: '#fff',
+								textDecoration: 'none',
+								borderRadius: '4px',
+								fontWeight: '600',
+								fontSize: '14px',
+								marginTop: '10px'
+							}}
+						>
+							{__('Purchase weDocs Pro', 'wedocs')}
+						</a>
+					</Placeholder>
+				</div>
+			</>
+		);
+	}
 
 	return (
 		<>

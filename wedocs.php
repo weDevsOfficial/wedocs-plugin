@@ -175,6 +175,9 @@ final class WeDocs {
     }
 
     public function register_blocks() {
+        // Enqueue admin script early to make weDocsAdminScriptVars available for blocks
+        wp_enqueue_script( 'wedocs-admin-script' );
+
         // Modern WordPress block registration using block.json files
         $block_directories = [
             'assets/build/blocks/DocsGrid',
@@ -334,3 +337,16 @@ function dequeue_wedocs_pro_frontend_css() {
     }
 }
 add_action( 'wp_enqueue_scripts', 'dequeue_wedocs_pro_frontend_css', 20 );
+
+
+// Add custom category for your blocks
+add_filter( 'block_categories_all', function( $categories, $post ) {
+    // Add "wedocs" category if not already there
+    $categories[] = array(
+        'slug'  => 'wedocs',
+        'title' => __( 'weDocs Blocks', 'wedocs' ),
+        'icon'  => null, // optional, doesn't show everywhere
+    );
+
+    return $categories;
+}, 10, 2 );

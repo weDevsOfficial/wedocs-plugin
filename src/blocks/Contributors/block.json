@@ -7,6 +7,7 @@
 	"icon": "groups",
 	"category": "widgets",
 	"description": "Display the author(s)/contributors of a doc along with the last updated date.",
+	"keywords": ["pro", "doc contributor"],
 	"supports": {
 		"html": false
 	},

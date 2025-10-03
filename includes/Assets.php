@@ -40,9 +40,10 @@ class Assets {
             'wedocs-admin-script',
             'weDocsAdminScriptVars',
             array(
-                'ajaxurl' => admin_url( 'admin-ajax.php' ),
-                'nonce'   => wp_create_nonce( 'wedocs-ajax' ),
+                'ajaxurl'   => admin_url( 'admin-ajax.php' ),
+                'nonce'     => wp_create_nonce( 'wedocs-ajax' ),
                 'assetsUrl' => WEDOCS_ASSETS,
+                'isPro'     => wedocs_pro_exists(),
             ),
         );
 
