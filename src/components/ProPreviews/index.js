@@ -9,6 +9,7 @@ import ExploreSettings from './AssistantWidgetPanels/ExplorePanel';
 import MessageSettings from './AssistantWidgetPanels/MessagePanel';
 import PlacementSettings from './AssistantWidgetPanels/PlacementPanel';
 import PreferenceSettings from './AssistantWidgetPanels/PreferencePanel';
+import Badge from './common/Badge';
 
 const isProLoaded = wp.hooks.applyFilters(
     'wedocs_pro_loaded',
@@ -188,32 +189,18 @@ if ( !isProLoaded ) {
                     { userIsAdmin() && (
                         <>
                             { type === 'doc' && (
-                                <UpgradePopup>
-                <span className="group flex items-center py-2 px-4 space-x- text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 !shadow-none">
+                <a href={`${weDocsAdminVars.weDocsUrl}permission_settings`} className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none">
                   <span>{ __( 'Permission Management', 'wedocs' ) }</span>
                   <span className={ `crown cursor-pointer relative text-white text-[10px] py-[3px] px-[5px] leading-none ml-2.5` }>
-                    <svg className='crown-icon hover:fill-[#cf7500]' xmlns="http://www.w3.org/2000/svg" width="20" fill="#ff9000" height="15">
-                      <path d="M19.213 4.116c.003.054-.001.108-.015.162l-1.234 6.255a.56.56 0 0 1-.541.413l-7.402.036h-.003-7.402c-.257 0-.482-.171-.544-.414L.839 4.295a.53.53 0 0 1-.015-.166C.347 3.983 0 3.548 0 3.036c0-.632.528-1.145 1.178-1.145s1.178.514 1.178 1.145a1.13 1.13 0 0 1-.43.884L3.47 5.434c.39.383.932.602 1.486.602.655 0 1.28-.303 1.673-.81l2.538-3.272c-.213-.207-.345-.494-.345-.809C8.822.514 9.351 0 10 0s1.178.514 1.178 1.145c0 .306-.125.584-.327.79l.002.003 2.52 3.281c.393.512 1.02.818 1.677.818a2.11 2.11 0 0 0 1.481-.597l1.554-1.512c-.268-.21-.44-.531-.44-.892 0-.632.528-1.145 1.177-1.145S20 2.405 20 3.036c0 .498-.329.922-.787 1.079zm-1.369 8.575c0-.301-.251-.545-.561-.545H2.779c-.31 0-.561.244-.561.545V14c0 .301.251.546.561.546h14.505c.31 0 .561-.244.561-.546v-1.309z"/>
-                    </svg>
                   </span>
-                  <span className='ml-1 text-white bg-[#FF9000] px-1.5 py-0.5 rounded leading-[13.31px] text-[11px] pt-[1px] pb-0.5 px-[5px]'>
-                    { __( 'Pro', 'wedocs' ) }
-                  </span>
-                </span>
-                                </UpgradePopup>
+                </a>
                             ) }
                             { type === 'article' && (
-                                <UpgradePopup>
-                <span className='group w-full flex items-center py-2 px-4 space-x-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 !shadow-none'>
+                              
+                 <UpgradePopup>
+                <span className='group w-full flex items-center py-2 px-4 space-x-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none'>
                   <span>{ __( 'Restrict editing for admin only', 'wedocs' ) }</span>
-                  <span className={ `crown cursor-pointer relative text-white text-[10px] py-[3px] px-[5px] leading-none ml-2.5` }>
-                    <svg className='crown-icon hover:fill-[#cf7500]' xmlns="http://www.w3.org/2000/svg" width="20" fill="#ff9000" height="15">
-                      <path d="M19.213 4.116c.003.054-.001.108-.015.162l-1.234 6.255a.56.56 0 0 1-.541.413l-7.402.036h-.003-7.402c-.257 0-.482-.171-.544-.414L.839 4.295a.53.53 0 0 1-.015-.166C.347 3.983 0 3.548 0 3.036c0-.632.528-1.145 1.178-1.145s1.178.514 1.178 1.145a1.13 1.13 0 0 1-.43.884L3.47 5.434c.39.383.932.602 1.486.602.655 0 1.28-.303 1.673-.81l2.538-3.272c-.213-.207-.345-.494-.345-.809C8.822.514 9.351 0 10 0s1.178.514 1.178 1.145c0 .306-.125.584-.327.79l.002.003 2.52 3.281c.393.512 1.02.818 1.677.818a2.11 2.11 0 0 0 1.481-.597l1.554-1.512c-.268-.21-.44-.531-.44-.892 0-.632.528-1.145 1.177-1.145S20 2.405 20 3.036c0 .498-.329.922-.787 1.079zm-1.369 8.575c0-.301-.251-.545-.561-.545H2.779c-.31 0-.561.244-.561.545V14c0 .301.251.546.561.546h14.505c.31 0 .561-.244.561-.546v-1.309z"/>
-                    </svg>
-                  </span>
-                  <span className='!ml-1 text-white bg-[#FF9000] px-1.5 py-0.5 rounded leading-[13.31px] text-[11px] pt-[1px] pb-0.5 px-[5px]'>
-                    { __( 'Pro', 'wedocs' ) }
-                  </span>
+                <Badge classes="opacity-0 group-hover:opacity-100 transition-opacity"/>
                 </span>
                                 </UpgradePopup>
                             ) }
@@ -245,4 +232,15 @@ if ( !isProLoaded ) {
             return <Contributors />;
         }
     );
+
+
+wp.hooks.addFilter(
+	'wedocs_register_menu_routes',
+	'wedocs_register_menu_routes_callback',
+	function ( routes ) {
+		const { weDocsSettingsPage: SettingsPage } = window;
+			routes?.push( { path: 'settings/:panel', component: SettingsPage } );
+		return routes;
+	}
+);
 }
