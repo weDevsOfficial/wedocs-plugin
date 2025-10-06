@@ -192,18 +192,21 @@ class SettingsApi extends \WP_REST_Controller {
     /**
      * Sanitize AI settings data.
      *
-     * @since 2.0.0
+     * @since WEDOCS_SINCE
      *
      * @param array $ai_settings
      *
      * @return array
      */
     private function sanitize_ai_settings( $ai_settings ) {
-        $sanitized = array();
+        $sanitized = [];
+
+        // Get allowed providers from configuration
+        $provider_configs = wedocs_get_ai_provider_configs();
+        $allowed_providers = array_keys( $provider_configs );
 
         // Sanitize default provider
         if ( isset( $ai_settings['default_provider'] ) ) {
-            $allowed_providers = array( 'openai', 'anthropic', 'google', 'azure' );
             $sanitized['default_provider'] = in_array( $ai_settings['default_provider'], $allowed_providers ) 
                 ? sanitize_text_field( $ai_settings['default_provider'] ) 
                 : 'openai';
@@ -214,7 +217,7 @@ class SettingsApi extends \WP_REST_Controller {
             $sanitized['providers'] = array();
             
             foreach ( $ai_settings['providers'] as $provider => $config ) {
-                if ( in_array( $provider, array( 'openai', 'anthropic', 'google', 'azure' ) ) ) {
+                if ( in_array( $provider, $allowed_providers ) ) {
                     $sanitized['providers'][ $provider ] = array();
                     
                     // Sanitize API key
