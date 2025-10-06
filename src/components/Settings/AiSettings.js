@@ -18,15 +18,9 @@
  */
 
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
-import {
-    Card,
-    CardBody,
-    CardHeader,
-    TextControl,
-    SelectControl,
-    __experimentalVStack as VStack,
-} from '@wordpress/components';
+import { useState, useEffect, Fragment } from '@wordpress/element';
+import { Listbox, Transition } from '@headlessui/react';
+import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
 
 const AiSettings = ({
     settingsData,
@@ -227,6 +221,176 @@ const AiSettings = ({
     };
 
 
+    // Custom AI Provider Select Component
+    const AiProviderSelect = ({ value, onChange, options }) => {
+        const [selectedProvider, setSelectedProvider] = useState(
+            options.find(option => option.value === value) || options[0]
+        );
+
+        useEffect(() => {
+            setSelectedProvider(options.find(option => option.value === value) || options[0]);
+        }, [value, options]);
+
+        const handleChange = (provider) => {
+            setSelectedProvider(provider);
+            onChange(provider.value);
+        };
+
+        return (
+            <Fragment>
+                {selectedProvider && Object.keys(selectedProvider).length > 0 ? (
+                    <Listbox value={selectedProvider} onChange={handleChange}>
+                        <div className="relative mt-1">
+                            <Listbox.Button className="relative w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+                                <span className="block truncate">{selectedProvider?.label}</span>
+                                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                    <ChevronDownIcon
+                                        className="h-5 w-5 text-gray-400"
+                                        aria-hidden="true"
+                                    />
+                                </span>
+                            </Listbox.Button>
+                            <Transition
+                                as={Fragment}
+                                leave="transition ease-in duration-100"
+                                leaveFrom="opacity-100"
+                                leaveTo="opacity-0"
+                            >
+                                <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                    {options?.map((option) => (
+                                        <Listbox.Option
+                                            key={option?.value}
+                                            className={({ active }) =>
+                                                `cursor-pointer relative select-none py-2 pl-3 pr-9 ${
+                                                    active ? 'text-white bg-indigo-600' : 'text-gray-900'
+                                                }`
+                                            }
+                                            value={option}
+                                        >
+                                            {({ selected, active }) => (
+                                                <>
+                                                    <span
+                                                        className={`block truncate ${
+                                                            selected ? 'font-semibold' : 'font-normal'
+                                                        }`}
+                                                    >
+                                                        {option?.label}
+                                                    </span>
+                                                    {selected && (
+                                                        <span
+                                                            className={`absolute inset-y-0 right-0 flex items-center pr-4 ${
+                                                                active ? 'text-white' : 'text-indigo-600'
+                                                            }`}
+                                                        >
+                                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                        </span>
+                                                    )}
+                                                </>
+                                            )}
+                                        </Listbox.Option>
+                                    ))}
+                                </Listbox.Options>
+                            </Transition>
+                        </div>
+                    </Listbox>
+                ) : (
+                    <div className="relative mt-1">
+                        <input
+                            className="relative !w-full cursor-pointer !rounded-md border !border-gray-300 bg-white !py-2 !pl-3 !pr-10 text-left shadow-sm sm:text-sm"
+                            placeholder={__('No providers available', 'wedocs')}
+                            disabled
+                        />
+                    </div>
+                )}
+            </Fragment>
+        );
+    };
+
+    // Custom AI Model Select Component
+    const AiModelSelect = ({ value, onChange, options }) => {
+        const [selectedModel, setSelectedModel] = useState(
+            options.find(option => option.value === value) || options[0]
+        );
+
+        useEffect(() => {
+            setSelectedModel(options.find(option => option.value === value) || options[0]);
+        }, [value, options]);
+
+        const handleChange = (model) => {
+            setSelectedModel(model);
+            onChange(model.value);
+        };
+
+        return (
+            <Fragment>
+                {selectedModel && Object.keys(selectedModel).length > 0 ? (
+                    <Listbox value={selectedModel} onChange={handleChange}>
+                        <div className="relative mt-1">
+                            <Listbox.Button className="relative w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+                                <span className="block truncate">{selectedModel?.label}</span>
+                                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                    <ChevronDownIcon
+                                        className="h-5 w-5 text-gray-400"
+                                        aria-hidden="true"
+                                    />
+                                </span>
+                            </Listbox.Button>
+                            <Transition
+                                as={Fragment}
+                                leave="transition ease-in duration-100"
+                                leaveFrom="opacity-100"
+                                leaveTo="opacity-0"
+                            >
+                                <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                    {options?.map((option) => (
+                                        <Listbox.Option
+                                            key={option?.value}
+                                            className={({ active }) =>
+                                                `cursor-pointer relative select-none py-2 pl-3 pr-9 ${
+                                                    active ? 'text-white bg-indigo-600' : 'text-gray-900'
+                                                }`
+                                            }
+                                            value={option}
+                                        >
+                                            {({ selected, active }) => (
+                                                <>
+                                                    <span
+                                                        className={`block truncate ${
+                                                            selected ? 'font-semibold' : 'font-normal'
+                                                        }`}
+                                                    >
+                                                        {option?.label}
+                                                    </span>
+                                                    {selected && (
+                                                        <span
+                                                            className={`absolute inset-y-0 right-0 flex items-center pr-4 ${
+                                                                active ? 'text-white' : 'text-indigo-600'
+                                                            }`}
+                                                        >
+                                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                        </span>
+                                                    )}
+                                                </>
+                                            )}
+                                        </Listbox.Option>
+                                    ))}
+                                </Listbox.Options>
+                            </Transition>
+                        </div>
+                    </Listbox>
+                ) : (
+                    <div className="relative mt-1">
+                        <input
+                            className="relative !w-full cursor-pointer !rounded-md border !border-gray-300 bg-white !py-2 !pl-3 !pr-10 text-left shadow-sm sm:text-sm"
+                            placeholder={__('No models available', 'wedocs')}
+                            disabled
+                        />
+                    </div>
+                )}
+            </Fragment>
+        );
+    };
+
     return (
         <section>
             <div className="shadow sm:rounded-md">
@@ -235,90 +399,170 @@ const AiSettings = ({
                         <h2 className="text-gray-900 font-medium text-lg">
                             {__('AI Control Settings', 'wedocs')}
                         </h2>
-                        <p className="text-sm text-gray-600 mt-1">
-                            {__('Configure AI providers and manage API integrations for all AI-powered features.', 'wedocs')}
-                        </p>
                     </div>
                     <hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200" />
-                    
-                    <div className="pt-6 pb-20 px-8 space-y-8">
-                        {/* Global Configuration */}
-                        <Card>
-                            <CardHeader>
-                                <h3 className="text-lg font-medium text-gray-900">
-                                    {__('Global Configuration', 'wedocs')}
-                                </h3>
-                            </CardHeader>
-                            <CardBody>
-                                <VStack spacing={4}>
-                                    <div className="w-full">
-                                        <SelectControl
-                                            label={__('Default AI Provider', 'wedocs')}
+                    <div className="pt-6 pb-20 px-8 grid grid-cols-4 gap-5">
+                        {/* Default AI Provider */}
+                        <div className="col-span-4">
+                            <div className="settings-content flex items-center justify-between">
+                                <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+                                    <label
+                                        className="block text-sm font-medium text-gray-600"
+                                        id="headlessui-listbox-label-ai-provider"
+                                        data-headlessui-state="open"
+                                    >
+                                        {__('Default AI Provider', 'wedocs')}
+                                    </label>
+                                    <div
+                                        className="tooltip cursor-pointer ml-2 z-[9999]"
+                                        data-tip={__(
+                                            'This provider will be used as the default for all AI features unless overridden',
+                                            'wedocs'
+                                        )}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                                                stroke="#6b7280"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+                                    <div className="relative">
+                                        <AiProviderSelect
                                             value={aiSettings.default_provider}
+                                            onChange={handleDefaultProviderChange}
                                             options={Object.keys(providerConfigs).map(providerKey => ({
                                                 value: providerKey,
                                                 label: providerConfigs[providerKey].name
                                             }))}
-                                            onChange={handleDefaultProviderChange}
-                                            help={__('This provider will be used as the default for all AI features unless overridden.', 'wedocs')}
                                         />
                                     </div>
-                                </VStack>
-                            </CardBody>
-                        </Card>
-
-                        {/* Provider Configuration */}
-                        <Card>
-                            <CardHeader>
-                                <h3 className="text-lg font-medium text-gray-900">
-                                    {__('AI Provider Configuration', 'wedocs')}
-                                </h3>
-                                <p className="text-sm text-gray-600">
-                                    {__('Configure API key and model for the selected AI provider.', 'wedocs')}
+                                </div>
+                            </div>
+                            <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
+                                <p className="text-sm text-[#6B7280]">
+                                    {__('This provider will be used as the default for all AI features unless overridden.', 'wedocs')}
                                 </p>
-                            </CardHeader>
-                            <CardBody>
-                                {(() => {
-                                    const selectedProvider = aiSettings.default_provider;
-                                    const providerConfig = providerConfigs[selectedProvider];
-                                    
-                                    return (
-                                        <div className="border border-gray-200 rounded-lg p-4">
-                                            <div className="mb-4">
-                                                <h4 className="text-md font-medium text-gray-900">
-                                                    {providerConfig.name}
-                                                </h4>
-                                            </div>
-                                            
-                                            <VStack spacing={3}>
-                                                <TextControl
-                                                    label={__('API Key', 'wedocs')}
-                                                    type="password"
-                                                    style={{ width: '100%' }}
-                                                    value={aiSettings.providers[selectedProvider]?.api_key || ''}
-                                                    onChange={(value) => handleProviderChange(selectedProvider, 'api_key', value)}
-                                                    placeholder={__('Enter your API key', 'wedocs')}
-                                                    help={aiSettings.providers[selectedProvider]?.api_key ? 
-                                                        `Current: ${maskApiKey(aiSettings.providers[selectedProvider].api_key)}` : 
-                                                        __('Enter your API key for this provider', 'wedocs')
-                                                    }
-                                                />
-                                                
-                                                <SelectControl
-                                                    label={__('Model', 'wedocs')}
-                                                    value={aiSettings.providers[selectedProvider]?.selected_model || providerConfig.models[0].value}
-                                                    options={providerConfig.models}
-                                                    onChange={(value) => handleProviderChange(selectedProvider, 'selected_model', value)}
-                                                    help={__('Select the model for this provider', 'wedocs')}
-                                                />
-                                            </VStack>
-                                        </div>
-                                    );
-                                })()}
-                            </CardBody>
-                        </Card>
+                            </div>
+                        </div>
 
+                        {/* API Key */}
+                        <div className="col-span-4">
+                            <div className="settings-content flex items-center justify-between">
+                                <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+                                    <label
+                                        className="block text-sm font-medium text-gray-600"
+                                        id="headlessui-listbox-label-api-key"
+                                        data-headlessui-state="open"
+                                    >
+                                        {__('API Key', 'wedocs')}
+                                    </label>
+                                    <div
+                                        className="tooltip cursor-pointer ml-2 z-[9999]"
+                                        data-tip={__(
+                                            'Enter your API key for the selected AI provider',
+                                            'wedocs'
+                                        )}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                                                stroke="#6b7280"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+                                    <div className="relative">
+                                        <input
+                                            type="password"
+                                            name="ai_api_key"
+                                            id="ai-api-key"
+                                            placeholder={__('Enter your API key', 'wedocs')}
+                                            className="w-full !rounded-md !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                                            value={aiSettings.providers[aiSettings.default_provider]?.api_key || ''}
+                                            onChange={(e) => handleProviderChange(aiSettings.default_provider, 'api_key', e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            {aiSettings.providers[aiSettings.default_provider]?.api_key && (
+                                <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
+                                    <p className="text-sm text-[#6B7280]">
+                                        {__('Current:', 'wedocs')} {maskApiKey(aiSettings.providers[aiSettings.default_provider].api_key)}
+                                    </p>
+                                </div>
+                            )}
+                        </div>
 
+                        {/* AI Model */}
+                        <div className="col-span-4">
+                            <div className="settings-content flex items-center justify-between">
+                                <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+                                    <label
+                                        className="block text-sm font-medium text-gray-600"
+                                        id="headlessui-listbox-label-ai-model"
+                                        data-headlessui-state="open"
+                                    >
+                                        {__('AI Model', 'wedocs')}
+                                    </label>
+                                    <div
+                                        className="tooltip cursor-pointer ml-2 z-[9999]"
+                                        data-tip={__(
+                                            'Select the model for this AI provider',
+                                            'wedocs'
+                                        )}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                                                stroke="#6b7280"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+                                    <div className="relative">
+                                        <AiModelSelect
+                                            value={aiSettings.providers[aiSettings.default_provider]?.selected_model || providerConfigs[aiSettings.default_provider]?.models[0]?.value}
+                                            onChange={(value) => handleProviderChange(aiSettings.default_provider, 'selected_model', value)}
+                                            options={providerConfigs[aiSettings.default_provider]?.models || []}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
+                                <p className="text-sm text-[#6B7280]">
+                                    {__('Select the model for this provider', 'wedocs')}
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

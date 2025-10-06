@@ -19356,8 +19356,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _headlessui_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @headlessui/react */ "./node_modules/@headlessui/react/dist/components/listbox/listbox.js");
+/* harmony import */ var _headlessui_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @headlessui/react */ "./node_modules/@headlessui/react/dist/components/transitions/transition.js");
+/* harmony import */ var _heroicons_react_20_solid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @heroicons/react/20/solid */ "./node_modules/@heroicons/react/20/solid/esm/ChevronDownIcon.js");
+/* harmony import */ var _heroicons_react_20_solid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @heroicons/react/20/solid */ "./node_modules/@heroicons/react/20/solid/esm/CheckIcon.js");
 
 /**
  * AI Settings Component
@@ -19377,6 +19379,7 @@ __webpack_require__.r(__webpack_exports__);
  * 
  * @since 2.0.0
  */
+
 
 
 
@@ -19567,6 +19570,126 @@ const AiSettings = ({
 
     return firstPart + middleAsterisks + lastPart;
   };
+
+  // Custom AI Provider Select Component
+  const AiProviderSelect = ({
+    value,
+    onChange,
+    options
+  }) => {
+    const [selectedProvider, setSelectedProvider] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(options.find(option => option.value === value) || options[0]);
+    (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+      setSelectedProvider(options.find(option => option.value === value) || options[0]);
+    }, [value, options]);
+    const handleChange = provider => {
+      setSelectedProvider(provider);
+      onChange(provider.value);
+    };
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, selectedProvider && Object.keys(selectedProvider).length > 0 ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_3__.Listbox, {
+      value: selectedProvider,
+      onChange: handleChange
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "relative mt-1"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_3__.Listbox.Button, {
+      className: "relative w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+      className: "block truncate"
+    }, selectedProvider?.label), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+      className: "pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_20_solid__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      className: "h-5 w-5 text-gray-400",
+      "aria-hidden": "true"
+    }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_5__.Transition, {
+      as: _wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment,
+      leave: "transition ease-in duration-100",
+      leaveFrom: "opacity-100",
+      leaveTo: "opacity-0"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_3__.Listbox.Options, {
+      className: "absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+    }, options?.map(option => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_3__.Listbox.Option, {
+      key: option?.value,
+      className: ({
+        active
+      }) => `cursor-pointer relative select-none py-2 pl-3 pr-9 ${active ? 'text-white bg-indigo-600' : 'text-gray-900'}`,
+      value: option
+    }, ({
+      selected,
+      active
+    }) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+      className: `block truncate ${selected ? 'font-semibold' : 'font-normal'}`
+    }, option?.label), selected && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+      className: `absolute inset-y-0 right-0 flex items-center pr-4 ${active ? 'text-white' : 'text-indigo-600'}`
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_20_solid__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      className: "h-5 w-5",
+      "aria-hidden": "true"
+    }))))))))) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "relative mt-1"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+      className: "relative !w-full cursor-pointer !rounded-md border !border-gray-300 bg-white !py-2 !pl-3 !pr-10 text-left shadow-sm sm:text-sm",
+      placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No providers available', 'wedocs'),
+      disabled: true
+    })));
+  };
+
+  // Custom AI Model Select Component
+  const AiModelSelect = ({
+    value,
+    onChange,
+    options
+  }) => {
+    const [selectedModel, setSelectedModel] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(options.find(option => option.value === value) || options[0]);
+    (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+      setSelectedModel(options.find(option => option.value === value) || options[0]);
+    }, [value, options]);
+    const handleChange = model => {
+      setSelectedModel(model);
+      onChange(model.value);
+    };
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, selectedModel && Object.keys(selectedModel).length > 0 ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_3__.Listbox, {
+      value: selectedModel,
+      onChange: handleChange
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "relative mt-1"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_3__.Listbox.Button, {
+      className: "relative w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+      className: "block truncate"
+    }, selectedModel?.label), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+      className: "pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_20_solid__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      className: "h-5 w-5 text-gray-400",
+      "aria-hidden": "true"
+    }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_5__.Transition, {
+      as: _wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment,
+      leave: "transition ease-in duration-100",
+      leaveFrom: "opacity-100",
+      leaveTo: "opacity-0"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_3__.Listbox.Options, {
+      className: "absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+    }, options?.map(option => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_3__.Listbox.Option, {
+      key: option?.value,
+      className: ({
+        active
+      }) => `cursor-pointer relative select-none py-2 pl-3 pr-9 ${active ? 'text-white bg-indigo-600' : 'text-gray-900'}`,
+      value: option
+    }, ({
+      selected,
+      active
+    }) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+      className: `block truncate ${selected ? 'font-semibold' : 'font-normal'}`
+    }, option?.label), selected && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+      className: `absolute inset-y-0 right-0 flex items-center pr-4 ${active ? 'text-white' : 'text-indigo-600'}`
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_20_solid__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      className: "h-5 w-5",
+      "aria-hidden": "true"
+    }))))))))) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "relative mt-1"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+      className: "relative !w-full cursor-pointer !rounded-md border !border-gray-300 bg-white !py-2 !pl-3 !pr-10 text-left shadow-sm sm:text-sm",
+      placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No models available', 'wedocs'),
+      disabled: true
+    })));
+  };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "shadow sm:rounded-md"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -19575,60 +19698,126 @@ const AiSettings = ({
     className: "section-heading py-4 px-8 sm:px-8 sm:py-4"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
     className: "text-gray-900 font-medium text-lg"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('AI Control Settings', 'wedocs')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
-    className: "text-sm text-gray-600 mt-1"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Configure AI providers and manage API integrations for all AI-powered features.', 'wedocs'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('AI Control Settings', 'wedocs'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", {
     className: "h-px !bg-gray-200 border-0 dark:!bg-gray-200"
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "pt-6 pb-20 px-8 space-y-8"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Card, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
-    className: "text-lg font-medium text-gray-900"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Global Configuration', 'wedocs'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalVStack, {
-    spacing: 4
+    className: "pt-6 pb-20 px-8 grid grid-cols-4 gap-5"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "w-full"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Default AI Provider', 'wedocs'),
+    className: "col-span-4"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "settings-content flex items-center justify-between"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    className: "block text-sm font-medium text-gray-600",
+    id: "headlessui-listbox-label-ai-provider",
+    "data-headlessui-state": "open"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Default AI Provider', 'wedocs')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tooltip cursor-pointer ml-2 z-[9999]",
+    "data-tip": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('This provider will be used as the default for all AI features unless overridden', 'wedocs')
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    width: "18",
+    height: "18",
+    fill: "none"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+    d: "M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z",
+    stroke: "#6b7280",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  })))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "settings-field w-full max-w-[490px] mt-1 ml-auto flex-2"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "relative"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(AiProviderSelect, {
     value: aiSettings.default_provider,
+    onChange: handleDefaultProviderChange,
     options: Object.keys(providerConfigs).map(providerKey => ({
       value: providerKey,
       label: providerConfigs[providerKey].name
-    })),
-    onChange: handleDefaultProviderChange,
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('This provider will be used as the default for all AI features unless overridden.', 'wedocs')
-  }))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Card, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
-    className: "text-lg font-medium text-gray-900"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('AI Provider Configuration', 'wedocs')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
-    className: "text-sm text-gray-600"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Configure API key and model for the selected AI provider.', 'wedocs'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardBody, null, (() => {
-    const selectedProvider = aiSettings.default_provider;
-    const providerConfig = providerConfigs[selectedProvider];
-    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      className: "border border-gray-200 rounded-lg p-4"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      className: "mb-4"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", {
-      className: "text-md font-medium text-gray-900"
-    }, providerConfig.name)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalVStack, {
-      spacing: 3
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('API Key', 'wedocs'),
-      type: "password",
-      style: {
-        width: '100%'
-      },
-      value: aiSettings.providers[selectedProvider]?.api_key || '',
-      onChange: value => handleProviderChange(selectedProvider, 'api_key', value),
-      placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your API key', 'wedocs'),
-      help: aiSettings.providers[selectedProvider]?.api_key ? `Current: ${maskApiKey(aiSettings.providers[selectedProvider].api_key)}` : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your API key for this provider', 'wedocs')
-    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Model', 'wedocs'),
-      value: aiSettings.providers[selectedProvider]?.selected_model || providerConfig.models[0].value,
-      options: providerConfig.models,
-      onChange: value => handleProviderChange(selectedProvider, 'selected_model', value),
-      help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select the model for this provider', 'wedocs')
-    })));
-  })()))))));
+    }))
+  })))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "settings-description w-full max-w-[490px] ml-auto mt-1"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "text-sm text-[#6B7280]"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('This provider will be used as the default for all AI features unless overridden.', 'wedocs')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "col-span-4"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "settings-content flex items-center justify-between"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    className: "block text-sm font-medium text-gray-600",
+    id: "headlessui-listbox-label-api-key",
+    "data-headlessui-state": "open"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('API Key', 'wedocs')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tooltip cursor-pointer ml-2 z-[9999]",
+    "data-tip": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your API key for the selected AI provider', 'wedocs')
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    width: "18",
+    height: "18",
+    fill: "none"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+    d: "M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z",
+    stroke: "#6b7280",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  })))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "settings-field w-full max-w-[490px] ml-auto flex-2"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "relative"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "password",
+    name: "ai_api_key",
+    id: "ai-api-key",
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your API key', 'wedocs'),
+    className: "w-full !rounded-md !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm",
+    value: aiSettings.providers[aiSettings.default_provider]?.api_key || '',
+    onChange: e => handleProviderChange(aiSettings.default_provider, 'api_key', e.target.value)
+  })))), aiSettings.providers[aiSettings.default_provider]?.api_key && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "settings-description w-full max-w-[490px] ml-auto mt-1"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "text-sm text-[#6B7280]"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Current:', 'wedocs'), " ", maskApiKey(aiSettings.providers[aiSettings.default_provider].api_key)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "col-span-4"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "settings-content flex items-center justify-between"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    className: "block text-sm font-medium text-gray-600",
+    id: "headlessui-listbox-label-ai-model",
+    "data-headlessui-state": "open"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('AI Model', 'wedocs')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tooltip cursor-pointer ml-2 z-[9999]",
+    "data-tip": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select the model for this AI provider', 'wedocs')
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    width: "18",
+    height: "18",
+    fill: "none"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+    d: "M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z",
+    stroke: "#6b7280",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  })))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "settings-field w-full max-w-[490px] mt-1 ml-auto flex-2"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "relative"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(AiModelSelect, {
+    value: aiSettings.providers[aiSettings.default_provider]?.selected_model || providerConfigs[aiSettings.default_provider]?.models[0]?.value,
+    onChange: value => handleProviderChange(aiSettings.default_provider, 'selected_model', value),
+    options: providerConfigs[aiSettings.default_provider]?.models || []
+  })))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "settings-description w-full max-w-[490px] ml-auto mt-1"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "text-sm text-[#6B7280]"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select the model for this provider', 'wedocs'))))))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AiSettings);
 
@@ -32428,17 +32617,6 @@ module.exports = window["ReactDOM"];
 
 "use strict";
 module.exports = window["wp"]["apiFetch"];
-
-/***/ }),
-
-/***/ "@wordpress/components":
-/*!************************************!*\
-  !*** external ["wp","components"] ***!
-  \************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = window["wp"]["components"];
 
 /***/ }),
 
