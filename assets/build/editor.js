@@ -173,6 +173,7 @@ const AiDocWriterModal = ({
   const [prompt, setPrompt] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)('');
   const [keywords, setKeywords] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)('');
   const [overwriteContent, setOverwriteContent] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
+  const [useExistingContent, setUseExistingContent] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(true);
   const [isGenerating, setIsGenerating] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
   const [generatedContent, setGeneratedContent] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)('');
   const [showPreview, setShowPreview] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
@@ -365,9 +366,17 @@ const AiDocWriterModal = ({
       }
 
       // Use AI service to generate content
-      const systemPrompt = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('You are a professional documentation writer. Generate comprehensive, well-structured documentation content using HTML tags. Use proper heading hierarchy (h2, h3, etc.) and wrap all content in paragraph tags. Highlight important terms with <span class="highlight"> tags. IMPORTANT: Only return the content body without HTML document structure (no <!DOCTYPE>, <html>, <head>, <style>, or <body> tags). Return only the content that should be inserted into the document.', 'wedocs');
+      let systemPrompt = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('You are a professional documentation writer. Generate comprehensive, well-structured documentation content using HTML tags. Use proper heading hierarchy (h2, h3, etc.) and wrap all content in paragraph tags. Highlight important terms with <span class="highlight"> tags. IMPORTANT: Only return the content body without HTML document structure (no <!DOCTYPE>, <html>, <head>, <style>, or <body> tags). Return only the content that should be inserted into the document.', 'wedocs');
+
+      // Add existing content context if enabled
+      let enhancedPrompt = prompt;
+      if (useExistingContent && currentPost?.contentRaw) {
+        const existingContentContext = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('EXISTING DOCUMENT CONTEXT:\n{content}\n\nPlease generate new content that complements and builds upon the existing content above. Maintain consistency in tone, style, and structure. Avoid duplicating information already covered.', 'wedocs').replace('{content}', currentPost.contentRaw);
+        enhancedPrompt = `${existingContentContext}\n\n${prompt}`;
+        systemPrompt += ' ' + (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Consider the existing document content provided above to maintain consistency and avoid duplication.', 'wedocs');
+      }
       const selectedModel = aiSettings.providers[aiSettings.default_provider].selected_model;
-      const result = await _utils_aiService__WEBPACK_IMPORTED_MODULE_9__["default"].generateContent(prompt, {
+      const result = await _utils_aiService__WEBPACK_IMPORTED_MODULE_9__["default"].generateContent(enhancedPrompt, {
         provider: aiSettings.default_provider,
         model: selectedModel,
         feature: 'ai_doc_writer',
@@ -545,6 +554,12 @@ const AiDocWriterModal = ({
     rows: 4,
     placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('AI instructions will be auto-generated from title and keywords...', 'wedocs'),
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Instructions are automatically generated from your title and keywords. You can edit them manually if needed.', 'wedocs'),
+    __nextHasNoMarginBottom: true
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Use existing post content', 'wedocs'),
+    checked: useExistingContent,
+    onChange: setUseExistingContent,
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('When enabled, the AI will consider your existing post content to maintain consistency and avoid duplication.', 'wedocs'),
     __nextHasNoMarginBottom: true
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Overwrite your existing Doc', 'wedocs'),

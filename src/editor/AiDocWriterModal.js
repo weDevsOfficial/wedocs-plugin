@@ -30,6 +30,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
     const [prompt, setPrompt] = useState('');
     const [keywords, setKeywords] = useState('');
     const [overwriteContent, setOverwriteContent] = useState(false);
+    const [useExistingContent, setUseExistingContent] = useState(true);
     const [isGenerating, setIsGenerating] = useState(false);
     const [generatedContent, setGeneratedContent] = useState('');
     const [showPreview, setShowPreview] = useState(false);
@@ -232,14 +233,30 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
             }
 
             // Use AI service to generate content
-            const systemPrompt = __(
+            let systemPrompt = __(
                 'You are a professional documentation writer. Generate comprehensive, well-structured documentation content using HTML tags. Use proper heading hierarchy (h2, h3, etc.) and wrap all content in paragraph tags. Highlight important terms with <span class="highlight"> tags. IMPORTANT: Only return the content body without HTML document structure (no <!DOCTYPE>, <html>, <head>, <style>, or <body> tags). Return only the content that should be inserted into the document.',
                 'wedocs'
             );
 
+            // Add existing content context if enabled
+            let enhancedPrompt = prompt;
+            if (useExistingContent && currentPost?.contentRaw) {
+                const existingContentContext = __(
+                    'EXISTING DOCUMENT CONTEXT:\n{content}\n\nPlease generate new content that complements and builds upon the existing content above. Maintain consistency in tone, style, and structure. Avoid duplicating information already covered.',
+                    'wedocs'
+                ).replace('{content}', currentPost.contentRaw);
+                
+                enhancedPrompt = `${existingContentContext}\n\n${prompt}`;
+                
+                systemPrompt += ' ' + __(
+                    'Consider the existing document content provided above to maintain consistency and avoid duplication.',
+                    'wedocs'
+                );
+            }
+
             const selectedModel = aiSettings.providers[aiSettings.default_provider].selected_model;
 
-                const result = await aiService.generateContent(prompt, {
+                const result = await aiService.generateContent(enhancedPrompt, {
                     provider: aiSettings.default_provider,
                     model: selectedModel,
                     feature: 'ai_doc_writer',
@@ -443,6 +460,14 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
                                     rows={4}
                                     placeholder={__('AI instructions will be auto-generated from title and keywords...', 'wedocs')}
                                     help={__('Instructions are automatically generated from your title and keywords. You can edit them manually if needed.', 'wedocs')}
+                                    __nextHasNoMarginBottom
+                                />
+
+                                <ToggleControl
+                                    label={__('Use existing post content', 'wedocs')}
+                                    checked={useExistingContent}
+                                    onChange={setUseExistingContent}
+                                    help={__('When enabled, the AI will consider your existing post content to maintain consistency and avoid duplication.', 'wedocs')}
                                     __nextHasNoMarginBottom
                                 />
 
