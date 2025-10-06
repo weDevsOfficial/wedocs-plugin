@@ -60,29 +60,30 @@ const DEFAULT_SETTINGS_STATE = {
     },
     ai: {
       default_provider: 'openai',
-      providers: {
-        openai: {
-          api_key: '',
-          models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
-          selected_model: 'gpt-4'
-        },
-        anthropic: {
-          api_key: '',
-          models: ['claude-3-opus-20240229', 'claude-3-sonnet-20240229', 'claude-3-haiku-20240307'],
-          selected_model: 'claude-3-sonnet-20240229'
-        },
-        google: {
-          api_key: '',
-          models: ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.0-pro'],
-          selected_model: 'gemini-1.5-pro'
-        },
-        azure: {
-          api_key: '',
-          endpoint: '',
-          models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
-          selected_model: 'gpt-4'
-        }
-      },
+      providers: (() => {
+        // Generate default providers from centralized configs
+        const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
+        const providers = {};
+        
+        Object.keys(configs).forEach(providerKey => {
+          const provider = configs[providerKey];
+          const modelKeys = Object.keys(provider.models);
+          const firstModel = modelKeys[0]; // Use first model as default
+          
+          providers[providerKey] = {
+            api_key: '',
+            models: modelKeys,
+            selected_model: firstModel
+          };
+          
+          // Add endpoint for Azure if it exists
+          if (providerKey === 'azure') {
+            providers[providerKey].endpoint = '';
+          }
+        });
+
+        return providers;
+      })(),
     }
   },
   loading: false,

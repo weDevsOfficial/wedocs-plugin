@@ -69,6 +69,7 @@ class Assets {
                 array(
                     'adminUrl'     => admin_url(),
                     'hasManageCap' => current_user_can( 'manage_options' ),
+                    'aiProviderConfigs' => wedocs_get_ai_provider_configs(),
                 ),
             );
         }
@@ -114,6 +115,7 @@ class Assets {
                 array(
                     'ajaxurl' => admin_url( 'admin-ajax.php' ),
                     'nonce'   => wp_create_nonce( 'wedocs-ai-doc-writer' ),
+                    'aiProviderConfigs' => wedocs_get_ai_provider_configs(),
                 ),
             );
         }

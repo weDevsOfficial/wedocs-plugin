@@ -18,7 +18,10 @@ import {
     __experimentalHStack as HStack,
     __experimentalVStack as VStack,
 } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { store as editorStore } from '@wordpress/editor';
+import { store as blockEditorStore } from '@wordpress/block-editor';
+import { createBlock } from '@wordpress/blocks';
 import AiDocWriterPreview from './AiDocWriterPreview';
 import aiService from '../utils/aiService';
 
@@ -32,9 +35,14 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
     const [showPreview, setShowPreview] = useState(false);
     const [error, setError] = useState('');
 
-    // Get current post data
-    const currentPost = useSelect((select) => {
+    // WordPress editor dispatch hooks
+    const { insertBlocks, replaceBlocks, insertDefaultBlock } = useDispatch(blockEditorStore);
+    const { editPost } = useDispatch(editorStore);
+
+    // Get current post data and editor state
+    const { currentPost, selectedBlockId, blocks } = useSelect((select) => {
         const { getCurrentPost, getEditedPostContent } = select('core/editor');
+        const { getSelectedBlockClientId, getBlocks } = select('core/block-editor');
         const post = getCurrentPost();
         const content = getEditedPostContent();
         
@@ -42,11 +50,14 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
         console.log('Content from getEditedPostContent:', content);
         
         return {
-            ...post,
-            content: {
-                raw: content,
-                rendered: content
-            }
+            currentPost: {
+                id: post?.id || null,
+                title: post?.title || '',
+                contentRaw: content || '',
+                contentRendered: content || ''
+            },
+            selectedBlockId: getSelectedBlockClientId() || null,
+            blocks: getBlocks() || []
         };
     }, []);
 
@@ -93,10 +104,32 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
         setPrompt(dynamicPrompt);
     }, [title, keywords]);
 
+    // Clean AI-generated content
+    const cleanGeneratedContent = (content) => {
+        if (!content) return content;
+        
+        // Remove HTML document structure
+        let cleaned = content
+            .replace(/```html\s*/gi, '') // Remove markdown code blocks
+            .replace(/```\s*/g, '') // Remove closing code blocks
+            .replace(/<!DOCTYPE[^>]*>/gi, '') // Remove DOCTYPE
+            .replace(/<html[^>]*>/gi, '') // Remove html tag
+            .replace(/<\/html>/gi, '') // Remove closing html tag
+            .replace(/<head[^>]*>[\s\S]*?<\/head>/gi, '') // Remove head section
+            .replace(/<body[^>]*>/gi, '') // Remove body opening tag
+            .replace(/<\/body>/gi, '') // Remove body closing tag
+            .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '') // Remove style blocks
+            .replace(/<title[^>]*>[\s\S]*?<\/title>/gi, '') // Remove title
+            .replace(/<meta[^>]*>/gi, '') // Remove meta tags
+            .trim();
+        
+        return cleaned;
+    };
+
     // Validate AI-generated content
     const validateGeneratedContent = (content) => {
         const errors = [];
-        
+
         // Check if content is empty
         if (!content || content.trim().length === 0) {
             errors.push(__('Generated content is empty.', 'wedocs'));
@@ -106,10 +139,12 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
         // Check for basic HTML structure
         const hasParagraphs = /<p[^>]*>.*?<\/p>/i.test(content);
         const hasHeadings = /<h[1-6][^>]*>.*?<\/h[1-6]>/i.test(content);
-        
+
         if (!hasParagraphs && !hasHeadings) {
             errors.push(__('Generated content should contain at least paragraphs or headings.', 'wedocs'));
         }
+
+        console.log(content);
 
         // Check for potentially dangerous HTML (basic XSS prevention)
         const dangerousPatterns = [
@@ -143,6 +178,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
         };
     };
 
+
     const handleGenerate = async () => {
         if (!title.trim()) {
             setError(__('Please enter a documentation title.', 'wedocs'));
@@ -160,78 +196,177 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
         try {
             // Get AI settings to determine provider and model
             const aiSettings = await aiService.getAiSettings();
-            
+
             // Check if AI is properly configured
             if (!aiSettings.providers[aiSettings.default_provider]?.api_key) {
-                // Fall back to mock content if AI is not configured
-                console.warn('AI not configured, using mock content');
-                const mockContent = `
-                    <h2><span class="highlight">Introduction</span></h2>
-                    <p>This is AI-generated content for: <strong>${title}</strong></p>
-                    <p>Keywords: <span class="highlight">${keywords}</span></p>
-                    <p>Overwrite mode: <strong>${overwriteContent ? 'Enabled' : 'Disabled'}</strong></p>
-                    <p>Prompt used: <em>${prompt.substring(0, 100)}${prompt.length > 100 ? '...' : ''}</em></p>
-                    <h2><span class="highlight">Key Features</span></h2>
-                    <p>Based on your keywords and instructions, here's the generated content. This is a comprehensive guide that covers all the important aspects of the topic you've specified. The content is structured with proper headings and paragraphs to ensure good readability and organization.</p>
-                    <h2><span class="highlight">Detailed Information</span></h2>
-                    <p>This section provides more detailed information about the topic. The AI has generated relevant content based on your keywords and title. The content follows proper HTML structure with headings and paragraphs as requested.</p>
-                    <h2><span class="highlight">Conclusion</span></h2>
-                    <p>This content was generated using AI and can be customized as needed. The validation ensures that the content meets quality standards and is safe to use in your documentation.</p>
-                `;
-                
-                const validation = validateGeneratedContent(mockContent);
-                if (!validation.isValid) {
-                    setError(validation.errors.join(' '));
-                    return;
-                }
-                
-                setGeneratedContent(mockContent);
-                setShowPreview(true);
+                setError(__('AI service is not configured. Please set up your AI provider settings in weDocs > Settings > AI Control Settings.', 'wedocs'));
                 return;
             }
 
             // Use AI service to generate content
             const systemPrompt = __(
-                'You are a professional documentation writer. Generate comprehensive, well-structured documentation content using HTML tags. Use proper heading hierarchy (h2, h3, etc.) and wrap all content in paragraph tags. Highlight important terms with <span class="highlight"> tags.',
+                'You are a professional documentation writer. Generate comprehensive, well-structured documentation content using HTML tags. Use proper heading hierarchy (h2, h3, etc.) and wrap all content in paragraph tags. Highlight important terms with <span class="highlight"> tags. IMPORTANT: Only return the content body without HTML document structure (no <!DOCTYPE>, <html>, <head>, <style>, or <body> tags). Return only the content that should be inserted into the document.',
                 'wedocs'
             );
 
-            const result = await aiService.generateContent(prompt, {
-                provider: aiSettings.default_provider,
-                model: aiSettings.providers[aiSettings.default_provider].selected_model,
-                feature: 'ai_doc_writer',
-                systemPrompt: systemPrompt,
-                maxTokens: 2000,
-                temperature: 0.7
-            });
+            const selectedModel = aiSettings.providers[aiSettings.default_provider].selected_model;
 
-            if (!result.content) {
-                throw new Error(__('AI service returned empty content', 'wedocs'));
-            }
+                const result = await aiService.generateContent(prompt, {
+                    provider: aiSettings.default_provider,
+                    model: selectedModel,
+                    feature: 'ai_doc_writer',
+                    systemPrompt: systemPrompt,
+                    maxTokens: 2000,
+                    temperature: 0.7
+                });
+
+
+                if (!result.content) {
+                    throw new Error(__('AI service returned empty content', 'wedocs'));
+                }
+
+                // Clean the generated content
+                const cleanedContent = cleanGeneratedContent(result.content);
 
             // Validate the generated content
-            const validation = validateGeneratedContent(result.content);
-            
+            const validation = validateGeneratedContent(cleanedContent);
+
             if (!validation.isValid) {
                 setError(validation.errors.join(' '));
                 return;
             }
-            
-            setGeneratedContent(result.content);
+
+            setGeneratedContent(cleanedContent);
             setShowPreview(true);
         } catch (err) {
-            console.error('AI generation error:', err);
             setError(err.message || __('Failed to generate content. Please try again.', 'wedocs'));
         } finally {
             setIsGenerating(false);
         }
     };
 
+    // Sanitize content for security (following BetterDocs Pro pattern)
+    const sanitizeContent = (content) => {
+        if (!content) return content;
+        
+        // Remove script tags and their contents
+        content = content.replace(/<script[^>]*>.*?<\/script>/gi, '');
+        
+        // Remove javascript: protocols but keep the anchor tags
+        content = content.replace(/href\s*=\s*(["\'])\s*javascript:.*?\1/i, 'href="#"');
+        
+        // Remove all event handlers (onclick, onload, etc) but keep the elements
+        content = content.replace(/\s+on\w+\s*=\s*(["\'])?[^"\']*\1?/i, '');
+        
+        // Remove any inline javascript: in attributes
+        content = content.replace(/javascript\s*:/i, '');
+        
+        return content;
+    };
+
+    // Parse HTML content and create appropriate blocks
+    const createContentBlocks = (htmlContent) => {
+        const blocks = [];
+        
+        // Sanitize the content first
+        const sanitizedContent = sanitizeContent(htmlContent);
+        
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = sanitizedContent;
+        
+        // Process each top-level element
+        Array.from(tempDiv.children).forEach(element => {
+            const tagName = element.tagName.toLowerCase();
+            
+            switch (tagName) {
+                case 'h1':
+                case 'h2':
+                case 'h3':
+                case 'h4':
+                case 'h5':
+                case 'h6':
+                    const level = parseInt(tagName.charAt(1));
+                    blocks.push(createBlock('core/heading', {
+                        content: element.innerHTML,
+                        level: level
+                    }));
+                    break;
+                    
+                case 'p':
+                    blocks.push(createBlock('core/paragraph', {
+                        content: element.innerHTML
+                    }));
+                    break;
+                    
+                case 'ul':
+                case 'ol':
+                    const listType = tagName === 'ul' ? 'ul' : 'ol';
+                    const listItems = Array.from(element.querySelectorAll('li')).map(li => li.innerHTML);
+                    blocks.push(createBlock('core/list', {
+                        values: listItems,
+                        ordered: listType === 'ol'
+                    }));
+                    break;
+                    
+                case 'blockquote':
+                    blocks.push(createBlock('core/quote', {
+                        value: element.innerHTML
+                    }));
+                    break;
+                    
+                default:
+                    // For any other HTML content, use HTML block
+                    blocks.push(createBlock('core/html', {
+                        content: element.outerHTML
+                    }));
+                    break;
+            }
+        });
+        
+        // If no blocks were created (e.g., only text), create a paragraph
+        if (blocks.length === 0) {
+            blocks.push(createBlock('core/paragraph', {
+                content: htmlContent
+            }));
+        }
+        
+        return blocks;
+    };
+
     const handleAccept = () => {
-        // TODO: Implement content insertion logic
-        console.log('Accepting content:', generatedContent);
-        console.log('Overwrite mode:', overwriteContent);
-        onClose();
+        try {
+            // Create blocks from the generated content
+            const contentBlocks = createContentBlocks(generatedContent);
+
+            if (overwriteContent) {
+                // Overwrite Mode: Replace entire post content
+                // Get all block client IDs safely
+                const blockIds = blocks.map(block => block.clientId).filter(id => id);
+                
+                if (blockIds.length > 0) {
+                    // Replace all existing blocks with new content blocks
+                    replaceBlocks(blockIds, contentBlocks);
+                } else {
+                    // If no blocks exist, just insert the new blocks
+                    insertBlocks(contentBlocks);
+                }
+            } else {
+                // Insert Mode: Insert at current cursor position
+                if (selectedBlockId) {
+                    // Insert after the selected block
+                    insertBlocks(contentBlocks, selectedBlockId, 'after');
+                } else {
+                    // No block selected, insert at the end
+                    insertBlocks(contentBlocks);
+                }
+            }
+            
+            // Close the modal
+            onClose();
+            
+        } catch (error) {
+            setError(__('Failed to insert content. Please try again.', 'wedocs'));
+        }
     };
 
     const handleReject = () => {
@@ -256,9 +391,6 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
             {!showPreview ? (
                 <VStack spacing={4}>
                     <Card>
-                        <CardHeader>
-                            <h3>{__('Content Generation Settings', 'wedocs')}</h3>
-                        </CardHeader>
                         <CardBody>
                             <VStack spacing={3}>
                                 <TextControl
@@ -268,6 +400,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
                                     placeholder={__('Enter your documentation title here...', 'wedocs')}
                                     help={__('The title will be used to generate relevant content.', 'wedocs')}
                                     __nextHasNoMarginBottom
+                                    __next40pxDefaultSize
                                 />
 
                                 <TextControl
@@ -277,6 +410,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
                                     placeholder={__('Add keywords to guide AI (comma-separated)...', 'wedocs')}
                                     help={__('Enter relevant keywords separated by commas.', 'wedocs')}
                                     __nextHasNoMarginBottom
+                                    __next40pxDefaultSize
                                 />
 
                                 <TextareaControl
@@ -294,6 +428,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
                                     checked={overwriteContent}
                                     onChange={setOverwriteContent}
                                     help={__('When enabled, AI content will replace the entire document. When disabled, content will be inserted at the current cursor position.', 'wedocs')}
+                                    __nextHasNoMarginBottom
                                 />
                             </VStack>
                         </CardBody>

@@ -1,15 +1,15 @@
 /**
  * AI Service Utility
- * 
+ *
  * Centralized service for managing AI provider integrations
  * and API calls across all AI-powered features in weDocs.
- * 
+ *
  * Available WordPress Filters:
- * 
+ *
  * @filter wedocs_ai_service_providers
  * Allows customization of AI service provider configurations including models,
  * base URLs, and provider names for the AI service utility.
- * 
+ *
  * @since 2.0.0
  */
 
@@ -17,51 +17,15 @@ import { __ } from '@wordpress/i18n';
 
 class AiService {
     constructor() {
-        this.providers = {
-            openai: {
-                name: 'OpenAI',
-                baseUrl: 'https://api.openai.com/v1',
-                models: {
-                    'gpt-4': 'GPT-4',
-                    'gpt-4o-mini': 'GPT-4o Mini',
-                    'gpt-3.5-turbo': 'GPT-3.5 Turbo'
-                }
-            },
-            anthropic: {
-                name: 'Anthropic',
-                baseUrl: 'https://api.anthropic.com/v1',
-                models: {
-                    'claude-3-opus-20240229': 'Claude 3 Opus',
-                    'claude-3-sonnet-20240229': 'Claude 3.5 Sonnet',
-                    'claude-3-haiku-20240307': 'Claude 3 Haiku'
-                }
-            },
-            google: {
-                name: 'Google Gemini',
-                baseUrl: 'https://generativelanguage.googleapis.com/v1beta',
-                models: {
-                    'gemini-1.5-pro': 'Gemini 1.5 Pro',
-                    'gemini-1.5-flash': 'Gemini 1.5 Flash',
-                    'gemini-1.0-pro': 'Gemini 1.0 Pro'
-                }
-            },
-            azure: {
-                name: 'Azure OpenAI',
-                baseUrl: null, // Will be set from endpoint
-                models: {
-                    'gpt-4': 'GPT-4',
-                    'gpt-4o-mini': 'GPT-4o Mini',
-                    'gpt-3.5-turbo': 'GPT-3.5 Turbo'
-                }
-            }
-        };
+        // Use centralized provider configs from WordPress
+        this.providers = window.weDocsEditorVars?.aiProviderConfigs || {};
 
         /**
          * Filter: wedocs_ai_service_providers
-         * 
+         *
          * Allows customization of AI service provider configurations including models,
          * base URLs, and provider names for the AI service utility.
-         * 
+         *
          * @param {Object} providers - The providers configuration object
          * @param {Object} providers.openai - OpenAI provider configuration
          * @param {string} providers.openai.name - Provider display name
@@ -70,14 +34,14 @@ class AiService {
          * @param {Object} providers.anthropic - Anthropic provider configuration
          * @param {Object} providers.google - Google Gemini provider configuration
          * @param {Object} providers.azure - Azure OpenAI provider configuration
-         * 
+         *
          * @example
          * // Add a new model to OpenAI
          * wp.hooks.addFilter('wedocs_ai_service_providers', 'my-plugin', function(providers) {
          *     providers.openai.models['gpt-4-turbo'] = 'GPT-4 Turbo';
          *     return providers;
          * });
-         * 
+         *
          * @example
          * // Add a completely new provider
          * wp.hooks.addFilter('wedocs_ai_service_providers', 'my-plugin', function(providers) {
@@ -91,14 +55,14 @@ class AiService {
          *     };
          *     return providers;
          * });
-         * 
+         *
          * @example
          * // Modify existing provider configuration
          * wp.hooks.addFilter('wedocs_ai_service_providers', 'my-plugin', function(providers) {
          *     providers.openai.baseUrl = 'https://custom-openai-proxy.com/v1';
          *     return providers;
          * });
-         * 
+         *
          * @since 2.0.0
          */
         this.providers = wp.hooks.applyFilters('wedocs_ai_service_providers', this.providers);
@@ -122,31 +86,29 @@ class AiService {
      * Get default AI settings structure
      */
     getDefaultAiSettings() {
+        const providers = {};
+
+        // Generate settings from centralized configs
+        Object.keys(this.providers).forEach(providerKey => {
+            const provider = this.providers[providerKey];
+            const modelKeys = Object.keys(provider.models);
+            const firstModel = modelKeys[0]; // Use first model as default
+
+            providers[providerKey] = {
+                api_key: '',
+                models: modelKeys,
+                selected_model: firstModel
+            };
+
+            // Add endpoint for Azure if it exists
+            if (providerKey === 'azure') {
+                providers[providerKey].endpoint = '';
+            }
+        });
+
         return {
             default_provider: 'openai',
-            providers: {
-                openai: {
-                    api_key: '',
-                    models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
-                    selected_model: 'gpt-4'
-                },
-                anthropic: {
-                    api_key: '',
-                    models: ['claude-3-opus-20240229', 'claude-3-sonnet-20240229', 'claude-3-haiku-20240307'],
-                    selected_model: 'claude-3-sonnet-20240229'
-                },
-                google: {
-                    api_key: '',
-                    models: ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.0-pro'],
-                    selected_model: 'gemini-1.5-pro'
-                },
-                azure: {
-                    api_key: '',
-                    endpoint: '',
-                    models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
-                    selected_model: 'gpt-4'
-                }
-            },
+            providers: providers
         };
     }
 
@@ -192,14 +154,18 @@ class AiService {
     async generateContent(prompt, options = {}) {
         try {
             const aiSettings = await this.getAiSettings();
-            const { 
+            const {
                 provider = aiSettings.default_provider,
                 model = null,
                 feature = 'ai_doc_writer'
             } = options;
 
+            console.log('AI Service - generateContent called with:', { prompt: prompt.substring(0, 100) + '...', options });
+
             // Get provider and model configuration
             const providerConfig = aiSettings.providers[provider];
+            console.log('AI Service - Provider config:', providerConfig);
+
             if (!providerConfig || !providerConfig.api_key) {
                 throw new Error(__('AI provider not configured or API key missing', 'wedocs'));
             }
@@ -207,20 +173,58 @@ class AiService {
             const selectedModel = model || providerConfig.selected_model;
             const endpoint = provider === 'azure' ? providerConfig.endpoint : null;
 
+            console.log('AI Service - Selected model:', selectedModel);
+            console.log('AI Service - Provider:', provider);
+            console.log('AI Service - Endpoint:', endpoint);
+
             // Prepare the request payload
             const payload = this.preparePayload(provider, selectedModel, prompt, options);
 
             // Make the API call
             const response = await this.makeApiCall(
-                provider, 
-                providerConfig.api_key, 
-                endpoint, 
-                payload
+                provider,
+                providerConfig.api_key,
+                endpoint,
+                payload,
+                selectedModel
             );
 
             return this.parseResponse(provider, response);
         } catch (error) {
             console.error('AI content generation failed:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * List available models for Google Gemini API
+     */
+    async listGoogleModels(apiKey) {
+        try {
+            console.log('AI Service - Listing Google models...');
+            const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(
+                    errorData.error?.message ||
+                    errorData.message ||
+                    __('Failed to list Google models', 'wedocs')
+                );
+            }
+
+            const data = await response.json();
+            console.log('AI Service - Available Google models:', data);
+            return data;
+        } catch (error) {
+            console.error('AI Service - Failed to list Google models:', error);
             throw error;
         }
     }
@@ -259,6 +263,8 @@ class AiService {
      * Prepare payload for content generation
      */
     preparePayload(provider, model, prompt, options = {}) {
+        console.log('AI Service - preparePayload called with:', { provider, model, prompt: prompt.substring(0, 100) + '...', options });
+
         const basePayloads = {
             openai: {
                 model: model,
@@ -313,20 +319,26 @@ class AiService {
             }
         };
 
-        return basePayloads[provider] || basePayloads.openai;
+        const finalPayload = basePayloads[provider] || basePayloads.openai;
+        console.log('AI Service - Final payload prepared:', finalPayload);
+
+        return finalPayload;
     }
 
     /**
      * Make API call to the specified provider
      */
-    async makeApiCall(provider, apiKey, endpoint, payload) {
+    async makeApiCall(provider, apiKey, endpoint, payload, model = null) {
+        console.log('AI Service - makeApiCall called with:', { provider, apiKey: apiKey ? '***' + apiKey.slice(-4) : 'none', endpoint, payload, model });
+
         const providerConfig = this.providers[provider];
         let url, headers;
 
         // Prepare URL and headers based on provider
         switch (provider) {
             case 'openai':
-                url = `${providerConfig.baseUrl}/chat/completions`;
+                const openaiBaseUrl = providerConfig.endpoint || providerConfig.baseUrl || 'https://api.openai.com/v1';
+                url = `${openaiBaseUrl}/chat/completions`;
                 headers = {
                     'Authorization': `Bearer ${apiKey}`,
                     'Content-Type': 'application/json'
@@ -334,7 +346,8 @@ class AiService {
                 break;
 
             case 'anthropic':
-                url = `${providerConfig.baseUrl}/messages`;
+                const anthropicBaseUrl = providerConfig.endpoint || providerConfig.baseUrl || 'https://api.anthropic.com/v1';
+                url = `${anthropicBaseUrl}/messages`;
                 headers = {
                     'x-api-key': apiKey,
                     'Content-Type': 'application/json',
@@ -343,7 +356,10 @@ class AiService {
                 break;
 
             case 'google':
-                url = `${providerConfig.baseUrl}/models/${payload.model || 'gemini-1.5-pro'}:generateContent?key=${apiKey}`;
+                // Use endpoint from centralized config and replace {model} placeholder
+                const endpoint = providerConfig.endpoint || 'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent';
+                const selectedModel = model || 'gemini-2.0-flash-exp';
+                url = endpoint.replace('{model}', selectedModel) + `?key=${apiKey}`;
                 headers = {
                     'Content-Type': 'application/json'
                 };
@@ -360,6 +376,10 @@ class AiService {
             default:
                 throw new Error(__('Unsupported AI provider', 'wedocs'));
         }
+        
+        console.log('AI Service - Request headers:', headers);
+        console.log('AI Service - Request payload:', payload);
+        console.log(payload);
 
         const response = await fetch(url, {
             method: 'POST',
@@ -368,12 +388,37 @@ class AiService {
         });
 
         if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(
-                errorData.error?.message || 
-                errorData.message || 
-                __('API request failed', 'wedocs')
-            );
+            let errorData = {};
+            let errorMessage = __('API request failed', 'wedocs');
+
+            try {
+                const responseText = await response.text();
+                console.log('AI Service - Error response text:', responseText);
+
+                // Try to parse as JSON
+                if (responseText.trim().startsWith('{')) {
+                    errorData = JSON.parse(responseText);
+                    errorMessage = errorData.error?.message || errorData.message || errorMessage;
+                } else {
+                    // If it's HTML (like a 404 page), provide a more helpful message
+                    errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+                }
+            } catch (parseError) {
+                console.error('AI Service - Failed to parse error response:', parseError);
+                errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+            }
+
+            // If it's a Google model not found error, list available models
+            if (provider === 'google' && errorMessage.includes('is not found for API version')) {
+                console.log('AI Service - Model not found, listing available models...');
+                try {
+                    await this.listGoogleModels(apiKey);
+                } catch (listError) {
+                    console.error('AI Service - Failed to list models:', listError);
+                }
+            }
+
+            throw new Error(errorMessage);
         }
 
         return await response.json();

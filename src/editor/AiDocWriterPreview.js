@@ -5,20 +5,6 @@ const AiDocWriterPreview = ({ content, onAccept, onReject, onClose }) => {
     return (
         <VStack spacing={4}>
             <Card>
-                <CardHeader>
-                    <h3>{__('AI Generated Content Preview', 'wedocs')}</h3>
-                </CardHeader>
-                <CardBody>
-                    <p>
-                        {__(
-                            'Review the generated content below. You can accept it to insert into your document or reject it to try again.',
-                            'wedocs'
-                        )}
-                    </p>
-                </CardBody>
-            </Card>
-
-            <Card>
                 <CardBody>
                     <div 
                         dangerouslySetInnerHTML={{ __html: content }}

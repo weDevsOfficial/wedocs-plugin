@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { registerPlugin } from '@wordpress/plugins';
-import { PluginSidebar } from '@wordpress/edit-post';
+import { PluginSidebar } from '@wordpress/editor';
 import { useSelect } from '@wordpress/data';
 import { store as editorStore } from '@wordpress/editor';
 import { store as coreStore } from '@wordpress/core-data';
@@ -25,7 +25,6 @@ const AiDocWriter = () => {
         return null;
     }
 
-    console.log('AiDocWriter component rendered for docs post type, isModalOpen:', isModalOpen);
 
     return (
         <>
@@ -40,10 +39,7 @@ const AiDocWriter = () => {
                     </p>
                     
                     <button
-                        onClick={() => {
-                            console.log('Opening AI Doc Writer modal');
-                            setIsModalOpen(true);
-                        }}
+                        onClick={() => setIsModalOpen(true)}
                         className="button button-primary"
                         style={{ 
                             width: '100%',
@@ -60,10 +56,7 @@ const AiDocWriter = () => {
             {isModalOpen && (
                 <AiDocWriterModal
                     isOpen={isModalOpen}
-                    onClose={() => {
-                        console.log('Closing AI Doc Writer modal');
-                        setIsModalOpen(false);
-                    }}
+                    onClose={() => setIsModalOpen(false)}
                 />
             )}
         </>

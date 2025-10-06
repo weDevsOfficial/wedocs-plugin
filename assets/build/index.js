@@ -19386,31 +19386,33 @@ const AiSettings = ({
   aiSettingsData,
   setSettings
 }) => {
+  // Get centralized provider configs
+  const getProviderConfigs = () => {
+    const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
+    const providers = {};
+
+    // Generate settings from centralized configs
+    Object.keys(configs).forEach(providerKey => {
+      const provider = configs[providerKey];
+      const modelKeys = Object.keys(provider.models);
+      const firstModel = modelKeys[0]; // Use first model as default
+
+      providers[providerKey] = {
+        api_key: '',
+        models: modelKeys,
+        selected_model: firstModel
+      };
+
+      // Add endpoint for Azure if it exists
+      if (providerKey === 'azure') {
+        providers[providerKey].endpoint = '';
+      }
+    });
+    return providers;
+  };
   const [aiSettings, setAiSettings] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)({
     default_provider: 'openai',
-    providers: {
-      openai: {
-        api_key: '',
-        models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
-        selected_model: 'gpt-4'
-      },
-      anthropic: {
-        api_key: '',
-        models: ['claude-3-opus-20240229', 'claude-3-sonnet-20240229', 'claude-3-haiku-20240307'],
-        selected_model: 'claude-3-sonnet-20240229'
-      },
-      google: {
-        api_key: '',
-        models: ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.0-pro'],
-        selected_model: 'gemini-1.5-pro'
-      },
-      azure: {
-        api_key: '',
-        endpoint: '',
-        models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
-        selected_model: 'gpt-4'
-      }
-    },
+    providers: getProviderConfigs(),
     features: {
       ai_search: {
         enabled: false,
@@ -19441,61 +19443,27 @@ const AiSettings = ({
     ...aiSettingsData
   });
 
-  // Provider configurations
-  let providerConfigs = {
-    openai: {
-      name: 'OpenAI',
-      models: [{
-        value: 'gpt-4',
-        label: 'GPT-4'
-      }, {
-        value: 'gpt-4o-mini',
-        label: 'GPT-4o Mini'
-      }, {
-        value: 'gpt-3.5-turbo',
-        label: 'GPT-3.5 Turbo'
-      }]
-    },
-    anthropic: {
-      name: 'Anthropic (Claude)',
-      models: [{
-        value: 'claude-3-opus-20240229',
-        label: 'Claude 3 Opus'
-      }, {
-        value: 'claude-3-sonnet-20240229',
-        label: 'Claude 3.5 Sonnet'
-      }, {
-        value: 'claude-3-haiku-20240307',
-        label: 'Claude 3 Haiku'
-      }]
-    },
-    google: {
-      name: 'Google Gemini',
-      models: [{
-        value: 'gemini-1.5-pro',
-        label: 'Gemini 1.5 Pro'
-      }, {
-        value: 'gemini-1.5-flash',
-        label: 'Gemini 1.5 Flash'
-      }, {
-        value: 'gemini-1.0-pro',
-        label: 'Gemini 1.0 Pro'
-      }]
-    },
-    azure: {
-      name: 'Azure OpenAI',
-      models: [{
-        value: 'gpt-4',
-        label: 'GPT-4'
-      }, {
-        value: 'gpt-4o-mini',
-        label: 'GPT-4o Mini'
-      }, {
-        value: 'gpt-3.5-turbo',
-        label: 'GPT-3.5 Turbo'
-      }]
-    }
+  // Get provider configurations from centralized configs
+  const getProviderConfigsForUI = () => {
+    const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
+    const providerConfigs = {};
+    Object.keys(configs).forEach(providerKey => {
+      const provider = configs[providerKey];
+      const models = [];
+      Object.keys(provider.models).forEach(modelKey => {
+        models.push({
+          value: modelKey,
+          label: provider.models[modelKey]
+        });
+      });
+      providerConfigs[providerKey] = {
+        name: provider.name,
+        models: models
+      };
+    });
+    return providerConfigs;
   };
+  let providerConfigs = getProviderConfigsForUI();
 
   /**
    * Filter: wedocs_ai_provider_configs
@@ -19628,7 +19596,7 @@ const AiSettings = ({
       className: "text-md font-medium text-gray-900"
     }, providerConfig.name)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalVStack, {
       spacing: 3
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, selectedProvider === 'azure' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "grid grid-cols-1 md:grid-cols-2 gap-4"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('API Key', 'wedocs'),
@@ -19637,13 +19605,21 @@ const AiSettings = ({
       onChange: value => handleProviderChange(selectedProvider, 'api_key', value),
       placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your API key', 'wedocs'),
       help: aiSettings.providers[selectedProvider]?.api_key ? `Current: ${maskApiKey(aiSettings.providers[selectedProvider].api_key)}` : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your API key for this provider', 'wedocs')
-    }), selectedProvider === 'azure' && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Azure Endpoint', 'wedocs'),
       value: aiSettings.providers[selectedProvider]?.endpoint || '',
       onChange: value => handleProviderChange(selectedProvider, 'endpoint', value),
       placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('https://your-resource.openai.azure.com/', 'wedocs'),
       help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Your Azure OpenAI endpoint URL', 'wedocs')
-    })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
+    })) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('API Key', 'wedocs'),
+      type: "password",
+      className: "w-full",
+      value: aiSettings.providers[selectedProvider]?.api_key || '',
+      onChange: value => handleProviderChange(selectedProvider, 'api_key', value),
+      placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your API key', 'wedocs'),
+      help: aiSettings.providers[selectedProvider]?.api_key ? `Current: ${maskApiKey(aiSettings.providers[selectedProvider].api_key)}` : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your API key for this provider', 'wedocs')
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Model', 'wedocs'),
       value: aiSettings.providers[selectedProvider]?.selected_model || providerConfig.models[0].value,
       options: providerConfig.models,
@@ -21415,29 +21391,28 @@ const DEFAULT_SETTINGS_STATE = {
     },
     ai: {
       default_provider: 'openai',
-      providers: {
-        openai: {
-          api_key: '',
-          models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
-          selected_model: 'gpt-4'
-        },
-        anthropic: {
-          api_key: '',
-          models: ['claude-3-opus-20240229', 'claude-3-sonnet-20240229', 'claude-3-haiku-20240307'],
-          selected_model: 'claude-3-sonnet-20240229'
-        },
-        google: {
-          api_key: '',
-          models: ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.0-pro'],
-          selected_model: 'gemini-1.5-pro'
-        },
-        azure: {
-          api_key: '',
-          endpoint: '',
-          models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
-          selected_model: 'gpt-4'
-        }
-      }
+      providers: (() => {
+        // Generate default providers from centralized configs
+        const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
+        const providers = {};
+        Object.keys(configs).forEach(providerKey => {
+          const provider = configs[providerKey];
+          const modelKeys = Object.keys(provider.models);
+          const firstModel = modelKeys[0]; // Use first model as default
+
+          providers[providerKey] = {
+            api_key: '',
+            models: modelKeys,
+            selected_model: firstModel
+          };
+
+          // Add endpoint for Azure if it exists
+          if (providerKey === 'azure') {
+            providers[providerKey].endpoint = '';
+          }
+        });
+        return providers;
+      })()
     }
   },
   loading: false,
