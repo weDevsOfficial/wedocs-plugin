@@ -33,7 +33,6 @@ class AiService {
          * @param {Object} providers.openai.models - Available models object (key: model_id, value: display_name)
          * @param {Object} providers.anthropic - Anthropic provider configuration
          * @param {Object} providers.google - Google Gemini provider configuration
-         * @param {Object} providers.azure - Azure OpenAI provider configuration
          *
          * @example
          * // Add a new model to OpenAI
@@ -100,10 +99,6 @@ class AiService {
                 selected_model: firstModel
             };
 
-            // Add endpoint for Azure if it exists
-            if (providerKey === 'azure') {
-                providers[providerKey].endpoint = '';
-            }
         });
 
         return {
@@ -126,10 +121,6 @@ class AiService {
                 throw new Error(__('API key is required', 'wedocs'));
             }
 
-            // For Azure, endpoint is required
-            if (provider === 'azure' && !endpoint) {
-                throw new Error(__('Azure endpoint is required', 'wedocs'));
-            }
 
             const testPayload = this.getTestPayload(provider);
             const response = await this.makeApiCall(provider, apiKey, endpoint, testPayload);
@@ -168,7 +159,7 @@ class AiService {
             }
 
             const selectedModel = model || providerConfig.selected_model;
-            const endpoint = provider === 'azure' ? providerConfig.endpoint : null;
+            const endpoint = null;
 
             // Prepare the request payload
             const payload = this.preparePayload(provider, selectedModel, prompt, options);
@@ -239,11 +230,6 @@ class AiService {
                     parts: [{ text: 'Hello' }]
                 }]
             },
-            azure: {
-                model: 'gpt-3.5-turbo',
-                messages: [{ role: 'user', content: 'Hello' }],
-                max_tokens: 10
-            }
         };
 
         return testPrompts[provider] || testPrompts.openai;
@@ -290,21 +276,6 @@ class AiService {
                     temperature: options.temperature || 0.7
                 }
             },
-            azure: {
-                model: model,
-                messages: [
-                    {
-                        role: 'system',
-                        content: options.systemPrompt || __('You are a helpful documentation assistant.', 'wedocs')
-                    },
-                    {
-                        role: 'user',
-                        content: prompt
-                    }
-                ],
-                max_tokens: options.maxTokens || 2000,
-                temperature: options.temperature || 0.7
-            }
         };
 
         const finalPayload = basePayloads[provider] || basePayloads.openai;
@@ -350,13 +321,6 @@ class AiService {
                 };
                 break;
 
-            case 'azure':
-                url = `${endpoint}/openai/deployments/${payload.model}/chat/completions?api-version=2023-12-01-preview`;
-                headers = {
-                    'api-key': apiKey,
-                    'Content-Type': 'application/json'
-                };
-                break;
 
             default:
                 throw new Error(__('Unsupported AI provider', 'wedocs'));
@@ -409,11 +373,6 @@ class AiService {
     parseResponse(provider, response) {
         switch (provider) {
             case 'openai':
-            case 'azure':
-                return {
-                    content: response.choices?.[0]?.message?.content || '',
-                    usage: response.usage || null
-                };
 
             case 'anthropic':
                 return {
@@ -462,9 +421,6 @@ class AiService {
                 errors.push(`${providerKey}: ${__('Invalid provider', 'wedocs')}`);
             }
 
-            if (providerKey === 'azure' && config.api_key && !config.endpoint) {
-                errors.push(`${providerKey}: ${__('Endpoint is required for Azure OpenAI', 'wedocs')}`);
-            }
         });
 
         return {

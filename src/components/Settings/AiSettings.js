@@ -45,10 +45,6 @@ const AiSettings = ({
                 selected_model: firstModel
             };
             
-            // Add endpoint for Azure if it exists
-            if (providerKey === 'azure') {
-                providers[providerKey].endpoint = '';
-            }
         });
 
         return providers;
@@ -137,7 +133,6 @@ const AiSettings = ({
      * @param {Array} providerConfigs.openai.models - Available models array
      * @param {Object} providerConfigs.anthropic - Anthropic configuration
      * @param {Object} providerConfigs.google - Google Gemini configuration
-     * @param {Object} providerConfigs.azure - Azure OpenAI configuration
      * 
      * @example
      * // Add a new model to OpenAI

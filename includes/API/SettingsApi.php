@@ -225,10 +225,6 @@ class SettingsApi extends \WP_REST_Controller {
                         $sanitized['providers'][ $provider ]['api_key'] = sanitize_text_field( $config['api_key'] );
                     }
                     
-                    // Sanitize Azure endpoint
-                    if ( $provider === 'azure' && isset( $config['endpoint'] ) ) {
-                        $sanitized['providers'][ $provider ]['endpoint'] = esc_url_raw( $config['endpoint'] );
-                    }
                     
                     // Sanitize selected model
                     if ( isset( $config['selected_model'] ) ) {

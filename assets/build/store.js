@@ -923,11 +923,6 @@ const DEFAULT_SETTINGS_STATE = {
             models: modelKeys,
             selected_model: firstModel
           };
-
-          // Add endpoint for Azure if it exists
-          if (providerKey === 'azure') {
-            providers[providerKey].endpoint = '';
-          }
         });
         return providers;
       })()
