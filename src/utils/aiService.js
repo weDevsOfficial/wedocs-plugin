@@ -160,11 +160,8 @@ class AiService {
                 feature = 'ai_doc_writer'
             } = options;
 
-            console.log('AI Service - generateContent called with:', { prompt: prompt.substring(0, 100) + '...', options });
-
             // Get provider and model configuration
             const providerConfig = aiSettings.providers[provider];
-            console.log('AI Service - Provider config:', providerConfig);
 
             if (!providerConfig || !providerConfig.api_key) {
                 throw new Error(__('AI provider not configured or API key missing', 'wedocs'));
@@ -172,10 +169,6 @@ class AiService {
 
             const selectedModel = model || providerConfig.selected_model;
             const endpoint = provider === 'azure' ? providerConfig.endpoint : null;
-
-            console.log('AI Service - Selected model:', selectedModel);
-            console.log('AI Service - Provider:', provider);
-            console.log('AI Service - Endpoint:', endpoint);
 
             // Prepare the request payload
             const payload = this.preparePayload(provider, selectedModel, prompt, options);
@@ -201,7 +194,6 @@ class AiService {
      */
     async listGoogleModels(apiKey) {
         try {
-            console.log('AI Service - Listing Google models...');
             const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
 
             const response = await fetch(url, {
@@ -221,10 +213,8 @@ class AiService {
             }
 
             const data = await response.json();
-            console.log('AI Service - Available Google models:', data);
             return data;
         } catch (error) {
-            console.error('AI Service - Failed to list Google models:', error);
             throw error;
         }
     }
@@ -263,8 +253,6 @@ class AiService {
      * Prepare payload for content generation
      */
     preparePayload(provider, model, prompt, options = {}) {
-        console.log('AI Service - preparePayload called with:', { provider, model, prompt: prompt.substring(0, 100) + '...', options });
-
         const basePayloads = {
             openai: {
                 model: model,
@@ -320,7 +308,6 @@ class AiService {
         };
 
         const finalPayload = basePayloads[provider] || basePayloads.openai;
-        console.log('AI Service - Final payload prepared:', finalPayload);
 
         return finalPayload;
     }
@@ -329,16 +316,14 @@ class AiService {
      * Make API call to the specified provider
      */
     async makeApiCall(provider, apiKey, endpoint, payload, model = null) {
-        console.log('AI Service - makeApiCall called with:', { provider, apiKey: apiKey ? '***' + apiKey.slice(-4) : 'none', endpoint, payload, model });
-
         const providerConfig = this.providers[provider];
         let url, headers;
 
         // Prepare URL and headers based on provider
         switch (provider) {
             case 'openai':
-                const openaiBaseUrl = providerConfig.endpoint || providerConfig.baseUrl || 'https://api.openai.com/v1';
-                url = `${openaiBaseUrl}/chat/completions`;
+                // Use the endpoint directly from centralized config (already includes /chat/completions)
+                url = providerConfig.endpoint || 'https://api.openai.com/v1/chat/completions';
                 headers = {
                     'Authorization': `Bearer ${apiKey}`,
                     'Content-Type': 'application/json'
@@ -346,8 +331,8 @@ class AiService {
                 break;
 
             case 'anthropic':
-                const anthropicBaseUrl = providerConfig.endpoint || providerConfig.baseUrl || 'https://api.anthropic.com/v1';
-                url = `${anthropicBaseUrl}/messages`;
+                // Use the endpoint directly from centralized config (already includes /messages)
+                url = providerConfig.endpoint || 'https://api.anthropic.com/v1/messages';
                 headers = {
                     'x-api-key': apiKey,
                     'Content-Type': 'application/json',
@@ -376,10 +361,6 @@ class AiService {
             default:
                 throw new Error(__('Unsupported AI provider', 'wedocs'));
         }
-        
-        console.log('AI Service - Request headers:', headers);
-        console.log('AI Service - Request payload:', payload);
-        console.log(payload);
 
         const response = await fetch(url, {
             method: 'POST',
@@ -393,7 +374,6 @@ class AiService {
 
             try {
                 const responseText = await response.text();
-                console.log('AI Service - Error response text:', responseText);
 
                 // Try to parse as JSON
                 if (responseText.trim().startsWith('{')) {
@@ -410,7 +390,6 @@ class AiService {
 
             // If it's a Google model not found error, list available models
             if (provider === 'google' && errorMessage.includes('is not found for API version')) {
-                console.log('AI Service - Model not found, listing available models...');
                 try {
                     await this.listGoogleModels(apiKey);
                 } catch (listError) {

@@ -33,7 +33,8 @@ const AiSettings = ({
     aiSettingsData,
     setSettings,
 }) => {
-    // Get centralized provider configs
+    // Get centralized provider configs from wedocs_get_ai_provider_configs() PHP function
+    // This ensures consistency across all AI features and settings
     const getProviderConfigs = () => {
         const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
         const providers = {};
@@ -59,34 +60,46 @@ const AiSettings = ({
         return providers;
     };
 
+    // Get default provider and model from centralized config
+    const getDefaultProviderAndModel = () => {
+        const providers = getProviderConfigs();
+        const providerKeys = Object.keys(providers);
+        const defaultProvider = providerKeys[0] || 'openai';
+        const defaultModel = providers[defaultProvider]?.selected_model || 'gpt-4o-mini';
+        
+        return { defaultProvider, defaultModel };
+    };
+
+    const { defaultProvider, defaultModel } = getDefaultProviderAndModel();
+
     const [aiSettings, setAiSettings] = useState({
-        default_provider: 'openai',
+        default_provider: defaultProvider,
         providers: getProviderConfigs(),
         features: {
             ai_search: {
                 enabled: false,
-                provider: 'openai',
-                model: 'gpt-4o-mini'
+                provider: defaultProvider,
+                model: defaultModel
             },
             ai_summaries: {
                 enabled: false,
-                provider: 'openai',
-                model: 'gpt-4o-mini'
+                provider: defaultProvider,
+                model: defaultModel
             },
             ai_qa: {
                 enabled: false,
-                provider: 'openai',
-                model: 'gpt-4o-mini'
+                provider: defaultProvider,
+                model: defaultModel
             },
             ai_recommendations: {
                 enabled: false,
-                provider: 'openai',
-                model: 'gpt-4o-mini'
+                provider: defaultProvider,
+                model: defaultModel
             },
             ai_acknowledgements: {
                 enabled: false,
-                provider: 'openai',
-                model: 'gpt-4o-mini'
+                provider: defaultProvider,
+                model: defaultModel
             }
         },
         ...aiSettingsData
@@ -203,7 +216,14 @@ const AiSettings = ({
     const maskApiKey = (key) => {
         if (!key) return '';
         if (key.length <= 8) return key;
-        return key.substring(0, 4) + '•'.repeat(key.length - 8) + key.substring(key.length - 4);
+        
+        // Show first 4 and last 4 characters, fill middle with asterisks
+        // Maximum 15 characters total: 4 + 17 asterisks + 4 = 25
+        const firstPart = key.substring(0, 4);
+        const lastPart = key.substring(key.length - 4);
+        const middleAsterisks = '*'.repeat(17); // Always 7 asterisks for consistent length
+        
+        return firstPart + middleAsterisks + lastPart;
     };
 
 
@@ -235,12 +255,10 @@ const AiSettings = ({
                                         <SelectControl
                                             label={__('Default AI Provider', 'wedocs')}
                                             value={aiSettings.default_provider}
-                                            options={[
-                                                { value: 'openai', label: 'OpenAI' },
-                                                { value: 'anthropic', label: 'Anthropic (Claude)' },
-                                                { value: 'google', label: 'Google Gemini' },
-                                                { value: 'azure', label: 'Azure OpenAI' }
-                                            ]}
+                                            options={Object.keys(providerConfigs).map(providerKey => ({
+                                                value: providerKey,
+                                                label: providerConfigs[providerKey].name
+                                            }))}
                                             onChange={handleDefaultProviderChange}
                                             help={__('This provider will be used as the default for all AI features unless overridden.', 'wedocs')}
                                         />
@@ -273,42 +291,18 @@ const AiSettings = ({
                                             </div>
                                             
                                             <VStack spacing={3}>
-                                                {selectedProvider === 'azure' ? (
-                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                        <TextControl
-                                                            label={__('API Key', 'wedocs')}
-                                                            type="password"
-                                                            value={aiSettings.providers[selectedProvider]?.api_key || ''}
-                                                            onChange={(value) => handleProviderChange(selectedProvider, 'api_key', value)}
-                                                            placeholder={__('Enter your API key', 'wedocs')}
-                                                            help={aiSettings.providers[selectedProvider]?.api_key ? 
-                                                                `Current: ${maskApiKey(aiSettings.providers[selectedProvider].api_key)}` : 
-                                                                __('Enter your API key for this provider', 'wedocs')
-                                                            }
-                                                        />
-                                                        
-                                                        <TextControl
-                                                            label={__('Azure Endpoint', 'wedocs')}
-                                                            value={aiSettings.providers[selectedProvider]?.endpoint || ''}
-                                                            onChange={(value) => handleProviderChange(selectedProvider, 'endpoint', value)}
-                                                            placeholder={__('https://your-resource.openai.azure.com/', 'wedocs')}
-                                                            help={__('Your Azure OpenAI endpoint URL', 'wedocs')}
-                                                        />
-                                                    </div>
-                                                ) : (
-                                                    <TextControl
-                                                        label={__('API Key', 'wedocs')}
-                                                        type="password"
-                                                        className="w-full"
-                                                        value={aiSettings.providers[selectedProvider]?.api_key || ''}
-                                                        onChange={(value) => handleProviderChange(selectedProvider, 'api_key', value)}
-                                                        placeholder={__('Enter your API key', 'wedocs')}
-                                                        help={aiSettings.providers[selectedProvider]?.api_key ? 
-                                                            `Current: ${maskApiKey(aiSettings.providers[selectedProvider].api_key)}` : 
-                                                            __('Enter your API key for this provider', 'wedocs')
-                                                        }
-                                                    />
-                                                )}
+                                                <TextControl
+                                                    label={__('API Key', 'wedocs')}
+                                                    type="password"
+                                                    style={{ width: '100%' }}
+                                                    value={aiSettings.providers[selectedProvider]?.api_key || ''}
+                                                    onChange={(value) => handleProviderChange(selectedProvider, 'api_key', value)}
+                                                    placeholder={__('Enter your API key', 'wedocs')}
+                                                    help={aiSettings.providers[selectedProvider]?.api_key ? 
+                                                        `Current: ${maskApiKey(aiSettings.providers[selectedProvider].api_key)}` : 
+                                                        __('Enter your API key for this provider', 'wedocs')
+                                                    }
+                                                />
                                                 
                                                 <SelectControl
                                                     label={__('Model', 'wedocs')}

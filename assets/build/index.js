@@ -19386,7 +19386,8 @@ const AiSettings = ({
   aiSettingsData,
   setSettings
 }) => {
-  // Get centralized provider configs
+  // Get centralized provider configs from wedocs_get_ai_provider_configs() PHP function
+  // This ensures consistency across all AI features and settings
   const getProviderConfigs = () => {
     const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
     const providers = {};
@@ -19410,34 +19411,50 @@ const AiSettings = ({
     });
     return providers;
   };
+
+  // Get default provider and model from centralized config
+  const getDefaultProviderAndModel = () => {
+    const providers = getProviderConfigs();
+    const providerKeys = Object.keys(providers);
+    const defaultProvider = providerKeys[0] || 'openai';
+    const defaultModel = providers[defaultProvider]?.selected_model || 'gpt-4o-mini';
+    return {
+      defaultProvider,
+      defaultModel
+    };
+  };
+  const {
+    defaultProvider,
+    defaultModel
+  } = getDefaultProviderAndModel();
   const [aiSettings, setAiSettings] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)({
-    default_provider: 'openai',
+    default_provider: defaultProvider,
     providers: getProviderConfigs(),
     features: {
       ai_search: {
         enabled: false,
-        provider: 'openai',
-        model: 'gpt-4o-mini'
+        provider: defaultProvider,
+        model: defaultModel
       },
       ai_summaries: {
         enabled: false,
-        provider: 'openai',
-        model: 'gpt-4o-mini'
+        provider: defaultProvider,
+        model: defaultModel
       },
       ai_qa: {
         enabled: false,
-        provider: 'openai',
-        model: 'gpt-4o-mini'
+        provider: defaultProvider,
+        model: defaultModel
       },
       ai_recommendations: {
         enabled: false,
-        provider: 'openai',
-        model: 'gpt-4o-mini'
+        provider: defaultProvider,
+        model: defaultModel
       },
       ai_acknowledgements: {
         enabled: false,
-        provider: 'openai',
-        model: 'gpt-4o-mini'
+        provider: defaultProvider,
+        model: defaultModel
       }
     },
     ...aiSettingsData
@@ -19541,7 +19558,14 @@ const AiSettings = ({
   const maskApiKey = key => {
     if (!key) return '';
     if (key.length <= 8) return key;
-    return key.substring(0, 4) + '•'.repeat(key.length - 8) + key.substring(key.length - 4);
+
+    // Show first 4 and last 4 characters, fill middle with asterisks
+    // Maximum 15 characters total: 4 + 17 asterisks + 4 = 25
+    const firstPart = key.substring(0, 4);
+    const lastPart = key.substring(key.length - 4);
+    const middleAsterisks = '*'.repeat(17); // Always 7 asterisks for consistent length
+
+    return firstPart + middleAsterisks + lastPart;
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "shadow sm:rounded-md"
@@ -19566,19 +19590,10 @@ const AiSettings = ({
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Default AI Provider', 'wedocs'),
     value: aiSettings.default_provider,
-    options: [{
-      value: 'openai',
-      label: 'OpenAI'
-    }, {
-      value: 'anthropic',
-      label: 'Anthropic (Claude)'
-    }, {
-      value: 'google',
-      label: 'Google Gemini'
-    }, {
-      value: 'azure',
-      label: 'Azure OpenAI'
-    }],
+    options: Object.keys(providerConfigs).map(providerKey => ({
+      value: providerKey,
+      label: providerConfigs[providerKey].name
+    })),
     onChange: handleDefaultProviderChange,
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('This provider will be used as the default for all AI features unless overridden.', 'wedocs')
   }))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Card, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
@@ -19596,25 +19611,12 @@ const AiSettings = ({
       className: "text-md font-medium text-gray-900"
     }, providerConfig.name)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalVStack, {
       spacing: 3
-    }, selectedProvider === 'azure' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      className: "grid grid-cols-1 md:grid-cols-2 gap-4"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('API Key', 'wedocs'),
       type: "password",
-      value: aiSettings.providers[selectedProvider]?.api_key || '',
-      onChange: value => handleProviderChange(selectedProvider, 'api_key', value),
-      placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your API key', 'wedocs'),
-      help: aiSettings.providers[selectedProvider]?.api_key ? `Current: ${maskApiKey(aiSettings.providers[selectedProvider].api_key)}` : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your API key for this provider', 'wedocs')
-    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Azure Endpoint', 'wedocs'),
-      value: aiSettings.providers[selectedProvider]?.endpoint || '',
-      onChange: value => handleProviderChange(selectedProvider, 'endpoint', value),
-      placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('https://your-resource.openai.azure.com/', 'wedocs'),
-      help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Your Azure OpenAI endpoint URL', 'wedocs')
-    })) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('API Key', 'wedocs'),
-      type: "password",
-      className: "w-full",
+      style: {
+        width: '100%'
+      },
       value: aiSettings.providers[selectedProvider]?.api_key || '',
       onChange: value => handleProviderChange(selectedProvider, 'api_key', value),
       placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your API key', 'wedocs'),

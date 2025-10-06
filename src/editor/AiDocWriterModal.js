@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useMemo } from '@wordpress/element';
 import {
     Modal,
     Button,
@@ -39,15 +39,37 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
     const { insertBlocks, replaceBlocks, insertDefaultBlock } = useDispatch(blockEditorStore);
     const { editPost } = useDispatch(editorStore);
 
-    // Get current post data and editor state
-    const { currentPost, selectedBlockId, blocks } = useSelect((select) => {
+    // Get current post data and editor state with enhanced cursor detection
+    const editorData = useSelect((select) => {
         const { getCurrentPost, getEditedPostContent } = select('core/editor');
-        const { getSelectedBlockClientId, getBlocks } = select('core/block-editor');
-        const post = getCurrentPost();
-        const content = getEditedPostContent();
+        const { 
+            getSelectedBlockClientId, 
+            getBlocks, 
+            getSelectedBlock,
+            getBlockInsertionPoint,
+            getBlockOrder
+        } = select('core/block-editor');
         
-        console.log('Post from getCurrentPost:', post);
-        console.log('Content from getEditedPostContent:', content);
+        return {
+            post: getCurrentPost(),
+            content: getEditedPostContent(),
+            selectedBlockClientId: getSelectedBlockClientId(),
+            blocks: getBlocks(),
+            selectedBlock: getSelectedBlock(),
+            insertionPoint: getBlockInsertionPoint(),
+            blockOrder: getBlockOrder()
+        };
+    }, []);
+
+    // Create stable references using useMemo
+    const { currentPost, selectedBlockId, blocks, cursorPosition } = useMemo(() => {
+        const post = editorData.post;
+        const content = editorData.content;
+        const selectedBlockClientId = editorData.selectedBlockClientId;
+        const blocks = editorData.blocks || [];
+        const selectedBlock = editorData.selectedBlock;
+        const insertionPoint = editorData.insertionPoint;
+        const blockOrder = editorData.blockOrder || [];
         
         return {
             currentPost: {
@@ -56,10 +78,17 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
                 contentRaw: content || '',
                 contentRendered: content || ''
             },
-            selectedBlockId: getSelectedBlockClientId() || null,
-            blocks: getBlocks() || []
+            selectedBlockId: selectedBlockClientId || null,
+            blocks: blocks,
+            cursorPosition: {
+                selectedBlock: selectedBlock,
+                insertionPoint: insertionPoint,
+                blockOrder: blockOrder,
+                hasSelection: !!selectedBlockClientId,
+                selectedBlockIndex: selectedBlock ? blockOrder.indexOf(selectedBlock.clientId) : -1
+            }
         };
-    }, []);
+    }, [editorData]);
 
     // Pre-fill title with current post title
     useEffect(() => {
@@ -144,7 +173,6 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
             errors.push(__('Generated content should contain at least paragraphs or headings.', 'wedocs'));
         }
 
-        console.log(content);
 
         // Check for potentially dangerous HTML (basic XSS prevention)
         const dangerousPatterns = [
@@ -340,28 +368,23 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
 
             if (overwriteContent) {
                 // Overwrite Mode: Replace entire post content
-                // Get all block client IDs safely
                 const blockIds = blocks.map(block => block.clientId).filter(id => id);
                 
                 if (blockIds.length > 0) {
-                    // Replace all existing blocks with new content blocks
                     replaceBlocks(blockIds, contentBlocks);
                 } else {
-                    // If no blocks exist, just insert the new blocks
                     insertBlocks(contentBlocks);
                 }
             } else {
                 // Insert Mode: Insert at current cursor position
-                if (selectedBlockId) {
-                    // Insert after the selected block
-                    insertBlocks(contentBlocks, selectedBlockId, 'after');
-                } else {
-                    // No block selected, insert at the end
-                    insertBlocks(contentBlocks);
-                }
+                // Use reliable method that appends to end of document
+                const currentBlocks = wp.data.select('core/block-editor').getBlocks();
+                const allBlocks = [...currentBlocks, ...contentBlocks];
+                const allBlockIds = currentBlocks.map(block => block.clientId);
+                wp.data.dispatch('core/block-editor').replaceBlocks(allBlockIds, allBlocks);
             }
             
-            // Close the modal
+            // Close modal
             onClose();
             
         } catch (error) {
@@ -427,7 +450,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
                                     label={__('Overwrite your existing Doc', 'wedocs')}
                                     checked={overwriteContent}
                                     onChange={setOverwriteContent}
-                                    help={__('When enabled, AI content will replace the entire document. When disabled, content will be inserted at the current cursor position.', 'wedocs')}
+                                    help={__('When enabled, AI content will replace the entire document. When disabled, content will be inserted at the end of the current contents.', 'wedocs')}
                                     __nextHasNoMarginBottom
                                 />
                             </VStack>

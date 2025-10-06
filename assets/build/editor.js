@@ -33,6 +33,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+// Custom AI icon SVG - Neural network/brain inspired
+const AiIcon = () => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  width: "22",
+  height: "18",
+  viewBox: "0 0 22 18",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "M20.3574 0.120361C21.0356 0.120379 21.5839 0.668752 21.584 1.34692C21.584 1.84677 21.2856 2.27474 20.8574 2.46606V6.36353C21.5099 6.66256 21.9503 7.20505 21.9961 8.0481C21.9985 8.09871 22 8.67906 22 8.72974C22 8.77621 21.999 9.60227 21.999 9.65161C21.931 10.9279 20.9632 11.5184 19.7197 11.6145C18.9403 15.5822 15.3332 17.8801 10.999 17.8801C6.66363 17.8801 3.05521 15.5812 2.27637 11.6116C1.03483 11.4955 0.0707824 10.8026 0.00390625 9.52954C0.00145752 9.48179 0 8.77749 0 8.72974C1.39541e-06 8.68032 0.00145892 8.21911 0.00390625 8.17017C0.0497323 7.32686 0.489827 6.73982 1.14258 6.40552V2.46606C0.715048 2.27453 0.416016 1.84641 0.416016 1.34692C0.416151 0.669965 0.966565 0.120361 1.64355 0.120361C2.32161 0.120549 2.86998 0.668858 2.87012 1.34692C2.87012 1.84713 2.57124 2.27592 2.14258 2.46704V6.10571C2.20844 6.09723 2.27527 6.0913 2.34277 6.08618C3.24165 2.30043 6.77492 0.120405 11 0.120361C15.2243 0.120361 18.7565 2.29975 19.6562 6.08423C19.7241 6.08853 19.7912 6.0936 19.8574 6.10083V2.46606C19.4296 2.27466 19.1309 1.84662 19.1309 1.34692C19.131 0.669966 19.6804 0.120361 20.3574 0.120361ZM11.001 2.0686C7.3014 2.0686 4.27893 4.20979 4.0791 7.85962C4.07241 7.98673 4.06836 8.8722 4.06836 9.00122C4.06836 9.12651 4.07144 10.0059 4.07812 10.1282C4.27139 13.7836 7.29669 15.9319 11 15.9319C14.7032 15.9318 17.7286 13.7835 17.9209 10.1282C17.9285 10.0059 17.9326 9.12651 17.9326 9.00122C17.9326 8.8722 17.9286 7.98673 17.9219 7.85962C17.722 4.20989 14.7004 2.06871 11.001 2.0686ZM7.89746 6.43677C8.61856 6.43677 9.20299 7.02136 9.20312 7.74243C9.20312 8.46362 8.61865 9.0481 7.89746 9.0481C7.17631 9.04806 6.5918 8.4636 6.5918 7.74243C6.59193 7.02138 7.17639 6.43681 7.89746 6.43677ZM14.0977 6.43677C14.8195 6.43692 15.4032 7.0206 15.4033 7.74243C15.4033 8.46437 14.8196 9.04794 14.0977 9.0481C13.3756 9.0481 12.792 8.46446 12.792 7.74243C12.7921 7.02051 13.3757 6.43677 14.0977 6.43677Z",
+  fill: "currentColor"
+}));
 const AiDocWriter = () => {
   const [isModalOpen, setIsModalOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
 
@@ -53,10 +65,33 @@ const AiDocWriter = () => {
   if (!isViewable || postTypeName !== 'docs') {
     return null;
   }
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_editor__WEBPACK_IMPORTED_MODULE_4__.PluginSidebar, {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("style", null, `
+                    /* AI Doc Writer icon active state */
+                    .components-button[aria-controls="wedocs-ai-doc-writer:wedocs-ai-doc-writer"] {
+                        background-color: #4338CA !important;
+                        color: white !important;
+                        border-radius: 4px !important;
+                        transition: all 0.2s ease !important;
+                    }
+                    
+                    .components-button[aria-controls="wedocs-ai-doc-writer:wedocs-ai-doc-writer"]:hover {
+                        background-color: #3730A3 !important;
+                        transform: translateY(-1px) !important;
+                        box-shadow: 0 4px 8px rgba(67, 56, 202, 0.3) !important;
+                    }
+                    
+                    .components-button[aria-controls="wedocs-ai-doc-writer:wedocs-ai-doc-writer"]:focus {
+                        box-shadow: 0 0 0 2px rgba(67, 56, 202, 0.5) !important;
+                    }
+                    
+                    /* Icon color when active */
+                    .components-button[aria-controls="wedocs-ai-doc-writer:wedocs-ai-doc-writer"] svg path {
+                        fill: white !important;
+                    }
+                `), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_editor__WEBPACK_IMPORTED_MODULE_4__.PluginSidebar, {
     name: "wedocs-ai-doc-writer",
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('AI Doc Writer', 'wedocs'),
-    icon: "edit"
+    icon: AiIcon
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     style: {
       padding: '16px'
@@ -74,7 +109,9 @@ const AiDocWriter = () => {
       width: '100%',
       height: '40px',
       fontSize: '14px',
-      fontWeight: '500'
+      fontWeight: '500',
+      backgroundColor: '#4338CA',
+      borderColor: '#4338CA'
     }
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Open AI Doc Writer', 'wedocs')))), isModalOpen && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_AiDocWriterModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
     isOpen: isModalOpen,
@@ -85,7 +122,7 @@ const AiDocWriter = () => {
 // Register the plugin
 (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_3__.registerPlugin)('wedocs-ai-doc-writer', {
   render: AiDocWriter,
-  icon: 'edit'
+  icon: AiIcon // Custom AI icon
 });
 
 /***/ }),
@@ -151,24 +188,44 @@ const AiDocWriterModal = ({
     editPost
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useDispatch)(_wordpress_editor__WEBPACK_IMPORTED_MODULE_5__.store);
 
-  // Get current post data and editor state
-  const {
-    currentPost,
-    selectedBlockId,
-    blocks
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
+  // Get current post data and editor state with enhanced cursor detection
+  const editorData = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
     const {
       getCurrentPost,
       getEditedPostContent
     } = select('core/editor');
     const {
       getSelectedBlockClientId,
-      getBlocks
+      getBlocks,
+      getSelectedBlock,
+      getBlockInsertionPoint,
+      getBlockOrder
     } = select('core/block-editor');
-    const post = getCurrentPost();
-    const content = getEditedPostContent();
-    console.log('Post from getCurrentPost:', post);
-    console.log('Content from getEditedPostContent:', content);
+    return {
+      post: getCurrentPost(),
+      content: getEditedPostContent(),
+      selectedBlockClientId: getSelectedBlockClientId(),
+      blocks: getBlocks(),
+      selectedBlock: getSelectedBlock(),
+      insertionPoint: getBlockInsertionPoint(),
+      blockOrder: getBlockOrder()
+    };
+  }, []);
+
+  // Create stable references using useMemo
+  const {
+    currentPost,
+    selectedBlockId,
+    blocks,
+    cursorPosition
+  } = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useMemo)(() => {
+    const post = editorData.post;
+    const content = editorData.content;
+    const selectedBlockClientId = editorData.selectedBlockClientId;
+    const blocks = editorData.blocks || [];
+    const selectedBlock = editorData.selectedBlock;
+    const insertionPoint = editorData.insertionPoint;
+    const blockOrder = editorData.blockOrder || [];
     return {
       currentPost: {
         id: post?.id || null,
@@ -176,10 +233,17 @@ const AiDocWriterModal = ({
         contentRaw: content || '',
         contentRendered: content || ''
       },
-      selectedBlockId: getSelectedBlockClientId() || null,
-      blocks: getBlocks() || []
+      selectedBlockId: selectedBlockClientId || null,
+      blocks: blocks,
+      cursorPosition: {
+        selectedBlock: selectedBlock,
+        insertionPoint: insertionPoint,
+        blockOrder: blockOrder,
+        hasSelection: !!selectedBlockClientId,
+        selectedBlockIndex: selectedBlock ? blockOrder.indexOf(selectedBlock.clientId) : -1
+      }
     };
-  }, []);
+  }, [editorData]);
 
   // Pre-fill title with current post title
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
@@ -254,7 +318,6 @@ const AiDocWriterModal = ({
     if (!hasParagraphs && !hasHeadings) {
       errors.push((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Generated content should contain at least paragraphs or headings.', 'wedocs'));
     }
-    console.log(content);
 
     // Check for potentially dangerous HTML (basic XSS prevention)
     const dangerousPatterns = [/<script[^>]*>.*?<\/script>/gi, /<iframe[^>]*>.*?<\/iframe>/gi, /javascript:/gi, /on\w+\s*=/gi];
@@ -419,27 +482,22 @@ const AiDocWriterModal = ({
       const contentBlocks = createContentBlocks(generatedContent);
       if (overwriteContent) {
         // Overwrite Mode: Replace entire post content
-        // Get all block client IDs safely
         const blockIds = blocks.map(block => block.clientId).filter(id => id);
         if (blockIds.length > 0) {
-          // Replace all existing blocks with new content blocks
           replaceBlocks(blockIds, contentBlocks);
         } else {
-          // If no blocks exist, just insert the new blocks
           insertBlocks(contentBlocks);
         }
       } else {
         // Insert Mode: Insert at current cursor position
-        if (selectedBlockId) {
-          // Insert after the selected block
-          insertBlocks(contentBlocks, selectedBlockId, 'after');
-        } else {
-          // No block selected, insert at the end
-          insertBlocks(contentBlocks);
-        }
+        // Use reliable method that appends to end of document
+        const currentBlocks = wp.data.select('core/block-editor').getBlocks();
+        const allBlocks = [...currentBlocks, ...contentBlocks];
+        const allBlockIds = currentBlocks.map(block => block.clientId);
+        wp.data.dispatch('core/block-editor').replaceBlocks(allBlockIds, allBlocks);
       }
 
-      // Close the modal
+      // Close modal
       onClose();
     } catch (error) {
       setError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to insert content. Please try again.', 'wedocs'));
@@ -492,7 +550,7 @@ const AiDocWriterModal = ({
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Overwrite your existing Doc', 'wedocs'),
     checked: overwriteContent,
     onChange: setOverwriteContent,
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('When enabled, AI content will replace the entire document. When disabled, content will be inserted at the current cursor position.', 'wedocs'),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('When enabled, AI content will replace the entire document. When disabled, content will be inserted at the end of the current contents.', 'wedocs'),
     __nextHasNoMarginBottom: true
   })))), error && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Notice, {
     status: "error",
@@ -746,22 +804,14 @@ class AiService {
         model = null,
         feature = 'ai_doc_writer'
       } = options;
-      console.log('AI Service - generateContent called with:', {
-        prompt: prompt.substring(0, 100) + '...',
-        options
-      });
 
       // Get provider and model configuration
       const providerConfig = aiSettings.providers[provider];
-      console.log('AI Service - Provider config:', providerConfig);
       if (!providerConfig || !providerConfig.api_key) {
         throw new Error((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('AI provider not configured or API key missing', 'wedocs'));
       }
       const selectedModel = model || providerConfig.selected_model;
       const endpoint = provider === 'azure' ? providerConfig.endpoint : null;
-      console.log('AI Service - Selected model:', selectedModel);
-      console.log('AI Service - Provider:', provider);
-      console.log('AI Service - Endpoint:', endpoint);
 
       // Prepare the request payload
       const payload = this.preparePayload(provider, selectedModel, prompt, options);
@@ -780,7 +830,6 @@ class AiService {
    */
   async listGoogleModels(apiKey) {
     try {
-      console.log('AI Service - Listing Google models...');
       const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
       const response = await fetch(url, {
         method: 'GET',
@@ -793,10 +842,8 @@ class AiService {
         throw new Error(errorData.error?.message || errorData.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Failed to list Google models', 'wedocs'));
       }
       const data = await response.json();
-      console.log('AI Service - Available Google models:', data);
       return data;
     } catch (error) {
-      console.error('AI Service - Failed to list Google models:', error);
       throw error;
     }
   }
@@ -845,12 +892,6 @@ class AiService {
    * Prepare payload for content generation
    */
   preparePayload(provider, model, prompt, options = {}) {
-    console.log('AI Service - preparePayload called with:', {
-      provider,
-      model,
-      prompt: prompt.substring(0, 100) + '...',
-      options
-    });
     const basePayloads = {
       openai: {
         model: model,
@@ -897,7 +938,6 @@ class AiService {
       }
     };
     const finalPayload = basePayloads[provider] || basePayloads.openai;
-    console.log('AI Service - Final payload prepared:', finalPayload);
     return finalPayload;
   }
 
@@ -905,29 +945,22 @@ class AiService {
    * Make API call to the specified provider
    */
   async makeApiCall(provider, apiKey, endpoint, payload, model = null) {
-    console.log('AI Service - makeApiCall called with:', {
-      provider,
-      apiKey: apiKey ? '***' + apiKey.slice(-4) : 'none',
-      endpoint,
-      payload,
-      model
-    });
     const providerConfig = this.providers[provider];
     let url, headers;
 
     // Prepare URL and headers based on provider
     switch (provider) {
       case 'openai':
-        const openaiBaseUrl = providerConfig.endpoint || providerConfig.baseUrl || 'https://api.openai.com/v1';
-        url = `${openaiBaseUrl}/chat/completions`;
+        // Use the endpoint directly from centralized config (already includes /chat/completions)
+        url = providerConfig.endpoint || 'https://api.openai.com/v1/chat/completions';
         headers = {
           'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json'
         };
         break;
       case 'anthropic':
-        const anthropicBaseUrl = providerConfig.endpoint || providerConfig.baseUrl || 'https://api.anthropic.com/v1';
-        url = `${anthropicBaseUrl}/messages`;
+        // Use the endpoint directly from centralized config (already includes /messages)
+        url = providerConfig.endpoint || 'https://api.anthropic.com/v1/messages';
         headers = {
           'x-api-key': apiKey,
           'Content-Type': 'application/json',
@@ -953,9 +986,6 @@ class AiService {
       default:
         throw new Error((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Unsupported AI provider', 'wedocs'));
     }
-    console.log('AI Service - Request headers:', headers);
-    console.log('AI Service - Request payload:', payload);
-    console.log(payload);
     const response = await fetch(url, {
       method: 'POST',
       headers: headers,
@@ -966,7 +996,6 @@ class AiService {
       let errorMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('API request failed', 'wedocs');
       try {
         const responseText = await response.text();
-        console.log('AI Service - Error response text:', responseText);
 
         // Try to parse as JSON
         if (responseText.trim().startsWith('{')) {
@@ -983,7 +1012,6 @@ class AiService {
 
       // If it's a Google model not found error, list available models
       if (provider === 'google' && errorMessage.includes('is not found for API version')) {
-        console.log('AI Service - Model not found, listing available models...');
         try {
           await this.listGoogleModels(apiKey);
         } catch (listError) {
