@@ -19339,6 +19339,323 @@ const SelectBox = ({
 
 /***/ }),
 
+/***/ "./src/components/Settings/AiSettings.js":
+/*!***********************************************!*\
+  !*** ./src/components/Settings/AiSettings.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+
+/**
+ * AI Settings Component
+ * 
+ * Centralized AI Control Settings panel for weDocs that allows admins to configure
+ * and manage API integrations with multiple AI providers.
+ * 
+ * Available WordPress Filters:
+ * 
+ * @filter wedocs_ai_provider_configs
+ * Allows customization of AI provider configurations including available models.
+ * Used in the settings UI to display provider options and model selections.
+ * 
+ * @filter wedocs_ai_service_providers  
+ * Allows customization of AI service provider configurations for the AI service utility.
+ * Used for API calls and provider management in the backend.
+ * 
+ * @since 2.0.0
+ */
+
+
+
+
+const AiSettings = ({
+  settingsData,
+  aiSettingsData,
+  setSettings
+}) => {
+  const [aiSettings, setAiSettings] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)({
+    default_provider: 'openai',
+    providers: {
+      openai: {
+        api_key: '',
+        models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
+        selected_model: 'gpt-4'
+      },
+      anthropic: {
+        api_key: '',
+        models: ['claude-3-opus-20240229', 'claude-3-sonnet-20240229', 'claude-3-haiku-20240307'],
+        selected_model: 'claude-3-sonnet-20240229'
+      },
+      google: {
+        api_key: '',
+        models: ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.0-pro'],
+        selected_model: 'gemini-1.5-pro'
+      },
+      azure: {
+        api_key: '',
+        endpoint: '',
+        models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
+        selected_model: 'gpt-4'
+      }
+    },
+    features: {
+      ai_search: {
+        enabled: false,
+        provider: 'openai',
+        model: 'gpt-4o-mini'
+      },
+      ai_summaries: {
+        enabled: false,
+        provider: 'openai',
+        model: 'gpt-4o-mini'
+      },
+      ai_qa: {
+        enabled: false,
+        provider: 'openai',
+        model: 'gpt-4o-mini'
+      },
+      ai_recommendations: {
+        enabled: false,
+        provider: 'openai',
+        model: 'gpt-4o-mini'
+      },
+      ai_acknowledgements: {
+        enabled: false,
+        provider: 'openai',
+        model: 'gpt-4o-mini'
+      }
+    },
+    ...aiSettingsData
+  });
+
+  // Provider configurations
+  let providerConfigs = {
+    openai: {
+      name: 'OpenAI',
+      models: [{
+        value: 'gpt-4',
+        label: 'GPT-4'
+      }, {
+        value: 'gpt-4o-mini',
+        label: 'GPT-4o Mini'
+      }, {
+        value: 'gpt-3.5-turbo',
+        label: 'GPT-3.5 Turbo'
+      }]
+    },
+    anthropic: {
+      name: 'Anthropic (Claude)',
+      models: [{
+        value: 'claude-3-opus-20240229',
+        label: 'Claude 3 Opus'
+      }, {
+        value: 'claude-3-sonnet-20240229',
+        label: 'Claude 3.5 Sonnet'
+      }, {
+        value: 'claude-3-haiku-20240307',
+        label: 'Claude 3 Haiku'
+      }]
+    },
+    google: {
+      name: 'Google Gemini',
+      models: [{
+        value: 'gemini-1.5-pro',
+        label: 'Gemini 1.5 Pro'
+      }, {
+        value: 'gemini-1.5-flash',
+        label: 'Gemini 1.5 Flash'
+      }, {
+        value: 'gemini-1.0-pro',
+        label: 'Gemini 1.0 Pro'
+      }]
+    },
+    azure: {
+      name: 'Azure OpenAI',
+      models: [{
+        value: 'gpt-4',
+        label: 'GPT-4'
+      }, {
+        value: 'gpt-4o-mini',
+        label: 'GPT-4o Mini'
+      }, {
+        value: 'gpt-3.5-turbo',
+        label: 'GPT-3.5 Turbo'
+      }]
+    }
+  };
+
+  /**
+   * Filter: wedocs_ai_provider_configs
+   * 
+   * Allows customization of AI provider configurations including available models.
+   * 
+   * @param {Object} providerConfigs - The provider configurations object
+   * @param {Object} providerConfigs.openai - OpenAI configuration
+   * @param {string} providerConfigs.openai.name - Provider display name
+   * @param {Array} providerConfigs.openai.models - Available models array
+   * @param {Object} providerConfigs.anthropic - Anthropic configuration
+   * @param {Object} providerConfigs.google - Google Gemini configuration
+   * @param {Object} providerConfigs.azure - Azure OpenAI configuration
+   * 
+   * @example
+   * // Add a new model to OpenAI
+   * wp.hooks.addFilter('wedocs_ai_provider_configs', 'my-plugin', function(configs) {
+   *     configs.openai.models.push({
+   *         value: 'gpt-4-turbo',
+   *         label: 'GPT-4 Turbo'
+   *     });
+   *     return configs;
+   * });
+   * 
+   * @example
+   * // Add a completely new provider
+   * wp.hooks.addFilter('wedocs_ai_provider_configs', 'my-plugin', function(configs) {
+   *     configs.custom_provider = {
+   *         name: 'Custom AI Provider',
+   *         models: [
+   *             { value: 'custom-model-1', label: 'Custom Model 1' },
+   *             { value: 'custom-model-2', label: 'Custom Model 2' }
+   *         ]
+   *     };
+   *     return configs;
+   * });
+   * 
+   * @since 2.0.0
+   */
+  providerConfigs = wp.hooks.applyFilters('wedocs_ai_provider_configs', providerConfigs);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    setAiSettings({
+      ...aiSettings,
+      ...aiSettingsData
+    });
+  }, [aiSettingsData]);
+  const handleProviderChange = (providerKey, field, value) => {
+    const updatedSettings = {
+      ...aiSettings,
+      providers: {
+        ...aiSettings.providers,
+        [providerKey]: {
+          ...aiSettings.providers[providerKey],
+          [field]: value
+        }
+      }
+    };
+    setAiSettings(updatedSettings);
+    setSettings({
+      ...settingsData,
+      ai: updatedSettings
+    });
+  };
+  const handleDefaultProviderChange = value => {
+    const updatedSettings = {
+      ...aiSettings,
+      default_provider: value
+    };
+    setAiSettings(updatedSettings);
+    setSettings({
+      ...settingsData,
+      ai: updatedSettings
+    });
+  };
+  const maskApiKey = key => {
+    if (!key) return '';
+    if (key.length <= 8) return key;
+    return key.substring(0, 4) + '•'.repeat(key.length - 8) + key.substring(key.length - 4);
+  };
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "shadow sm:rounded-md"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "bg-white sm:rounded-md min-h-[500px]"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "section-heading py-4 px-8 sm:px-8 sm:py-4"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
+    className: "text-gray-900 font-medium text-lg"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('AI Control Settings', 'wedocs')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "text-sm text-gray-600 mt-1"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Configure AI providers and manage API integrations for all AI-powered features.', 'wedocs'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", {
+    className: "h-px !bg-gray-200 border-0 dark:!bg-gray-200"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "pt-6 pb-20 px-8 space-y-8"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Card, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
+    className: "text-lg font-medium text-gray-900"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Global Configuration', 'wedocs'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalVStack, {
+    spacing: 4
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "w-full"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Default AI Provider', 'wedocs'),
+    value: aiSettings.default_provider,
+    options: [{
+      value: 'openai',
+      label: 'OpenAI'
+    }, {
+      value: 'anthropic',
+      label: 'Anthropic (Claude)'
+    }, {
+      value: 'google',
+      label: 'Google Gemini'
+    }, {
+      value: 'azure',
+      label: 'Azure OpenAI'
+    }],
+    onChange: handleDefaultProviderChange,
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('This provider will be used as the default for all AI features unless overridden.', 'wedocs')
+  }))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Card, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
+    className: "text-lg font-medium text-gray-900"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('AI Provider Configuration', 'wedocs')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "text-sm text-gray-600"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Configure API key and model for the selected AI provider.', 'wedocs'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardBody, null, (() => {
+    const selectedProvider = aiSettings.default_provider;
+    const providerConfig = providerConfigs[selectedProvider];
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "border border-gray-200 rounded-lg p-4"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "mb-4"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", {
+      className: "text-md font-medium text-gray-900"
+    }, providerConfig.name)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalVStack, {
+      spacing: 3
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "grid grid-cols-1 md:grid-cols-2 gap-4"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('API Key', 'wedocs'),
+      type: "password",
+      value: aiSettings.providers[selectedProvider]?.api_key || '',
+      onChange: value => handleProviderChange(selectedProvider, 'api_key', value),
+      placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your API key', 'wedocs'),
+      help: aiSettings.providers[selectedProvider]?.api_key ? `Current: ${maskApiKey(aiSettings.providers[selectedProvider].api_key)}` : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your API key for this provider', 'wedocs')
+    }), selectedProvider === 'azure' && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Azure Endpoint', 'wedocs'),
+      value: aiSettings.providers[selectedProvider]?.endpoint || '',
+      onChange: value => handleProviderChange(selectedProvider, 'endpoint', value),
+      placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('https://your-resource.openai.azure.com/', 'wedocs'),
+      help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Your Azure OpenAI endpoint URL', 'wedocs')
+    })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Model', 'wedocs'),
+      value: aiSettings.providers[selectedProvider]?.selected_model || providerConfig.models[0].value,
+      options: providerConfig.models,
+      onChange: value => handleProviderChange(selectedProvider, 'selected_model', value),
+      help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select the model for this provider', 'wedocs')
+    })));
+  })()))))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AiSettings);
+
+/***/ }),
+
 /***/ "./src/components/Settings/GeneralSettings.js":
 /*!****************************************************!*\
   !*** ./src/components/Settings/GeneralSettings.js ***!
@@ -19674,6 +19991,25 @@ const Menu = () => {
       }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
         d: "M13 10a3 3 0 1 1-6 0 3 3 0 1 1 6 0z"
       }))
+    },
+    ai: {
+      text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('AI Control', 'wedocs'),
+      icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        width: "20",
+        height: "20",
+        fill: "none",
+        stroke: "#6b7280",
+        strokeWidth: "2",
+        strokeLinejoin: "round",
+        className: "-ml-1 mr-4"
+      }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+        d: "M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-6.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"
+      }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+        d: "M14 6h4v4"
+      }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+        d: "M17 4v8"
+      }))
     }
   };
   const [showSubTabs, setShowSubTabs] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(true);
@@ -19761,20 +20097,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Menu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Menu */ "./src/components/Settings/Menu.js");
 /* harmony import */ var _SaveButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SaveButton */ "./src/components/Settings/SaveButton.js");
-/* harmony import */ var _headlessui_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @headlessui/react */ "./node_modules/@headlessui/react/dist/components/tabs/tabs.js");
+/* harmony import */ var _headlessui_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @headlessui/react */ "./node_modules/@headlessui/react/dist/components/tabs/tabs.js");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _data_settings__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../data/settings */ "./src/data/settings/index.js");
 /* harmony import */ var _GeneralSettings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./GeneralSettings */ "./src/components/Settings/GeneralSettings.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _Upgrade__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Upgrade */ "./src/components/Upgrade.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _WedocsPromoNotice__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../WedocsPromoNotice */ "./src/components/WedocsPromoNotice.js");
+/* harmony import */ var _AiSettings__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./AiSettings */ "./src/components/Settings/AiSettings.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _Upgrade__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Upgrade */ "./src/components/Upgrade.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _WedocsPromoNotice__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../WedocsPromoNotice */ "./src/components/WedocsPromoNotice.js");
+
 
 
 
@@ -19791,7 +20129,7 @@ __webpack_require__.r(__webpack_exports__);
 const SettingsPage = () => {
   const {
     panel
-  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_11__.useParams)();
+  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_12__.useParams)();
   const settings = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select(_data_settings__WEBPACK_IMPORTED_MODULE_5__["default"]).getSettings(), []);
   const panelIndex = Object.keys(settings).indexOf(panel);
   const [selectedIndex, setSelectedIndex] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(panelIndex || 0);
@@ -19814,9 +20152,9 @@ const SettingsPage = () => {
         ...docSettings,
         ...result
       });
-      sweetalert2__WEBPACK_IMPORTED_MODULE_7___default().fire({
-        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Settings Data Saved!', 'wedocs'),
-        text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Settings data has been saved successfully', 'wedocs'),
+      sweetalert2__WEBPACK_IMPORTED_MODULE_8___default().fire({
+        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_9__.__)('Settings Data Saved!', 'wedocs'),
+        text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_9__.__)('Settings data has been saved successfully', 'wedocs'),
         icon: 'success',
         toast: true,
         position: 'bottom-end',
@@ -19824,8 +20162,8 @@ const SettingsPage = () => {
         timer: 2000
       });
     }).catch(err => {
-      sweetalert2__WEBPACK_IMPORTED_MODULE_7___default().fire({
-        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Error', 'wedocs'),
+      sweetalert2__WEBPACK_IMPORTED_MODULE_8___default().fire({
+        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_9__.__)('Error', 'wedocs'),
         text: err.message,
         icon: 'error',
         toast: true,
@@ -19839,6 +20177,11 @@ const SettingsPage = () => {
     index: selectedIndex,
     settingsData: docSettings,
     generalSettingsData: docSettings?.general,
+    setSettings: setDocSettings
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_AiSettings__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    index: selectedIndex,
+    settingsData: docSettings,
+    aiSettingsData: docSettings?.ai,
     setSettings: setDocSettings
   })];
   templates = wp.hooks.applyFilters('wedocs_settings_page_templates', templates, docSettings, setDocSettings);
@@ -19873,10 +20216,10 @@ const SettingsPage = () => {
   if (status === 'done') {
     (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.dispatch)(_data_settings__WEBPACK_IMPORTED_MODULE_5__["default"]).makeUpdateDone().then(result => {
       if (result) {
-        sweetalert2__WEBPACK_IMPORTED_MODULE_7___default().fire({
+        sweetalert2__WEBPACK_IMPORTED_MODULE_8___default().fire({
           icon: 'success',
-          text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('weDocs database has been updated successfully', 'wedocs'),
-          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Database Updated!', 'wedocs'),
+          text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_9__.__)('weDocs database has been updated successfully', 'wedocs'),
+          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_9__.__)('Database Updated!', 'wedocs'),
           toast: true,
           timer: 3000,
           position: 'bottom-end',
@@ -19887,9 +20230,9 @@ const SettingsPage = () => {
   }
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "min-h-full pt-7"
-  }, showActions && need_upgrade && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Upgrade__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  }, showActions && need_upgrade && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Upgrade__WEBPACK_IMPORTED_MODULE_10__["default"], {
     status: status
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_WedocsPromoNotice__WEBPACK_IMPORTED_MODULE_10__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("main", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_WedocsPromoNotice__WEBPACK_IMPORTED_MODULE_11__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("main", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "pb-10 pt-3 sm:px-0"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "h-100"
@@ -19897,7 +20240,7 @@ const SettingsPage = () => {
     className: "h-full"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("main", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "lg:grid lg:grid-cols-12 lg:gap-x-6"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_12__.Tab.Group, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_13__.Tab.Group, {
     vertical: true,
     onChange: setSelectedIndex,
     selectedIndex: selectedIndex
@@ -19905,11 +20248,11 @@ const SettingsPage = () => {
     className: "px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3 md:mb-6"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("nav", {
     className: "py-[18px] min-h-[500px] bg-white rounded-md"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_12__.Tab.List, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_13__.Tab.List, {
     className: "px-2 space-y-1"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Menu__WEBPACK_IMPORTED_MODULE_1__["default"], null)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "space-y-6 sm:px-6 lg:px-0 lg:col-span-9"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_12__.Tab.Panels, null, templates && templates?.map((value, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_12__.Tab.Panel, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_13__.Tab.Panels, null, templates && templates?.map((value, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_headlessui_react__WEBPACK_IMPORTED_MODULE_13__.Tab.Panel, {
     key: index
   }, value))))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_SaveButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
     settingsSaveHandler: handleSettingsSave,
@@ -21068,6 +21411,32 @@ const DEFAULT_SETTINGS_STATE = {
         g: 255,
         b: 255,
         a: 1
+      }
+    },
+    ai: {
+      default_provider: 'openai',
+      providers: {
+        openai: {
+          api_key: '',
+          models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
+          selected_model: 'gpt-4'
+        },
+        anthropic: {
+          api_key: '',
+          models: ['claude-3-opus-20240229', 'claude-3-sonnet-20240229', 'claude-3-haiku-20240307'],
+          selected_model: 'claude-3-sonnet-20240229'
+        },
+        google: {
+          api_key: '',
+          models: ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.0-pro'],
+          selected_model: 'gemini-1.5-pro'
+        },
+        azure: {
+          api_key: '',
+          endpoint: '',
+          models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
+          selected_model: 'gpt-4'
+        }
       }
     }
   },
@@ -32082,6 +32451,17 @@ module.exports = window["ReactDOM"];
 
 "use strict";
 module.exports = window["wp"]["apiFetch"];
+
+/***/ }),
+
+/***/ "@wordpress/components":
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = window["wp"]["components"];
 
 /***/ }),
 

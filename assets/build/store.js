@@ -906,6 +906,32 @@ const DEFAULT_SETTINGS_STATE = {
         b: 255,
         a: 1
       }
+    },
+    ai: {
+      default_provider: 'openai',
+      providers: {
+        openai: {
+          api_key: '',
+          models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
+          selected_model: 'gpt-4'
+        },
+        anthropic: {
+          api_key: '',
+          models: ['claude-3-opus-20240229', 'claude-3-sonnet-20240229', 'claude-3-haiku-20240307'],
+          selected_model: 'claude-3-sonnet-20240229'
+        },
+        google: {
+          api_key: '',
+          models: ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.0-pro'],
+          selected_model: 'gemini-1.5-pro'
+        },
+        azure: {
+          api_key: '',
+          endpoint: '',
+          models: ['gpt-4', 'gpt-4o-mini', 'gpt-3.5-turbo'],
+          selected_model: 'gpt-4'
+        }
+      }
     }
   },
   loading: false,

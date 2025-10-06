@@ -20,6 +20,7 @@ import {
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import AiDocWriterPreview from './AiDocWriterPreview';
+import aiService from '../utils/aiService';
 
 const AiDocWriterModal = ({ isOpen, onClose }) => {
     const [title, setTitle] = useState('');
@@ -92,6 +93,56 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
         setPrompt(dynamicPrompt);
     }, [title, keywords]);
 
+    // Validate AI-generated content
+    const validateGeneratedContent = (content) => {
+        const errors = [];
+        
+        // Check if content is empty
+        if (!content || content.trim().length === 0) {
+            errors.push(__('Generated content is empty.', 'wedocs'));
+            return { isValid: false, errors };
+        }
+
+        // Check for basic HTML structure
+        const hasParagraphs = /<p[^>]*>.*?<\/p>/i.test(content);
+        const hasHeadings = /<h[1-6][^>]*>.*?<\/h[1-6]>/i.test(content);
+        
+        if (!hasParagraphs && !hasHeadings) {
+            errors.push(__('Generated content should contain at least paragraphs or headings.', 'wedocs'));
+        }
+
+        // Check for potentially dangerous HTML (basic XSS prevention)
+        const dangerousPatterns = [
+            /<script[^>]*>.*?<\/script>/gi,
+            /<iframe[^>]*>.*?<\/iframe>/gi,
+            /javascript:/gi,
+            /on\w+\s*=/gi
+        ];
+
+        for (const pattern of dangerousPatterns) {
+            if (pattern.test(content)) {
+                errors.push(__('Generated content contains potentially unsafe HTML elements.', 'wedocs'));
+                break;
+            }
+        }
+
+        // Check for minimum content length
+        const textContent = content.replace(/<[^>]*>/g, '').trim();
+        if (textContent.length < 50) {
+            errors.push(__('Generated content is too short. Please try again with more specific keywords.', 'wedocs'));
+        }
+
+        // Check for maximum content length (prevent extremely long content)
+        if (textContent.length > 10000) {
+            errors.push(__('Generated content is too long. Please try again with more focused keywords.', 'wedocs'));
+        }
+
+        return {
+            isValid: errors.length === 0,
+            errors
+        };
+    };
+
     const handleGenerate = async () => {
         if (!title.trim()) {
             setError(__('Please enter a documentation title.', 'wedocs'));
@@ -107,25 +158,70 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
         setIsGenerating(true);
 
         try {
-            // Simulate AI generation (static content for now)
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            // Get AI settings to determine provider and model
+            const aiSettings = await aiService.getAiSettings();
             
-            const mockContent = `
-                <h2><span class="highlight">Introduction</span></h2>
-                <p>This is AI-generated content for: <strong>${title}</strong></p>
-                <p>Keywords: <span class="highlight">${keywords}</span></p>
-                <p>Overwrite mode: <strong>${overwriteContent ? 'Enabled' : 'Disabled'}</strong></p>
-                <p>Prompt used: <em>${prompt.substring(0, 100)}${prompt.length > 100 ? '...' : ''}</em></p>
-                <h2><span class="highlight">Key Features</span></h2>
-                <p>Based on your keywords and instructions, here's the generated content...</p>
-                <h2><span class="highlight">Conclusion</span></h2>
-                <p>This content was generated using AI and can be customized as needed.</p>
-            `;
+            // Check if AI is properly configured
+            if (!aiSettings.providers[aiSettings.default_provider]?.api_key) {
+                // Fall back to mock content if AI is not configured
+                console.warn('AI not configured, using mock content');
+                const mockContent = `
+                    <h2><span class="highlight">Introduction</span></h2>
+                    <p>This is AI-generated content for: <strong>${title}</strong></p>
+                    <p>Keywords: <span class="highlight">${keywords}</span></p>
+                    <p>Overwrite mode: <strong>${overwriteContent ? 'Enabled' : 'Disabled'}</strong></p>
+                    <p>Prompt used: <em>${prompt.substring(0, 100)}${prompt.length > 100 ? '...' : ''}</em></p>
+                    <h2><span class="highlight">Key Features</span></h2>
+                    <p>Based on your keywords and instructions, here's the generated content. This is a comprehensive guide that covers all the important aspects of the topic you've specified. The content is structured with proper headings and paragraphs to ensure good readability and organization.</p>
+                    <h2><span class="highlight">Detailed Information</span></h2>
+                    <p>This section provides more detailed information about the topic. The AI has generated relevant content based on your keywords and title. The content follows proper HTML structure with headings and paragraphs as requested.</p>
+                    <h2><span class="highlight">Conclusion</span></h2>
+                    <p>This content was generated using AI and can be customized as needed. The validation ensures that the content meets quality standards and is safe to use in your documentation.</p>
+                `;
+                
+                const validation = validateGeneratedContent(mockContent);
+                if (!validation.isValid) {
+                    setError(validation.errors.join(' '));
+                    return;
+                }
+                
+                setGeneratedContent(mockContent);
+                setShowPreview(true);
+                return;
+            }
+
+            // Use AI service to generate content
+            const systemPrompt = __(
+                'You are a professional documentation writer. Generate comprehensive, well-structured documentation content using HTML tags. Use proper heading hierarchy (h2, h3, etc.) and wrap all content in paragraph tags. Highlight important terms with <span class="highlight"> tags.',
+                'wedocs'
+            );
+
+            const result = await aiService.generateContent(prompt, {
+                provider: aiSettings.default_provider,
+                model: aiSettings.providers[aiSettings.default_provider].selected_model,
+                feature: 'ai_doc_writer',
+                systemPrompt: systemPrompt,
+                maxTokens: 2000,
+                temperature: 0.7
+            });
+
+            if (!result.content) {
+                throw new Error(__('AI service returned empty content', 'wedocs'));
+            }
+
+            // Validate the generated content
+            const validation = validateGeneratedContent(result.content);
             
-            setGeneratedContent(mockContent);
+            if (!validation.isValid) {
+                setError(validation.errors.join(' '));
+                return;
+            }
+            
+            setGeneratedContent(result.content);
             setShowPreview(true);
         } catch (err) {
-            setError(__('Failed to generate content. Please try again.', 'wedocs'));
+            console.error('AI generation error:', err);
+            setError(err.message || __('Failed to generate content. Please try again.', 'wedocs'));
         } finally {
             setIsGenerating(false);
         }

@@ -173,6 +173,12 @@ class SettingsApi extends \WP_REST_Controller {
         }
 
         $settings_data = $request->get_param( 'settings' );
+        
+        // Sanitize AI settings if present
+        if ( isset( $settings_data['ai'] ) ) {
+            $settings_data['ai'] = $this->sanitize_ai_settings( $settings_data['ai'] );
+        }
+        
         $settings_data_filtered = apply_filters( 'wedocs_settings_data', $settings_data );
 
         // Update wedocs_settings via docs store.
@@ -182,4 +188,60 @@ class SettingsApi extends \WP_REST_Controller {
 
         return new \WP_REST_Response( rest_ensure_response( $response ), 200 );
     }
+
+    /**
+     * Sanitize AI settings data.
+     *
+     * @since 2.0.0
+     *
+     * @param array $ai_settings
+     *
+     * @return array
+     */
+    private function sanitize_ai_settings( $ai_settings ) {
+        $sanitized = array();
+
+        // Sanitize default provider
+        if ( isset( $ai_settings['default_provider'] ) ) {
+            $allowed_providers = array( 'openai', 'anthropic', 'google', 'azure' );
+            $sanitized['default_provider'] = in_array( $ai_settings['default_provider'], $allowed_providers ) 
+                ? sanitize_text_field( $ai_settings['default_provider'] ) 
+                : 'openai';
+        }
+
+        // Sanitize provider configurations
+        if ( isset( $ai_settings['providers'] ) && is_array( $ai_settings['providers'] ) ) {
+            $sanitized['providers'] = array();
+            
+            foreach ( $ai_settings['providers'] as $provider => $config ) {
+                if ( in_array( $provider, array( 'openai', 'anthropic', 'google', 'azure' ) ) ) {
+                    $sanitized['providers'][ $provider ] = array();
+                    
+                    // Sanitize API key
+                    if ( isset( $config['api_key'] ) && ! empty( $config['api_key'] ) ) {
+                        $sanitized['providers'][ $provider ]['api_key'] = sanitize_text_field( $config['api_key'] );
+                    }
+                    
+                    // Sanitize Azure endpoint
+                    if ( $provider === 'azure' && isset( $config['endpoint'] ) ) {
+                        $sanitized['providers'][ $provider ]['endpoint'] = esc_url_raw( $config['endpoint'] );
+                    }
+                    
+                    // Sanitize selected model
+                    if ( isset( $config['selected_model'] ) ) {
+                        $sanitized['providers'][ $provider ]['selected_model'] = sanitize_text_field( $config['selected_model'] );
+                    }
+                    
+                    // Sanitize available models
+                    if ( isset( $config['models'] ) && is_array( $config['models'] ) ) {
+                        $sanitized['providers'][ $provider ]['models'] = array_map( 'sanitize_text_field', $config['models'] );
+                    }
+                }
+            }
+        }
+
+
+        return $sanitized;
+    }
+
 }
