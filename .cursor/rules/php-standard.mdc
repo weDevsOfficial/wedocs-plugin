@@ -1,0 +1,8 @@
+---
+alwaysApply: true
+---
+- Follow WordPress PHP Coding Standards
+- Use proper WordPress prefix for functions and classes
+- Implement WordPress nonce verification
+- Follow WordPress database operations best practices
+- Structure plugin hooks logically

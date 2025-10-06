@@ -9,6 +9,7 @@ const updatedConfig = {
     ...defaultConfig.entry,
     index    : './src/index',
     block    : './src/block.js',
+    editor   : './src/editor/index.js',
     store    : './src/data/store.js',
     print    : './src/assets/less/print.less',
     frontend : './src/assets/less/frontend.less',
