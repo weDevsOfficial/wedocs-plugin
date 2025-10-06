@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.components-grid.components-tools-panel.block-editor-panel-color-gradient-settings {
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+/* Frontend Doc Navigation Styles - Fallback for when Tailwind is not loaded */
+.wedocs-doc-navigation-preview .wedocs-doc-navigation,
+.wedocs-doc-navigation {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    margin: 1rem 0 !important;
+    
+    .wedocs-doc-nav-prev,
+    .wedocs-doc-nav-next {
+        display: flex !important;
+        align-items: center !important;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        
+        a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+            
+            &:hover {
+                text-decoration: none;
+            }
+        }
+        
+        .wedocs-doc-nav-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .wedocs-doc-nav-title {
+            display: inline-block;
+            line-height: 1.4;
+        }
+    }
+    
+    .wedocs-doc-nav-prev {
+        text-align: left;
+        
+        .wedocs-doc-nav-arrow {
+            margin-right: 0.5rem;
+        }
+    }
+    
+    .wedocs-doc-nav-next {
+        text-align: right;
+        margin-left: auto;
+        
+        .wedocs-doc-nav-arrow {
+            margin-left: 0.5rem;
+        }
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .wedocs-doc-navigation {
+        flex-direction: column;
+        gap: 0.5rem;
+        
+        .wedocs-doc-nav-prev,
+        .wedocs-doc-nav-next {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .wedocs-doc-nav-next {
+            margin-left: 0;
+        }
+    }
+}
