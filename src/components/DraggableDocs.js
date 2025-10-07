@@ -65,6 +65,7 @@ const DraggableDocs = ( { setItems, children, setNeedSortingStatus, parentId = n
       sensors={ sensors }
       collisionDetection={ collisionDetectionStrategy }
       onDragEnd={ handleDragEnd }
+      id={ parentId ? `parent-${parentId}` : 'root-context' }
     >
       { children }
     </DndContext>

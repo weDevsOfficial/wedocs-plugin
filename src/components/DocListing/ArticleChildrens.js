@@ -6,6 +6,9 @@ import extractedTitle from '../../utils/extractedTitle';
 import UpgradePopup from '../ProPreviews/common/UpgradePopup';
 
 const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllowComments } ) => {
+  // Note: Level 3 articles cannot be dragged due to @dnd-kit nested context limitation
+  // Drag-and-drop only works for Level 2 articles in the root context
+
   const { modified: lastModifiedDate, comment_count: commentCount } = article;
 
   const formattedDateString = () => {
@@ -23,7 +26,10 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
 
   if ( section ) {
     return (
-      <div key={ section?.id } className="flex items-center bg-white border-b border-[#D9D9D9] py-4">
+      <div
+        key={ section?.id }
+        className="flex items-center bg-white border-b border-[#D9D9D9] py-4"
+      >
         <div className="flex items-center w-full group">
           <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
             <div className="flex items-center">

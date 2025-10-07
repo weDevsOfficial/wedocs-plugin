@@ -3,7 +3,7 @@ import DocActions from '../DocActions';
 import { CSS } from '@dnd-kit/utilities';
 import { __, sprintf } from '@wordpress/i18n';
 import QuickEditModal from './QuickEditModal';
-import { useSortable, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { useSortable } from '@dnd-kit/sortable';
 import extractedTitle from '../../utils/extractedTitle';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
@@ -40,12 +40,40 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
   const [ childrenItems, setChildrenItems ] = useState( articleChildrens || [] );
   const [ needSortingStatusLocal, setNeedSortingStatusLocal ] = useState( false );
 
+  const sortableStatus = useSelect(
+    ( select ) => select( docStore ).getSortingStatus(),
+    []
+  );
+
+  const needSortableStatus = useSelect(
+    ( select ) => select( docStore ).getNeedSortingStatus(),
+    []
+  );
+
   // Update children items when articleChildren changes
   useEffect( () => {
     if ( articleChildrens ) {
       setChildrenItems( articleChildrens );
     }
   }, [ articleChildrens, article?.id ] );
+
+  // Sync local sorting status with global status
+  useEffect( () => {
+    setNeedSortingStatusLocal( needSortableStatus );
+  }, [ needSortableStatus ] );
+
+  // Handle sorting when needed
+  useEffect( () => {
+    if ( needSortingStatusLocal && childrenItems.length > 0 ) {
+      const { dispatch } = wp.data;
+      dispatch( docStore )
+        .updateSortingStatus( { sortable_status: sortableStatus, documentations: childrenItems } )
+        .then( ( result ) => setNeedSortingStatusLocal( result?.sorting ) )
+        .catch( ( error ) => {
+          console.error( 'Failed to update sorting status:', error );
+        } );
+    }
+  }, [ needSortingStatusLocal, childrenItems, sortableStatus ] );
 
   const filteredArticleChildrens = searchValue
     ? childrenItems?.filter(
@@ -314,48 +342,48 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
           </div>
         </div>
 
+        { /* Level 3 children - no DraggableDocs wrapper (nested context doesn't work) */ }
         { !isDragging && ( filteredArticleChildrens?.length > 0 ) && (
           <div
-            style={ style }
             className={ `my-1 article-children pl-4 sm:pl-16 bg-white` }
           >
             { filteredArticleChildrens?.map( ( childrenDoc ) => {
-              // Allow pro version to override the article children component
-              const ChildComponent = wp?.hooks?.applyFilters(
-                'wedocs_article_children_component',
-                ArticleChildrens,
-                {
-                  section: article,
-                  sections: articles,
-                  article: childrenDoc,
-                  setShowArticles: setShowArticles,
-                  isAllowComments: isAllowComments,
-                  searchValue: searchValue,
-                  DocActions: DocActions,
-                  QuickEditModal: QuickEditModal,
-                  AddArticleModal: AddArticleModal,
-                  DraggableDocs: DraggableDocs,
-                }
-              );
+                // Allow pro version to override the article children component
+                const ChildComponent = wp?.hooks?.applyFilters(
+                  'wedocs_article_children_component',
+                  ArticleChildrens,
+                  {
+                    section: article,
+                    sections: articles,
+                    article: childrenDoc,
+                    setShowArticles: setShowArticles,
+                    isAllowComments: isAllowComments,
+                    searchValue: searchValue,
+                    DocActions: DocActions,
+                    QuickEditModal: QuickEditModal,
+                    AddArticleModal: AddArticleModal,
+                    DraggableDocs: DraggableDocs,
+                  }
+                );
 
-              return (
-                <ChildComponent
-                  section={ article }
-                  sections={ articles }
-                  key={ childrenDoc.id }
-                  article={ childrenDoc }
-                  setShowArticles={ setShowArticles }
-                  isAllowComments={ isAllowComments }
-                  searchValue={ searchValue }
-                  DocActions={ DocActions }
-                  QuickEditModal={ QuickEditModal }
-                  AddArticleModal={ AddArticleModal }
-                  DraggableDocs={ DraggableDocs }
-                  depth={ 2 }
-                  maxDepth={ 7 }
-                />
-              );
-            } ) }
+                return (
+                  <ChildComponent
+                    section={ article }
+                    sections={ articles }
+                    key={ childrenDoc.id }
+                    article={ childrenDoc }
+                    setShowArticles={ setShowArticles }
+                    isAllowComments={ isAllowComments }
+                    searchValue={ searchValue }
+                    DocActions={ DocActions }
+                    QuickEditModal={ QuickEditModal }
+                    AddArticleModal={ AddArticleModal }
+                    DraggableDocs={ DraggableDocs }
+                    depth={ 2 }
+                    maxDepth={ 7 }
+                  />
+                );
+              } ) }
           </div>
         ) }
       </Fragment>
