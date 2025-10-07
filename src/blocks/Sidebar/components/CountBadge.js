@@ -1,9 +1,14 @@
 const CountBadge = ({ count, attributes }) => {
     const { countBadgeStyles } = attributes;
     
+    // Helper function to get color value or fallback
+    const getColorValue = (colorValue, fallback = '') => {
+        return colorValue && colorValue.trim() !== '' ? colorValue : fallback;
+    };
+    
     const badgeStyle = {
-        backgroundColor: countBadgeStyles.backgroundColor || '#6c757d',
-        borderRadius: countBadgeStyles.borderRadius || '12px'
+        backgroundColor: getColorValue(countBadgeStyles.backgroundColor),
+        borderRadius: countBadgeStyles.borderRadius || ''
     };
 
     if (count === 0) {

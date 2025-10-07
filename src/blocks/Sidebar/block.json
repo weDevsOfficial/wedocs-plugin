@@ -69,43 +69,56 @@
 		"containerStyles": {
 			"type": "object",
 			"default": {
-				"backgroundColor": "#ffffff"
+				"backgroundColor": ""
 			}
 		},
 		"sectionStyles": {
 			"type": "object",
 			"default": {
-				"padding": "12px",
-				"margin": "8px 0",
-				"backgroundColor": "#f8f9fa",
-				"backgroundColorHover": "#e9ecef",
-				"borderRadius": "6px"
+				"padding": "",
+				"margin": "",
+				"backgroundColor": "",
+				"backgroundColorHover": "",
+				"borderRadius": ""
 			}
 		},
 		"titleStyles": {
 			"type": "object",
 			"default": {
-				"color": "#333333",
-				"backgroundColor": "transparent",
-				"backgroundColorHover": "transparent",
-				"padding": "8px"
+				"color": "",
+				"backgroundColor": "",
+				"backgroundColorHover": "",
+				"padding": ""
 			}
 		},
 		"countBadgeStyles": {
 			"type": "object",
 			"default": {
-				"backgroundColor": "#6c757d",
-				"backgroundColorHover": "#5a6268",
-				"borderRadius": "12px"
+				"backgroundColor": "",
+				"backgroundColorHover": "",
+				"borderRadius": ""
 			}
 		},
 		"docListStyles": {
 			"type": "object",
 			"default": {
-				"backgroundColor": "transparent",
-				"backgroundColorHover": "#f8f9fa",
-				"textColor": "#333333",
-				"textColorHover": "#007cba"
+				"backgroundColor": "",
+				"backgroundColorHover": "",
+				"textColor": "",
+				"textColorHover": ""
+			}
+		},
+		"treeStyles": {
+			"type": "object",
+			"default": {
+				"indentation": "20px",
+				"connectorColor": "",
+				"connectorWidth": "1px",
+				"itemSpacing": "4px",
+				"headerBackgroundColor": "",
+				"headerTextColor": "",
+				"headerPadding": "",
+				"headerBorderRadius": ""
 			}
 		}
 	},

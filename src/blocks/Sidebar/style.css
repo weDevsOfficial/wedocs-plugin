@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Section styling for frontend */
+.wedocs-section {
+    transition: all 0.2s ease;
+    background-color: var(--section-bg, transparent);
+    padding: var(--section-padding, 0);
+    margin: var(--section-margin, 0);
+    border-radius: var(--section-border-radius, 0);
+}
+
+.wedocs-section:hover {
+    background-color: var(--section-bg-hover, var(--section-bg, transparent));
+}
+
+.wedocs-section-header {
+    transition: all 0.2s ease;
+}
+
+.wedocs-article {
+    transition: all 0.2s ease;
+}
+
+.wedocs-connector-line {
+    transition: all 0.2s ease;
+}

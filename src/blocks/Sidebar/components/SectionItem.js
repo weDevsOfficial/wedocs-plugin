@@ -2,33 +2,55 @@ import { useState } from '@wordpress/element';
 import ArticleItem from './ArticleItem';
 import CountBadge from './CountBadge';
 
-const SectionItem = ({ section, attributes, enableNestedSections }) => {
+const SectionItem = ({ section, attributes, enableNestedSections, level = 0 }) => {
     const [isExpanded, setIsExpanded] = useState(true);
     
     const {
         sectionTitleTag,
         sectionStyles,
-        titleStyles
+        titleStyles,
+        treeStyles
     } = attributes;
 
+    // Helper function to get color value or fallback
+    const getColorValue = (colorValue, fallback = '') => {
+        return colorValue && colorValue.trim() !== '' ? colorValue : fallback;
+    };
+
+    // Tree-specific styles
+    const indentation = level * parseInt(treeStyles?.indentation?.replace('px', '') || 20);
+    
     const sectionStyle = {
-        backgroundColor: sectionStyles.backgroundColor || '#f8f9fa',
-        margin: sectionStyles.margin || '8px 0'
+        marginLeft: level > 0 ? `${indentation}px` : '0',
+        marginBottom: treeStyles?.itemSpacing || '4px',
+        position: 'relative',
+        // Apply section box styling
+        backgroundColor: getColorValue(sectionStyles.backgroundColor),
+        padding: sectionStyles.padding || '',
+        margin: sectionStyles.margin || '',
+        borderRadius: sectionStyles.borderRadius || ''
     };
 
     const headerStyle = {
-        padding: sectionStyles.padding || '12px'
+        backgroundColor: level === 0 ? getColorValue(treeStyles?.headerBackgroundColor) : 'transparent',
+        color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : getColorValue(titleStyles?.color),
+        padding: level === 0 ? (treeStyles?.headerPadding || '') : (titleStyles?.padding || ''),
+        borderRadius: level === 0 ? (treeStyles?.headerBorderRadius || '') : '',
+        border: level > 0 && treeStyles?.connectorColor ? `1px solid ${treeStyles.connectorColor}` : 'none',
+        borderLeft: level > 0 && treeStyles?.connectorColor ? `2px solid ${treeStyles.connectorColor}` : 'none'
     };
 
     const titleStyle = {
-        color: '#333333',
-        backgroundColor: titleStyles.backgroundColor || 'transparent',
-        padding: titleStyles.padding || '8px'
+        color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : getColorValue(titleStyles?.color),
+        backgroundColor: 'transparent',
+        padding: '0',
+        margin: '0'
     };
 
     const iconStyle = {
-        color: '#6c757d',
-        fontSize: '16px'
+        color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : getColorValue(titleStyles?.color, '#6c757d'),
+        fontSize: '16px',
+        marginRight: '8px'
     };
 
     const toggleExpanded = () => {
@@ -41,11 +63,36 @@ const SectionItem = ({ section, attributes, enableNestedSections }) => {
 
     return (
         <div 
-            className="wedocs-section border border-gray-200 rounded-md overflow-hidden"
+            className="wedocs-section transition-colors duration-200"
             style={sectionStyle}
+            onMouseEnter={(e) => {
+                const hoverBg = getColorValue(sectionStyles.backgroundColorHover);
+                if (hoverBg) {
+                    e.currentTarget.style.backgroundColor = hoverBg;
+                }
+            }}
+            onMouseLeave={(e) => {
+                const normalBg = getColorValue(sectionStyles.backgroundColor);
+                e.currentTarget.style.backgroundColor = normalBg || '';
+            }}
         >
+            {/* Visual connector line for nested items */}
+            {level > 0 && (
+                <div 
+                    className="wedocs-connector-line"
+                    style={{
+                        position: 'absolute',
+                        left: `-${parseInt(treeStyles?.indentation?.replace('px', '') || 20) / 2}px`,
+                        top: '0',
+                        bottom: '0',
+                        width: treeStyles?.connectorWidth || '1px',
+                        backgroundColor: getColorValue(treeStyles?.connectorColor, '#e5e7eb')
+                    }}
+                />
+            )}
+            
             <div 
-                className="wedocs-section-header flex items-center justify-between p-3 cursor-pointer transition-colors"
+                className="wedocs-section-header flex items-center justify-between cursor-pointer transition-colors"
                 style={headerStyle}
                 onClick={toggleExpanded}
                 role="button"
@@ -65,9 +112,17 @@ const SectionItem = ({ section, attributes, enableNestedSections }) => {
                         style={iconStyle}
                         aria-hidden="true"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
-                        </svg>
+                        {level === 0 ? (
+                            // Blue folder icon for top-level sections
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" style={{ width: '20px', height: '20px' }}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                            </svg>
+                        ) : (
+                            // Simple folder icon for nested sections
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" style={{ width: '16px', height: '16px' }}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                            </svg>
+                        )}
                     </span>
                     <TitleTag 
                         className="wedocs-section-title"
@@ -76,20 +131,50 @@ const SectionItem = ({ section, attributes, enableNestedSections }) => {
                         {section.post_title}
                     </TitleTag>
                 </div>
-                <CountBadge count={childrenCount} attributes={attributes} />
+                
+                {/* Expand/collapse button */}
+                <button
+                    className="wedocs-expand-toggle transition-colors"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        toggleExpanded();
+                    }}
+                    aria-expanded={isExpanded}
+                    aria-label={`Toggle ${section.post_title} section`}
+                    style={{
+                        fontSize: '16px',
+                        color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : getColorValue(titleStyles?.color, '#6c757d'),
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: '2px',
+                        borderRadius: '2px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '20px',
+                        height: '20px'
+                    }}
+                >
+                    {isExpanded ? '▲' : '▼'}
+                </button>
             </div>
             
-            {enableNestedSections && children.length > 0 && (
+            {enableNestedSections && children.length > 0 && isExpanded && (
                 <div 
-                    className={`wedocs-section-children pl-4 border-l-2 border-gray-200 transition-all duration-300 ${
-                        isExpanded ? 'expanded' : 'collapsed'
-                    }`}
+                    className="wedocs-section-children"
+                    style={{
+                        marginLeft: level > 0 ? `${parseInt(treeStyles?.indentation?.replace('px', '') || 20)}px` : '0',
+                        borderLeft: level > 0 && treeStyles?.connectorColor ? `${treeStyles?.connectorWidth || '1px'} solid ${treeStyles.connectorColor}` : 'none',
+                        paddingLeft: level > 0 ? '8px' : '0'
+                    }}
                 >
                     {children.map((article) => (
                         <ArticleItem
                             key={article.ID}
                             article={article}
                             attributes={attributes}
+                            level={level + 1}
                         />
                     ))}
                 </div>

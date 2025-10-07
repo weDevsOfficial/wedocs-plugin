@@ -23,7 +23,8 @@ const Edit = ({ attributes, setAttributes }) => {
         sectionStyles,
         titleStyles,
         countBadgeStyles,
-        docListStyles
+        docListStyles,
+        treeStyles
     } = attributes;
 
     const blockProps = useBlockProps({
@@ -39,12 +40,17 @@ const Edit = ({ attributes, setAttributes }) => {
         };
     });
 
+    // Helper function to handle color values (including empty/cleared values)
+    const handleColorValue = (value) => {
+        return value === undefined || value === null ? '' : value;
+    };
+
     // Helper functions for updating styles
     const updateContainerStyles = (property, value) => {
         setAttributes({
             containerStyles: {
                 ...containerStyles,
-                [property]: value
+                [property]: handleColorValue(value)
             }
         });
     };
@@ -53,7 +59,7 @@ const Edit = ({ attributes, setAttributes }) => {
         setAttributes({
             sectionStyles: {
                 ...sectionStyles,
-                [property]: value
+                [property]: handleColorValue(value)
             }
         });
     };
@@ -62,7 +68,7 @@ const Edit = ({ attributes, setAttributes }) => {
         setAttributes({
             titleStyles: {
                 ...titleStyles,
-                [property]: value
+                [property]: handleColorValue(value)
             }
         });
     };
@@ -71,7 +77,7 @@ const Edit = ({ attributes, setAttributes }) => {
         setAttributes({
             countBadgeStyles: {
                 ...countBadgeStyles,
-                [property]: value
+                [property]: handleColorValue(value)
             }
         });
     };
@@ -80,7 +86,16 @@ const Edit = ({ attributes, setAttributes }) => {
         setAttributes({
             docListStyles: {
                 ...docListStyles,
-                [property]: value
+                [property]: handleColorValue(value)
+            }
+        });
+    };
+
+    const updateTreeStyles = (property, value) => {
+        setAttributes({
+            treeStyles: {
+                ...treeStyles,
+                [property]: handleColorValue(value)
             }
         });
     };
@@ -518,9 +533,101 @@ const Edit = ({ attributes, setAttributes }) => {
                         />
                     </div>
                 </PanelBody>
+                
+                <PanelBody title={__('Tree Structure Styling', 'wedocs')} initialOpen={false}>
+                    <UnitControl
+                        label={__('Indentation', 'wedocs')}
+                        value={treeStyles.indentation}
+                        onChange={(value) => updateTreeStyles('indentation', value)}
+                        units={[
+                            { value: 'px', label: 'px', default: 20 },
+                            { value: 'em', label: 'em', default: 1 },
+                            { value: 'rem', label: 'rem', default: 1 }
+                        ]}
+                    />
+                    
+                    <UnitControl
+                        label={__('Item Spacing', 'wedocs')}
+                        value={treeStyles.itemSpacing}
+                        onChange={(value) => updateTreeStyles('itemSpacing', value)}
+                        units={[
+                            { value: 'px', label: 'px', default: 4 },
+                            { value: 'em', label: 'em', default: 0.25 },
+                            { value: 'rem', label: 'rem', default: 0.25 }
+                        ]}
+                    />
+                    
+                    <div>
+                        <label className="components-base-control__label">
+                            {__('Connector Line Color', 'wedocs')}
+                        </label>
+                        <ColorPalette
+                            colors={themeColors}
+                            value={treeStyles.connectorColor}
+                            onChange={(newColor) => updateTreeStyles('connectorColor', newColor)}
+                        />
+                    </div>
+                    
+                    <UnitControl
+                        label={__('Connector Line Width', 'wedocs')}
+                        value={treeStyles.connectorWidth}
+                        onChange={(value) => updateTreeStyles('connectorWidth', value)}
+                        units={[
+                            { value: 'px', label: 'px', default: 1 },
+                            { value: 'em', label: 'em', default: 0.0625 },
+                            { value: 'rem', label: 'rem', default: 0.0625 }
+                        ]}
+                    />
+                    
+                    <div>
+                        <label className="components-base-control__label">
+                            {__('Header Background Color', 'wedocs')}
+                        </label>
+                        <ColorPalette
+                            colors={themeColors}
+                            value={treeStyles.headerBackgroundColor}
+                            onChange={(newColor) => updateTreeStyles('headerBackgroundColor', newColor)}
+                        />
+                    </div>
+                    
+                    <div>
+                        <label className="components-base-control__label">
+                            {__('Header Text Color', 'wedocs')}
+                        </label>
+                        <ColorPalette
+                            colors={themeColors}
+                            value={treeStyles.headerTextColor}
+                            onChange={(newColor) => updateTreeStyles('headerTextColor', newColor)}
+                        />
+                    </div>
+                    
+                    <UnitControl
+                        label={__('Header Padding', 'wedocs')}
+                        value={treeStyles.headerPadding}
+                        onChange={(value) => updateTreeStyles('headerPadding', value)}
+                        units={[
+                            { value: 'px', label: 'px', default: 12 },
+                            { value: 'em', label: 'em', default: 1 },
+                            { value: 'rem', label: 'rem', default: 1 }
+                        ]}
+                    />
+                    
+                    <UnitControl
+                        label={__('Header Border Radius', 'wedocs')}
+                        value={treeStyles.headerBorderRadius}
+                        onChange={(value) => updateTreeStyles('headerBorderRadius', value)}
+                        units={[
+                            { value: 'px', label: 'px', default: 6 },
+                            { value: 'em', label: 'em', default: 0.5 },
+                            { value: 'rem', label: 'rem', default: 0.5 },
+                            { value: '%', label: '%', default: 50 }
+                        ]}
+                    />
+                </PanelBody>
             </InspectorControls>
 
-            <div {...blockProps} className='wedocs-document'>
+            <div {...blockProps}>
+                <div  className='wedocs-document'>
                 {isLoading ? (
                     <div className="flex items-center justify-center py-8">
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
@@ -537,6 +644,7 @@ const Edit = ({ attributes, setAttributes }) => {
                         <p className="text-sm">{__('Create some documentation sections to see them here.', 'wedocs')}</p>
                     </div>
                 )}
+                </div>
             </div>
         </>
     );

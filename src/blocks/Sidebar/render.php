@@ -89,10 +89,28 @@ function render_wedocs_sidebar($attributes, $content) {
         $container_style .= 'width: ' . esc_attr($container_styles['width']) . ';';
     }
 
+    // Build section styles for CSS custom properties
+    $section_styles_css = '';
+    if (!empty($section_styles['backgroundColor'])) {
+        $section_styles_css .= '--section-bg: ' . esc_attr($section_styles['backgroundColor']) . ';';
+    }
+    if (!empty($section_styles['backgroundColorHover'])) {
+        $section_styles_css .= '--section-bg-hover: ' . esc_attr($section_styles['backgroundColorHover']) . ';';
+    }
+    if (!empty($section_styles['padding'])) {
+        $section_styles_css .= '--section-padding: ' . esc_attr($section_styles['padding']) . ';';
+    }
+    if (!empty($section_styles['margin'])) {
+        $section_styles_css .= '--section-margin: ' . esc_attr($section_styles['margin']) . ';';
+    }
+    if (!empty($section_styles['borderRadius'])) {
+        $section_styles_css .= '--section-border-radius: ' . esc_attr($section_styles['borderRadius']) . ';';
+    }
+
     // Start output buffering
     ob_start();
     ?>
-    <div class="wedocs-sidebar-block <?php echo esc_attr($className); ?>" style="<?php echo esc_attr($container_style); ?>">
+    <div class="wedocs-sidebar-block <?php echo esc_attr($className); ?>" style="<?php echo esc_attr($container_style . $section_styles_css); ?>">
         <?php if ($children): ?>
             <ul class="doc-nav-list">
                 <?php echo $children; ?>

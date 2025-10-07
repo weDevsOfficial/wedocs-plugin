@@ -9,13 +9,14 @@ const SidebarContainer = ({ sections, attributes }) => {
     return (
         <>
             {sections && sections.length > 0 ? (
-                <div className="wedocs-sections space-y-2">
+                <div className="wedocs-sections">
                     {sections.map((section) => (
                         <SectionItem
                             key={section.ID}
                             section={section}
                             attributes={attributes}
                             enableNestedSections={enableNestedSections}
+                            level={0}
                         />
                     ))}
                 </div>
