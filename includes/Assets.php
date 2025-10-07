@@ -70,6 +70,7 @@ class Assets {
                 array(
                     'adminUrl'     => admin_url(),
                     'hasManageCap' => current_user_can( 'manage_options' ),
+                     'weDocsUrl'              => admin_url( 'admin.php?page=wedocs#/' ),
                 ),
             );
         }
