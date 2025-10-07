@@ -13,6 +13,7 @@ ehthumbs.db
 Thumbs.db
 /node_modules
 /vendor/
-/assets/build
+
 .vscode/
 .idea/
+config.bat

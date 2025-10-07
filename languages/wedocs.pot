@@ -2,14 +2,14 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 2.1.12\n"
+"Project-Id-Version: weDocs 2.1.13\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-24T12:19:37+00:00\n"
+"POT-Creation-Date: 2025-10-01T06:41:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wedocs\n"
@@ -57,6 +57,28 @@ msgstr ""
 msgid "This document has no sections yet. Check back later or wait for the author to add content."
 msgstr ""
 
+#: includes/Admin.php:91
+#: includes/Admin.php:112
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: includes/Admin.php:92
+#: includes/Admin.php:113
+msgid "Check Discount"
+msgstr ""
+
+#: includes/Admin.php:93
+#: includes/Admin.php:115
+#: includes/Admin/Menu.php:72
+#: includes/functions.php:127
+msgid "Docs"
+msgstr ""
+
+#: includes/Admin.php:94
+#: includes/Admin.php:116
+msgid "Get Support"
+msgstr ""
+
 #: includes/Admin/Admin.php:102
 msgid "Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
 msgstr ""
@@ -79,11 +101,6 @@ msgstr ""
 
 #: includes/Admin/Docs_List_Table.php:67
 msgid "Votes"
-msgstr ""
-
-#: includes/Admin/Menu.php:72
-#: includes/functions.php:127
-msgid "Docs"
 msgstr ""
 
 #: includes/Admin/Menu.php:77
@@ -457,6 +474,7 @@ msgstr ""
 #: assets/build/index.js:7
 #: src/components/BackToDocsPage.js:25
 #: src/components/Documentations/index.js:131
+#: src/components/PermissionSettingsDemo/BackToDocsPage.js:25
 msgid "All Docs"
 msgstr ""
 
@@ -1003,6 +1021,7 @@ msgstr ""
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:199
 #: src/components/Migrations/Modals/MigrationProgressModal.js:155
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:195
+#: src/components/PermissionSettingsDemo/index.js:31
 #: src/components/RestrictionModal.js:131
 msgid "Cancel"
 msgstr ""
@@ -1314,8 +1333,8 @@ msgid "No section or article found for this documentation"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/ProPreviews/common/UpgradeButton.js:15
-msgid "Upgrade to PRO "
+#: src/components/ProPreviews/common/UpgradeButton.js:16
+msgid "Go Pro – Up to 50% OFF! 🔥"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1344,7 +1363,7 @@ msgid "Assistant widget and A.I. Powered Chatbot"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/ProPreviews/common/UpgradeTooltip.js:15
+#: src/components/ProPreviews/common/UpgradeTooltip.js:16
 msgid "Available in Pro. Unlock & enjoy:"
 msgstr ""
 
@@ -1800,42 +1819,47 @@ msgid "Industry leading 24x7 support"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/PermissionSettings.js:13
+#: src/components/MultiSelectBox.js:21
+msgid "1 role selected"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/MultiSelectBox.js:74
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:252
+#: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:124
+msgid "%s"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/ProPreviews/PermissionSettings.js:16
 msgid "Global doc permission settings"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/PermissionSettings.js:14
+#: src/components/ProPreviews/PermissionSettings.js:17
 msgid "By default, who will get edit access on all the documents?"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/PermissionSettings.js:22
+#: src/components/ProPreviews/PermissionSettings.js:25
 msgid "Who can manage weDocs Settings?"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/PermissionSettings.js:23
+#: src/components/ProPreviews/PermissionSettings.js:26
 msgid "Who will have the ability to alter the settings of the plugin?"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/index.js:25
+#: src/components/ProPreviews/index.js:26
 #: src/components/ProPreviews/index.js:193
-#: src/components/ProPreviews/PermissionSettings.js:35
+#: src/components/ProPreviews/PermissionSettings.js:38
 msgid "Permission Management"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/PermissionSettings.js:81
-msgid "6 roles selected"
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:252
-#: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:124
-#: src/components/ProPreviews/PermissionSettings.js:113
-msgid "%s"
+#: src/components/ProPreviews/PermissionSettings.js:103
+msgid "Administrator"
 msgstr ""
 
 #: assets/build/index.js:7
@@ -2038,7 +2062,7 @@ msgstr ""
 
 #: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AssistantPanel.js:16
-#: src/components/ProPreviews/index.js:43
+#: src/components/ProPreviews/index.js:44
 msgid "Assistant Widget"
 msgstr ""
 
@@ -2056,7 +2080,7 @@ msgstr ""
 #: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/index.js:11
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:5
-#: src/components/ProPreviews/index.js:62
+#: src/components/ProPreviews/index.js:63
 msgid "A.I. Chat"
 msgstr ""
 
@@ -2194,7 +2218,7 @@ msgstr ""
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/index.js:11
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:6
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:67
-#: src/components/ProPreviews/index.js:71
+#: src/components/ProPreviews/index.js:72
 msgid "Explore"
 msgstr ""
 
@@ -2322,7 +2346,7 @@ msgstr ""
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/index.js:11
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:90
-#: src/components/ProPreviews/index.js:86
+#: src/components/ProPreviews/index.js:87
 msgid "Messaging"
 msgstr ""
 
@@ -2533,29 +2557,133 @@ msgid "Reset All"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/index.js:101
+#: src/components/ProPreviews/index.js:102
 msgid "Placement"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/index.js:116
+#: src/components/ProPreviews/index.js:117
 msgid "Widget Preference"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/index.js:133
+#: src/components/ProPreviews/index.js:134
 msgid "Layout & Styles"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/index.js:200
-#: src/components/ProPreviews/index.js:215
-msgid "Pro"
+#: src/components/ProPreviews/index.js:202
+msgid "Restrict editing for admin only"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/index.js:208
-msgid "Restrict editing for admin only"
+#: src/components/PermissionSettingsDemo/SettingsHeader.js:7
+msgid "Choose your privacy settings"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/SettingsHeader.js:10
+msgid "Control user management for this doc. You can make a doc for internal usage, allow certain user roles to write and edit a doc and more"
+msgstr ""
+
+#: assets/build/index.js:7
+msgid "Viewing Privacy"
+msgstr ""
+
+#: assets/build/index.js:7
+msgid "Public"
+msgstr ""
+
+#: assets/build/index.js:7
+msgid "Everyone can see this doc"
+msgstr ""
+
+#: assets/build/index.js:7
+msgid "Private"
+msgstr ""
+
+#: assets/build/index.js:7
+msgid "Only logged-in users can see this doc"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/RoleManagementHeader.js:7
+msgid "Manage your team members"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/RoleManagementHeader.js:10
+msgid "Assign roles, control access levels, and collaborate seamlessly on documentations"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:18
+msgid "User role management"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:21
+msgid "Set your documentation role permissions"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:48
+msgid "As per Global Permission Settings"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:49
+msgid "Custom"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:56
+msgid "Go to permission management setting"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:65
+msgid "Admin"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:69
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:81
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:93
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:105
+msgid "Can edit"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:76
+msgid "Authors"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:80
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:92
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:104
+msgid "Can view"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:88
+msgid "Contributors"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:100
+msgid "Subscribers"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/BackToDocsPage.js:27
+msgid "Manage Docs"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/PermissionSettingsDemo/index.js:39
+msgid "Save"
 msgstr ""
 
 #: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:89
