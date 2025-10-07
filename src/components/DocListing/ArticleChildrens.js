@@ -3,6 +3,7 @@ import DocActions from '../DocActions';
 import { __, sprintf } from '@wordpress/i18n';
 import QuickEditModal from './QuickEditModal';
 import extractedTitle from '../../utils/extractedTitle';
+import UpgradePopup from '../ProPreviews/common/UpgradePopup';
 
 const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllowComments } ) => {
   const { modified: lastModifiedDate, comment_count: commentCount } = article;
@@ -75,7 +76,34 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                       { __( 'Draft', 'wedocs' ) }
                     </div>
                   ) }
+                </a>
 
+                { /* Add Nested Article Button - Pro Feature */ }
+                { ! Boolean( parseInt( isAdminRestrictedArticle ) ) && (
+                  <UpgradePopup className={ `mr-4` }>
+                    <div
+                      className='tooltip cursor-pointer flex items-center justify-center w-3.5 h-3.5'
+                      data-tip={ __( 'Create Nested Article (Pro)', 'wedocs' ) }
+                    >
+                      <span className="items-center dashicons dashicons-plus-alt2 hidden group-hover:inline-flex text-2xl font-medium text-[#d1d5db] hover:text-indigo-700"></span>
+                    </div>
+                  </UpgradePopup>
+                ) }
+
+                <a
+                  target="_blank"
+                  href={
+                    ! Boolean( parseInt( wp?.hooks?.applyFilters(
+                      'wedocs_check_is_admin_restricted_article',
+                      false,
+                      article?.id
+                    ) ) ) ?
+                      `${ weDocsAdminVars.adminUrl }post.php?post=${ article?.id }&action=edit` :
+                      `${ window.location.origin }/?p=${ article?.id }`
+                  }
+                  className={ `${ ! Boolean( parseInt( isAdminRestrictedArticle ) ) ? 'mr-4' : '' } flex items-center flex-shrink-0 text-base group font-medium text-gray-700 !shadow-none` }
+                  rel="noreferrer"
+                >
                   { ! Boolean( parseInt( isAdminRestrictedArticle ) ) && (
                     <>
                       <QuickEditModal

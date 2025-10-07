@@ -3,13 +3,14 @@ import DocActions from '../DocActions';
 import { CSS } from '@dnd-kit/utilities';
 import { __, sprintf } from '@wordpress/i18n';
 import QuickEditModal from './QuickEditModal';
-import { useSortable } from '@dnd-kit/sortable';
+import { useSortable, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import extractedTitle from '../../utils/extractedTitle';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useState, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import docStore from '../../data/docs';
 import ArticleChildrens from './ArticleChildrens';
 import AddArticleModal from '../AddArticleModal';
+import DraggableDocs from '../DraggableDocs';
 
 const SectionArticles = ( { article, articles, isAdmin, section, sections, searchValue, setShowArticles, isAllowComments } ) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
@@ -33,12 +34,24 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
 
   const articleChildrens = useSelect(
     ( select ) => select( docStore ).getArticleChildrens( parseInt( article?.id ) ),
-    []
+    [ article?.id ]
   );
 
-  const filteredArticleChildrens = articleChildrens?.filter(
-    ( children ) => children?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() )
-  );
+  const [ childrenItems, setChildrenItems ] = useState( articleChildrens || [] );
+  const [ needSortingStatusLocal, setNeedSortingStatusLocal ] = useState( false );
+
+  // Update children items when articleChildren changes
+  useEffect( () => {
+    if ( articleChildrens ) {
+      setChildrenItems( articleChildrens );
+    }
+  }, [ articleChildrens, article?.id ] );
+
+  const filteredArticleChildrens = searchValue
+    ? childrenItems?.filter(
+        ( children ) => children?.title?.rendered?.toLowerCase().includes( searchValue.toLowerCase() )
+      )
+    : childrenItems;
 
   const isAdminRestrictedArticle = wp?.hooks?.applyFilters(
     'wedocs_check_is_admin_restricted_article',
@@ -55,13 +68,17 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
           { ...attributes }
           ref={ setNodeRef }
         >
-          <div className={ `pr-3.5 py-0.5 cursor-grab` }>
+          <div
+            className={ `pr-3.5 py-0.5 cursor-grab hover:bg-gray-100 rounded transition-colors` }
+            { ...listeners }
+            style={{ touchAction: 'none' }}
+          >
             <svg
               width="20"
               height="21"
               fill="none"
-              { ...listeners }
               xmlns="http://www.w3.org/2000/svg"
+              className="pointer-events-none"
             >
               <path
                 fillRule="evenodd"
@@ -133,7 +150,7 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
                       className='tooltip cursor-pointer flex items-center justify-center w-3.5 h-3.5'
                       data-tip={ __( 'Create', 'wedocs' ) }
                     >
-                      <span className="flex items-center dashicons dashicons-plus-alt2 hidden group-hover:inline-flex text-2xl font-medium text-[#d1d5db] hover:text-indigo-700"></span>
+                      <span className="items-center dashicons dashicons-plus-alt2 hidden group-hover:inline-flex text-2xl font-medium text-[#d1d5db] hover:text-indigo-700"></span>
                     </div>
                   </AddArticleModal>
 
@@ -302,16 +319,43 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
             style={ style }
             className={ `my-1 article-children pl-4 sm:pl-16 bg-white` }
           >
-            { filteredArticleChildrens?.map( ( childrenDoc ) => (
-              <ArticleChildrens
-                section={ article }
-                sections={ articles }
-                key={ childrenDoc.id }
-                article={ childrenDoc }
-                setShowArticles={ setShowArticles }
-                isAllowComments={ isAllowComments }
-              />
-            ) ) }
+            { filteredArticleChildrens?.map( ( childrenDoc ) => {
+              // Allow pro version to override the article children component
+              const ChildComponent = wp?.hooks?.applyFilters(
+                'wedocs_article_children_component',
+                ArticleChildrens,
+                {
+                  section: article,
+                  sections: articles,
+                  article: childrenDoc,
+                  setShowArticles: setShowArticles,
+                  isAllowComments: isAllowComments,
+                  searchValue: searchValue,
+                  DocActions: DocActions,
+                  QuickEditModal: QuickEditModal,
+                  AddArticleModal: AddArticleModal,
+                  DraggableDocs: DraggableDocs,
+                }
+              );
+
+              return (
+                <ChildComponent
+                  section={ article }
+                  sections={ articles }
+                  key={ childrenDoc.id }
+                  article={ childrenDoc }
+                  setShowArticles={ setShowArticles }
+                  isAllowComments={ isAllowComments }
+                  searchValue={ searchValue }
+                  DocActions={ DocActions }
+                  QuickEditModal={ QuickEditModal }
+                  AddArticleModal={ AddArticleModal }
+                  DraggableDocs={ DraggableDocs }
+                  depth={ 2 }
+                  maxDepth={ 7 }
+                />
+              );
+            } ) }
           </div>
         ) }
       </Fragment>
