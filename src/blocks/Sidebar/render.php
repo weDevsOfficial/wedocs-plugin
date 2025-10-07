@@ -1,0 +1,109 @@
+<?php
+/**
+ * Render the sidebar block on frontend using WordPress native functions
+ *
+ * @param array  $attributes Block attributes
+ * @param string $content    Block content
+ * @return string Rendered block content
+ */
+
+if (!function_exists('render_wedocs_sidebar')) {
+function render_wedocs_sidebar($attributes, $content) {
+    // Extract attributes with defaults
+    $docs_selection = $attributes['docsSelection'] ?? 'all';
+    $include_sections = $attributes['includeSections'] ?? [];
+    $exclude_sections = $attributes['excludeSections'] ?? [];
+    $sections_order_by = $attributes['sectionsOrderBy'] ?? 'menu_order';
+    $sections_order = $attributes['sectionsOrder'] ?? 'asc';
+    $enable_nested_sections = $attributes['enableNestedSections'] ?? true;
+    $article_order_by = $attributes['articleOrderBy'] ?? 'menu_order';
+    $article_order = $attributes['articleOrder'] ?? 'asc';
+    $enable_nested_articles = $attributes['enableNestedArticles'] ?? true;
+    $section_title_tag = $attributes['sectionTitleTag'] ?? 'h3';
+    $article_title_tag = $attributes['articleTitleTag'] ?? 'h4';
+    
+    // Styling attributes
+    $container_styles = $attributes['containerStyles'] ?? [];
+    $section_styles = $attributes['sectionStyles'] ?? [];
+    $title_styles = $attributes['titleStyles'] ?? [];
+    $count_badge_styles = $attributes['countBadgeStyles'] ?? [];
+    $doc_list_styles = $attributes['docListStyles'] ?? [];
+    $className = $attributes['className'] ?? '';
+
+    // Get the parent doc ID (similar to existing docs-sidebar.php logic)
+    global $post;
+    $parent = 0;
+    
+    if (!empty($post) && $post->post_type === 'docs') {
+        if (!empty($post->post_parent)) {
+            $ancestors = get_post_ancestors($post->ID);
+            $root = count($ancestors) - 1;
+            $parent = $ancestors[$root];
+        } else {
+            $parent = $post->ID;
+        }
+    }
+
+    // Use wp_list_pages with existing Walker class (like docs-sidebar.php)
+    $walker = new WeDevs\WeDocs\Walker();
+    
+    // Build wp_list_pages arguments
+    $list_args = array(
+        'title_li' => '',
+        'echo' => false,
+        'post_type' => 'docs',
+        'walker' => $walker,
+    );
+
+    // Apply ordering
+    if ($sections_order_by === 'menu_order') {
+        $list_args['sort_column'] = 'menu_order';
+    } else {
+        $list_args['sort_column'] = $sections_order_by;
+    }
+    $list_args['sort_order'] = strtoupper($sections_order);
+
+    // Apply include/exclude filters
+    if (!empty($include_sections)) {
+        $list_args['include'] = implode(',', $include_sections);
+    } elseif (!empty($exclude_sections)) {
+        $list_args['exclude'] = implode(',', $exclude_sections);
+    }
+
+    // If we have a specific parent, use child_of, otherwise get all top-level docs
+    if ($parent > 0) {
+        $list_args['child_of'] = $parent;
+    } else {
+        $list_args['parent'] = 0; // Only top-level docs
+    }
+
+    // Get the hierarchical list using WordPress native function
+    $children = wp_list_pages($list_args);
+
+    // Build inline styles from block attributes
+    $container_style = '';
+    if (!empty($container_styles['backgroundColor'])) {
+        $container_style .= 'background-color: ' . esc_attr($container_styles['backgroundColor']) . ';';
+    }
+    if (!empty($container_styles['width'])) {
+        $container_style .= 'width: ' . esc_attr($container_styles['width']) . ';';
+    }
+
+    // Start output buffering
+    ob_start();
+    ?>
+    <div class="wedocs-sidebar-block <?php echo esc_attr($className); ?>" style="<?php echo esc_attr($container_style); ?>">
+        <?php if ($children): ?>
+            <ul class="doc-nav-list">
+                <?php echo $children; ?>
+            </ul>
+        <?php else: ?>
+            <p class="wedocs-no-content">
+                <?php _e('No documentation sections found.', 'wedocs'); ?>
+            </p>
+        <?php endif; ?>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+}
