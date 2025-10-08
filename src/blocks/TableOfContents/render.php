@@ -126,6 +126,12 @@ if ( ! function_exists( 'wedocs_extract_headings_from_content_safe' ) ) {
             return $headings;
         }
 
+        // Extract only content within entry-content div for weDocs pages
+        // This prevents the TOC from picking up headings from headers, footers, sidebars, etc.
+        if (preg_match('/<div[^>]*class=["\'][^"\']*entry-content[^"\']*["\'][^>]*>(.*?)<\/div>/is', $content, $entry_match)) {
+            $content = $entry_match[1];
+        }
+
         // Convert h-tags to lowercase for pattern matching
         $supported_tags = array_map('strtolower', $supported_headings);
         $pattern = '/<(' . implode('|', $supported_tags) . ')(?:[^>]*(?:\s+id=["\']([^"\'][^"\']*)["\'\'])?[^>]*)>(.*?)<\/\1>/i';

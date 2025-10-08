@@ -43,8 +43,14 @@ document.addEventListener('DOMContentLoaded', function() {
 		const showHierarchy = tocBlock.dataset.showHierarchy !== 'false';
 		const showNumbering = tocBlock.dataset.showNumbering === 'true';
 
-		// Find all headings in the page content
-		const contentArea = document.querySelector('.entry-content, .post-content, main, .content') || document.body;
+		// Find all headings in the weDocs content section only
+		const contentArea = document.querySelector('.entry-content');
+		if (!contentArea) {
+			const tocContent = tocBlock.querySelector('.toc-content');
+			tocContent.innerHTML = '<div class="toc-empty-state"><p>No weDocs content area found.</p></div>';
+			return;
+		}
+
 		const headingSelector = supportedHeadings.map(h => h.toLowerCase()).join(', ');
 		const headings = contentArea.querySelectorAll(headingSelector);
 
