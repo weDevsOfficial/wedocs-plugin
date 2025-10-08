@@ -396,7 +396,8 @@ function render_wedocs_quick_search( $attributes ) {
 
     <script>
     (function() {
-        const trigger = document.querySelector('.wedocs-quick-search-trigger');
+        // Use a more specific selector to avoid conflicts with other search elements
+        const trigger = document.querySelector('.wedocs-quick-search-block .wedocs-quick-search-trigger');
 
         if (!trigger) return;
 
@@ -767,15 +768,18 @@ function render_wedocs_quick_search( $attributes ) {
             }
         };
 
-        // Enhanced keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            // Only handle keyboard events when modal is active
+        // Enhanced keyboard navigation - only for Quick Search blocks
+        const handleKeydown = (e) => {
+            // Only handle keyboard events when modal is active or when clicking on Quick Search trigger
             if (!modal.classList.contains('active')) {
-                // Cmd/Ctrl + K to open modal
+                // Cmd/Ctrl + K to open modal - but only if the trigger is focused
                 if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-                    e.preventDefault();
-                    openModal();
-                    setTimeout(focusSearchInput, 100);
+                    // Only open if the trigger is focused to avoid conflicts with sidebar search
+                    if (trigger.contains(document.activeElement)) {
+                        e.preventDefault();
+                        openModal();
+                        setTimeout(focusSearchInput, 100);
+                    }
                 }
                 return;
             }
@@ -814,6 +818,14 @@ function render_wedocs_quick_search( $attributes ) {
                     }
                     break;
             }
+        };
+
+        // Add the event listener
+        document.addEventListener('keydown', handleKeydown);
+        
+        // Clean up event listener when the page unloads
+        window.addEventListener('beforeunload', () => {
+            document.removeEventListener('keydown', handleKeydown);
         });
     })();
     </script>
