@@ -12,6 +12,14 @@ const SectionItem = ({ section, attributes, level = 0 }) => {
         treeStyles
     } = attributes;
 
+    // Helper function to decode HTML entities
+    const decodeHtmlEntities = (text) => {
+        if (!text) return '';
+        const textarea = document.createElement('textarea');
+        textarea.innerHTML = text;
+        return textarea.value;
+    };
+
     // Helper function to get color value or fallback
     const getColorValue = (colorValue, fallback = '') => {
         return colorValue && colorValue.trim() !== '' ? colorValue : fallback;
@@ -163,7 +171,7 @@ const SectionItem = ({ section, attributes, level = 0 }) => {
                         className="wedocs-section-title"
                         style={titleStyle}
                     >
-                        {section.post_title}
+                        {decodeHtmlEntities(section.post_title)}
                     </TitleTag>
                 </div>
                 

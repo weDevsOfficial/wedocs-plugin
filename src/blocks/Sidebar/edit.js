@@ -91,9 +91,27 @@ const Edit = ({ attributes, setAttributes }) => {
                 const queryParams = new URLSearchParams({
                     per_page: -1,
                     status: 'publish',
-                    orderby: sectionsOrderBy,
-                    order: sectionsOrder,
                 });
+
+                // Map our orderby options to WordPress REST API valid options
+                let apiOrderBy = 'menu_order';
+                if (sectionsOrderBy === 'menu_order') {
+                    apiOrderBy = 'menu_order';
+                } else if (sectionsOrderBy === 'name') {
+                    apiOrderBy = 'title';
+                } else if (sectionsOrderBy === 'slug') {
+                    apiOrderBy = 'slug';
+                } else if (sectionsOrderBy === 'id') {
+                    apiOrderBy = 'id';
+                } else if (sectionsOrderBy === 'count') {
+                    // For count, we'll fetch all and sort client-side
+                    apiOrderBy = 'menu_order';
+                } else {
+                    apiOrderBy = 'menu_order';
+                }
+                
+                queryParams.append('orderby', apiOrderBy);
+                queryParams.append('order', sectionsOrder);
 
                 // Apply exclude filter
                 if (excludeSections.length > 0) {
@@ -105,11 +123,11 @@ const Edit = ({ attributes, setAttributes }) => {
                     path: `/wp/v2/docs?${queryParams.toString()}`
                 });
 
+
                 // Process the data to build hierarchical structure
                 const processedSections = processDocsData(response);
                 setSections(processedSections);
             } catch (error) {
-                console.error('Error fetching weDocs data:', error);
                 // Fallback to empty array on error
                 setSections([]);
             } finally {

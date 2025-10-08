@@ -37,6 +37,14 @@ const ArticleItem = ({
     treeStyles
   } = attributes;
 
+  // Helper function to decode HTML entities
+  const decodeHtmlEntities = text => {
+    if (!text) return '';
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.value;
+  };
+
   // Tree-specific styles
   const indentation = level * parseInt(treeStyles?.indentation?.replace('px', '') || 20);
 
@@ -106,7 +114,7 @@ const ArticleItem = ({
               e.target.style.color = normalColor;
             }
           },
-          children: article.post_title
+          children: decodeHtmlEntities(article.post_title)
         })
       })]
     }), hasChildren && enableNestedArticles && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
@@ -209,6 +217,14 @@ const SectionItem = ({
     titleStyles,
     treeStyles
   } = attributes;
+
+  // Helper function to decode HTML entities
+  const decodeHtmlEntities = text => {
+    if (!text) return '';
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.value;
+  };
 
   // Helper function to get color value or fallback
   const getColorValue = (colorValue, fallback = '') => {
@@ -369,7 +385,7 @@ const SectionItem = ({
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(TitleTag, {
           className: "wedocs-section-title",
           style: titleStyle,
-          children: section.post_title
+          children: decodeHtmlEntities(section.post_title)
         })]
       }), level === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
         className: "wedocs-expand-toggle transition-colors",
@@ -623,10 +639,27 @@ const Edit = ({
         // Build query parameters based on block attributes
         const queryParams = new URLSearchParams({
           per_page: -1,
-          status: 'publish',
-          orderby: sectionsOrderBy,
-          order: sectionsOrder
+          status: 'publish'
         });
+
+        // Map our orderby options to WordPress REST API valid options
+        let apiOrderBy = 'menu_order';
+        if (sectionsOrderBy === 'menu_order') {
+          apiOrderBy = 'menu_order';
+        } else if (sectionsOrderBy === 'name') {
+          apiOrderBy = 'title';
+        } else if (sectionsOrderBy === 'slug') {
+          apiOrderBy = 'slug';
+        } else if (sectionsOrderBy === 'id') {
+          apiOrderBy = 'id';
+        } else if (sectionsOrderBy === 'count') {
+          // For count, we'll fetch all and sort client-side
+          apiOrderBy = 'menu_order';
+        } else {
+          apiOrderBy = 'menu_order';
+        }
+        queryParams.append('orderby', apiOrderBy);
+        queryParams.append('order', sectionsOrder);
 
         // Apply exclude filter
         if (excludeSections.length > 0) {
@@ -642,7 +675,6 @@ const Edit = ({
         const processedSections = processDocsData(response);
         setSections(processedSections);
       } catch (error) {
-        console.error('Error fetching weDocs data:', error);
         // Fallback to empty array on error
         setSections([]);
       } finally {

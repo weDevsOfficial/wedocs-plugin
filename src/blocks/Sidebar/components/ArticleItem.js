@@ -7,6 +7,14 @@ const ArticleItem = ({ article, attributes, level = 0 }) => {
         treeStyles
     } = attributes;
 
+    // Helper function to decode HTML entities
+    const decodeHtmlEntities = (text) => {
+        if (!text) return '';
+        const textarea = document.createElement('textarea');
+        textarea.innerHTML = text;
+        return textarea.value;
+    };
+
     // Tree-specific styles
     const indentation = level * parseInt(treeStyles?.indentation?.replace('px', '') || 20);
     
@@ -92,7 +100,7 @@ const ArticleItem = ({ article, attributes, level = 0 }) => {
                             }
                         }}
                     >
-                        {article.post_title}
+                        {decodeHtmlEntities(article.post_title)}
                     </a>
                 </TitleTag>
                 
