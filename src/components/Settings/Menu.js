@@ -56,7 +56,7 @@ const Menu = () => {
             <Tab className="settings-tab w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer">
               { tab[ 1 ]?.icon }
               <span className="truncate">{ __( tab[ 1 ]?.text, 'wedocs' ) }</span>
-              { tab[ 1 ]?.pro && <Badge /> }
+              { tab[ 1 ]?.pro && <Badge classes="opacity-0 group-hover:opacity-100 transition-opacity"/> }
             </Tab>
           ) : (
             <Fragment>
@@ -66,7 +66,7 @@ const Menu = () => {
               >
                 { tab[ 1 ]?.icon }
                 <span className="truncate">{ tab[ 1 ]?.text }</span>
-                { tab[ 1 ]?.pro && <Badge /> }
+                { tab[ 1 ]?.pro && <Badge classes="opacity-0 group-hover:opacity-100 transition-opacity"/> }
                 <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#6b7280" className="w-5 h-5 ml-auto">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                 </svg>
@@ -80,7 +80,7 @@ const Menu = () => {
                   <div className={ `pro-sub-settings ml-9 flex items-center w-full` }>
                     { subtab?.icon }
                     <span className="truncate">{ subtab?.text }</span>
-                    { subtab?.pro && <Badge /> }
+                    { subtab?.pro && <Badge classes="opacity-0 group-hover:opacity-100 transition-opacity"/> }
                   </div>
                 </Tab>
               ) ) }

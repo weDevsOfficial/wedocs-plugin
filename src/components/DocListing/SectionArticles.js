@@ -232,7 +232,7 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
                 </div>
               </div>
               <div className="flex items-center gap-5 flex-shrink-0 mt-4 sm:mt-0 sm:ml-5">
-                <div className="flex items-center gap-0">
+                <div className="flex items-center gap-1">
                   { /* Render admin restriction icon. */ }
                   { wp?.hooks?.applyFilters(
                     'wedocs_article_privacy_action',
