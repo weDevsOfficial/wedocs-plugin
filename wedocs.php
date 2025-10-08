@@ -47,6 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid/render.php';
+require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/Sidebar/render.php';
 
 /**
  * WeDocs class.
@@ -180,6 +181,14 @@ final class WeDocs {
             plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid',
             array(
                 'render_callback' => 'render_wedocs_docs_grid'
+            )
+        );
+
+        // Register the Sidebar block
+        register_block_type(
+            plugin_dir_path(__FILE__) . 'assets/build/blocks/Sidebar',
+            array(
+                'render_callback' => 'render_wedocs_sidebar'
             )
         );
     }

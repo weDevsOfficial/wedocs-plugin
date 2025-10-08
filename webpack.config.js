@@ -6,7 +6,7 @@ const MiniCSSExtractPlugin = require( 'mini-css-extract-plugin' );
 const updatedConfig = {
   ...defaultConfig,
   entry: {
-    ...defaultConfig.entry,
+    ...defaultConfig.entry(),
     index    : './src/index',
     block    : './src/block.js',
     store    : './src/data/store.js',

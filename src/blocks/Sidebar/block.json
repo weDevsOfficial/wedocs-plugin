@@ -1,0 +1,118 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/wedocs-sidebar",
+	"version": "1.0.0",
+	"title": "weDocs - Sidebar",
+	"icon": "layout",
+	"category": "widgets",
+	"description": "Display a sidebar for documentation navigation",
+	"supports": {
+		"html": true,
+		"spacing": {
+			"padding": true
+		},
+		"color": {
+			"background": true,
+			"text": false
+		}
+	},
+	"attributes": {
+		"excludeSections": {
+			"type": "array",
+			"default": []
+		},
+		"sectionsOrderBy": {
+			"type": "string",
+			"default": "menu_order"
+		},
+		"sectionsOrder": {
+			"type": "string",
+			"default": "asc"
+		},
+		"articleOrderBy": {
+			"type": "string",
+			"default": "menu_order"
+		},
+		"articleOrder": {
+			"type": "string",
+			"default": "asc"
+		},
+		"enableNestedArticles": {
+			"type": "boolean",
+			"default": true
+		},
+		"sectionTitleTag": {
+			"type": "string",
+			"default": "h3"
+		},
+		"articleTitleTag": {
+			"type": "string",
+			"default": "h4"
+		},
+		"className": {
+			"type": "string",
+			"default": ""
+		},
+		"containerStyles": {
+			"type": "object",
+			"default": {
+				"backgroundColor": ""
+			}
+		},
+		"sectionStyles": {
+			"type": "object",
+			"default": {
+				"padding": "",
+				"margin": "",
+				"backgroundColor": "",
+				"backgroundColorHover": "",
+				"borderRadius": ""
+			}
+		},
+		"titleStyles": {
+			"type": "object",
+			"default": {
+				"color": "",
+				"backgroundColor": "",
+				"backgroundColorHover": "",
+				"padding": ""
+			}
+		},
+		"countBadgeStyles": {
+			"type": "object",
+			"default": {
+				"backgroundColor": "",
+				"backgroundColorHover": "",
+				"borderRadius": ""
+			}
+		},
+		"docListStyles": {
+			"type": "object",
+			"default": {
+				"backgroundColor": "",
+				"backgroundColorHover": "",
+				"textColor": "",
+				"textColorHover": ""
+			}
+		},
+		"treeStyles": {
+			"type": "object",
+			"default": {
+				"indentation": "20px",
+				"connectorColor": "",
+				"connectorWidth": "1px",
+				"itemSpacing": "4px",
+				"headerBackgroundColor": "",
+				"headerTextColor": "",
+				"headerPadding": "",
+				"headerBorderRadius": ""
+			}
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}
