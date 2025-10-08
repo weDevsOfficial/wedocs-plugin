@@ -1,11 +1,10 @@
 import { __ } from '@wordpress/i18n';
 
-const UpgradeButton = ( { classes, showPopup, children} ) => {
-  
+const UpgradeButton = ( { classes, showPopup, children, className } ) => {
   return (
     <>
       { children ? (
-        <span onClick={ showPopup }>{ children }</span>
+        <span onClick={ showPopup } className={ className }>{ children }</span>
       ) : (
         <a
           target='_blank'

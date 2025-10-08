@@ -1,6 +1,7 @@
 import {
   DndContext,
   closestCenter,
+  pointerWithin,
   PointerSensor,
   useSensor,
   useSensors,
@@ -11,7 +12,7 @@ import { arrayMove } from '@dnd-kit/sortable';
 import { dispatch } from '@wordpress/data';
 import docsStore from '../data/docs';
 
-const DraggableDocs = ( { setItems, children, setNeedSortingStatus } ) => {
+const DraggableDocs = ( { setItems, children, setNeedSortingStatus, parentId = null } ) => {
   const sensors = useSensors(
     useSensor( PointerSensor, {
       activationConstraint: {
@@ -24,7 +25,7 @@ const DraggableDocs = ( { setItems, children, setNeedSortingStatus } ) => {
   const handleDragEnd = ( event ) => {
     const { active, over } = event;
 
-    if ( active?.id !== over?.id ) {
+    if ( active?.id !== over?.id && over?.id ) {
       setItems( ( elements ) => {
         const oldItem = elements.find(
           ( element ) => element?.id === active?.id
@@ -33,6 +34,12 @@ const DraggableDocs = ( { setItems, children, setNeedSortingStatus } ) => {
         const newItem = elements.find(
           ( element ) => element?.id === over?.id
         );
+
+        // Only allow reordering if both items exist in the current elements array
+        if ( !oldItem || !newItem ) {
+          return elements;
+        }
+
         const oldIndex = elements.indexOf( oldItem );
         const newIndex = elements.indexOf( newItem );
         const updatedOrder = arrayMove( elements, oldIndex, newIndex );
@@ -50,12 +57,15 @@ const DraggableDocs = ( { setItems, children, setNeedSortingStatus } ) => {
     }
   };
 
+  // Use pointerWithin for better nested context support
+  const collisionDetectionStrategy = parentId ? pointerWithin : closestCenter;
+
   return (
     <DndContext
       sensors={ sensors }
-      collisionDetection={ closestCenter }
+      collisionDetection={ collisionDetectionStrategy }
       onDragEnd={ handleDragEnd }
-      class="z-10"
+      id={ parentId ? `parent-${parentId}` : 'root-context' }
     >
       { children }
     </DndContext>

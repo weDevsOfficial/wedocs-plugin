@@ -175,7 +175,7 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                       className='tooltip cursor-pointer flex items-center justify-center w-3.5 h-3.5'
                       data-tip={ __( 'Create', 'wedocs' ) }
                     >
-                      <span className="flex items-center dashicons dashicons-plus-alt2 hidden group-hover:inline-flex text-2xl font-medium text-[#d1d5db] hover:text-indigo-700"></span>
+                      <span className="items-center dashicons dashicons-plus-alt2 hidden group-hover:inline-flex text-2xl font-medium text-[#d1d5db] hover:text-indigo-700"></span>
                     </div>
                   </AddArticleModal>
                   <a
@@ -286,7 +286,7 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                   setNeedSortingStatus={ setNeedSortingStatus }
                 >
                   <SortableContext
-                    items={ articles }
+                    items={ articles?.map( a => a.id ) || [] }
                     strategy={ verticalListSortingStrategy }
                   >
                     { articles?.map( ( article ) => (
