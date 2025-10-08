@@ -41,41 +41,57 @@ function render_wedocs_sidebar($attributes, $content) {
         }
     }
 
-    // Use wp_list_pages with existing Walker class (like docs-sidebar.php)
+    // Custom implementation to handle separate sorting for sections and articles
     $walker = new WeDevs\WeDocs\Walker();
     
-    // Build wp_list_pages arguments
-    $list_args = array(
-        'title_li' => '',
-        'echo' => false,
+    // Get all docs for custom sorting
+    $all_docs_args = array(
         'post_type' => 'docs',
-        'walker' => $walker,
+        'post_status' => 'publish',
+        'numberposts' => -1,
+        'orderby' => 'menu_order',
+        'order' => 'ASC'
     );
-
-    // Apply ordering - matching admin interface logic but respecting direction setting
-    if ($sections_order_by === 'menu_order') {
-        // Use the same sorting logic as admin interface but respect direction setting
-        $list_args['sort_column'] = 'menu_order';
-        $list_args['sort_order'] = strtoupper($sections_order);
-    } else {
-        $list_args['sort_column'] = $sections_order_by;
-        $list_args['sort_order'] = strtoupper($sections_order);
-    }
-
+    
+    $all_docs = get_posts($all_docs_args);
+    
     // Apply exclude filter
     if (!empty($exclude_sections)) {
-        $list_args['exclude'] = implode(',', $exclude_sections);
+        $all_docs = array_filter($all_docs, function($doc) use ($exclude_sections) {
+            return !in_array($doc->ID, $exclude_sections);
+        });
     }
-
-    // If we have a specific parent, use child_of, otherwise get all top-level docs
-    if ($parent > 0) {
-        $list_args['child_of'] = $parent;
-    } else {
-        $list_args['parent'] = 0; // Only top-level docs
+    
+    // Build hierarchical structure
+    $sections = array();
+    $articles_by_section = array();
+    
+    foreach ($all_docs as $doc) {
+        if ($doc->post_parent == 0) {
+            // This is a top-level section
+            $sections[] = $doc;
+        } else {
+            // This is an article
+            if (!isset($articles_by_section[$doc->post_parent])) {
+                $articles_by_section[$doc->post_parent] = array();
+            }
+            $articles_by_section[$doc->post_parent][] = $doc;
+        }
     }
-
-    // Get the hierarchical list using WordPress native function
-    $children = wp_list_pages($list_args);
+    
+    // Sort sections
+    $sections = wedocs_sort_docs($sections, $sections_order_by, $sections_order);
+    
+    // Sort articles for each section
+    foreach ($articles_by_section as $section_id => $articles) {
+        $articles_by_section[$section_id] = wedocs_sort_docs($articles, $article_order_by, $article_order);
+    }
+    
+    // Build the HTML output using the Walker
+    $children = '';
+    foreach ($sections as $section) {
+        $children .= wedocs_render_section_with_articles($section, $articles_by_section, $walker, $enable_nested_articles);
+    }
 
     // Build inline styles from block attributes
     $container_style = '';
@@ -134,5 +150,78 @@ function render_wedocs_sidebar($attributes, $content) {
     </div>
     <?php
     return ob_get_clean();
+}
+
+/**
+ * Sort docs array based on orderby and order parameters
+ */
+function wedocs_sort_docs($docs, $orderby, $order) {
+    if (empty($docs)) {
+        return $docs;
+    }
+    
+    usort($docs, function($a, $b) use ($orderby, $order) {
+        $result = 0;
+        
+        switch ($orderby) {
+            case 'menu_order':
+                $result = $a->menu_order - $b->menu_order;
+                break;
+            case 'name':
+                $result = strcmp($a->post_title, $b->post_title);
+                break;
+            case 'slug':
+                $result = strcmp($a->post_name, $b->post_name);
+                break;
+            case 'id':
+                $result = $a->ID - $b->ID;
+                break;
+            case 'count':
+                // For count, we need to count children - this is complex for articles
+                // For now, fall back to menu_order
+                $result = $a->menu_order - $b->menu_order;
+                break;
+            default:
+                $result = $a->menu_order - $b->menu_order;
+        }
+        
+        return $order === 'desc' ? -$result : $result;
+    });
+    
+    return $docs;
+}
+
+/**
+ * Render a section with its articles using the Walker
+ */
+function wedocs_render_section_with_articles($section, $articles_by_section, $walker, $enable_nested_articles) {
+    $output = '';
+    
+    // Start the section
+    $walker->start_el($output, $section, 0, array('pages_with_children' => array()));
+    
+    // Add articles for this section
+    if (isset($articles_by_section[$section->ID])) {
+        $articles = $articles_by_section[$section->ID];
+        
+        if ($enable_nested_articles) {
+            // Render articles as nested children
+            foreach ($articles as $article) {
+                $walker->start_el($output, $article, 1, array());
+                $walker->end_el($output, $article, 1);
+            }
+        } else {
+            // Render articles at the same level
+            foreach ($articles as $article) {
+                $walker->start_el($output, $article, 0, array());
+                $walker->end_el($output, $article, 0);
+            }
+        }
+    }
+    
+    // End the section
+    $walker->end_el($output, $section, 0);
+    
+    return $output;
 }
 }

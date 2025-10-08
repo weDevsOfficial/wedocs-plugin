@@ -717,8 +717,8 @@ const Edit = ({
       }
     });
 
-    // Sort sections and their children - matching admin interface logic
-    const sortDocs = docsArray => {
+    // Sort sections - matching admin interface logic
+    const sortSections = docsArray => {
       return docsArray.sort((a, b) => {
         if (sectionsOrderBy === 'menu_order') {
           // Use the same sorting logic as admin interface but respect direction setting
@@ -739,13 +739,35 @@ const Edit = ({
       });
     };
 
-    // Sort sections using admin interface logic
-    const sortedSections = sortDocs(sections);
+    // Sort articles - using articleOrderBy setting
+    const sortArticles = docsArray => {
+      return docsArray.sort((a, b) => {
+        if (articleOrderBy === 'menu_order') {
+          // Use the same sorting logic as admin interface but respect direction setting
+          return articleOrder === 'asc' ? a.menu_order - b.menu_order : b.menu_order - a.menu_order;
+        } else if (articleOrderBy === 'name') {
+          return articleOrder === 'asc' ? a.post_title.localeCompare(b.post_title) : b.post_title.localeCompare(a.post_title);
+        } else if (articleOrderBy === 'id') {
+          return articleOrder === 'asc' ? a.ID - b.ID : b.ID - a.ID;
+        } else if (articleOrderBy === 'slug') {
+          return articleOrder === 'asc' ? a.post_name.localeCompare(b.post_name) : b.post_name.localeCompare(a.post_name);
+        } else if (articleOrderBy === 'count') {
+          // Sort by number of children
+          const aCount = a.children ? a.children.length : 0;
+          const bCount = b.children ? b.children.length : 0;
+          return articleOrder === 'asc' ? aCount - bCount : bCount - aCount;
+        }
+        return 0;
+      });
+    };
 
-    // Sort children of each section using the same logic
+    // Sort sections using admin interface logic
+    const sortedSections = sortSections(sections);
+
+    // Sort children of each section using article sorting logic
     sortedSections.forEach(section => {
       if (section.children.length > 0) {
-        section.children = sortDocs(section.children);
+        section.children = sortArticles(section.children);
       }
     });
     return sortedSections;
