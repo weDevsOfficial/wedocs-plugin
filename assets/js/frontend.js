@@ -410,6 +410,22 @@
         $( this ).removeClass( 'active' );
       }
     },
+
+    initializeQuickSearch() {
+      // Initialize Quick Search blocks functionality
+      // The Quick Search blocks have their own JavaScript built into their render.php
+      // This method is called to ensure compatibility but the actual functionality
+      // is handled by the individual Quick Search block instances
+      
+      // Check if there are any Quick Search blocks on the page
+      const quickSearchBlocks = document.querySelectorAll('.wedocs-quick-search-block');
+      
+      if (quickSearchBlocks.length > 0) {
+        // The Quick Search blocks are self-contained with their own JavaScript
+        // No additional initialization is needed here as each block handles its own functionality
+        // Both search systems can coexist without conflicts
+      }
+    },
   };
 
   $( function () {
