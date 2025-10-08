@@ -10,12 +10,9 @@
 if (!function_exists('render_wedocs_sidebar')) {
 function render_wedocs_sidebar($attributes, $content) {
     // Extract attributes with defaults
-    $docs_selection = $attributes['docsSelection'] ?? 'all';
-    $include_sections = $attributes['includeSections'] ?? [];
     $exclude_sections = $attributes['excludeSections'] ?? [];
     $sections_order_by = $attributes['sectionsOrderBy'] ?? 'menu_order';
     $sections_order = $attributes['sectionsOrder'] ?? 'asc';
-    $enable_nested_sections = $attributes['enableNestedSections'] ?? true;
     $article_order_by = $attributes['articleOrderBy'] ?? 'menu_order';
     $article_order = $attributes['articleOrder'] ?? 'asc';
     $enable_nested_articles = $attributes['enableNestedArticles'] ?? true;
@@ -63,10 +60,8 @@ function render_wedocs_sidebar($attributes, $content) {
     }
     $list_args['sort_order'] = strtoupper($sections_order);
 
-    // Apply include/exclude filters
-    if (!empty($include_sections)) {
-        $list_args['include'] = implode(',', $include_sections);
-    } elseif (!empty($exclude_sections)) {
+    // Apply exclude filter
+    if (!empty($exclude_sections)) {
         $list_args['exclude'] = implode(',', $exclude_sections);
     }
 
@@ -105,6 +100,20 @@ function render_wedocs_sidebar($attributes, $content) {
     }
     if (!empty($section_styles['borderRadius'])) {
         $section_styles_css .= '--section-border-radius: ' . esc_attr($section_styles['borderRadius']) . ';';
+    }
+
+    // Build title styles for CSS custom properties
+    if (!empty($title_styles['backgroundColor'])) {
+        $section_styles_css .= '--title-bg: ' . esc_attr($title_styles['backgroundColor']) . ';';
+    }
+    if (!empty($title_styles['backgroundColorHover'])) {
+        $section_styles_css .= '--title-bg-hover: ' . esc_attr($title_styles['backgroundColorHover']) . ';';
+    }
+    if (!empty($title_styles['color'])) {
+        $section_styles_css .= '--title-color: ' . esc_attr($title_styles['color']) . ';';
+    }
+    if (!empty($title_styles['padding'])) {
+        $section_styles_css .= '--title-padding: ' . esc_attr($title_styles['padding']) . ';';
     }
 
     // Start output buffering

@@ -2,7 +2,7 @@ import { useState } from '@wordpress/element';
 import ArticleItem from './ArticleItem';
 import CountBadge from './CountBadge';
 
-const SectionItem = ({ section, attributes, enableNestedSections, level = 0 }) => {
+const SectionItem = ({ section, attributes, level = 0 }) => {
     const [isExpanded, setIsExpanded] = useState(true);
     
     const {
@@ -33,22 +33,23 @@ const SectionItem = ({ section, attributes, enableNestedSections, level = 0 }) =
 
     const headerStyle = {
         backgroundColor: level === 0 ? getColorValue(treeStyles?.headerBackgroundColor) : 'transparent',
-        color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : getColorValue(titleStyles?.color),
-        padding: level === 0 ? (treeStyles?.headerPadding || '') : (titleStyles?.padding || ''),
+        color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : 'inherit',
+        padding: level === 0 ? (treeStyles?.headerPadding || '') : '',
         borderRadius: level === 0 ? (treeStyles?.headerBorderRadius || '') : '',
         border: level > 0 && treeStyles?.connectorColor ? `1px solid ${treeStyles.connectorColor}` : 'none',
         borderLeft: level > 0 && treeStyles?.connectorColor ? `2px solid ${treeStyles.connectorColor}` : 'none'
     };
 
     const titleStyle = {
-        color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : getColorValue(titleStyles?.color),
-        backgroundColor: 'transparent',
-        padding: '0',
+        color: level === 0 ? getColorValue(titleStyles?.color) : getColorValue(titleStyles?.color),
+        backgroundColor: level === 0 ? getColorValue(titleStyles?.backgroundColor) : 'transparent',
+        padding: level === 0 ? (titleStyles?.padding || '0') : '0',
         margin: '0'
     };
 
+
     const iconStyle = {
-        color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : getColorValue(titleStyles?.color, '#6c757d'),
+        color: level === 0 ? getColorValue(titleStyles?.color, '#6c757d') : getColorValue(titleStyles?.color, '#6c757d'),
         fontSize: '16px',
         marginRight: '8px'
     };
@@ -103,6 +104,40 @@ const SectionItem = ({ section, attributes, enableNestedSections, level = 0 }) =
                         toggleExpanded();
                     }
                 }}
+                onMouseEnter={(e) => {
+                    if (level === 0) {
+                        // For top-level sections, apply Section Title Styling hover
+                        const titleElement = e.currentTarget.querySelector('.wedocs-section-title');
+                        const hoverBg = getColorValue(titleStyles?.backgroundColorHover);
+                        if (titleElement && hoverBg) {
+                            titleElement.style.backgroundColor = hoverBg;
+                        }
+                    } else {
+                        // For nested sections, apply Article Title Styling hover
+                        const titleElement = e.currentTarget.querySelector('.wedocs-section-title');
+                        const hoverBg = getColorValue(titleStyles?.backgroundColorHover);
+                        if (titleElement && hoverBg) {
+                            titleElement.style.backgroundColor = hoverBg;
+                        }
+                    }
+                }}
+                onMouseLeave={(e) => {
+                    if (level === 0) {
+                        // For top-level sections, reset Section Title Styling
+                        const titleElement = e.currentTarget.querySelector('.wedocs-section-title');
+                        const normalBg = getColorValue(titleStyles?.backgroundColor);
+                        if (titleElement) {
+                            titleElement.style.backgroundColor = normalBg || 'transparent';
+                        }
+                    } else {
+                        // For nested sections, reset Article Title Styling
+                        const titleElement = e.currentTarget.querySelector('.wedocs-section-title');
+                        const normalBg = getColorValue(titleStyles?.backgroundColor);
+                        if (titleElement) {
+                            titleElement.style.backgroundColor = normalBg || 'transparent';
+                        }
+                    }
+                }}
                 aria-expanded={isExpanded}
                 aria-label={`Toggle ${section.post_title} section`}
             >
@@ -132,35 +167,44 @@ const SectionItem = ({ section, attributes, enableNestedSections, level = 0 }) =
                     </TitleTag>
                 </div>
                 
-                {/* Expand/collapse button */}
-                <button
-                    className="wedocs-expand-toggle transition-colors"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        toggleExpanded();
-                    }}
-                    aria-expanded={isExpanded}
-                    aria-label={`Toggle ${section.post_title} section`}
-                    style={{
-                        fontSize: '16px',
-                        color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : getColorValue(titleStyles?.color, '#6c757d'),
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '2px',
-                        borderRadius: '2px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '20px',
-                        height: '20px'
-                    }}
-                >
-                    {isExpanded ? '▲' : '▼'}
-                </button>
+                {/* Expand/collapse button - only show on section title level (level 0) */}
+                {level === 0 && (
+                    <button
+                        className="wedocs-expand-toggle transition-colors"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            toggleExpanded();
+                        }}
+                        aria-expanded={isExpanded}
+                        aria-label={`Toggle ${section.post_title} section`}
+                        style={{
+                            color: getColorValue(titleStyles?.color, '#6c757d'),
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: '2px',
+                            borderRadius: '2px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '24px',
+                            height: '24px'
+                        }}
+                    >
+                        {isExpanded ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" style={{ width: '16px', height: '16px' }}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                            </svg>
+                        ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" style={{ width: '16px', height: '16px' }}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        )}
+                    </button>
+                )}
             </div>
             
-            {enableNestedSections && children.length > 0 && isExpanded && (
+            {children.length > 0 && isExpanded && (
                 <div 
                     className="wedocs-section-children"
                     style={{

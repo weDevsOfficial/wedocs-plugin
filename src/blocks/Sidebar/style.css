@@ -19,10 +19,30 @@
     transition: all 0.2s ease;
 }
 
+.wedocs-section-title {
+    transition: all 0.2s ease;
+    background-color: var(--title-bg, transparent);
+    color: var(--title-color, inherit);
+    padding: var(--title-padding, 0);
+}
+
+.wedocs-section-title:hover {
+    background-color: var(--title-bg-hover, var(--title-bg, transparent));
+}
+
 .wedocs-article {
     transition: all 0.2s ease;
 }
 
 .wedocs-connector-line {
     transition: all 0.2s ease;
+}
+
+/* Article title styling that respects HTML tag hierarchy */
+.wedocs-article-title {
+    transition: all 0.2s ease;
+    margin: 0;
+    flex: 1;
+    font-weight: inherit;
+    line-height: inherit;
 }

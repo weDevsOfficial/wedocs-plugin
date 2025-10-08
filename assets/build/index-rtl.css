@@ -3716,10 +3716,6 @@ select {
 .wedocs-document .hidden {
   display: none;
 }
-.wedocs-document .size-6 {
-  width: 1.5rem;
-  height: 1.5rem;
-}
 .wedocs-document .h-1\.5 {
   height: 0.375rem;
 }
@@ -4340,17 +4336,14 @@ select {
 .wedocs-document .border-b {
   border-bottom-width: 1px;
 }
-.wedocs-document .border-l-2 {
-  border-right-width: 2px;
+.wedocs-document .border-b-2 {
+  border-bottom-width: 2px;
 }
 .wedocs-document .border-l-4 {
   border-right-width: 4px;
 }
 .wedocs-document .border-t {
   border-top-width: 1px;
-}
-.wedocs-document .border-b-2 {
-  border-bottom-width: 2px;
 }
 .wedocs-document .\!border-\[\#8c8f94\] {
   --tw-border-opacity: 1 !important;
@@ -4399,6 +4392,10 @@ select {
   --tw-border-opacity: 1;
   border-color: rgb(251 191 36 / var(--tw-border-opacity, 1));
 }
+.wedocs-document .border-blue-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(37 99 235 / var(--tw-border-opacity, 1));
+}
 .wedocs-document .border-gray-200 {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity, 1));
@@ -4421,10 +4418,6 @@ select {
 .wedocs-document .border-yellow-400 {
   --tw-border-opacity: 1;
   border-color: rgb(250 204 21 / var(--tw-border-opacity, 1));
-}
-.wedocs-document .border-blue-600 {
-  --tw-border-opacity: 1;
-  border-color: rgb(37 99 235 / var(--tw-border-opacity, 1));
 }
 .wedocs-document .border-t-\[\#DBDBDB\] {
   --tw-border-opacity: 1;
@@ -4586,9 +4579,6 @@ select {
 }
 .wedocs-document .p-12 {
   padding: 3rem;
-}
-.wedocs-document .p-2 {
-  padding: 0.5rem;
 }
 .wedocs-document .p-3 {
   padding: 0.75rem;
@@ -5205,10 +5195,6 @@ select {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(0 0 0 / var(--tw-ring-opacity, 1));
 }
-.wedocs-document .ring-blue-500 {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity, 1));
-}
 .wedocs-document .ring-indigo-600 {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(79 70 229 / var(--tw-ring-opacity, 1));
@@ -5219,9 +5205,6 @@ select {
 }
 .wedocs-document .ring-opacity-5 {
   --tw-ring-opacity: 0.05;
-}
-.wedocs-document .ring-opacity-50 {
-  --tw-ring-opacity: 0.5;
 }
 .wedocs-document .blur {
   --tw-blur: blur(8px);
@@ -5778,11 +5761,6 @@ html.wp-toolbar {
 .wedocs-document .hover\:text-gray-600:hover {
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity, 1));
-}
-
-.wedocs-document .hover\:text-gray-700:hover {
-  --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
 }
 
 .wedocs-document .hover\:text-indigo-700:hover {

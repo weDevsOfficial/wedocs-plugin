@@ -8,7 +8,7 @@
   \***************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"wedocs/wedocs-sidebar","version":"1.0.0","title":"weDocs - Sidebar","icon":"layout","category":"widgets","description":"Display a sidebar for documentation navigation","supports":{"html":true,"spacing":{"padding":true},"color":{"background":true,"text":false}},"attributes":{"docsSelection":{"type":"string","default":"all"},"includeSections":{"type":"array","default":[]},"excludeSections":{"type":"array","default":[]},"sectionsOrderBy":{"type":"string","default":"menu_order"},"sectionsOrder":{"type":"string","default":"asc"},"enableNestedSections":{"type":"boolean","default":true},"articleOrderBy":{"type":"string","default":"menu_order"},"articleOrder":{"type":"string","default":"asc"},"enableNestedArticles":{"type":"boolean","default":true},"sectionTitleTag":{"type":"string","default":"h3"},"articleTitleTag":{"type":"string","default":"h4"},"className":{"type":"string","default":""},"containerStyles":{"type":"object","default":{"backgroundColor":""}},"sectionStyles":{"type":"object","default":{"padding":"","margin":"","backgroundColor":"","backgroundColorHover":"","borderRadius":""}},"titleStyles":{"type":"object","default":{"color":"","backgroundColor":"","backgroundColorHover":"","padding":""}},"countBadgeStyles":{"type":"object","default":{"backgroundColor":"","backgroundColorHover":"","borderRadius":""}},"docListStyles":{"type":"object","default":{"backgroundColor":"","backgroundColorHover":"","textColor":"","textColorHover":""}},"treeStyles":{"type":"object","default":{"indentation":"20px","connectorColor":"","connectorWidth":"1px","itemSpacing":"4px","headerBackgroundColor":"","headerTextColor":"","headerPadding":"","headerBorderRadius":""}}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"wedocs/wedocs-sidebar","version":"1.0.0","title":"weDocs - Sidebar","icon":"layout","category":"widgets","description":"Display a sidebar for documentation navigation","supports":{"html":true,"spacing":{"padding":true},"color":{"background":true,"text":false}},"attributes":{"excludeSections":{"type":"array","default":[]},"sectionsOrderBy":{"type":"string","default":"menu_order"},"sectionsOrder":{"type":"string","default":"asc"},"articleOrderBy":{"type":"string","default":"menu_order"},"articleOrder":{"type":"string","default":"asc"},"enableNestedArticles":{"type":"boolean","default":true},"sectionTitleTag":{"type":"string","default":"h3"},"articleTitleTag":{"type":"string","default":"h4"},"className":{"type":"string","default":""},"containerStyles":{"type":"object","default":{"backgroundColor":""}},"sectionStyles":{"type":"object","default":{"padding":"","margin":"","backgroundColor":"","backgroundColorHover":"","borderRadius":""}},"titleStyles":{"type":"object","default":{"color":"","backgroundColor":"","backgroundColorHover":"","padding":""}},"countBadgeStyles":{"type":"object","default":{"backgroundColor":"","backgroundColorHover":"","borderRadius":""}},"docListStyles":{"type":"object","default":{"backgroundColor":"","backgroundColorHover":"","textColor":"","textColorHover":""}},"treeStyles":{"type":"object","default":{"indentation":"20px","connectorColor":"","connectorWidth":"1px","itemSpacing":"4px","headerBackgroundColor":"","headerTextColor":"","headerPadding":"","headerBorderRadius":""}}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","render":"file:./render.php"}');
 
 /***/ }),
 
@@ -22,18 +22,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 
 const ArticleItem = ({
   article,
   attributes,
   level = 0
 }) => {
-  const [isExpanded, setIsExpanded] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const {
     articleTitleTag,
     enableNestedArticles,
@@ -63,21 +59,14 @@ const ArticleItem = ({
     marginRight: '8px'
   };
   const textStyle = {
-    color: getColorValue(docListStyles.textColor),
-    fontSize: '14px',
-    lineHeight: '1.4'
-  };
-  const toggleExpanded = () => {
-    if (article.children && article.children.length > 0) {
-      setIsExpanded(!isExpanded);
-    }
+    color: getColorValue(docListStyles.textColor)
   };
   const TitleTag = articleTitleTag || 'h4';
   const children = article.children || [];
   const hasChildren = children.length > 0;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
     className: "wedocs-article transition-colors duration-200",
-    children: [level > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    children: [level > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
       className: "wedocs-connector-line",
       style: {
         position: 'absolute',
@@ -87,18 +76,18 @@ const ArticleItem = ({
         width: treeStyles?.connectorWidth || '1px',
         backgroundColor: getColorValue(treeStyles?.connectorColor, '#e5e7eb')
       }
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "flex items-center space-x-2",
       style: articleStyle,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
         className: "wedocs-article-icon",
         style: iconStyle,
         "aria-hidden": "true",
         children: "\uD83D\uDCC4"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(TitleTag, {
-        className: "wedocs-article-title m-0 flex-1",
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(TitleTag, {
+        className: `wedocs-article-title ${TitleTag} m-0 flex-1`,
         style: textStyle,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("a", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("a", {
           href: article.permalink || `#${article.ID}`,
           className: "hover:underline transition-colors duration-200",
           style: {
@@ -119,38 +108,24 @@ const ArticleItem = ({
           },
           children: article.post_title
         })
-      }), hasChildren && enableNestedArticles && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
-        className: "wedocs-expand-toggle text-gray-500 hover:text-gray-700 transition-colors",
-        onClick: toggleExpanded,
-        "aria-expanded": isExpanded,
-        "aria-label": `Toggle ${article.post_title} sub-articles`,
-        style: {
-          fontSize: '14px',
-          color: '#6c757d',
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
-          padding: '2px',
-          borderRadius: '2px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '18px',
-          height: '18px'
-        },
-        children: isExpanded ? '▼' : '▶'
       })]
-    }), hasChildren && enableNestedArticles && isExpanded && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    }), hasChildren && enableNestedArticles && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
       className: "wedocs-article-children",
       style: {
         marginLeft: level > 0 ? `${parseInt(treeStyles?.indentation?.replace('px', '') || 20)}px` : '0',
         borderLeft: level > 0 && treeStyles?.connectorColor ? `${treeStyles?.connectorWidth || '1px'} solid ${treeStyles.connectorColor}` : 'none',
         paddingLeft: level > 0 ? '8px' : '0'
       },
-      children: children.map(childArticle => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(ArticleItem, {
+      children: children.map(childArticle => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(ArticleItem, {
         article: childArticle,
         attributes: attributes,
         level: level + 1
+      }, childArticle.ID))
+    }), hasChildren && !enableNestedArticles && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      children: children.map(childArticle => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(ArticleItem, {
+        article: childArticle,
+        attributes: attributes,
+        level: level
       }, childArticle.ID))
     })]
   });
@@ -225,7 +200,6 @@ __webpack_require__.r(__webpack_exports__);
 const SectionItem = ({
   section,
   attributes,
-  enableNestedSections,
   level = 0
 }) => {
   const [isExpanded, setIsExpanded] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
@@ -255,20 +229,20 @@ const SectionItem = ({
   };
   const headerStyle = {
     backgroundColor: level === 0 ? getColorValue(treeStyles?.headerBackgroundColor) : 'transparent',
-    color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : getColorValue(titleStyles?.color),
-    padding: level === 0 ? treeStyles?.headerPadding || '' : titleStyles?.padding || '',
+    color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : 'inherit',
+    padding: level === 0 ? treeStyles?.headerPadding || '' : '',
     borderRadius: level === 0 ? treeStyles?.headerBorderRadius || '' : '',
     border: level > 0 && treeStyles?.connectorColor ? `1px solid ${treeStyles.connectorColor}` : 'none',
     borderLeft: level > 0 && treeStyles?.connectorColor ? `2px solid ${treeStyles.connectorColor}` : 'none'
   };
   const titleStyle = {
-    color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : getColorValue(titleStyles?.color),
-    backgroundColor: 'transparent',
-    padding: '0',
+    color: level === 0 ? getColorValue(titleStyles?.color) : getColorValue(titleStyles?.color),
+    backgroundColor: level === 0 ? getColorValue(titleStyles?.backgroundColor) : 'transparent',
+    padding: level === 0 ? titleStyles?.padding || '0' : '0',
     margin: '0'
   };
   const iconStyle = {
-    color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : getColorValue(titleStyles?.color, '#6c757d'),
+    color: level === 0 ? getColorValue(titleStyles?.color, '#6c757d') : getColorValue(titleStyles?.color, '#6c757d'),
     fontSize: '16px',
     marginRight: '8px'
   };
@@ -311,6 +285,40 @@ const SectionItem = ({
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           toggleExpanded();
+        }
+      },
+      onMouseEnter: e => {
+        if (level === 0) {
+          // For top-level sections, apply Section Title Styling hover
+          const titleElement = e.currentTarget.querySelector('.wedocs-section-title');
+          const hoverBg = getColorValue(titleStyles?.backgroundColorHover);
+          if (titleElement && hoverBg) {
+            titleElement.style.backgroundColor = hoverBg;
+          }
+        } else {
+          // For nested sections, apply Article Title Styling hover
+          const titleElement = e.currentTarget.querySelector('.wedocs-section-title');
+          const hoverBg = getColorValue(titleStyles?.backgroundColorHover);
+          if (titleElement && hoverBg) {
+            titleElement.style.backgroundColor = hoverBg;
+          }
+        }
+      },
+      onMouseLeave: e => {
+        if (level === 0) {
+          // For top-level sections, reset Section Title Styling
+          const titleElement = e.currentTarget.querySelector('.wedocs-section-title');
+          const normalBg = getColorValue(titleStyles?.backgroundColor);
+          if (titleElement) {
+            titleElement.style.backgroundColor = normalBg || 'transparent';
+          }
+        } else {
+          // For nested sections, reset Article Title Styling
+          const titleElement = e.currentTarget.querySelector('.wedocs-section-title');
+          const normalBg = getColorValue(titleStyles?.backgroundColor);
+          if (titleElement) {
+            titleElement.style.backgroundColor = normalBg || 'transparent';
+          }
         }
       },
       "aria-expanded": isExpanded,
@@ -363,7 +371,7 @@ const SectionItem = ({
           style: titleStyle,
           children: section.post_title
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+      }), level === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
         className: "wedocs-expand-toggle transition-colors",
         onClick: e => {
           e.stopPropagation();
@@ -372,8 +380,7 @@ const SectionItem = ({
         "aria-expanded": isExpanded,
         "aria-label": `Toggle ${section.post_title} section`,
         style: {
-          fontSize: '16px',
-          color: level === 0 ? getColorValue(treeStyles?.headerTextColor) : getColorValue(titleStyles?.color, '#6c757d'),
+          color: getColorValue(titleStyles?.color, '#6c757d'),
           background: 'none',
           border: 'none',
           cursor: 'pointer',
@@ -382,12 +389,42 @@ const SectionItem = ({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          width: '20px',
-          height: '20px'
+          width: '24px',
+          height: '24px'
         },
-        children: isExpanded ? '▲' : '▼'
+        children: isExpanded ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("svg", {
+          xmlns: "http://www.w3.org/2000/svg",
+          fill: "none",
+          viewBox: "0 0 24 24",
+          strokeWidth: "1.5",
+          stroke: "currentColor",
+          style: {
+            width: '16px',
+            height: '16px'
+          },
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("path", {
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            d: "m4.5 15.75 7.5-7.5 7.5 7.5"
+          })
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("svg", {
+          xmlns: "http://www.w3.org/2000/svg",
+          fill: "none",
+          viewBox: "0 0 24 24",
+          strokeWidth: "1.5",
+          stroke: "currentColor",
+          style: {
+            width: '16px',
+            height: '16px'
+          },
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("path", {
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            d: "m19.5 8.25-7.5 7.5-7.5-7.5"
+          })
+        })
       })]
-    }), enableNestedSections && children.length > 0 && isExpanded && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+    }), children.length > 0 && isExpanded && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
       className: "wedocs-section-children",
       style: {
         marginLeft: level > 0 ? `${parseInt(treeStyles?.indentation?.replace('px', '') || 20)}px` : '0',
@@ -428,16 +465,12 @@ const SidebarContainer = ({
   sections,
   attributes
 }) => {
-  const {
-    enableNestedSections
-  } = attributes;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
     children: sections && sections.length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "wedocs-sections",
       children: sections.map(section => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_SectionItem__WEBPACK_IMPORTED_MODULE_1__["default"], {
         section: section,
         attributes: attributes,
-        enableNestedSections: enableNestedSections,
         level: 0
       }, section.ID))
     }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
@@ -509,12 +542,9 @@ const Edit = ({
   setAttributes
 }) => {
   const {
-    docsSelection,
-    includeSections,
     excludeSections,
     sectionsOrderBy,
     sectionsOrder,
-    enableNestedSections,
     articleOrderBy,
     articleOrder,
     enableNestedArticles,
@@ -524,9 +554,7 @@ const Edit = ({
     containerStyles,
     sectionStyles,
     titleStyles,
-    countBadgeStyles,
-    docListStyles,
-    treeStyles
+    docListStyles
   } = attributes;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)({
     className: 'wedocs-sidebar-block'
@@ -574,26 +602,10 @@ const Edit = ({
       }
     });
   };
-  const updateCountBadgeStyles = (property, value) => {
-    setAttributes({
-      countBadgeStyles: {
-        ...countBadgeStyles,
-        [property]: handleColorValue(value)
-      }
-    });
-  };
   const updateDocListStyles = (property, value) => {
     setAttributes({
       docListStyles: {
         ...docListStyles,
-        [property]: handleColorValue(value)
-      }
-    });
-  };
-  const updateTreeStyles = (property, value) => {
-    setAttributes({
-      treeStyles: {
-        ...treeStyles,
         [property]: handleColorValue(value)
       }
     });
@@ -616,10 +628,8 @@ const Edit = ({
           order: sectionsOrder
         });
 
-        // Apply include/exclude filters
-        if (includeSections.length > 0) {
-          queryParams.append('include', includeSections.join(','));
-        } else if (excludeSections.length > 0) {
+        // Apply exclude filter
+        if (excludeSections.length > 0) {
           queryParams.append('exclude', excludeSections.join(','));
         }
 
@@ -640,7 +650,7 @@ const Edit = ({
       }
     };
     fetchDocsData();
-  }, [docsSelection, includeSections, excludeSections, sectionsOrderBy, sectionsOrder, enableNestedSections, articleOrderBy, articleOrder, enableNestedArticles]);
+  }, [excludeSections, sectionsOrderBy, sectionsOrder, articleOrderBy, articleOrder, enableNestedArticles]);
 
   // Process flat docs array into hierarchical structure
   const processDocsData = docs => {
@@ -744,24 +754,7 @@ const Edit = ({
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
         title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Query Settings', 'wedocs'),
         initialOpen: true,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Docs Selection', 'wedocs'),
-          value: docsSelection,
-          options: [{
-            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('All Docs', 'wedocs'),
-            value: 'all'
-          }],
-          onChange: value => setAttributes({
-            docsSelection: value
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Include Sections', 'wedocs'),
-          value: includeSections.join(', '),
-          onChange: value => setAttributes({
-            includeSections: value.split(',').map(id => id.trim()).filter(id => id)
-          }),
-          help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Comma-separated section IDs to include', 'wedocs')
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Exclude Sections', 'wedocs'),
           value: excludeSections.join(', '),
           onChange: value => setAttributes({
@@ -787,12 +780,6 @@ const Edit = ({
           }],
           onChange: value => setAttributes({
             sectionsOrder: value
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Enable Nested Sections', 'wedocs'),
-          checked: enableNestedSections,
-          onChange: value => setAttributes({
-            enableNestedSections: value
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Article Order By', 'wedocs'),
@@ -838,28 +825,6 @@ const Edit = ({
             articleTitleTag: value
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('WordPress Default Styles', 'wedocs'),
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-            className: "components-base-control__label",
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Block Background Color', 'wedocs')
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, {
-            colors: themeColors,
-            value: containerStyles.backgroundColor,
-            onChange: newColor => updateContainerStyles('backgroundColor', newColor)
-          })]
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Advanced', 'wedocs'),
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Additional CSS Classes', 'wedocs'),
-          value: className,
-          onChange: value => setAttributes({
-            className: value
-          }),
-          help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Add custom CSS classes', 'wedocs')
-        })
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
       group: "styles",
@@ -979,209 +944,6 @@ const Edit = ({
             value: docListStyles.textColorHover,
             onChange: newColor => updateDocListStyles('textColorHover', newColor)
           })]
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Count Badge Styling', 'wedocs'),
-        initialOpen: false,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalUnitControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Badge Border Radius', 'wedocs'),
-          value: countBadgeStyles.borderRadius,
-          onChange: value => updateCountBadgeStyles('borderRadius', value),
-          units: [{
-            value: 'px',
-            label: 'px',
-            default: 12
-          }, {
-            value: '%',
-            label: '%',
-            default: 50
-          }, {
-            value: 'em',
-            label: 'em',
-            default: 1
-          }, {
-            value: 'rem',
-            label: 'rem',
-            default: 1
-          }]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-            className: "components-base-control__label",
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Badge Background', 'wedocs')
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, {
-            colors: themeColors,
-            value: countBadgeStyles.backgroundColor,
-            onChange: newColor => updateCountBadgeStyles('backgroundColor', newColor)
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-            className: "components-base-control__label",
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Badge Background (Hover)', 'wedocs')
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, {
-            colors: themeColors,
-            value: countBadgeStyles.backgroundColorHover,
-            onChange: newColor => updateCountBadgeStyles('backgroundColorHover', newColor)
-          })]
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Document List Styling', 'wedocs'),
-        initialOpen: false,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-            className: "components-base-control__label",
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('List Background', 'wedocs')
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, {
-            colors: themeColors,
-            value: docListStyles.backgroundColor,
-            onChange: newColor => updateDocListStyles('backgroundColor', newColor)
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-            className: "components-base-control__label",
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('List Background (Hover)', 'wedocs')
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, {
-            colors: themeColors,
-            value: docListStyles.backgroundColorHover,
-            onChange: newColor => updateDocListStyles('backgroundColorHover', newColor)
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-            className: "components-base-control__label",
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Text Color', 'wedocs')
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, {
-            colors: themeColors,
-            value: docListStyles.textColor,
-            onChange: newColor => updateDocListStyles('textColor', newColor)
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-            className: "components-base-control__label",
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Text Color (Hover)', 'wedocs')
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, {
-            colors: themeColors,
-            value: docListStyles.textColorHover,
-            onChange: newColor => updateDocListStyles('textColorHover', newColor)
-          })]
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Tree Structure Styling', 'wedocs'),
-        initialOpen: false,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalUnitControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Indentation', 'wedocs'),
-          value: treeStyles.indentation,
-          onChange: value => updateTreeStyles('indentation', value),
-          units: [{
-            value: 'px',
-            label: 'px',
-            default: 20
-          }, {
-            value: 'em',
-            label: 'em',
-            default: 1
-          }, {
-            value: 'rem',
-            label: 'rem',
-            default: 1
-          }]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalUnitControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Item Spacing', 'wedocs'),
-          value: treeStyles.itemSpacing,
-          onChange: value => updateTreeStyles('itemSpacing', value),
-          units: [{
-            value: 'px',
-            label: 'px',
-            default: 4
-          }, {
-            value: 'em',
-            label: 'em',
-            default: 0.25
-          }, {
-            value: 'rem',
-            label: 'rem',
-            default: 0.25
-          }]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-            className: "components-base-control__label",
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Connector Line Color', 'wedocs')
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, {
-            colors: themeColors,
-            value: treeStyles.connectorColor,
-            onChange: newColor => updateTreeStyles('connectorColor', newColor)
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalUnitControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Connector Line Width', 'wedocs'),
-          value: treeStyles.connectorWidth,
-          onChange: value => updateTreeStyles('connectorWidth', value),
-          units: [{
-            value: 'px',
-            label: 'px',
-            default: 1
-          }, {
-            value: 'em',
-            label: 'em',
-            default: 0.0625
-          }, {
-            value: 'rem',
-            label: 'rem',
-            default: 0.0625
-          }]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-            className: "components-base-control__label",
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Header Background Color', 'wedocs')
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, {
-            colors: themeColors,
-            value: treeStyles.headerBackgroundColor,
-            onChange: newColor => updateTreeStyles('headerBackgroundColor', newColor)
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-            className: "components-base-control__label",
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Header Text Color', 'wedocs')
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, {
-            colors: themeColors,
-            value: treeStyles.headerTextColor,
-            onChange: newColor => updateTreeStyles('headerTextColor', newColor)
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalUnitControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Header Padding', 'wedocs'),
-          value: treeStyles.headerPadding,
-          onChange: value => updateTreeStyles('headerPadding', value),
-          units: [{
-            value: 'px',
-            label: 'px',
-            default: 12
-          }, {
-            value: 'em',
-            label: 'em',
-            default: 1
-          }, {
-            value: 'rem',
-            label: 'rem',
-            default: 1
-          }]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalUnitControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Header Border Radius', 'wedocs'),
-          value: treeStyles.headerBorderRadius,
-          onChange: value => updateTreeStyles('headerBorderRadius', value),
-          units: [{
-            value: 'px',
-            label: 'px',
-            default: 6
-          }, {
-            value: 'em',
-            label: 'em',
-            default: 0.5
-          }, {
-            value: 'rem',
-            label: 'rem',
-            default: 0.5
-          }, {
-            value: '%',
-            label: '%',
-            default: 50
-          }]
         })]
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {

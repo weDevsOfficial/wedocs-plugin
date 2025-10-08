@@ -2,9 +2,6 @@ import { __ } from '@wordpress/i18n';
 import SectionItem from './SectionItem';
 
 const SidebarContainer = ({ sections, attributes }) => {
-    const {
-        enableNestedSections
-    } = attributes;
 
     return (
         <>
@@ -15,7 +12,6 @@ const SidebarContainer = ({ sections, attributes }) => {
                             key={section.ID}
                             section={section}
                             attributes={attributes}
-                            enableNestedSections={enableNestedSections}
                             level={0}
                         />
                     ))}

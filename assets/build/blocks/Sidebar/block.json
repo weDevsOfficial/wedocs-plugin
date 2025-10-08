@@ -18,14 +18,6 @@
     }
   },
   "attributes": {
-    "docsSelection": {
-      "type": "string",
-      "default": "all"
-    },
-    "includeSections": {
-      "type": "array",
-      "default": []
-    },
     "excludeSections": {
       "type": "array",
       "default": []
@@ -37,10 +29,6 @@
     "sectionsOrder": {
       "type": "string",
       "default": "asc"
-    },
-    "enableNestedSections": {
-      "type": "boolean",
-      "default": true
     },
     "articleOrderBy": {
       "type": "string",

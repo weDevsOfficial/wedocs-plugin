@@ -1,7 +1,4 @@
-import { useState } from '@wordpress/element';
-
 const ArticleItem = ({ article, attributes, level = 0 }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
     
     const {
         articleTitleTag,
@@ -35,16 +32,9 @@ const ArticleItem = ({ article, attributes, level = 0 }) => {
     };
 
     const textStyle = {
-        color: getColorValue(docListStyles.textColor),
-        fontSize: '14px',
-        lineHeight: '1.4'
+        color: getColorValue(docListStyles.textColor)
     };
 
-    const toggleExpanded = () => {
-        if (article.children && article.children.length > 0) {
-            setIsExpanded(!isExpanded);
-        }
-    };
 
     const TitleTag = articleTitleTag || 'h4';
     const children = article.children || [];
@@ -54,7 +44,7 @@ const ArticleItem = ({ article, attributes, level = 0 }) => {
         <div className="wedocs-article transition-colors duration-200">
             {/* Visual connector line for nested items */}
             {level > 0 && (
-                <div 
+                <div
                     className="wedocs-connector-line"
                     style={{
                         position: 'absolute',
@@ -79,7 +69,7 @@ const ArticleItem = ({ article, attributes, level = 0 }) => {
                     📄
                 </span>
                 <TitleTag 
-                    className="wedocs-article-title m-0 flex-1"
+                    className={`wedocs-article-title ${TitleTag} m-0 flex-1`}
                     style={textStyle}
                 >
                     <a 
@@ -106,33 +96,9 @@ const ArticleItem = ({ article, attributes, level = 0 }) => {
                     </a>
                 </TitleTag>
                 
-                {hasChildren && enableNestedArticles && (
-                    <button
-                        className="wedocs-expand-toggle text-gray-500 hover:text-gray-700 transition-colors"
-                        onClick={toggleExpanded}
-                        aria-expanded={isExpanded}
-                        aria-label={`Toggle ${article.post_title} sub-articles`}
-                        style={{
-                            fontSize: '14px',
-                            color: '#6c757d',
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer',
-                            padding: '2px',
-                            borderRadius: '2px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: '18px',
-                            height: '18px'
-                        }}
-                    >
-                        {isExpanded ? '▼' : '▶'}
-                    </button>
-                )}
             </div>
             
-            {hasChildren && enableNestedArticles && isExpanded && (
+            {hasChildren && enableNestedArticles && (
                 <div 
                     className="wedocs-article-children"
                     style={{
@@ -150,6 +116,20 @@ const ArticleItem = ({ article, attributes, level = 0 }) => {
                         />
                     ))}
                 </div>
+            )}
+            
+            {/* When nested articles are disabled, show all child articles at the same level */}
+            {hasChildren && !enableNestedArticles && (
+                <>
+                    {children.map((childArticle) => (
+                        <ArticleItem
+                            key={childArticle.ID}
+                            article={childArticle}
+                            attributes={attributes}
+                            level={level}
+                        />
+                    ))}
+                </>
             )}
         </div>
     );

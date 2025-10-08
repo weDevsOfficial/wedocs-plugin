@@ -7,12 +7,9 @@ import { SidebarContainer } from './components';
 
 const Edit = ({ attributes, setAttributes }) => {
     const {
-        docsSelection,
-        includeSections,
         excludeSections,
         sectionsOrderBy,
         sectionsOrder,
-        enableNestedSections,
         articleOrderBy,
         articleOrder,
         enableNestedArticles,
@@ -22,9 +19,7 @@ const Edit = ({ attributes, setAttributes }) => {
         containerStyles,
         sectionStyles,
         titleStyles,
-        countBadgeStyles,
-        docListStyles,
-        treeStyles
+        docListStyles
     } = attributes;
 
     const blockProps = useBlockProps({
@@ -73,15 +68,6 @@ const Edit = ({ attributes, setAttributes }) => {
         });
     };
 
-    const updateCountBadgeStyles = (property, value) => {
-        setAttributes({
-            countBadgeStyles: {
-                ...countBadgeStyles,
-                [property]: handleColorValue(value)
-            }
-        });
-    };
-
     const updateDocListStyles = (property, value) => {
         setAttributes({
             docListStyles: {
@@ -91,14 +77,6 @@ const Edit = ({ attributes, setAttributes }) => {
         });
     };
 
-    const updateTreeStyles = (property, value) => {
-        setAttributes({
-            treeStyles: {
-                ...treeStyles,
-                [property]: handleColorValue(value)
-            }
-        });
-    };
 
     // Real data fetching for preview
     const [sections, setSections] = useState([]);
@@ -117,10 +95,8 @@ const Edit = ({ attributes, setAttributes }) => {
                     order: sectionsOrder,
                 });
 
-                // Apply include/exclude filters
-                if (includeSections.length > 0) {
-                    queryParams.append('include', includeSections.join(','));
-                } else if (excludeSections.length > 0) {
+                // Apply exclude filter
+                if (excludeSections.length > 0) {
                     queryParams.append('exclude', excludeSections.join(','));
                 }
 
@@ -142,7 +118,7 @@ const Edit = ({ attributes, setAttributes }) => {
         };
 
         fetchDocsData();
-    }, [docsSelection, includeSections, excludeSections, sectionsOrderBy, sectionsOrder, enableNestedSections, articleOrderBy, articleOrder, enableNestedArticles]);
+    }, [excludeSections, sectionsOrderBy, sectionsOrder, articleOrderBy, articleOrder, enableNestedArticles]);
 
     // Process flat docs array into hierarchical structure
     const processDocsData = (docs) => {
@@ -234,22 +210,6 @@ const Edit = ({ attributes, setAttributes }) => {
             
             <InspectorControls>
                 <PanelBody title={__('Query Settings', 'wedocs')} initialOpen={true}>
-                    <SelectControl
-                        label={__('Docs Selection', 'wedocs')}
-                        value={docsSelection}
-                        options={[
-                            { label: __('All Docs', 'wedocs'), value: 'all' }
-                        ]}
-                        onChange={(value) => setAttributes({ docsSelection: value })}
-                    />
-                    
-                    <TextControl
-                        label={__('Include Sections', 'wedocs')}
-                        value={includeSections.join(', ')}
-                        onChange={(value) => setAttributes({ includeSections: value.split(',').map(id => id.trim()).filter(id => id) })}
-                        help={__('Comma-separated section IDs to include', 'wedocs')}
-                    />
-                    
                     <TextControl
                         label={__('Exclude Sections', 'wedocs')}
                         value={excludeSections.join(', ')}
@@ -274,11 +234,6 @@ const Edit = ({ attributes, setAttributes }) => {
                         onChange={(value) => setAttributes({ sectionsOrder: value })}
                     />
                     
-                    <ToggleControl
-                        label={__('Enable Nested Sections', 'wedocs')}
-                        checked={enableNestedSections}
-                        onChange={(value) => setAttributes({ enableNestedSections: value })}
-                    />
                     
                     <SelectControl
                         label={__('Article Order By', 'wedocs')}
@@ -320,27 +275,6 @@ const Edit = ({ attributes, setAttributes }) => {
                     />
                 </PanelBody>
                 
-                <PanelBody title={__('WordPress Default Styles', 'wedocs')}>
-                    <div>
-                        <label className="components-base-control__label">
-                            {__('Block Background Color', 'wedocs')}
-                        </label>
-                        <ColorPalette
-                            colors={themeColors}
-                            value={containerStyles.backgroundColor}
-                            onChange={(newColor) => updateContainerStyles('backgroundColor', newColor)}
-                        />
-                    </div>
-                </PanelBody>
-                
-                <PanelBody title={__('Advanced', 'wedocs')}>
-                    <TextControl
-                        label={__('Additional CSS Classes', 'wedocs')}
-                        value={className}
-                        onChange={(value) => setAttributes({ className: value })}
-                        help={__('Add custom CSS classes', 'wedocs')}
-                    />
-                </PanelBody>
             </InspectorControls>
 
             <InspectorControls group="styles">
@@ -452,178 +386,6 @@ const Edit = ({ attributes, setAttributes }) => {
                 </PanelBody>
                 
                 
-                <PanelBody title={__('Count Badge Styling', 'wedocs')} initialOpen={false}>
-                    <UnitControl
-                        label={__('Badge Border Radius', 'wedocs')}
-                        value={countBadgeStyles.borderRadius}
-                        onChange={(value) => updateCountBadgeStyles('borderRadius', value)}
-                        units={[
-                            { value: 'px', label: 'px', default: 12 },
-                            { value: '%', label: '%', default: 50 },
-                            { value: 'em', label: 'em', default: 1 },
-                            { value: 'rem', label: 'rem', default: 1 }
-                        ]}
-                    />
-                    
-                    <div>
-                        <label className="components-base-control__label">
-                            {__('Badge Background', 'wedocs')}
-                        </label>
-                        <ColorPalette
-                            colors={themeColors}
-                            value={countBadgeStyles.backgroundColor}
-                            onChange={(newColor) => updateCountBadgeStyles('backgroundColor', newColor)}
-                        />
-                    </div>
-                    
-                    <div>
-                        <label className="components-base-control__label">
-                            {__('Badge Background (Hover)', 'wedocs')}
-                        </label>
-                        <ColorPalette
-                            colors={themeColors}
-                            value={countBadgeStyles.backgroundColorHover}
-                            onChange={(newColor) => updateCountBadgeStyles('backgroundColorHover', newColor)}
-                        />
-                    </div>
-                </PanelBody>
-                
-                <PanelBody title={__('Document List Styling', 'wedocs')} initialOpen={false}>
-                    <div>
-                        <label className="components-base-control__label">
-                            {__('List Background', 'wedocs')}
-                        </label>
-                        <ColorPalette
-                            colors={themeColors}
-                            value={docListStyles.backgroundColor}
-                            onChange={(newColor) => updateDocListStyles('backgroundColor', newColor)}
-                        />
-                    </div>
-                    
-                    <div>
-                        <label className="components-base-control__label">
-                            {__('List Background (Hover)', 'wedocs')}
-                        </label>
-                        <ColorPalette
-                            colors={themeColors}
-                            value={docListStyles.backgroundColorHover}
-                            onChange={(newColor) => updateDocListStyles('backgroundColorHover', newColor)}
-                        />
-                    </div>
-                    
-                    <div>
-                        <label className="components-base-control__label">
-                            {__('Text Color', 'wedocs')}
-                        </label>
-                        <ColorPalette
-                            colors={themeColors}
-                            value={docListStyles.textColor}
-                            onChange={(newColor) => updateDocListStyles('textColor', newColor)}
-                        />
-                    </div>
-                    
-                    <div>
-                        <label className="components-base-control__label">
-                            {__('Text Color (Hover)', 'wedocs')}
-                        </label>
-                        <ColorPalette
-                            colors={themeColors}
-                            value={docListStyles.textColorHover}
-                            onChange={(newColor) => updateDocListStyles('textColorHover', newColor)}
-                        />
-                    </div>
-                </PanelBody>
-                
-                <PanelBody title={__('Tree Structure Styling', 'wedocs')} initialOpen={false}>
-                    <UnitControl
-                        label={__('Indentation', 'wedocs')}
-                        value={treeStyles.indentation}
-                        onChange={(value) => updateTreeStyles('indentation', value)}
-                        units={[
-                            { value: 'px', label: 'px', default: 20 },
-                            { value: 'em', label: 'em', default: 1 },
-                            { value: 'rem', label: 'rem', default: 1 }
-                        ]}
-                    />
-                    
-                    <UnitControl
-                        label={__('Item Spacing', 'wedocs')}
-                        value={treeStyles.itemSpacing}
-                        onChange={(value) => updateTreeStyles('itemSpacing', value)}
-                        units={[
-                            { value: 'px', label: 'px', default: 4 },
-                            { value: 'em', label: 'em', default: 0.25 },
-                            { value: 'rem', label: 'rem', default: 0.25 }
-                        ]}
-                    />
-                    
-                    <div>
-                        <label className="components-base-control__label">
-                            {__('Connector Line Color', 'wedocs')}
-                        </label>
-                        <ColorPalette
-                            colors={themeColors}
-                            value={treeStyles.connectorColor}
-                            onChange={(newColor) => updateTreeStyles('connectorColor', newColor)}
-                        />
-                    </div>
-                    
-                    <UnitControl
-                        label={__('Connector Line Width', 'wedocs')}
-                        value={treeStyles.connectorWidth}
-                        onChange={(value) => updateTreeStyles('connectorWidth', value)}
-                        units={[
-                            { value: 'px', label: 'px', default: 1 },
-                            { value: 'em', label: 'em', default: 0.0625 },
-                            { value: 'rem', label: 'rem', default: 0.0625 }
-                        ]}
-                    />
-                    
-                    <div>
-                        <label className="components-base-control__label">
-                            {__('Header Background Color', 'wedocs')}
-                        </label>
-                        <ColorPalette
-                            colors={themeColors}
-                            value={treeStyles.headerBackgroundColor}
-                            onChange={(newColor) => updateTreeStyles('headerBackgroundColor', newColor)}
-                        />
-                    </div>
-                    
-                    <div>
-                        <label className="components-base-control__label">
-                            {__('Header Text Color', 'wedocs')}
-                        </label>
-                        <ColorPalette
-                            colors={themeColors}
-                            value={treeStyles.headerTextColor}
-                            onChange={(newColor) => updateTreeStyles('headerTextColor', newColor)}
-                        />
-                    </div>
-                    
-                    <UnitControl
-                        label={__('Header Padding', 'wedocs')}
-                        value={treeStyles.headerPadding}
-                        onChange={(value) => updateTreeStyles('headerPadding', value)}
-                        units={[
-                            { value: 'px', label: 'px', default: 12 },
-                            { value: 'em', label: 'em', default: 1 },
-                            { value: 'rem', label: 'rem', default: 1 }
-                        ]}
-                    />
-                    
-                    <UnitControl
-                        label={__('Header Border Radius', 'wedocs')}
-                        value={treeStyles.headerBorderRadius}
-                        onChange={(value) => updateTreeStyles('headerBorderRadius', value)}
-                        units={[
-                            { value: 'px', label: 'px', default: 6 },
-                            { value: 'em', label: 'em', default: 0.5 },
-                            { value: 'rem', label: 'rem', default: 0.5 },
-                            { value: '%', label: '%', default: 50 }
-                        ]}
-                    />
-                </PanelBody>
             </InspectorControls>
 
             <div {...blockProps}>
