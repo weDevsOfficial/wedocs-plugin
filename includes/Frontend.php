@@ -88,6 +88,12 @@ class Frontend {
             'sectionNavLabel'   => __( 'Section: ', 'wedocs' ),
             'searchModalColors' => wedocs_get_search_modal_active_colors(),
         ] );
+
+        // Localize script for HelpfulModal block
+        wp_localize_script( 'wedocs-scripts', 'needMoreHelpAjax', [
+            'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+            'nonce'   => wp_create_nonce( 'wedocs-ajax' ),
+        ] );
     }
 
     /**
