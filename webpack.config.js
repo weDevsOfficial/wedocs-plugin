@@ -6,7 +6,8 @@ const MiniCSSExtractPlugin = require( 'mini-css-extract-plugin' );
 const updatedConfig = {
   ...defaultConfig,
   entry: {
-    ...defaultConfig.entry,
+    ...defaultConfig.entry(),
+    // Add your custom entries while preserving the automatic block detection
     index    : './src/index',
     block    : './src/block.js',
     store    : './src/data/store.js',
@@ -23,7 +24,7 @@ const updatedConfig = {
       {
         test: /\.less$/,
         use: [
-          { loader: MiniCSSExtractPlugin.loader, options: { emit: true } },
+          MiniCSSExtractPlugin.loader,
           'css-loader',
           'less-loader',
         ],
