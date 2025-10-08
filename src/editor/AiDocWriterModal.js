@@ -298,13 +298,13 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
         content = content.replace(/<script[^>]*>.*?<\/script>/gi, '');
         
         // Remove javascript: protocols but keep the anchor tags
-        content = content.replace(/href\s*=\s*(["\'])\s*javascript:.*?\1/i, 'href="#"');
+        content = content.replace(/href\s*=\s*(["\'])\s*javascript:.*?\1/gi, 'href="#"');
         
         // Remove all event handlers (onclick, onload, etc) but keep the elements
-        content = content.replace(/\s+on\w+\s*=\s*(["\'])?[^"\']*\1?/i, '');
+        content = content.replace(/\s+on\w+\s*=\s*(["\'])?[^"\']*\1?/gi, '');
         
         // Remove any inline javascript: in attributes
-        content = content.replace(/javascript\s*:/i, '');
+        content = content.replace(/javascript\s*:/gi, '');
         
         return content;
     };
