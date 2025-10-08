@@ -652,7 +652,7 @@ const Edit = ({
     fetchDocsData();
   }, [excludeSections, sectionsOrderBy, sectionsOrder, articleOrderBy, articleOrder, enableNestedArticles]);
 
-  // Process flat docs array into hierarchical structure
+  // Process flat docs array into hierarchical structure - matching admin interface logic
   const processDocsData = docs => {
     if (!docs || !Array.isArray(docs)) return [];
 
@@ -685,24 +685,32 @@ const Edit = ({
       }
     });
 
-    // Sort sections and their children
+    // Sort sections and their children - matching admin interface logic
     const sortDocs = docsArray => {
       return docsArray.sort((a, b) => {
         if (sectionsOrderBy === 'menu_order') {
+          // Use the same sorting logic as admin interface but respect direction setting
           return sectionsOrder === 'asc' ? a.menu_order - b.menu_order : b.menu_order - a.menu_order;
         } else if (sectionsOrderBy === 'name') {
           return sectionsOrder === 'asc' ? a.post_title.localeCompare(b.post_title) : b.post_title.localeCompare(a.post_title);
         } else if (sectionsOrderBy === 'id') {
           return sectionsOrder === 'asc' ? a.ID - b.ID : b.ID - a.ID;
+        } else if (sectionsOrderBy === 'slug') {
+          return sectionsOrder === 'asc' ? a.post_name.localeCompare(b.post_name) : b.post_name.localeCompare(a.post_name);
+        } else if (sectionsOrderBy === 'count') {
+          // Sort by number of children
+          const aCount = a.children ? a.children.length : 0;
+          const bCount = b.children ? b.children.length : 0;
+          return sectionsOrder === 'asc' ? aCount - bCount : bCount - aCount;
         }
         return 0;
       });
     };
 
-    // Sort sections
+    // Sort sections using admin interface logic
     const sortedSections = sortDocs(sections);
 
-    // Sort children of each section
+    // Sort children of each section using the same logic
     sortedSections.forEach(section => {
       if (section.children.length > 0) {
         section.children = sortDocs(section.children);

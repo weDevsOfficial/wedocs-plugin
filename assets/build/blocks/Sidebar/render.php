@@ -52,13 +52,15 @@ function render_wedocs_sidebar($attributes, $content) {
         'walker' => $walker,
     );
 
-    // Apply ordering
+    // Apply ordering - matching admin interface logic but respecting direction setting
     if ($sections_order_by === 'menu_order') {
+        // Use the same sorting logic as admin interface but respect direction setting
         $list_args['sort_column'] = 'menu_order';
+        $list_args['sort_order'] = strtoupper($sections_order);
     } else {
         $list_args['sort_column'] = $sections_order_by;
+        $list_args['sort_order'] = strtoupper($sections_order);
     }
-    $list_args['sort_order'] = strtoupper($sections_order);
 
     // Apply exclude filter
     if (!empty($exclude_sections)) {
