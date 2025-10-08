@@ -96,7 +96,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
         if (currentPost?.title && !title) {
             setTitle(currentPost.title);
         }
-    }, [currentPost, title]);
+    }, [currentPost]);
 
     // Generate dynamic prompt from title and keywords
     const generateDynamicPrompt = (docTitle, docKeywords) => {

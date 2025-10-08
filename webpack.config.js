@@ -11,6 +11,7 @@ const updatedConfig = {
     block    : './src/block.js',
     editor   : './src/editor/index.js',
     store    : './src/data/store.js',
+    icons    : './src/icons/index.js',
     print    : './src/assets/less/print.less',
     frontend : './src/assets/less/frontend.less',
   },
