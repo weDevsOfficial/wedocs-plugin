@@ -65,7 +65,7 @@ const GeneralSettings = ( {
                       'wedocs'
                   )}
                     <a
-                        href="https://github.com/tareq1988/wedocs-plugin/wiki/Using-Shortcodes"
+                        href="https://wedocs.co/docs/wedocs/shortcodes/"
                         target="_blank"
                         className="text-indigo-700 underline underline-offset-2 !shadow-none"
                         rel="noreferrer"
