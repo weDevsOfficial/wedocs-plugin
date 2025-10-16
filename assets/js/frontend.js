@@ -87,10 +87,64 @@
       mywindow.document.close(); // necessary for IE >= 10
       mywindow.focus(); // necessary for IE >= 10
 
-      // setTimeout( function () {
-      //   mywindow.print();
-      //   mywindow.close();
-      // }, 2000 );
+      // Event-driven print handling
+      let printCompleted = false;
+      let fallbackTimeout = null;
+      
+      // Function to handle print completion and cleanup
+      const handlePrintComplete = function() {
+        if (printCompleted) return; // Prevent multiple calls
+        printCompleted = true;
+        
+        // Clear fallback timeout if it exists
+        if (fallbackTimeout) {
+          clearTimeout(fallbackTimeout);
+          fallbackTimeout = null;
+        }
+        
+        // Remove event listeners to prevent memory leaks
+        if (mywindow.removeEventListener) {
+          mywindow.removeEventListener('afterprint', handlePrintComplete);
+        } else if (mywindow.detachEvent) {
+          mywindow.detachEvent('onafterprint', handlePrintComplete);
+        }
+        
+        // Close the window
+        mywindow.close();
+      };
+      
+      // Function to initiate printing
+      const initiatePrint = function() {
+        // Attach afterprint event listener before printing
+        if (mywindow.addEventListener) {
+          mywindow.addEventListener('afterprint', handlePrintComplete, false);
+        } else if (mywindow.attachEvent) {
+          // IE8 and older support
+          mywindow.attachEvent('onafterprint', handlePrintComplete);
+        }
+        
+        // Set up fallback timeout as last resort (for browsers that don't support afterprint)
+        fallbackTimeout = setTimeout(function() {
+          if (!printCompleted) {
+            console.warn('Print afterprint event not fired, using fallback cleanup');
+            handlePrintComplete();
+          }
+        }, 30000); // 30 second fallback timeout
+        
+        // Initiate print
+        mywindow.print();
+      };
+      
+      // Wait for window to load before printing
+      if (mywindow.addEventListener) {
+        mywindow.addEventListener('load', initiatePrint, false);
+      } else if (mywindow.attachEvent) {
+        // IE8 and older support
+        mywindow.attachEvent('onload', initiatePrint);
+      } else {
+        // Fallback for very old browsers
+        mywindow.onload = initiatePrint;
+      }
 
       return true;
     },

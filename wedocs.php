@@ -47,6 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid/render.php';
+require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/PrintButton/render.php';
 
 /**
  * WeDocs class.
@@ -169,6 +170,7 @@ final class WeDocs {
         // Localize our plugin
         add_action( 'init', [ $this, 'localization_setup' ] );
         add_action('init', [$this, 'register_blocks']);
+        add_action('block_categories_all', [$this, 'register_block_category']);
 
         // registeer our widget
         add_action( 'widgets_init', [ $this, 'register_widget' ] );
@@ -181,6 +183,41 @@ final class WeDocs {
             array(
                 'render_callback' => 'render_wedocs_docs_grid'
             )
+        );
+        
+        // Register the PrintButton block
+        register_block_type(
+            plugin_dir_path(__FILE__) . 'assets/build/blocks/PrintButton',
+            array(
+                'render_callback' => 'render_wedocs_print_button'
+            )
+        );
+    }
+
+    /**
+     * Register the weDocs block category.
+     *
+     * @param array $categories Existing block categories.
+     * @return array Modified block categories.
+     */
+    public function register_block_category($categories) {
+        // Check if weDocs category already exists
+        foreach ($categories as $category) {
+            if ($category['slug'] === 'wedocs') {
+                return $categories;
+            }
+        }
+
+        // Add weDocs category at the beginning
+        return array_merge(
+            array(
+                array(
+                    'slug'  => 'wedocs',
+                    'title' => __('weDocs', 'wedocs'),
+                    'icon'  => null
+                )
+            ),
+            $categories
         );
     }
 
