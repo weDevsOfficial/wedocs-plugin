@@ -6,7 +6,7 @@ import { useState } from '@wordpress/element';
 const SocialShareSettings = ( { settingsData, setSettings } ) => {
 	const [ showOverlay, setShowOverlay ] = useState( false );
 	const { general } = settingsData;
-	const { switchComponent: Switcher } = window;
+	const SwitcherComponent = window?.switchComponent || Switcher;
 
 	return (
 		<section>
@@ -59,7 +59,7 @@ const SocialShareSettings = ( { settingsData, setSettings } ) => {
 									<span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">
 										PRO
 									</span>
-									<Switcher
+									<SwitcherComponent
 										name="social_share"
 										settingsPanel={ general }
 										settingsData={ settingsData }
