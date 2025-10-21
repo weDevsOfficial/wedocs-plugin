@@ -1,12 +1,13 @@
 import actions from './actions';
 
-const getDocsPath = wp.hooks.applyFilters(
-  'wedocs_documentation_fetching_path',
-  `/wp/v2/docs?per_page=-1&status=publish${ typeof weDocsAdminVars !== 'undefined' ? ',draft' : ''}`
-);
-
 const resolvers = {
   *getDocs() {
+    // Compute path at runtime to ensure Pro filters are applied
+    const getDocsPath = wp.hooks.applyFilters(
+      'wedocs_documentation_fetching_path',
+      `/wp/v2/docs?per_page=-1&status=publish${ typeof weDocsAdminVars !== 'undefined' ? ',draft,private' : ''}`
+    );
+    
     yield actions.setLoading( true );
     const response = yield actions.fetchFromAPI( getDocsPath );
     yield actions.setDocs( response );
