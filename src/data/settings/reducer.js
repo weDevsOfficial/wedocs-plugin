@@ -14,6 +14,7 @@ const DEFAULT_SETTINGS_STATE = {
     permission: {
       global_permission: [ 'administrator', 'editor' ],
       role_wise_permission: [ 'administrator' ],
+      show_contributors: 'on',
     },
     assistant: {
       assist_enable: 'on',

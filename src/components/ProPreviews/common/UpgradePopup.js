@@ -10,7 +10,7 @@ import SliderImgThreeSrc from '../../../assets/img/popup-slider/slider-4.jpg';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
-const UpgradePopup = ({ children}) => {
+const UpgradePopup = ({ children, className }) => {
   let [ isOpen, setIsOpen ] = useState( false );
 
   const closeModal = () => {
@@ -32,13 +32,13 @@ const UpgradePopup = ({ children}) => {
   return (
     <>
       {/* Pro upgrade button. */}
-      <UpgradeButton showPopup={ openModal }>
+      <UpgradeButton showPopup={ openModal } className={ className }>
         { children }
       </UpgradeButton>
 
       {/* Show premium features content via pop-up. */}
       <Transition appear show={ isOpen } as={ Fragment }>
-        <Dialog as='div' className='wedocs-document relative z-[9999]' onClose={ closeModal }>
+        <Dialog as='div' className='wedocs-document relative z-[99999]' onClose={ closeModal }>
           <Transition.Child
             as={ Fragment }
             enter='ease-out duration-300'
@@ -48,10 +48,10 @@ const UpgradePopup = ({ children}) => {
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <div className='fixed inset-0 bg-black bg-opacity-25' />
+            <div className='fixed inset-0 bg-black bg-opacity-25 z-[99998]' />
           </Transition.Child>
 
-          <div className='fixed inset-0 overflow-y-auto'>
+          <div className='fixed inset-0 overflow-y-auto z-[99999]'>
             <div className='flex min-h-full items-center justify-center p-4 text-center'>
               <Transition.Child
                 as={ Fragment }
