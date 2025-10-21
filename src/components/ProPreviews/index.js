@@ -12,16 +12,13 @@ import PreferenceSettings from './AssistantWidgetPanels/PreferencePanel';
 import SocialShareSettings from './SocialShareSettings';
 import Badge from './common/Badge';
 
-const isProLoaded = wp.hooks.applyFilters(
-    'wedocs_pro_loaded',
-    false
-);
-
-if ( !isProLoaded ) {
-    wp.hooks.addFilter(
-        'wedocs_settings_menu',
-        'settings_menu_override',
-        function ( menus ) {
+wp.hooks.addFilter(
+    'wedocs_settings_menu',
+    'wedocs_free_settings_menu_preview',
+    function ( menus ) {
+        // Check if Pro is loaded dynamically
+        const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+        if (isProLoaded) return menus;
             menus.permission = {
                 pro: true,
                 text: __( 'Permission Management', 'wedocs' ),
@@ -168,14 +165,19 @@ if ( !isProLoaded ) {
             };
 
             return menus;
-        }
+        },
+        5
     );
 
-    wp.hooks.addFilter(
-        'wedocs_settings_page_templates',
-        'wedocs_settings_page_templates_callback',
-        function ( templates, docSettings, setDocSettings, index ) {
-            const assistantWidgetSubPanels = [
+wp.hooks.addFilter(
+    'wedocs_settings_page_templates',
+    'wedocs_free_settings_page_templates_preview',
+    function ( templates, docSettings, setDocSettings, index ) {
+        // Check if Pro is loaded dynamically
+        const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+        if (isProLoaded) return templates;
+        
+        const assistantWidgetSubPanels = [
                 <AiChatBotSettings key={ index } />,
                 <ExploreSettings key={ index } />,
                 <MessageSettings key={ index } />,
@@ -202,14 +204,19 @@ if ( !isProLoaded ) {
                     setSettings={ setDocSettings }
                 />,
             ];
-        }
+        },
+        5
     );
 
-    wp.hooks.addFilter(
-        'wedocs_admin_article_restriction_action',
-        'wedocs_admin_article_restriction_action_callback',
-        function ( componentsArray, id, type ) {
-            return (
+wp.hooks.addFilter(
+    'wedocs_admin_article_restriction_action',
+    'wedocs_free_article_restriction_preview',
+    function ( componentsArray, id, type ) {
+        // Check if Pro is loaded dynamically
+        const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+        if (isProLoaded) return componentsArray;
+        
+        return (
                 <>
                     { userIsAdmin() && (
                         <>
@@ -233,39 +240,34 @@ if ( !isProLoaded ) {
                     ) }
                 </>
             );
-        }
+        },
+        5
     );
-
-    wp.hooks.addFilter(
-        'wedocs_documentation_contributors',
-        'wedocs_documentation_contributors_callback',
-        function () {
-            if ( !userIsAdmin() ) return;
-            if(!isProLoaded) return;
-
-            return <Contributors />;
-        }
-    );
-
-    wp.hooks.addFilter(
-        'wedocs_article_contributors',
-        'wedocs_article_contributors_callback',
-        function () {
-            if ( !userIsAdmin() ) return;
-              if(!isProLoaded) return;
-
-            return <Contributors />;
-        }
-    );
-
 
 wp.hooks.addFilter(
-	'wedocs_register_menu_routes',
-	'wedocs_register_menu_routes_callback',
-	function ( routes ) {
-		const { weDocsSettingsPage: SettingsPage } = window;
-			routes?.push( { path: 'settings/:panel', component: SettingsPage } );
-		return routes;
-	}
+    'wedocs_documentation_contributors',
+    'wedocs_free_documentation_contributors_preview',
+    function () {
+        // Check if Pro is loaded dynamically
+        const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+        if (isProLoaded) return;
+        if ( !userIsAdmin() ) return;
+
+        return <Contributors />;
+    },
+    5
 );
-}
+
+wp.hooks.addFilter(
+    'wedocs_article_contributors',
+    'wedocs_free_article_contributors_preview',
+    function () {
+        // Check if Pro is loaded dynamically
+        const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+        if (isProLoaded) return;
+        if ( !userIsAdmin() ) return;
+
+        return <Contributors />;
+    },
+    5
+);
