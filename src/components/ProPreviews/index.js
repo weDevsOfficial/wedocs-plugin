@@ -221,11 +221,12 @@ wp.hooks.addFilter(
                     { userIsAdmin() && (
                         <>
                             { type === 'doc' && (
-                <a href={`${weDocsAdminVars.weDocsUrl}permission_settings`} className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none">
-                  <span>{ __( 'Permission Management', 'wedocs' ) }</span>
-                  <span className={ `crown cursor-pointer relative text-white text-[10px] py-[3px] px-[5px] leading-none ml-2.5` }>
+                <UpgradePopup>
+                  <span className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none cursor-pointer">
+                    <span>{ __( 'Permission Management', 'wedocs' ) }</span>
+                    <Badge classes="opacity-0 group-hover:opacity-100 transition-opacity ml-2"/>
                   </span>
-                </a>
+                </UpgradePopup>
                             ) }
                             { type === 'article' && (
                               
@@ -270,4 +271,27 @@ wp.hooks.addFilter(
         return <Contributors />;
     },
     5
+);
+
+wp.hooks.addFilter(
+	'wedocs_article_restriction_menu',
+	'wedocs_free_article_restriction_menu_preview',
+	function ( menu ) {
+		// Check if Pro is loaded dynamically
+		const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+		if (isProLoaded) return menu;
+		
+		// Return PRO preview menu when Pro is not loaded
+		return (
+			<UpgradePopup>
+				<a
+					href="#"
+					className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
+				>
+					<span>{ __( 'Permission Management', 'wedocs' ) }</span>
+				</a>
+			</UpgradePopup>
+		);
+	},
+	5
 );
