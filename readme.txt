@@ -108,10 +108,10 @@ Yes, weDocs allows you to set up custom permalinks for your documentation pages.
 
 == Changelog ==
 
-**v2.1.14 (22st Oct, 2025**)
+**v2.1.14 (22nd Oct, 2025**)
 – **Added:** Social sharing options (Facebook, LinkedIn, and more).
 – **Added:** Default contributor display settings for better visibility.
-– **Fixed:** REST enpoint not found.
+– **Fixed:** REST endpoint not found.
 
 **v2.1.13 (3rd Oct, 2025**)
 – **Enhanced:** Plugin settings UX.
