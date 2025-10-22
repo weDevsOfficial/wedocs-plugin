@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-10-21T11:21:58+00:00\n"
+"POT-Creation-Date: 2025-10-22T09:19:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wedocs\n"
@@ -268,24 +268,24 @@ msgstr ""
 msgid "Processing Upgrade in the background."
 msgstr ""
 
-#: includes/Frontend.php:82
+#: includes/Frontend.php:85
 msgid "Powered by weDocs plugin for WordPress"
 msgstr ""
 
-#: includes/Frontend.php:85
+#: includes/Frontend.php:88
 msgid "Doc: "
 msgstr ""
 
-#: includes/Frontend.php:86
+#: includes/Frontend.php:89
 #: templates/modals/search-modal.php:49
 msgid "Search field cannot be blank"
 msgstr ""
 
-#: includes/Frontend.php:87
+#: includes/Frontend.php:90
 msgid "Your search didn't match any documents"
 msgstr ""
 
-#: includes/Frontend.php:88
+#: includes/Frontend.php:91
 msgid "Section: "
 msgstr ""
 
