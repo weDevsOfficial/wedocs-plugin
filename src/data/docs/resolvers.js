@@ -7,7 +7,7 @@ const resolvers = {
       'wedocs_documentation_fetching_path',
       `/wp/v2/docs?per_page=-1&status=publish${ typeof weDocsAdminVars !== 'undefined' ? ',draft,private' : ''}`
     );
-    
+
     yield actions.setLoading( true );
     const response = yield actions.fetchFromAPI( getDocsPath );
     yield actions.setDocs( response );
@@ -43,8 +43,15 @@ const resolvers = {
   },
 
   *getUserDocIds() {
-    const userDocIds = yield actions.fetchFromAPI( `/wp/v2/docs/users/ids` );
-    return actions.setUserDocIds( userDocIds );
+    try {
+      // Check if Pro plugin is active by checking if the endpoint exists
+      const userDocIds = yield actions.fetchFromAPI( `/wp/v2/docs/users/ids/` );
+      return actions.setUserDocIds( userDocIds );
+    } catch (error) {
+      // If Pro plugin is not active or endpoint fails, return empty array
+      console.warn('weDocs Pro plugin not active or endpoint unavailable:', error);
+      return actions.setUserDocIds( [] );
+    }
   },
 
   *getHelpfulDocs() {
