@@ -249,6 +249,31 @@ class API extends WP_REST_Controller {
                 'permission_callback' => [ $this, 'get_promotional_notice_check' ],
             ]
         ] );
+
+        // Fallback endpoint for Pro plugin users/ids endpoint
+        // This will only register if the Pro plugin endpoint doesn't exist
+        add_action( 'rest_api_init', [ $this, 'register_fallback_user_ids_endpoint' ], 20 );
+    }
+
+    /**
+     * Register fallback user IDs endpoint if Pro plugin is not active
+     *
+     * @since 2.0.0
+     *
+     * @return void
+     */
+    public function register_fallback_user_ids_endpoint() {
+        // Check if the Pro plugin endpoint is already registered
+        $routes = rest_get_server()->get_routes();
+        if ( ! isset( $routes['/wp/v2/docs/users/ids/'] ) ) {
+            register_rest_route( $this->namespace, '/' . $this->rest_base . '/users/ids/', [
+                [
+                    'methods'             => WP_REST_Server::READABLE,
+                    'callback'            => [ $this, 'get_user_doc_ids_fallback' ],
+                    'permission_callback' => '__return_true',
+                ]
+            ] );
+        }
     }
 
     /**
@@ -414,6 +439,31 @@ class API extends WP_REST_Controller {
         return rest_ensure_response( [
             'success' => true,
         ] );
+    }
+
+    /**
+     * Fallback method for user doc IDs when Pro plugin is not active
+     *
+     * @since 2.0.0
+     *
+     * @return WP_REST_Response
+     */
+    public function get_user_doc_ids_fallback() {
+        // If user is not logged in, return empty array
+        if ( ! is_user_logged_in() ) {
+            return rest_ensure_response( [] );
+        }
+
+        // Get all published parent docs for logged-in users
+        $parent_docs = get_posts( [
+            'post_type'      => 'docs',
+            'post_status'    => 'publish',
+            'post_parent'    => 0,
+            'posts_per_page' => -1,
+            'fields'         => 'ids'
+        ] );
+
+        return rest_ensure_response( $parent_docs );
     }
 
     /**
@@ -875,7 +925,7 @@ class API extends WP_REST_Controller {
 
     /**
      * Get the data needed for promotional notice.
-     * 
+     *
      * @since 2.1.11
      *
      * @return bool|WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
@@ -928,9 +978,9 @@ class API extends WP_REST_Controller {
 
      /**
      * Handle promotional notice hidden action
-     * 
+     *
      * @since 2.1.11
-     * 
+     *
      * @param WP_REST_Request $request Current request.
      *
      */
