@@ -3187,7 +3187,7 @@ select {
   padding: 2px 8px;
   border-radius: var(--rounded-badge);
 }
-.prose code:after, 
+.prose code:after,
   .prose code:before {
   content: none;
 }
@@ -3197,6 +3197,36 @@ select {
 }
 .prose :where(tbody tr, thead):not(:where([class~="not-prose"] *)) {
   border-bottom-color: hsl(var(--bc) / 20%);
+}
+.artboard.phone-1.horizontal,
+      .artboard.phone-1.artboard-horizontal {
+  width: 568px;
+  height: 320px;
+}
+.artboard.phone-2.horizontal,
+      .artboard.phone-2.artboard-horizontal {
+  width: 667px;
+  height: 375px;
+}
+.artboard.phone-3.horizontal,
+      .artboard.phone-3.artboard-horizontal {
+  width: 736px;
+  height: 414px;
+}
+.artboard.phone-4.horizontal,
+      .artboard.phone-4.artboard-horizontal {
+  width: 812px;
+  height: 375px;
+}
+.artboard.phone-5.horizontal,
+      .artboard.phone-5.artboard-horizontal {
+  width: 896px;
+  height: 414px;
+}
+.artboard.phone-6.horizontal,
+      .artboard.phone-6.artboard-horizontal {
+  width: 1024px;
+  height: 320px;
 }
 .btm-nav-xs>*:where(.active) {
   border-top-width: 1px;
