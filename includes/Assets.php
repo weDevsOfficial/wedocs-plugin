@@ -69,8 +69,10 @@ class Assets {
                 'wedocs-app-script',
                 'weDocsAdminVars',
                 array(
-                    'adminUrl'     => admin_url(),
-                    'hasManageCap' => current_user_can( 'manage_options' ),
+                    'adminUrl'      => admin_url(),
+                    'hasManageCap'  => current_user_can( 'manage_options' ),
+                    'weDocsUrl'     => admin_url( 'admin.php?page=wedocs#/' ),
+                    'pro_active'    => wedocs_is_pro_active(),
                 ),
             );
         }
