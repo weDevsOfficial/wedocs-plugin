@@ -2,14 +2,14 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 2.1.12\n"
+"Project-Id-Version: weDocs 2.1.14\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-24T12:19:37+00:00\n"
+"POT-Creation-Date: 2025-10-22T09:19:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wedocs\n"
@@ -57,6 +57,28 @@ msgstr ""
 msgid "This document has no sections yet. Check back later or wait for the author to add content."
 msgstr ""
 
+#: includes/Admin.php:91
+#: includes/Admin.php:112
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: includes/Admin.php:92
+#: includes/Admin.php:113
+msgid "Check Discount"
+msgstr ""
+
+#: includes/Admin.php:93
+#: includes/Admin.php:115
+#: includes/Admin/Menu.php:72
+#: includes/functions.php:127
+msgid "Docs"
+msgstr ""
+
+#: includes/Admin.php:94
+#: includes/Admin.php:116
+msgid "Get Support"
+msgstr ""
+
 #: includes/Admin/Admin.php:102
 msgid "Thank you for using <strong>weDocs</strong>. Please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating."
 msgstr ""
@@ -79,11 +101,6 @@ msgstr ""
 
 #: includes/Admin/Docs_List_Table.php:67
 msgid "Votes"
-msgstr ""
-
-#: includes/Admin/Menu.php:72
-#: includes/functions.php:127
-msgid "Docs"
 msgstr ""
 
 #: includes/Admin/Menu.php:77
@@ -251,24 +268,24 @@ msgstr ""
 msgid "Processing Upgrade in the background."
 msgstr ""
 
-#: includes/Frontend.php:82
+#: includes/Frontend.php:85
 msgid "Powered by weDocs plugin for WordPress"
 msgstr ""
 
-#: includes/Frontend.php:85
+#: includes/Frontend.php:88
 msgid "Doc: "
 msgstr ""
 
-#: includes/Frontend.php:86
+#: includes/Frontend.php:89
 #: templates/modals/search-modal.php:49
 msgid "Search field cannot be blank"
 msgstr ""
 
-#: includes/Frontend.php:87
+#: includes/Frontend.php:90
 msgid "Your search didn't match any documents"
 msgstr ""
 
-#: includes/Frontend.php:88
+#: includes/Frontend.php:91
 msgid "Section: "
 msgstr ""
 
@@ -457,6 +474,7 @@ msgstr ""
 #: assets/build/index.js:7
 #: src/components/BackToDocsPage.js:25
 #: src/components/Documentations/index.js:131
+#: src/components/PermissionSettingsDemo/BackToDocsPage.js:25
 msgid "All Docs"
 msgstr ""
 
@@ -602,8 +620,8 @@ msgstr ""
 
 #: templates/single-docs.php:152
 #: assets/build/index.js:1
-#: src/components/DocListing/ArticleChildrens.js:202
-#: src/components/DocListing/SectionArticles.js:275
+#: src/components/DocListing/ArticleChildrens.js:236
+#: src/components/DocListing/SectionArticles.js:320
 msgid "Updated on %s"
 msgstr ""
 
@@ -955,18 +973,18 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocActions.js:81
-#: src/components/DocListing/ArticleChildrens.js:113
+#: src/components/DocListing/ArticleChildrens.js:147
 #: src/components/DocListing/DocSections.js:189
 #: src/components/DocListing/ListingHeader.js:44
-#: src/components/DocListing/SectionArticles.js:186
+#: src/components/DocListing/SectionArticles.js:231
 msgid "Edit"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/DocListing/ArticleChildrens.js:135
+#: src/components/DocListing/ArticleChildrens.js:169
 #: src/components/DocListing/DocSections.js:215
 #: src/components/DocListing/ListingHeader.js:68
-#: src/components/DocListing/SectionArticles.js:208
+#: src/components/DocListing/SectionArticles.js:253
 msgid "View on Web"
 msgstr ""
 
@@ -974,11 +992,11 @@ msgstr ""
 #: src/components/AddArticleModal.js:215
 #: src/components/AddDocModal.js:180
 #: src/components/AddSectionModal.js:175
-#: src/components/DocListing/ArticleChildrens.js:75
+#: src/components/DocListing/ArticleChildrens.js:82
 #: src/components/DocListing/DocSections.js:165
 #: src/components/DocListing/ListingHeader.js:87
 #: src/components/DocListing/QuickEditModal.js:264
-#: src/components/DocListing/SectionArticles.js:123
+#: src/components/DocListing/SectionArticles.js:168
 #: src/components/Documentations/ParentDocs.js:96
 msgid "Draft"
 msgstr ""
@@ -1003,6 +1021,7 @@ msgstr ""
 #: src/components/Migrations/Modals/MigrationContentMappingModal.js:199
 #: src/components/Migrations/Modals/MigrationProgressModal.js:155
 #: src/components/Migrations/Modals/MigrationSelectionModal.js:195
+#: src/components/PermissionSettingsDemo/index.js:31
 #: src/components/RestrictionModal.js:131
 msgid "Cancel"
 msgstr ""
@@ -1114,8 +1133,8 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocActions.js:70
-#: src/components/DocListing/ArticleChildrens.js:92
-#: src/components/DocListing/SectionArticles.js:165
+#: src/components/DocListing/ArticleChildrens.js:126
+#: src/components/DocListing/SectionArticles.js:210
 msgid "Quick Edit"
 msgstr ""
 
@@ -1138,6 +1157,116 @@ msgstr ""
 #: src/components/DocActions.js:114
 #: src/components/DocListing/DocSections.js:241
 msgid "Delete"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeButton.js:15
+msgid "Go Pro – Up to 50% OFF! 🔥"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:26
+msgid "Pop-up slider first image"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:27
+msgid "Pop-up slider second image"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:28
+msgid "Pop-up slider third image"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:29
+msgid "Pop-up slider fourth image"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:95
+msgid "Upgrade to"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:101
+msgid "to experience even more Powerful features 🎉"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:116
+msgid "Role based permission management "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:117
+msgid "or viewing, managing, and configuring permission settings."
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:131
+msgid "Arrange content automatically or manually "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:132
+msgid "giving you full control over its presentation."
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:146
+msgid "Personalize messaging tab with custom titles "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:147
+msgid "and messages for seamless communication."
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:161
+msgid "Customize with "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:162
+msgid "design widgets, colors, and pre-built options "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:163
+msgid "for an appealing interface."
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:177
+msgid "Get assisted by A.I. Powered Chatbot "
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:178
+msgid "24/7 with updated information and support."
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:224
+msgid "10,000+ successful businesses"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:234
+msgid "14 days no questions asked refund policy"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradePopup.js:244
+msgid "Industry leading 24x7 support"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/DocListing/ArticleChildrens.js:92
+msgid "Create Nested Article (Pro)"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1190,7 +1319,7 @@ msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/DocListing/DocSections.js:176
-#: src/components/DocListing/SectionArticles.js:134
+#: src/components/DocListing/SectionArticles.js:179
 msgid "Create"
 msgstr ""
 
@@ -1314,11 +1443,6 @@ msgid "No section or article found for this documentation"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/ProPreviews/common/UpgradeButton.js:15
-msgid "Upgrade to PRO "
-msgstr ""
-
-#: assets/build/index.js:1
 #: src/components/ProPreviews/common/UpgradeTooltip.js:6
 msgid "Role-based permission management"
 msgstr ""
@@ -1344,7 +1468,7 @@ msgid "Assistant widget and A.I. Powered Chatbot"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/ProPreviews/common/UpgradeTooltip.js:15
+#: src/components/ProPreviews/common/UpgradeTooltip.js:16
 msgid "Available in Pro. Unlock & enjoy:"
 msgstr ""
 
@@ -1700,142 +1824,48 @@ msgid "Migration not required"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:26
-msgid "Pop-up slider first image"
+#: src/components/MultiSelectBox.js:21
+msgid "1 role selected"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:27
-msgid "Pop-up slider second image"
+#: src/components/MultiSelectBox.js:74
+#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:252
+#: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:124
+msgid "%s"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:28
-msgid "Pop-up slider third image"
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:29
-msgid "Pop-up slider fourth image"
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:95
-msgid "Upgrade to"
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:101
-msgid "to experience even more Powerful features 🎉"
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:116
-msgid "Role based permission management "
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:117
-msgid "or viewing, managing, and configuring permission settings."
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:131
-msgid "Arrange content automatically or manually "
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:132
-msgid "giving you full control over its presentation."
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:146
-msgid "Personalize messaging tab with custom titles "
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:147
-msgid "and messages for seamless communication."
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:161
-msgid "Customize with "
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:162
-msgid "design widgets, colors, and pre-built options "
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:163
-msgid "for an appealing interface."
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:177
-msgid "Get assisted by A.I. Powered Chatbot "
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:178
-msgid "24/7 with updated information and support."
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:224
-msgid "10,000+ successful businesses"
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:234
-msgid "14 days no questions asked refund policy"
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/common/UpgradePopup.js:244
-msgid "Industry leading 24x7 support"
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/PermissionSettings.js:13
+#: src/components/ProPreviews/PermissionSettings.js:16
 msgid "Global doc permission settings"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/PermissionSettings.js:14
+#: src/components/ProPreviews/PermissionSettings.js:17
 msgid "By default, who will get edit access on all the documents?"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/PermissionSettings.js:22
+#: src/components/ProPreviews/PermissionSettings.js:25
 msgid "Who can manage weDocs Settings?"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/PermissionSettings.js:23
+#: src/components/ProPreviews/PermissionSettings.js:26
 msgid "Who will have the ability to alter the settings of the plugin?"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/index.js:25
-#: src/components/ProPreviews/index.js:193
-#: src/components/ProPreviews/PermissionSettings.js:35
+#: src/components/ProPreviews/index.js:24
+#: src/components/ProPreviews/index.js:226
+#: src/components/ProPreviews/index.js:301
+#: src/components/ProPreviews/PermissionSettings.js:38
 msgid "Permission Management"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/PermissionSettings.js:81
-msgid "6 roles selected"
-msgstr ""
-
-#: assets/build/index.js:7
-#: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/ExploreSettings.js:252
-#: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:124
-#: src/components/ProPreviews/PermissionSettings.js:113
-msgid "%s"
+#: src/components/ProPreviews/PermissionSettings.js:103
+msgid "Administrator"
 msgstr ""
 
 #: assets/build/index.js:7
@@ -2038,7 +2068,7 @@ msgstr ""
 
 #: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AssistantPanel.js:16
-#: src/components/ProPreviews/index.js:43
+#: src/components/ProPreviews/index.js:42
 msgid "Assistant Widget"
 msgstr ""
 
@@ -2056,7 +2086,7 @@ msgstr ""
 #: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/AiChatPanel/index.js:11
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:5
-#: src/components/ProPreviews/index.js:62
+#: src/components/ProPreviews/index.js:61
 msgid "A.I. Chat"
 msgstr ""
 
@@ -2194,7 +2224,7 @@ msgstr ""
 #: src/components/ProPreviews/AssistantWidgetPanels/ExplorePanel/index.js:11
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:6
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:67
-#: src/components/ProPreviews/index.js:71
+#: src/components/ProPreviews/index.js:70
 msgid "Explore"
 msgstr ""
 
@@ -2322,7 +2352,7 @@ msgstr ""
 #: src/components/ProPreviews/AssistantWidgetPanels/MessagePanel/index.js:11
 #: src/components/ProPreviews/AssistantWidgetPanels/PlacementPanel/PlacementSettings.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/MessagePreview.js:90
-#: src/components/ProPreviews/index.js:86
+#: src/components/ProPreviews/index.js:85
 msgid "Messaging"
 msgstr ""
 
@@ -2533,29 +2563,137 @@ msgid "Reset All"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/index.js:101
+#: src/components/ProPreviews/index.js:149
+#: src/components/ProPreviews/SocialShareSettings.js:16
+msgid "Social Share"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/ProPreviews/SocialShareSettings.js:32
+msgid "Enable Social Share"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/ProPreviews/SocialShareSettings.js:36
+msgid "Enable social sharing buttons on documentation articles"
+msgstr ""
+
+#: assets/build/index.js:7
+#: src/components/ProPreviews/index.js:100
 msgid "Placement"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/index.js:116
+#: src/components/ProPreviews/index.js:115
 msgid "Widget Preference"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/index.js:133
+#: src/components/ProPreviews/index.js:132
 msgid "Layout & Styles"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/index.js:200
-#: src/components/ProPreviews/index.js:215
-msgid "Pro"
+#: src/components/ProPreviews/index.js:237
+msgid "Duplicate"
 msgstr ""
 
 #: assets/build/index.js:7
-#: src/components/ProPreviews/index.js:208
+#: src/components/ProPreviews/index.js:244
 msgid "Restrict editing for admin only"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/BackToDocsPage.js:27
+msgid "Manage Docs"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/index.js:39
+msgid "Save"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/PrivacySettings.js:17
+msgid "Viewing Privacy"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/PrivacySettings.js:34
+msgid "Public"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/PrivacySettings.js:36
+msgid "Everyone can see this doc"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/PrivacySettings.js:70
+msgid "Private"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/PrivacySettings.js:72
+msgid "Only logged-in users can see this doc"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/RoleManagementHeader.js:7
+msgid "Manage your team members"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/RoleManagementHeader.js:10
+msgid "Assign roles, control access levels, and collaborate seamlessly on documentations"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:18
+msgid "User role management"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:21
+msgid "Set your documentation role permissions"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:48
+msgid "As per Global Permission Settings"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:49
+msgid "Custom"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:56
+msgid "Go to permission management setting"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:65
+msgid "Admin"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:69
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:81
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:93
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:105
+msgid "Can edit"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:76
+msgid "Authors"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:80
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:92
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:104
+msgid "Can view"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:88
+msgid "Contributors"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/RoleManagementSettings.js:100
+msgid "Subscribers"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/SettingsHeader.js:7
+msgid "Choose your privacy settings"
+msgstr ""
+
+#: src/components/PermissionSettingsDemo/SettingsHeader.js:10
+msgid "Control user management for this doc. You can make a doc for internal usage, allow certain user roles to write and edit a doc and more"
 msgstr ""
 
 #: src/components/ProPreviews/AssistantWidgetPanels/PageSelectionBox.js:89
