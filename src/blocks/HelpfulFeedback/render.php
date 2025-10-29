@@ -192,7 +192,7 @@ function render_wedocs_helpful_feedback($attributes) {
     }
 
     // Enqueue frontend script and styles
-    wp_enqueue_script('wedocs-helpful-feedback-frontend', plugin_dir_url(WEDOCS_FILE) . '../../../assets/js/helpful-feedback.js', ['jquery'], '1.0.0', true);
+    wp_enqueue_script('wedocs-helpful-feedback-frontend', plugin_dir_url(WEDOCS_FILE) . '/assets/js/helpful-feedback.js', ['jquery'], WEDOCS_VERSION, true);
     wp_localize_script('wedocs-helpful-feedback-frontend', 'wedocsHelpfulFeedback', [
         'ajax_url' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('wedocs_helpful_feedback_nonce')

@@ -34,8 +34,8 @@ function render_wedocs_helpful_feedback($attributes) {
     $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
 
     // Get vote counts from post meta
-    $yes_votes = (int) get_post_meta($post_id, 'positive', true);
-    $no_votes = (int) get_post_meta($post_id, 'negative', true);
+    $yes_votes = (int) get_post_meta($post_id, 'wedocs_helpful_yes', true);
+    $no_votes = (int) get_post_meta($post_id, 'wedocs_helpful_no', true);
 
     // Check if user has already voted
     $has_voted = false;
@@ -190,11 +190,9 @@ function render_wedocs_helpful_feedback($attributes) {
     foreach ($data_attributes as $key => $value) {
         $data_attrs_string .= ' ' . $key . '="' . $value . '"';
     }
-    error_log(print_r( [plugins_url( '/assets/js/helpful-feedback.js', WEDOCS_FILE) ], true ));
-
 
     // Enqueue frontend script and styles
-    wp_enqueue_script('wedocs-helpful-feedback-frontend', plugins_url( '/assets/js/helpful-feedback.js', WEDOCS_FILE), ['jquery'], '1.0.0', true);
+    wp_enqueue_script('wedocs-helpful-feedback-frontend', plugin_dir_url(WEDOCS_FILE) .'./assets/js/helpful-feedback.js', ['jquery'], '1.0.0', true);
     wp_localize_script('wedocs-helpful-feedback-frontend', 'wedocsHelpfulFeedback', [
         'ajax_url' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('wedocs_helpful_feedback_nonce')
