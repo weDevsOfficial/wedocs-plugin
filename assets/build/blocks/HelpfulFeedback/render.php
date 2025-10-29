@@ -33,22 +33,41 @@ function render_wedocs_helpful_feedback($attributes) {
     $user_id = get_current_user_id();
     $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
 
-    // Get vote counts from post meta
-    $yes_votes = (int) get_post_meta($post_id, 'wedocs_helpful_yes', true);
-    $no_votes = (int) get_post_meta($post_id, 'wedocs_helpful_no', true);
+    // Get vote counts from post meta (using existing system meta keys)
+    $yes_votes = (int) get_post_meta($post_id, 'positive', true);
+    $no_votes = (int) get_post_meta($post_id, 'negative', true);
 
     // Check if user has already voted
     $has_voted = false;
     $voted_option = '';
 
-    if ($user_id) {
+    // Check cookie-based tracking first (for compatibility with existing system)
+    $previous = isset($_COOKIE['wedocs_response']) ? explode(',', $_COOKIE['wedocs_response']) : [];
+    if (in_array($post_id, $previous)) {
+        $has_voted = true;
+        // For cookie-based votes, we need to determine which option was voted
+        // Check user-specific records to get the vote type
+        if ($user_id) {
+            $user_vote = get_post_meta($post_id, "wedocs_helpful_vote_user_{$user_id}", true);
+            if ($user_vote) {
+                $voted_option = $user_vote;
+            }
+        }
+        // If we can't determine the specific vote from user records, show generic "voted" state
+        if (!$voted_option) {
+            $voted_option = 'yes'; // Default to yes for display purposes
+        }
+    }
+
+    // Check user-specific voting records if not already voted via cookie
+    if (!$has_voted && $user_id) {
         // Check by user ID
         $user_vote = get_post_meta($post_id, "wedocs_helpful_vote_user_{$user_id}", true);
         if ($user_vote) {
             $has_voted = true;
             $voted_option = $user_vote;
         }
-    } elseif (($attributes['allowAnonymous'] ?? true) && $user_ip) {
+    } elseif (!$has_voted && ($attributes['allowAnonymous'] ?? true) && $user_ip) {
         // Check by IP for anonymous users
         $ip_vote = get_post_meta($post_id, "wedocs_helpful_vote_ip_" . md5($user_ip), true);
         if ($ip_vote) {

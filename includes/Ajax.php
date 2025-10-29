@@ -295,13 +295,21 @@ class Ajax {
 
         // Check if user has already voted
         $has_voted = false;
-        if ( $user_id ) {
+        
+        // Check cookie-based tracking (for compatibility with existing system)
+        $previous = isset( $_COOKIE['wedocs_response'] ) ? explode( ',', $_COOKIE['wedocs_response'] ) : [];
+        if ( in_array( $post_id, $previous ) ) {
+            $has_voted = true;
+        }
+        
+        // Check user-specific voting records
+        if ( ! $has_voted && $user_id ) {
             // Check by user ID
             $user_vote = get_post_meta( $post_id, "wedocs_helpful_vote_user_{$user_id}", true );
             if ( $user_vote ) {
                 $has_voted = true;
             }
-        } elseif ( $allow_anonymous && $user_ip ) {
+        } elseif ( ! $has_voted && $allow_anonymous && $user_ip ) {
             // Check by IP for anonymous users
             $ip_vote = get_post_meta( $post_id, "wedocs_helpful_vote_ip_" . md5( $user_ip ), true );
             if ( $ip_vote ) {
@@ -316,7 +324,7 @@ class Ajax {
         }
 
         // Record the vote
-        $vote_meta_key = $vote === 'yes' ? 'postive' : 'negative';
+        $vote_meta_key = $vote === 'yes' ? 'positive' : 'negative';
         $current_votes = (int) get_post_meta( $post_id, $vote_meta_key, true );
         update_post_meta( $post_id, $vote_meta_key, $current_votes + 1 );
 
@@ -327,9 +335,15 @@ class Ajax {
             update_post_meta( $post_id, "wedocs_helpful_vote_ip_" . md5( $user_ip ), $vote );
         }
 
+        // Also update cookie-based tracking for compatibility with existing system
+        $previous = isset( $_COOKIE['wedocs_response'] ) ? explode( ',', $_COOKIE['wedocs_response'] ) : [];
+        array_push( $previous, $post_id );
+        $cookie_val = implode( ',', $previous );
+        setcookie( 'wedocs_response', $cookie_val, time() + WEEK_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
+
         // Get updated vote counts
         $yes_votes = (int) get_post_meta( $post_id, 'positive', true );
-        $no_votes = (int) get_post_meta( $post_id, 'negetive', true );
+        $no_votes = (int) get_post_meta( $post_id, 'negative', true );
 
         // Fire action hook for extensibility
         do_action( 'wedocs_helpful_feedback_voted', $post_id, $vote, $user_id, $user_ip );
