@@ -3,7 +3,7 @@
   \*********************************************************************************************************************/
 a.wedocs-print-article {
   position: absolute;
-  right: 0;
+  left: 0;
   top: 0;
   color: #777;
 }
@@ -49,7 +49,7 @@ a.wedocs-print-article:hover {
   margin-bottom: 1em;
 }
 .entry-content dl dt {
-  float: left;
+  float: right;
   display: inline-block;
   font-weight: 400;
   text-align: center;
@@ -69,7 +69,7 @@ a.wedocs-print-article:hover {
 }
 .entry-content dl dd {
   padding-top: 3px;
-  margin: 0 0 5px 45px;
+  margin: 0 45px 5px 0;
 }
 .entry-content dl dd:before,
 .entry-content dl dd:after {
@@ -81,11 +81,11 @@ a.wedocs-print-article:hover {
   clear: both;
 }
 .entry-content .wedocs-callout {
-  border-left: 5px solid;
+  border-right: 5px solid;
   color: #333;
   font-size: 14px;
   margin-bottom: 2em;
-  padding: 16px 25px 16px 20px;
+  padding: 16px 20px 16px 25px;
   background: #f1f1f1;
   border-color: #cfcfcf;
 }
@@ -153,7 +153,7 @@ td {
 table {
   border-collapse: separate;
   border-spacing: 0;
-  border-width: 1px 0 0 1px;
+  border-width: 1px 1px 0 0;
   margin: 0 0 1.75em;
   table-layout: fixed;
   /* Prevents HTML tables from becoming too wide */
@@ -162,15 +162,15 @@ table {
 table th,
 table td {
   font-weight: normal;
-  text-align: left;
+  text-align: right;
   padding: 0.4375em;
 }
 table th {
-  border-width: 0 1px 1px 0;
+  border-width: 0 0 1px 1px;
   font-weight: 700;
 }
 table td {
-  border-width: 0 1px 1px 0;
+  border-width: 0 0 1px 1px;
 }
 .powered-by {
   text-align: center;
@@ -182,5 +182,3 @@ table td {
   display: none;
 }
 
-
-/*# sourceMappingURL=print.css.map*/

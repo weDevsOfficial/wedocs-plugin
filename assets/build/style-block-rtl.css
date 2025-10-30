@@ -44,7 +44,7 @@
 .wedocs-search-input .search-submit,
 .wedocs-editor-search-input .search-submit {
   top: 0;
-  right: 0;
+  left: 0;
   border: 0;
   margin: 0;
   height: 100%;
@@ -59,7 +59,7 @@
 }
 
 .wedocs-search-input {
-  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 4%;
 }
 
@@ -72,8 +72,8 @@
 
 .wedocs-search-color-settings .block-editor-panel-color-gradient-settings {
   border-top: 0;
-  padding-left: 0;
   padding-right: 0;
+  padding-left: 0;
 }
 .wedocs-search-color-settings .block-editor-panel-color-gradient-settings .block-editor-tools-panel-color-gradient-settings__item.first {
   margin-top: 0;
@@ -85,7 +85,7 @@
   justify-content: space-between;
 }
 .radio-image-control-options .radio-image-option {
-  margin-right: 10px;
+  margin-left: 10px;
 }
 .radio-image-control-options .radio-image-option label {
   cursor: pointer;
@@ -105,7 +105,7 @@
 
 .backdrop {
   top: 0;
-  left: 0;
+  right: 0;
   z-index: 0;
   width: 100%;
   opacity: 0.5;
@@ -135,5 +135,3 @@
 .wp-block-wedocs-wedocs-search:not(.wp-block) {
   display: block;
 }
-
-/*# sourceMappingURL=style-block.css.map*/
