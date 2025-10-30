@@ -1,0 +1,101 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/quick-search",
+	"version": "1.0.0",
+	"title": "weDocs - Quick Search",
+	"icon": "search",
+	"category": "widgets",
+	"description": "Add a quick search block that opens a modal with documentation search",
+	"supports": {
+		"html": false
+	},
+	"render": "file:./render.php",
+	"attributes": {
+		"searchBoxPlaceholder": {
+			"type": "string",
+			"default": "Quick search..."
+		},
+		"modalPlaceholder": {
+			"type": "string",
+			"default": "Search documentation"
+		},
+		"modalDocsSource": {
+			"type": "string",
+			"default": "helpful"
+		},
+		"sectionIds": {
+			"type": "string",
+			"default": ""
+		},
+		"articleIds": {
+			"type": "string",
+			"default": ""
+		},
+		"helpfulDocsCount": {
+			"type": "number",
+			"default": 10
+		},
+		"resultImageType": {
+			"type": "string",
+			"default": "icon"
+		},
+		"searchBoxStyles": {
+			"type": "object",
+			"default": {
+				"placeholderColor": "#9CA3AF",
+				"iconColor": "#6B7280",
+				"commandKeyColor": "#6B7280",
+				"backgroundColor": "#FFFFFF",
+				"borderColor": "#D1D5DB",
+				"borderWidth": "1px",
+				"borderRadius": "8px",
+				"padding": {
+					"top": "12px",
+					"right": "16px",
+					"bottom": "12px",
+					"left": "16px"
+				},
+				"margin": {
+					"top": "0px",
+					"right": "0px",
+					"bottom": "0px",
+					"left": "0px"
+				},
+				"fontSize": "16px",
+				"fontWeight": "400",
+				"letterSpacing": "0px",
+				"lineHeight": "1.5"
+			}
+		},
+		"modalStyles": {
+			"type": "object",
+			"default": {
+				"placeholderColor": "#9CA3AF",
+				"searchIconColor": "#6B7280",
+				"backgroundColor": "#FFFFFF",
+				"fieldTextColor": "#111827",
+				"listItemIconColor": "#3B82F6",
+				"listItemTextColor": "#111827",
+				"docLabelColor": "#3B82F6",
+				"sectionLabelColor": "#3B82F6",
+				"listItemPadding": {
+					"top": "12px",
+					"right": "16px",
+					"bottom": "12px",
+					"left": "16px"
+				},
+				"listItemMargin": {
+					"top": "0px",
+					"right": "0px",
+					"bottom": "0px",
+					"left": "0px"
+				},
+				"listItemBorderColor": "#E5E7EB",
+				"listItemBorderWidth": "1px",
+				"listItemBorderRadius": "4px",
+				"listItemBackgroundColor": "#F9FAFB"
+			}
+		}
+	}
+}
