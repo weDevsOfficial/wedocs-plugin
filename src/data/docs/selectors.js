@@ -104,6 +104,18 @@ const selectors = {
     const { restrictedArticleList } = state;
     return restrictedArticleList.find( ( article ) => article.id === id );
   },
+
+  // Generic function to get children at any level (supports deep hierarchy)
+  getDocumentChildrens: ( state, id ) => {
+    const { docs } = state;
+    const childrens = docs?.filter( ( doc ) => doc.parent === id )?.reverse();
+
+    const sortableChildrens = childrens?.sort(
+      ( a, b ) => a.menu_order - b.menu_order
+    );
+
+    return sortableChildrens;
+  },
 };
 
 export default selectors;
