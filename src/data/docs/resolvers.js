@@ -1,12 +1,13 @@
 import actions from './actions';
 
-const getDocsPath = wp.hooks.applyFilters(
-  'wedocs_documentation_fetching_path',
-  `/wp/v2/docs?per_page=-1&status=publish${ typeof weDocsAdminVars !== 'undefined' ? ',draft' : ''}`
-);
-
 const resolvers = {
   *getDocs() {
+    // Compute path at runtime to ensure Pro filters are applied
+    const getDocsPath = wp.hooks.applyFilters(
+      'wedocs_documentation_fetching_path',
+      `/wp/v2/docs?per_page=-1&status=publish${ typeof weDocsAdminVars !== 'undefined' ? ',draft,private' : ''}`
+    );
+
     yield actions.setLoading( true );
     const response = yield actions.fetchFromAPI( getDocsPath );
     yield actions.setDocs( response );
@@ -42,8 +43,20 @@ const resolvers = {
   },
 
   *getUserDocIds() {
-    const userDocIds = yield actions.fetchFromAPI( `/wp/v2/docs/users/ids` );
-    return actions.setUserDocIds( userDocIds );
+    try {
+      // Check if Pro plugin is active via global flag
+      if (typeof weDocsAdminVars !== 'undefined' && weDocsAdminVars.pro_active) {
+        const userDocIds = yield actions.fetchFromAPI(`/wp/v2/docs/users/ids/`);
+        return actions.setUserDocIds(userDocIds);
+      } else {
+        // Pro plugin not active, return empty array
+        console.info('weDocs Pro plugin not active, returning empty user doc IDs');
+        return actions.setUserDocIds([]);
+      }
+    } catch (error) {
+      console.warn('Error fetching user doc IDs:', error);
+      return actions.setUserDocIds([]);
+    }
   },
 
   *getHelpfulDocs() {

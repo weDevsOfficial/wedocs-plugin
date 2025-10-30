@@ -4,6 +4,8 @@ import Badge from '../ProPreviews/common/Badge';
 import UpgradePopup from '../ProPreviews/common/UpgradePopup';
 
 const PrivacySettings = ( ) => {
+ 	// Check if Pro is loaded dynamically
+	const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
 	
 	return (
 		<div className="privacy-settings mt-8">
@@ -19,12 +21,10 @@ const PrivacySettings = ( ) => {
 						<input
 							id="public"
 							type="radio"
-							name="publish"
-							
-							 defaultChecked={ true }
-							className=
-								 'checked:!border-transparent checked:!bg-indigo-600 !mt-[.2rem] before:!bg-white before:!w-1.5 before:!h-1.5 before:!mt-1 before:!ml-1 place-content-center'
-							
+							name="privacy"
+							value="public"
+							defaultChecked={ true }
+							className='checked:!border-transparent checked:!bg-indigo-600 !mt-[.2rem] before:!bg-white before:!w-1.5 before:!h-1.5 before:!mt-1 before:!ml-1 place-content-center'
 						/>
 						<div className="ml-2 text-sm">
 							<label
@@ -42,19 +42,29 @@ const PrivacySettings = ( ) => {
 						</div>
 					</div>
 					<div className="field flex">
-						<UpgradePopup>
-	<input
-							id="privacy"
-							name="private"
-							type="radio"
-							className='!bg-transparent !border-[#8c8f94]
-							 !mt-[.2rem] before:!bg-white before:!w-1.5 before:!h-1.5 before:!mt-1 before:!ml-1 place-content-center'
-						/>
-						</UpgradePopup>
+						{isProLoaded ? (
+							<input
+								id="private"
+								name="privacy"
+								type="radio"
+								value="private"
+								className='checked:!border-transparent checked:!bg-indigo-600 !mt-[.2rem] before:!bg-white before:!w-1.5 before:!h-1.5 before:!mt-1 before:!ml-1 place-content-center'
+							/>
+						) : (
+							<UpgradePopup>
+								<input
+									id="private"
+									name="privacy"
+									type="radio"
+									value="private"
+									className='!bg-transparent !border-[#8c8f94] !mt-[.2rem] before:!bg-white before:!w-1.5 before:!h-1.5 before:!mt-1 before:!ml-1 place-content-center'
+								/>
+							</UpgradePopup>
+						)}
 					
 						<div className="ml-2 text-sm">
 							<label
-								htmlFor="privacy"
+								htmlFor="private"
 								className="font-medium text-gray-700 relative"
 							>
 								{ __( 'Private', 'wedocs' ) }
@@ -64,7 +74,9 @@ const PrivacySettings = ( ) => {
 										'wedocs'
 									) }
 								</p>
-								<Badge position='absolute' top="-5px" left="45px" heading="Permission Management is a Premium Feature" description="To see who contributed to the documents, you must upgrade to the pro edition."/>
+								{!isProLoaded && (
+									<Badge position='absolute' top="-5px" left="45px" heading="Permission Management is a Premium Feature" description="To see who contributed to the documents, you must upgrade to the pro edition."/>
+								)}
 							</label>
 						</div>
 					</div>

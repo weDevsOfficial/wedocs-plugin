@@ -9,18 +9,16 @@ import ExploreSettings from './AssistantWidgetPanels/ExplorePanel';
 import MessageSettings from './AssistantWidgetPanels/MessagePanel';
 import PlacementSettings from './AssistantWidgetPanels/PlacementPanel';
 import PreferenceSettings from './AssistantWidgetPanels/PreferencePanel';
+import SocialShareSettings from './SocialShareSettings';
 import Badge from './common/Badge';
 
-const isProLoaded = wp.hooks.applyFilters(
-    'wedocs_pro_loaded',
-    false
-);
-
-if ( !isProLoaded ) {
-    wp.hooks.addFilter(
-        'wedocs_settings_menu',
-        'settings_menu_override',
-        function ( menus ) {
+wp.hooks.addFilter(
+    'wedocs_settings_menu',
+    'wedocs_free_settings_menu_preview',
+    function ( menus ) {
+        // Check if Pro is loaded dynamically
+        const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+        if (isProLoaded) return menus;
             menus.permission = {
                 pro: true,
                 text: __( 'Permission Management', 'wedocs' ),
@@ -146,16 +144,40 @@ if ( !isProLoaded ) {
                     </svg>
                 ),
             };
+            menus.social_share = {
+                pro: true,
+                text: __( 'Social Share', 'wedocs' ),
+                icon: (
+                    <svg
+                        width="20"
+                        height="20"
+                        fill="none"
+                        stroke="#6b7280"
+                        strokeWidth="2"
+                        strokeLinejoin="round"
+                        className="-ml-1 mr-4 pro-settings"
+                    >
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                        <rect width="4" height="12" x="2" y="9" rx="2" />
+                        <circle cx="4" cy="4" r="2" />
+                    </svg>
+                ),
+            };
 
             return menus;
-        }
+        },
+        5
     );
 
-    wp.hooks.addFilter(
-        'wedocs_settings_page_templates',
-        'wedocs_settings_page_templates_callback',
-        function ( templates, docSettings, setDocSettings, index ) {
-            const assistantWidgetSubPanels = [
+wp.hooks.addFilter(
+    'wedocs_settings_page_templates',
+    'wedocs_free_settings_page_templates_preview',
+    function ( templates, docSettings, setDocSettings, index ) {
+        // Check if Pro is loaded dynamically
+        const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+        if (isProLoaded) return templates;
+
+        const assistantWidgetSubPanels = [
                 <AiChatBotSettings key={ index } />,
                 <ExploreSettings key={ index } />,
                 <MessageSettings key={ index } />,
@@ -176,71 +198,110 @@ if ( !isProLoaded ) {
                     settingsData={ docSettings }
                     setSettings={ setDocSettings }
                 />,
+                <SocialShareSettings
+                    key={ index }
+                    settingsData={ docSettings }
+                    setSettings={ setDocSettings }
+                />,
             ];
-        }
+        },
+        5
     );
 
-    wp.hooks.addFilter(
-        'wedocs_admin_article_restriction_action',
-        'wedocs_admin_article_restriction_action_callback',
-        function ( componentsArray, id, type ) {
-            return (
+wp.hooks.addFilter(
+    'wedocs_admin_article_restriction_action',
+    'wedocs_free_article_restriction_preview',
+    function ( componentsArray, id, type ) {
+        // Check if Pro is loaded dynamically
+        const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+        if (isProLoaded) return componentsArray;
+
+        return (
                 <>
                     { userIsAdmin() && (
                         <>
                             { type === 'doc' && (
-                <a href={`${weDocsAdminVars.weDocsUrl}permission_settings`} className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none">
-                  <span>{ __( 'Permission Management', 'wedocs' ) }</span>
-                  <span className={ `crown cursor-pointer relative text-white text-[10px] py-[3px] px-[5px] leading-none ml-2.5` }>
+                <UpgradePopup>
+                  <span className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none cursor-pointer">
+                    <span>{ __( 'Permission Management', 'wedocs' ) }</span>
+                    <Badge classes="opacity-0 group-hover:opacity-100 transition-opacity ml-2"/>
                   </span>
-                </a>
+                </UpgradePopup>
                             ) }
                             { type === 'article' && (
-                              
-                 <UpgradePopup>
-                <span className='group w-full flex items-center py-2 px-4 space-x-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none'>
-                  <span>{ __( 'Restrict editing for admin only', 'wedocs' ) }</span>
-                <Badge classes="opacity-0 group-hover:opacity-100 transition-opacity"/>
-                </span>
-                                </UpgradePopup>
+
+                                <>
+                                    <UpgradePopup>
+                                        <span
+                                            className="group w-full flex items-center py-2 px-4 space-x-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none">
+                                            <span>{__( 'Duplicate', 'wedocs' )}</span>
+                                            <Badge classes="opacity-0 group-hover:opacity-100 transition-opacity"/>
+                                        </span>
+                                    </UpgradePopup>
+                                    <UpgradePopup>
+                                        <span
+                                            className="group w-full flex items-center py-2 px-4 space-x-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none">
+                                            <span>{__( 'Restrict editing for admin only', 'wedocs' )}</span>
+                                            <Badge classes="opacity-0 group-hover:opacity-100 transition-opacity"/>
+                                        </span>
+                                    </UpgradePopup>
+                                </>
                             ) }
                         </>
                     ) }
                 </>
             );
-        }
+        },
+        5
     );
-
-    wp.hooks.addFilter(
-        'wedocs_documentation_contributors',
-        'wedocs_documentation_contributors_callback',
-        function () {
-            if ( !userIsAdmin() ) return;
-            if(!isProLoaded) return;
-
-            return <Contributors />;
-        }
-    );
-
-    wp.hooks.addFilter(
-        'wedocs_article_contributors',
-        'wedocs_article_contributors_callback',
-        function () {
-            if ( !userIsAdmin() ) return;
-              if(!isProLoaded) return;
-
-            return <Contributors />;
-        }
-    );
-
 
 wp.hooks.addFilter(
-	'wedocs_register_menu_routes',
-	'wedocs_register_menu_routes_callback',
-	function ( routes ) {
-		const { weDocsSettingsPage: SettingsPage } = window;
-			routes?.push( { path: 'settings/:panel', component: SettingsPage } );
-		return routes;
-	}
+    'wedocs_documentation_contributors',
+    'wedocs_free_documentation_contributors_preview',
+    function () {
+        // Check if Pro is loaded dynamically
+        const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+        if (isProLoaded) return;
+        if ( !userIsAdmin() ) return;
+
+        return <Contributors />;
+    },
+    5
 );
-}
+
+wp.hooks.addFilter(
+    'wedocs_article_contributors',
+    'wedocs_free_article_contributors_preview',
+    function () {
+        // Check if Pro is loaded dynamically
+        const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+        if (isProLoaded) return;
+        if ( !userIsAdmin() ) return;
+
+        return <Contributors />;
+    },
+    5
+);
+
+wp.hooks.addFilter(
+	'wedocs_article_restriction_menu',
+	'wedocs_free_article_restriction_menu_preview',
+	function ( menu ) {
+		// Check if Pro is loaded dynamically
+		const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+		if (isProLoaded) return menu;
+
+		// Return PRO preview menu when Pro is not loaded
+		return (
+			<UpgradePopup>
+				<a
+					href="#"
+					className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
+				>
+					<span>{ __( 'Permission Management', 'wedocs' ) }</span>
+				</a>
+			</UpgradePopup>
+		);
+	},
+	5
+);
