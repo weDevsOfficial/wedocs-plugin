@@ -9,120 +9,16 @@
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
-/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/editor */ "@wordpress/editor");
-/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_editor__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _AiDocWriterModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./AiDocWriterModal */ "./src/editor/AiDocWriterModal.js");
+/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
+/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../icons */ "./src/icons/index.js");
+/* harmony import */ var _AiDocWriterPanel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AiDocWriterPanel */ "./src/editor/AiDocWriterPanel.js");
 
 
 
-
-
-
-
-
-
-
-// Custom AI icon SVG - Neural network/brain inspired
-const AiIcon = () => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
-  width: "22",
-  height: "18",
-  viewBox: "0 0 22 18",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
-  d: "M20.3574 0.120361C21.0356 0.120379 21.5839 0.668752 21.584 1.34692C21.584 1.84677 21.2856 2.27474 20.8574 2.46606V6.36353C21.5099 6.66256 21.9503 7.20505 21.9961 8.0481C21.9985 8.09871 22 8.67906 22 8.72974C22 8.77621 21.999 9.60227 21.999 9.65161C21.931 10.9279 20.9632 11.5184 19.7197 11.6145C18.9403 15.5822 15.3332 17.8801 10.999 17.8801C6.66363 17.8801 3.05521 15.5812 2.27637 11.6116C1.03483 11.4955 0.0707824 10.8026 0.00390625 9.52954C0.00145752 9.48179 0 8.77749 0 8.72974C1.39541e-06 8.68032 0.00145892 8.21911 0.00390625 8.17017C0.0497323 7.32686 0.489827 6.73982 1.14258 6.40552V2.46606C0.715048 2.27453 0.416016 1.84641 0.416016 1.34692C0.416151 0.669965 0.966565 0.120361 1.64355 0.120361C2.32161 0.120549 2.86998 0.668858 2.87012 1.34692C2.87012 1.84713 2.57124 2.27592 2.14258 2.46704V6.10571C2.20844 6.09723 2.27527 6.0913 2.34277 6.08618C3.24165 2.30043 6.77492 0.120405 11 0.120361C15.2243 0.120361 18.7565 2.29975 19.6562 6.08423C19.7241 6.08853 19.7912 6.0936 19.8574 6.10083V2.46606C19.4296 2.27466 19.1309 1.84662 19.1309 1.34692C19.131 0.669966 19.6804 0.120361 20.3574 0.120361ZM11.001 2.0686C7.3014 2.0686 4.27893 4.20979 4.0791 7.85962C4.07241 7.98673 4.06836 8.8722 4.06836 9.00122C4.06836 9.12651 4.07144 10.0059 4.07812 10.1282C4.27139 13.7836 7.29669 15.9319 11 15.9319C14.7032 15.9318 17.7286 13.7835 17.9209 10.1282C17.9285 10.0059 17.9326 9.12651 17.9326 9.00122C17.9326 8.8722 17.9286 7.98673 17.9219 7.85962C17.722 4.20989 14.7004 2.06871 11.001 2.0686ZM7.89746 6.43677C8.61856 6.43677 9.20299 7.02136 9.20312 7.74243C9.20312 8.46362 8.61865 9.0481 7.89746 9.0481C7.17631 9.04806 6.5918 8.4636 6.5918 7.74243C6.59193 7.02138 7.17639 6.43681 7.89746 6.43677ZM14.0977 6.43677C14.8195 6.43692 15.4032 7.0206 15.4033 7.74243C15.4033 8.46437 14.8196 9.04794 14.0977 9.0481C13.3756 9.0481 12.792 8.46446 12.792 7.74243C12.7921 7.02051 13.3757 6.43677 14.0977 6.43677Z",
-  fill: "currentColor"
-}));
-const AiDocWriter = () => {
-  const [isModalOpen, setIsModalOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
-
-  // Check if we're in the docs post type
-  const {
-    isViewable,
-    postTypeName
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
-    const postType = select(_wordpress_editor__WEBPACK_IMPORTED_MODULE_4__.store).getCurrentPostType();
-    const postTypeObject = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_6__.store).getPostType(postType);
-    return {
-      isViewable: postTypeObject?.viewable,
-      postTypeName: postType
-    };
-  }, []);
-
-  // Only show for docs post type
-  if (!isViewable || postTypeName !== 'docs') {
-    return null;
-  }
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("style", null, `
-                    /* AI Doc Writer icon active state */
-                    .components-button[aria-controls="wedocs-ai-doc-writer:wedocs-ai-doc-writer"] {
-                        background-color: #4338CA !important;
-                        color: white !important;
-                        border-radius: 4px !important;
-                        transition: all 0.2s ease !important;
-                    }
-                    
-                    .components-button[aria-controls="wedocs-ai-doc-writer:wedocs-ai-doc-writer"]:hover {
-                        background-color: #3730A3 !important;
-                        transform: translateY(-1px) !important;
-                        box-shadow: 0 4px 8px rgba(67, 56, 202, 0.3) !important;
-                    }
-                    
-                    .components-button[aria-controls="wedocs-ai-doc-writer:wedocs-ai-doc-writer"]:focus {
-                        box-shadow: 0 0 0 2px rgba(67, 56, 202, 0.5) !important;
-                    }
-                    
-                    /* Icon color when active */
-                    .components-button[aria-controls="wedocs-ai-doc-writer:wedocs-ai-doc-writer"] svg path {
-                        fill: white !important;
-                    }
-                `), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_editor__WEBPACK_IMPORTED_MODULE_4__.PluginSidebar, {
-    name: "wedocs-ai-doc-writer",
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('AI Doc Writer', 'wedocs'),
-    icon: AiIcon
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    style: {
-      padding: '16px'
-    }
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
-    style: {
-      marginBottom: '16px',
-      fontSize: '14px',
-      color: '#666'
-    }
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Generate AI-powered documentation content with advanced language models.', 'wedocs')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    onClick: () => setIsModalOpen(true),
-    className: "button button-primary",
-    style: {
-      width: '100%',
-      height: '40px',
-      fontSize: '14px',
-      fontWeight: '500',
-      backgroundColor: '#4338CA',
-      borderColor: '#4338CA'
-    }
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Open AI Doc Writer', 'wedocs')))), isModalOpen && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_AiDocWriterModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    isOpen: isModalOpen,
-    onClose: () => setIsModalOpen(false)
-  }));
-};
-
-// Register the plugin
-(0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_3__.registerPlugin)('wedocs-ai-doc-writer', {
-  render: AiDocWriter,
-  icon: AiIcon // Custom AI icon
+(0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_0__.registerPlugin)('wedocs-ai-doc-writer', {
+  icon: _icons__WEBPACK_IMPORTED_MODULE_1__["default"],
+  render: _AiDocWriterPanel__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 
 /***/ }),
@@ -251,7 +147,7 @@ const AiDocWriterModal = ({
     if (currentPost?.title && !title) {
       setTitle(currentPost.title);
     }
-  }, [currentPost, title]);
+  }, [currentPost]);
 
   // Generate dynamic prompt from title and keywords
   const generateDynamicPrompt = (docTitle, docKeywords) => {
@@ -414,13 +310,13 @@ const AiDocWriterModal = ({
     content = content.replace(/<script[^>]*>.*?<\/script>/gi, '');
 
     // Remove javascript: protocols but keep the anchor tags
-    content = content.replace(/href\s*=\s*(["\'])\s*javascript:.*?\1/i, 'href="#"');
+    content = content.replace(/href\s*=\s*(["\'])\s*javascript:.*?\1/gi, 'href="#"');
 
     // Remove all event handlers (onclick, onload, etc) but keep the elements
-    content = content.replace(/\s+on\w+\s*=\s*(["\'])?[^"\']*\1?/i, '');
+    content = content.replace(/\s+on\w+\s*=\s*(["\'])?[^"\']*\1?/gi, '');
 
     // Remove any inline javascript: in attributes
-    content = content.replace(/javascript\s*:/i, '');
+    content = content.replace(/javascript\s*:/gi, '');
     return content;
   };
 
@@ -591,6 +487,100 @@ const AiDocWriterModal = ({
 
 /***/ }),
 
+/***/ "./src/editor/AiDocWriterPanel.js":
+/*!****************************************!*\
+  !*** ./src/editor/AiDocWriterPanel.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/editor */ "@wordpress/editor");
+/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_editor__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
+/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../icons */ "./src/icons/index.js");
+/* harmony import */ var _AiDocWriterModal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AiDocWriterModal */ "./src/editor/AiDocWriterModal.js");
+
+
+
+
+
+
+
+
+
+
+const AiDocWriterPanel = () => {
+  const [isModalOpen, setIsModalOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
+
+  // Check if we're in the docs post type
+  const {
+    isViewable,
+    postTypeName
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => {
+    const postType = select(_wordpress_editor__WEBPACK_IMPORTED_MODULE_4__.store).getCurrentPostType();
+    const postTypeObject = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getPostType(postType);
+    return {
+      isViewable: postTypeObject?.viewable,
+      postTypeName: postType
+    };
+  }, []);
+
+  // Only show for docs post type
+  if (!isViewable || postTypeName !== 'docs') {
+    return null;
+  }
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_7__.PluginSidebarMoreMenuItem, {
+    target: "wedocs-ai-doc-writer",
+    icon: _icons__WEBPACK_IMPORTED_MODULE_8__["default"]
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('AI Doc Writer', 'wedocs')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_7__.PluginSidebar, {
+    name: "wedocs-ai-doc-writer",
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('AI Doc Writer', 'wedocs')
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    style: {
+      padding: '16px'
+    }
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    style: {
+      marginBottom: '16px',
+      fontSize: '14px',
+      color: '#666'
+    }
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Generate AI-powered documentation content with advanced language models.', 'wedocs')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Button, {
+    onClick: () => setIsModalOpen(true),
+    variant: "primary",
+    style: {
+      width: '100%',
+      height: '40px',
+      fontSize: '14px',
+      fontWeight: '500',
+      backgroundColor: '#4338CA',
+      borderColor: '#4338CA'
+    }
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Open AI Doc Writer', 'wedocs')))), isModalOpen && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_AiDocWriterModal__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    isOpen: isModalOpen,
+    onClose: () => setIsModalOpen(false)
+  }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AiDocWriterPanel);
+
+/***/ }),
+
 /***/ "./src/editor/AiDocWriterPreview.js":
 /*!******************************************!*\
   !*** ./src/editor/AiDocWriterPreview.js ***!
@@ -648,6 +638,32 @@ const AiDocWriterPreview = ({
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Accept & Insert', 'wedocs'))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AiDocWriterPreview);
+
+/***/ }),
+
+/***/ "./src/icons/index.js":
+/*!****************************!*\
+  !*** ./src/icons/index.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "20",
+  height: "20",
+  viewBox: "0 0 22 18",
+  fill: "none"
+}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "M20.3574 0.120361C21.0356 0.120379 21.5839 0.668752 21.584 1.34692C21.584 1.84677 21.2856 2.27474 20.8574 2.46606V6.36353C21.5099 6.66256 21.9503 7.20505 21.9961 8.0481C21.9985 8.09871 22 8.67906 22 8.72974C22 8.77621 21.999 9.60227 21.999 9.65161C21.931 10.9279 20.9632 11.5184 19.7197 11.6145C18.9403 15.5822 15.3332 17.8801 10.999 17.8801C6.66363 17.8801 3.05521 15.5812 2.27637 11.6116C1.03483 11.4955 0.0707824 10.8026 0.00390625 9.52954C0.00145752 9.48179 0 8.77749 0 8.72974C1.39541e-06 8.68032 0.00145892 8.21911 0.00390625 8.17017C0.0497323 7.32686 0.489827 6.73982 1.14258 6.40552V2.46606C0.715048 2.27453 0.416016 1.84641 0.416016 1.34692C0.416151 0.669965 0.966565 0.120361 1.64355 0.120361C2.32161 0.120549 2.86998 0.668858 2.87012 1.34692C2.87012 1.84713 2.57124 2.27592 2.14258 2.46704V6.10571C2.20844 6.09723 2.27527 6.0913 2.34277 6.08618C3.24165 2.30043 6.77492 0.120405 11 0.120361C15.2243 0.120361 18.7565 2.29975 19.6562 6.08423C19.7241 6.08853 19.7912 6.0936 19.8574 6.10083V2.46606C19.4296 2.27466 19.1309 1.84662 19.1309 1.34692C19.131 0.669966 19.6804 0.120361 20.3574 0.120361ZM11.001 2.0686C7.3014 2.0686 4.27893 4.20979 4.0791 7.85962C4.07241 7.98673 4.06836 8.8722 4.06836 9.00122C4.06836 9.12651 4.07144 10.0059 4.07812 10.1282C4.27139 13.7836 7.29669 15.9319 11 15.9319C14.7032 15.9318 17.7286 13.7835 17.9209 10.1282C17.9285 10.0059 17.9326 9.12651 17.9326 9.00122C17.9326 8.8722 17.9286 7.98673 17.9219 7.85962C17.722 4.20989 14.7004 2.06871 11.001 2.0686ZM7.89746 6.43677C8.61856 6.43677 9.20299 7.02136 9.20312 7.74243C9.20312 8.46362 8.61865 9.0481 7.89746 9.0481C7.17631 9.04806 6.5918 8.4636 6.5918 7.74243C6.59193 7.02138 7.17639 6.43681 7.89746 6.43677ZM14.0977 6.43677C14.8195 6.43692 15.4032 7.0206 15.4033 7.74243C15.4033 8.46437 14.8196 9.04794 14.0977 9.0481C13.3756 9.0481 12.792 8.46446 12.792 7.74243C12.7921 7.02051 13.3757 6.43677 14.0977 6.43677Z",
+  fill: "currentColor"
+})));
 
 /***/ }),
 
@@ -740,7 +756,6 @@ class AiService {
       const settings = await response.json();
       return settings?.ai || this.getDefaultAiSettings();
     } catch (error) {
-      console.error('Failed to fetch AI settings:', error);
       return this.getDefaultAiSettings();
     }
   }
@@ -811,20 +826,75 @@ class AiService {
 
       // Get provider and model configuration
       const providerConfig = aiSettings.providers[provider];
-      if (!providerConfig || !providerConfig.api_key) {
-        throw new Error((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('AI provider not configured or API key missing', 'wedocs'));
+      if (!providerConfig) {
+        throw new Error((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('AI provider not configured', 'wedocs'));
       }
       const selectedModel = model || providerConfig.selected_model;
-      const endpoint = null;
 
-      // Prepare the request payload
-      const payload = this.preparePayload(provider, selectedModel, prompt, options);
+      // Make the API call directly via WordPress REST API
+      // Pass prompt and options directly instead of creating provider-specific payloads
+      const restUrl = '/wp-json/wp/v2/docs/ai/generate';
+      const nonce = window.weDocsEditorVars?.nonce || '';
+      const requestBody = {
+        prompt: prompt,
+        provider: provider,
+        model: selectedModel,
+        maxTokens: options.maxTokens || 2000,
+        temperature: options.temperature || 0.7,
+        systemPrompt: options.systemPrompt || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('You are a helpful documentation assistant.', 'wedocs')
+      };
+      const response = await fetch(restUrl, {
+        method: 'POST',
+        credentials: 'include',
+        // Include cookies for authentication
+        headers: {
+          'Content-Type': 'application/json',
+          'X-WP-Nonce': nonce
+        },
+        body: JSON.stringify(requestBody)
+      });
+      if (!response.ok) {
+        let errorData = {};
+        let errorMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('AI content generation failed. Please try again.', 'wedocs');
+        try {
+          const responseText = await response.text();
+          if (responseText.trim().startsWith('{')) {
+            errorData = JSON.parse(responseText);
+            // Use the message from the API, which should already be user-friendly
+            errorMessage = errorData.message || errorData.code || errorMessage;
 
-      // Make the API call
-      const response = await this.makeApiCall(provider, providerConfig.api_key, endpoint, payload, selectedModel);
-      return this.parseResponse(provider, response);
+            // Clean up HTML error messages (WordPress fatal errors)
+            if (errorMessage.includes('<p>') || errorMessage.includes('critical error')) {
+              errorMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('A server error occurred. Please try again or contact support if the problem persists.', 'wedocs');
+            }
+          } else {
+            // For non-JSON responses, provide user-friendly message
+            if (response.status === 500) {
+              errorMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('A server error occurred. Please try again.', 'wedocs');
+            } else if (response.status === 403) {
+              errorMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('You do not have permission to perform this action.', 'wedocs');
+            } else {
+              errorMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('An error occurred. Please try again.', 'wedocs');
+            }
+          }
+        } catch (parseError) {
+          // If we can't parse the error, provide a generic user-friendly message
+          if (response.status === 500) {
+            errorMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('A server error occurred. Please try again.', 'wedocs');
+          } else {
+            errorMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('An error occurred. Please try again.', 'wedocs');
+          }
+        }
+        throw new Error(errorMessage);
+      }
+      const data = await response.json();
+
+      // Return in format expected by callers
+      return {
+        content: data.content || '',
+        usage: data.usage || null
+      };
     } catch (error) {
-      console.error('AI content generation failed:', error);
       throw error;
     }
   }
@@ -926,47 +996,34 @@ class AiService {
   }
 
   /**
-   * Make API call to the specified provider
+   * Make API call to the specified provider via WordPress REST API
+   * This method is kept for backward compatibility with testApiConnection
    */
   async makeApiCall(provider, apiKey, endpoint, payload, model = null) {
-    const providerConfig = this.providers[provider];
-    let url, headers;
+    // Extract options from payload (provider-specific payloads vary)
+    const options = this.extractOptionsFromPayload(provider, payload);
 
-    // Prepare URL and headers based on provider
-    switch (provider) {
-      case 'openai':
-        // Use the endpoint directly from centralized config (already includes /chat/completions)
-        url = providerConfig.endpoint || 'https://api.openai.com/v1/chat/completions';
-        headers = {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json'
-        };
-        break;
-      case 'anthropic':
-        // Use the endpoint directly from centralized config (already includes /messages)
-        url = providerConfig.endpoint || 'https://api.anthropic.com/v1/messages';
-        headers = {
-          'x-api-key': apiKey,
-          'Content-Type': 'application/json',
-          'anthropic-version': '2023-06-01'
-        };
-        break;
-      case 'google':
-        // Use endpoint from centralized config and replace {model} placeholder
-        const endpoint = providerConfig.endpoint || 'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent';
-        const selectedModel = model || 'gemini-2.0-flash-exp';
-        url = endpoint.replace('{model}', selectedModel) + `?key=${apiKey}`;
-        headers = {
-          'Content-Type': 'application/json'
-        };
-        break;
-      default:
-        throw new Error((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Unsupported AI provider', 'wedocs'));
-    }
-    const response = await fetch(url, {
+    // Use WordPress REST API endpoint instead of direct API calls
+    const restUrl = '/wp-json/wp/v2/docs/ai/generate';
+
+    // Get nonce from localized script
+    const nonce = window.weDocsEditorVars?.nonce || '';
+    const response = await fetch(restUrl, {
       method: 'POST',
-      headers: headers,
-      body: JSON.stringify(payload)
+      credentials: 'include',
+      // Include cookies for authentication
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce
+      },
+      body: JSON.stringify({
+        prompt: options.prompt,
+        provider: provider,
+        model: model || options.model,
+        maxTokens: options.maxTokens || 2000,
+        temperature: options.temperature || 0.7,
+        systemPrompt: options.systemPrompt
+      })
     });
     if (!response.ok) {
       let errorData = {};
@@ -977,27 +1034,67 @@ class AiService {
         // Try to parse as JSON
         if (responseText.trim().startsWith('{')) {
           errorData = JSON.parse(responseText);
-          errorMessage = errorData.error?.message || errorData.message || errorMessage;
+          errorMessage = errorData.message || errorData.code || errorMessage;
         } else {
           // If it's HTML (like a 404 page), provide a more helpful message
           errorMessage = `HTTP ${response.status}: ${response.statusText}`;
         }
       } catch (parseError) {
-        console.error('AI Service - Failed to parse error response:', parseError);
         errorMessage = `HTTP ${response.status}: ${response.statusText}`;
-      }
-
-      // If it's a Google model not found error, list available models
-      if (provider === 'google' && errorMessage.includes('is not found for API version')) {
-        try {
-          await this.listGoogleModels(apiKey);
-        } catch (listError) {
-          console.error('AI Service - Failed to list models:', listError);
-        }
       }
       throw new Error(errorMessage);
     }
-    return await response.json();
+    const data = await response.json();
+
+    // Return in format expected by parseResponse
+    return data;
+  }
+
+  /**
+   * Extract options from provider-specific payload
+   */
+  extractOptionsFromPayload(provider, payload) {
+    switch (provider) {
+      case 'openai':
+        return {
+          prompt: payload.messages?.find(m => m.role === 'user')?.content || '',
+          systemPrompt: payload.messages?.find(m => m.role === 'system')?.content || '',
+          model: payload.model,
+          maxTokens: payload.max_tokens,
+          temperature: payload.temperature
+        };
+      case 'anthropic':
+        // Anthropic combines system prompt and user prompt in the message content
+        const anthropicContent = payload.messages?.[0]?.content || '';
+        const parts = anthropicContent.split('\n\n');
+        return {
+          prompt: parts.slice(1).join('\n\n') || parts[0] || '',
+          systemPrompt: parts[0] || '',
+          model: payload.model,
+          maxTokens: payload.max_tokens,
+          temperature: payload.temperature
+        };
+      case 'google':
+        // Google combines system prompt and user prompt in the text
+        const googleText = payload.contents?.[0]?.parts?.[0]?.text || '';
+        const googleParts = googleText.split('\n\n');
+        return {
+          prompt: googleParts.slice(1).join('\n\n') || googleParts[0] || '',
+          systemPrompt: googleParts[0] || '',
+          model: null,
+          // Google model is handled separately
+          maxTokens: payload.generationConfig?.maxOutputTokens,
+          temperature: payload.generationConfig?.temperature
+        };
+      default:
+        return {
+          prompt: '',
+          systemPrompt: '',
+          model: null,
+          maxTokens: 2000,
+          temperature: 0.7
+        };
+    }
   }
 
   /**
@@ -1119,6 +1216,16 @@ module.exports = window["wp"]["coreData"];
 /***/ ((module) => {
 
 module.exports = window["wp"]["data"];
+
+/***/ }),
+
+/***/ "@wordpress/edit-post":
+/*!**********************************!*\
+  !*** external ["wp","editPost"] ***!
+  \**********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["editPost"];
 
 /***/ }),
 

@@ -76,7 +76,6 @@ class AiService {
             const settings = await response.json();
             return settings?.ai || this.getDefaultAiSettings();
         } catch (error) {
-            console.error('Failed to fetch AI settings:', error);
             return this.getDefaultAiSettings();
         }
     }
@@ -154,28 +153,82 @@ class AiService {
             // Get provider and model configuration
             const providerConfig = aiSettings.providers[provider];
 
-            if (!providerConfig || !providerConfig.api_key) {
-                throw new Error(__('AI provider not configured or API key missing', 'wedocs'));
+            if (!providerConfig) {
+                throw new Error(__('AI provider not configured', 'wedocs'));
             }
 
             const selectedModel = model || providerConfig.selected_model;
-            const endpoint = null;
 
-            // Prepare the request payload
-            const payload = this.preparePayload(provider, selectedModel, prompt, options);
+            // Make the API call directly via WordPress REST API
+            // Pass prompt and options directly instead of creating provider-specific payloads
+            const restUrl = '/wp-json/wp/v2/docs/ai/generate';
+            const nonce = window.weDocsEditorVars?.nonce || '';
+            
+            const requestBody = {
+                prompt: prompt,
+                provider: provider,
+                model: selectedModel,
+                maxTokens: options.maxTokens || 2000,
+                temperature: options.temperature || 0.7,
+                systemPrompt: options.systemPrompt || __('You are a helpful documentation assistant.', 'wedocs')
+            };
+            
+            const response = await fetch(restUrl, {
+                method: 'POST',
+                credentials: 'include', // Include cookies for authentication
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-WP-Nonce': nonce
+                },
+                body: JSON.stringify(requestBody)
+            });
 
-            // Make the API call
-            const response = await this.makeApiCall(
-                provider,
-                providerConfig.api_key,
-                endpoint,
-                payload,
-                selectedModel
-            );
+            if (!response.ok) {
+                let errorData = {};
+                let errorMessage = __('AI content generation failed. Please try again.', 'wedocs');
 
-            return this.parseResponse(provider, response);
+                try {
+                    const responseText = await response.text();
+
+                    if (responseText.trim().startsWith('{')) {
+                        errorData = JSON.parse(responseText);
+                        // Use the message from the API, which should already be user-friendly
+                        errorMessage = errorData.message || errorData.code || errorMessage;
+                        
+                        // Clean up HTML error messages (WordPress fatal errors)
+                        if (errorMessage.includes('<p>') || errorMessage.includes('critical error')) {
+                            errorMessage = __('A server error occurred. Please try again or contact support if the problem persists.', 'wedocs');
+                        }
+                    } else {
+                        // For non-JSON responses, provide user-friendly message
+                        if (response.status === 500) {
+                            errorMessage = __('A server error occurred. Please try again.', 'wedocs');
+                        } else if (response.status === 403) {
+                            errorMessage = __('You do not have permission to perform this action.', 'wedocs');
+                        } else {
+                            errorMessage = __('An error occurred. Please try again.', 'wedocs');
+                        }
+                    }
+                } catch (parseError) {
+                    // If we can't parse the error, provide a generic user-friendly message
+                    if (response.status === 500) {
+                        errorMessage = __('A server error occurred. Please try again.', 'wedocs');
+                    } else {
+                        errorMessage = __('An error occurred. Please try again.', 'wedocs');
+                    }
+                }
+
+                throw new Error(errorMessage);
+            }
+
+            const data = await response.json();
+            
+            // Return in format expected by callers
+            return {
+                content: data.content || '',
+                usage: data.usage || null
+            };
         } catch (error) {
-            console.error('AI content generation failed:', error);
             throw error;
         }
     }
@@ -284,52 +337,34 @@ class AiService {
     }
 
     /**
-     * Make API call to the specified provider
+     * Make API call to the specified provider via WordPress REST API
+     * This method is kept for backward compatibility with testApiConnection
      */
     async makeApiCall(provider, apiKey, endpoint, payload, model = null) {
-        const providerConfig = this.providers[provider];
-        let url, headers;
-
-        // Prepare URL and headers based on provider
-        switch (provider) {
-            case 'openai':
-                // Use the endpoint directly from centralized config (already includes /chat/completions)
-                url = providerConfig.endpoint || 'https://api.openai.com/v1/chat/completions';
-                headers = {
-                    'Authorization': `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json'
-                };
-                break;
-
-            case 'anthropic':
-                // Use the endpoint directly from centralized config (already includes /messages)
-                url = providerConfig.endpoint || 'https://api.anthropic.com/v1/messages';
-                headers = {
-                    'x-api-key': apiKey,
-                    'Content-Type': 'application/json',
-                    'anthropic-version': '2023-06-01'
-                };
-                break;
-
-            case 'google':
-                // Use endpoint from centralized config and replace {model} placeholder
-                const endpoint = providerConfig.endpoint || 'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent';
-                const selectedModel = model || 'gemini-2.0-flash-exp';
-                url = endpoint.replace('{model}', selectedModel) + `?key=${apiKey}`;
-                headers = {
-                    'Content-Type': 'application/json'
-                };
-                break;
-
-
-            default:
-                throw new Error(__('Unsupported AI provider', 'wedocs'));
-        }
-
-        const response = await fetch(url, {
+        // Extract options from payload (provider-specific payloads vary)
+        const options = this.extractOptionsFromPayload(provider, payload);
+        
+        // Use WordPress REST API endpoint instead of direct API calls
+        const restUrl = '/wp-json/wp/v2/docs/ai/generate';
+        
+        // Get nonce from localized script
+        const nonce = window.weDocsEditorVars?.nonce || '';
+        
+        const response = await fetch(restUrl, {
             method: 'POST',
-            headers: headers,
-            body: JSON.stringify(payload)
+            credentials: 'include', // Include cookies for authentication
+            headers: {
+                'Content-Type': 'application/json',
+                'X-WP-Nonce': nonce
+            },
+            body: JSON.stringify({
+                prompt: options.prompt,
+                provider: provider,
+                model: model || options.model,
+                maxTokens: options.maxTokens || 2000,
+                temperature: options.temperature || 0.7,
+                systemPrompt: options.systemPrompt
+            })
         });
 
         if (!response.ok) {
@@ -342,29 +377,68 @@ class AiService {
                 // Try to parse as JSON
                 if (responseText.trim().startsWith('{')) {
                     errorData = JSON.parse(responseText);
-                    errorMessage = errorData.error?.message || errorData.message || errorMessage;
+                    errorMessage = errorData.message || errorData.code || errorMessage;
                 } else {
                     // If it's HTML (like a 404 page), provide a more helpful message
+                        errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+                    }
+                } catch (parseError) {
                     errorMessage = `HTTP ${response.status}: ${response.statusText}`;
                 }
-            } catch (parseError) {
-                console.error('AI Service - Failed to parse error response:', parseError);
-                errorMessage = `HTTP ${response.status}: ${response.statusText}`;
-            }
-
-            // If it's a Google model not found error, list available models
-            if (provider === 'google' && errorMessage.includes('is not found for API version')) {
-                try {
-                    await this.listGoogleModels(apiKey);
-                } catch (listError) {
-                    console.error('AI Service - Failed to list models:', listError);
-                }
-            }
 
             throw new Error(errorMessage);
         }
 
-        return await response.json();
+        const data = await response.json();
+        
+        // Return in format expected by parseResponse
+        return data;
+    }
+
+    /**
+     * Extract options from provider-specific payload
+     */
+    extractOptionsFromPayload(provider, payload) {
+        switch (provider) {
+            case 'openai':
+                return {
+                    prompt: payload.messages?.find(m => m.role === 'user')?.content || '',
+                    systemPrompt: payload.messages?.find(m => m.role === 'system')?.content || '',
+                    model: payload.model,
+                    maxTokens: payload.max_tokens,
+                    temperature: payload.temperature
+                };
+            case 'anthropic':
+                // Anthropic combines system prompt and user prompt in the message content
+                const anthropicContent = payload.messages?.[0]?.content || '';
+                const parts = anthropicContent.split('\n\n');
+                return {
+                    prompt: parts.slice(1).join('\n\n') || parts[0] || '',
+                    systemPrompt: parts[0] || '',
+                    model: payload.model,
+                    maxTokens: payload.max_tokens,
+                    temperature: payload.temperature
+                };
+            case 'google':
+                // Google combines system prompt and user prompt in the text
+                const googleText = payload.contents?.[0]?.parts?.[0]?.text || '';
+                const googleParts = googleText.split('\n\n');
+                return {
+                    prompt: googleParts.slice(1).join('\n\n') || googleParts[0] || '',
+                    systemPrompt: googleParts[0] || '',
+                    model: null, // Google model is handled separately
+                    maxTokens: payload.generationConfig?.maxOutputTokens,
+                    temperature: payload.generationConfig?.temperature
+                };
+            default:
+                return {
+                    prompt: '',
+                    systemPrompt: '',
+                    model: null,
+                    maxTokens: 2000,
+                    temperature: 0.7
+                };
+        }
     }
 
     /**

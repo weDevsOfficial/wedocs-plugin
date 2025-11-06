@@ -118,7 +118,7 @@ class Assets {
                 'weDocsEditorVars',
                 array(
                     'ajaxurl'           => admin_url( 'admin-ajax.php' ),
-                    'nonce'             => wp_create_nonce( 'wedocs-ai-doc-writer' ),
+                    'nonce'             => wp_create_nonce( 'wp_rest' ),
                     'aiProviderConfigs' => wedocs_get_ai_provider_configs(),
                 ),
             );
