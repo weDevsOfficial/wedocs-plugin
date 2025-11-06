@@ -70,6 +70,10 @@ class Assets {
                     'adminUrl'     => admin_url(),
                     'hasManageCap' => current_user_can( 'manage_options' ),
                     'aiProviderConfigs' => wedocs_get_ai_provider_configs(),
+                    'adminUrl'      => admin_url(),
+                    'hasManageCap'  => current_user_can( 'manage_options' ),
+                    'weDocsUrl'     => admin_url( 'admin.php?page=wedocs#/' ),
+                    'pro_active'    => wedocs_is_pro_active(),
                 ),
             );
         }
@@ -100,7 +104,7 @@ class Assets {
         // Register editor scripts for AI Doc Writer
         if ( file_exists( WEDOCS_PATH . '/assets/build/editor.asset.php' ) ) {
             $editor_dependencies = require WEDOCS_PATH . '/assets/build/editor.asset.php';
-            
+
             wp_register_script(
                 'wedocs-editor-script',
                 $assets_url . '/build/editor.js',
