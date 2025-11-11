@@ -228,8 +228,12 @@ class Ajax {
      * @return void
      */
     public function hide_pro_notice() {
+        check_ajax_referer( 'wedocs-admin-nonce', 'nonce' );
+
         $user_id = get_current_user_id();
         update_user_meta( $user_id, 'wedocs_hide_pro_notice', true );
+
+        wp_send_json_success();
     }
 
     /**

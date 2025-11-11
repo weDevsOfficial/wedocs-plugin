@@ -735,7 +735,7 @@ class API extends WP_REST_Controller {
      * @return WP_Error|bool true on success
      */
     public function helpful_update_permissions_check( $request ) {
-        if ( ! is_user_logged_in() ) {
+        if ( ! get_current_user_id() ) {
             return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ) );
         }
 
