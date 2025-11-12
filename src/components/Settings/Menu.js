@@ -23,6 +23,25 @@ const Menu = () => {
         </svg>
       ),
     },
+    ai: {
+      text: __( 'AI Control', 'wedocs' ),
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="#6b7280"
+          strokeWidth="2"
+          strokeLinejoin="round"
+          className="-ml-1 mr-4"
+        >
+          <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-6.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
+          <path d="M14 6h4v4" />
+          <path d="M17 4v8" />
+        </svg>
+      ),
+    },
   };
 
   const [ showSubTabs, setShowSubTabs ] = useState( true );

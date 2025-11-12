@@ -2412,10 +2412,6 @@ msgstr ""
 msgid "Dark Slate Blue"
 msgstr ""
 
-#: assets/build/index.js:7
-#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:79
-msgid "Azure"
-msgstr ""
 
 #: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:103

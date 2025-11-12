@@ -58,6 +58,29 @@ const DEFAULT_SETTINGS_STATE = {
       active_text: { r: 59, g: 130, b: 246, a: 1 },
       active_nav_bg: { r: 59, g: 130, b: 246, a: 1 },
       active_nav_text: { r: 255, g: 255, b: 255, a: 1 },
+    },
+    ai: {
+      default_provider: 'openai',
+      providers: (() => {
+        // Generate default providers from centralized configs
+        const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
+        const providers = {};
+        
+        Object.keys(configs).forEach(providerKey => {
+          const provider = configs[providerKey];
+          const modelKeys = Object.keys(provider.models);
+          const firstModel = modelKeys[0]; // Use first model as default
+          
+          providers[providerKey] = {
+            api_key: '',
+            models: modelKeys,
+            selected_model: firstModel
+          };
+          
+        });
+
+        return providers;
+      })(),
     }
   },
   loading: false,
