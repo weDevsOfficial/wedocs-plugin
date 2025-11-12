@@ -2,14 +2,14 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: weDocs 2.1.14\n"
+"Project-Id-Version: weDocs 2.1.15\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-10-22T09:19:59+00:00\n"
+"POT-Creation-Date: 2025-11-12T16:04:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wedocs\n"
@@ -135,18 +135,18 @@ msgstr ""
 msgid "Untitled Docs"
 msgstr ""
 
-#: includes/Admin/Promotion.php:92
+#: includes/Admin/Promotion.php:98
 msgid "Dismiss this notice."
 msgstr ""
 
-#: includes/Admin/Promotion.php:161
-#: includes/Admin/Promotion.php:165
-#: includes/Admin/Promotion.php:169
+#: includes/Admin/Promotion.php:167
+#: includes/Admin/Promotion.php:171
+#: includes/Admin/Promotion.php:175
 msgid "Unauthorized operation"
 msgstr ""
 
 #: includes/Ajax.php:112
-#: includes/API/API.php:757
+#: includes/API/API.php:797
 msgid "Sorry, we have already recorded your feedback!"
 msgstr ""
 
@@ -194,49 +194,166 @@ msgstr ""
 msgid "Collective documents object"
 msgstr ""
 
-#: includes/API/API.php:289
-#: includes/API/API.php:316
-#: includes/API/API.php:739
+#: includes/API/API.php:329
+#: includes/API/API.php:356
+#: includes/API/API.php:779
 msgid "You are not currently logged in."
 msgstr ""
 
-#: includes/API/API.php:293
-#: includes/API/API.php:321
-#: includes/API/API.php:386
+#: includes/API/API.php:333
+#: includes/API/API.php:361
+#: includes/API/API.php:426
 msgid "Unauthorized permission error"
 msgstr ""
 
-#: includes/API/API.php:297
-#: includes/API/API.php:326
+#: includes/API/API.php:337
+#: includes/API/API.php:366
 msgid "Currently sortable status not given"
 msgstr ""
 
-#: includes/API/API.php:632
+#: includes/API/API.php:672
 msgid "The page number requested is larger than the number of pages available."
 msgstr ""
 
-#: includes/API/API.php:718
+#: includes/API/API.php:758
 msgid "No name given"
 msgstr ""
 
-#: includes/API/API.php:722
+#: includes/API/API.php:762
 msgid "No email given"
 msgstr ""
 
-#: includes/API/API.php:748
+#: includes/API/API.php:788
 msgid "Doc status not valid for update helpful data"
 msgstr ""
 
-#: includes/API/API.php:804
+#: includes/API/API.php:844
 msgid "You cannot delete the documentation resource."
 msgstr ""
 
-#: includes/API/API.php:825
+#: includes/API/API.php:865
 msgid "Invalid Documentation."
 msgstr ""
 
-#: includes/API/API.php:869
+#: includes/API/API.php:909
 msgid "You cannot see promotion notices."
+msgstr ""
+
+#: includes/API/API.php:1002
+msgid "You do not have permission to generate AI content."
+msgstr ""
+
+#: includes/API/API.php:1031
+msgid "Max tokens must be between 1 and 8000."
+msgstr ""
+
+#: includes/API/API.php:1039
+msgid "Temperature must be between 0.0 and 2.0."
+msgstr ""
+
+#: includes/API/API.php:1050
+msgid "AI settings are not configured."
+msgstr ""
+
+#: includes/API/API.php:1064
+msgid "AI provider is not configured or API key is missing."
+msgstr ""
+
+#: includes/API/API.php:1076
+msgid "Invalid AI provider specified."
+msgstr ""
+
+#: includes/API/API.php:1086
+msgid "AI model is not specified."
+msgstr ""
+
+#: includes/API/API.php:1099
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:173
+#: src/utils/aiService.js:301
+#: src/utils/aiService.js:317
+#: src/utils/aiService.js:324
+msgid "You are a helpful documentation assistant."
+msgstr ""
+
+#: includes/API/API.php:1109
+msgid "The request took too long to complete. Please try again with a shorter prompt."
+msgstr ""
+
+#: includes/API/API.php:1148
+msgid "Unsupported AI provider"
+msgstr ""
+
+#: includes/API/API.php:1171
+msgid "OpenAI API key is missing or invalid"
+msgstr ""
+
+#: includes/API/API.php:1206
+#: includes/API/API.php:1282
+#: includes/API/API.php:1362
+msgid "The request took too long. Please try again with a shorter prompt or check your connection."
+msgstr ""
+
+#: includes/API/API.php:1209
+msgid "OpenAI API error: %s"
+msgstr ""
+
+#: includes/API/API.php:1228
+msgid "Invalid OpenAI API response"
+msgstr ""
+
+#: includes/API/API.php:1251
+msgid "Anthropic API key is missing or invalid"
+msgstr ""
+
+#: includes/API/API.php:1285
+msgid "Anthropic API error: %s"
+msgstr ""
+
+#: includes/API/API.php:1304
+msgid "Invalid Anthropic API response"
+msgstr ""
+
+#: includes/API/API.php:1327
+msgid "Google API key is missing or invalid"
+msgstr ""
+
+#: includes/API/API.php:1365
+msgid "Google API error: %s"
+msgstr ""
+
+#: includes/API/API.php:1374
+msgid "Google API request failed"
+msgstr ""
+
+#: includes/API/API.php:1385
+msgid "Invalid Google API response"
+msgstr ""
+
+#: includes/API/API.php:1401
+msgid "%s API request failed"
+msgstr ""
+
+#: includes/API/API.php:1406
+#: includes/API/API.php:1411
+msgid "Invalid %s API key. Please check your API key in the AI settings."
+msgstr ""
+
+#: includes/API/API.php:1408
+#: includes/API/API.php:1413
+msgid "Authentication failed. Please verify your %s API key is correct."
+msgstr ""
+
+#: includes/API/API.php:1415
+msgid "Rate limit exceeded. Please wait a moment and try again."
+msgstr ""
+
+#: includes/API/API.php:1417
+msgid "%s service is temporarily unavailable. Please try again later."
+msgstr ""
+
+#: includes/API/API.php:1421
+msgid "%s API error: %s"
 msgstr ""
 
 #: includes/API/SettingsApi.php:79
@@ -268,24 +385,24 @@ msgstr ""
 msgid "Processing Upgrade in the background."
 msgstr ""
 
-#: includes/Frontend.php:85
+#: includes/Frontend.php:82
 msgid "Powered by weDocs plugin for WordPress"
 msgstr ""
 
-#: includes/Frontend.php:88
+#: includes/Frontend.php:85
 msgid "Doc: "
 msgstr ""
 
-#: includes/Frontend.php:89
+#: includes/Frontend.php:86
 #: templates/modals/search-modal.php:49
 msgid "Search field cannot be blank"
 msgstr ""
 
-#: includes/Frontend.php:90
+#: includes/Frontend.php:87
 msgid "Your search didn't match any documents"
 msgstr ""
 
-#: includes/Frontend.php:91
+#: includes/Frontend.php:88
 msgid "Section: "
 msgstr ""
 
@@ -636,193 +753,193 @@ msgid "Search for a top or question"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:49
+#: src/blocks/Search/edit.js:47
 msgid "Align left"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:57
+#: src/blocks/Search/edit.js:55
 msgid "Align center"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:66
+#: src/blocks/Search/edit.js:64
 msgid "Align right"
 msgstr ""
 
 #: assets/build/block.js:1
 #: src/blocks/DocsGrid/StyleControls.js:116
 #: src/blocks/DocsGrid/StyleControls.js:175
-#: src/blocks/Search/edit.js:117
+#: src/blocks/Search/edit.js:115
 msgid "Solid"
 msgstr ""
 
 #: assets/build/block.js:1
 #: src/blocks/DocsGrid/StyleControls.js:118
 #: src/blocks/DocsGrid/StyleControls.js:177
-#: src/blocks/Search/edit.js:118
+#: src/blocks/Search/edit.js:116
 msgid "Dotted"
 msgstr ""
 
 #: assets/build/block.js:1
 #: src/blocks/DocsGrid/StyleControls.js:117
 #: src/blocks/DocsGrid/StyleControls.js:176
-#: src/blocks/Search/edit.js:119
+#: src/blocks/Search/edit.js:117
 msgid "Dashed"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:120
+#: src/blocks/Search/edit.js:118
 msgid "Double"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:121
+#: src/blocks/Search/edit.js:119
 msgid "Groove"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:122
+#: src/blocks/Search/edit.js:120
 msgid "Ridge"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:123
+#: src/blocks/Search/edit.js:121
 msgid "Inset"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:124
+#: src/blocks/Search/edit.js:122
 msgid "Outset"
 msgstr ""
 
 #: assets/build/block.js:1
 #: src/blocks/DocsGrid/StyleControls.js:119
 #: src/blocks/DocsGrid/StyleControls.js:178
-#: src/blocks/Search/edit.js:125
+#: src/blocks/Search/edit.js:123
 msgid "None"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:126
+#: src/blocks/Search/edit.js:124
 msgid "Hidden"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:136
+#: src/blocks/Search/edit.js:134
 msgid "Disable Block"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:142
+#: src/blocks/Search/edit.js:140
 msgid "Color Settings"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:149
+#: src/blocks/Search/edit.js:147
 msgid "Field Background Color"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:154
+#: src/blocks/Search/edit.js:152
 msgid "Field Hover Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: src/blocks/DocsGrid/StyleControls.js:155
-#: src/blocks/Search/edit.js:159
+#: src/blocks/Search/edit.js:157
 msgid "Border Color"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:164
+#: src/blocks/Search/edit.js:162
 msgid "Icon Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: src/blocks/DocsGrid/StyleControls.js:222
-#: src/blocks/Search/edit.js:169
+#: src/blocks/Search/edit.js:167
 msgid "Button Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: src/blocks/DocsGrid/StyleControls.js:228
-#: src/blocks/Search/edit.js:174
+#: src/blocks/Search/edit.js:172
 msgid "Button Hover Color"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:179
+#: src/blocks/Search/edit.js:177
 msgid "Icon Hover Color"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:185
+#: src/blocks/Search/edit.js:183
 msgid "Search Bar Settings"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:189
+#: src/blocks/Search/edit.js:187
 msgid "Field Width"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:195
+#: src/blocks/Search/edit.js:193
 msgid "Placeholder"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:196
+#: src/blocks/Search/edit.js:194
 msgid "Search bar placeholder"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:199
+#: src/blocks/Search/edit.js:197
 msgid "POSITION"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:213
+#: src/blocks/Search/edit.js:211
 msgid "Field Padding"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:224
+#: src/blocks/Search/edit.js:222
 msgid "Field Margin"
 msgstr ""
 
 #: assets/build/block.js:1
 #: src/blocks/DocsGrid/StyleControls.js:184
-#: src/blocks/Search/edit.js:231
+#: src/blocks/Search/edit.js:229
 msgid "Border Width"
 msgstr ""
 
 #: assets/build/block.js:1
 #: src/blocks/DocsGrid/StyleControls.js:197
-#: src/blocks/Search/edit.js:238
+#: src/blocks/Search/edit.js:236
 msgid "Border Radius"
 msgstr ""
 
 #: assets/build/block.js:1
 #: src/blocks/DocsGrid/StyleControls.js:172
-#: src/blocks/Search/edit.js:244
+#: src/blocks/Search/edit.js:242
 msgid "Border Type"
 msgstr ""
 
 #: assets/build/block.js:1
 #: src/blocks/DocsGrid/StyleControls.js:247
-#: src/blocks/Search/edit.js:255
+#: src/blocks/Search/edit.js:253
 msgid "Button Padding"
 msgstr ""
 
 #: assets/build/block.js:1
 #: src/blocks/DocsGrid/StyleControls.js:252
-#: src/blocks/Search/edit.js:265
+#: src/blocks/Search/edit.js:263
 msgid "Button Margin"
 msgstr ""
 
 #: assets/build/block.js:1
-#: src/blocks/Search/edit.js:272
+#: src/blocks/Search/edit.js:270
 msgid "Button Radius"
 msgstr ""
 
@@ -971,6 +1088,292 @@ msgstr ""
 msgid "Show View Details Button"
 msgstr ""
 
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterPreview.js:24
+msgid "The content above is formatted with HTML tags. When inserted, it will be properly formatted in your document."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: assets/build/index.js:1
+#: assets/build/index.js:7
+#: src/components/AddArticleModal.js:205
+#: src/components/AddDocModal.js:170
+#: src/components/AddSectionModal.js:165
+#: src/components/ConfirmationModal.js:140
+#: src/components/DocListing/QuickEditModal.js:254
+#: src/components/Migrations/Modals/MigrationContentMappingModal.js:199
+#: src/components/Migrations/Modals/MigrationProgressModal.js:155
+#: src/components/Migrations/Modals/MigrationSelectionModal.js:195
+#: src/components/PermissionSettingsDemo/index.js:31
+#: src/components/RestrictionModal.js:131
+#: src/editor/AiDocWriterModal.js:493
+#: src/editor/AiDocWriterPreview.js:35
+msgid "Cancel"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterPreview.js:41
+msgid "Reject & Try Again"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterPreview.js:47
+msgid "Accept & Insert"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:116
+msgid "Invalid provider specified"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:120
+msgid "API key is required"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:129
+msgid "API connection successful"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:135
+msgid "API connection failed"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:157
+msgid "AI provider not configured"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:188
+msgid "AI content generation failed. Please try again."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:200
+msgid "A server error occurred. Please try again or contact support if the problem persists."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:205
+#: src/utils/aiService.js:215
+msgid "A server error occurred. Please try again."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:207
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:209
+#: src/utils/aiService.js:217
+msgid "An error occurred. Please try again."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:255
+msgid "Failed to list Google models"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:372
+msgid "API request failed"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:485
+msgid "Default provider is required"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:489
+msgid "Invalid default provider"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/utils/aiService.js:495
+msgid "Invalid provider"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:104
+msgid "Generate documentation using HTML heading tags for the title. Include details on {Documentation Keywords} and wrap all content in <p> tags. Highlight headings and keywords with <span class='highlight'>."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:110
+msgid "Generate documentation using HTML heading tags for '{title}'. Include relevant details on {keywords} in the documentation. Wrap all content in <p> tags. Highlight headings and keywords with <span class='highlight'>."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:426
+#: src/editor/AiDocWriterPanel.js:32
+#: src/editor/AiDocWriterPanel.js:34
+msgid "AI Doc Writer"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:408
+msgid "Failed to insert content. Please try again."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:437
+msgid "Documentation Title"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:440
+msgid "Enter your documentation title here..."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:441
+msgid "The title will be used to generate relevant content."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:447
+msgid "Keywords"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:450
+msgid "Add keywords to guide AI (comma-separated)..."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:451
+msgid "Enter relevant keywords separated by commas."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:457
+msgid "AI Instructions"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:461
+msgid "AI instructions will be auto-generated from title and keywords..."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:462
+msgid "Instructions are automatically generated from your title and keywords. You can edit them manually if needed."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:467
+msgid "Use existing post content"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:470
+msgid "When enabled, the AI will consider your existing post content to maintain consistency and avoid duplication."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:475
+msgid "Overwrite your existing Doc"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:478
+msgid "When enabled, AI content will replace the entire document. When disabled, content will be inserted at the end of the current contents."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:231
+msgid "AI service is not configured. Please set up your AI provider settings in weDocs > Settings > AI Control Settings."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:236
+msgid "You are a professional documentation writer. Generate comprehensive, well-structured documentation content using HTML tags. Use proper heading hierarchy (h2, h3, etc.) and wrap all content in paragraph tags. Highlight important terms with <span class=\"highlight\"> tags. IMPORTANT: Only return the content body without HTML document structure (no <!DOCTYPE>, <html>, <head>, <style>, or <body> tags). Return only the content that should be inserted into the document."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:244
+msgid ""
+"EXISTING DOCUMENT CONTEXT:\n"
+"{content}\n"
+"\n"
+"Please generate new content that complements and builds upon the existing content above. Maintain consistency in tone, style, and structure. Avoid duplicating information already covered."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:251
+msgid "Consider the existing document content provided above to maintain consistency and avoid duplication."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:270
+msgid "AI service returned empty content"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:165
+msgid "Generated content is empty."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:174
+msgid "Generated content should contain at least paragraphs or headings."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:188
+msgid "Generated content contains potentially unsafe HTML elements."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:196
+msgid "Generated content is too short. Please try again with more specific keywords."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:201
+msgid "Generated content is too long. Please try again with more focused keywords."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:287
+msgid "Failed to generate content. Please try again."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:218
+msgid "Please enter keywords to guide the AI."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:213
+msgid "Please enter a documentation title."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:503
+msgid "Generating..."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterModal.js:506
+msgid "Generate Content"
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterPanel.js:37
+msgid "Generate AI-powered documentation content with advanced language models."
+msgstr ""
+
+#: assets/build/editor.js:1
+#: src/editor/AiDocWriterPanel.js:52
+msgid "Open AI Doc Writer"
+msgstr ""
+
 #: assets/build/index.js:1
 #: src/components/DocActions.js:81
 #: src/components/DocListing/ArticleChildrens.js:147
@@ -1012,21 +1415,6 @@ msgid "Deleting it means it will be permanently lost, and you won't be able to r
 msgstr ""
 
 #: assets/build/index.js:1
-#: assets/build/index.js:7
-#: src/components/AddArticleModal.js:205
-#: src/components/AddDocModal.js:170
-#: src/components/AddSectionModal.js:165
-#: src/components/ConfirmationModal.js:140
-#: src/components/DocListing/QuickEditModal.js:254
-#: src/components/Migrations/Modals/MigrationContentMappingModal.js:199
-#: src/components/Migrations/Modals/MigrationProgressModal.js:155
-#: src/components/Migrations/Modals/MigrationSelectionModal.js:195
-#: src/components/PermissionSettingsDemo/index.js:31
-#: src/components/RestrictionModal.js:131
-msgid "Cancel"
-msgstr ""
-
-#: assets/build/index.js:1
 #: src/components/RestrictionModal.js:21
 msgid " deleted!"
 msgstr ""
@@ -1043,7 +1431,7 @@ msgstr ""
 #: src/components/ConfirmationModal.js:24
 #: src/components/DocListing/QuickEditModal.js:97
 #: src/components/RestrictionModal.js:36
-#: src/components/Settings/index.js:54
+#: src/components/Settings/index.js:55
 msgid "Error"
 msgstr ""
 
@@ -1425,7 +1813,7 @@ msgstr ""
 #: assets/build/index.js:7
 #: src/components/DocListing/index.js:136
 #: src/components/Documentations/index.js:115
-#: src/components/Settings/index.js:126
+#: src/components/Settings/index.js:133
 msgid "weDocs database has been updated successfully"
 msgstr ""
 
@@ -1433,7 +1821,7 @@ msgstr ""
 #: assets/build/index.js:7
 #: src/components/DocListing/index.js:137
 #: src/components/Documentations/index.js:116
-#: src/components/Settings/index.js:127
+#: src/components/Settings/index.js:134
 msgid "Database Updated!"
 msgstr ""
 
@@ -1476,6 +1864,11 @@ msgstr ""
 #: src/components/Settings/GeneralSettings.js:34
 #: src/components/Settings/Menu.js:9
 msgid "General"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/Menu.js:27
+msgid "AI Control"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -1594,12 +1987,77 @@ msgid "Allow users to print articles directly from the website"
 msgstr ""
 
 #: assets/build/index.js:1
-#: src/components/Settings/index.js:43
-msgid "Settings Data Saved!"
+#: src/components/Settings/AiSettings.js:395
+msgid "AI Control Settings"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:409
+msgid "Default AI Provider"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:413
+msgid "This provider will be used as the default for all AI features unless overridden"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:295
+msgid "No providers available"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:449
+msgid "This provider will be used as the default for all AI features unless overridden."
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:463
+msgid "API Key"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:467
+msgid "Enter your API key for the selected AI provider"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:494
+msgid "Enter your API key"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:505
+msgid "Current:"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:520
+msgid "AI Model"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:524
+msgid "Select the model for this AI provider"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:380
+msgid "No models available"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:557
+msgid "Select the model for this provider"
 msgstr ""
 
 #: assets/build/index.js:1
 #: src/components/Settings/index.js:44
+msgid "Settings Data Saved!"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/index.js:45
 msgid "Settings data has been saved successfully"
 msgstr ""
 
@@ -2412,6 +2870,10 @@ msgstr ""
 msgid "Dark Slate Blue"
 msgstr ""
 
+#: assets/build/index.js:7
+#: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:79
+msgid "Azure"
+msgstr ""
 
 #: assets/build/index.js:7
 #: src/components/ProPreviews/AssistantWidgetPanels/PreferencePanel/ColorPaletteSettings.js:103

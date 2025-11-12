@@ -596,7 +596,7 @@ function wedocs_convert_utc_to_est() {
 /**
  * Get AI provider configurations
  *
- * @since WEDOCS_SINCE
+ * @since 2.1.15
  *
  * @return array
  */

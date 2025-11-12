@@ -5,7 +5,7 @@ Tags: Documentation, Knowledge base, Wiki, Contact form, docs
 Requires at least: 5.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.1.14
+Stable tag: 2.1.15
 License: GPLv2 or later
 License URI: [GPLv2](https://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -57,10 +57,6 @@ weDocs Pro is designed for users and businesses requiring a more advanced and cu
 – **[Role-Based Permission Management](https://wedocs.co/docs/permission-management/permission-management/)**: Allows you to control who can access, edit, and manage different parts of your documentation based on user roles. This includes managing permissions for both published and drafted documents.
 – **[Pre-Built Layouts and Styles](https://wedocs.co/docs/permission-management/theme-and-styles/)**: A variety of pre-built layouts and extensive stylization features to create visually appealing and structured documentation without coding.
 
-= What Others Say About weDocs: =
-
-[youtube https://youtu.be/TFXsyB09VJQ?si=k56S-YEjYIUUEMdO]
-
 == Privacy Policy ==
 
 weDocs uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon the user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
@@ -107,6 +103,9 @@ A. No, the AI chatbot is a premium feature available with a subscription.
 Yes, weDocs allows you to set up custom permalinks for your documentation pages.
 
 == Changelog ==
+
+**v2.1.15 (12 Nov, 2025**)
+– **Added:** AI docs Writer.
 
 **v2.1.14 (22nd Oct, 2025**)
 – **Added:** Social sharing options (Facebook, LinkedIn, and more).
