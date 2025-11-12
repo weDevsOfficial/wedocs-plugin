@@ -1,1 +1,1271 @@
-(()=>{"use strict";var e={902:(e,t,s)=>{s.d(t,{A:()=>u});var r=s(143);const o={docs:[],pages:[],parents:[],loading:!1,sorting:!1,userDocIds:[],helpfulDocs:[],needSorting:!1,restrictedArticleList:[]},n={setDocs:e=>({type:"SET_DOCS",docs:e}),setDoc:e=>({type:"SET_DOC",doc:e}),setParentDocs:e=>({type:"SET_PARENT_DOCS",parents:e}),setPages:e=>({type:"SET_PAGES",pages:e}),setLoading:e=>({type:"SET_LOADING",loading:e}),setSortingStatus:e=>({type:"SET_SORTING_STATUS",sorting:e}),setNeedSortingStatus:e=>({type:"SET_NEED_SORTING_STATUS",needSorting:e}),setUserDocIds:e=>({type:"SET_USER_DOC_IDS",userDocIds:e}),setUserDocId:e=>({type:"SET_USER_DOC_ID",userDocId:e}),fetchFromAPI:e=>({type:"FETCH_FROM_API",path:e}),setHelpfulDocs:e=>({type:"SET_HELPFUL_DOCS",helpfulDocs:e}),createDocsToAPI:e=>({type:"UPDATE_TO_API",path:"/wp/v2/docs",data:e}),removeDoc:e=>({type:"REMOVE_DOC",docId:e}),setRestrictedArticles:e=>({type:"SET_RESTRICTED_ARTICLES",restrictedArticleList:e}),setRestrictedArticle:e=>({type:"SET_RESTRICTED_ARTICLE",restrictedArticle:e}),*createDoc(e){const t=yield n.createDocsToAPI(e);return yield n.setUserDocId(t.id),yield n.setDoc(t),t},*updateDoc(e,t){const s=wp.hooks.applyFilters("wedocs_documentation_fetching_path","/wp/v2/docs?per_page=-1&status=publish"+("undefined"!=typeof weDocsAdminVars?",draft,private":"")),r="/wp/v2/docs/"+e;yield{type:"UPDATE_TO_API",path:r,data:t};const o=yield n.fetchFromAPI(s),i=o.filter((e=>!e.parent)),a=i?.sort(((e,t)=>e.menu_order-t.menu_order));return yield n.setParentDocs(a),n.setDocs(o)},*updateDocs(e){yield{type:"UPDATE_TO_API",path:"/wp/v2/docs/update_docs_status",data:e};const t=yield n.fetchFromAPI("/wp/v2/docs?per_page=-1&status=publish,draft,private"),s=t.filter((e=>!e.parent)),r=s?.sort(((e,t)=>e.menu_order-t.menu_order));return yield n.setParentDocs(r),n.setDocs(t)},*updateNeedSortingStatus(e){yield{type:"UPDATE_TO_API",path:"/wp/v2/docs/need_sorting_status",data:e};const t=yield n.fetchFromAPI("/wp/v2/docs/need_sorting_status");return n.setNeedSortingStatus(t)},*updateSortingStatus(e){yield{type:"UPDATE_TO_API",path:"/wp/v2/docs/sorting_status",data:e};const t=yield n.fetchFromAPI("/wp/v2/docs/sorting_status");return yield n.setNeedSortingStatus(t),n.setSortingStatus(t)},*updateDocMeta(e,t){const s="/wp/v2/docs/"+e+"/meta",r=yield{type:"UPDATE_TO_API",path:s,data:t};return yield n.setRestrictedArticle({id:e,value:r}),r},*deleteDoc(e){const t="/wp/v2/docs/"+e;return yield{type:"DELETE_TO_API",path:t},n.removeDoc(e)},*updateParentDocs(){const e=wp.hooks.applyFilters("wedocs_documentation_fetching_path","/wp/v2/docs?per_page=-1&status=publish"+("undefined"!=typeof weDocsAdminVars?",draft,private":"")),t=yield n.fetchFromAPI(e),s=t.filter((e=>!e.parent)),r=s?.sort(((e,t)=>e.menu_order-t.menu_order));return yield n.setParentDocs(r),n.setDocs(t)},*sendMessage(e){return yield{type:"UPDATE_TO_API",path:"/wp/v2/docs/message",data:e}},*dismissPromoNotice(e){return yield n.dismissPromoNoticeAPI(e)},dismissPromoNoticeAPI:e=>({type:"UPDATE_TO_API",path:"/wp/v2/docs/hide-promotion-notice",data:{option_name:e}})},i=n,a={getDocs:e=>{const{docs:t}=e;return t},getParentDocs:e=>{const{parents:t}=e;return t},getDoc:(e,t)=>{const{docs:s}=e;return s.find((e=>e.id===t))},getPages:e=>{const{pages:t}=e;return t},getLoading:e=>{const{loading:t}=e;return t},getSortingStatus:e=>{const{sorting:t}=e;return t},getNeedSortingStatus:e=>{const{needSorting:t}=e;return t},getUserDocIds:e=>{const{userDocIds:t}=e;return t},getSectionsDocs:(e,t)=>{const{docs:s}=e,r=s.filter((e=>e.parent===t)),o=r?.sort(((e,t)=>e.menu_order-t.menu_order));return o},getDocArticles:(e,t)=>{const{docs:s}=e,r=s.filter((e=>e.parent===t)),o=[];r.forEach((e=>{const t=s.filter((t=>t.parent===e.id));o.push(...t)}));const n=o?.sort(((e,t)=>e.menu_order-t.menu_order));return n},getSectionArticles:(e,t)=>{const{docs:s}=e,r=s.filter((e=>e.parent===t)),o=r?.sort(((e,t)=>e.menu_order-t.menu_order));return o},getArticleChildrens:(e,t)=>{const{docs:s}=e,r=s?.filter((e=>e.parent===t))?.reverse(),o=r?.sort(((e,t)=>e.menu_order-t.menu_order));return o},getHelpfulDocs:e=>{const{helpfulDocs:t}=e;return t},getRestrictedArticles(e){const{restrictedArticleList:t}=e;return t},getRestrictedArticle(e,t){const{restrictedArticleList:s}=e;return s.find((e=>e.id===t))},getDocumentChildrens:(e,t)=>{const{docs:s}=e,r=s?.filter((e=>e.parent===t))?.reverse(),o=r?.sort(((e,t)=>e.menu_order-t.menu_order));return o}},d=a;var c=s(455),p=s.n(c);const g={FETCH_FROM_API:e=>p()({path:e.path}),UPDATE_TO_API:e=>p()({path:e.path,data:e.data,method:"POST"}),DELETE_TO_API:e=>p()({path:e.path,method:"DELETE"})},l={*getDocs(){const e=wp.hooks.applyFilters("wedocs_documentation_fetching_path","/wp/v2/docs?per_page=-1&status=publish"+("undefined"!=typeof weDocsAdminVars?",draft,private":""));yield i.setLoading(!0);const t=yield i.fetchFromAPI(e);yield i.setDocs(t);const s=t.filter((e=>!e.parent)),r=s?.sort(((e,t)=>e.menu_order-t.menu_order));return yield i.setParentDocs(r),i.setLoading(!1)},*getDoc(e){yield i.setLoading(!0);let t="/wp/v2/docs/"+e;const s=yield i.fetchFromAPI(t);return yield i.setDoc(s),i.setLoading(!1)},*getPages(){const e=yield i.fetchFromAPI("/wp/v2/pages");return i.setPages(e)},*getSortingStatus(){const e=yield i.fetchFromAPI("/wp/v2/docs/sorting_status");return i.setSortingStatus(e)},*getNeedSortingStatus(){const e=yield i.fetchFromAPI("/wp/v2/docs/need_sorting_status");return i.setNeedSortingStatus(e)},*getUserDocIds(){try{if("undefined"!=typeof weDocsAdminVars&&weDocsAdminVars.pro_active){const e=yield i.fetchFromAPI("/wp/v2/docs/users/ids/");return i.setUserDocIds(e)}return console.info("weDocs Pro plugin not active, returning empty user doc IDs"),i.setUserDocIds([])}catch(e){return console.warn("Error fetching user doc IDs:",e),i.setUserDocIds([])}},*getHelpfulDocs(){const e=yield i.fetchFromAPI(getDocsPath);yield i.setDocs(e);const t=yield i.fetchFromAPI("/wp/v2/docs/helpfulness"),s=e.sort(((e,s)=>t.indexOf(e.id)-t.indexOf(s.id))).filter((e=>t?.includes(e?.id)));yield i.setHelpfulDocs(s)},*getRestrictedArticles(){const e=yield i.fetchFromAPI("/wp/v2/docs/meta?key=wedocs_restrict_admin_article_access");return yield i.setRestrictedArticles(e)},*getRestrictedArticle(e,t){const{restrictedArticleList:s}=e;return s.find((e=>e.id===t))}},_=l,u=(0,r.createReduxStore)("wedocs/docs",{reducer:(e=o,t)=>{switch(t.type){case"SET_DOCS":return{...e,docs:[...t.docs]};case"SET_DOC":const s={...e,docs:[...e.docs,t.doc]},r=!e.parents.some((e=>e?.id===t?.doc?.id));return!t.doc.parent&&r&&(s.parents=[{...t.doc},...e.parents]),s;case"SET_USER_DOC_IDS":return{...e,userDocIds:[...e.userDocIds,...t.userDocIds]};case"SET_USER_DOC_ID":return{...e,userDocIds:[...e.userDocIds,t.userDocId]};case"SET_PAGES":return{...e,pages:[...t.pages]};case"SET_PARENT_DOCS":return{...e,parents:[...t.parents]};case"SET_LOADING":return{...e,loading:t.loading};case"SET_SORTING_STATUS":return{...e,sorting:t.sorting};case"SET_NEED_SORTING_STATUS":return{...e,needSorting:t.needSorting};case"SET_HELPFUL_DOCS":return{...e,helpfulDocs:t.helpfulDocs};case"REMOVE_DOC":return{...e,docs:[...e.docs?.filter((e=>e.id!==t.docId))],parents:[...e.parents?.filter((e=>e.id!==t.docId))]};case"SET_RESTRICTED_ARTICLES":return{...e,restrictedArticleList:[...t.restrictedArticleList]};case"SET_RESTRICTED_ARTICLE":return{...e,restrictedArticleList:[...e.restrictedArticleList,{...t.restrictedArticle}]};default:return e}},selectors:d,actions:i,resolvers:_,controls:g})},768:(e,t,s)=>{s.d(t,{A:()=>S});var r=s(143);const o={roles:{},settings:{general:{docs_home:"",email:"on",email_to:"",helpful:"on",comments:"off",print:"on",enable_search:"on",collapse_articles:"off"},permission:{global_permission:["administrator","editor"],role_wise_permission:["administrator"],show_contributors:"on"},assistant:{assist_enable:"on",integrate_ai:{ai_enabled:"off",sync_data:"off",ai_response:{}},explore:{explore_enable:"on"},message:{messaging_enable:"on",turnstile_site_key:""},placement:{order:["integrate_ai","explore","message"]},preference:{color_settings:{preview_colors:{widgetBg:{r:99,g:102,b:241,a:1},activeTabBg:{r:255,g:255,b:255,a:1},activeTabFont:{r:55,g:65,b:81,a:1},inactiveTabBg:{r:67,g:56,b:202,a:1},inactiveTabFont:{r:199,g:210,b:254,a:1},tabTitleFont:{r:255,g:255,b:255,a:1},tabDescriptionFont:{r:199,g:210,b:254,a:1},breadcrumbColor:{r:67,g:56,b:202,a:1},bubbleBg:{r:87,g:116,b:241,a:1},bubbleIcon:{r:255,g:255,b:255,a:1}}}}},layout:{column:"2",nav_icon:"on",right_bar:"on",template:"default",active_text:{r:59,g:130,b:246,a:1},active_nav_bg:{r:59,g:130,b:246,a:1},active_nav_text:{r:255,g:255,b:255,a:1}}},loading:!1,saving:!1,needUpgrade:!1},n={getSettings(e){const{settings:t}=e;return t},getSettingsOption(e,t){const{settings:s}=e;return s[t]},getGeneralSettingsOption(e,t){const{settings:s}=e;return s?.general?.[t]},getPermissionSettingsOption(e,t){const{settings:s}=e;return s?.permission?.[t]},getAssistantSettingsOption(e,t){const{settings:s}=e;return s?.assistant?.[t]},getRoles(e){const{roles:t}=e;return t},getLoading(e){const{loading:t}=e;return t},getUpgradeInfo(e){const{needUpgrade:t}=e;return t},getSaving(e){const{saving:t}=e;return t},getTurnstileSiteKey(e){const{settings:t}=e;return t?.assistant?.message?.turnstile_site_key},getPromoNotice(e){const{promoNotice:t}=e;return t}},i=n,a={setSettings:e=>({type:"SET_SETTINGS",settings:e}),setSettingsOption:(e,t)=>({type:"SET_SETTINGS_OPTION",option:e,value:t}),setLoading:e=>({type:"SET_LOADING",loading:e}),setUpgradeInfo:e=>({type:"SET_UPGRADE_INFO",needUpgrade:e}),setPromoNotice:e=>({type:"SET_PROMO_NOTICE",promoNotice:e}),setMigrateInfo:e=>({type:"SET_MIGRATE_INFO",needMigrate:e}),setSaving:e=>({type:"SET_SAVING",saving:e}),setRoles:e=>({type:"SET_ROLES",roles:e}),setTurnstileSiteKey:e=>({type:"SET_TURNSTILE_SITE_KEY",siteKey:e}),*updateSettings(e){const t=yield{type:"UPDATE_TO_API",path:"/wp/v2/docs/settings",data:e};return yield a.setSettings(t.data),t.data},*wedocsUpgrade(e){const t=yield{type:"UPDATE_TO_API",path:"/wp/v2/docs/upgrade",data:e};return yield a.setUpgradeInfo(!1),t},*makeUpdateDone(){return yield{type:"UPDATE_TO_API",path:"/wp/v2/docs/upgrade/done"}}},d=a,c={*getSettings(){yield d.setLoading(!0);const e=yield{type:"FETCH_SETTINGS"};return yield d.setSettings(e),d.setLoading(!1)},*getUpgradeInfo(){yield d.setLoading(!0);const e=yield{type:"FETCH_UPGRADE_INFO"};return yield d.setUpgradeInfo(e),d.setLoading(!1)},*getRoles(){yield d.setLoading(!0);const e=yield{type:"FETCH_ROLES"};return yield d.setRoles(e),d.setLoading(!1)},*getTurnstileSiteKey(){yield d.setLoading(!0);const e=yield{type:"FETCH_SITE_KEY"};return yield d.setTurnstileSiteKey(e),d.setLoading(!1)},*getPromoNotice(){yield d.setLoading(!0);const e=yield{type:"FETCH_PROMO_NOTICE"};return yield d.setPromoNotice(e),d.setLoading(!1)}},p=c;var g=s(455),l=s.n(g);const _=wp.hooks.applyFilters("wedocs_pro_loaded",!1),u={FETCH_SETTINGS:()=>l()({path:"/wp/v2/docs/settings?data=wedocs_settings"}),FETCH_ROLES:()=>l()({path:"/wp/v2/docs/users"}),FETCH_UPGRADE_INFO:()=>l()({path:"/wp/v2/docs/upgrade"}),FETCH_SITE_KEY:()=>l()({path:"/wp/v2/docs/settings/turnstile-site-key"}),UPDATE_TO_API:e=>l()({path:e.path,data:e.data,method:"POST"}),FETCH_PROMO_NOTICE:()=>_?null:l()({path:"/wp/v2/docs/promotion-notice"})},S=(0,r.createReduxStore)("wedocs/settings",{reducer:(e=o,t)=>{switch(t.type){case"SET_SETTINGS":return{...e,settings:{...e.settings,...t.settings}};case"SET_LOADING":return{...e,loading:t.loading};case"SET_ROLES":return{...e,roles:t.roles};case"SET_SETTINGS_OPTION":return{...e,settings:{...e.settings,[t.option]:t.value}};case"SET_UPGRADE_INFO":return{...e,needUpgrade:t.needUpgrade};case"SET_PROMO_NOTICE":return{...e,promoNotice:t.promoNotice};case"SET_SAVING":return{...e,saving:t.saving};case"SET_TURNSTILE_SITE_KEY":return{...e,settings:{...e.settings,assistant:{...e.settings.assistant,message:{...e.settings.assistant.message,turnstile_site_key:t.siteKey}}}};default:return e}},selectors:i,actions:d,resolvers:p,controls:u})},455:e=>{e.exports=window.wp.apiFetch},143:e=>{e.exports=window.wp.data}},t={};function s(r){var o=t[r];if(void 0!==o)return o.exports;var n=t[r]={exports:{}};return e[r](n,n.exports,s),n.exports}s.n=e=>{var t=e&&e.__esModule?()=>e.default:()=>e;return s.d(t,{a:t}),t},s.d=(e,t)=>{for(var r in t)s.o(t,r)&&!s.o(e,r)&&Object.defineProperty(e,r,{enumerable:!0,get:t[r]})},s.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t);var r=s(143),o=s(902),n=s(768);(0,r.register)(o.A),(0,r.register)(n.A)})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/data/docs/actions.js":
+/*!**********************************!*\
+  !*** ./src/data/docs/actions.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const actions = {
+  setDocs(docs) {
+    return {
+      type: 'SET_DOCS',
+      docs
+    };
+  },
+  setDoc(doc) {
+    return {
+      type: 'SET_DOC',
+      doc
+    };
+  },
+  setParentDocs(parents) {
+    return {
+      type: 'SET_PARENT_DOCS',
+      parents
+    };
+  },
+  setPages(pages) {
+    return {
+      type: 'SET_PAGES',
+      pages
+    };
+  },
+  setLoading(loading) {
+    return {
+      type: 'SET_LOADING',
+      loading
+    };
+  },
+  setSortingStatus(sorting) {
+    return {
+      type: 'SET_SORTING_STATUS',
+      sorting
+    };
+  },
+  setNeedSortingStatus(needSorting) {
+    return {
+      type: 'SET_NEED_SORTING_STATUS',
+      needSorting
+    };
+  },
+  setUserDocIds(userDocIds) {
+    return {
+      type: 'SET_USER_DOC_IDS',
+      userDocIds
+    };
+  },
+  setUserDocId(userDocId) {
+    return {
+      type: 'SET_USER_DOC_ID',
+      userDocId
+    };
+  },
+  fetchFromAPI(path) {
+    return {
+      type: 'FETCH_FROM_API',
+      path
+    };
+  },
+  setHelpfulDocs(helpfulDocs) {
+    return {
+      type: 'SET_HELPFUL_DOCS',
+      helpfulDocs
+    };
+  },
+  createDocsToAPI(doc) {
+    const path = '/wp/v2/docs';
+    return {
+      type: 'UPDATE_TO_API',
+      path,
+      data: doc
+    };
+  },
+  removeDoc(docId) {
+    return {
+      type: 'REMOVE_DOC',
+      docId
+    };
+  },
+  setRestrictedArticles(restrictedArticleList) {
+    return {
+      type: 'SET_RESTRICTED_ARTICLES',
+      restrictedArticleList
+    };
+  },
+  setRestrictedArticle(restrictedArticle) {
+    return {
+      type: 'SET_RESTRICTED_ARTICLE',
+      restrictedArticle
+    };
+  },
+  *createDoc(doc) {
+    const createdDoc = yield actions.createDocsToAPI(doc);
+    yield actions.setUserDocId(createdDoc.id);
+    yield actions.setDoc(createdDoc);
+    return createdDoc;
+  },
+  *updateDoc(docId, data) {
+    const getDocsPath = wp.hooks.applyFilters('wedocs_documentation_fetching_path', `/wp/v2/docs?per_page=-1&status=publish${typeof weDocsAdminVars !== 'undefined' ? ',draft,private' : ''}`);
+    const path = '/wp/v2/docs/' + docId;
+    yield {
+      type: 'UPDATE_TO_API',
+      path,
+      data
+    };
+    const response = yield actions.fetchFromAPI(getDocsPath);
+    const parentDocs = response.filter(doc => !doc.parent);
+    const sortableDocs = parentDocs?.sort((a, b) => a.menu_order - b.menu_order);
+    yield actions.setParentDocs(sortableDocs);
+    return actions.setDocs(response);
+  },
+  *updateDocs(data) {
+    const path = '/wp/v2/docs/update_docs_status';
+    yield {
+      type: 'UPDATE_TO_API',
+      path,
+      data
+    };
+    const response = yield actions.fetchFromAPI('/wp/v2/docs?per_page=-1&status=publish,draft,private');
+    const parentDocs = response.filter(doc => !doc.parent);
+    const sortableDocs = parentDocs?.sort((a, b) => a.menu_order - b.menu_order);
+    yield actions.setParentDocs(sortableDocs);
+    return actions.setDocs(response);
+  },
+  *updateNeedSortingStatus(data) {
+    const path = '/wp/v2/docs/need_sorting_status';
+    yield {
+      type: 'UPDATE_TO_API',
+      path,
+      data
+    };
+    const response = yield actions.fetchFromAPI('/wp/v2/docs/need_sorting_status');
+    return actions.setNeedSortingStatus(response);
+  },
+  *updateSortingStatus(data) {
+    const path = '/wp/v2/docs/sorting_status';
+    yield {
+      type: 'UPDATE_TO_API',
+      path,
+      data
+    };
+    const response = yield actions.fetchFromAPI('/wp/v2/docs/sorting_status');
+    yield actions.setNeedSortingStatus(response);
+    return actions.setSortingStatus(response);
+  },
+  *updateDocMeta(docId, meta) {
+    const path = '/wp/v2/docs/' + docId + '/meta';
+    const response = yield {
+      type: 'UPDATE_TO_API',
+      path,
+      data: meta
+    };
+    yield actions.setRestrictedArticle({
+      id: docId,
+      value: response
+    });
+    return response;
+  },
+  *deleteDoc(docId) {
+    const path = '/wp/v2/docs/' + docId;
+    yield {
+      type: 'DELETE_TO_API',
+      path
+    };
+    return actions.removeDoc(docId);
+  },
+  *updateParentDocs() {
+    const getDocsPath = wp.hooks.applyFilters('wedocs_documentation_fetching_path', `/wp/v2/docs?per_page=-1&status=publish${typeof weDocsAdminVars !== 'undefined' ? ',draft,private' : ''}`);
+    const response = yield actions.fetchFromAPI(getDocsPath);
+    const parentDocs = response.filter(doc => !doc.parent);
+    const sortableDocs = parentDocs?.sort((a, b) => a.menu_order - b.menu_order);
+    yield actions.setParentDocs(sortableDocs);
+    return actions.setDocs(response);
+  },
+  *sendMessage(data) {
+    const path = '/wp/v2/docs/message';
+    const response = yield {
+      type: 'UPDATE_TO_API',
+      path,
+      data
+    };
+    return response;
+  },
+  *dismissPromoNotice(optionName) {
+    const response = yield actions.dismissPromoNoticeAPI(optionName);
+    return response;
+  },
+  dismissPromoNoticeAPI(optionName) {
+    const path = '/wp/v2/docs/hide-promotion-notice';
+    return {
+      type: 'UPDATE_TO_API',
+      path,
+      data: {
+        option_name: optionName
+      }
+    };
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (actions);
+
+/***/ }),
+
+/***/ "./src/data/docs/controls.js":
+/*!***********************************!*\
+  !*** ./src/data/docs/controls.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
+
+const controls = {
+  FETCH_FROM_API(action) {
+    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      path: action.path
+    });
+  },
+  UPDATE_TO_API(action) {
+    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      path: action.path,
+      data: action.data,
+      method: 'POST'
+    });
+  },
+  DELETE_TO_API(action) {
+    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      path: action.path,
+      method: 'DELETE'
+    });
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (controls);
+
+/***/ }),
+
+/***/ "./src/data/docs/index.js":
+/*!********************************!*\
+  !*** ./src/data/docs/index.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DOCS_STORE: () => (/* binding */ DOCS_STORE),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reducer */ "./src/data/docs/reducer.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./actions */ "./src/data/docs/actions.js");
+/* harmony import */ var _selectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./selectors */ "./src/data/docs/selectors.js");
+/* harmony import */ var _controls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./controls */ "./src/data/docs/controls.js");
+/* harmony import */ var _resolvers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./resolvers */ "./src/data/docs/resolvers.js");
+
+
+
+
+
+
+const DOCS_STORE = 'wedocs/docs';
+const docsStore = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.createReduxStore)(DOCS_STORE, {
+  reducer: _reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  selectors: _selectors__WEBPACK_IMPORTED_MODULE_3__["default"],
+  actions: _actions__WEBPACK_IMPORTED_MODULE_2__["default"],
+  resolvers: _resolvers__WEBPACK_IMPORTED_MODULE_5__["default"],
+  controls: _controls__WEBPACK_IMPORTED_MODULE_4__["default"]
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (docsStore);
+
+/***/ }),
+
+/***/ "./src/data/docs/reducer.js":
+/*!**********************************!*\
+  !*** ./src/data/docs/reducer.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const DEFAULT_STATE = {
+  docs: [],
+  pages: [],
+  parents: [],
+  loading: false,
+  sorting: false,
+  userDocIds: [],
+  helpfulDocs: [],
+  needSorting: false,
+  restrictedArticleList: []
+};
+const reducer = (state = DEFAULT_STATE, action) => {
+  switch (action.type) {
+    case 'SET_DOCS':
+      return {
+        ...state,
+        docs: [...action.docs]
+      };
+    case 'SET_DOC':
+      const setDocState = {
+        ...state,
+        docs: [...state.docs, action.doc]
+      };
+      const isNotInParent = !state.parents.some(parent => parent?.id === action?.doc?.id);
+      if (!action.doc.parent && isNotInParent) {
+        setDocState.parents = [{
+          ...action.doc
+        }, ...state.parents];
+      }
+      return setDocState;
+    case 'SET_USER_DOC_IDS':
+      return {
+        ...state,
+        userDocIds: [...state.userDocIds, ...action.userDocIds]
+      };
+    case 'SET_USER_DOC_ID':
+      return {
+        ...state,
+        userDocIds: [...state.userDocIds, action.userDocId]
+      };
+    case 'SET_PAGES':
+      return {
+        ...state,
+        pages: [...action.pages]
+      };
+    case 'SET_PARENT_DOCS':
+      return {
+        ...state,
+        parents: [...action.parents]
+      };
+    case 'SET_LOADING':
+      return {
+        ...state,
+        loading: action.loading
+      };
+    case 'SET_SORTING_STATUS':
+      return {
+        ...state,
+        sorting: action.sorting
+      };
+    case 'SET_NEED_SORTING_STATUS':
+      return {
+        ...state,
+        needSorting: action.needSorting
+      };
+    case 'SET_HELPFUL_DOCS':
+      return {
+        ...state,
+        helpfulDocs: action.helpfulDocs
+      };
+    case 'REMOVE_DOC':
+      return {
+        ...state,
+        docs: [...state.docs?.filter(doc => doc.id !== action.docId)],
+        parents: [...state.parents?.filter(parent => parent.id !== action.docId)]
+      };
+    case 'SET_RESTRICTED_ARTICLES':
+      return {
+        ...state,
+        restrictedArticleList: [...action.restrictedArticleList]
+      };
+    case 'SET_RESTRICTED_ARTICLE':
+      return {
+        ...state,
+        restrictedArticleList: [...state.restrictedArticleList, {
+          ...action.restrictedArticle
+        }]
+      };
+    default:
+      return state;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reducer);
+
+/***/ }),
+
+/***/ "./src/data/docs/resolvers.js":
+/*!************************************!*\
+  !*** ./src/data/docs/resolvers.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions */ "./src/data/docs/actions.js");
+
+const resolvers = {
+  *getDocs() {
+    // Compute path at runtime to ensure Pro filters are applied
+    const getDocsPath = wp.hooks.applyFilters('wedocs_documentation_fetching_path', `/wp/v2/docs?per_page=-1&status=publish${typeof weDocsAdminVars !== 'undefined' ? ',draft,private' : ''}`);
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(true);
+    const response = yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].fetchFromAPI(getDocsPath);
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setDocs(response);
+    const parentDocs = response.filter(doc => !doc.parent);
+    const sortableDocs = parentDocs?.sort((a, b) => a.menu_order - b.menu_order);
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setParentDocs(sortableDocs);
+    return _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(false);
+  },
+  *getDoc(id) {
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(true);
+    let url = '/wp/v2/docs/' + id;
+    const response = yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].fetchFromAPI(url);
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setDoc(response);
+    return _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(false);
+  },
+  *getPages() {
+    const response = yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].fetchFromAPI('/wp/v2/pages');
+    return _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setPages(response);
+  },
+  *getSortingStatus() {
+    const response = yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].fetchFromAPI('/wp/v2/docs/sorting_status');
+    return _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setSortingStatus(response);
+  },
+  *getNeedSortingStatus() {
+    const response = yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].fetchFromAPI('/wp/v2/docs/need_sorting_status');
+    return _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setNeedSortingStatus(response);
+  },
+  *getUserDocIds() {
+    try {
+      // Check if Pro plugin is active via global flag
+      if (typeof weDocsAdminVars !== 'undefined' && weDocsAdminVars.pro_active) {
+        const userDocIds = yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].fetchFromAPI(`/wp/v2/docs/users/ids/`);
+        return _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setUserDocIds(userDocIds);
+      } else {
+        // Pro plugin not active, return empty array
+        console.info('weDocs Pro plugin not active, returning empty user doc IDs');
+        return _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setUserDocIds([]);
+      }
+    } catch (error) {
+      console.warn('Error fetching user doc IDs:', error);
+      return _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setUserDocIds([]);
+    }
+  },
+  *getHelpfulDocs() {
+    const docs = yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].fetchFromAPI(getDocsPath);
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setDocs(docs);
+    const helpfulDocIds = yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].fetchFromAPI('/wp/v2/docs/helpfulness');
+    const helpfulDocs = docs.sort((a, b) => helpfulDocIds.indexOf(a.id) - helpfulDocIds.indexOf(b.id)).filter(doc => helpfulDocIds?.includes(doc?.id));
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setHelpfulDocs(helpfulDocs);
+  },
+  *getRestrictedArticles() {
+    const response = yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].fetchFromAPI('/wp/v2/docs/meta?key=wedocs_restrict_admin_article_access');
+    return yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setRestrictedArticles(response);
+  },
+  *getRestrictedArticle(state, id) {
+    const {
+      restrictedArticleList
+    } = state;
+    return restrictedArticleList.find(article => article.id === id);
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (resolvers);
+
+/***/ }),
+
+/***/ "./src/data/docs/selectors.js":
+/*!************************************!*\
+  !*** ./src/data/docs/selectors.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const selectors = {
+  getDocs: state => {
+    const {
+      docs
+    } = state;
+    return docs;
+  },
+  getParentDocs: state => {
+    const {
+      parents
+    } = state;
+    return parents;
+  },
+  getDoc: (state, id) => {
+    const {
+      docs
+    } = state;
+    return docs.find(doc => doc.id === id);
+  },
+  getPages: state => {
+    const {
+      pages
+    } = state;
+    return pages;
+  },
+  getLoading: state => {
+    const {
+      loading
+    } = state;
+    return loading;
+  },
+  getSortingStatus: state => {
+    const {
+      sorting
+    } = state;
+    return sorting;
+  },
+  getNeedSortingStatus: state => {
+    const {
+      needSorting
+    } = state;
+    return needSorting;
+  },
+  getUserDocIds: state => {
+    const {
+      userDocIds
+    } = state;
+    return userDocIds;
+  },
+  getSectionsDocs: (state, id) => {
+    const {
+      docs
+    } = state;
+    const sections = docs.filter(doc => doc.parent === id);
+    const sortableSections = sections?.sort((a, b) => a.menu_order - b.menu_order);
+    return sortableSections;
+  },
+  getDocArticles: (state, id) => {
+    const {
+      docs
+    } = state;
+    const sections = docs.filter(doc => doc.parent === id);
+    const articles = [];
+    sections.forEach(article => {
+      const collection = docs.filter(doc => {
+        return doc.parent === article.id;
+      });
+      articles.push(...collection);
+    });
+    const sortableArticles = articles?.sort((a, b) => a.menu_order - b.menu_order);
+    return sortableArticles;
+  },
+  getSectionArticles: (state, id) => {
+    const {
+      docs
+    } = state;
+    const articles = docs.filter(doc => doc.parent === id);
+    const sortableArticles = articles?.sort((a, b) => a.menu_order - b.menu_order);
+    return sortableArticles;
+  },
+  getArticleChildrens: (state, id) => {
+    const {
+      docs
+    } = state;
+    const childrens = docs?.filter(doc => doc.parent === id)?.reverse();
+    const sortableChildrens = childrens?.sort((a, b) => a.menu_order - b.menu_order);
+    return sortableChildrens;
+  },
+  getHelpfulDocs: state => {
+    const {
+      helpfulDocs
+    } = state;
+    return helpfulDocs;
+  },
+  getRestrictedArticles(state) {
+    const {
+      restrictedArticleList
+    } = state;
+    return restrictedArticleList;
+  },
+  getRestrictedArticle(state, id) {
+    const {
+      restrictedArticleList
+    } = state;
+    return restrictedArticleList.find(article => article.id === id);
+  },
+  // Generic function to get children at any level (supports deep hierarchy)
+  getDocumentChildrens: (state, id) => {
+    const {
+      docs
+    } = state;
+    const childrens = docs?.filter(doc => doc.parent === id)?.reverse();
+    const sortableChildrens = childrens?.sort((a, b) => a.menu_order - b.menu_order);
+    return sortableChildrens;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (selectors);
+
+/***/ }),
+
+/***/ "./src/data/settings/actions.js":
+/*!**************************************!*\
+  !*** ./src/data/settings/actions.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const actions = {
+  setSettings(settings) {
+    return {
+      type: 'SET_SETTINGS',
+      settings
+    };
+  },
+  setSettingsOption(option, value) {
+    return {
+      type: 'SET_SETTINGS_OPTION',
+      option,
+      value
+    };
+  },
+  setLoading(loading) {
+    return {
+      type: 'SET_LOADING',
+      loading
+    };
+  },
+  setUpgradeInfo(needUpgrade) {
+    return {
+      type: 'SET_UPGRADE_INFO',
+      needUpgrade
+    };
+  },
+  setPromoNotice(promoNotice) {
+    return {
+      type: 'SET_PROMO_NOTICE',
+      promoNotice
+    };
+  },
+  setMigrateInfo(needMigrate) {
+    return {
+      type: 'SET_MIGRATE_INFO',
+      needMigrate
+    };
+  },
+  setSaving(saving) {
+    return {
+      type: 'SET_SAVING',
+      saving
+    };
+  },
+  setRoles(roles) {
+    return {
+      type: 'SET_ROLES',
+      roles
+    };
+  },
+  setTurnstileSiteKey(siteKey) {
+    return {
+      type: 'SET_TURNSTILE_SITE_KEY',
+      siteKey
+    };
+  },
+  *updateSettings(data) {
+    const path = '/wp/v2/docs/settings';
+    const response = yield {
+      type: 'UPDATE_TO_API',
+      path,
+      data
+    };
+    yield actions.setSettings(response.data);
+    return response.data;
+  },
+  *wedocsUpgrade(data) {
+    const path = '/wp/v2/docs/upgrade';
+    const response = yield {
+      type: 'UPDATE_TO_API',
+      path,
+      data
+    };
+    yield actions.setUpgradeInfo(false);
+    return response;
+  },
+  *makeUpdateDone() {
+    return yield {
+      type: 'UPDATE_TO_API',
+      path: '/wp/v2/docs/upgrade/done'
+    };
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (actions);
+
+/***/ }),
+
+/***/ "./src/data/settings/controls.js":
+/*!***************************************!*\
+  !*** ./src/data/settings/controls.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
+
+const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+const controls = {
+  FETCH_SETTINGS() {
+    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      path: '/wp/v2/docs/settings?data=wedocs_settings'
+    });
+  },
+  FETCH_ROLES() {
+    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      path: '/wp/v2/docs/users'
+    });
+  },
+  FETCH_UPGRADE_INFO() {
+    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      path: '/wp/v2/docs/upgrade'
+    });
+  },
+  FETCH_SITE_KEY() {
+    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      path: '/wp/v2/docs/settings/turnstile-site-key'
+    });
+  },
+  UPDATE_TO_API(action) {
+    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      path: action.path,
+      data: action.data,
+      method: 'POST'
+    });
+  },
+  FETCH_PROMO_NOTICE() {
+    if (isProLoaded) {
+      return null;
+    }
+    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      path: '/wp/v2/docs/promotion-notice'
+    });
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (controls);
+
+/***/ }),
+
+/***/ "./src/data/settings/index.js":
+/*!************************************!*\
+  !*** ./src/data/settings/index.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DOCS_SETTINGS_STORE: () => (/* binding */ DOCS_SETTINGS_STORE),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reducer */ "./src/data/settings/reducer.js");
+/* harmony import */ var _selectors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./selectors */ "./src/data/settings/selectors.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./actions */ "./src/data/settings/actions.js");
+/* harmony import */ var _resolvers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./resolvers */ "./src/data/settings/resolvers.js");
+/* harmony import */ var _controls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./controls */ "./src/data/settings/controls.js");
+
+
+
+
+
+
+const DOCS_SETTINGS_STORE = 'wedocs/settings';
+const settingsStore = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.createReduxStore)(DOCS_SETTINGS_STORE, {
+  reducer: _reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  selectors: _selectors__WEBPACK_IMPORTED_MODULE_2__["default"],
+  actions: _actions__WEBPACK_IMPORTED_MODULE_3__["default"],
+  resolvers: _resolvers__WEBPACK_IMPORTED_MODULE_4__["default"],
+  controls: _controls__WEBPACK_IMPORTED_MODULE_5__["default"]
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (settingsStore);
+
+/***/ }),
+
+/***/ "./src/data/settings/reducer.js":
+/*!**************************************!*\
+  !*** ./src/data/settings/reducer.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const DEFAULT_SETTINGS_STATE = {
+  roles: {},
+  settings: {
+    general: {
+      docs_home: '',
+      email: 'on',
+      email_to: '',
+      helpful: 'on',
+      comments: 'off',
+      print: 'on',
+      enable_search: 'on',
+      collapse_articles: 'off'
+    },
+    permission: {
+      global_permission: ['administrator', 'editor'],
+      role_wise_permission: ['administrator'],
+      show_contributors: 'on'
+    },
+    assistant: {
+      assist_enable: 'on',
+      integrate_ai: {
+        ai_enabled: 'off',
+        sync_data: 'off',
+        ai_response: {}
+      },
+      explore: {
+        explore_enable: 'on'
+      },
+      message: {
+        messaging_enable: 'on',
+        turnstile_site_key: ''
+      },
+      placement: {
+        order: ['integrate_ai', 'explore', 'message']
+      },
+      preference: {
+        color_settings: {
+          preview_colors: {
+            widgetBg: {
+              r: 99,
+              g: 102,
+              b: 241,
+              a: 1
+            },
+            activeTabBg: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1
+            },
+            activeTabFont: {
+              r: 55,
+              g: 65,
+              b: 81,
+              a: 1
+            },
+            inactiveTabBg: {
+              r: 67,
+              g: 56,
+              b: 202,
+              a: 1
+            },
+            inactiveTabFont: {
+              r: 199,
+              g: 210,
+              b: 254,
+              a: 1
+            },
+            tabTitleFont: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1
+            },
+            tabDescriptionFont: {
+              r: 199,
+              g: 210,
+              b: 254,
+              a: 1
+            },
+            breadcrumbColor: {
+              r: 67,
+              g: 56,
+              b: 202,
+              a: 1
+            },
+            bubbleBg: {
+              r: 87,
+              g: 116,
+              b: 241,
+              a: 1
+            },
+            bubbleIcon: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1
+            }
+          }
+        }
+      }
+    },
+    layout: {
+      column: '2',
+      nav_icon: 'on',
+      right_bar: 'on',
+      template: 'default',
+      active_text: {
+        r: 59,
+        g: 130,
+        b: 246,
+        a: 1
+      },
+      active_nav_bg: {
+        r: 59,
+        g: 130,
+        b: 246,
+        a: 1
+      },
+      active_nav_text: {
+        r: 255,
+        g: 255,
+        b: 255,
+        a: 1
+      }
+    },
+    ai: {
+      default_provider: 'openai',
+      providers: (() => {
+        // Generate default providers from centralized configs
+        const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
+        const providers = {};
+        Object.keys(configs).forEach(providerKey => {
+          const provider = configs[providerKey];
+          const modelKeys = Object.keys(provider.models);
+          const firstModel = modelKeys[0]; // Use first model as default
+
+          providers[providerKey] = {
+            api_key: '',
+            models: modelKeys,
+            selected_model: firstModel
+          };
+        });
+        return providers;
+      })()
+    }
+  },
+  loading: false,
+  saving: false,
+  needUpgrade: false
+};
+const reducer = (state = DEFAULT_SETTINGS_STATE, action) => {
+  switch (action.type) {
+    case 'SET_SETTINGS':
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          ...action.settings
+        }
+      };
+    case 'SET_LOADING':
+      return {
+        ...state,
+        loading: action.loading
+      };
+    case 'SET_ROLES':
+      return {
+        ...state,
+        roles: action.roles
+      };
+    case 'SET_SETTINGS_OPTION':
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          [action.option]: action.value
+        }
+      };
+    case 'SET_UPGRADE_INFO':
+      return {
+        ...state,
+        needUpgrade: action.needUpgrade
+      };
+    case 'SET_PROMO_NOTICE':
+      return {
+        ...state,
+        promoNotice: action.promoNotice
+      };
+    case 'SET_SAVING':
+      return {
+        ...state,
+        saving: action.saving
+      };
+    case 'SET_TURNSTILE_SITE_KEY':
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          assistant: {
+            ...state.settings.assistant,
+            message: {
+              ...state.settings.assistant.message,
+              turnstile_site_key: action.siteKey
+            }
+          }
+        }
+      };
+    default:
+      return state;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reducer);
+
+/***/ }),
+
+/***/ "./src/data/settings/resolvers.js":
+/*!****************************************!*\
+  !*** ./src/data/settings/resolvers.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions */ "./src/data/settings/actions.js");
+
+const resolvers = {
+  *getSettings() {
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(true);
+    const settings = yield {
+      type: 'FETCH_SETTINGS'
+    };
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setSettings(settings);
+    return _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(false);
+  },
+  *getUpgradeInfo() {
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(true);
+    const needUpgrade = yield {
+      type: 'FETCH_UPGRADE_INFO'
+    };
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setUpgradeInfo(needUpgrade);
+    return _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(false);
+  },
+  *getRoles() {
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(true);
+    const roles = yield {
+      type: 'FETCH_ROLES'
+    };
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setRoles(roles);
+    return _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(false);
+  },
+  *getTurnstileSiteKey() {
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(true);
+    const siteKey = yield {
+      type: 'FETCH_SITE_KEY'
+    };
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setTurnstileSiteKey(siteKey);
+    return _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(false);
+  },
+  *getPromoNotice() {
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(true);
+    const promoNotice = yield {
+      type: 'FETCH_PROMO_NOTICE'
+    };
+    yield _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setPromoNotice(promoNotice);
+    return _actions__WEBPACK_IMPORTED_MODULE_0__["default"].setLoading(false);
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (resolvers);
+
+/***/ }),
+
+/***/ "./src/data/settings/selectors.js":
+/*!****************************************!*\
+  !*** ./src/data/settings/selectors.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const selectors = {
+  getSettings(state) {
+    const {
+      settings
+    } = state;
+    return settings;
+  },
+  getSettingsOption(state, option) {
+    const {
+      settings
+    } = state;
+    return settings[option];
+  },
+  getGeneralSettingsOption(state, option) {
+    const {
+      settings
+    } = state;
+    return settings?.general?.[option];
+  },
+  getPermissionSettingsOption(state, option) {
+    const {
+      settings
+    } = state;
+    return settings?.permission?.[option];
+  },
+  getAssistantSettingsOption(state, option) {
+    const {
+      settings
+    } = state;
+    return settings?.assistant?.[option];
+  },
+  getRoles(state) {
+    const {
+      roles
+    } = state;
+    return roles;
+  },
+  getLoading(state) {
+    const {
+      loading
+    } = state;
+    return loading;
+  },
+  getUpgradeInfo(state) {
+    const {
+      needUpgrade
+    } = state;
+    return needUpgrade;
+  },
+  getSaving(state) {
+    const {
+      saving
+    } = state;
+    return saving;
+  },
+  getTurnstileSiteKey(state) {
+    const {
+      settings
+    } = state;
+    return settings?.assistant?.message?.turnstile_site_key;
+  },
+  getPromoNotice(state) {
+    const {
+      promoNotice
+    } = state;
+    return promoNotice;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (selectors);
+
+/***/ }),
+
+/***/ "@wordpress/api-fetch":
+/*!**********************************!*\
+  !*** external ["wp","apiFetch"] ***!
+  \**********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["apiFetch"];
+
+/***/ }),
+
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["data"];
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!***************************!*\
+  !*** ./src/data/store.js ***!
+  \***************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _docs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./docs */ "./src/data/docs/index.js");
+/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./settings */ "./src/data/settings/index.js");
+
+
+
+(0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.register)(_docs__WEBPACK_IMPORTED_MODULE_1__["default"]);
+(0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.register)(_settings__WEBPACK_IMPORTED_MODULE_2__["default"]);
+})();
+
+/******/ })()
+;
+//# sourceMappingURL=store.js.map
