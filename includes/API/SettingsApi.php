@@ -192,7 +192,7 @@ class SettingsApi extends \WP_REST_Controller {
     /**
      * Sanitize AI settings data.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.1.15
      *
      * @param array $ai_settings
      *
