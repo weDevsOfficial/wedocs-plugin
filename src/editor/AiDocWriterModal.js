@@ -423,7 +423,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
 
     return (
         <Modal
-            title={__('AI Doc Writer', 'wedocs')}
+            title={__('weDocs AI Doc Writer', 'wedocs')}
             onRequestClose={handleClose}
             className="wedocs-ai-doc-writer-modal"
             size="large"
