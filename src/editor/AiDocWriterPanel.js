@@ -29,9 +29,9 @@ const AiDocWriterPanel = () => {
     return (
         <Fragment>
             <PluginSidebarMoreMenuItem target="wedocs-ai-doc-writer" icon={AiDocWriterIcon}>
-                {__('AI Doc Writer', 'wedocs')}
+                {__('weDocs AI Doc Writer', 'wedocs')}
             </PluginSidebarMoreMenuItem>
-            <PluginSidebar name="wedocs-ai-doc-writer" title={__('AI Doc Writer', 'wedocs')}>
+            <PluginSidebar name="wedocs-ai-doc-writer" title={__('weDocs AI Doc Writer', 'wedocs')}>
                 <div style={{ padding: '16px' }}>
                     <p style={{ marginBottom: '16px', fontSize: '14px', color: '#666' }}>
                         {__('Generate AI-powered documentation content with advanced language models.', 'wedocs')}
