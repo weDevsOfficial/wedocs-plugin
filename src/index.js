@@ -1,5 +1,6 @@
 import './data/store';
 import './assets/css/index.css';
+import './components/ProPreviews';
 import App from './components/App';
 import menuFix from './utils/menuFix';
 import { createRoot } from '@wordpress/element';
