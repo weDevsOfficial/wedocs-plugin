@@ -32,7 +32,7 @@ const PermissionSettings = () => {
 
     return (
         <section>
-            <div className="shadow sm:rounded-md bg-white overflow-hidden min-h-[500px]">
+            <div className="shadow sm:rounded-md bg-white overflow-visible min-h-[500px]">
                 <div className="py-4 px-8 sm:px-8 sm:py-4">
                     <h2 className="text-gray-900 font-medium text-lg">
                         { __( 'Permission Management', 'wedocs' ) }
