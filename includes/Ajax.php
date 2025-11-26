@@ -30,7 +30,6 @@ class Ajax {
 
         // Handle weDocs beta notice.
         add_action( 'wp_ajax_hide_wedocs_beta_notice', [ $this, 'hide_beta_notice' ] );
-        add_action( 'wp_ajax_nopriv_hide_wedocs_beta_notice', [ $this, 'hide_beta_notice' ] );
 
         // Data migration.
         add_action( 'wp_ajax_wedocs_check_need_betterdocs_migration', [ Migrate::class, 'need_migration' ] );
@@ -38,7 +37,6 @@ class Ajax {
 
         // Handle weDocs pro notice.
         add_action( 'wp_ajax_hide_wedocs_pro_notice', [ $this, 'hide_pro_notice' ] );
-        add_action( 'wp_ajax_nopriv_hide_wedocs_pro_notice', [ $this, 'hide_pro_notice' ] );
     }
 
     /**
@@ -228,8 +226,12 @@ class Ajax {
      * @return void
      */
     public function hide_pro_notice() {
+        check_ajax_referer( 'wedocs-admin-nonce', 'nonce' );
+
         $user_id = get_current_user_id();
         update_user_meta( $user_id, 'wedocs_hide_pro_notice', true );
+
+        wp_send_json_success();
     }
 
     /**
