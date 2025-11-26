@@ -13,6 +13,10 @@ const container = document.getElementById( 'wedocs-app' );
 // Use requestIdleCallback or setTimeout to ensure all scripts have executed
 // This gives Pro plugin time to register its filters
 const renderApp = () => {
+    if (!container) {
+		console.error('wedocs-app container not found');
+		return;
+	}
 	const root = createRoot( container );
 	root.render( <App /> );
 	menuFix( 'wedocs' );
