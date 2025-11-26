@@ -1,0 +1,27 @@
+
+  /**
+ * The following styles get applied inside the editor only.
+ */
+
+.wp-block-wedocs-block-dynamic-table-of-contents {
+	.toc-mobile-notice {
+		background-color: rgba(0, 115, 170, 0.1);
+		padding: 5px 10px;
+		border-radius: 3px;
+		border-left: 3px solid #0073aa;
+		color: #0073aa;
+		font-size: 12px;
+	}
+
+	.toc-content {
+		.toc-list {
+			li a {
+				cursor: default;
+
+				&:hover {
+					color: #0073aa;
+				}
+			}
+		}
+	}
+}
