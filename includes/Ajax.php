@@ -30,7 +30,6 @@ class Ajax {
 
         // Handle weDocs beta notice.
         add_action( 'wp_ajax_hide_wedocs_beta_notice', [ $this, 'hide_beta_notice' ] );
-        add_action( 'wp_ajax_nopriv_hide_wedocs_beta_notice', [ $this, 'hide_beta_notice' ] );
 
         // Data migration.
         add_action( 'wp_ajax_wedocs_check_need_betterdocs_migration', [ Migrate::class, 'need_migration' ] );
@@ -38,7 +37,6 @@ class Ajax {
 
         // Handle weDocs pro notice.
         add_action( 'wp_ajax_hide_wedocs_pro_notice', [ $this, 'hide_pro_notice' ] );
-        add_action( 'wp_ajax_nopriv_hide_wedocs_pro_notice', [ $this, 'hide_pro_notice' ] );
     }
 
     /**
