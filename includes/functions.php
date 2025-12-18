@@ -510,12 +510,30 @@ function wedocs_user_documentation_handling_capabilities() {
         $wp_roles = new \WP_Roles(); // @codingStandardsIgnoreLine
     }
 
-    $roles        = $wp_roles->get_names();
-    $capabilities = array( 'edit_post', 'edit_docs', 'publish_docs', 'edit_others_docs', 'read_private_docs', 'edit_private_docs', 'edit_published_docs' );
-    // Push documentation handling access to users.
+    $permitted_roles = array( 'administrator', 'editor' );
+    $all_roles       = $wp_roles->get_names();
+    $capabilities    = array( 'edit_post', 'edit_docs', 'publish_docs', 'edit_others_docs', 'read_private_docs', 'edit_private_docs', 'edit_published_docs' );
+
+    // First, remove capabilities from unauthorized roles (cleanup for existing installations)
     foreach ( $capabilities as $capability ) {
-        foreach ( $roles as $role_key => $role ) {
-            $wp_roles->add_cap( $role_key, $capability );
+        if ( 'edit_post' === $capability ) {
+            continue; // Skip core WordPress capability
+        }
+
+        foreach ( array_keys( $all_roles ) as $role_key ) {
+            $role = $wp_roles->get_role( $role_key );
+            if ( $role && $role->has_cap( $capability ) && ! in_array( $role_key, $permitted_roles, true ) ) {
+                $wp_roles->remove_cap( $role_key, $capability );
+            }
+        }
+    }
+
+    // Push documentation handling access ONLY to permitted roles.
+    foreach ( $capabilities as $capability ) {
+        foreach ( $permitted_roles as $role_key ) {
+            if ( $wp_roles->is_role( $role_key ) ) {
+                $wp_roles->add_cap( $role_key, $capability );
+            }
         }
     }
 }

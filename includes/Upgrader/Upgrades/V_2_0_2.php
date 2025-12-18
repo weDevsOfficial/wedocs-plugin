@@ -97,8 +97,8 @@ class V_2_0_2 extends UpgradeHandler {
             $wp_roles = new \WP_Roles(); // @codingStandardsIgnoreLine
         }
 
-        $roles        = $wp_roles->get_names();
-        $capabilities = array(
+        $permitted_roles = array( 'administrator', 'editor' );
+        $capabilities    = array(
             'edit_post',
             'edit_docs',
             'publish_docs',
@@ -108,10 +108,12 @@ class V_2_0_2 extends UpgradeHandler {
             'edit_published_docs'
         );
 
-        // Push documentation handling access to users.
+        // Push documentation handling access ONLY to permitted roles.
         foreach ( $capabilities as $capability ) {
-            foreach ( $roles as $role_key => $role ) {
-                $wp_roles->add_cap( $role_key, $capability );
+            foreach ( $permitted_roles as $role_key ) {
+                if ( $wp_roles->is_role( $role_key ) ) {
+                    $wp_roles->add_cap( $role_key, $capability );
+                }
             }
         }
     }
