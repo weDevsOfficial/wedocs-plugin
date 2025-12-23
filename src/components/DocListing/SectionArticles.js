@@ -318,7 +318,7 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
                     { /* translators: %s: Formatted datetime string */ }
                     { sprintf(
                       __( 'Updated on %s', 'wedocs' ),
-                      formattedDateString
+                      formattedDateString()
                     ) }
                   </div>
                 </div>
