@@ -67,7 +67,7 @@ class SettingsApi extends \WP_REST_Controller {
                 array(
                     'methods'             => WP_REST_Server::READABLE,
                     'callback'            => array( $this, 'get_items' ),
-                    'permission_callback' => '__return_true',
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
                 ),
                 array(
                     'methods'             => WP_REST_Server::CREATABLE,
@@ -101,6 +101,23 @@ class SettingsApi extends \WP_REST_Controller {
                 ),
             )
         );
+    }
+
+    /**
+     * Check settings data read permission.
+     *
+     * @since 2.1.16
+     *
+     * @param \WP_REST_Request $request
+     *
+     * @return bool|WP_Error
+     */
+    public function get_items_permissions_check( $request ) {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to do that.', 'wedocs' ), array( 'status' => rest_authorization_required_code() ) );
+        }
+
+        return true;
     }
 
     /**
