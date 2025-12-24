@@ -14,6 +14,7 @@
  */
 
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 class AiService {
     constructor() {
@@ -72,8 +73,7 @@ class AiService {
      */
     async getAiSettings() {
         try {
-            const response = await fetch('/wp-json/wp/v2/docs/settings?data=wedocs_settings');
-            const settings = await response.json();
+            const settings = await apiFetch({ path: '/wp/v2/docs/settings?data=wedocs_settings' });
             return settings?.ai || this.getDefaultAiSettings();
         } catch (error) {
             return this.getDefaultAiSettings();
@@ -161,9 +161,6 @@ class AiService {
 
             // Make the API call directly via WordPress REST API
             // Pass prompt and options directly instead of creating provider-specific payloads
-            const restUrl = '/wp-json/wp/v2/docs/ai/generate';
-            const nonce = window.weDocsEditorVars?.nonce || '';
-            
             const requestBody = {
                 prompt: prompt,
                 provider: provider,
@@ -172,19 +169,20 @@ class AiService {
                 temperature: options.temperature || 0.7,
                 systemPrompt: options.systemPrompt || __('You are a helpful documentation assistant.', 'wedocs')
             };
-            
-            const response = await fetch(restUrl, {
-                method: 'POST',
-                credentials: 'include', // Include cookies for authentication
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-WP-Nonce': nonce
-                },
-                body: JSON.stringify(requestBody)
-            });
 
-            if (!response.ok) {
-                let errorData = {};
+            try {
+                const data = await apiFetch({
+                    path: '/wp/v2/docs/ai/generate',
+                    method: 'POST',
+                    data: requestBody
+                });
+
+                // Return in format expected by callers
+                return {
+                    content: data.content || '',
+                    usage: data.usage || null
+                };
+            } catch (error) {
                 let errorMessage = __('AI content generation failed. Please try again.', 'wedocs');
 
                 try {
@@ -194,7 +192,7 @@ class AiService {
                         errorData = JSON.parse(responseText);
                         // Use the message from the API, which should already be user-friendly
                         errorMessage = errorData.message || errorData.code || errorMessage;
-                        
+
                         // Clean up HTML error messages (WordPress fatal errors)
                         if (errorMessage.includes('<p>') || errorMessage.includes('critical error')) {
                             errorMessage = __('A server error occurred. Please try again or contact support if the problem persists.', 'wedocs');
@@ -222,7 +220,7 @@ class AiService {
             }
 
             const data = await response.json();
-            
+
             // Return in format expected by callers
             return {
                 content: data.content || '',
@@ -343,13 +341,13 @@ class AiService {
     async makeApiCall(provider, apiKey, endpoint, payload, model = null) {
         // Extract options from payload (provider-specific payloads vary)
         const options = this.extractOptionsFromPayload(provider, payload);
-        
+
         // Use WordPress REST API endpoint instead of direct API calls
         const restUrl = '/wp-json/wp/v2/docs/ai/generate';
-        
+
         // Get nonce from localized script
         const nonce = window.weDocsEditorVars?.nonce || '';
-        
+
         const response = await fetch(restUrl, {
             method: 'POST',
             credentials: 'include', // Include cookies for authentication
@@ -390,7 +388,7 @@ class AiService {
         }
 
         const data = await response.json();
-        
+
         // Return in format expected by parseResponse
         return data;
     }
