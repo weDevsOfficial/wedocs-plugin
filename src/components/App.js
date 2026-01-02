@@ -10,20 +10,22 @@ import SettingsPage from './Settings';
 import Documentations from './Documentations';
 import Migrate from './Migrations';
 import NotFound from './NotFound';
-import '../components/ProPreviews';
 import PermissionSettingsDemo from './PermissionSettingsDemo';
 
 const App = () => {
   let routes = [
     { path: '/', component: Documentations },
     { path: 'settings', component: SettingsPage },
+    { path: 'settings/permission', component: PermissionSettingsDemo },
+    { path: 'settings/:panel', component: SettingsPage },
     { path: 'section/:id', component: ListingPage },
     { path: 'migrate', component: Migrate },
-    { path: 'permission_settings', component: PermissionSettingsDemo },
-    { path: '*', component: NotFound },
   ];
 
   routes = wp.hooks.applyFilters('wedocs_register_menu_routes', routes);
+  
+  // Add wildcard NotFound route LAST so it doesn't catch Pro routes
+  routes.push({ path: '*', component: NotFound });
   const router = createHashRouter(
     createRoutesFromElements(
       <>

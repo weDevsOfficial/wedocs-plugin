@@ -249,6 +249,46 @@ class API extends WP_REST_Controller {
                 'permission_callback' => [ $this, 'get_promotional_notice_check' ],
             ]
         ] );
+
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/ai/generate', [
+            [
+                'methods'             => WP_REST_Server::CREATABLE,
+                'callback'            => [ $this, 'generate_ai_content' ],
+                'permission_callback' => [ $this, 'ai_generate_permissions_check' ],
+                'args'                => [
+                    'prompt' => [
+                        'required'          => true,
+                        'type'              => 'string',
+                        'sanitize_callback' => 'sanitize_textarea_field',
+                    ],
+                    'provider' => [
+                        'required' => false,
+                        'type'     => 'string',
+                        'sanitize_callback' => 'sanitize_text_field',
+                    ],
+                    'model' => [
+                        'required' => false,
+                        'type'     => 'string',
+                        'sanitize_callback' => 'sanitize_text_field',
+                    ],
+                    'maxTokens' => [
+                        'required' => false,
+                        'type'     => 'integer',
+                        'default'  => 2000,
+                    ],
+                    'temperature' => [
+                        'required' => false,
+                        'type'     => 'number',
+                        'default'  => 0.7,
+                    ],
+                    'systemPrompt' => [
+                        'required' => false,
+                        'type'     => 'string',
+                        'sanitize_callback' => 'sanitize_textarea_field',
+                    ],
+                ],
+            ],
+        ] );
     }
 
     /**
@@ -735,7 +775,7 @@ class API extends WP_REST_Controller {
      * @return WP_Error|bool true on success
      */
     public function helpful_update_permissions_check( $request ) {
-        if ( ! is_user_logged_in() ) {
+        if ( ! get_current_user_id() ) {
             return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ) );
         }
 
@@ -943,6 +983,441 @@ class API extends WP_REST_Controller {
             wp_send_json_success( 'Successfully dismissed.' );
 		}
 
-        wp_send_json_error( 'Faild to dismiss.' );
+        wp_send_json_error( 'Failed to dismiss.' );
+    }
+
+    /**
+     * Check permissions for AI content generation
+     *
+     * @since 2.0.0
+     *
+     * @param WP_REST_Request $request Current request.
+     *
+     * @return bool|WP_Error
+     */
+    public function ai_generate_permissions_check( $request ) {
+        if ( ! current_user_can( 'edit_docs' ) ) {
+            return new WP_Error(
+                'wedocs_permission_failure',
+                __( 'You do not have permission to generate AI content.', 'wedocs' ),
+                [ 'status' => 403 ]
+            );
+        }
+
+        return true;
+    }
+
+    /**
+     * Generate AI content
+     *
+     * @since 2.0.0
+     *
+     * @param WP_REST_Request $request Current request.
+     *
+     * @return WP_Error|WP_REST_Response
+     */
+    public function generate_ai_content( $request ) {
+        $prompt = $request->get_param( 'prompt' );
+        $provider = $request->get_param( 'provider' );
+        $model = $request->get_param( 'model' );
+        $max_tokens = $request->get_param( 'maxTokens' );
+        $temperature = $request->get_param( 'temperature' );
+        $system_prompt = $request->get_param( 'systemPrompt' );
+
+        // Validate numeric parameters
+        if ( $max_tokens && ( $max_tokens < 1 || $max_tokens > 8000 ) ) {
+            return new WP_Error(
+                'wedocs_ai_invalid_max_tokens',
+                __( 'Max tokens must be between 1 and 8000.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        if ( $temperature !== null && ( $temperature < 0.0 || $temperature > 2.0 ) ) {
+            return new WP_Error(
+                'wedocs_ai_invalid_temperature',
+                __( 'Temperature must be between 0.0 and 2.0.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        // Get AI settings
+        $ai_settings = wedocs_get_option( 'ai', 'wedocs_settings', '' );
+        
+        if ( empty( $ai_settings ) || empty( $ai_settings['providers'] ) ) {
+            return new WP_Error(
+                'wedocs_ai_not_configured',
+                __( 'AI settings are not configured.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        // Use provided provider or default
+        $selected_provider = $provider ?: ( $ai_settings['default_provider'] ?? 'openai' );
+        
+        // Get provider config
+        $provider_config = $ai_settings['providers'][ $selected_provider ] ?? null;
+        
+        if ( ! $provider_config || empty( $provider_config['api_key'] ) ) {
+            return new WP_Error(
+                'wedocs_ai_provider_not_configured',
+                __( 'AI provider is not configured or API key is missing.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        // Get provider endpoint and config
+        $provider_configs = wedocs_get_ai_provider_configs();
+        $provider_endpoint_config = $provider_configs[ $selected_provider ] ?? null;
+        
+        if ( ! $provider_endpoint_config ) {
+            return new WP_Error(
+                'wedocs_ai_invalid_provider',
+                __( 'Invalid AI provider specified.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        $selected_model = $model ?: ( $provider_config['selected_model'] ?? null );
+        
+        if ( ! $selected_model ) {
+            return new WP_Error(
+                'wedocs_ai_model_not_specified',
+                __( 'AI model is not specified.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        // Make API call
+        try {
+            $response = $this->make_ai_api_call(
+                $selected_provider,
+                $provider_endpoint_config,
+                $selected_model,
+                $provider_config['api_key'],
+                $prompt,
+                $system_prompt ?: __( 'You are a helpful documentation assistant.', 'wedocs' ),
+                $max_tokens ?: 2000,
+                $temperature ?: 0.7
+            );
+
+            return rest_ensure_response( $response );
+        } catch ( \Exception $e ) {
+            // Check if it's a timeout or fatal error
+            $error_message = $e->getMessage();
+            if ( strpos( $error_message, 'Maximum execution time' ) !== false || strpos( $error_message, 'Fatal error' ) !== false ) {
+                $error_message = __( 'The request took too long to complete. Please try again with a shorter prompt.', 'wedocs' );
+            }
+
+            return new WP_Error(
+                'wedocs_ai_generation_failed',
+                $error_message,
+                [ 'status' => 500 ]
+            );
+        }
+    }
+
+    /**
+     * Make AI API call based on provider
+     *
+     * @since 2.0.0
+     *
+     * @param string $provider Provider name
+     * @param array $provider_config Provider configuration
+     * @param string $model Model to use
+     * @param string $api_key API key
+     * @param string $prompt User prompt
+     * @param string $system_prompt System prompt
+     * @param int $max_tokens Max tokens
+     * @param float $temperature Temperature
+     *
+     * @return array Response with content and usage
+     * @throws \Exception
+     */
+    private function make_ai_api_call( $provider, $provider_config, $model, $api_key, $prompt, $system_prompt, $max_tokens, $temperature ) {
+        $endpoint = $provider_config['endpoint'];
+
+        switch ( $provider ) {
+            case 'openai':
+                return $this->call_openai_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature );
+            case 'anthropic':
+                return $this->call_anthropic_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature );
+            case 'google':
+                return $this->call_google_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature );
+            default:
+                throw new \Exception( __( 'Unsupported AI provider', 'wedocs' ) );
+        }
+    }
+
+    /**
+     * Call OpenAI API
+     *
+     * @since 2.0.0
+     *
+     * @param string $endpoint API endpoint
+     * @param string $api_key API key
+     * @param string $model Model to use
+     * @param string $prompt User prompt
+     * @param string $system_prompt System prompt
+     * @param int $max_tokens Max tokens
+     * @param float $temperature Temperature
+     *
+     * @return array Response with content and usage
+     * @throws \Exception
+     */
+    private function call_openai_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature ) {
+        // Validate API key
+        if ( empty( $api_key ) || ! is_string( $api_key ) ) {
+            throw new \Exception( __( 'OpenAI API key is missing or invalid', 'wedocs' ) );
+        }
+
+        $headers = [
+            'Authorization' => 'Bearer ' . $api_key,
+            'Content-Type' => 'application/json',
+        ];
+
+        $data = [
+            'model' => $model,
+            'messages' => [
+                [
+                    'role' => 'system',
+                    'content' => $system_prompt
+                ],
+                [
+                    'role' => 'user',
+                    'content' => $prompt
+                ]
+            ],
+            'max_tokens' => $max_tokens,
+            'temperature' => $temperature
+        ];
+
+        $response = wp_remote_post( $endpoint, [
+            'headers' => $headers,
+            'body' => json_encode( $data ),
+            'timeout' => 60 // Increased timeout for AI generation
+        ]);
+
+        if ( is_wp_error( $response ) ) {
+            $error_message = $response->get_error_message();
+            
+            // Handle timeout errors
+            if ( strpos( $error_message, 'timeout' ) !== false || strpos( $error_message, 'timed out' ) !== false ) {
+                throw new \Exception( __( 'The request took too long. Please try again with a shorter prompt or check your connection.', 'wedocs' ) );
+            }
+            
+            throw new \Exception( sprintf( __( 'OpenAI API error: %s', 'wedocs' ), $error_message ) );
+        }
+
+        $response_code = wp_remote_retrieve_response_code( $response );
+        $body = wp_remote_retrieve_body( $response );
+        $decoded = json_decode( $body, true );
+
+        // Check for HTTP errors
+        if ( $response_code >= 400 ) {
+            $this->handle_api_error( $response_code, $decoded, 'OpenAI' );
+        }
+
+        if ( isset( $decoded['choices'][0]['message']['content'] ) ) {
+            return [
+                'content' => $decoded['choices'][0]['message']['content'],
+                'usage' => $decoded['usage'] ?? null
+            ];
+        }
+
+        $error_message = $decoded['error']['message'] ?? __( 'Invalid OpenAI API response', 'wedocs' );
+        throw new \Exception( $error_message );
+    }
+
+    /**
+     * Call Anthropic API
+     *
+     * @since 2.0.0
+     *
+     * @param string $endpoint API endpoint
+     * @param string $api_key API key
+     * @param string $model Model to use
+     * @param string $prompt User prompt
+     * @param string $system_prompt System prompt
+     * @param int $max_tokens Max tokens
+     * @param float $temperature Temperature
+     *
+     * @return array Response with content and usage
+     * @throws \Exception
+     */
+    private function call_anthropic_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature ) {
+        // Validate API key
+        if ( empty( $api_key ) || ! is_string( $api_key ) ) {
+            throw new \Exception( __( 'Anthropic API key is missing or invalid', 'wedocs' ) );
+        }
+
+        $headers = [
+            'x-api-key' => $api_key,
+            'Content-Type' => 'application/json',
+            'anthropic-version' => '2023-06-01'
+        ];
+
+        $data = [
+            'model' => $model,
+            'max_tokens' => $max_tokens,
+            'messages' => [
+                [
+                    'role' => 'user',
+                    'content' => $system_prompt . "\n\n" . $prompt
+                ]
+            ]
+        ];
+
+        $response = wp_remote_post( $endpoint, [
+            'headers' => $headers,
+            'body' => json_encode( $data ),
+            'timeout' => 60 // Increased timeout for AI generation
+        ]);
+
+        if ( is_wp_error( $response ) ) {
+            $error_message = $response->get_error_message();
+            
+            // Handle timeout errors
+            if ( strpos( $error_message, 'timeout' ) !== false || strpos( $error_message, 'timed out' ) !== false ) {
+                throw new \Exception( __( 'The request took too long. Please try again with a shorter prompt or check your connection.', 'wedocs' ) );
+            }
+            
+            throw new \Exception( sprintf( __( 'Anthropic API error: %s', 'wedocs' ), $error_message ) );
+        }
+
+        $response_code = wp_remote_retrieve_response_code( $response );
+        $body = wp_remote_retrieve_body( $response );
+        $decoded = json_decode( $body, true );
+
+        // Check for HTTP errors
+        if ( $response_code >= 400 ) {
+            $this->handle_api_error( $response_code, $decoded, 'Anthropic' );
+        }
+
+        if ( isset( $decoded['content'][0]['text'] ) ) {
+            return [
+                'content' => $decoded['content'][0]['text'],
+                'usage' => $decoded['usage'] ?? null
+            ];
+        }
+
+        $error_message = $decoded['error']['message'] ?? __( 'Invalid Anthropic API response', 'wedocs' );
+        throw new \Exception( $error_message );
+    }
+
+    /**
+     * Call Google API
+     *
+     * @since 2.0.0
+     *
+     * @param string $endpoint API endpoint
+     * @param string $api_key API key
+     * @param string $model Model to use
+     * @param string $prompt User prompt
+     * @param string $system_prompt System prompt
+     * @param int $max_tokens Max tokens
+     * @param float $temperature Temperature
+     *
+     * @return array Response with content and usage
+     * @throws \Exception
+     */
+    private function call_google_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature ) {
+        // Validate API key
+        if ( empty( $api_key ) || ! is_string( $api_key ) ) {
+            throw new \Exception( __( 'Google API key is missing or invalid', 'wedocs' ) );
+        }
+
+        $endpoint = str_replace( '{model}', $model, $endpoint );
+        $endpoint = add_query_arg( 'key', $api_key, $endpoint );
+
+        $data = [
+            'contents' => [
+                [
+                    'parts' => [
+                        [
+                            'text' => $system_prompt . "\n\n" . $prompt
+                        ]
+                    ]
+                ]
+            ],
+            'generationConfig' => [
+                'maxOutputTokens' => $max_tokens,
+                'temperature' => $temperature
+            ]
+        ];
+
+        $response = wp_remote_post( $endpoint, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
+            'body' => json_encode( $data ),
+            'timeout' => 60 // Increased timeout for AI generation
+        ]);
+
+        if ( is_wp_error( $response ) ) {
+            $error_message = $response->get_error_message();
+            
+            // Handle timeout errors
+            if ( strpos( $error_message, 'timeout' ) !== false || strpos( $error_message, 'timed out' ) !== false ) {
+                throw new \Exception( __( 'The request took too long. Please try again with a shorter prompt or check your connection.', 'wedocs' ) );
+            }
+            
+            throw new \Exception( sprintf( __( 'Google API error: %s', 'wedocs' ), $error_message ) );
+        }
+
+        $response_code = wp_remote_retrieve_response_code( $response );
+        $body = wp_remote_retrieve_body( $response );
+        $decoded = json_decode( $body, true );
+
+        // Check for HTTP errors
+        if ( $response_code >= 400 ) {
+            $error_message = $decoded['error']['message'] ?? $decoded['error']['status'] ?? __( 'Google API request failed', 'wedocs' );
+            $this->handle_api_error( $response_code, [ 'error' => [ 'message' => $error_message ] ], 'Google' );
+        }
+
+        if ( isset( $decoded['candidates'][0]['content']['parts'][0]['text'] ) ) {
+            return [
+                'content' => $decoded['candidates'][0]['content']['parts'][0]['text'],
+                'usage' => $decoded['usageMetadata'] ?? null
+            ];
+        }
+
+        $error_message = $decoded['error']['message'] ?? __( 'Invalid Google API response', 'wedocs' );
+        throw new \Exception( $error_message );
+    }
+
+    /**
+     * Handle API error responses
+     *
+     * @since 2.0.0
+     *
+     * @param int $response_code HTTP response code
+     * @param array $decoded Decoded response body
+     * @param string $provider_name Provider name for error messages
+     *
+     * @throws \Exception
+     */
+    private function handle_api_error( $response_code, $decoded, $provider_name ) {
+        $error_message = $decoded['error']['message'] ?? $decoded['error']['type'] ?? $decoded['error']['status'] ?? sprintf( __( '%s API request failed', 'wedocs' ), $provider_name );
+        
+        // User-friendly error messages
+        if ( $response_code === 401 ) {
+            if ( strpos( strtolower( $error_message ), 'invalid' ) !== false || strpos( strtolower( $error_message ), 'api' ) !== false ) {
+                throw new \Exception( sprintf( __( 'Invalid %s API key. Please check your API key in the AI settings.', 'wedocs' ), $provider_name ) );
+            }
+            throw new \Exception( sprintf( __( 'Authentication failed. Please verify your %s API key is correct.', 'wedocs' ), $provider_name ) );
+        } elseif ( $response_code === 403 ) {
+            if ( strpos( strtolower( $error_message ), 'invalid' ) !== false || strpos( strtolower( $error_message ), 'api' ) !== false ) {
+                throw new \Exception( sprintf( __( 'Invalid %s API key. Please check your API key in the AI settings.', 'wedocs' ), $provider_name ) );
+            }
+            throw new \Exception( sprintf( __( 'Authentication failed. Please verify your %s API key is correct.', 'wedocs' ), $provider_name ) );
+        } elseif ( $response_code === 429 ) {
+            throw new \Exception( __( 'Rate limit exceeded. Please wait a moment and try again.', 'wedocs' ) );
+        } elseif ( $response_code === 500 || $response_code === 503 ) {
+            throw new \Exception( sprintf( __( '%s service is temporarily unavailable. Please try again later.', 'wedocs' ), $provider_name ) );
+        }
+        
+        // Generic error
+        throw new \Exception( sprintf( __( '%s API error: %s', 'wedocs' ), $provider_name, $error_message ) );
     }
 }

@@ -70,7 +70,11 @@ class Assets {
                 array(
                     'adminUrl'     => admin_url(),
                     'hasManageCap' => current_user_can( 'manage_options' ),
-                     'weDocsUrl'              => admin_url( 'admin.php?page=wedocs#/' ),
+                    'aiProviderConfigs' => wedocs_get_ai_provider_configs(),
+                    'adminUrl'      => admin_url(),
+                    'hasManageCap'  => current_user_can( 'manage_options' ),
+                    'weDocsUrl'     => admin_url( 'admin.php?page=wedocs#/' ),
+                    'pro_active'    => wedocs_is_pro_active(),
                 ),
             );
         }
@@ -95,6 +99,29 @@ class Assets {
                 'wedocs-block-script',
                 'weDocsBlockVars',
                 array( 'siteUrl' => site_url() ),
+            );
+        }
+
+        // Register editor scripts for AI Doc Writer
+        if ( file_exists( WEDOCS_PATH . '/assets/build/editor.asset.php' ) ) {
+            $editor_dependencies = require WEDOCS_PATH . '/assets/build/editor.asset.php';
+
+            wp_register_script(
+                'wedocs-editor-script',
+                $assets_url . '/build/editor.js',
+                $editor_dependencies['dependencies'],
+                $editor_dependencies['version'],
+                true
+            );
+
+            wp_localize_script(
+                'wedocs-editor-script',
+                'weDocsEditorVars',
+                array(
+                    'ajaxurl'           => admin_url( 'admin-ajax.php' ),
+                    'nonce'             => wp_create_nonce( 'wp_rest' ),
+                    'aiProviderConfigs' => wedocs_get_ai_provider_configs(),
+                ),
             );
         }
 
@@ -134,6 +161,12 @@ class Assets {
         if ( 'toplevel_page_wedocs' === get_current_screen()->id ) {
             wp_enqueue_style( 'wedocs-app-style' );
             wp_enqueue_script( 'wedocs-app-script' );
+        }
+
+        // Enqueue editor scripts for docs post type
+        $screen = get_current_screen();
+        if ( $screen && ( 'post' === $screen->base && 'docs' === $screen->post_type ) ) {
+            wp_enqueue_script( 'wedocs-editor-script' );
         }
     }
 }

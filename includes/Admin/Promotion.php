@@ -57,6 +57,12 @@ class Promotion {
 			&& strtotime( $promos['start_date'] ) < strtotime( $current_time )
 			&& strtotime( $current_time ) < strtotime( $promos['end_date'] )
 			) {
+			// Only show notice on dashboard, weDocs pages, and doc tags page.
+			$screen = get_current_screen();
+			if ( ! $screen || ! in_array( $screen->id, array( 'dashboard', 'toplevel_page_wedocs', 'edit-doc_tag' ), true ) ) {
+				return;
+			}
+
 			$this->generate_notice( $promos );
 		}
 	}
