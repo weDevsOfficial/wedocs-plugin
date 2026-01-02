@@ -592,3 +592,7 @@ function wedocs_convert_utc_to_est() {
 
 	return $current_time->format( 'Y-m-d H:i:s T' );
 }
+
+function wedocs_is_pro_active() {
+    return defined( 'WEDOCS_PRO_VERSION' );
+}

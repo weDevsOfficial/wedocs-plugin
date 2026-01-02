@@ -19,11 +19,13 @@ const App = () => {
     { path: 'settings', component: SettingsPage },
     { path: 'section/:id', component: ListingPage },
     { path: 'migrate', component: Migrate },
-    { path: 'permission_settings', component: PermissionSettingsDemo },
-    { path: '*', component: NotFound },
+    // permission_settings route removed - Pro handles this via manager/:id
   ];
 
   routes = wp.hooks.applyFilters('wedocs_register_menu_routes', routes);
+  
+  // Add wildcard NotFound route LAST so it doesn't catch Pro routes
+  routes.push({ path: '*', component: NotFound });
   const router = createHashRouter(
     createRoutesFromElements(
       <>
