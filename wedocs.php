@@ -169,6 +169,8 @@ final class WeDocs {
         // Localize our plugin
         add_action( 'init', [ $this, 'localization_setup' ] );
         add_action( 'init', [ $this, 'register_blocks' ] );
+        add_action('init', [$this, 'register_blocks']);
+        add_action('block_categories_all', [$this, 'register_block_category']);
 
         // registeer our widget
         add_action( 'widgets_init', [ $this, 'register_widget' ] );
@@ -181,13 +183,41 @@ final class WeDocs {
             WEDOCS_PATH . '/assets/build/blocks/Breadcrumb',
             WEDOCS_PATH . '/assets/build/blocks/HelpfulFeedback',
             WEDOCS_PATH . '/assets/build/blocks/QuickSearch',
+            WEDOCS_PATH . '/assets/build/blocks/PrintButton',
         ];
 
         foreach ($block_lists as $block) {
             if (file_exists($block . '/block.json')) {
-                register_block_type($block);
+                register_block_type( $block );
             }
         }
+    }
+
+    /**
+     * Register the weDocs block category.
+     *
+     * @param array $categories Existing block categories.
+     * @return array Modified block categories.
+     */
+    public function register_block_category($categories) {
+        // Check if weDocs category already exists
+        foreach ($categories as $category) {
+            if ($category['slug'] === 'wedocs') {
+                return $categories;
+            }
+        }
+
+        // Add weDocs category at the beginning
+        return array_merge(
+            array(
+                array(
+                    'slug'  => 'wedocs',
+                    'title' => __('weDocs', 'wedocs'),
+                    'icon'  => null
+                )
+            ),
+            $categories
+        );
     }
 
 

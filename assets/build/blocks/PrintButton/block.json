@@ -1,0 +1,108 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "wedocs/print-button",
+  "version": "1.0.0",
+  "title": "weDocs - Print Button",
+  "icon": "printer",
+  "category": "wedocs",
+  "description": "Add a print button to allow users to print the current page",
+  "keywords": [
+    "print",
+    "button",
+    "wedocs",
+    "documentation"
+  ],
+  "supports": {
+    "html": false,
+    "align": [
+      "left",
+      "center",
+      "right"
+    ]
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "layout": {
+      "type": "string",
+      "default": "layout1"
+    },
+    "alignment": {
+      "type": "string",
+      "default": "left"
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Print"
+    },
+    "showIcon": {
+      "type": "boolean",
+      "default": true
+    },
+    "padding": {
+      "type": "object",
+      "default": {
+        "top": "10px",
+        "right": "15px",
+        "bottom": "10px",
+        "left": "15px"
+      }
+    },
+    "margin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "10px",
+        "left": "0px"
+      }
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#0073aa"
+    },
+    "textColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "hoverBackgroundColor": {
+      "type": "string",
+      "default": "#005177"
+    },
+    "hoverTextColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "borderRadius": {
+      "type": "string",
+      "default": "4px"
+    },
+    "borderWidth": {
+      "type": "string",
+      "default": "1px"
+    },
+    "borderColor": {
+      "type": "string",
+      "default": "#0073aa"
+    },
+    "borderStyle": {
+      "type": "string",
+      "default": "solid"
+    },
+    "fontSize": {
+      "type": "string",
+      "default": "16px"
+    },
+    "fontWeight": {
+      "type": "string",
+      "default": "normal"
+    },
+    "additionalClasses": {
+      "type": "string",
+      "default": ""
+    }
+  }
+}
