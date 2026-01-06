@@ -5,3 +5,4 @@ import './HelpfulFeedback';
 import './TableOfContents';
 import './QuickSearch';
 import './PrintButton';
+import './DocNavigation';

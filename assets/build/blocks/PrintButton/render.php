@@ -6,7 +6,8 @@
  * @return string
  */
 
-function render_wedocs_print_button($attributes) {
+if (!function_exists('render_wedocs_print_button')) {
+    function render_wedocs_print_button($attributes) {
 
 // Check if we're on a weDocs post type
 global $post;
@@ -161,5 +162,6 @@ switch ($layout) {
 </div>
 <?php
 return ob_get_clean();
+    }
 }
 ?>

@@ -184,6 +184,7 @@ final class WeDocs {
             WEDOCS_PATH . '/assets/build/blocks/HelpfulFeedback',
             WEDOCS_PATH . '/assets/build/blocks/QuickSearch',
             WEDOCS_PATH . '/assets/build/blocks/PrintButton',
+            WEDOCS_PATH . '/assets/build/blocks/DocNavigation',
         ];
 
         foreach ($block_lists as $block) {
@@ -219,7 +220,6 @@ final class WeDocs {
             $categories
         );
     }
-
 
     /**
      * The plugin activation function.
