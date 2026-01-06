@@ -42,6 +42,10 @@ class Ajax {
         // Handle weDocs helpful feedback voting.
         add_action( 'wp_ajax_wedocs_helpful_feedback_vote', [ $this, 'handle_helpful_feedback_vote' ] );
         add_action( 'wp_ajax_nopriv_wedocs_helpful_feedback_vote', [ $this, 'handle_helpful_feedback_vote' ] );
+
+        // Handle QuickSearch.
+        add_action( 'wp_ajax_wedocs_quick_search', [ $this, 'quick_search' ] );
+        add_action( 'wp_ajax_nopriv_wedocs_quick_search', [ $this, 'quick_search' ] );
     }
 
     /**
@@ -298,13 +302,13 @@ class Ajax {
 
         // Check if user has already voted
         $has_voted = false;
-        
+
         // Check cookie-based tracking (for compatibility with existing system)
         $previous = isset( $_COOKIE['wedocs_response'] ) ? explode( ',', $_COOKIE['wedocs_response'] ) : [];
         if ( in_array( $post_id, $previous ) ) {
             $has_voted = true;
         }
-        
+
         // Check user-specific voting records
         if ( ! $has_voted && $user_id ) {
             // Check by user ID
@@ -359,4 +363,91 @@ class Ajax {
             'message' => __( 'Thank you for your feedback!', 'wedocs' )
         ] );
     }
+
+    /**
+     * QuickSearch AJAX handler
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function quick_search() {
+        check_ajax_referer( 'wedocs-ajax' );
+
+        $query = isset( $_POST['query'] ) ? sanitize_text_field( $_POST['query'] ) : '';
+        $per_page = isset( $_POST['per_page'] ) ? intval( $_POST['per_page'] ) : 10;
+        $format = isset( $_POST['format'] ) ? sanitize_text_field( $_POST['format'] ) : 'json';
+        $modal_styles = isset( $_POST['modal_styles'] ) ? $_POST['modal_styles'] : [];
+        $show_icon_in_results = isset( $_POST['show_icon_in_results'] ) ? filter_var( $_POST['show_icon_in_results'], FILTER_VALIDATE_BOOLEAN ) : true;
+
+
+        // If modal_styles is a string (JSON), decode it
+        if ( is_string( $modal_styles ) ) {
+            // Remove slashes that WordPress adds to escaped quotes
+            $modal_styles = stripslashes( $modal_styles );
+            $modal_styles = json_decode( $modal_styles, true );
+        }
+
+        // Ensure it's an array
+        if ( ! is_array( $modal_styles ) ) {
+            $modal_styles = [];
+        }
+
+        if ( empty( $query ) || strlen( $query ) < 2 ) {
+            wp_send_json_error( __( 'Query must be at least 2 characters long.', 'wedocs' ) );
+        }
+
+        // Use existing search logic from API
+        $args = [
+            'post_type'      => 'docs',
+            'posts_per_page' => $per_page,
+            's'              => $query,
+            'post_status'    => 'publish',
+        ];
+
+        $query_obj = new \WP_Query( $args );
+        $docs = $query_obj->get_posts();
+        $results = [];
+
+        foreach ( $docs as $doc ) {
+            $results[] = [
+                'id'        => $doc->ID,
+                'title'     => [
+                    'rendered' => get_the_title( $doc->ID ),
+                ],
+                'permalink' => get_permalink( $doc->ID ),
+                'parent'    => $doc->post_parent,
+                'order'     => $doc->menu_order,
+            ];
+        }
+
+        if ( $format === 'html' ) {
+            // Load template for HTML response
+            $template_args = [
+                'results'      => $results,
+                'query'        => $query,
+                'modal_styles' => $modal_styles,
+                'empty_message' => __( 'No results found. Try different keywords.', 'wedocs' ),
+                'show_icon_in_results' => $show_icon_in_results,
+            ];
+
+            // Load the template
+            $template_path = plugin_dir_path( __FILE__ ) . '../src/blocks/QuickSearch/templates/search-results.php';
+            if ( file_exists( $template_path ) ) {
+                extract( $template_args );
+                ob_start();
+                include $template_path;
+                $html = ob_get_clean();
+                wp_send_json_success( [
+                    'html' => $html,
+                    'results' => $results,
+                    'query' => $query
+                ] );
+            } else {
+                wp_send_json_error( __( 'Template not found.', 'wedocs' ) );
+            }
+        } else {
+            // Return JSON response
+            wp_send_json_success( $results );
+        }
 }
