@@ -228,7 +228,7 @@ function render_wedocs_quick_search( $attributes ) {
     $section_ids = $attributes['sectionIds'] ?? '';
     $article_ids = $attributes['articleIds'] ?? '';
     $helpful_docs_count = $attributes['helpfulDocsCount'] ?? 10;
-    $show_icon_in_results = $attributes['showIconInResults'] ?? true;
+    $result_image_type = $attributes['resultImageType'] ?? 'icon';
 
     // Get styling attributes
     $search_box_styles = $attributes['searchBoxStyles'] ?? [];
@@ -301,7 +301,7 @@ function render_wedocs_quick_search( $attributes ) {
         'data-section-ids="' . esc_attr( $section_ids ) . '"',
         'data-article-ids="' . esc_attr( $article_ids ) . '"',
         'data-helpful-docs-count="' . esc_attr( $helpful_docs_count ) . '"',
-        'data-show-icon-in-results="' . esc_attr( $show_icon_in_results ? 'true' : 'false' ) . '"',
+        'data-result-image-type="' . esc_attr( $result_image_type ) . '"',
     ];
     $data_attributes_string = implode( ' ', $data_attributes );
 
@@ -404,7 +404,8 @@ function render_wedocs_quick_search( $attributes ) {
 
     <script>
     (function() {
-        const trigger = document.querySelector('.wedocs-quick-search-trigger');
+        // Use a more specific selector to avoid conflicts with other search elements
+        const trigger = document.querySelector('.wedocs-quick-search-block .wedocs-quick-search-trigger');
 
         if (!trigger) return;
 
@@ -613,13 +614,15 @@ function render_wedocs_quick_search( $attributes ) {
 
                 const showIconInResults = trigger.getAttribute('data-show-icon-in-results') === 'true';
 
+                const resultImageType = trigger.getAttribute('data-result-image-type') || 'icon';
+
                 const requestData = {
                     action: 'wedocs_quick_search',
                     query: query,
                     per_page: '10',
                     format: 'html',
                     modal_styles: JSON.stringify(modalStyles),
-                    show_icon_in_results: showIconInResults,
+                    result_image_type: resultImageType,
                     _wpnonce: weDocs_Vars.nonce
                 };
 
@@ -775,15 +778,18 @@ function render_wedocs_quick_search( $attributes ) {
             }
         };
 
-        // Enhanced keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            // Only handle keyboard events when modal is active
+        // Enhanced keyboard navigation - only for Quick Search blocks
+        const handleKeydown = (e) => {
+            // Only handle keyboard events when modal is active or when clicking on Quick Search trigger
             if (!modal.classList.contains('active')) {
-                // Cmd/Ctrl + K to open modal
+                // Cmd/Ctrl + K to open modal - but only if the trigger is focused
                 if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-                    e.preventDefault();
-                    openModal();
-                    setTimeout(focusSearchInput, 100);
+                    // Only open if the trigger is focused to avoid conflicts with sidebar search
+                    if (trigger.contains(document.activeElement)) {
+                        e.preventDefault();
+                        openModal();
+                        setTimeout(focusSearchInput, 100);
+                    }
                 }
                 return;
             }
@@ -822,6 +828,14 @@ function render_wedocs_quick_search( $attributes ) {
                     }
                     break;
             }
+        };
+
+        // Add the event listener
+        document.addEventListener('keydown', handleKeydown);
+
+        // Clean up event listener when the page unloads
+        window.addEventListener('beforeunload', () => {
+            document.removeEventListener('keydown', handleKeydown);
         });
     })();
     </script>

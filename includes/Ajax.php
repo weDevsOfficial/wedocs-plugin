@@ -381,6 +381,9 @@ class Ajax {
         $show_icon_in_results = isset( $_POST['show_icon_in_results'] ) ? filter_var( $_POST['show_icon_in_results'], FILTER_VALIDATE_BOOLEAN ) : true;
 
 
+        $result_image_type = isset( $_POST['result_image_type'] ) ? sanitize_text_field( $_POST['result_image_type'] ) : 'icon';
+
+
         // If modal_styles is a string (JSON), decode it
         if ( is_string( $modal_styles ) ) {
             // Remove slashes that WordPress adds to escaped quotes
@@ -428,7 +431,7 @@ class Ajax {
                 'query'        => $query,
                 'modal_styles' => $modal_styles,
                 'empty_message' => __( 'No results found. Try different keywords.', 'wedocs' ),
-                'show_icon_in_results' => $show_icon_in_results,
+                'result_image_type' => $result_image_type,
             ];
 
             // Load the template
