@@ -200,6 +200,18 @@ final class WeDocs {
                 'render_callback' => 'render_wedocs_helpful_feedback'
             )
         );
+
+        $block_lists = [
+            WEDOCS_PATH . '/assets/build/blocks/DocsGrid',
+            WEDOCS_PATH . '/assets/build/blocks/TableOfContents',
+        ];
+
+        foreach ($block_lists as $block) {
+            if (file_exists($block . '/block.json')) {
+                // Register the DocsGrid block
+                register_block_type($block);
+            }
+        }
     }
 
 
