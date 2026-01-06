@@ -39,6 +39,10 @@ class Ajax {
         // Handle weDocs pro notice.
         add_action( 'wp_ajax_hide_wedocs_pro_notice', [ $this, 'hide_pro_notice' ] );
         add_action( 'wp_ajax_nopriv_hide_wedocs_pro_notice', [ $this, 'hide_pro_notice' ] );
+
+        // Handle Need More Help modal submission.
+        add_action( 'wp_ajax_need_more_help_submit', [ $this, 'handle_help_modal' ] );
+        add_action( 'wp_ajax_nopriv_need_more_help_submit', [ $this, 'handle_help_modal' ] );
     }
 
     /**
@@ -243,5 +247,56 @@ class Ajax {
      */
     public function is_a_parent_doc( $doc_id ) {
         return (int) wp_get_post_parent_id( $doc_id ) === 0;
+    }
+
+    /**
+     * Handle Need More Help modal form submission.
+     *
+     * @return void
+     */
+    public function handle_help_modal() {
+        check_ajax_referer( 'wedocs-ajax', 'nonce' );
+
+        $name     = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : '';
+        $email    = isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : '';
+        $subject  = isset( $_POST['subject'] ) ? sanitize_text_field( $_POST['subject'] ) : '';
+        $message  = isset( $_POST['message'] ) ? sanitize_textarea_field( $_POST['message'] ) : '';
+        $page_url = isset( $_POST['page_url'] ) ? esc_url_raw( $_POST['page_url'] ) : '';
+
+        // Validate required fields
+        if ( empty( $name ) || empty( $email ) || empty( $message ) ) {
+            wp_send_json_error( __( 'Please fill in all required fields.', 'wedocs' ) );
+        }
+
+        if ( ! is_email( $email ) ) {
+            wp_send_json_error( __( 'Please enter a valid email address.', 'wedocs' ) );
+        }
+
+        // Get admin email or site email
+        $to = get_option( 'admin_email' );
+
+        // Prepare email
+        $email_subject = ! empty( $subject ) ? $subject : __( 'New Help Request', 'wedocs' );
+        $email_body    = sprintf(
+            __( "New help request from: %s\nEmail: %s\nPage: %s\n\nMessage:\n%s", 'wedocs' ),
+            $name,
+            $email,
+            $page_url,
+            $message
+        );
+
+        $headers = [
+            'Content-Type: text/plain; charset=UTF-8',
+            'Reply-To: ' . $name . ' <' . $email . '>',
+        ];
+
+        // Send email
+        $sent = wp_mail( $to, $email_subject, $email_body, $headers );
+
+        if ( $sent ) {
+            wp_send_json_success( __( 'Thank you! Your message has been sent successfully.', 'wedocs' ) );
+        } else {
+            wp_send_json_error( __( 'Sorry, there was an error sending your message. Please try again.', 'wedocs' ) );
+        }
     }
 }

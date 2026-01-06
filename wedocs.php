@@ -177,6 +177,7 @@ final class WeDocs {
 
         $block_lists = [
             WEDOCS_PATH . '/assets/build/blocks/DocsGrid',
+            WEDOCS_PATH . '/assets/build/blocks/HelpfulModal',
             WEDOCS_PATH . '/assets/build/blocks/TableOfContents',
         ];
 
