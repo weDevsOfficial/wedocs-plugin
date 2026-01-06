@@ -219,6 +219,14 @@ final class WeDocs {
             ),
             $categories
         );
+
+        // Register the Sidebar block
+        register_block_type(
+            plugin_dir_path(__FILE__) . 'assets/build/blocks/Sidebar',
+            array(
+                'render_callback' => 'render_wedocs_sidebar'
+            )
+        );
     }
 
     /**
