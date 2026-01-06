@@ -47,6 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid/render.php';
+require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/HelpfulFeedback/render.php';
 
 /**
  * WeDocs class.
@@ -186,7 +187,18 @@ final class WeDocs {
 
         // Register the Breadcrumb block
         register_block_type(
-            plugin_dir_path(__FILE__) . 'assets/build/blocks/Breadcrumb'
+            plugin_dir_path(__FILE__) . 'assets/build/blocks/Breadcrumb',
+            array(
+                'render_callback' => 'render_wedocs_breadcrumb',
+            )
+        );
+        
+        // Register the HelpfulFeedback block
+        register_block_type(
+            plugin_dir_path(__FILE__) . 'assets/build/blocks/HelpfulFeedback',
+            array(
+                'render_callback' => 'render_wedocs_helpful_feedback'
+            )
         );
     }
 
