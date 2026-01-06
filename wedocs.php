@@ -168,31 +168,10 @@ final class WeDocs {
 
         // Localize our plugin
         add_action( 'init', [ $this, 'localization_setup' ] );
-        add_action( 'init', [ $this, 'load_block_render_files' ] );
-        add_action('init', [$this, 'register_blocks']);
+        add_action( 'init', [ $this, 'register_blocks' ] );
 
         // registeer our widget
         add_action( 'widgets_init', [ $this, 'register_widget' ] );
-    }
-
-    /**
-     * Auto-load all block render files
-     * 
-     * @since WEDOCS_SINCE
-     *
-     * @return void
-     */
-    public function load_block_render_files() {
-        $blocks_dir = plugin_dir_path( __FILE__ ) . 'assets/build/blocks/';
-        if ( is_dir( $blocks_dir ) ) {
-            $block_dirs = glob( $blocks_dir . '*', GLOB_ONLYDIR );
-            foreach ( $block_dirs as $block_dir ) {
-                $render_file = $block_dir . '/render.php';
-                if ( file_exists( $render_file ) ) {
-                    require_once $render_file;
-                }
-            }
-        }
     }
 
     public function register_blocks() {
@@ -206,7 +185,6 @@ final class WeDocs {
 
         foreach ($block_lists as $block) {
             if (file_exists($block . '/block.json')) {
-                // Register the DocsGrid block
                 register_block_type($block);
             }
         }

@@ -670,3 +670,5 @@ function wedocs_get_ai_provider_configs() {
 function wedocs_is_pro_active() {
     return defined( 'WEDOCS_PRO_VERSION' );
 }
+
+

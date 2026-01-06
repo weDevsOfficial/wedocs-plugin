@@ -10,175 +10,207 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-/**
- * Check if a docs post is a parent doc (top-level documentation)
- * Uses the same logic as the existing Ajax::is_a_parent_doc() method
- *
- * @param int $doc_id Post ID
- * @return bool True if parent doc, false otherwise
- */
-function wedocs_is_parent_doc( $doc_id ) {
-    return (int) wp_get_post_parent_id( $doc_id ) === 0;
-}
-
-/**
- * Check if a docs post is a section (child of a parent doc)
- *
- * @param int $doc_id Post ID
- * @return bool True if section, false otherwise
- */
-function wedocs_is_section_doc( $doc_id ) {
-    $parent_id = wp_get_post_parent_id( $doc_id );
-    return $parent_id > 0 && wedocs_is_parent_doc( $parent_id );
-}
-
-/**
- * Check if a docs post is an article (child of a section)
- *
- * @param int $doc_id Post ID
- * @return bool True if article, false otherwise
- */
-function wedocs_is_article_doc( $doc_id ) {
-    $parent_id = wp_get_post_parent_id( $doc_id );
-    return $parent_id > 0 && wedocs_is_section_doc( $parent_id );
-}
-
-/**
- * Get modal docs source data based on the selected source type
- *
- * @param string $modal_docs_source Source type (none, sections, articles, helpful)
- * @param string $section_ids Comma-separated section IDs
- * @param string $article_ids Comma-separated article IDs
- * @param int $helpful_docs_count Number of helpful docs to show
- * @return array Modal docs data
- */
-function get_modal_docs_data( $modal_docs_source, $section_ids, $article_ids, $helpful_docs_count ) {
-    $modal_docs_data = [
-        'type' => $modal_docs_source,
-        'items' => []
-    ];
-
-    switch ( $modal_docs_source ) {
-        case 'none':
-            // No items to show
-            break;
-
-        case 'sections':
-            if ( ! empty( $section_ids ) ) {
-                $section_ids_array = array_map( 'intval', explode( ',', $section_ids ) );
-                $sections = get_posts([
-                    'post_type' => 'docs',
-                    'post__in' => $section_ids_array,
-                    'post_status' => 'publish',
-                    'orderby' => 'menu_order',
-                    'order' => 'ASC'
-                ]);
-
-                foreach ( $sections as $section ) {
-                    // Validate that this is actually a section
-                    if ( wedocs_is_section_doc( $section->ID ) ) {
-                        $modal_docs_data['items'][] = [
-                            'id' => $section->ID,
-                            'title' => $section->post_title,
-                            'permalink' => get_permalink( $section->ID ),
-                            'type' => 'section'
-                        ];
-                    }
-                    // Note: Posts that are not sections (e.g., articles or parent docs) are silently filtered out
-                }
-            }
-            break;
-
-        case 'articles':
-            if ( ! empty( $article_ids ) ) {
-                $article_ids_array = array_map( 'intval', explode( ',', $article_ids ) );
-                $articles = get_posts([
-                    'post_type' => 'docs',
-                    'post__in' => $article_ids_array,
-                    'post_status' => 'publish',
-                    'orderby' => 'menu_order',
-                    'order' => 'ASC'
-                ]);
-
-                foreach ( $articles as $article ) {
-                    // Validate that this is actually an article
-                    if ( wedocs_is_article_doc( $article->ID ) ) {
-                        $modal_docs_data['items'][] = [
-                            'id' => $article->ID,
-                            'title' => $article->post_title,
-                            'permalink' => get_permalink( $article->ID ),
-                            'type' => 'article'
-                        ];
-                    }
-                    // Note: Posts that are not articles (e.g., sections or parent docs) are silently filtered out
-                }
-            }
-            break;
-
-        case 'helpful':
-            // Get helpful docs using the same logic as the API
-            $docs = get_posts([
-                'post_type' => 'docs',
-                'posts_per_page' => -1,
-                'post_status' => 'publish'
-            ]);
-
-            // Create an array to store the vote counts
-            $vote_counts = [];
-
-            // Loop through each post and calculate the vote count
-            foreach ( $docs as $doc ) {
-                if ( empty( $doc->ID ) ) {
-                    continue;
-                }
-
-                $positive = (int) get_post_meta( $doc->ID, 'positive', true );
-                $negative = (int) get_post_meta( $doc->ID, 'negative', true );
-                if ( empty( $positive ) && empty( $negative ) ) {
-                    continue;
-                }
-
-                $vote_count = $positive - $negative;
-                $vote_counts[ $doc->ID ] = $vote_count;
-            }
-
-            // Sort the vote counts in descending order
-            arsort( $vote_counts );
-
-            // Get the top helpful docs (limited by count)
-            $top_helpful_ids = array_slice( array_keys( $vote_counts ), 0, $helpful_docs_count );
-            
-            if ( ! empty( $top_helpful_ids ) ) {
-                $helpful_docs = get_posts([
-                    'post_type' => 'docs',
-                    'post__in' => $top_helpful_ids,
-                    'post_status' => 'publish',
-                    'orderby' => 'post__in' // Maintain the helpful order
-                ]);
-
-                foreach ( $helpful_docs as $doc ) {
-                    // Determine the actual document type for helpful docs
-                    $doc_type = 'helpful';
-                    if ( wedocs_is_parent_doc( $doc->ID ) ) {
-                        $doc_type = 'parent';
-                    } elseif ( wedocs_is_section_doc( $doc->ID ) ) {
-                        $doc_type = 'section';
-                    } elseif ( wedocs_is_article_doc( $doc->ID ) ) {
-                        $doc_type = 'article';
-                    }
-
-                    $modal_docs_data['items'][] = [
-                        'id' => $doc->ID,
-                        'title' => $doc->post_title,
-                        'permalink' => get_permalink( $doc->ID ),
-                        'type' => $doc_type
-                    ];
-                }
-            }
-            break;
+if ( ! function_exists( 'wedocs_is_parent_doc' ) ) {
+    /**
+     * Check if a docs post is a parent doc (top-level documentation)
+     * Uses the same logic as the existing Ajax::is_a_parent_doc() method
+     *
+     * @param int $doc_id Post ID
+     * @return bool True if parent doc, false otherwise
+     */
+    function wedocs_is_parent_doc( $doc_id ) {
+        return (int) wp_get_post_parent_id( $doc_id ) === 0;
     }
+}
 
-    return $modal_docs_data;
+if ( ! function_exists( 'wedocs_is_section_doc' ) ) {
+    /**
+     * Check if a docs post is a section (child of a parent doc)
+     *
+     * @param int $doc_id Post ID
+     * @return bool True if section, false otherwise
+     */
+    function wedocs_is_section_doc( $doc_id ) {
+        $parent_id = wp_get_post_parent_id( $doc_id );
+        return $parent_id > 0 && wedocs_is_parent_doc( $parent_id );
+    }
+}
+
+if ( ! function_exists( 'wedocs_is_article_doc' ) ) {
+    /**
+     * Check if a docs post is an article (child of a section)
+     *
+     * @param int $doc_id Post ID
+     * @return bool True if article, false otherwise
+     */
+    function wedocs_is_article_doc( $doc_id ) {
+        $parent_id = wp_get_post_parent_id( $doc_id );
+        return $parent_id > 0 && wedocs_is_section_doc( $parent_id );
+    }
+}
+
+if ( ! function_exists( 'wedocs_get_modal_docs_data' ) ) {
+    /**
+     * Get modal docs source data based on the selected source type
+     *
+     * @param string $modal_docs_source Source type (none, sections, articles, helpful)
+     * @param string $section_ids Comma-separated section IDs
+     * @param string $article_ids Comma-separated article IDs
+     * @param int $helpful_docs_count Number of helpful docs to show
+     * @return array Modal docs data
+     */
+    function wedocs_get_modal_docs_data( $modal_docs_source, $section_ids, $article_ids, $helpful_docs_count ) {
+        $modal_docs_data = [
+            'type' => $modal_docs_source,
+            'items' => []
+        ];
+
+        switch ( $modal_docs_source ) {
+            case 'none':
+                // No items to show
+                break;
+
+            case 'sections':
+                if ( ! empty( $section_ids ) ) {
+                    $section_ids_array = array_map( 'intval', explode( ',', $section_ids ) );
+                    $sections = get_posts([
+                        'post_type' => 'docs',
+                        'post__in' => $section_ids_array,
+                        'post_status' => 'publish',
+                        'orderby' => 'menu_order',
+                        'order' => 'ASC'
+                    ]);
+
+                    foreach ( $sections as $section ) {
+                        // Validate that this is actually a section
+                        if ( wedocs_is_section_doc( $section->ID ) ) {
+                            $modal_docs_data['items'][] = [
+                                'id' => $section->ID,
+                                'title' => $section->post_title,
+                                'permalink' => get_permalink( $section->ID ),
+                                'type' => 'section'
+                            ];
+                        }
+                        // Note: Posts that are not sections (e.g., articles or parent docs) are silently filtered out
+                    }
+                }
+                break;
+
+            case 'articles':
+                if ( ! empty( $article_ids ) ) {
+                    $article_ids_array = array_map( 'intval', explode( ',', $article_ids ) );
+                    $articles = get_posts([
+                        'post_type' => 'docs',
+                        'post__in' => $article_ids_array,
+                        'post_status' => 'publish',
+                        'orderby' => 'menu_order',
+                        'order' => 'ASC'
+                    ]);
+
+                    foreach ( $articles as $article ) {
+                        // Validate that this is actually an article
+                        if ( wedocs_is_article_doc( $article->ID ) ) {
+                            $modal_docs_data['items'][] = [
+                                'id' => $article->ID,
+                                'title' => $article->post_title,
+                                'permalink' => get_permalink( $article->ID ),
+                                'type' => 'article'
+                            ];
+                        }
+                        // Note: Posts that are not articles (e.g., sections or parent docs) are silently filtered out
+                    }
+                }
+                break;
+
+            case 'helpful':
+                // Get helpful docs using the same logic as the API
+                $docs = get_posts([
+                    'post_type' => 'docs',
+                    'posts_per_page' => -1,
+                    'post_status' => 'publish'
+                ]);
+
+                // Create an array to store the vote counts
+                $vote_counts = [];
+
+                // Loop through each post and calculate the vote count
+                foreach ( $docs as $doc ) {
+                    if ( empty( $doc->ID ) ) {
+                        continue;
+                    }
+
+                    $positive = (int) get_post_meta( $doc->ID, 'positive', true );
+                    $negative = (int) get_post_meta( $doc->ID, 'negative', true );
+                    if ( empty( $positive ) && empty( $negative ) ) {
+                        continue;
+                    }
+
+                    $vote_count = $positive - $negative;
+                    $vote_counts[ $doc->ID ] = $vote_count;
+                }
+
+                // Sort the vote counts in descending order
+                arsort( $vote_counts );
+
+                // Get the top helpful docs (limited by count)
+                $top_helpful_ids = array_slice( array_keys( $vote_counts ), 0, $helpful_docs_count );
+
+                if ( ! empty( $top_helpful_ids ) ) {
+                    $helpful_docs = get_posts([
+                        'post_type' => 'docs',
+                        'post__in' => $top_helpful_ids,
+                        'post_status' => 'publish',
+                        'orderby' => 'post__in' // Maintain the helpful order
+                    ]);
+
+                    foreach ( $helpful_docs as $doc ) {
+                        // Determine the actual document type for helpful docs
+                        $doc_type = 'helpful';
+                        if ( wedocs_is_parent_doc( $doc->ID ) ) {
+                            $doc_type = 'parent';
+                        } elseif ( wedocs_is_section_doc( $doc->ID ) ) {
+                            $doc_type = 'section';
+                        } elseif ( wedocs_is_article_doc( $doc->ID ) ) {
+                            $doc_type = 'article';
+                        }
+
+                        $modal_docs_data['items'][] = [
+                            'id' => $doc->ID,
+                            'title' => $doc->post_title,
+                            'permalink' => get_permalink( $doc->ID ),
+                            'type' => $doc_type
+                        ];
+                    }
+                }
+                break;
+        }
+
+        return $modal_docs_data;
+    }
+}
+
+if ( ! function_exists( 'wedocs_block_quick_search_get_template' ) ) {
+    /**
+     * Load QuickSearch template
+     *
+     * @param string $template_name Template name without .php extension
+     * @param array $args Template arguments
+     * @return string Rendered template HTML
+     */
+    function wedocs_block_quick_search_get_template( $template_name, $args = [] ) {
+        $template_path = plugin_dir_path( __FILE__ ) . 'templates/' . $template_name . '.php';
+
+        if ( ! file_exists( $template_path ) ) {
+            return '';
+        }
+
+        // Extract variables for template
+        extract( $args );
+
+        ob_start();
+        include $template_path;
+        return ob_get_clean();
+    }
 }
 
 /**
@@ -187,6 +219,7 @@ function get_modal_docs_data( $modal_docs_source, $section_ids, $article_ids, $h
  * @param array $attributes Block attributes
  * @return string
  */
+if ( ! function_exists( 'render_wedocs_quick_search' ) ) {
 function render_wedocs_quick_search( $attributes ) {
     // Get block attributes
     $search_box_placeholder = $attributes['searchBoxPlaceholder'] ?? __( 'Quick search...', 'wedocs' );
@@ -202,7 +235,7 @@ function render_wedocs_quick_search( $attributes ) {
     $modal_styles = $attributes['modalStyles'] ?? [];
 
     // Get modal docs source data
-    $modal_docs_data = get_modal_docs_data( $modal_docs_source, $section_ids, $article_ids, $helpful_docs_count );
+    $modal_docs_data = wedocs_get_modal_docs_data( $modal_docs_source, $section_ids, $article_ids, $helpful_docs_count );
 
     // Build CSS variables for styling
     $search_box_css_vars = [];
@@ -272,32 +305,7 @@ function render_wedocs_quick_search( $attributes ) {
     ];
     $data_attributes_string = implode( ' ', $data_attributes );
 
-/**
- * Load QuickSearch template
- *
- * @param string $template_name Template name without .php extension
- * @param array $args Template arguments
- * @return string Rendered template HTML
- */
-
- if( ! function_exists( 'wedocs_block_quick_search_get_template' ) ) {
-    function wedocs_block_quick_search_get_template( $template_name, $args = [] ) {
-        $template_path = plugin_dir_path( __FILE__ ) . 'templates/' . $template_name . '.php';
-
-        if ( ! file_exists( $template_path ) ) {
-            return '';
-        }
-
-        // Extract variables for template
-        extract( $args );
-
-        ob_start();
-        include $template_path;
-        return ob_get_clean();
-    }
-}
-
-    // Enqueue frontend assets to get access to weDocs_Vars
+// Enqueue frontend assets to get access to weDocs_Vars
     \WeDevs\WeDocs\Frontend::enqueue_assets();
 
     ob_start();
@@ -417,7 +425,7 @@ function render_wedocs_quick_search( $attributes ) {
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: <?php echo esc_attr( $modal_styles['searchIconColor'] ?? '#6B7280' ); ?>;">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                <path strokeLinecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                         </div>
                            <input
@@ -450,7 +458,7 @@ function render_wedocs_quick_search( $attributes ) {
                         <div class="absolute inset-y-0 right-0 pr-2 sm:pr-3 flex items-center space-x-1 sm:space-x-2">
                             <button class="text-gray-400 hover:text-gray-600 p-1" type="button">
                                 <svg class="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    <path strokeLinecap="round" strokeLinejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                 </svg>
                             </button>
                             <span class="hidden sm:inline text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">ESC</span>
@@ -462,7 +470,7 @@ function render_wedocs_quick_search( $attributes ) {
                 <?php if ( $modal_docs_data['type'] !== 'none' && ! empty( $modal_docs_data['items'] ) ) : ?>
                 <div class="p-4">
                     <?php foreach ( $modal_docs_data['items'] as $item ) : ?>
-                        <a href="<?php echo esc_url( $item['permalink'] ); ?>" 
+                        <a href="<?php echo esc_url( $item['permalink'] ); ?>"
                            class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium mr-2 mb-2 transition-colors hover:opacity-80 no-underline"
                            style="background-color: <?php echo esc_attr( $modal_styles['docLabelColor'] ?? '#3B82F6' ); ?>20; color: <?php echo esc_attr( $modal_styles['docLabelColor'] ?? '#3B82F6' ); ?>;"
                            target="_blank">
@@ -475,7 +483,7 @@ function render_wedocs_quick_search( $attributes ) {
                 <!-- Search Results -->
                 <div class="p-4">
                     <div id="search-results" class="space-y-2" role="listbox" aria-label="Search results">
-                        <?php echo wedocs_block_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>
+                        <?php echo wedocs_block_quick_search_get_template( 'empty-state', [ 'message' => __( 'Type at least 2 characters to search...', 'wedocs' ) ] ); ?>
                     </div>
                 </div>
             </div>
@@ -584,7 +592,7 @@ function render_wedocs_quick_search( $attributes ) {
 
         const performSearch = async (query) => {
             if (!query || query.length < 2) {
-                resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>';
+                resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template( "empty-state", [ "message" => __( "Type at least 2 characters to search...", "wedocs" ) ] ); ?>';
                 return;
             }
 
@@ -604,7 +612,7 @@ function render_wedocs_quick_search( $attributes ) {
                 const modalStyles = <?php echo json_encode( $modal_styles ); ?>;
 
                 const showIconInResults = trigger.getAttribute('data-show-icon-in-results') === 'true';
-                
+
                 const requestData = {
                     action: 'wedocs_quick_search',
                     query: query,
@@ -657,7 +665,7 @@ function render_wedocs_quick_search( $attributes ) {
 
             } catch (error) {
                 console.error('Search error:', error);
-                resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template("empty-state", ["message" => __("Search failed. Please try again.", "wedocs")]); ?>';
+                resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template( "empty-state", [ "message" => __( "Search failed. Please try again.", "wedocs" ) ] ); ?>';
             } finally {
                 // Remove loading state
                 searchInput.classList.remove('opacity-75', 'cursor-wait');
@@ -756,7 +764,7 @@ function render_wedocs_quick_search( $attributes ) {
         if (clearButton) {
             clearButton.addEventListener('click', () => {
                 searchInput.value = '';
-                resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template("empty-state", ["message" => __("Type at least 2 characters to search...", "wedocs")]); ?>';
+                resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template( "empty-state", [ "message" => __( "Type at least 2 characters to search...", "wedocs" ) ] ); ?>';
             });
         }
 
@@ -819,4 +827,5 @@ function render_wedocs_quick_search( $attributes ) {
     </script>
     <?php
     return ob_get_clean();
+}
 }

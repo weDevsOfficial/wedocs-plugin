@@ -89,82 +89,82 @@ const Edit = ({ attributes, setAttributes }) => {
             className="wedocs-docs-grid__item"
             style={styles.item}
         >
-        <h3
-            className="wedocs-docs-grid__title"
-            style={styles.title}
-        >
-            {doc.title.rendered}
-        </h3>
+            <h3
+                className="wedocs-docs-grid__title"
+                style={styles.title}
+            >
+                {doc.title.rendered}
+            </h3>
             {renderSections(doc, styles)}
             {showViewDetails && (
                 <div className="wedocs-docs-grid__details">
-                <span
-                    className="wedocs-docs-grid__details-link"
-                    style={styles.button}
-                >
-                    {styles.button.text}
-                </span>
-            </div>
+                    <span
+                        className="wedocs-docs-grid__details-link"
+                        style={styles.button}
+                    >
+                        {styles.button.text}
+                    </span>
+                </div>
             )}
-    </div>
+        </div>
     );
     const renderSections = (doc, styles) => {
         if (!doc.sections) return null;
 
         return (
             <div className={`wedocs-docs-grid__sections ${keepArticlesCollapsed ? 'is-collapsed' : ''}`}>
-            {doc.sections.map(section => (
-                <div key={section.id} className="wedocs-docs-grid__section">
-                    <h4
-                        className="wedocs-docs-grid__section-title"
-                        style={{ ...styles.title, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-                    >
-                        <span>{section.title.rendered}</span>
-                        {showDocArticle && section.articles && section.articles.length > 0 && (
-                            <svg
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                width="16"
-                                strokeWidth="2"
-                                stroke="#acb8c4"
-                                className={keepArticlesCollapsed ? '' : 'active'}
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                                />
-                            </svg>
-                        )}
-                    </h4>
-                    {(showDocArticle && !keepArticlesCollapsed && section.articles) && (
-                        <ul className="wedocs-docs-grid__articles">
-                            {section.articles.map(article => (
-                                <li
-                                    key={article.id}
-                                    className="wedocs-docs-grid__article"
-                                    style={styles.children}
+                {doc.sections.map(section => (
+                    <div key={section.id} className="wedocs-docs-grid__section">
+                        <h4
+                            className="wedocs-docs-grid__section-title"
+                            style={{ ...styles.title, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                        >
+                            <span>{section.title.rendered}</span>
+                            {showDocArticle && section.articles && section.articles.length > 0 && (
+                                <svg
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    width="16"
+                                    strokeWidth="2"
+                                    stroke="#acb8c4"
+                                    className={keepArticlesCollapsed ? '' : 'active'}
                                 >
-                                    {article.title.rendered}
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </div>
-            ))}
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                                    />
+                                </svg>
+                            )}
+                        </h4>
+                        {(showDocArticle && !keepArticlesCollapsed && section.articles) && (
+                            <ul className="wedocs-docs-grid__articles">
+                                {section.articles.map(article => (
+                                    <li
+                                        key={article.id}
+                                        className="wedocs-docs-grid__article"
+                                        style={styles.children}
+                                    >
+                                        {article.title.rendered}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                ))}
                 {doc.sections.length === 0 && (
                     <span className="inside">
                         <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path
-                                stroke-linecap="round"
+                                strokeLinecap="round"
                                 stroke-linejoin="round"
                                 d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
                             ></path>
                         </svg>
-                            {__('This document has no sections yet. Check back later or wait for the author to add content.', 'wedocs')}
+                        {__('This document has no sections yet. Check back later or wait for the author to add content.', 'wedocs')}
                     </span>
                 )}
-        </div>
+            </div>
         );
     };
 
@@ -286,7 +286,7 @@ const Edit = ({ attributes, setAttributes }) => {
     };
     // Handle pagination
     const getPagedDocs = (docs) => {
-        if ( docsPerPage === 'all') return docs;
+        if (docsPerPage === 'all') return docs;
 
         const perPage = parseInt(docsPerPage);
         const start = (currentPage - 1) * perPage;
@@ -350,15 +350,15 @@ const Edit = ({ attributes, setAttributes }) => {
                     ...customProperties
                 }}
             >
-            {/* Previous button */}
+                {/* Previous button */}
                 {currentPage > 1 && (
                     <button
                         style={paginationBaseStyle}
                         onClick={() => setCurrentPage(currentPage - 1)}
                         className="wedocs-docs-pagination__button"
                     >
-                    ←
-                </button>
+                        ←
+                    </button>
                 )}
 
                 {/* Page numbers */}
@@ -373,8 +373,8 @@ const Edit = ({ attributes, setAttributes }) => {
                             className={`wedocs-docs-pagination__button ${isCurrentPage ? 'is-active' : ''}`}
                             onClick={() => setCurrentPage(pageNum)}
                         >
-                        {pageNum}
-                    </button>
+                            {pageNum}
+                        </button>
                     );
                 })}
 
@@ -385,20 +385,20 @@ const Edit = ({ attributes, setAttributes }) => {
                         onClick={() => setCurrentPage(currentPage + 1)}
                         className="wedocs-docs-pagination__button"
                     >
-                    →
-                </button>
+                        →
+                    </button>
                 )}
 
                 <style>
-                {`
+                    {`
                     .wedocs-docs-pagination__button:hover:not(.is-active) {
                         background-color: var(--pagination-hover-bg) !important;
                         color: var(--pagination-hover-color) !important;
                         border-color: var(--pagination-hover-border) !important;
                     }
                 `}
-            </style>
-        </div>
+                </style>
+            </div>
         );
     };
 
@@ -525,20 +525,20 @@ const Edit = ({ attributes, setAttributes }) => {
             </InspectorControls>
 
             <div {...blockProps}>
-            {hideDocGrid ? (
-                <div className="backdrop"></div>
-            ) : (
-                <div className="wedocs-block-wrapper">
-                    <div className={`wedocs-docs-grid ${getGridClass()}`}>
-                        {loading ? (
-                            <Spinner />
-                        ) : (
-                            displayDocs.map((doc) => renderGridItem(doc, applyStyles()))
-                        )}
+                {hideDocGrid ? (
+                    <div className="backdrop"></div>
+                ) : (
+                    <div className="wedocs-block-wrapper">
+                        <div className={`wedocs-docs-grid ${getGridClass()}`}>
+                            {loading ? (
+                                <Spinner />
+                            ) : (
+                                displayDocs.map((doc) => renderGridItem(doc, applyStyles()))
+                            )}
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )}
+            </div>
         </Fragment>
     );
 };

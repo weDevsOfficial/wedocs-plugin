@@ -450,4 +450,5 @@ class Ajax {
             // Return JSON response
             wp_send_json_success( $results );
         }
+    }
 }
