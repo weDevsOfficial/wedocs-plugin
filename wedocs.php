@@ -46,8 +46,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
-require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid/render.php';
-require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/HelpfulFeedback/render.php';
 
 /**
  * WeDocs class.
@@ -177,33 +175,11 @@ final class WeDocs {
     }
 
     public function register_blocks() {
-        // Register the DocsGrid block
-        register_block_type(
-            plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid',
-            array(
-                'render_callback' => 'render_wedocs_docs_grid'
-            )
-        );
-
-        // Register the Breadcrumb block
-        register_block_type(
-            plugin_dir_path(__FILE__) . 'assets/build/blocks/Breadcrumb',
-            array(
-                'render_callback' => 'render_wedocs_breadcrumb',
-            )
-        );
-        
-        // Register the HelpfulFeedback block
-        register_block_type(
-            plugin_dir_path(__FILE__) . 'assets/build/blocks/HelpfulFeedback',
-            array(
-                'render_callback' => 'render_wedocs_helpful_feedback'
-            )
-        );
-
         $block_lists = [
             WEDOCS_PATH . '/assets/build/blocks/DocsGrid',
             WEDOCS_PATH . '/assets/build/blocks/TableOfContents',
+            WEDOCS_PATH . '/assets/build/blocks/Breadcrumb',
+            WEDOCS_PATH . '/assets/build/blocks/HelpfulFeedback',
         ];
 
         foreach ($block_lists as $block) {
