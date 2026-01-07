@@ -7,7 +7,11 @@
  */
 
 if (!function_exists('render_wedocs_print_button')) {
-    function render_wedocs_print_button($attributes) {
+    function render_wedocs_print_button($attributes, $content = '') {
+        // Handle null attributes
+        if ($attributes === null) {
+            $attributes = [];
+        }
 
 // Check if we're on a weDocs post type
 global $post;

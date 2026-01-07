@@ -11,8 +11,15 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-// Extract attributes with defaults
-$separator = $attributes['separator'] ?? 'slash';
+if ( ! function_exists( 'render_wedocs_breadcrumbs' ) ) {
+    function render_wedocs_breadcrumbs( $attributes, $content = '' ) {
+        // Handle null attributes
+        if ( $attributes === null ) {
+            $attributes = [];
+        }
+
+        // Extract attributes with defaults
+        $separator = $attributes['separator'] ?? 'slash';
 $hide_home_icon = $attributes['hideHomeIcon'] ?? false;
 $alignment = $attributes['alignment'] ?? 'left';
 
@@ -360,18 +367,20 @@ if (!function_exists('get_doc_ancestors')) {
 $separator_icon = get_separator_icon($separator);
 $breadcrumbs = get_breadcrumb_items();
 
-?>
-<style>
-.wedocs-breadcrumb a:hover {
-    <?php if ($link_hover_color): ?>color: var(--hover-color) !important;<?php endif; ?>
-    <?php if ($link_hover_background): ?>background-color: var(--hover-background) !important;<?php endif; ?>
-}
-.wedocs-breadcrumb span:hover {
-    <?php if ($link_hover_color): ?>color: var(--hover-color) !important;<?php endif; ?>
-    <?php if ($link_hover_background): ?>background-color: var(--hover-background) !important;<?php endif; ?>
-}
-</style>
-<div class="wedocs-document">
+
+        ob_start();
+        ?>
+        <style>
+        .wedocs-breadcrumb a:hover {
+            <?php if ($link_hover_color): ?>color: var(--hover-color) !important;<?php endif; ?>
+            <?php if ($link_hover_background): ?>background-color: var(--hover-background) !important;<?php endif; ?>
+        }
+        .wedocs-breadcrumb span:hover {
+            <?php if ($link_hover_color): ?>color: var(--hover-color) !important;<?php endif; ?>
+            <?php if ($link_hover_background): ?>background-color: var(--hover-background) !important;<?php endif; ?>
+        }
+        </style>
+        <div class="wedocs-document">
     <nav aria-label="Breadcrumb" class="wedocs-breadcrumb">
         <?php
         // Build CSS classes for WordPress style system
@@ -466,3 +475,7 @@ $breadcrumbs = get_breadcrumb_items();
         </ol>
     </nav>
 </div>
+        <?php
+        return ob_get_clean();
+    }
+}

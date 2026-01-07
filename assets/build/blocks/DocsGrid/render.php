@@ -37,7 +37,11 @@ if(!function_exists( 'get_pagination_style_tag' )){
     }
 }
 if(!function_exists( 'render_wedocs_docs_grid' )){
-    function render_wedocs_docs_grid($attributes) {
+    function render_wedocs_docs_grid($attributes, $content = '') {
+        // Handle null attributes
+        if ($attributes === null) {
+            $attributes = [];
+        }
         // Extract attributes with defaults
         $doc_style = $attributes['docStyle'] ?? '1x1';
         $docs_per_page = $attributes['docsPerPage'] ?? 'all';
@@ -320,5 +324,4 @@ if(!function_exists( 'render_wedocs_docs_grid' )){
         <?php
         return ob_get_clean();
     }
-    echo render_wedocs_docs_grid($attributes);
 }

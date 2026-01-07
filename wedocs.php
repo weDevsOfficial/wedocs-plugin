@@ -177,32 +177,29 @@ final class WeDocs {
     }
 
     public function register_blocks() {
-        $block_lists = [
-            WEDOCS_PATH . '/assets/build/blocks/DocsGrid',
-            WEDOCS_PATH . '/assets/build/blocks/TableOfContents',
-            WEDOCS_PATH . '/assets/build/blocks/Breadcrumb',
-            WEDOCS_PATH . '/assets/build/blocks/HelpfulFeedback',
-            WEDOCS_PATH . '/assets/build/blocks/QuickSearch',
-            WEDOCS_PATH . '/assets/build/blocks/PrintButton',
-            WEDOCS_PATH . '/assets/build/blocks/DocNavigation',
+        // Blocks with custom render callbacks that need special registration
+        $blocks_with_render_callbacks = [
+            'DocsGrid' => 'render_wedocs_docs_grid',
+            'TableOfContents' => 'render_wedocs_table_of_contents',
+            'Breadcrumb' => 'render_wedocs_breadcrumbs',
+            'HelpfulFeedback' => 'render_wedocs_helpful_feedback',
+            'QuickSearch' => 'render_wedocs_quick_search',
+            'PrintButton' => 'render_wedocs_print_button',
+            'DocNavigation' => 'render_wedocs_doc_navigation',
+            'Sidebar' => 'render_wedocs_sidebar',
         ];
 
-        foreach ($block_lists as $block) {
-            if (file_exists($block . '/block.json')) {
-                register_block_type( $block );
+        foreach ($blocks_with_render_callbacks as $block_name => $render_callback) {
+            $block_path = WEDOCS_PATH . '/assets/build/blocks/' . $block_name;
+            if (file_exists($block_path . '/render.php')) {
+                require_once $block_path . '/render.php';
+                register_block_type(
+                    $block_path,
+                    [
+                        'render_callback' => $render_callback
+                    ]
+                );
             }
-        }
-
-        // Register Sidebar block with custom render callback
-        $sidebar_block_path = WEDOCS_PATH . '/assets/build/blocks/Sidebar';
-        if (file_exists($sidebar_block_path . '/render.php')) {
-            require_once $sidebar_block_path . '/render.php';
-            register_block_type(
-                $sidebar_block_path,
-                [
-                    'render_callback' => 'render_wedocs_sidebar'
-                ]
-            );
         }
     }
 

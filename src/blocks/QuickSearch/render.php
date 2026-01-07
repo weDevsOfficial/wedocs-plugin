@@ -220,8 +220,13 @@ if ( ! function_exists( 'wedocs_block_quick_search_get_template' ) ) {
  * @return string
  */
 if ( ! function_exists( 'render_wedocs_quick_search' ) ) {
-function render_wedocs_quick_search( $attributes ) {
-    // Get block attributes
+    function render_wedocs_quick_search( $attributes, $content = '' ) {
+        // Handle null attributes
+        if ( $attributes === null ) {
+            $attributes = [];
+        }
+
+        // Get block attributes
     $search_box_placeholder = $attributes['searchBoxPlaceholder'] ?? __( 'Quick search...', 'wedocs' );
     $modal_placeholder = $attributes['modalPlaceholder'] ?? __( 'Search documentation', 'wedocs' );
     $modal_docs_source = $attributes['modalDocsSource'] ?? 'helpful';

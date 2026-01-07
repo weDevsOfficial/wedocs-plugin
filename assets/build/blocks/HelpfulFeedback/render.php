@@ -18,7 +18,12 @@ if (!defined('ABSPATH')) {
  * @return string Rendered block content
  */
 if ( ! function_exists( 'render_wedocs_helpful_feedback' ) ) {
-    function render_wedocs_helpful_feedback($attributes) {
+    function render_wedocs_helpful_feedback($attributes, $content = '') {
+        // Handle null attributes
+        if ($attributes === null) {
+            $attributes = [];
+        }
+
         // Check if this is a docs post type
         if (get_post_type() !== 'docs') {
             return '';

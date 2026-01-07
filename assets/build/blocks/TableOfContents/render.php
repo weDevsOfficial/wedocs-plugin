@@ -8,8 +8,15 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-// Get block attributes with proper defaults
-$block_id = isset($attributes['blockId']) ? sanitize_text_field($attributes['blockId']) : 'toc-' . uniqid();
+if ( ! function_exists( 'render_wedocs_table_of_contents' ) ) {
+    function render_wedocs_table_of_contents( $attributes, $content = '' ) {
+        // Handle null attributes
+        if ( $attributes === null ) {
+            $attributes = [];
+        }
+
+        // Get block attributes with proper defaults
+        $block_id = isset($attributes['blockId']) ? sanitize_text_field($attributes['blockId']) : 'toc-' . uniqid();
 $toc_title = isset($attributes['tocTitle']) ? sanitize_text_field($attributes['tocTitle']) : 'Table of Contents';
 $supported_headings = isset($attributes['supportedHeadings']) && is_array($attributes['supportedHeadings']) ? $attributes['supportedHeadings'] : ['h2', 'h3'];
 $show_hierarchy = isset($attributes['showHierarchy']) ? (bool) $attributes['showHierarchy'] : true;
@@ -248,14 +255,19 @@ if ( ! function_exists( 'wedocs_render_toc_list_safe' ) ) {
     }
 }
 
-$toc_content = wedocs_generate_toc_content_safe($supported_headings, $show_hierarchy, $show_numbering);
-?>
+        $toc_content = wedocs_generate_toc_content_safe($supported_headings, $show_hierarchy, $show_numbering);
 
-<div <?php echo $wrapper_attributes; ?>>
-    <div class="toc-title">
-        <?php echo esc_html($toc_title); ?>
-    </div>
-    <div class="toc-content">
-        <?php echo wp_kses_post($toc_content); ?>
-    </div>
-</div>
+        ob_start();
+        ?>
+        <div <?php echo $wrapper_attributes; ?>>
+            <div class="toc-title">
+                <?php echo esc_html($toc_title); ?>
+            </div>
+            <div class="toc-content">
+                <?php echo wp_kses_post($toc_content); ?>
+            </div>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
+}
