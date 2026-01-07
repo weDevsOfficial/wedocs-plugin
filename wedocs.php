@@ -192,6 +192,18 @@ final class WeDocs {
                 register_block_type( $block );
             }
         }
+
+        // Register Sidebar block with custom render callback
+        $sidebar_block_path = WEDOCS_PATH . '/assets/build/blocks/Sidebar';
+        if (file_exists($sidebar_block_path . '/render.php')) {
+            require_once $sidebar_block_path . '/render.php';
+            register_block_type(
+                $sidebar_block_path,
+                [
+                    'render_callback' => 'render_wedocs_sidebar'
+                ]
+            );
+        }
     }
 
     /**
@@ -218,14 +230,6 @@ final class WeDocs {
                 )
             ),
             $categories
-        );
-
-        // Register the Sidebar block
-        register_block_type(
-            plugin_dir_path(__FILE__) . 'assets/build/blocks/Sidebar',
-            array(
-                'render_callback' => 'render_wedocs_sidebar'
-            )
         );
     }
 
@@ -269,7 +273,7 @@ final class WeDocs {
         $this->container['migrate']    = new WeDevs\WeDocs\Admin\Migrate();
         $this->container['upgrader']   = new WeDevs\WeDocs\Upgrader\Upgrader();
         $this->container['capability'] = new Capability();
-        // $this->container['templates']  = new WeDevs\WeDocs\Templates\TemplateManager();
+        $this->container['templates']  = new WeDevs\WeDocs\Templates\TemplateManager();
     }
 
     /**

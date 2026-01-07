@@ -48,17 +48,10 @@ abstract class AbstractPageTemplate extends AbstractTemplate {
 	 * @return array Modified templates array.
 	 */
 	public function page_template_hierarchy( $templates ) {
-		error_log( '[weDocs AbstractPageTemplate] page_template_hierarchy called for slug: ' . static::SLUG );
-		error_log( '[weDocs AbstractPageTemplate] Input templates: ' . implode( ', ', $templates ) );
-
 		if ( $this->is_active_template() ) {
 			array_unshift( $templates, static::SLUG );
-			error_log( '[weDocs AbstractPageTemplate] Template IS active, added slug to hierarchy: ' . static::SLUG );
-		} else {
-			error_log( '[weDocs AbstractPageTemplate] Template NOT active, hierarchy unchanged' );
 		}
 
-		error_log( '[weDocs AbstractPageTemplate] Output templates: ' . implode( ', ', $templates ) );
 		return $templates;
 	}
 

@@ -1,46 +1,24 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 
-<!-- wp:group {"tagName":"main","className":"wedocs-single-wrapper","layout":{"type":"constrained"}} -->
-<main class="wp-block-group wedocs-single-wrapper">
-	<!-- wp:group {"className":"wedocs-container","layout":{"type":"flex","flexWrap":"nowrap"}} -->
-	<div class="wp-block-group wedocs-container">
+<!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column {"width":"33.33%"} -->
+<div class="wp-block-column" style="flex-basis:33.33%"><!-- wp:wedocs/quick-search -->
+<!-- /wp:wedocs/quick-search -->
 
-		<!-- wp:group {"className":"wedocs-sidebar-area","layout":{"type":"default"}} -->
-		<div class="wp-block-group wedocs-sidebar-area">
-			<!-- wp:wedocs/wedocs-sidebar {"docId":0} /-->
-		</div>
-		<!-- /wp:group -->
+<!-- wp:wedocs/sidebar /--></div>
+<!-- /wp:column -->
 
-		<!-- wp:group {"className":"wedocs-content-area","layout":{"type":"default"}} -->
-		<div class="wp-block-group wedocs-content-area">
+<!-- wp:column {"width":"66.66%"} -->
+<div class="wp-block-column" style="flex-basis:66.66%"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
+<div class="wp-block-group"><!-- wp:wedocs/breadcrumbs {"style":{"spacing":{"padding":{"top":"var:preset|spacing|20","right":"var:preset|spacing|40","bottom":"var:preset|spacing|20","left":"var:preset|spacing|40"}},"border":{"radius":"var:preset|spacing|20"}}} /-->
 
-			<!-- wp:wedocs/breadcrumb {"textAlign":"left"} /-->
+<!-- wp:wedocs/print-button /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
 
-			<!-- wp:post-title {"level":1,"className":"wedocs-doc-title"} /-->
+<!-- wp:wedocs/doc-navigation /-->
 
-			<!-- wp:post-content {"className":"wedocs-doc-content","layout":{"type":"constrained"}} /-->
-
-			<!-- wp:wedocs/doc-navigation /-->
-
-			<!-- wp:group {"className":"wedocs-footer-meta","layout":{"type":"flex","flexWrap":"wrap"}} -->
-			<div class="wp-block-group wedocs-footer-meta">
-				<!-- wp:wedocs/helpful-feedback /-->
-
-				<!-- wp:paragraph {"className":"wedocs-updated-date"} -->
-				<p class="wedocs-updated-date">
-					<!-- wp:post-date /-->
-				</p>
-				<!-- /wp:paragraph -->
-			</div>
-			<!-- /wp:group -->
-
-			<!-- wp:post-comments /-->
-		</div>
-		<!-- /wp:group -->
-
-	</div>
-	<!-- /wp:group -->
-</main>
-<!-- /wp:group -->
+<!-- wp:wedocs/helpful-feedback /-->
 
 <!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

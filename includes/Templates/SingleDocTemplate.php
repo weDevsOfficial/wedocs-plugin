@@ -43,8 +43,6 @@ class SingleDocTemplate extends AbstractTemplate {
 	 */
 	public function render_block_template() {
 		if ( ! is_embed() && is_singular( 'docs' ) ) {
-			error_log( '[weDocs SingleDocTemplate] render_block_template called, is_singular(docs): true' );
-
 			global $post;
 
 			$valid_slugs = array( self::SLUG );
@@ -53,14 +51,9 @@ class SingleDocTemplate extends AbstractTemplate {
 				$valid_slugs[] = 'single-docs-' . $post->post_name;
 			}
 
-			error_log( '[weDocs SingleDocTemplate] Looking for templates with slugs: ' . implode( ', ', $valid_slugs ) );
-
 			$templates = get_block_templates( array( 'slug__in' => $valid_slugs ) );
 
-			error_log( '[weDocs SingleDocTemplate] Found ' . count( $templates ) . ' matching templates' );
-
 			if ( count( $templates ) === 0 ) {
-				error_log( '[weDocs SingleDocTemplate] No templates found, exiting' );
 				return;
 			}
 
@@ -76,8 +69,6 @@ class SingleDocTemplate extends AbstractTemplate {
 					}
 				}
 			}
-
-			error_log( '[weDocs SingleDocTemplate] Using template: ' . $template->slug );
 		}
 	}
 
@@ -90,8 +81,6 @@ class SingleDocTemplate extends AbstractTemplate {
 	 * @return array
 	 */
 	public function update_single_doc_content( $query_result, $query = array(), $template_type = 'wp_template' ) {
-		error_log( '[weDocs SingleDocTemplate] update_single_doc_content called' );
-
 		if ( 'wp_template' !== $template_type ) {
 			return $query_result;
 		}
@@ -99,12 +88,8 @@ class SingleDocTemplate extends AbstractTemplate {
 		$query_result = array_map(
 			function ( $template ) {
 				if ( strpos( $template->slug, self::SLUG ) === 0 ) {
-					error_log( '[weDocs SingleDocTemplate] Processing template slug: ' . $template->slug );
-
 					// Only modify on frontend, not in admin or REST API
 					if ( ! is_admin() && ! ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
-						error_log( '[weDocs SingleDocTemplate] Frontend context, could modify content here if needed' );
-
 						// Optionally add custom body classes or modify content
 						add_filter(
 							'body_class',
