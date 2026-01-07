@@ -26,7 +26,7 @@ if (!function_exists('block_footer_area')) {
  */
 
 // For block themes, we need to output the minimal HTML structure
-if (function_exists('wp_is_block_theme') && wp_is_block_theme()) {
+if (function_exists('') && wp_is_block_theme()) {
     ?>
     <!DOCTYPE html>
     <html <?php language_attributes(); ?>>

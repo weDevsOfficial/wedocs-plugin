@@ -264,11 +264,12 @@ final class WeDocs {
             $this->container['ajax'] = new WeDevs\WeDocs\Ajax();
         }
 
-        $this->container['api']      = new WeDevs\WeDocs\API();
-        $this->container['assets']   = new WeDevs\WeDocs\Assets();
-        $this->container['migrate']  = new WeDevs\WeDocs\Admin\Migrate();
-        $this->container['upgrader'] = new WeDevs\WeDocs\Upgrader\Upgrader();
+        $this->container['api']        = new WeDevs\WeDocs\API();
+        $this->container['assets']     = new WeDevs\WeDocs\Assets();
+        $this->container['migrate']    = new WeDevs\WeDocs\Admin\Migrate();
+        $this->container['upgrader']   = new WeDevs\WeDocs\Upgrader\Upgrader();
         $this->container['capability'] = new Capability();
+        // $this->container['templates']  = new WeDevs\WeDocs\Templates\TemplateManager();
     }
 
     /**
