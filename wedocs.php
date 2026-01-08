@@ -184,7 +184,9 @@ final class WeDocs {
             'assets/build/blocks/DocsGrid',
             'assets/build/blocks/Contributors',
             // 'assets/build/blocks/AdvanceContributors',
-            'assets/build/blocks/TableOfContents'
+            'assets/build/blocks/TableOfContents',
+            'assets/build/blocks/HelpfulModal',
+
         ];
 
         foreach ( $block_directories as $block_dir ) {
