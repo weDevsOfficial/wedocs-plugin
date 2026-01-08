@@ -3,6 +3,8 @@ import './DocsGrid';
 import './Contributors';
 import './TableOfContents';
 import './HelpfulModal';
+import './HelpfulFeedback';
+
 // import './Breadcrumbs';
 // import './CategoryDocs';
 // import './DocAuthor';

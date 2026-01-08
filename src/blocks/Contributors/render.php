@@ -12,9 +12,9 @@ if ( !function_exists('render_wedocs_contributors_block')){
     function render_wedocs_contributors_block($attributes, $content, $block) {
         // Get the current post
         $post = get_post();
-        // if (!$post || $post->post_type !== 'docs') {
-        //     return '';
-        // }
+        if (!$post || $post->post_type !== 'docs') {
+            return '';
+        }
 
         // Extract attributes with defaults
         $show_title = $attributes['showTitle'] ?? true;

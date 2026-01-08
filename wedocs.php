@@ -186,6 +186,7 @@ final class WeDocs {
             // 'assets/build/blocks/AdvanceContributors',
             'assets/build/blocks/TableOfContents',
             'assets/build/blocks/HelpfulModal',
+            'assets/build/blocks/HelpfulFeedback',
 
         ];
 
