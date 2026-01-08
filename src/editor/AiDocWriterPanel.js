@@ -36,11 +36,11 @@ const AiDocWriterPanel = () => {
                     <p style={{ marginBottom: '16px', fontSize: '14px', color: '#666' }}>
                         {__('Generate AI-powered documentation content with advanced language models.', 'wedocs')}
                     </p>
-                    
+
                     <Button
                         onClick={() => setIsModalOpen(true)}
                         variant="primary"
-                        style={{ 
+                        style={{
                             width: '100%',
                             height: '40px',
                             fontSize: '14px',
