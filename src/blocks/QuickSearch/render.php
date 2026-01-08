@@ -848,3 +848,5 @@ if ( ! function_exists( 'render_wedocs_quick_search' ) ) {
     return ob_get_clean();
 }
 }
+
+echo render_wedocs_quick_search( $attributes );

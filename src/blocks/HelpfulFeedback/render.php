@@ -412,3 +412,5 @@ if ( ! function_exists( 'render_wedocs_helpful_feedback' ) ) {
         return $output;
     }
 }
+
+echo render_wedocs_helpful_feedback( $attributes );

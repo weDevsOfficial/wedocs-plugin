@@ -276,3 +276,5 @@ if (!function_exists('render_wedocs_doc_navigation')) {
     return ob_get_clean();
     }
 }
+
+echo render_wedocs_doc_navigation( $attributes );

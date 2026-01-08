@@ -479,3 +479,5 @@ $breadcrumbs = get_breadcrumb_items();
         return ob_get_clean();
     }
 }
+
+echo render_wedocs_breadcrumbs( $attributes );

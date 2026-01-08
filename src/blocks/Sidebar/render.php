@@ -627,3 +627,5 @@ if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
         return $output;
     }
 }
+
+echo render_wedocs_sidebar( $attributes, $content );

@@ -271,3 +271,5 @@ if ( ! function_exists( 'wedocs_render_toc_list_safe' ) ) {
         return ob_get_clean();
     }
 }
+
+echo render_wedocs_table_of_contents( $attributes );

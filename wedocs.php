@@ -169,7 +169,7 @@ final class WeDocs {
         // Localize our plugin
         add_action( 'init', [ $this, 'localization_setup' ] );
         add_action( 'init', [ $this, 'register_blocks' ] );
-        add_action('init', [$this, 'register_blocks']);
+        // add_action('init', [$this, 'register_blocks']);
         add_action('block_categories_all', [$this, 'register_block_category']);
 
         // registeer our widget
@@ -177,28 +177,29 @@ final class WeDocs {
     }
 
     public function register_blocks() {
-        // Blocks with custom render callbacks that need special registration
-        $blocks_with_render_callbacks = [
-            'DocsGrid' => 'render_wedocs_docs_grid',
-            'TableOfContents' => 'render_wedocs_table_of_contents',
-            'Breadcrumb' => 'render_wedocs_breadcrumbs',
-            'HelpfulFeedback' => 'render_wedocs_helpful_feedback',
-            'QuickSearch' => 'render_wedocs_quick_search',
-            'PrintButton' => 'render_wedocs_print_button',
-            'DocNavigation' => 'render_wedocs_doc_navigation',
-            'Sidebar' => 'render_wedocs_sidebar',
+        // Enqueue admin script early to make weDocsAdminScriptVars available for blocks
+        wp_enqueue_script( 'wedocs-admin-script' );
+
+        // Modern WordPress block registration using block.json files
+        $block_directories = [
+            'assets/build/blocks/DocsGrid',
+            'assets/build/blocks/Contributors',
+            'assets/build/blocks/Breadcrumb',
+            'assets/build/blocks/TableOfContents',
+            'assets/build/blocks/HelpfulFeedback',
+            'assets/build/blocks/QuickSearch',
+            'assets/build/blocks/PrintButton',
+            'assets/build/blocks/DocNavigation',
+            'assets/build/blocks/Sidebar',
         ];
 
-        foreach ($blocks_with_render_callbacks as $block_name => $render_callback) {
-            $block_path = WEDOCS_PATH . '/assets/build/blocks/' . $block_name;
-            if (file_exists($block_path . '/render.php')) {
-                require_once $block_path . '/render.php';
-                register_block_type(
-                    $block_path,
-                    [
-                        'render_callback' => $render_callback
-                    ]
-                );
+        foreach ( $block_directories as $block_dir ) {
+            $block_path = plugin_dir_path(__FILE__) . $block_dir;
+
+            if ( file_exists( $block_path . '/block.json' ) ) {
+
+                // Register block using block.json (modern approach - render callback is handled by block.json)
+                register_block_type( $block_path );
             }
         }
     }
@@ -219,13 +220,13 @@ final class WeDocs {
 
         // Add weDocs category at the beginning
         return array_merge(
-            array(
-                array(
+            [
+                [
                     'slug'  => 'wedocs',
                     'title' => __('weDocs', 'wedocs'),
                     'icon'  => null
-                )
-            ),
+                ]
+            ],
             $categories
         );
     }

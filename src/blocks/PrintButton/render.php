@@ -168,4 +168,5 @@ switch ($layout) {
 return ob_get_clean();
     }
 }
-?>
+
+echo render_wedocs_print_button( $attributes );
