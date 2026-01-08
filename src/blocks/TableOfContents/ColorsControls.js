@@ -29,7 +29,7 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 
 	return (
 		<>
-			<div className="block-responsive-colors-controls">
+			<div className="wedocs-colors-controls">
 				{/* Text Color Control */}
 				<Dropdown
 					style={{ width: '100%' }}
@@ -50,7 +50,7 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 								<ColorIndicator
 									colorValue={currentColors.textColor}
 								/>
-								<Text>{__('Color', 'block-responsive')}</Text>
+								<Text>{__('Color', 'wedocs')}</Text>
 							</HStack>
 						</Button>
 					)}
@@ -65,7 +65,7 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 								colors={[
 									{
 										colors: themeColors,
-										name: __('Theme', 'block-responsive'),
+										name: __('Theme', 'wedocs'),
 									},
 								]}
 								onChange={(color) =>
@@ -105,7 +105,7 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 									colorValue={currentColors.backgroundColor}
 								/>
 								<Text>
-									{__('Background', 'block-responsive')}
+									{__('Background', 'wedocs')}
 								</Text>
 							</HStack>
 						</Button>
@@ -119,9 +119,9 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 								tabs={[
 									{
 										name: 'color',
-										title: __('Color', 'block-responsive'),
+										title: __('Color', 'wedocs'),
 										content: (
-											<div className="block-editor-block-responsive-dropdown-tab-content">
+											<div className="block-editor-wedocs-dropdown-tab-content">
 												<ColorPalette
 													enableAlpha
 													value={
@@ -132,7 +132,7 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 															colors: themeColors,
 															name: __(
 																'Theme',
-																'block-responsive'
+																'wedocs'
 															),
 														},
 													]}
@@ -156,10 +156,10 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 										name: 'gradient',
 										title: __(
 											'Gradient',
-											'block-responsive'
+											'wedocs'
 										),
 										content: (
-											<div className="block-editor-block-responsive-dropdown-tab-content">
+											<div className="block-editor-wedocs-dropdown-tab-content">
 												<GradientPicker
 													value={
 														currentColors.backgroundColor ??
@@ -171,7 +171,7 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 																themeGradients,
 															name: __(
 																'Theme',
-																'block-responsive'
+																'wedocs'
 															),
 														},
 													]}
@@ -226,7 +226,7 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 										}
 									/>
 								</ZStack>
-								<Text>{__('Link', 'block-responsive')}</Text>
+								<Text>{__('Link', 'wedocs')}</Text>
 							</HStack>
 						</Button>
 					)}
@@ -241,10 +241,10 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 										name: 'default',
 										title: __(
 											'Default',
-											'block-responsive'
+											'wedocs'
 										),
 										content: (
-											<div className="block-editor-block-responsive-dropdown-tab-content">
+											<div className="block-editor-wedocs-dropdown-tab-content">
 												<ColorPalette
 													enableAlpha
 													value={
@@ -255,7 +255,7 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 															colors: themeColors,
 															name: __(
 																'Theme',
-																'block-responsive'
+																'wedocs'
 															),
 														},
 													]}
@@ -277,9 +277,9 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 									},
 									{
 										name: 'hover-color',
-										title: __('Hover', 'block-responsive'),
+										title: __('Hover', 'wedocs'),
 										content: (
-											<div className="block-editor-block-responsive-dropdown-tab-content">
+											<div className="block-editor-wedocs-dropdown-tab-content">
 												<ColorPalette
 													enableAlpha
 													value={
@@ -290,7 +290,7 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 															colors: themeColors,
 															name: __(
 																'Theme',
-																'block-responsive'
+																'wedocs'
 															),
 														},
 													]}
@@ -323,7 +323,7 @@ const ColorsControls = ({ attributes, setAttributes, device }) => {
 				__next40pxDefaultSize
 				variant="secondary"
 				isDestructive
-				text={__('Reset All', 'block-responsive')}
+				text={__('Reset All', 'wedocs')}
 				style={{
 					width: '100%',
 					justifyContent: 'center',
