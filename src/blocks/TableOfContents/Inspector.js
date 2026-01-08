@@ -13,6 +13,30 @@ import {
 import ListItems from './controls/ListItems';
 
 const Inspector = ({ attributes, setAttributes }) => {
+    const {
+        tocTitle,
+        supportedHeadings,
+        showHierarchy,
+        showNumbering,
+        collapsibleOnMobile,
+        smoothScroll,
+        stickyMode,
+        containerBackgroundColor,
+        containerWidth,
+        containerPadding,
+        containerMargin,
+        containerBorderStyle,
+        containerBorderWidth,
+        containerBorderColor,
+        containerBorderRadius,
+        titleColor,
+        titleFontSize,
+        titleFontWeight,
+        listColor,
+        listHoverColor,
+        listFontSize
+    } = attributes;
+
     return (
         <>
             <InspectorControls>
