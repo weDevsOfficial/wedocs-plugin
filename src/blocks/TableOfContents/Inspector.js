@@ -45,6 +45,8 @@ const Inspector = ({ attributes, setAttributes }) => {
                         label={__('TOC Title', 'dynamic-table-of-contents-block-wp')}
                         value={tocTitle}
                         onChange={(value) => setAttributes({ tocTitle: value })}
+                        __next40pxDefaultSize
+                        __nextHasNoMarginBottom
                     />
 
                     <div style={{ marginBottom: '20px' }}>
@@ -62,6 +64,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                         : supportedHeadings.filter(h => h !== heading);
                                     setAttributes({ supportedHeadings: newHeadings });
                                 }}
+                                __nextHasNoMarginBottom
                             />
                         ))}
                     </div>
@@ -71,6 +74,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                         help={__('Indent subheadings to show hierarchy', 'dynamic-table-of-contents-block-wp')}
                         checked={showHierarchy}
                         onChange={(value) => setAttributes({ showHierarchy: value })}
+                        __nextHasNoMarginBottom
                     />
 
                     <ToggleControl
@@ -78,6 +82,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                         help={__('Show numbered list instead of bullets', 'dynamic-table-of-contents-block-wp')}
                         checked={showNumbering}
                         onChange={(value) => setAttributes({ showNumbering: value })}
+                        __nextHasNoMarginBottom
                     />
 
                     <ToggleControl
@@ -85,11 +90,13 @@ const Inspector = ({ attributes, setAttributes }) => {
                         help={__('Make TOC collapsible on mobile devices', 'dynamic-table-of-contents-block-wp')}
                         checked={collapsibleOnMobile}
                         onChange={(value) => setAttributes({ collapsibleOnMobile: value })}
+                        __nextHasNoMarginBottom
                     />
                     <ToggleControl
                         label={__('Smooth Scroll Behavior', 'dynamic-table-of-contents-block-wp')}
                         checked={smoothScroll}
                         onChange={(value) => setAttributes({ smoothScroll: value })}
+                        __nextHasNoMarginBottom
                     />
 
                     <ToggleControl
@@ -97,6 +104,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                         help={__('Keep TOC fixed while scrolling', 'dynamic-table-of-contents-block-wp')}
                         checked={stickyMode}
                         onChange={(value) => setAttributes({ stickyMode: value })}
+                        __nextHasNoMarginBottom
                     />
                 </PanelBody>
 
