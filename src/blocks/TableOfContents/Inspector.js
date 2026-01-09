@@ -40,9 +40,9 @@ const Inspector = ({ attributes, setAttributes }) => {
     return (
         <>
             <InspectorControls>
-                <PanelBody title={__('General', 'dynamic-table-of-contents-block-wp')} initialOpen={true}>
+                <PanelBody title={__('General', 'wedocs')} initialOpen={true}>
                     <TextControl
-                        label={__('TOC Title', 'dynamic-table-of-contents-block-wp')}
+                        label={__('TOC Title', 'wedocs')}
                         value={tocTitle}
                         onChange={(value) => setAttributes({ tocTitle: value })}
                         __next40pxDefaultSize
@@ -51,7 +51,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 
                     <div style={{ marginBottom: '20px' }}>
                         <label style={{ fontWeight: '600', marginBottom: '8px', display: 'block' }}>
-                            {__('Supported Heading Tags', 'dynamic-table-of-contents-block-wp')}
+                            {__('Supported Heading Tags', 'wedocs')}
                         </label>
                         {['h1', 'h2', 'h3', 'h4', 'h5'].map(heading => (
                             <CheckboxControl
@@ -70,38 +70,38 @@ const Inspector = ({ attributes, setAttributes }) => {
                     </div>
 
                     <ToggleControl
-                        label={__('List Hierarchy', 'dynamic-table-of-contents-block-wp')}
-                        help={__('Indent subheadings to show hierarchy', 'dynamic-table-of-contents-block-wp')}
+                        label={__('List Hierarchy', 'wedocs')}
+                        help={__('Indent subheadings to show hierarchy', 'wedocs')}
                         checked={showHierarchy}
                         onChange={(value) => setAttributes({ showHierarchy: value })}
                         __nextHasNoMarginBottom
                     />
 
                     <ToggleControl
-                        label={__('List Numbering', 'dynamic-table-of-contents-block-wp')}
-                        help={__('Show numbered list instead of bullets', 'dynamic-table-of-contents-block-wp')}
+                        label={__('List Numbering', 'wedocs')}
+                        help={__('Show numbered list instead of bullets', 'wedocs')}
                         checked={showNumbering}
                         onChange={(value) => setAttributes({ showNumbering: value })}
                         __nextHasNoMarginBottom
                     />
 
                     <ToggleControl
-                        label={__('Collapsible on Small Devices', 'dynamic-table-of-contents-block-wp')}
-                        help={__('Make TOC collapsible on mobile devices', 'dynamic-table-of-contents-block-wp')}
+                        label={__('Collapsible on Small Devices', 'wedocs')}
+                        help={__('Make TOC collapsible on mobile devices', 'wedocs')}
                         checked={collapsibleOnMobile}
                         onChange={(value) => setAttributes({ collapsibleOnMobile: value })}
                         __nextHasNoMarginBottom
                     />
                     <ToggleControl
-                        label={__('Smooth Scroll Behavior', 'dynamic-table-of-contents-block-wp')}
+                        label={__('Smooth Scroll Behavior', 'wedocs')}
                         checked={smoothScroll}
                         onChange={(value) => setAttributes({ smoothScroll: value })}
                         __nextHasNoMarginBottom
                     />
 
                     <ToggleControl
-                        label={__('Sticky Mode', 'dynamic-table-of-contents-block-wp')}
-                        help={__('Keep TOC fixed while scrolling', 'dynamic-table-of-contents-block-wp')}
+                        label={__('Sticky Mode', 'wedocs')}
+                        help={__('Keep TOC fixed while scrolling', 'wedocs')}
                         checked={stickyMode}
                         onChange={(value) => setAttributes({ stickyMode: value })}
                         __nextHasNoMarginBottom
@@ -110,12 +110,12 @@ const Inspector = ({ attributes, setAttributes }) => {
 
 
 
-                {/* <PanelBody title={__('Advanced', 'dynamic-table-of-contents-block-wp')} initialOpen={false}>
+                {/* <PanelBody title={__('Advanced', 'wedocs')} initialOpen={false}>
 					<TextControl
-						label={__('Additional CSS class(es)', 'dynamic-table-of-contents-block-wp')}
+						label={__('Additional CSS class(es)', 'wedocs')}
 						value={additionalCssClass}
 						onChange={(value) => setAttributes({ additionalCssClass: value })}
-						help={__('Space-separated CSS classes', 'dynamic-table-of-contents-block-wp')}
+						help={__('Space-separated CSS classes', 'wedocs')}
 					/>
 
 
@@ -123,11 +123,11 @@ const Inspector = ({ attributes, setAttributes }) => {
             </InspectorControls>
             <InspectorControls group='styles'>
                 <ListItems attributes={attributes} setAttributes={setAttributes} />
-                <PanelBody title={__('Style', 'dynamic-table-of-contents-block-wp')} initialOpen={false}>
-                    <h4>{__('TOC Container', 'dynamic-table-of-contents-block-wp')}</h4>
+                <PanelBody title={__('Style', 'wedocs')} initialOpen={false}>
+                    <h4>{__('TOC Container', 'wedocs')}</h4>
 
                     <div style={{ marginBottom: '20px' }}>
-                        <label>{__('Background Color', 'dynamic-table-of-contents-block-wp')}</label>
+                        <label>{__('Background Color', 'wedocs')}</label>
                         <ColorPicker
                             color={containerBackgroundColor}
                             onChange={(value) => setAttributes({ containerBackgroundColor: value })}
@@ -135,7 +135,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                     </div>
 
                     <UnitControl
-                        label={__('Width', 'dynamic-table-of-contents-block-wp')}
+                        label={__('Width', 'wedocs')}
                         value={containerWidth}
                         onChange={(value) => setAttributes({ containerWidth: value })}
                         units={[
@@ -147,25 +147,25 @@ const Inspector = ({ attributes, setAttributes }) => {
                     />
 
                     <BoxControl
-                        label={__('Padding', 'dynamic-table-of-contents-block-wp')}
+                        label={__('Padding', 'wedocs')}
                         values={containerPadding}
                         onChange={(value) => setAttributes({ containerPadding: value })}
                     />
 
                     <BoxControl
-                        label={__('Margin', 'dynamic-table-of-contents-block-wp')}
+                        label={__('Margin', 'wedocs')}
                         values={containerMargin}
                         onChange={(value) => setAttributes({ containerMargin: value })}
                     />
 
                     <SelectControl
-                        label={__('Border Style', 'dynamic-table-of-contents-block-wp')}
+                        label={__('Border Style', 'wedocs')}
                         value={containerBorderStyle}
                         options={[
-                            { label: __('None', 'dynamic-table-of-contents-block-wp'), value: 'none' },
-                            { label: __('Solid', 'dynamic-table-of-contents-block-wp'), value: 'solid' },
-                            { label: __('Dashed', 'dynamic-table-of-contents-block-wp'), value: 'dashed' },
-                            { label: __('Dotted', 'dynamic-table-of-contents-block-wp'), value: 'dotted' }
+                            { label: __('None', 'wedocs'), value: 'none' },
+                            { label: __('Solid', 'wedocs'), value: 'solid' },
+                            { label: __('Dashed', 'wedocs'), value: 'dashed' },
+                            { label: __('Dotted', 'wedocs'), value: 'dotted' }
                         ]}
                         onChange={(value) => setAttributes({ containerBorderStyle: value })}
                     />
@@ -173,13 +173,13 @@ const Inspector = ({ attributes, setAttributes }) => {
                     {containerBorderStyle !== 'none' && (
                         <>
                             <UnitControl
-                                label={__('Border Width', 'dynamic-table-of-contents-block-wp')}
+                                label={__('Border Width', 'wedocs')}
                                 value={containerBorderWidth}
                                 onChange={(value) => setAttributes({ containerBorderWidth: value })}
                             />
 
                             <div style={{ marginBottom: '20px' }}>
-                                <label>{__('Border Color', 'dynamic-table-of-contents-block-wp')}</label>
+                                <label>{__('Border Color', 'wedocs')}</label>
                                 <ColorPicker
                                     color={containerBorderColor}
                                     onChange={(value) => setAttributes({ containerBorderColor: value })}
@@ -189,17 +189,17 @@ const Inspector = ({ attributes, setAttributes }) => {
                     )}
 
                     <UnitControl
-                        label={__('Border Radius', 'dynamic-table-of-contents-block-wp')}
+                        label={__('Border Radius', 'wedocs')}
                         value={containerBorderRadius}
                         onChange={(value) => setAttributes({ containerBorderRadius: value })}
                     />
 
                     <hr style={{ margin: '20px 0' }} />
 
-                    <h4>{__('TOC Title', 'dynamic-table-of-contents-block-wp')}</h4>
+                    <h4>{__('TOC Title', 'wedocs')}</h4>
 
                     <div style={{ marginBottom: '20px' }}>
-                        <label>{__('Color', 'dynamic-table-of-contents-block-wp')}</label>
+                        <label>{__('Color', 'wedocs')}</label>
                         <ColorPicker
                             color={titleColor}
                             onChange={(value) => setAttributes({ titleColor: value })}
@@ -207,13 +207,13 @@ const Inspector = ({ attributes, setAttributes }) => {
                     </div>
 
                     <UnitControl
-                        label={__('Font Size', 'dynamic-table-of-contents-block-wp')}
+                        label={__('Font Size', 'wedocs')}
                         value={titleFontSize}
                         onChange={(value) => setAttributes({ titleFontSize: value })}
                     />
 
                     <SelectControl
-                        label={__('Font Weight', 'dynamic-table-of-contents-block-wp')}
+                        label={__('Font Weight', 'wedocs')}
                         value={titleFontWeight}
                         options={[
                             { label: '300', value: '300' },
@@ -228,10 +228,10 @@ const Inspector = ({ attributes, setAttributes }) => {
 
                     <hr style={{ margin: '20px 0' }} />
 
-                    <h4>{__('TOC List', 'dynamic-table-of-contents-block-wp')}</h4>
+                    <h4>{__('TOC List', 'wedocs')}</h4>
 
                     <div style={{ marginBottom: '20px' }}>
-                        <label>{__('Color', 'dynamic-table-of-contents-block-wp')}</label>
+                        <label>{__('Color', 'wedocs')}</label>
                         <ColorPicker
                             color={listColor}
                             onChange={(value) => setAttributes({ listColor: value })}
@@ -239,7 +239,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                     </div>
 
                     <div style={{ marginBottom: '20px' }}>
-                        <label>{__('Hover Color', 'dynamic-table-of-contents-block-wp')}</label>
+                        <label>{__('Hover Color', 'wedocs')}</label>
                         <ColorPicker
                             color={listHoverColor}
                             onChange={(value) => setAttributes({ listHoverColor: value })}
@@ -247,7 +247,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                     </div>
 
                     <UnitControl
-                        label={__('Font Size', 'dynamic-table-of-contents-block-wp')}
+                        label={__('Font Size', 'wedocs')}
                         value={listFontSize}
                         onChange={(value) => setAttributes({ listFontSize: value })}
                     />

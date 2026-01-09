@@ -6,6 +6,10 @@
  * @param string $content    Block content
  * @return string Rendered block content
  */
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
 
  if ( ! function_exists( 'get_pagination_style_tag' ) ) {
     function get_pagination_style_tag($attributes) {

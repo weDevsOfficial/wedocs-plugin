@@ -7,6 +7,10 @@
  * @param WP_Block $block      Block instance
  * @return string
  */
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
 function render_wedocs_advance_contributors_block($attributes, $content, $block) {
     // Get the current post
     $post = get_post();
