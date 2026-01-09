@@ -43,6 +43,10 @@
 			"type": "string",
 			"default": ""
 		},
+		"postId": {
+			"type": "number",
+			"default": 0
+		},
 		"title": {
 			"type": "string",
 			"default": "AI-Powered Summary"

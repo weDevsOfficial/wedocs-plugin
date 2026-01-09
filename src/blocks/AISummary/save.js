@@ -3,6 +3,7 @@ import { useBlockProps, RichText } from '@wordpress/block-editor';
 export default function save({ attributes }) {
 	const {
 		blockId,
+		postId,
 		title,
 		content,
 		isCollapsible,
@@ -48,11 +49,16 @@ export default function save({ attributes }) {
 		return icons[type] || icons.sparkles;
 	};
 
+	// Only include postId if it's a valid number
+	const validPostId = postId && typeof postId === 'number' && postId > 0 ? postId : '';
+
 	const blockProps = useBlockProps.save({
-		className: `wp-block-wedocs-ai-summary ${isCollapsible ? 'collapsible' : ''} ${isOpenByDefault ? 'open' : ''}`,
+		className: `wp-block-wedocs-ai-summary ${isCollapsible ? 'collapsible' : ''} ${isOpenByDefault ? 'open' : ''} ${!content ? 'no-summary' : 'has-summary'}`,
 		'data-block-id': blockId,
+		'data-post-id': validPostId,
 		'data-collapsible': isCollapsible,
 		'data-open-by-default': isOpenByDefault,
+		'data-has-content': content ? 'true' : 'false',
 		style: {
 			backgroundColor,
 			color: textColor,
@@ -99,10 +105,39 @@ export default function save({ attributes }) {
 				fontSize: contentFontSize,
 				lineHeight: '1.6'
 			}}>
-				<RichText.Content
-					tagName="div"
-					value={content}
-				/>
+				{content ? (
+					<RichText.Content
+						tagName="div"
+						value={content}
+					/>
+				) : (
+					<div className="ai-summary-generate-placeholder">
+						<button
+							className="ai-summary-generate-btn"
+							data-generating-text="Generating summary..."
+							style={{
+								backgroundColor: '#0073aa',
+								color: '#ffffff',
+								border: 'none',
+								padding: '10px 20px',
+								borderRadius: '4px',
+								cursor: 'pointer',
+								fontSize: '14px',
+								fontWeight: '500'
+							}}
+						>
+							Generate AI Summary
+						</button>
+						<p style={{
+							fontSize: '12px',
+							color: '#666',
+							marginTop: '8px',
+							fontStyle: 'italic'
+						}}>
+							Click to generate a summary of this documentation using AI
+						</p>
+					</div>
+				)}
 			</div>
 		</div>
 	);

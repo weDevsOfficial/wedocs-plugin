@@ -4,9 +4,14 @@ import {
 	PanelBody,
 	ToggleControl,
 	SelectControl,
+	Button,
+	Spinner,
+	Notice,
 	__experimentalBoxControl as BoxControl
 } from '@wordpress/components';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
 import './editor.scss';
 import {
 	ColorSettingsPanel,
@@ -35,12 +40,140 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		margin
 	} = attributes;
 
-	// Set unique block ID
+	const [isGenerating, setIsGenerating] = useState(false);
+	const [isLoadingSaved, setIsLoadingSaved] = useState(false);
+	const [error, setError] = useState('');
+	const [success, setSuccess] = useState('');
+	const [hasSavedSummary, setHasSavedSummary] = useState(false);
+
+	// Get current post ID
+	const currentPostId = useSelect((select) => {
+		return select('core/editor').getCurrentPostId();
+	}, []);
+
+	// Set unique block ID and post ID
 	useEffect(() => {
 		if (!blockId) {
 			setAttributes({ blockId: `ai-summary-${clientId}` });
 		}
-	}, [blockId, clientId, setAttributes]);
+		if (currentPostId && attributes.postId !== currentPostId) {
+			setAttributes({ postId: currentPostId });
+		}
+	}, [blockId, clientId, currentPostId, attributes.postId, setAttributes]);
+
+	// Use postId from attributes
+	const postId = attributes.postId;
+
+	// Load saved summary on mount
+	useEffect(() => {
+		if (postId) {
+			loadSavedSummary();
+		}
+	}, [postId]);
+
+	// Load saved summary from post meta
+	const loadSavedSummary = async () => {
+		setIsLoadingSaved(true);
+		setError('');
+
+		try {
+			const response = await apiFetch({
+				path: `/wp/v2/docs/${postId}/ai-summary`,
+				method: 'GET',
+			});
+
+			if (response.exists && response.summary) {
+				setAttributes({ content: response.summary });
+				setHasSavedSummary(true);
+				setSuccess(__('Loaded saved summary', 'wedocs-plugin'));
+				setTimeout(() => setSuccess(''), 3000);
+			}
+		} catch (err) {
+			// No saved summary or error loading - not a critical error
+			console.log('No saved summary found or error loading:', err);
+		} finally {
+			setIsLoadingSaved(false);
+		}
+	};
+
+	// Generate summary using AI
+	const generateSummary = async () => {
+		if (!postId) {
+			setError(__('Unable to get post ID. Please save the post first.', 'wedocs-plugin'));
+			return;
+		}
+
+		setIsGenerating(true);
+		setError('');
+		setSuccess('');
+
+		try {
+			console.log('Generating AI summary for post ID:', postId);
+			const response = await apiFetch({
+				path: `/wp/v2/docs/${postId}/ai-summary/generate`,
+				method: 'POST',
+			});
+
+			console.log('AI summary response:', response);
+
+			if (response.success && response.summary) {
+				setAttributes({ content: response.summary });
+				setHasSavedSummary(true);
+				setSuccess(__('Summary generated and saved successfully!', 'wedocs-plugin'));
+				setTimeout(() => setSuccess(''), 5000);
+			}
+		} catch (err) {
+			console.error('AI summary generation error:', err);
+			setError(err.message || __('Failed to generate summary. Please check your AI settings.', 'wedocs-plugin'));
+		} finally {
+			setIsGenerating(false);
+		}
+	};
+
+	// Clear saved summary
+	const clearSummary = async () => {
+		if (!confirm(__('Are you sure you want to clear the saved summary? This cannot be undone.', 'wedocs-plugin'))) {
+			return;
+		}
+
+		try {
+			await apiFetch({
+				path: `/wp/v2/docs/${postId}/ai-summary`,
+				method: 'DELETE',
+			});
+
+			setAttributes({ content: '' });
+			setHasSavedSummary(false);
+			setSuccess(__('Summary cleared successfully', 'wedocs-plugin'));
+			setTimeout(() => setSuccess(''), 3000);
+		} catch (err) {
+			setError(err.message || __('Failed to clear summary', 'wedocs-plugin'));
+		}
+	};
+
+	// Save current content as summary
+	const saveCurrentSummary = async () => {
+		if (!content) {
+			setError(__('Please add content before saving', 'wedocs-plugin'));
+			return;
+		}
+
+		try {
+			await apiFetch({
+				path: `/wp/v2/docs/${postId}/ai-summary`,
+				method: 'POST',
+				data: {
+					summary: content
+				}
+			});
+
+			setHasSavedSummary(true);
+			setSuccess(__('Summary saved successfully!', 'wedocs-plugin'));
+			setTimeout(() => setSuccess(''), 3000);
+		} catch (err) {
+			setError(err.message || __('Failed to save summary', 'wedocs-plugin'));
+		}
+	};
 
 	const blockProps = useBlockProps({
 		className: 'wp-block-wedocs-ai-summary',
@@ -85,7 +218,93 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Summary Settings', 'wedocs-plugin')} initialOpen={true}>
+				<PanelBody title={__('AI Summary Actions', 'wedocs-plugin')} initialOpen={true}>
+					{error && (
+						<Notice status="error" isDismissible={false}>
+							{error}
+						</Notice>
+					)}
+					{success && (
+						<Notice status="success" isDismissible={false}>
+							{success}
+						</Notice>
+					)}
+
+					<div style={{ marginBottom: '16px' }}>
+						<Button
+							variant="primary"
+							onClick={generateSummary}
+							disabled={isGenerating || isLoadingSaved}
+							style={{ width: '100%', justifyContent: 'center', marginBottom: '8px' }}
+						>
+							{isGenerating ? (
+								<>
+									<Spinner />
+									{__('Generating...', 'wedocs-plugin')}
+								</>
+							) : (
+								__('Generate AI Summary', 'wedocs-plugin')
+							)}
+						</Button>
+
+						<p style={{ fontSize: '12px', color: '#757575', margin: '8px 0' }}>
+							{hasSavedSummary
+								? __('A saved summary exists. Generate will create a new one.', 'wedocs-plugin')
+								: __('Generate a summary using AI based on the document content.', 'wedocs-plugin')
+							}
+						</p>
+					</div>
+
+					{content && (
+						<div style={{ marginBottom: '16px' }}>
+							<Button
+								variant="secondary"
+								onClick={saveCurrentSummary}
+								disabled={isGenerating}
+								style={{ width: '100%', justifyContent: 'center', marginBottom: '8px' }}
+							>
+								{__('Save Current Content', 'wedocs-plugin')}
+							</Button>
+							<p style={{ fontSize: '12px', color: '#757575', margin: '8px 0' }}>
+								{__('Save the current summary content for future use.', 'wedocs-plugin')}
+							</p>
+						</div>
+					)}
+
+					{hasSavedSummary && (
+						<div style={{ marginBottom: '16px' }}>
+							<Button
+								variant="secondary"
+								onClick={loadSavedSummary}
+								disabled={isGenerating || isLoadingSaved}
+								style={{ width: '100%', justifyContent: 'center', marginBottom: '8px' }}
+							>
+								{isLoadingSaved ? (
+									<>
+										<Spinner />
+										{__('Loading...', 'wedocs-plugin')}
+									</>
+								) : (
+									__('Reload Saved Summary', 'wedocs-plugin')
+								)}
+							</Button>
+						</div>
+					)}
+
+					{hasSavedSummary && (
+						<Button
+							variant="link"
+							isDestructive
+							onClick={clearSummary}
+							disabled={isGenerating}
+							style={{ width: '100%', justifyContent: 'center' }}
+						>
+							{__('Clear Saved Summary', 'wedocs-plugin')}
+						</Button>
+					)}
+				</PanelBody>
+
+				<PanelBody title={__('Summary Settings', 'wedocs-plugin')} initialOpen={false}>
 					<ToggleControl
 						label={__('Make Collapsible', 'wedocs-plugin')}
 						checked={isCollapsible}
@@ -217,7 +436,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						tagName="div"
 						value={content}
 						onChange={(value) => setAttributes({ content: value })}
-						placeholder={__('Enter AI-generated summary content...', 'wedocs-plugin')}
+						placeholder={__('Click "Generate AI Summary" to create a summary, or type your own...', 'wedocs-plugin')}
 					/>
 				</div>
 			</div>
