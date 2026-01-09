@@ -9,7 +9,46 @@
 	"description": "Display the author(s)/contributors of a doc along with the last updated date.",
 	"keywords": ["pro", "doc contributor"],
 	"supports": {
-		"html": false
+		"html": false,
+		"anchor": true,
+		"align": ["wide", "full"],
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true
+			}
+		}
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",

@@ -5,6 +5,11 @@ import './TableOfContents';
 import './HelpfulModal';
 import './HelpfulFeedback';
 import './SocialShare';
+import './AISummary';
+import './LastUpdated';
+import './DocActions';
+import './ReadingProgress';
+
 
 // import './Breadcrumbs';
 // import './CategoryDocs';

@@ -121,18 +121,19 @@ const Inspector = ({ attributes, setAttributes }) => {
 
 				</PanelBody> */}
             </InspectorControls>
+
             <InspectorControls group='styles'>
                 <ListItems attributes={attributes} setAttributes={setAttributes} />
-                <PanelBody title={__('Style', 'wedocs')} initialOpen={false}>
+                <PanelBody title={__('Container Style', 'wedocs')} initialOpen={false}>
                     <h4>{__('TOC Container', 'wedocs')}</h4>
 
-                    <div style={{ marginBottom: '20px' }}>
+                    {/* <div style={{ marginBottom: '20px' }}> */}
                         <label>{__('Background Color', 'wedocs')}</label>
                         <ColorPicker
                             color={containerBackgroundColor}
                             onChange={(value) => setAttributes({ containerBackgroundColor: value })}
                         />
-                    </div>
+                    {/* </div> */}
 
                     <UnitControl
                         label={__('Width', 'wedocs')}

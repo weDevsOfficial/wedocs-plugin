@@ -15,15 +15,12 @@ import {
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-
-// Import our custom components
-import TabSystem from '../components/TabSystem';
-import TypographyControl from '../components/TypographyControl';
-import SpacingControl from '../components/SpacingControl';
-import BorderControl from '../components/BorderControl';
-import BackgroundControl from '../components/BackgroundControl';
-import ShadowControl from '../components/ShadowControl';
-import DimensionControl from '../components/DimensionControl';
+import {
+	ColorSettingsPanel,
+	SpacingPanel,
+	BorderPanel,
+	TypographyPanel,
+} from '../commonControls/CommonControls';
 
 // Import demo avatars
 import avatar1 from '../../assets/img/avatar_1.png';
@@ -331,10 +328,83 @@ const Edit = (props) => {
 		);
 	};
 
-	const setupTabContent = () => (
+	// If Pro is not active, show upgrade notice
+	if (!isPro) {
+		return (
+			<>
+				<InspectorControls>
+					<PanelBody title={__('Doc Contributors - PRO Feature', 'wedocs')} initialOpen={true}>
+						<div style={{ padding: '20px', textAlign: 'center' }}>
+							<div style={{ marginBottom: '15px' }}>
+								<svg width="48" height="48" fill="#4f47e6" viewBox="0 0 20 15">
+									<path d="M19.213 4.116c.003.054-.001.108-.015.162l-1.234 6.255a.56.56 0 0 1-.541.413l-7.402.036h-.003-7.402c-.257 0-.482-.171-.544-.414L.839 4.295a.53.53 0 0 1-.015-.166C.347 3.983 0 3.548 0 3.036c0-.632.528-1.145 1.178-1.145s1.178.514 1.178 1.145a1.13 1.13 0 0 1-.43.884L3.47 5.434c.39.383.932.602 1.486.602.655 0 1.28-.303 1.673-.81l2.538-3.272c-.213-.207-.345-.494-.345-.809C8.822.514 9.351 0 10 0s1.178.514 1.178 1.145c0 .306-.125.584-.327.79l.002.003 2.52 3.281c.393.512 1.02.818 1.677.818a2.11 2.11 0 0 0 1.481-.597l1.554-1.512c-.268-.21-.44-.531-.44-.892 0-.632.528-1.145 1.177-1.145S20 2.405 20 3.036c0 .498-.329.922-.787 1.079zm-1.369 8.575c0-.301-.251-.545-.561-.545H2.779c-.31 0-.561.244-.561.545V14c0 .301.251.546.561.546h14.505c.31 0 .561-.244.561-.546v-1.309z" />
+								</svg>
+							</div>
+							<h3 style={{ margin: '0 0 10px 0', fontSize: '16px', fontWeight: '600' }}>
+								{__('This is a PRO Feature', 'wedocs')}
+							</h3>
+							<p style={{ margin: '0 0 20px 0', color: '#666', fontSize: '14px' }}>
+								{__('The Contributors block requires weDocs Pro to be active.', 'wedocs')}
+							</p>
+							<a
+								href="https://wedocs.co/pricing/"
+								target="_blank"
+								rel="noopener noreferrer"
+								style={{
+									display: 'inline-block',
+									padding: '10px 20px',
+									backgroundColor: '#4f47e6',
+									color: '#fff',
+									textDecoration: 'none',
+									borderRadius: '4px',
+									fontWeight: '600',
+									fontSize: '14px'
+								}}
+							>
+								{__('Purchase weDocs Pro', 'wedocs')}
+							</a>
+						</div>
+					</PanelBody>
+				</InspectorControls>
+
+				<div {...blockProps}>
+					<Placeholder
+						icon={
+							<svg width="48" height="48" fill="#4f47e6" viewBox="0 0 20 15">
+								<path d="M19.213 4.116c.003.054-.001.108-.015.162l-1.234 6.255a.56.56 0 0 1-.541.413l-7.402.036h-.003-7.402c-.257 0-.482-.171-.544-.414L.839 4.295a.53.53 0 0 1-.015-.166C.347 3.983 0 3.548 0 3.036c0-.632.528-1.145 1.178-1.145s1.178.514 1.178 1.145a1.13 1.13 0 0 1-.43.884L3.47 5.434c.39.383.932.602 1.486.602.655 0 1.28-.303 1.673-.81l2.538-3.272c-.213-.207-.345-.494-.345-.809C8.822.514 9.351 0 10 0s1.178.514 1.178 1.145c0 .306-.125.584-.327.79l.002.003 2.52 3.281c.393.512 1.02.818 1.677.818a2.11 2.11 0 0 0 1.481-.597l1.554-1.512c-.268-.21-.44-.531-.44-.892 0-.632.528-1.145 1.177-1.145S20 2.405 20 3.036c0 .498-.329.922-.787 1.079zm-1.369 8.575c0-.301-.251-.545-.561-.545H2.779c-.31 0-.561.244-.561.545V14c0 .301.251.546.561.546h14.505c.31 0 .561-.244.561-.546v-1.309z" />
+							</svg>
+						}
+						label={__('Doc Contributors - PRO Feature', 'wedocs')}
+						instructions={__('This block requires weDocs Pro to be active.', 'wedocs')}
+					>
+						<a
+							href="https://wedocs.co/pricing/"
+							target="_blank"
+							rel="noopener noreferrer"
+							style={{
+								display: 'inline-block',
+								padding: '10px 20px',
+								backgroundColor: '#4f47e6',
+								color: '#fff',
+								textDecoration: 'none',
+								borderRadius: '4px',
+								fontWeight: '600',
+								fontSize: '14px',
+								marginTop: '10px'
+							}}
+						>
+							{__('Purchase weDocs Pro', 'wedocs')}
+						</a>
+					</Placeholder>
+				</div>
+			</>
+		);
+	}
+
+	return (
 		<>
-			{/* Basic Settings */}
-			<PanelBody title={__('General Settings', 'wedocs')} initialOpen={true}>
+			<InspectorControls>
+				<PanelBody title={__('General Settings', 'wedocs')} initialOpen={true}>
 				<ToggleControl
 					label={__('Show Title', 'wedocs')}
 					checked={attributes.showTitle}
@@ -503,247 +573,137 @@ const Edit = (props) => {
 					/>
 				)}
 			</PanelBody>
-		</>
-	);
+		</InspectorControls>
 
-	const styleTabContent = () => (
-		<>
-			{/* Container Styles */}
-			<BackgroundControl
-				label={__('Container Background', 'wedocs')}
-				backgroundType={attributes.backgroundType}
-				onBackgroundTypeChange={(value) => setAttributes({ backgroundType: value })}
-				backgroundColor={attributes.backgroundColor}
-				onBackgroundColorChange={(value) => setAttributes({ backgroundColor: value })}
-				backgroundGradient={attributes.backgroundGradient}
-				onBackgroundGradientChange={(value) => setAttributes({ backgroundGradient: value })}
-				backgroundImage={attributes.backgroundImage}
-				onBackgroundImageChange={(value) => setAttributes({ backgroundImage: value })}
-			/>
-
-			<SpacingControl
-				label={__('Container Spacing', 'wedocs')}
-				paddingValue={attributes.padding}
+		<InspectorControls group="styles">
+			<SpacingPanel
+				title={__('Container Spacing', 'wedocs')}
+				padding={attributes.padding}
+				margin={attributes.margin}
 				onPaddingChange={(value) => setAttributes({ padding: value })}
-				marginValue={attributes.margin}
 				onMarginChange={(value) => setAttributes({ margin: value })}
-				showGap={true}
-				gapValue={attributes.contributorGap}
-				onGapChange={(value) => setAttributes({ contributorGap: value })}
 			/>
 
-			<BorderControl
-				label={__('Container Border', 'wedocs')}
+			<BorderPanel
+				title={__('Container Border', 'wedocs')}
 				borderStyle={attributes.borderStyle}
-				onBorderStyleChange={(value) => setAttributes({ borderStyle: value })}
 				borderWidth={attributes.borderWidth}
-				onBorderWidthChange={(value) => setAttributes({ borderWidth: value })}
 				borderColor={attributes.borderColor}
-				onBorderColorChange={(value) => setAttributes({ borderColor: value })}
 				borderRadius={attributes.borderRadius}
-				onBorderRadiusChange={(value) => setAttributes({ borderRadius: value })}
+				onStyleChange={(value) => setAttributes({ borderStyle: value })}
+				onWidthChange={(value) => setAttributes({ borderWidth: value })}
+				onColorChange={(value) => setAttributes({ borderColor: value })}
+				onRadiusChange={(value) => setAttributes({ borderRadius: value })}
 			/>
 
-			<ShadowControl
-				label={__('Container Shadow', 'wedocs')}
-				shadowValue={attributes.boxShadow}
-				onShadowChange={(value) => setAttributes({ boxShadow: value })}
-			/>
 
-			{/* Title Styles */}
 			{attributes.showTitle && (
 				<>
-					<TypographyControl
-						label={__('Title Typography', 'wedocs')}
-						value={attributes.contributorTitleTypography}
-						onChange={(value) => setAttributes({ contributorTitleTypography: value })}
-						colorValue={attributes.contributorTitleColor}
-						onColorChange={(value) => setAttributes({ contributorTitleColor: value })}
-						hoverColorValue={attributes.contributorTitleHoverColor}
-						onHoverColorChange={(value) => setAttributes({ contributorTitleHoverColor: value })}
+					<ColorSettingsPanel
+						title={__('Title Colors', 'wedocs')}
+						colorSettings={[
+							{
+								value: attributes.contributorTitleColor,
+								onChange: (value) => setAttributes({ contributorTitleColor: value }),
+								label: __('Title Color', 'wedocs'),
+							},
+							{
+								value: attributes.contributorTitleHoverColor,
+								onChange: (value) => setAttributes({ contributorTitleHoverColor: value }),
+								label: __('Title Hover Color', 'wedocs'),
+							},
+						]}
 					/>
 
-					<SpacingControl
-						label={__('Title Spacing', 'wedocs')}
-						paddingValue={attributes.titlePadding}
+					<SpacingPanel
+						title={__('Title Spacing', 'wedocs')}
+						padding={attributes.titlePadding}
+						margin={attributes.titleMargin}
 						onPaddingChange={(value) => setAttributes({ titlePadding: value })}
-						marginValue={attributes.titleMargin}
 						onMarginChange={(value) => setAttributes({ titleMargin: value })}
-						showGap={false}
 					/>
 				</>
 			)}
 
-			{/* Avatar Styles */}
+
 			{attributes.showAvatar && (
 				<>
-					<DimensionControl
-						label={__('Avatar Size', 'wedocs')}
-						widthValue={attributes.avatarSize}
-						onWidthChange={(value) => setAttributes({ avatarSize: value })}
-						showHeight={false}
-					/>
-
-					<SpacingControl
-						label={__('Avatar Spacing', 'wedocs')}
-						paddingValue={attributes.avatarPadding}
+					<SpacingPanel
+						title={__('Avatar Spacing', 'wedocs')}
+						padding={attributes.avatarPadding}
+						margin={attributes.avatarMargin}
 						onPaddingChange={(value) => setAttributes({ avatarPadding: value })}
-						marginValue={attributes.avatarMargin}
 						onMarginChange={(value) => setAttributes({ avatarMargin: value })}
-						showGap={false}
 					/>
 
-					<BorderControl
-						label={__('Avatar Border', 'wedocs')}
+					<BorderPanel
+						title={__('Avatar Border', 'wedocs')}
 						borderStyle={attributes.avatarBorderStyle}
-						onBorderStyleChange={(value) => setAttributes({ avatarBorderStyle: value })}
 						borderWidth={attributes.avatarBorderWidth}
-						onBorderWidthChange={(value) => setAttributes({ avatarBorderWidth: value })}
 						borderColor={attributes.avatarBorderColor}
-						onBorderColorChange={(value) => setAttributes({ avatarBorderColor: value })}
 						borderRadius={attributes.avatarBorderRadius}
-						onBorderRadiusChange={(value) => setAttributes({ avatarBorderRadius: value })}
-					/>
-
-					<ShadowControl
-						label={__('Avatar Shadow', 'wedocs')}
-						shadowValue={attributes.avatarBoxShadow}
-						onShadowChange={(value) => setAttributes({ avatarBoxShadow: value })}
+						onStyleChange={(value) => setAttributes({ avatarBorderStyle: value })}
+						onWidthChange={(value) => setAttributes({ avatarBorderWidth: value })}
+						onColorChange={(value) => setAttributes({ avatarBorderColor: value })}
+						onRadiusChange={(value) => setAttributes({ avatarBorderRadius: value })}
 					/>
 				</>
 			)}
 
-			{/* Name Styles */}
-			<TypographyControl
-				label={__('Name Typography', 'wedocs')}
-				value={attributes.nameTypography}
-				onChange={(value) => setAttributes({ nameTypography: value })}
-				colorValue={attributes.nameColor}
-				onColorChange={(value) => setAttributes({ nameColor: value })}
-				hoverColorValue={attributes.nameHoverColor}
-				onHoverColorChange={(value) => setAttributes({ nameHoverColor: value })}
+
+			<ColorSettingsPanel
+				title={__('Name Colors', 'wedocs')}
+				colorSettings={[
+					{
+						value: attributes.nameColor,
+						onChange: (value) => setAttributes({ nameColor: value }),
+						label: __('Name Color', 'wedocs'),
+					},
+					{
+						value: attributes.nameHoverColor,
+						onChange: (value) => setAttributes({ nameHoverColor: value }),
+						label: __('Name Hover Color', 'wedocs'),
+					},
+				]}
 			/>
 
-			<SpacingControl
-				label={__('Name Spacing', 'wedocs')}
-				paddingValue={attributes.namePadding}
+			<SpacingPanel
+				title={__('Name Spacing', 'wedocs')}
+				padding={attributes.namePadding}
+				margin={attributes.nameMargin}
 				onPaddingChange={(value) => setAttributes({ namePadding: value })}
-				marginValue={attributes.nameMargin}
 				onMarginChange={(value) => setAttributes({ nameMargin: value })}
-				showGap={false}
 			/>
 
-			{/* Date Styles */}
+
 			{attributes.showLastUpdated && (
 				<>
-					<TypographyControl
-						label={__('Date Typography', 'wedocs')}
-						value={attributes.dateTypography}
-						onChange={(value) => setAttributes({ dateTypography: value })}
-						colorValue={attributes.dateColor}
-						onColorChange={(value) => setAttributes({ dateColor: value })}
-						showHoverColor={false}
+					<ColorSettingsPanel
+						title={__('Date Colors', 'wedocs')}
+						colorSettings={[
+							{
+								value: attributes.dateColor,
+								onChange: (value) => setAttributes({ dateColor: value }),
+								label: __('Date Color', 'wedocs'),
+							},
+						]}
 					/>
 
-					<SpacingControl
-						label={__('Date Spacing', 'wedocs')}
-						paddingValue={attributes.datePadding}
+					<SpacingPanel
+						title={__('Date Spacing', 'wedocs')}
+						padding={attributes.datePadding}
+						margin={attributes.dateMargin}
 						onPaddingChange={(value) => setAttributes({ datePadding: value })}
-						marginValue={attributes.dateMargin}
 						onMarginChange={(value) => setAttributes({ dateMargin: value })}
-						showGap={false}
 					/>
 				</>
 			)}
-		</>
-	);
+		</InspectorControls>
 
-	// If Pro is not active, show upgrade notice
-	if (!isPro) {
-		return (
-			<>
-				<InspectorControls>
-					<PanelBody title={__('Doc Contributors - PRO Feature', 'wedocs')} initialOpen={true}>
-						<div style={{ padding: '20px', textAlign: 'center' }}>
-							<div style={{ marginBottom: '15px' }}>
-								<svg width="48" height="48" fill="#4f47e6" viewBox="0 0 20 15">
-									<path d="M19.213 4.116c.003.054-.001.108-.015.162l-1.234 6.255a.56.56 0 0 1-.541.413l-7.402.036h-.003-7.402c-.257 0-.482-.171-.544-.414L.839 4.295a.53.53 0 0 1-.015-.166C.347 3.983 0 3.548 0 3.036c0-.632.528-1.145 1.178-1.145s1.178.514 1.178 1.145a1.13 1.13 0 0 1-.43.884L3.47 5.434c.39.383.932.602 1.486.602.655 0 1.28-.303 1.673-.81l2.538-3.272c-.213-.207-.345-.494-.345-.809C8.822.514 9.351 0 10 0s1.178.514 1.178 1.145c0 .306-.125.584-.327.79l.002.003 2.52 3.281c.393.512 1.02.818 1.677.818a2.11 2.11 0 0 0 1.481-.597l1.554-1.512c-.268-.21-.44-.531-.44-.892 0-.632.528-1.145 1.177-1.145S20 2.405 20 3.036c0 .498-.329.922-.787 1.079zm-1.369 8.575c0-.301-.251-.545-.561-.545H2.779c-.31 0-.561.244-.561.545V14c0 .301.251.546.561.546h14.505c.31 0 .561-.244.561-.546v-1.309z" />
-								</svg>
-							</div>
-							<h3 style={{ margin: '0 0 10px 0', fontSize: '16px', fontWeight: '600' }}>
-								{__('This is a PRO Feature', 'wedocs')}
-							</h3>
-							<p style={{ margin: '0 0 20px 0', color: '#666', fontSize: '14px' }}>
-								{__('The Contributors block requires weDocs Pro to be active.', 'wedocs')}
-							</p>
-							<a
-								href="https://wedocs.co/pricing/"
-								target="_blank"
-								rel="noopener noreferrer"
-								style={{
-									display: 'inline-block',
-									padding: '10px 20px',
-									backgroundColor: '#4f47e6',
-									color: '#fff',
-									textDecoration: 'none',
-									borderRadius: '4px',
-									fontWeight: '600',
-									fontSize: '14px'
-								}}
-							>
-								{__('Purchase weDocs Pro', 'wedocs')}
-							</a>
-						</div>
-					</PanelBody>
-				</InspectorControls>
-
-				<div {...blockProps}>
-					<Placeholder
-						icon={
-							<svg width="48" height="48" fill="#4f47e6" viewBox="0 0 20 15">
-								<path d="M19.213 4.116c.003.054-.001.108-.015.162l-1.234 6.255a.56.56 0 0 1-.541.413l-7.402.036h-.003-7.402c-.257 0-.482-.171-.544-.414L.839 4.295a.53.53 0 0 1-.015-.166C.347 3.983 0 3.548 0 3.036c0-.632.528-1.145 1.178-1.145s1.178.514 1.178 1.145a1.13 1.13 0 0 1-.43.884L3.47 5.434c.39.383.932.602 1.486.602.655 0 1.28-.303 1.673-.81l2.538-3.272c-.213-.207-.345-.494-.345-.809C8.822.514 9.351 0 10 0s1.178.514 1.178 1.145c0 .306-.125.584-.327.79l.002.003 2.52 3.281c.393.512 1.02.818 1.677.818a2.11 2.11 0 0 0 1.481-.597l1.554-1.512c-.268-.21-.44-.531-.44-.892 0-.632.528-1.145 1.177-1.145S20 2.405 20 3.036c0 .498-.329.922-.787 1.079zm-1.369 8.575c0-.301-.251-.545-.561-.545H2.779c-.31 0-.561.244-.561.545V14c0 .301.251.546.561.546h14.505c.31 0 .561-.244.561-.546v-1.309z" />
-							</svg>
-						}
-						label={__('Doc Contributors - PRO Feature', 'wedocs')}
-						instructions={__('This block requires weDocs Pro to be active.', 'wedocs')}
-					>
-						<a
-							href="https://wedocs.co/pricing/"
-							target="_blank"
-							rel="noopener noreferrer"
-							style={{
-								display: 'inline-block',
-								padding: '10px 20px',
-								backgroundColor: '#4f47e6',
-								color: '#fff',
-								textDecoration: 'none',
-								borderRadius: '4px',
-								fontWeight: '600',
-								fontSize: '14px',
-								marginTop: '10px'
-							}}
-						>
-							{__('Purchase weDocs Pro', 'wedocs')}
-						</a>
-					</Placeholder>
-				</div>
-			</>
-		);
-	}
-
-	return (
-		<>
-			<InspectorControls>
-				<TabSystem defaultTab="setup">
-					{setupTabContent()}
-					{styleTabContent()}
-				</TabSystem>
-			</InspectorControls>
-
-			<div {...blockProps}>
-				{renderPreview()}
-			</div>
-		</>
+		<div {...blockProps}>
+			{renderPreview()}
+		</div>
+	</>
 	);
 };
 

@@ -188,6 +188,10 @@ final class WeDocs {
             'assets/build/blocks/HelpfulModal',
             'assets/build/blocks/HelpfulFeedback',
             'assets/build/blocks/SocialShare',
+            'assets/build/blocks/AISummary',
+            'assets/build/blocks/DocActions',
+            'assets/build/blocks/LastUpdated',
+            'assets/build/blocks/ReadingProgress',
 
         ];
 

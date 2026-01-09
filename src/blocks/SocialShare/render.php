@@ -68,9 +68,12 @@ $linkedin_url = 'https://www.linkedin.com/sharing/share-offsite/?url=' . urlenco
 $pinterest_url = 'https://pinterest.com/pin/create/button/?url=' . urlencode($post_url) . '&media=' . urlencode($post_thumbnail) . '&description=' . urlencode($post_title);
 
 // Helper function to get button color
-function get_button_color($platform, $use_individual, $individual_color, $default_color) {
-    return $use_individual ? $individual_color : $default_color;
+if (!function_exists('wedocs_get_button_color')) {
+    function wedocs_get_button_color($platform, $use_individual, $individual_color, $default_color) {
+        return $use_individual ? $individual_color : $default_color;
+    }
 }
+
 
 // Get size class
 $size_class = 'wedocs-social-btn-' . $button_size;
@@ -147,7 +150,7 @@ $platform_names = [
         style="<?php echo esc_attr($button_wrapper_style_attr); ?>"
     >
         <?php if (!empty($enabled_platforms['facebook'])) :
-            $btn_color = get_button_color('facebook', $use_individual_colors, $facebook_color, $button_bg_color);
+            $btn_color = wedocs_get_button_color('facebook', $use_individual_colors, $facebook_color, $button_bg_color);
         ?>
             <a href="<?php echo esc_url($facebook_url); ?>"
                target="_blank"
@@ -167,7 +170,7 @@ $platform_names = [
         <?php endif; ?>
 
         <?php if (!empty($enabled_platforms['twitter'])) :
-            $btn_color = get_button_color('twitter', $use_individual_colors, $twitter_color, $button_bg_color);
+            $btn_color = wedocs_get_button_color('twitter', $use_individual_colors, $twitter_color, $button_bg_color);
         ?>
             <a href="<?php echo esc_url($twitter_url); ?>"
                target="_blank"
@@ -187,7 +190,7 @@ $platform_names = [
         <?php endif; ?>
 
         <?php if (!empty($enabled_platforms['linkedin'])) :
-            $btn_color = get_button_color('linkedin', $use_individual_colors, $linkedin_color, $button_bg_color);
+            $btn_color = wedocs_get_button_color('linkedin', $use_individual_colors, $linkedin_color, $button_bg_color);
         ?>
             <a href="<?php echo esc_url($linkedin_url); ?>"
                target="_blank"
@@ -207,7 +210,7 @@ $platform_names = [
         <?php endif; ?>
 
         <?php if (!empty($enabled_platforms['pinterest'])) :
-            $btn_color = get_button_color('pinterest', $use_individual_colors, $pinterest_color, $button_bg_color);
+            $btn_color = wedocs_get_button_color('pinterest', $use_individual_colors, $pinterest_color, $button_bg_color);
         ?>
             <a href="<?php echo esc_url($pinterest_url); ?>"
                target="_blank"

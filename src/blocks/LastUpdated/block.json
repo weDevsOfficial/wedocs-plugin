@@ -1,0 +1,101 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/last-updated",
+	"version": "1.0.0",
+	"title": "Last Updated Date",
+	"category": "text",
+	"icon": "clock",
+	"description": "Display the last updated date of the current post or page.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": ["left", "center", "right", "wide", "full"],
+		"color": {
+			"background": true,
+			"text": true,
+			"__experimentalDefaultControls": {
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		}
+	},
+	"attributes": {
+		"blockId": {
+			"type": "string",
+			"default": ""
+		},
+		"showIcon": {
+			"type": "boolean",
+			"default": true
+		},
+		"iconType": {
+			"type": "string",
+			"default": "document"
+		},
+		"prefix": {
+			"type": "string",
+			"default": "Last updated"
+		},
+		"dateFormat": {
+			"type": "string",
+			"default": "MM/DD/YYYY"
+		},
+		"textColor": {
+			"type": "string",
+			"default": "#666666"
+		},
+		"fontSize": {
+			"type": "string",
+			"default": "14px"
+		},
+		"fontWeight": {
+			"type": "string",
+			"default": "400"
+		},
+		"textAlign": {
+			"type": "string",
+			"default": "left"
+		},
+		"padding": {
+			"type": "object",
+			"default": {
+				"top": "10px",
+				"right": "0px",
+				"bottom": "10px",
+				"left": "0px"
+			}
+		},
+		"margin": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "10px",
+				"left": "0px"
+			}
+		}
+	},
+	"textdomain": "wedocs-plugin",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

@@ -1,0 +1,122 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/ai-summary",
+	"version": "1.0.0",
+	"title": "AI-Powered Summary",
+	"category": "text",
+	"icon": "lightbulb",
+	"description": "Display an AI-generated summary of documentation content with collapsible functionality.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": ["wide", "full"],
+		"color": {
+			"background": true,
+			"text": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		}
+	},
+	"attributes": {
+		"blockId": {
+			"type": "string",
+			"default": ""
+		},
+		"title": {
+			"type": "string",
+			"default": "AI-Powered Summary"
+		},
+		"content": {
+			"type": "string",
+			"default": ""
+		},
+		"isCollapsible": {
+			"type": "boolean",
+			"default": true
+		},
+		"isOpenByDefault": {
+			"type": "boolean",
+			"default": false
+		},
+		"showIcon": {
+			"type": "boolean",
+			"default": true
+		},
+		"iconType": {
+			"type": "string",
+			"default": "sparkles"
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": "#1a1a1a"
+		},
+		"textColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"titleColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"titleFontSize": {
+			"type": "string",
+			"default": "20px"
+		},
+		"titleFontWeight": {
+			"type": "string",
+			"default": "600"
+		},
+		"contentFontSize": {
+			"type": "string",
+			"default": "16px"
+		},
+		"borderRadius": {
+			"type": "string",
+			"default": "8px"
+		},
+		"padding": {
+			"type": "object",
+			"default": {
+				"top": "20px",
+				"right": "20px",
+				"bottom": "20px",
+				"left": "20px"
+			}
+		},
+		"margin": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "20px",
+				"left": "0px"
+			}
+		}
+	},
+	"textdomain": "wedocs-plugin",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

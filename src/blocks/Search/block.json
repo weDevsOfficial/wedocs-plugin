@@ -1,0 +1,127 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/wedocs-search",
+	"version": "1.0.0",
+	"title": "weDocs - Searchbar",
+	"icon": "search",
+	"category": "widgets",
+	"description": "Simple search forms for easy user guidance for your documentation",
+	"keywords": ["Search", "weDocs search bar", "Bar"],
+	"supports": {
+		"html": false,
+		"align": ["wide", "full"],
+		"anchor": true,
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		}
+	},
+	"attributes": {
+		"hideSearch": {
+			"type": "boolean",
+			"default": false
+		},
+		"searchWidth": {
+			"type": "string",
+			"default": "100%"
+		},
+		"placeholder": {
+			"type": "string",
+			"default": "Search for a topic or question"
+		},
+		"alignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"buttonText": {
+			"type": "string",
+			"default": "Search"
+		},
+		"showButton": {
+			"type": "boolean",
+			"default": true
+		},
+		"buttonPosition": {
+			"type": "string",
+			"default": "inside",
+			"enum": ["inside", "outside"]
+		},
+		"buttonBackgroundColor": {
+			"type": "string"
+		},
+		"buttonTextColor": {
+			"type": "string"
+		},
+		"buttonHoverBackgroundColor": {
+			"type": "string"
+		},
+		"buttonHoverTextColor": {
+			"type": "string"
+		},
+		"buttonBorderRadius": {
+			"type": "string",
+			"default": "4px"
+		},
+		"buttonPadding": {
+			"type": "object",
+			"default": {
+				"top": "12px",
+				"right": "24px",
+				"bottom": "12px",
+				"left": "24px"
+			}
+		},
+		"inputBorderRadius": {
+			"type": "string",
+			"default": "4px"
+		},
+		"iconSize": {
+			"type": "string",
+			"default": "20px"
+		}
+	},
+	"textdomain": "wedocs",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

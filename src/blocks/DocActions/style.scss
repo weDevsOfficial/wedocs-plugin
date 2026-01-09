@@ -1,0 +1,131 @@
+/**
+ * Documentation Actions Block Styles
+ */
+
+.wp-block-wedocs-doc-actions {
+	max-width: 100%;
+	box-sizing: border-box;
+
+	.doc-actions-container {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.doc-action-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		font-family: inherit;
+		font-weight: 500;
+		white-space: nowrap;
+
+		&:hover {
+			transform: translateY(-1px);
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		}
+
+		&:active {
+			transform: translateY(0);
+		}
+
+		svg {
+			flex-shrink: 0;
+			width: 20px;
+			height: 20px;
+		}
+
+		// Sizes
+		&.size-small {
+			padding: 8px 12px;
+			font-size: 12px;
+
+			svg {
+				width: 16px;
+				height: 16px;
+			}
+		}
+
+		&.size-medium {
+			padding: 10px 16px;
+			font-size: 14px;
+		}
+
+		&.size-large {
+			padding: 12px 20px;
+			font-size: 16px;
+
+			svg {
+				width: 24px;
+				height: 24px;
+			}
+		}
+
+		// Styles
+		&.style-outlined {
+			border-style: solid;
+		}
+
+		&.style-filled {
+			border: none;
+		}
+
+		&.style-text {
+			border: none;
+			background: none !important;
+			padding-left: 0;
+			padding-right: 0;
+
+			&:hover {
+				text-decoration: underline;
+				transform: none;
+				box-shadow: none;
+			}
+		}
+
+		// Success state
+		&.copied {
+			animation: copySuccess 0.3s ease;
+
+			svg {
+				animation: checkmark 0.3s ease;
+			}
+		}
+	}
+}
+
+@keyframes copySuccess {
+	0%, 100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.05);
+	}
+}
+
+@keyframes checkmark {
+	0% {
+		transform: rotate(0deg) scale(1);
+	}
+	50% {
+		transform: rotate(10deg) scale(1.2);
+	}
+	100% {
+		transform: rotate(0deg) scale(1);
+	}
+}
+
+// Responsive
+@media (max-width: 768px) {
+	.wp-block-wedocs-doc-actions {
+		.doc-actions-container {
+			flex-direction: column;
+
+			.doc-action-button {
+				width: 100%;
+				justify-content: center;
+			}
+		}
+	}
+}

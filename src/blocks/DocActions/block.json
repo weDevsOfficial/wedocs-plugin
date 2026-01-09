@@ -1,0 +1,109 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/doc-actions",
+	"version": "1.0.0",
+	"title": "Documentation Actions",
+	"category": "widgets",
+	"icon": "share",
+	"description": "Action buttons for documentation - Copy Markdown, Open in ChatGPT, Open in Claude, and more.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": ["left", "center", "right", "wide", "full"],
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		}
+	},
+	"attributes": {
+		"blockId": {
+			"type": "string",
+			"default": ""
+		},
+		"showCopyMarkdown": {
+			"type": "boolean",
+			"default": true
+		},
+		"showChatGPT": {
+			"type": "boolean",
+			"default": true
+		},
+		"showClaude": {
+			"type": "boolean",
+			"default": true
+		},
+		"buttonStyle": {
+			"type": "string",
+			"default": "outlined"
+		},
+		"buttonSize": {
+			"type": "string",
+			"default": "medium"
+		},
+		"alignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"spacing": {
+			"type": "string",
+			"default": "10px"
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": ""
+		},
+		"textColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"borderColor": {
+			"type": "string",
+			"default": "#444444"
+		},
+		"borderWidth": {
+			"type": "string",
+			"default": "1px"
+		},
+		"borderRadius": {
+			"type": "string",
+			"default": "6px"
+		},
+		"hoverBackgroundColor": {
+			"type": "string",
+			"default": "#333333"
+		},
+		"fontSize": {
+			"type": "string",
+			"default": "14px"
+		},
+		"padding": {
+			"type": "object",
+			"default": {
+				"top": "20px",
+				"right": "0px",
+				"bottom": "20px",
+				"left": "0px"
+			}
+		},
+		"margin": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "20px",
+				"left": "0px"
+			}
+		}
+	},
+	"textdomain": "wedocs-plugin",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

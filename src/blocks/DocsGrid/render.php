@@ -326,3 +326,5 @@ if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
         return ob_get_clean();
     }
 }
+
+echo render_wedocs_docs_grid($attributes);
