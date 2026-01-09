@@ -35,6 +35,59 @@ document.addEventListener('DOMContentLoaded', function() {
 		const storedSize = localStorage.getItem(storageKey);
 		let currentSize = storedSize || defaultSize;
 
+		// Store original font sizes on first run
+		const originalFontSizes = new Map();
+		let isInitialized = false;
+
+		// Initialize original font sizes
+		function initializeOriginalSizes() {
+			if (isInitialized) return;
+
+			const textElements = contentElement.querySelectorAll('p, li, span, div, a, td, th, h1, h2, h3, h4, h5, h6, blockquote, pre, code');
+			textElements.forEach(el => {
+				const computedStyle = window.getComputedStyle(el);
+				const originalSize = parseFloat(computedStyle.fontSize);
+				originalFontSizes.set(el, originalSize);
+			});
+
+			isInitialized = true;
+		}
+
+		// Apply font size to content
+		function applyFontSize(size) {
+			// Initialize original sizes if not done yet
+			initializeOriginalSizes();
+
+			// Calculate the scale factor from default size
+			const newSize = parseInt(size);
+			const defaultSizeNum = parseInt(defaultSize);
+			const scaleFactor = newSize / defaultSizeNum;
+
+			// Scale all text elements proportionally from their ORIGINAL sizes
+			const textElements = contentElement.querySelectorAll('p, li, span, div, a, td, th, h1, h2, h3, h4, h5, h6, blockquote, pre, code');
+			textElements.forEach(el => {
+				// Get the original font size (stored on first load)
+				let originalSize = originalFontSizes.get(el);
+
+				// If element wasn't in original map (dynamically added), get current computed size
+				if (!originalSize) {
+					const computedStyle = window.getComputedStyle(el);
+					originalSize = parseFloat(computedStyle.fontSize);
+					originalFontSizes.set(el, originalSize);
+				}
+
+				// Calculate new size based on original size, maintaining proportions
+				const newElementSize = originalSize * scaleFactor;
+
+				// Apply the scaled size
+				el.style.fontSize = newElementSize + 'px';
+			});
+
+			// Add a custom class to mark as adjusted
+			contentElement.classList.add('font-size-adjusted');
+			contentElement.setAttribute('data-adjusted-size', size);
+		}
+
 		// Apply initial font size
 		applyFontSize(currentSize);
 
@@ -154,35 +207,6 @@ document.addEventListener('DOMContentLoaded', function() {
 					}
 				});
 			}
-		}
-
-		// Apply font size to content
-		function applyFontSize(size) {
-			// Calculate the scale factor from default size
-			const newSize = parseInt(size);
-			const defaultSizeNum = parseInt(defaultSize);
-			const scaleFactor = newSize / defaultSizeNum;
-
-			// Apply to main content element
-			contentElement.style.setProperty('font-size', size, 'important');
-
-			// Scale all text elements proportionally to maintain hierarchy
-			const textElements = contentElement.querySelectorAll('p, li, span, div, a, td, th, h1, h2, h3, h4, h5, h6, blockquote, pre, code');
-			textElements.forEach(el => {
-				// Get the computed font size (what the element currently has from CSS)
-				const computedStyle = window.getComputedStyle(el);
-				const currentFontSize = parseFloat(computedStyle.fontSize);
-
-				// Calculate new size proportionally
-				const newElementSize = currentFontSize * scaleFactor;
-
-				// Apply the scaled size
-				el.style.fontSize = newElementSize + 'px';
-			});
-
-			// Add a custom class to mark as adjusted
-			contentElement.classList.add('font-size-adjusted');
-			contentElement.setAttribute('data-adjusted-size', size);
 		}
 
 		// Update current size display
