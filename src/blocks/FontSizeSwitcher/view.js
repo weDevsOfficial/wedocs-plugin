@@ -158,8 +158,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		// Apply font size to content
 		function applyFontSize(size) {
-			// Apply to main content element with !important to override theme styles
+			// Calculate the scale factor from default size
+			const newSize = parseInt(size);
+			const defaultSizeNum = parseInt(defaultSize);
+			const scaleFactor = newSize / defaultSizeNum;
+
+			// Apply to main content element
 			contentElement.style.setProperty('font-size', size, 'important');
+
+			// Scale all text elements proportionally to maintain hierarchy
+			const textElements = contentElement.querySelectorAll('p, li, span, div, a, td, th, h1, h2, h3, h4, h5, h6, blockquote, pre, code');
+			textElements.forEach(el => {
+				// Get the computed font size (what the element currently has from CSS)
+				const computedStyle = window.getComputedStyle(el);
+				const currentFontSize = parseFloat(computedStyle.fontSize);
+
+				// Calculate new size proportionally
+				const newElementSize = currentFontSize * scaleFactor;
+
+				// Apply the scaled size
+				el.style.fontSize = newElementSize + 'px';
+			});
 
 			// Add a custom class to mark as adjusted
 			contentElement.classList.add('font-size-adjusted');
