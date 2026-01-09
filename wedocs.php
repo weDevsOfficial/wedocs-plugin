@@ -187,6 +187,7 @@ final class WeDocs {
             'assets/build/blocks/TableOfContents',
             'assets/build/blocks/HelpfulModal',
             'assets/build/blocks/HelpfulFeedback',
+            'assets/build/blocks/SocialShare',
 
         ];
 

@@ -1,0 +1,251 @@
+/**
+ * Social Share Block Styles
+ */
+
+.wedocs-social-share-block {
+    display: block;
+    width: 100%;
+
+    /* Alignment classes */
+    &.wedocs-social-align-left {
+        text-align: left;
+
+        .wedocs-social-share-buttons {
+            justify-content: flex-start;
+        }
+    }
+
+    &.wedocs-social-align-center {
+        text-align: center;
+
+        .wedocs-social-share-buttons {
+            justify-content: center;
+        }
+    }
+
+    &.wedocs-social-align-right {
+        text-align: right;
+
+        .wedocs-social-share-buttons {
+            justify-content: flex-end;
+        }
+    }
+}
+
+.wedocs-social-share-label {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.wedocs-social-share-buttons {
+    display: flex;
+    align-items: center;
+
+    &.horizontal {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    &.vertical {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.wedocs-social-share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1;
+
+    svg {
+        display: block;
+        flex-shrink: 0;
+    }
+
+    .wedocs-social-btn-text {
+        white-space: nowrap;
+    }
+
+    /* Size variants */
+    &.wedocs-social-btn-small {
+        padding: 8px;
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .wedocs-social-btn-text {
+            font-size: 12px;
+            margin-left: 6px;
+        }
+
+        &.wedocs-social-btn-circle {
+            width: 32px;
+            height: 32px;
+        }
+    }
+
+    &.wedocs-social-btn-medium {
+        padding: 12px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .wedocs-social-btn-text {
+            font-size: 14px;
+            margin-left: 8px;
+        }
+
+        &.wedocs-social-btn-circle {
+            width: 44px;
+            height: 44px;
+        }
+    }
+
+    &.wedocs-social-btn-large {
+        padding: 16px;
+
+        svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .wedocs-social-btn-text {
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        &.wedocs-social-btn-circle {
+            width: 56px;
+            height: 56px;
+        }
+    }
+
+    /* Shape variants */
+    &.wedocs-social-btn-rounded {
+        border-radius: 8px;
+    }
+
+    &.wedocs-social-btn-square {
+        border-radius: 0;
+    }
+
+    &.wedocs-social-btn-circle {
+        border-radius: 50%;
+        padding: 0;
+
+        .wedocs-social-btn-text {
+            display: none;
+        }
+    }
+
+    /* Hover effects */
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    /* Focus styles for accessibility */
+    &:focus {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+    }
+
+    /* Platform-specific hover colors - only when using individual colors */
+    &.wedocs-social-share-facebook:hover {
+        filter: brightness(0.9);
+    }
+
+    &.wedocs-social-share-twitter:hover {
+        filter: brightness(0.9);
+    }
+
+    &.wedocs-social-share-linkedin:hover {
+        filter: brightness(0.9);
+    }
+
+    &.wedocs-social-share-pinterest:hover {
+        filter: brightness(0.9);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .wedocs-social-share-buttons {
+        &.horizontal {
+            flex-wrap: wrap;
+        }
+    }
+
+    .wedocs-social-share-btn {
+        &.wedocs-social-btn-large {
+            padding: 12px;
+
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .wedocs-social-btn-text {
+                font-size: 14px;
+            }
+
+            &.wedocs-social-btn-circle {
+                width: 44px;
+                height: 44px;
+            }
+        }
+    }
+}
+
+/* Editor-specific styles */
+.wp-block-wedocs-social-share {
+    .wedocs-social-share-btn {
+        cursor: not-allowed;
+        opacity: 0.9;
+
+        &:hover {
+            transform: none;
+            box-shadow: none;
+        }
+    }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+    .wedocs-social-share-label {
+        // Adjust if needed for dark mode
+    }
+}
+
+/* Print styles */
+@media print {
+    .wedocs-social-share-block {
+        display: none;
+    }
+}
+
+/* RTL support */
+[dir="rtl"] {
+    .wedocs-social-share-btn {
+        .wedocs-social-btn-text {
+            margin-left: 0;
+            margin-right: 8px;
+        }
+    }
+}

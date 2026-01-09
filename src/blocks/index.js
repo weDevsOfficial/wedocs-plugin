@@ -4,6 +4,7 @@ import './Contributors';
 import './TableOfContents';
 import './HelpfulModal';
 import './HelpfulFeedback';
+import './SocialShare';
 
 // import './Breadcrumbs';
 // import './CategoryDocs';
