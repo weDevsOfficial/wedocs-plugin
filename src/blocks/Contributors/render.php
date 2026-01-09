@@ -7,6 +7,10 @@
  * @param WP_Block $block      Block instance
  * @return string
  */
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 if ( !function_exists('render_wedocs_contributors_block')){
     function render_wedocs_contributors_block($attributes, $content, $block) {

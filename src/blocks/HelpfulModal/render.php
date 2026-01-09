@@ -2,6 +2,10 @@
 /**
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 $main_text = $attributes['mainText'] ?? 'Still stuck? How can we help?';
 $button_text = $attributes['buttonText'] ?? 'Get Help';
