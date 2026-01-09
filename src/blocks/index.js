@@ -9,6 +9,7 @@ import './AISummary';
 import './LastUpdated';
 import './DocActions';
 import './ReadingProgress';
+import './FontSizeSwitcher';
 
 
 // import './Breadcrumbs';

@@ -18,7 +18,8 @@ export default function save({ attributes }) {
 		hoverBackgroundColor,
 		fontSize,
 		padding,
-		margin
+		margin,
+		promptTemplate
 	} = attributes;
 
 	const getIconSVG = (type) => {
@@ -50,6 +51,7 @@ export default function save({ attributes }) {
 		'data-button-style': buttonStyle,
 		'data-bg-color': backgroundColor,
 		'data-hover-bg': hoverBackgroundColor,
+		'data-prompt-template': promptTemplate,
 		style: {
 			padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
 			margin: `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`

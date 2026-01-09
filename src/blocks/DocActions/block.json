@@ -99,6 +99,10 @@
 				"bottom": "20px",
 				"left": "0px"
 			}
+		},
+		"promptTemplate": {
+			"type": "string",
+			"default": "Need more information on \"{title}\"\n\nSource: {url}"
 		}
 	},
 	"textdomain": "wedocs-plugin",

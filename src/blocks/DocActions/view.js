@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	actionBlocks.forEach(block => {
 		const buttons = block.querySelectorAll('.doc-action-button');
 		const hoverBgColor = block.getAttribute('data-hover-bg');
+		const promptTemplate = block.getAttribute('data-prompt-template') || 'Need more information on "{title}"\n\nSource: {url}';
 
 		buttons.forEach(button => {
 			const action = button.getAttribute('data-action');
@@ -31,10 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
 						await handleCopyMarkdown(button);
 						break;
 					case 'open-chatgpt':
-						handleOpenChatGPT();
+						handleOpenChatGPT(promptTemplate);
 						break;
 					case 'open-claude':
-						handleOpenClaude();
+						handleOpenClaude(promptTemplate);
 						break;
 				}
 			});
@@ -67,26 +68,30 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 	}
 
-	function handleOpenChatGPT() {
-		const url = 'https://chat.openai.com/';
-		const content = getPageContent();
+	function handleOpenChatGPT(promptTemplate) {
+		const pageTitle = document.title;
+		const pageUrl = window.location.href;
+		const prompt = promptTemplate
+			.replace(/{title}/g, pageTitle)
+			.replace(/{url}/g, pageUrl);
 
-		// Open ChatGPT with content (if API available)
+		const encodedPrompt = encodeURIComponent(prompt);
+		const url = `https://chatgpt.com/?prompt=${encodedPrompt}`;
+
 		window.open(url, '_blank');
-
-		// Copy content to clipboard for easy pasting
-		copyToClipboard(content);
 	}
 
-	function handleOpenClaude() {
-		const url = 'https://claude.ai/';
-		const content = getPageContent();
+	function handleOpenClaude(promptTemplate) {
+		const pageTitle = document.title;
+		const pageUrl = window.location.href;
+		const prompt = promptTemplate
+			.replace(/{title}/g, pageTitle)
+			.replace(/{url}/g, pageUrl);
 
-		// Open Claude with content
+		const encodedPrompt = encodeURIComponent(prompt);
+		const url = `https://claude.ai/new?q=${encodedPrompt}`;
+
 		window.open(url, '_blank');
-
-		// Copy content to clipboard for easy pasting
-		copyToClipboard(content);
 	}
 
 	// Clipboard helper with fallback for unsupported browsers

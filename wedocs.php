@@ -192,6 +192,7 @@ final class WeDocs {
             'assets/build/blocks/DocActions',
             'assets/build/blocks/LastUpdated',
             'assets/build/blocks/ReadingProgress',
+            'assets/build/blocks/FontSizeSwitcher',
 
         ];
 

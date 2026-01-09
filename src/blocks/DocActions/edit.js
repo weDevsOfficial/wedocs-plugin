@@ -5,6 +5,7 @@ import {
 	ToggleControl,
 	SelectControl,
 	RangeControl,
+	TextareaControl,
 	__experimentalUnitControl as UnitControl
 } from '@wordpress/components';
 import { useEffect } from '@wordpress/element';
@@ -33,7 +34,8 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		hoverBackgroundColor,
 		fontSize,
 		padding,
-		margin
+		margin,
+		promptTemplate
 	} = attributes;
 
 	// Set unique block ID
@@ -124,6 +126,19 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						label={__('Show "Open in Claude"', 'wedocs-plugin')}
 						checked={showClaude}
 						onChange={(value) => setAttributes({ showClaude: value })}
+					/>
+				</PanelBody>
+
+				<PanelBody title={__('AI Prompt Template', 'wedocs-plugin')} initialOpen={false}>
+					<TextareaControl
+						label={__('Prompt Template', 'wedocs-plugin')}
+						value={promptTemplate}
+						onChange={(value) => setAttributes({ promptTemplate: value })}
+						help={__(
+							'Use {title} for page title and {url} for page URL. Example: Need more information on "{title}"\n\nSource: {url}',
+							'wedocs-plugin'
+						)}
+						rows={5}
 					/>
 				</PanelBody>
 
