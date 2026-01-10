@@ -22,6 +22,7 @@
     "html": false,
     "anchor": true,
     "align": ["wide", "full"],
+    "alignWide": true,
     "color": {
       "background": true,
       "text": true,
@@ -49,6 +50,12 @@
         "margin": true
       }
     },
+    "dimensions": {
+      "minHeight": true,
+      "__experimentalDefaultControls": {
+        "minHeight": true
+      }
+    },
     "__experimentalBorder": {
       "color": true,
       "radius": true,
@@ -57,6 +64,14 @@
       "__experimentalDefaultControls": {
         "color": true,
         "radius": true
+      }
+    },
+    "layout": {
+      "allowEditing": true,
+      "allowInheriting": true,
+      "allowSwitching": true,
+      "default": {
+        "type": "constrained"
       }
     }
   },
@@ -102,73 +117,14 @@
     "containerBackgroundColor": {
       "type": "string"
     },
-    "containerWidth": {
-      "type": "string",
-      "default": "100%"
-    },
-    "containerPadding": {
-      "type": "object",
-      "default": {
-        "top": "20px",
-        "right": "20px",
-        "bottom": "20px",
-        "left": "20px"
-      }
-    },
-    "containerMargin": {
-      "type": "object",
-      "default": {
-        "top": "0px",
-        "right": "0px",
-        "bottom": "20px",
-        "left": "0px"
-      }
-    },
-    "containerBorderStyle": {
-      "type": "string",
-      "default": "solid"
-    },
-    "containerBorderWidth": {
-      "type": "string",
-      "default": "1px"
-    },
-    "containerBorderColor": {
-      "type": "string",
-      "default": "#e0e0e0"
-    },
-    "containerBorderRadius": {
-      "type": "string",
-      "default": "5px"
-    },
     "titleColor": {
       "type": "string"
-    },
-    "titleFontSize": {
-      "type": "string",
-      "default": "18px"
-    },
-    "titleFontWeight": {
-      "type": "string",
-      "default": "600"
-    },
-    "titlePadding": {
-      "type": "object",
-      "default": {
-        "top": "0px",
-        "right": "0px",
-        "bottom": "15px",
-        "left": "0px"
-      }
     },
     "listColor": {
       "type": "string"
     },
     "listHoverColor": {
       "type": "string"
-    },
-    "listFontSize": {
-      "type": "string",
-      "default": "14px"
     },
     "smoothScroll": {
       "type": "boolean",

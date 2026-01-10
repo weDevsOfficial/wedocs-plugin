@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 import {
 	PanelBody,
 	ToggleControl,
@@ -8,11 +9,6 @@ import {
 } from '@wordpress/components';
 import { useEffect } from '@wordpress/element';
 import './editor.scss';
-import {
-	ColorSettingsPanel,
-	TypographyPanel,
-	SpacingPanel
-} from '../commonControls/CommonControls';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
 	const {
@@ -21,12 +17,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		iconType,
 		prefix,
 		dateFormat,
-		textColor,
-		fontSize,
-		fontWeight,
-		textAlign,
-		padding,
-		margin
+		textAlign
 	} = attributes;
 
 	// Set unique block ID
@@ -37,15 +28,11 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	}, [blockId, clientId, setAttributes]);
 
 	const blockProps = useBlockProps({
-		className: 'wp-block-wedocs-last-updated',
+		className: getBlockClasses(attributes, 'wp-block-wedocs-last-updated'),
 		'data-block-id': blockId,
 		style: {
-			color: textColor,
-			fontSize,
-			fontWeight,
-			textAlign,
-			padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
-			margin: `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
+			...getInlineStyles(attributes),
+			textAlign
 		}
 	});
 
@@ -57,42 +44,47 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					<path d="M9 2V6H14" stroke="currentColor" strokeWidth="1.5"/>
 				</svg>
 			),
-			clock: (
-				<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-					<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5"/>
-					<path d="M8 4V8L11 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-				</svg>
-			),
 			calendar: (
 				<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
 					<rect x="2" y="3" width="12" height="11" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+					<path d="M5 1V4M11 1V4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
 					<path d="M2 6H14" stroke="currentColor" strokeWidth="1.5"/>
-					<path d="M5 2V4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-					<path d="M11 2V4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
 				</svg>
 			),
-			refresh: (
+			clock: (
 				<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-					<path d="M2 8C2 4.68629 4.68629 2 8 2C9.88154 2 11.5638 2.92287 12.6271 4.34315M14 8C14 11.3137 11.3137 14 8 14C6.11846 14 4.43619 13.0771 3.37289 11.6569" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-					<path d="M14 4V4.5M14 4.5V8.5M14 4.5H10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-					<path d="M2 12V11.5M2 11.5V7.5M2 11.5H6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+					<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5"/>
+					<path d="M8 4V8L11 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 				</svg>
 			)
 		};
-		return icons[type] || icons.document;
+		return icons[type] || icons.calendar;
 	};
 
 	const formatDate = (format) => {
 		const now = new Date();
-		const formats = {
-			'MM/DD/YYYY': now.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }),
-			'DD/MM/YYYY': now.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }),
-			'YYYY-MM-DD': now.toISOString().split('T')[0],
-			'Month DD, YYYY': now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-			'DD Month YYYY': now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
-			'relative': 'Just now'
+		const options = {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
 		};
-		return formats[format] || formats['MM/DD/YYYY'];
+
+		switch (format) {
+			case 'MM/DD/YYYY':
+				return `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
+			case 'DD/MM/YYYY':
+				return `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+			case 'YYYY-MM-DD':
+				return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+			case 'Month DD, YYYY':
+				return now.toLocaleDateString('en-US', options);
+			case 'DD Month YYYY':
+				return now.toLocaleDateString('en-GB', options);
+			case 'relative':
+				return __('Just now', 'wedocs-plugin');
+			default:
+				return now.toLocaleDateString();
+		}
 	};
 
 	return (
@@ -145,36 +137,9 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					)}
 				</PanelBody>
 
-				<ColorSettingsPanel
-					attributes={attributes}
-					setAttributes={setAttributes}
-					colorSettings={[
-						{
-							label: __('Text Color', 'wedocs-plugin'),
-							value: textColor,
-							onChange: (value) => setAttributes({ textColor: value })
-						}
-					]}
-				/>
 
-				<TypographyPanel
-					fontSize={fontSize}
-					fontWeight={fontWeight}
-					onFontSizeChange={(value) => setAttributes({ fontSize: value })}
-					onFontWeightChange={(value) => setAttributes({ fontWeight: value })}
-				/>
 
-				<SpacingPanel
-					title={__('Padding', 'wedocs-plugin')}
-					values={padding}
-					onChange={(value) => setAttributes({ padding: value })}
-				/>
 
-				<SpacingPanel
-					title={__('Margin', 'wedocs-plugin')}
-					values={margin}
-					onChange={(value) => setAttributes({ margin: value })}
-				/>
 			</InspectorControls>
 
 			<div {...blockProps}>

@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 import {
 	PanelBody,
 	ToggleControl,
@@ -9,7 +10,6 @@ import {
 } from '@wordpress/components';
 import { useEffect } from '@wordpress/element';
 import './editor.scss';
-import { ColorSettingsPanel, SpacingPanel } from '../commonControls/CommonControls';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
 	const {
@@ -21,15 +21,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		alignment,
 		showCurrentSize,
 		contentSelector,
-		defaultSize,
-		backgroundColor,
-		textColor,
-		activeColor,
-		borderColor,
-		borderRadius,
-		spacing,
-		padding,
-		margin
+		defaultSize
 	} = attributes;
 
 	// Set unique block ID
@@ -40,38 +32,23 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	}, [blockId, clientId, setAttributes]);
 
 	const blockProps = useBlockProps({
-		className: 'wp-block-wedocs-font-size-switcher',
+		className: getBlockClasses(attributes, 'wp-block-wedocs-font-size-switcher'),
 		'data-block-id': blockId,
-		style: {
-			padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
-			margin: `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
-		}
+		style: getInlineStyles(attributes)
 	});
 
 	const containerStyle = {
 		display: 'flex',
 		alignItems: 'center',
-		gap: spacing,
+		gap: '10px',
 		justifyContent: alignment === 'center' ? 'center' : (alignment === 'right' ? 'flex-end' : 'flex-start'),
 		flexWrap: 'wrap'
 	};
 
 	const buttonBaseStyle = {
-		backgroundColor: buttonStyle === 'filled' ? backgroundColor : 'transparent',
-		color: textColor,
-		border: buttonStyle !== 'text' ? `1px solid ${borderColor}` : 'none',
-		borderRadius,
-		padding: '8px 12px',
 		cursor: 'pointer',
 		fontSize: '14px',
 		transition: 'all 0.2s ease'
-	};
-
-	const activeButtonStyle = {
-		...buttonBaseStyle,
-		backgroundColor: activeColor,
-		color: '#ffffff',
-		borderColor: activeColor
 	};
 
 	const renderButtons = () => {
@@ -182,53 +159,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						]}
 						onChange={(value) => setAttributes({ buttonStyle: value })}
 					/>
-					<UnitControl
-						label={__('Button Spacing', 'wedocs-plugin')}
-						value={spacing}
-						onChange={(value) => setAttributes({ spacing: value })}
-					/>
-					<UnitControl
-						label={__('Border Radius', 'wedocs-plugin')}
-						value={borderRadius}
-						onChange={(value) => setAttributes({ borderRadius: value })}
-					/>
-				</PanelBody>
-
-				<ColorSettingsPanel
-					attributes={attributes}
-					setAttributes={setAttributes}
-					colorSettings={[
-						{
-							label: __('Text Color', 'wedocs-plugin'),
-							value: textColor,
-							onChange: (value) => setAttributes({ textColor: value })
-						},
-						{
-							label: __('Background Color', 'wedocs-plugin'),
-							value: backgroundColor,
-							onChange: (value) => setAttributes({ backgroundColor: value })
-						},
-						{
-							label: __('Active/Hover Color', 'wedocs-plugin'),
-							value: activeColor,
-							onChange: (value) => setAttributes({ activeColor: value })
-						},
-						{
-							label: __('Border Color', 'wedocs-plugin'),
-							value: borderColor,
-							onChange: (value) => setAttributes({ borderColor: value })
-						}
-					]}
-				/>
-
-				<SpacingPanel
-					attributes={attributes}
-					setAttributes={setAttributes}
-					paddingAttribute="padding"
-					marginAttribute="margin"
-				/>
-
-				<PanelBody title={__('Advanced Settings', 'wedocs-plugin')} initialOpen={false}>
+</PanelBody>				<PanelBody title={__('Advanced Settings', 'wedocs-plugin')} initialOpen={false}>
 					<TextControl
 						label={__('Content Selector', 'wedocs-plugin')}
 						value={contentSelector}
@@ -246,7 +177,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 			<div {...blockProps}>
 				<div className="font-size-switcher-container" style={containerStyle}>
 					{showLabel && (
-						<span className="font-size-label" style={{ color: textColor, fontSize: '14px', fontWeight: '500' }}>
+						<span className="font-size-label" style={{ fontSize: '14px', fontWeight: '500' }}>
 							{labelText}
 						</span>
 					)}

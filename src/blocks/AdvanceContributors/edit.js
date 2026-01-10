@@ -3,6 +3,7 @@ import {
 	useBlockProps,
 	InspectorControls
 } from '@wordpress/block-editor';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 import {
 	PanelBody,
 	ToggleControl,

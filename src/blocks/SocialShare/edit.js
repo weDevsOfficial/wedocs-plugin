@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 import {
     PanelBody,
     SelectControl,

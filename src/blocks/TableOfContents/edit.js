@@ -13,6 +13,7 @@ import { __ } from '@wordpress/i18n';
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 
 /**
  * WordPress dependencies

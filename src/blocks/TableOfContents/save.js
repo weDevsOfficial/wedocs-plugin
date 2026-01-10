@@ -4,6 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
 import { useBlockProps } from '@wordpress/block-editor';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -88,5 +89,4 @@ export default function save({ attributes }) {
 	);
 }
 
-  
-	
+

@@ -12,9 +12,12 @@
 		"html": false,
 		"anchor": true,
 		"align": ["wide", "full"],
+		"alignWide": true,
 		"color": {
 			"background": true,
 			"text": true,
+			"link": true,
+			"gradients": true,
 			"__experimentalDefaultControls": {
 				"background": true,
 				"text": true
@@ -23,19 +26,74 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
+			"fontFamily": true,
+			"fontWeight": true,
+			"fontStyle": true,
+			"textTransform": true,
+			"textDecoration": true,
+			"letterSpacing": true,
 			"__experimentalFontFamily": true,
 			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
 			"__experimentalDefaultControls": {
-				"fontSize": true
+				"fontSize": true,
+				"lineHeight": true,
+				"fontWeight": true
 			}
 		},
 		"spacing": {
 			"margin": true,
 			"padding": true,
+			"blockGap": true,
 			"__experimentalDefaultControls": {
 				"padding": true,
 				"margin": true
 			}
+		},
+		"dimensions": {
+			"minHeight": true,
+			"__experimentalDefaultControls": {
+				"minHeight": true
+			}
+		},
+		"border": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		},
+		"layout": {
+			"allowEditing": true,
+			"allowInheriting": true,
+			"allowSwitching": true,
+			"allowVerticalAlignment": true,
+			"default": {
+				"type": "constrained"
+			}
+		},
+		"interactivity": {
+			"clientNavigation": true
 		}
 	},
 	"attributes": {
@@ -70,52 +128,6 @@
 		"iconType": {
 			"type": "string",
 			"default": "sparkles"
-		},
-		"backgroundColor": {
-			"type": "string",
-			"default": "#1a1a1a"
-		},
-		"textColor": {
-			"type": "string",
-			"default": "#ffffff"
-		},
-		"titleColor": {
-			"type": "string",
-			"default": "#ffffff"
-		},
-		"titleFontSize": {
-			"type": "string",
-			"default": "20px"
-		},
-		"titleFontWeight": {
-			"type": "string",
-			"default": "600"
-		},
-		"contentFontSize": {
-			"type": "string",
-			"default": "16px"
-		},
-		"borderRadius": {
-			"type": "string",
-			"default": "8px"
-		},
-		"padding": {
-			"type": "object",
-			"default": {
-				"top": "20px",
-				"right": "20px",
-				"bottom": "20px",
-				"left": "20px"
-			}
-		},
-		"margin": {
-			"type": "object",
-			"default": {
-				"top": "0px",
-				"right": "0px",
-				"bottom": "20px",
-				"left": "0px"
-			}
 		}
 	},
 	"textdomain": "wedocs-plugin",

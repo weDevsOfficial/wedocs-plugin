@@ -1,5 +1,6 @@
 /**
  * AI-Powered Summary Block Styles
+ * Includes hover states and responsive support
  */
 
 .wp-block-wedocs-ai-summary {
@@ -7,6 +8,13 @@
 	transition: all 0.3s ease;
 	max-width: 100%;
 	box-sizing: border-box;
+	position: relative;
+
+	/* Hover state - subtle elevation effect */
+	&:hover {
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+		transform: translateY(-1px);
+	}
 
 	.ai-summary-header {
 		display: flex;
@@ -84,6 +92,110 @@
 			&:last-child {
 				margin-bottom: 0;
 			}
+		}
+
+		/* Link hover states */
+		a {
+			transition: color 0.2s ease, opacity 0.2s ease;
+
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+
+		/* Button hover states for generate button */
+		.ai-summary-generate-btn {
+			transition: all 0.3s ease;
+
+			&:hover:not(:disabled) {
+				background-color: #005a87 !important;
+				transform: scale(1.02);
+			}
+
+			&:active:not(:disabled) {
+				transform: scale(0.98);
+			}
+
+			&:disabled {
+				cursor: not-allowed;
+				opacity: 0.6;
+			}
+		}
+	}
+
+	/* Responsive Design */
+	/* Tablet and below */
+	@media (max-width: 782px) {
+		.ai-summary-header {
+			flex-wrap: wrap;
+
+			h3 {
+				font-size: 18px !important;
+			}
+		}
+
+		.ai-summary-icon svg {
+			width: 20px;
+			height: 20px;
+		}
+
+		.ai-summary-content {
+			font-size: 14px !important;
+		}
+	}
+
+	/* Mobile devices */
+	@media (max-width: 600px) {
+		padding: 15px !important;
+
+		.ai-summary-header {
+			gap: 8px;
+
+			h3 {
+				font-size: 16px !important;
+			}
+		}
+
+		.ai-summary-icon svg {
+			width: 18px;
+			height: 18px;
+		}
+
+		.ai-summary-toggle svg {
+			width: 16px;
+			height: 16px;
+		}
+
+		.ai-summary-content {
+			font-size: 13px !important;
+			margin-top: 12px !important;
+		}
+
+		.ai-summary-generate-btn {
+			font-size: 13px !important;
+			padding: 8px 16px !important;
+		}
+	}
+
+	/* Small mobile devices */
+	@media (max-width: 480px) {
+		padding: 12px !important;
+
+		.ai-summary-header {
+			gap: 6px;
+
+			h3 {
+				font-size: 15px !important;
+			}
+		}
+
+		.ai-summary-icon svg {
+			width: 16px;
+			height: 16px;
+		}
+
+		.ai-summary-content {
+			margin-top: 10px !important;
 		}
 	}
 }

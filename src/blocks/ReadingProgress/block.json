@@ -10,7 +10,41 @@
 	"example": {},
 	"supports": {
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"anchor": true,
+		"align": ["wide", "full"],
+		"alignWide": true,
+		"color": {
+			"background": true,
+			"text": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
+		"dimensions": {
+			"minHeight": true,
+			"__experimentalDefaultControls": {
+				"minHeight": true
+			}
+		}
 	},
 	"attributes": {
 		"blockId": {
@@ -28,10 +62,6 @@
 		"barColor": {
 			"type": "string",
 			"default": "#0073aa"
-		},
-		"backgroundColor": {
-			"type": "string",
-			"default": "#f0f0f0"
 		},
 		"showPercentage": {
 			"type": "boolean",
@@ -56,10 +86,6 @@
 		"wordsPerMinute": {
 			"type": "number",
 			"default": 200
-		},
-		"borderRadius": {
-			"type": "string",
-			"default": "0px"
 		},
 		"showShadow": {
 			"type": "boolean",

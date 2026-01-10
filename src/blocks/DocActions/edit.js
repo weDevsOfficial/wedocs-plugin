@@ -10,11 +10,7 @@ import {
 } from '@wordpress/components';
 import { useEffect } from '@wordpress/element';
 import './editor.scss';
-import {
-	ColorSettingsPanel,
-	SpacingPanel,
-	BorderPanel
-} from '../commonControls/CommonControls';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
 	const {
@@ -25,16 +21,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		buttonStyle,
 		buttonSize,
 		alignment,
-		spacing,
-		backgroundColor,
-		textColor,
-		borderColor,
-		borderWidth,
-		borderRadius,
 		hoverBackgroundColor,
-		fontSize,
-		padding,
-		margin,
 		promptTemplate
 	} = attributes;
 
@@ -46,12 +33,9 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	}, [blockId, clientId, setAttributes]);
 
 	const blockProps = useBlockProps({
-		className: 'wp-block-wedocs-doc-actions',
+		className: getBlockClasses(attributes, 'wp-block-wedocs-doc-actions'),
 		'data-block-id': blockId,
-		style: {
-			padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
-			margin: `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
-		}
+		style: getInlineStyles(attributes)
 	});
 
 	const getButtonClasses = () => {
@@ -61,15 +45,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		return classes.join(' ');
 	};
 
-	const getButtonStyles = () => ({
-		backgroundColor: buttonStyle === 'filled' ? backgroundColor : 'transparent',
-		color: textColor,
-		borderColor,
-		borderWidth,
-		borderRadius,
-		fontSize,
-		gap: spacing
-	});
+	const getButtonStyles = () => ({});
 
 	const getIconSVG = (type) => {
 		const icons = {
@@ -97,7 +73,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	const containerStyle = {
 		display: 'flex',
 		flexWrap: 'wrap',
-		gap: spacing,
+		gap: '10px',
 		justifyContent: alignment === 'center' ? 'center' : (alignment === 'right' ? 'flex-end' : 'flex-start')
 	};
 
@@ -163,65 +139,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						]}
 						onChange={(value) => setAttributes({ buttonSize: value })}
 					/>
-					<UnitControl
-						label={__('Button Spacing', 'wedocs-plugin')}
-						value={spacing}
-						onChange={(value) => setAttributes({ spacing: value })}
-					/>
-					<UnitControl
-						label={__('Font Size', 'wedocs-plugin')}
-						value={fontSize}
-						onChange={(value) => setAttributes({ fontSize: value })}
-					/>
 				</PanelBody>
-
-				<ColorSettingsPanel
-					attributes={attributes}
-					setAttributes={setAttributes}
-					colorSettings={[
-						{
-							label: __('Text Color', 'wedocs-plugin'),
-							value: textColor,
-							onChange: (value) => setAttributes({ textColor: value })
-						},
-						{
-							label: __('Background Color', 'wedocs-plugin'),
-							value: backgroundColor,
-							onChange: (value) => setAttributes({ backgroundColor: value })
-						},
-						{
-							label: __('Border Color', 'wedocs-plugin'),
-							value: borderColor,
-							onChange: (value) => setAttributes({ borderColor: value })
-						},
-						{
-							label: __('Hover Background', 'wedocs-plugin'),
-							value: hoverBackgroundColor,
-							onChange: (value) => setAttributes({ hoverBackgroundColor: value })
-						}
-					]}
-				/>
-
-				<BorderPanel
-					borderWidth={borderWidth}
-					borderRadius={borderRadius}
-					borderColor={borderColor}
-					onBorderWidthChange={(value) => setAttributes({ borderWidth: value })}
-					onBorderRadiusChange={(value) => setAttributes({ borderRadius: value })}
-					onBorderColorChange={(value) => setAttributes({ borderColor: value })}
-				/>
-
-				<SpacingPanel
-					title={__('Padding', 'wedocs-plugin')}
-					values={padding}
-					onChange={(value) => setAttributes({ padding: value })}
-				/>
-
-				<SpacingPanel
-					title={__('Margin', 'wedocs-plugin')}
-					values={margin}
-					onChange={(value) => setAttributes({ margin: value })}
-				/>
 			</InspectorControls>
 
 			<div {...blockProps}>

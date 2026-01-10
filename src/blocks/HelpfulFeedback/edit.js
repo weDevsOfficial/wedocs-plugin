@@ -7,6 +7,7 @@ import {
     BlockControls,
     AlignmentToolbar,
 } from '@wordpress/block-editor';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 import {
     PanelBody,
     ToggleControl,
@@ -86,10 +87,10 @@ const Edit = ({ attributes, setAttributes }) => {
 
     const containerStyle = {
         backgroundColor: containerBgColor,
-        padding: `${containerPadding.top} ${containerPadding.right} ${containerPadding.bottom} ${containerPadding.left}`,
-        margin: `${containerMargin.top} ${containerMargin.right} ${containerMargin.bottom} ${containerMargin.left}`,
-        border: containerBorderStyle !== 'none' ? `${containerBorderWidth.top} ${containerBorderStyle} ${containerBorderColor}` : 'none',
-        borderRadius: `${containerBorderRadius.top} ${containerBorderRadius.right} ${containerBorderRadius.bottom} ${containerBorderRadius.left}`,
+        padding: containerPadding ? `${containerPadding.top} ${containerPadding.right} ${containerPadding.bottom} ${containerPadding.left}` : undefined,
+        margin: containerMargin ? `${containerMargin.top} ${containerMargin.right} ${containerMargin.bottom} ${containerMargin.left}` : undefined,
+        border: (containerBorderStyle !== 'none' && containerBorderWidth) ? `${containerBorderWidth.top} ${containerBorderStyle} ${containerBorderColor}` : 'none',
+        borderRadius: containerBorderRadius ? `${containerBorderRadius.top} ${containerBorderRadius.right} ${containerBorderRadius.bottom} ${containerBorderRadius.left}` : undefined,
         boxShadow: containerBoxShadow,
         textAlign: alignment,
         transition: 'all 0.3s ease'
@@ -101,8 +102,8 @@ const Edit = ({ attributes, setAttributes }) => {
         fontWeight: titleFontWeight,
         lineHeight: titleLineHeight,
         letterSpacing: titleLetterSpacing,
-        padding: `${titlePadding.top} ${titlePadding.right} ${titlePadding.bottom} ${titlePadding.left}`,
-        margin: `${titleMargin.top} ${titleMargin.right} ${titleMargin.bottom} ${titleMargin.left}`
+        padding: titlePadding ? `${titlePadding.top} ${titlePadding.right} ${titlePadding.bottom} ${titlePadding.left}` : undefined,
+        margin: titleMargin ? `${titleMargin.top} ${titleMargin.right} ${titleMargin.bottom} ${titleMargin.left}` : undefined
     };
 
     const buttonBaseStyle = {

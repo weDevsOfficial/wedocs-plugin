@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { cog, grid } from '@wordpress/icons';
 import { Fragment, useState } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 import {
     PanelBody,
     SelectControl,

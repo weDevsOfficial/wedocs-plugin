@@ -12,6 +12,7 @@
 		"html": false,
 		"anchor": true,
 		"align": ["left", "center", "right", "wide", "full"],
+		"alignWide": true,
 		"color": {
 			"background": true,
 			"text": true,
@@ -34,6 +35,12 @@
 			"__experimentalDefaultControls": {
 				"padding": true,
 				"margin": true
+			}
+		},
+		"dimensions": {
+			"minHeight": true,
+			"__experimentalDefaultControls": {
+				"minHeight": true
 			}
 		}
 	},
@@ -58,39 +65,9 @@
 			"type": "string",
 			"default": "MM/DD/YYYY"
 		},
-		"textColor": {
-			"type": "string",
-			"default": "#666666"
-		},
-		"fontSize": {
-			"type": "string",
-			"default": "14px"
-		},
-		"fontWeight": {
-			"type": "string",
-			"default": "400"
-		},
 		"textAlign": {
 			"type": "string",
 			"default": "left"
-		},
-		"padding": {
-			"type": "object",
-			"default": {
-				"top": "10px",
-				"right": "0px",
-				"bottom": "10px",
-				"left": "0px"
-			}
-		},
-		"margin": {
-			"type": "object",
-			"default": {
-				"top": "0px",
-				"right": "0px",
-				"bottom": "10px",
-				"left": "0px"
-			}
 		}
 	},
 	"textdomain": "wedocs-plugin",

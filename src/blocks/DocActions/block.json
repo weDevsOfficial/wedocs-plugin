@@ -12,12 +12,47 @@
 		"html": false,
 		"anchor": true,
 		"align": ["left", "center", "right", "wide", "full"],
+		"alignWide": true,
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
 		"spacing": {
 			"margin": true,
 			"padding": true,
 			"__experimentalDefaultControls": {
 				"padding": true,
 				"margin": true
+			}
+		},
+		"dimensions": {
+			"minHeight": true,
+			"__experimentalDefaultControls": {
+				"minHeight": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true
 			}
 		}
 	},
@@ -54,51 +89,9 @@
 			"type": "string",
 			"default": "10px"
 		},
-		"backgroundColor": {
-			"type": "string",
-			"default": ""
-		},
-		"textColor": {
-			"type": "string",
-			"default": "#ffffff"
-		},
-		"borderColor": {
-			"type": "string",
-			"default": "#444444"
-		},
-		"borderWidth": {
-			"type": "string",
-			"default": "1px"
-		},
-		"borderRadius": {
-			"type": "string",
-			"default": "6px"
-		},
 		"hoverBackgroundColor": {
 			"type": "string",
 			"default": "#333333"
-		},
-		"fontSize": {
-			"type": "string",
-			"default": "14px"
-		},
-		"padding": {
-			"type": "object",
-			"default": {
-				"top": "20px",
-				"right": "0px",
-				"bottom": "20px",
-				"left": "0px"
-			}
-		},
-		"margin": {
-			"type": "object",
-			"default": {
-				"top": "0px",
-				"right": "0px",
-				"bottom": "20px",
-				"left": "0px"
-			}
 		},
 		"promptTemplate": {
 			"type": "string",

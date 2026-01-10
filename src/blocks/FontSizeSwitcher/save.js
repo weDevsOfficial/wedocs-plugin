@@ -1,4 +1,5 @@
 import { useBlockProps } from '@wordpress/block-editor';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 
 export default function save({ attributes }) {
 	const {
@@ -10,15 +11,7 @@ export default function save({ attributes }) {
 		alignment,
 		showCurrentSize,
 		contentSelector,
-		defaultSize,
-		backgroundColor,
-		textColor,
-		activeColor,
-		borderColor,
-		borderRadius,
-		spacing,
-		padding,
-		margin
+		defaultSize
 	} = attributes;
 
 	const blockProps = useBlockProps.save({
@@ -28,29 +21,23 @@ export default function save({ attributes }) {
 		'data-button-style': buttonStyle,
 		'data-content-selector': contentSelector,
 		'data-default-size': defaultSize,
-		'data-active-color': activeColor,
-		'data-text-color': textColor,
-		'data-bg-color': backgroundColor,
-		'data-border-color': borderColor,
 		style: {
-			padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
-			margin: `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
 		}
 	});
 
 	const containerStyle = {
 		display: 'flex',
 		alignItems: 'center',
-		gap: spacing,
+		gap: "10px",
 		justifyContent: alignment === 'center' ? 'center' : (alignment === 'right' ? 'flex-end' : 'flex-start'),
 		flexWrap: 'wrap'
 	};
 
 	const buttonBaseStyle = {
-		backgroundColor: buttonStyle === 'filled' ? backgroundColor : 'transparent',
-		color: textColor,
-		border: buttonStyle !== 'text' ? `1px solid ${borderColor}` : 'none',
-		borderRadius,
+		
+		
+		
+		
 		padding: '8px 12px',
 		cursor: 'pointer',
 		fontSize: '14px',
@@ -125,7 +112,7 @@ export default function save({ attributes }) {
 		<div {...blockProps}>
 			<div className="font-size-switcher-container" style={containerStyle}>
 				{showLabel && (
-					<span className="font-size-label" style={{ color: textColor, fontSize: '14px', fontWeight: '500' }}>
+					<span className="font-size-label" style={{  fontSize: '14px', fontWeight: '500' }}>
 						{labelText}
 					</span>
 				)}
@@ -136,7 +123,7 @@ export default function save({ attributes }) {
 
 				{showCurrentSize && (
 					<span className="current-size-display" style={{
-						color: textColor,
+						
 						fontSize: '13px',
 						opacity: 0.7,
 						marginLeft: '10px'

@@ -163,14 +163,17 @@ export const TypographyPanel = ({
     title = __('Typography', 'wedocs'),
     fontSize,
     fontWeight,
+    fontFamily,
     lineHeight,
     letterSpacing,
     onFontSizeChange,
     onFontWeightChange,
+    onFontFamilyChange,
     onLineHeightChange,
     onLetterSpacingChange,
     showFontSize = true,
     showFontWeight = true,
+    showFontFamily = false,
     showLineHeight = false,
     showLetterSpacing = false,
     initialOpen = false
@@ -184,8 +187,36 @@ export const TypographyPanel = ({
         { label: __('Extra Bold (800)', 'wedocs'), value: '800' },
     ];
 
+    const fontFamilyOptions = [
+        { label: __('Default', 'wedocs'), value: '' },
+        { label: 'Arial', value: 'Arial, sans-serif' },
+        { label: 'Helvetica', value: 'Helvetica, sans-serif' },
+        { label: 'Times New Roman', value: '"Times New Roman", serif' },
+        { label: 'Georgia', value: 'Georgia, serif' },
+        { label: 'Courier New', value: '"Courier New", monospace' },
+        { label: 'Verdana', value: 'Verdana, sans-serif' },
+        { label: 'Trebuchet MS', value: '"Trebuchet MS", sans-serif' },
+        { label: 'Lucida Sans', value: '"Lucida Sans", sans-serif' },
+        { label: 'Tahoma', value: 'Tahoma, sans-serif' },
+        { label: 'Palatino', value: 'Palatino, serif' },
+        { label: 'Garamond', value: 'Garamond, serif' },
+        { label: 'Comic Sans MS', value: '"Comic Sans MS", cursive' },
+        { label: 'Impact', value: 'Impact, sans-serif' },
+        { label: 'Monaco', value: 'Monaco, monospace' },
+        { label: 'Consolas', value: 'Consolas, monospace' },
+    ];
+
     return (
         <PanelBody title={title} initialOpen={initialOpen}>
+            {showFontFamily && (
+                <SelectControl
+                    label={__('Font Family', 'wedocs')}
+                    value={fontFamily}
+                    options={fontFamilyOptions}
+                    onChange={onFontFamilyChange}
+                />
+            )}
+
             {showFontSize && (
                 <UnitControl
                     label={__('Font Size', 'wedocs')}

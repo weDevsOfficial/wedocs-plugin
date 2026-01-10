@@ -12,6 +12,7 @@
 		"html": false,
 		"anchor": true,
 		"align": ["wide", "full"],
+		"alignWide": true,
 		"color": {
 			"background": true,
 			"text": true,
@@ -39,6 +40,12 @@
 				"margin": true
 			}
 		},
+		"dimensions": {
+			"minHeight": true,
+			"__experimentalDefaultControls": {
+				"minHeight": true
+			}
+		},
 		"__experimentalBorder": {
 			"color": true,
 			"radius": true,
@@ -47,6 +54,14 @@
 			"__experimentalDefaultControls": {
 				"color": true,
 				"radius": true
+			}
+		},
+		"layout": {
+			"allowEditing": true,
+			"allowInheriting": true,
+			"allowSwitching": true,
+			"default": {
+				"type": "constrained"
 			}
 		}
 	},

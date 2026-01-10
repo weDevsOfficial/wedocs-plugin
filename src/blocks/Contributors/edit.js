@@ -3,6 +3,7 @@ import {
 	useBlockProps,
 	InspectorControls
 } from '@wordpress/block-editor';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 import {
 	PanelBody,
 	ToggleControl,
@@ -42,14 +43,14 @@ const Edit = (props) => {
 			backgroundColor: attributes.backgroundType === 'classic' ? attributes.backgroundColor : undefined,
 			backgroundImage: attributes.backgroundType === 'gradient' ? attributes.backgroundGradient :
 				(attributes.backgroundImage?.url ? `url(${attributes.backgroundImage.url})` : undefined),
-			padding: `${attributes.padding.top} ${attributes.padding.right} ${attributes.padding.bottom} ${attributes.padding.left}`,
-			margin: `${attributes.margin.top} ${attributes.margin.right} ${attributes.margin.bottom} ${attributes.margin.left}`,
+			padding: attributes.padding ? `${attributes.padding.top} ${attributes.padding.right} ${attributes.padding.bottom} ${attributes.padding.left}` : undefined,
+			margin: attributes.margin ? `${attributes.margin.top} ${attributes.margin.right} ${attributes.margin.bottom} ${attributes.margin.left}` : undefined,
 			borderStyle: attributes.borderStyle !== 'none' ? attributes.borderStyle : undefined,
-			borderWidth: attributes.borderStyle !== 'none' ?
+			borderWidth: (attributes.borderStyle !== 'none' && attributes.borderWidth) ?
 				`${attributes.borderWidth.top} ${attributes.borderWidth.right} ${attributes.borderWidth.bottom} ${attributes.borderWidth.left}` : undefined,
 			borderColor: attributes.borderStyle !== 'none' ? attributes.borderColor : undefined,
 			borderRadius: attributes.borderRadius,
-			boxShadow: attributes.boxShadow.enabled ?
+			boxShadow: attributes.boxShadow?.enabled ?
 				`${attributes.boxShadow.horizontal} ${attributes.boxShadow.vertical} ${attributes.boxShadow.blur} ${attributes.boxShadow.spread} ${attributes.boxShadow.color}` : undefined
 		}
 	});

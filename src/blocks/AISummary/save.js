@@ -1,4 +1,5 @@
 import { useBlockProps, RichText } from '@wordpress/block-editor';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 
 export default function save({ attributes }) {
 	const {
@@ -9,16 +10,7 @@ export default function save({ attributes }) {
 		isCollapsible,
 		isOpenByDefault,
 		showIcon,
-		iconType,
-		backgroundColor,
-		textColor,
-		titleColor,
-		titleFontSize,
-		titleFontWeight,
-		contentFontSize,
-		borderRadius,
-		padding,
-		margin
+		iconType
 	} = attributes;
 
 	const getIconSVG = (type) => {
@@ -53,19 +45,13 @@ export default function save({ attributes }) {
 	const validPostId = postId && typeof postId === 'number' && postId > 0 ? postId : '';
 
 	const blockProps = useBlockProps.save({
-		className: `wp-block-wedocs-ai-summary ${isCollapsible ? 'collapsible' : ''} ${isOpenByDefault ? 'open' : ''} ${!content ? 'no-summary' : 'has-summary'}`,
+		className: getBlockClasses(attributes, `wp-block-wedocs-ai-summary ${isCollapsible ? 'collapsible' : ''} ${isOpenByDefault ? 'open' : ''} ${!content ? 'no-summary' : 'has-summary'}`),
 		'data-block-id': blockId,
 		'data-post-id': validPostId,
 		'data-collapsible': isCollapsible,
 		'data-open-by-default': isOpenByDefault,
 		'data-has-content': content ? 'true' : 'false',
-		style: {
-			backgroundColor,
-			color: textColor,
-			borderRadius,
-			padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
-			margin: `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
-		}
+		style: getInlineStyles(attributes)
 	});
 
 	return (
@@ -77,7 +63,7 @@ export default function save({ attributes }) {
 				cursor: isCollapsible ? 'pointer' : 'default'
 			}}>
 				{showIcon && (
-					<div className="ai-summary-icon" style={{ color: titleColor }}>
+					<div className="ai-summary-icon" >
 						{getIconSVG(iconType)}
 					</div>
 				)}
@@ -85,15 +71,12 @@ export default function save({ attributes }) {
 					tagName="h3"
 					value={title}
 					style={{
-						color: titleColor,
-						fontSize: titleFontSize,
-						fontWeight: titleFontWeight,
 						margin: 0,
 						flex: 1
 					}}
 				/>
 				{isCollapsible && (
-					<div className="ai-summary-toggle" style={{ color: titleColor }}>
+					<div className="ai-summary-toggle" >
 						<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 							<path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
 						</svg>
@@ -101,9 +84,7 @@ export default function save({ attributes }) {
 				)}
 			</div>
 			<div className="ai-summary-content" style={{
-				marginTop: '15px',
-				fontSize: contentFontSize,
-				lineHeight: '1.6'
+			marginTop: '15px'
 			}}>
 				{content ? (
 					<RichText.Content

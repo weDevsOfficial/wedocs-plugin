@@ -1,4 +1,5 @@
 import { useBlockProps } from '@wordpress/block-editor';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 
 export default function save({ attributes }) {
 	const {
@@ -10,15 +11,7 @@ export default function save({ attributes }) {
 		buttonSize,
 		alignment,
 		spacing,
-		backgroundColor,
-		textColor,
-		borderColor,
-		borderWidth,
-		borderRadius,
 		hoverBackgroundColor,
-		fontSize,
-		padding,
-		margin,
 		promptTemplate
 	} = attributes;
 
@@ -46,16 +39,12 @@ export default function save({ attributes }) {
 	};
 
 	const blockProps = useBlockProps.save({
-		className: 'wp-block-wedocs-doc-actions',
+		className: getBlockClasses(attributes, 'wp-block-wedocs-doc-actions'),
 		'data-block-id': blockId,
 		'data-button-style': buttonStyle,
-		'data-bg-color': backgroundColor,
 		'data-hover-bg': hoverBackgroundColor,
 		'data-prompt-template': promptTemplate,
-		style: {
-			padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
-			margin: `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
-		}
+		style: getInlineStyles(attributes)
 	});
 
 	const containerStyle = {
@@ -65,23 +54,12 @@ export default function save({ attributes }) {
 		justifyContent: alignment === 'center' ? 'center' : (alignment === 'right' ? 'flex-end' : 'flex-start')
 	};
 
-	const btnStyles = {
-		backgroundColor: buttonStyle === 'filled' ? backgroundColor : 'transparent',
-		color: textColor,
-		borderColor,
-		borderWidth,
-		borderStyle: 'solid',
-		borderRadius,
-		fontSize
-	};
-
 	return (
 		<div {...blockProps}>
 			<div className="doc-actions-container" style={containerStyle}>
 				{showCopyMarkdown && (
 					<button
 						className={`doc-action-button style-${buttonStyle} size-${buttonSize}`}
-						style={btnStyles}
 						data-action="copy-markdown"
 					>
 						{getIconSVG('copy')}
@@ -91,7 +69,6 @@ export default function save({ attributes }) {
 				{showChatGPT && (
 					<button
 						className={`doc-action-button style-${buttonStyle} size-${buttonSize}`}
-						style={btnStyles}
 						data-action="open-chatgpt"
 					>
 						{getIconSVG('chatgpt')}
@@ -101,7 +78,6 @@ export default function save({ attributes }) {
 				{showClaude && (
 					<button
 						className={`doc-action-button style-${buttonStyle} size-${buttonSize}`}
-						style={btnStyles}
 						data-action="open-claude"
 					>
 						{getIconSVG('claude')}

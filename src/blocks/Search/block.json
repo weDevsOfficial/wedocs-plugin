@@ -11,6 +11,7 @@
 	"supports": {
 		"html": false,
 		"align": ["wide", "full"],
+		"alignWide": true,
 		"anchor": true,
 		"color": {
 			"background": true,
@@ -43,6 +44,12 @@
 				"margin": true
 			}
 		},
+		"dimensions": {
+			"minHeight": true,
+			"__experimentalDefaultControls": {
+				"minHeight": true
+			}
+		},
 		"__experimentalBorder": {
 			"color": true,
 			"radius": true,
@@ -53,6 +60,14 @@
 				"radius": true,
 				"style": true,
 				"width": true
+			}
+		},
+		"layout": {
+			"allowEditing": true,
+			"allowInheriting": true,
+			"allowSwitching": true,
+			"default": {
+				"type": "constrained"
 			}
 		}
 	},
@@ -97,23 +112,6 @@
 		},
 		"buttonHoverTextColor": {
 			"type": "string"
-		},
-		"buttonBorderRadius": {
-			"type": "string",
-			"default": "4px"
-		},
-		"buttonPadding": {
-			"type": "object",
-			"default": {
-				"top": "12px",
-				"right": "24px",
-				"bottom": "12px",
-				"left": "24px"
-			}
-		},
-		"inputBorderRadius": {
-			"type": "string",
-			"default": "4px"
 		},
 		"iconSize": {
 			"type": "string",

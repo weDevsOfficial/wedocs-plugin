@@ -36,7 +36,7 @@ class Frontend {
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_single_scripts' ], 9 );
 
         // override the theme template
-        // add_filter( 'template_include', [ $this, 'template_loader' ], 20 );
+        add_filter( 'template_include', [ $this, 'template_loader' ], 20 );
 
         $this->init_classes();
     }
@@ -158,6 +158,9 @@ class Frontend {
      * @return string
      */
     public function template_loader( $template ) {
+        if(wp_is_block_theme()){
+            return $template;
+        }
         $find = [ 'docs.php' ];
         $file = '';
 

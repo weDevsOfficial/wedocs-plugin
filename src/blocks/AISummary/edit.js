@@ -6,8 +6,7 @@ import {
 	SelectControl,
 	Button,
 	Spinner,
-	Notice,
-	__experimentalBoxControl as BoxControl
+	Notice
 } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
@@ -19,6 +18,7 @@ import {
 	SpacingPanel,
 	BorderPanel
 } from '../commonControls/CommonControls';
+import { getBlockClasses, getInlineStyles } from '../block-helpers';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
 	const {
@@ -28,16 +28,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		isCollapsible,
 		isOpenByDefault,
 		showIcon,
-		iconType,
-		backgroundColor,
-		textColor,
-		titleColor,
-		titleFontSize,
-		titleFontWeight,
-		contentFontSize,
-		borderRadius,
-		padding,
-		margin
+		iconType
 	} = attributes;
 
 	const [isGenerating, setIsGenerating] = useState(false);
@@ -179,11 +170,6 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		className: 'wp-block-wedocs-ai-summary',
 		'data-block-id': blockId,
 		style: {
-			backgroundColor,
-			color: textColor,
-			borderRadius,
-			padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
-			margin: `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
 		}
 	});
 
@@ -218,6 +204,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	return (
 		<>
 			<InspectorControls>
+				{/* AI Actions Panel */}
 				<PanelBody title={__('AI Summary Actions', 'wedocs-plugin')} initialOpen={true}>
 					{error && (
 						<Notice status="error" isDismissible={false}>
@@ -304,7 +291,8 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					)}
 				</PanelBody>
 
-				<PanelBody title={__('Summary Settings', 'wedocs-plugin')} initialOpen={false}>
+				{/* Block Settings Panel */}
+				<PanelBody title={__('Block Settings', 'wedocs-plugin')} initialOpen={false}>
 					<ToggleControl
 						label={__('Make Collapsible', 'wedocs-plugin')}
 						checked={isCollapsible}
@@ -337,62 +325,6 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						/>
 					)}
 				</PanelBody>
-
-				<ColorSettingsPanel
-					attributes={attributes}
-					setAttributes={setAttributes}
-					colorSettings={[
-						{
-							label: __('Background Color', 'wedocs-plugin'),
-							value: backgroundColor,
-							onChange: (value) => setAttributes({ backgroundColor: value })
-						},
-						{
-							label: __('Title Color', 'wedocs-plugin'),
-							value: titleColor,
-							onChange: (value) => setAttributes({ titleColor: value })
-						},
-						{
-							label: __('Content Color', 'wedocs-plugin'),
-							value: textColor,
-							onChange: (value) => setAttributes({ textColor: value })
-						}
-					]}
-				/>
-
-				<TypographyPanel
-					title={__('Title Typography', 'wedocs-plugin')}
-					fontSize={titleFontSize}
-					fontWeight={titleFontWeight}
-					onFontSizeChange={(value) => setAttributes({ titleFontSize: value })}
-					onFontWeightChange={(value) => setAttributes({ titleFontWeight: value })}
-				/>
-
-				<TypographyPanel
-					title={__('Content Typography', 'wedocs-plugin')}
-					fontSize={contentFontSize}
-					onFontSizeChange={(value) => setAttributes({ contentFontSize: value })}
-				/>
-
-				<SpacingPanel
-					title={__('Padding', 'wedocs-plugin')}
-					values={padding}
-					onChange={(value) => setAttributes({ padding: value })}
-				/>
-
-				<SpacingPanel
-					title={__('Margin', 'wedocs-plugin')}
-					values={margin}
-					onChange={(value) => setAttributes({ margin: value })}
-				/>
-
-				<PanelBody title={__('Border Settings', 'wedocs-plugin')}>
-					<BoxControl
-						label={__('Border Radius', 'wedocs-plugin')}
-						values={{ top: borderRadius, right: borderRadius, bottom: borderRadius, left: borderRadius }}
-						onChange={(value) => setAttributes({ borderRadius: value.top })}
-					/>
-				</PanelBody>
 			</InspectorControls>
 
 			<div {...blockProps}>
@@ -403,7 +335,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					cursor: isCollapsible ? 'pointer' : 'default'
 				}}>
 					{showIcon && (
-						<div className="ai-summary-icon" style={{ color: titleColor }}>
+						<div className="ai-summary-icon">
 							{getIconSVG(iconType)}
 						</div>
 					)}
@@ -411,16 +343,14 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						tagName="h3"
 						value={title}
 						onChange={(value) => setAttributes({ title: value })}
-						placeholder={__('Enter summary title...', 'wedocs-plugin')}
+						placeholder={__('AI Summary', 'wedocs-plugin')}
 						style={{
-							color: titleColor,
-							fontSize: titleFontSize,
-							fontWeight: titleFontWeight,
-							margin: 0
+							margin: 0,
+							flex: 1
 						}}
 					/>
 					{isCollapsible && (
-						<div className="ai-summary-toggle" style={{ marginLeft: 'auto', color: titleColor }}>
+						<div className="ai-summary-toggle">
 							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 								<path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
 							</svg>
@@ -428,9 +358,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					)}
 				</div>
 				<div className="ai-summary-content" style={{
-					marginTop: '15px',
-					fontSize: contentFontSize,
-					lineHeight: '1.6'
+					marginTop: '15px'
 				}}>
 					<RichText
 						tagName="div"
