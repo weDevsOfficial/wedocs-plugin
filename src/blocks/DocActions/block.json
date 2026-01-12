@@ -4,7 +4,7 @@
 	"name": "wedocs/doc-actions",
 	"version": "1.0.0",
 	"title": "Documentation Actions",
-	"category": "widgets",
+	"category": "wedocs",
 	"icon": "share",
 	"description": "Action buttons for documentation - Copy Markdown, Open in ChatGPT, Open in Claude, and more.",
 	"example": {},
@@ -96,6 +96,124 @@
 		"promptTemplate": {
 			"type": "string",
 			"default": "Need more information on \"{title}\"\n\nSource: {url}"
+		},
+		"buttonBackgroundColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"buttonTextColor": {
+			"type": "string",
+			"default": "#333333"
+		},
+		"buttonHoverBackgroundColor": {
+			"type": "string",
+			"default": "#f0f0f0"
+		},
+		"buttonHoverTextColor": {
+			"type": "string",
+			"default": "#000000"
+		},
+		"buttonBorderColor": {
+			"type": "string",
+			"default": "#cccccc"
+		},
+		"buttonHoverBorderColor": {
+			"type": "string",
+			"default": "#999999"
+		},
+		"buttonBorder": {
+			"type": "object",
+			"default": {
+				"style": "solid",
+				"width": "1px"
+			}
+		},
+		"buttonBorderRadius": {
+			"type": "object",
+			"default": {
+				"top": "4px",
+				"right": "4px",
+				"bottom": "4px",
+				"left": "4px"
+			}
+		},
+		"buttonPadding": {
+			"type": "object",
+			"default": {
+				"top": "8px",
+				"right": "16px",
+				"bottom": "8px",
+				"left": "16px"
+			}
+		},
+		"buttonMargin": {
+			"type": "object",
+			"default": {
+				"top": "0",
+				"right": "0",
+				"bottom": "0",
+				"left": "0"
+			}
+		},
+		"buttonWidth": {
+			"type": "string",
+			"default": "auto"
+		},
+		"buttonHeight": {
+			"type": "string",
+			"default": "auto"
+		},
+		"buttonBoxShadow": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonHoverBoxShadow": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonGap": {
+			"type": "string",
+			"default": "10px"
+		},
+		"buttonDirection": {
+			"type": "string",
+			"default": "row"
+		},
+		"buttonJustifyContent": {
+			"type": "string",
+			"default": "flex-start"
+		},
+		"buttonAlignItems": {
+			"type": "string",
+			"default": "center"
+		},
+		"iconSize": {
+			"type": "string",
+			"default": "20px"
+		},
+		"iconColor": {
+			"type": "string",
+			"default": ""
+		},
+		"iconHoverColor": {
+			"type": "string",
+			"default": ""
+		},
+		"iconPosition": {
+			"type": "string",
+			"default": "before"
+		},
+		"iconGap": {
+			"type": "string",
+			"default": "8px"
+		},
+		"transitionDuration": {
+			"type": "string",
+			"default": "300ms"
+		},
+		"transitionTimingFunction": {
+			"type": "string",
+			"default": "ease"
 		}
 	},
 	"textdomain": "wedocs-plugin",

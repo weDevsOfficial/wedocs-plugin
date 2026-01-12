@@ -5,7 +5,7 @@
 	"version": "1.0.0",
 	"title": "weDocs - Helpful Feedback",
 	"icon": "thumbs-up",
-	"category": "widgets",
+	"category": "wedocs",
 	"description": "Add a feedback voting system for articles with Yes/No buttons",
 	"supports": {
 		"html": false,
@@ -189,6 +189,142 @@
 		"dataAttributes": {
 			"type": "object",
 			"default": {}
+		},
+		"yesButtonBorder": {
+			"type": "object",
+			"default": {}
+		},
+		"yesButtonBorderRadius": {
+			"type": "object",
+			"default": {}
+		},
+		"yesButtonPadding": {
+			"type": "object",
+			"default": {}
+		},
+		"yesButtonMargin": {
+			"type": "object",
+			"default": {}
+		},
+		"yesButtonWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"yesButtonHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"noButtonBorder": {
+			"type": "object",
+			"default": {}
+		},
+		"noButtonBorderRadius": {
+			"type": "object",
+			"default": {}
+		},
+		"noButtonPadding": {
+			"type": "object",
+			"default": {}
+		},
+		"noButtonMargin": {
+			"type": "object",
+			"default": {}
+		},
+		"noButtonWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"noButtonHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonGap": {
+			"type": "string",
+			"default": "8px"
+		},
+		"buttonDirection": {
+			"type": "string",
+			"default": "row"
+		},
+		"buttonJustifyContent": {
+			"type": "string",
+			"default": "flex-start"
+		},
+		"yesIconSize": {
+			"type": "string",
+			"default": ""
+		},
+		"yesIconColor": {
+			"type": "string",
+			"default": ""
+		},
+		"yesIconHoverColor": {
+			"type": "string",
+			"default": ""
+		},
+		"yesIconBackgroundColor": {
+			"type": "string",
+			"default": ""
+		},
+		"yesIconBorderRadius": {
+			"type": "string",
+			"default": ""
+		},
+		"yesIconMargin": {
+			"type": "object",
+			"default": {}
+		},
+		"noIconSize": {
+			"type": "string",
+			"default": ""
+		},
+		"noIconColor": {
+			"type": "string",
+			"default": ""
+		},
+		"noIconHoverColor": {
+			"type": "string",
+			"default": ""
+		},
+		"noIconBackgroundColor": {
+			"type": "string",
+			"default": ""
+		},
+		"noIconBorderRadius": {
+			"type": "string",
+			"default": ""
+		},
+		"noIconMargin": {
+			"type": "object",
+			"default": {}
+		},
+		"transitionDuration": {
+			"type": "string",
+			"default": "0.3s"
+		},
+		"transitionTimingFunction": {
+			"type": "string",
+			"default": "ease"
+		},
+		"buttonHoverScale": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonHoverTranslateY": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonFontWeight": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonLetterSpacing": {
+			"type": "string",
+			"default": ""
 		}
 	}
 }

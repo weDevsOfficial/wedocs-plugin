@@ -4,7 +4,7 @@
 	"name": "wedocs/reading-progress",
 	"version": "1.0.0",
 	"title": "Reading Progress Bar",
-	"category": "widgets",
+	"category": "wedocs",
 	"icon": "chart-line",
 	"description": "Display a progress bar showing reading progress and estimated reading time based on content.",
 	"example": {},

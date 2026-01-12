@@ -4,7 +4,7 @@
 	"name": "wedocs/block-need-more-help-contact-modal",
 	"version": "0.1.0",
 	"title": "Need More Help - Contact Modal",
-	"category": "widgets",
+	"category": "wedocs",
 	"icon": "sos",
 	"description": "A customizable contact modal block for documentation sites with extensive styling options and WordPress core integration.",
 	"supports": {

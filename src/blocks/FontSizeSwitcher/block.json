@@ -4,7 +4,7 @@
 	"name": "wedocs/font-size-switcher",
 	"version": "1.0.0",
 	"title": "Font Size Switcher",
-	"category": "widgets",
+	"category": "wedocs",
 	"icon": "editor-textcolor",
 	"description": "Allow readers to adjust font size for better readability with preset options or custom controls.",
 	"example": {},
@@ -94,6 +94,118 @@
 		"defaultSize": {
 			"type": "string",
 			"default": "16px"
+		},
+		"buttonBackgroundColor": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonTextColor": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonHoverBackgroundColor": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonHoverTextColor": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonActiveBackgroundColor": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonActiveTextColor": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonHoverBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonBorder": {
+			"type": "object",
+			"default": {}
+		},
+		"buttonBorderRadius": {
+			"type": "object",
+			"default": {}
+		},
+		"buttonPadding": {
+			"type": "object",
+			"default": {}
+		},
+		"buttonMargin": {
+			"type": "object",
+			"default": {}
+		},
+		"buttonWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonGap": {
+			"type": "string",
+			"default": "8px"
+		},
+		"labelColor": {
+			"type": "string",
+			"default": ""
+		},
+		"labelFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"labelFontWeight": {
+			"type": "string",
+			"default": ""
+		},
+		"labelMargin": {
+			"type": "object",
+			"default": {}
+		},
+		"sliderHeight": {
+			"type": "string",
+			"default": "4px"
+		},
+		"sliderTrackColor": {
+			"type": "string",
+			"default": "#ddd"
+		},
+		"sliderThumbColor": {
+			"type": "string",
+			"default": "#333"
+		},
+		"sliderThumbSize": {
+			"type": "string",
+			"default": "16px"
+		},
+		"dropdownBackgroundColor": {
+			"type": "string",
+			"default": ""
+		},
+		"dropdownTextColor": {
+			"type": "string",
+			"default": ""
+		},
+		"dropdownBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"transitionDuration": {
+			"type": "string",
+			"default": "0.3s"
+		},
+		"transitionTimingFunction": {
+			"type": "string",
+			"default": "ease"
 		}
 	},
 	"textdomain": "wedocs-plugin",

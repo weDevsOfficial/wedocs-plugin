@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { getBlockClasses, getInlineStyles } from '../block-helpers';
 import {
@@ -13,9 +13,17 @@ import {
     __experimentalToolsPanelItem as ToolsPanelItem,
     ColorPalette
 } from '@wordpress/components';
+import {
+    ButtonControls,
+    ButtonGroupControls,
+    IconControls,
+    HoverStateControls,
+    AdvancedTypographyControls,
+} from '../commonControls/CommonControls';
 
 const Edit = ({ attributes, setAttributes }) => {
     const blockProps = useBlockProps();
+    const [hoveredPlatform, setHoveredPlatform] = useState(null);
 
     const {
         labelText,
@@ -46,7 +54,36 @@ const Edit = ({ attributes, setAttributes }) => {
         containerBorderWidth,
         containerBorderRadius,
         containerBgColor,
-        additionalCssClass
+        additionalCssClass,
+        // New comprehensive attributes
+        buttonTextColor,
+        buttonTextHoverColor,
+        buttonBorder,
+        buttonBorderRadius,
+        buttonBorderColor,
+        buttonBorderHoverColor,
+        buttonPadding,
+        buttonMargin,
+        buttonWidth,
+        buttonHeight,
+        buttonGap,
+        buttonDirection,
+        buttonJustifyContent,
+        iconSize,
+        iconHoverScale,
+        iconBackgroundColor,
+        iconHoverBackgroundColor,
+        iconBorderRadius,
+        iconMargin,
+        transitionDuration,
+        transitionTimingFunction,
+        buttonHoverScale,
+        buttonHoverTranslateY,
+        facebookHoverColor,
+        twitterHoverColor,
+        linkedinHoverColor,
+        pinterestHoverColor,
+        labelMargin,
     } = attributes;
 
     // Color palette
@@ -113,13 +150,92 @@ const Edit = ({ attributes, setAttributes }) => {
         }
     };
 
+    // Helper function to convert spacing object to CSS string
+    const spacingToString = (spacing) => {
+        if (!spacing) return undefined;
+        return `${spacing.top || '0'} ${spacing.right || '0'} ${spacing.bottom || '0'} ${spacing.left || '0'}`;
+    };
+
+    // Helper function to convert border object to CSS string
+    const borderToString = (border) => {
+        if (!border || !border.width) return undefined;
+        return `${border.width} ${border.style || 'solid'} ${border.color || 'currentColor'}`;
+    };
+
+    // Get button style for specific platform
+    const getButtonStyle = (platform, isHovered) => {
+        let bgColor = buttonBgColor;
+        let hoverBgColor = buttonBgHoverColor;
+
+        if (useIndividualColors) {
+            switch (platform) {
+                case 'facebook':
+                    bgColor = facebookColor;
+                    hoverBgColor = facebookHoverColor || facebookColor;
+                    break;
+                case 'twitter':
+                    bgColor = twitterColor;
+                    hoverBgColor = twitterHoverColor || twitterColor;
+                    break;
+                case 'linkedin':
+                    bgColor = linkedinColor;
+                    hoverBgColor = linkedinHoverColor || linkedinColor;
+                    break;
+                case 'pinterest':
+                    bgColor = pinterestColor;
+                    hoverBgColor = pinterestHoverColor || pinterestColor;
+                    break;
+            }
+        }
+
+        const baseStyle = {
+            backgroundColor: isHovered ? (hoverBgColor || bgColor) : bgColor,
+            color: isHovered ? (buttonTextHoverColor || buttonTextColor || buttonIconHoverColor || buttonIconColor) : (buttonTextColor || buttonIconColor),
+            border: borderToString(buttonBorder) || (buttonBorderStyle !== 'none' ? `${buttonBorderWidth} ${buttonBorderStyle} ${buttonBorderColor}` : 'none'),
+            borderColor: isHovered ? (buttonBorderHoverColor || buttonBorderColor) : buttonBorderColor,
+            borderRadius: spacingToString(buttonBorderRadius) || buttonBorderRadius,
+            padding: spacingToString(buttonPadding) || '12px 24px',
+            margin: spacingToString(buttonMargin) || '0',
+            width: buttonWidth,
+            height: buttonHeight,
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: iconSize || '8px',
+            transition: `all ${transitionDuration || '0.3s'} ${transitionTimingFunction || 'ease'}`,
+        };
+
+        if (isHovered && (buttonHoverScale || buttonHoverTranslateY)) {
+            const transforms = [];
+            if (buttonHoverScale) transforms.push(`scale(${buttonHoverScale})`);
+            if (buttonHoverTranslateY) transforms.push(`translateY(${buttonHoverTranslateY})`);
+            baseStyle.transform = transforms.join(' ');
+        }
+
+        return baseStyle;
+    };
+
+    // Get icon style
+    const getIconStyle = (isHovered) => ({
+        width: iconSize || '24px',
+        height: iconSize || '24px',
+        color: isHovered ? (buttonIconHoverColor || buttonIconColor) : buttonIconColor,
+        backgroundColor: isHovered ? (iconHoverBackgroundColor || iconBackgroundColor) : iconBackgroundColor,
+        borderRadius: iconBorderRadius,
+        margin: spacingToString(iconMargin),
+        padding: iconBackgroundColor ? '4px' : '0',
+        transition: `all ${transitionDuration || '0.3s'} ${transitionTimingFunction || 'ease'}`,
+        transform: isHovered && iconHoverScale ? `scale(${iconHoverScale})` : 'scale(1)',
+    });
+
     // Container styles
     const containerStyles = {
         backgroundColor: containerBgColor,
-        padding: `${containerPadding?.top || '20px'} ${containerPadding?.right || '0px'} ${containerPadding?.bottom || '20px'} ${containerPadding?.left || '0px'}`,
-        margin: `${containerMargin?.top || '20px'} ${containerMargin?.right || '0px'} ${containerMargin?.bottom || '20px'} ${containerMargin?.left || '0px'}`,
+        padding: spacingToString(containerPadding) || `${containerPadding?.top || '20px'} ${containerPadding?.right || '0px'} ${containerPadding?.bottom || '20px'} ${containerPadding?.left || '0px'}`,
+        margin: spacingToString(containerMargin) || `${containerMargin?.top || '20px'} ${containerMargin?.right || '0px'} ${containerMargin?.bottom || '20px'} ${containerMargin?.left || '0px'}`,
         border: containerBorderStyle !== 'none' ? `${containerBorderWidth} ${containerBorderStyle} ${containerBorderColor}` : 'none',
-        borderRadius: containerBorderRadius
+        borderRadius: containerBorderRadius,
+        transition: `all ${transitionDuration || '0.3s'} ${transitionTimingFunction || 'ease'}`
     };
 
     // Label styles
@@ -127,29 +243,16 @@ const Edit = ({ attributes, setAttributes }) => {
         color: labelColor,
         fontSize: `${labelFontSize}px`,
         fontWeight: labelFontWeight,
-        marginBottom: '12px'
+        margin: spacingToString(labelMargin) || '0 0 12px 0',
     };
 
     // Button wrapper styles
     const buttonWrapperStyles = {
         display: 'flex',
-        flexDirection: layout === 'vertical' ? 'column' : 'row',
-        gap: `${spacing}px`,
-        flexWrap: 'wrap'
-    };
-
-    // Get button color
-    const getButtonColor = (platform) => {
-        if (useIndividualColors) {
-            switch (platform) {
-                case 'facebook': return facebookColor;
-                case 'twitter': return twitterColor;
-                case 'linkedin': return linkedinColor;
-                case 'pinterest': return pinterestColor;
-                default: return buttonBgColor;
-            }
-        }
-        return buttonBgColor;
+        flexDirection: buttonDirection || (layout === 'vertical' ? 'column' : 'row'),
+        gap: buttonGap || `${spacing}px`,
+        flexWrap: 'wrap',
+        justifyContent: buttonJustifyContent || 'flex-start',
     };
 
     return (
@@ -490,13 +593,14 @@ const Edit = ({ attributes, setAttributes }) => {
                         {enabledPlatforms.facebook && (
                             <button
                                 className={`wedocs-social-share-btn wedocs-social-share-facebook ${getButtonSizeClass()} ${getButtonShapeClass()}`}
-                                style={{
-                                    backgroundColor: getButtonColor('facebook'),
-                                    color: buttonIconColor
-                                }}
+                                style={getButtonStyle('facebook', hoveredPlatform === 'facebook')}
+                                onMouseEnter={() => setHoveredPlatform('facebook')}
+                                onMouseLeave={() => setHoveredPlatform(null)}
                                 disabled
                             >
-                                {socialIcons.facebook}
+                                <span style={getIconStyle(hoveredPlatform === 'facebook')}>
+                                    {socialIcons.facebook}
+                                </span>
                                 {buttonStyle === 'icon-text' && <span>Facebook</span>}
                                 {buttonStyle === 'text-only' && <span>Facebook</span>}
                             </button>
@@ -505,13 +609,14 @@ const Edit = ({ attributes, setAttributes }) => {
                         {enabledPlatforms.twitter && (
                             <button
                                 className={`wedocs-social-share-btn wedocs-social-share-twitter ${getButtonSizeClass()} ${getButtonShapeClass()}`}
-                                style={{
-                                    backgroundColor: getButtonColor('twitter'),
-                                    color: buttonIconColor
-                                }}
+                                style={getButtonStyle('twitter', hoveredPlatform === 'twitter')}
+                                onMouseEnter={() => setHoveredPlatform('twitter')}
+                                onMouseLeave={() => setHoveredPlatform(null)}
                                 disabled
                             >
-                                {socialIcons.twitter}
+                                <span style={getIconStyle(hoveredPlatform === 'twitter')}>
+                                    {socialIcons.twitter}
+                                </span>
                                 {buttonStyle === 'icon-text' && <span>Twitter</span>}
                                 {buttonStyle === 'text-only' && <span>Twitter</span>}
                             </button>
@@ -520,13 +625,14 @@ const Edit = ({ attributes, setAttributes }) => {
                         {enabledPlatforms.linkedin && (
                             <button
                                 className={`wedocs-social-share-btn wedocs-social-share-linkedin ${getButtonSizeClass()} ${getButtonShapeClass()}`}
-                                style={{
-                                    backgroundColor: getButtonColor('linkedin'),
-                                    color: buttonIconColor
-                                }}
+                                style={getButtonStyle('linkedin', hoveredPlatform === 'linkedin')}
+                                onMouseEnter={() => setHoveredPlatform('linkedin')}
+                                onMouseLeave={() => setHoveredPlatform(null)}
                                 disabled
                             >
-                                {socialIcons.linkedin}
+                                <span style={getIconStyle(hoveredPlatform === 'linkedin')}>
+                                    {socialIcons.linkedin}
+                                </span>
                                 {buttonStyle === 'icon-text' && <span>LinkedIn</span>}
                                 {buttonStyle === 'text-only' && <span>LinkedIn</span>}
                             </button>
@@ -535,13 +641,14 @@ const Edit = ({ attributes, setAttributes }) => {
                         {enabledPlatforms.pinterest && (
                             <button
                                 className={`wedocs-social-share-btn wedocs-social-share-pinterest ${getButtonSizeClass()} ${getButtonShapeClass()}`}
-                                style={{
-                                    backgroundColor: getButtonColor('pinterest'),
-                                    color: buttonIconColor
-                                }}
+                                style={getButtonStyle('pinterest', hoveredPlatform === 'pinterest')}
+                                onMouseEnter={() => setHoveredPlatform('pinterest')}
+                                onMouseLeave={() => setHoveredPlatform(null)}
                                 disabled
                             >
-                                {socialIcons.pinterest}
+                                <span style={getIconStyle(hoveredPlatform === 'pinterest')}>
+                                    {socialIcons.pinterest}
+                                </span>
                                 {buttonStyle === 'icon-text' && <span>Pinterest</span>}
                                 {buttonStyle === 'text-only' && <span>Pinterest</span>}
                             </button>
