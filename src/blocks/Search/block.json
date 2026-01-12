@@ -5,7 +5,7 @@
 	"version": "1.0.0",
 	"title": "weDocs - Searchbar",
 	"icon": "search",
-	"category": "widgets",
+	"category": "wedocs",
 	"description": "Simple search forms for easy user guidance for your documentation",
 	"keywords": ["Search", "weDocs search bar", "Bar"],
 	"supports": {

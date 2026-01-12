@@ -8,9 +8,15 @@ import {
 	TextareaControl,
 	__experimentalUnitControl as UnitControl
 } from '@wordpress/components';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import './editor.scss';
 import { getBlockClasses, getInlineStyles } from '../block-helpers';
+import {
+	ButtonControls,
+	ButtonGroupControls,
+	IconControls,
+	HoverStateControls
+} from '../commonControls/CommonControls';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
 	const {
@@ -21,9 +27,39 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		buttonStyle,
 		buttonSize,
 		alignment,
-		hoverBackgroundColor,
-		promptTemplate
+		promptTemplate,
+		// Button styling
+		buttonBackgroundColor,
+		buttonTextColor,
+		buttonHoverBackgroundColor,
+		buttonHoverTextColor,
+		buttonBorderColor,
+		buttonHoverBorderColor,
+		buttonBorder,
+		buttonBorderRadius,
+		buttonPadding,
+		buttonMargin,
+		buttonWidth,
+		buttonHeight,
+		buttonBoxShadow,
+		buttonHoverBoxShadow,
+		// Button group styling
+		buttonGap,
+		buttonDirection,
+		buttonJustifyContent,
+		buttonAlignItems,
+		// Icon styling
+		iconSize,
+		iconColor,
+		iconHoverColor,
+		iconPosition,
+		iconGap,
+		// Transition
+		transitionDuration,
+		transitionTimingFunction
 	} = attributes;
+
+	const [hoveredButton, setHoveredButton] = useState(null);
 
 	// Set unique block ID
 	useEffect(() => {
@@ -45,7 +81,40 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		return classes.join(' ');
 	};
 
-	const getButtonStyles = () => ({});
+	const getButtonStyles = (buttonType) => {
+		const isHovered = hoveredButton === buttonType;
+
+		return {
+			backgroundColor: isHovered ? (buttonHoverBackgroundColor || buttonBackgroundColor) : buttonBackgroundColor,
+			color: isHovered ? (buttonHoverTextColor || buttonTextColor) : buttonTextColor,
+			borderColor: isHovered ? (buttonHoverBorderColor || buttonBorderColor) : buttonBorderColor,
+			borderStyle: buttonBorder?.style || 'solid',
+			borderWidth: buttonBorder?.width || '1px',
+			borderRadius: buttonBorderRadius ? `${buttonBorderRadius.top} ${buttonBorderRadius.right} ${buttonBorderRadius.bottom} ${buttonBorderRadius.left}` : '4px',
+			padding: buttonPadding ? `${buttonPadding.top} ${buttonPadding.right} ${buttonPadding.bottom} ${buttonPadding.left}` : '8px 16px',
+			margin: buttonMargin ? `${buttonMargin.top} ${buttonMargin.right} ${buttonMargin.bottom} ${buttonMargin.left}` : '0',
+			width: buttonWidth || 'auto',
+			height: buttonHeight || 'auto',
+			boxShadow: isHovered ? (buttonHoverBoxShadow || buttonBoxShadow) : buttonBoxShadow,
+			transition: `all ${transitionDuration || '300ms'} ${transitionTimingFunction || 'ease'}`,
+			display: 'inline-flex',
+			alignItems: 'center',
+			gap: iconGap || '8px',
+			flexDirection: iconPosition === 'after' ? 'row-reverse' : 'row',
+			cursor: 'pointer'
+		};
+	};
+
+	const getIconStyles = (buttonType) => {
+		const isHovered = hoveredButton === buttonType;
+
+		return {
+			width: iconSize || '20px',
+			height: iconSize || '20px',
+			color: isHovered ? (iconHoverColor || iconColor) : iconColor,
+			transition: `color ${transitionDuration || '300ms'} ${transitionTimingFunction || 'ease'}`
+		};
+	};
 
 	const getIconSVG = (type) => {
 		const icons = {
@@ -73,8 +142,10 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	const containerStyle = {
 		display: 'flex',
 		flexWrap: 'wrap',
-		gap: '10px',
-		justifyContent: alignment === 'center' ? 'center' : (alignment === 'right' ? 'flex-end' : 'flex-start')
+		gap: buttonGap || '10px',
+		justifyContent: buttonJustifyContent || (alignment === 'center' ? 'center' : (alignment === 'right' ? 'flex-end' : 'flex-start')),
+		alignItems: buttonAlignItems || 'center',
+		flexDirection: buttonDirection || 'row'
 	};
 
 	return (
@@ -87,7 +158,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 			</BlockControls>
 
 			<InspectorControls>
-				<PanelBody title={__('Button Settings', 'wedocs-plugin')} initialOpen={true}>
+				<PanelBody title={__('Button Visibility', 'wedocs-plugin')} initialOpen={true}>
 					<ToggleControl
 						label={__('Show "Copy Markdown for LLM"', 'wedocs-plugin')}
 						checked={showCopyMarkdown}
@@ -104,6 +175,84 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						onChange={(value) => setAttributes({ showClaude: value })}
 					/>
 				</PanelBody>
+
+				<ButtonControls
+					title={__('Button Styling', 'wedocs-plugin')}
+					backgroundColor={buttonBackgroundColor}
+					textColor={buttonTextColor}
+					hoverBackgroundColor={buttonHoverBackgroundColor}
+					hoverTextColor={buttonHoverTextColor}
+					borderColor={buttonBorderColor}
+					hoverBorderColor={buttonHoverBorderColor}
+					border={buttonBorder}
+					borderRadius={buttonBorderRadius}
+					padding={buttonPadding}
+					margin={buttonMargin}
+					width={buttonWidth}
+					height={buttonHeight}
+					boxShadow={buttonBoxShadow}
+					hoverBoxShadow={buttonHoverBoxShadow}
+					onBackgroundColorChange={(value) => setAttributes({ buttonBackgroundColor: value })}
+					onTextColorChange={(value) => setAttributes({ buttonTextColor: value })}
+					onHoverBackgroundColorChange={(value) => setAttributes({ buttonHoverBackgroundColor: value })}
+					onHoverTextColorChange={(value) => setAttributes({ buttonHoverTextColor: value })}
+					onBorderColorChange={(value) => setAttributes({ buttonBorderColor: value })}
+					onHoverBorderColorChange={(value) => setAttributes({ buttonHoverBorderColor: value })}
+					onBorderChange={(value) => setAttributes({ buttonBorder: value })}
+					onBorderRadiusChange={(value) => setAttributes({ buttonBorderRadius: value })}
+					onPaddingChange={(value) => setAttributes({ buttonPadding: value })}
+					onMarginChange={(value) => setAttributes({ buttonMargin: value })}
+					onWidthChange={(value) => setAttributes({ buttonWidth: value })}
+					onHeightChange={(value) => setAttributes({ buttonHeight: value })}
+					onBoxShadowChange={(value) => setAttributes({ buttonBoxShadow: value })}
+					onHoverBoxShadowChange={(value) => setAttributes({ buttonHoverBoxShadow: value })}
+					showAlignment={false}
+					initialOpen={false}
+				/>
+
+				<ButtonGroupControls
+					title={__('Button Group Layout', 'wedocs-plugin')}
+					gap={buttonGap}
+					direction={buttonDirection}
+					justifyContent={buttonJustifyContent}
+					alignItems={buttonAlignItems}
+					onGapChange={(value) => setAttributes({ buttonGap: value })}
+					onDirectionChange={(value) => setAttributes({ buttonDirection: value })}
+					onJustifyContentChange={(value) => setAttributes({ buttonJustifyContent: value })}
+					onAlignItemsChange={(value) => setAttributes({ buttonAlignItems: value })}
+					initialOpen={false}
+				/>
+
+				<IconControls
+					title={__('Icon Styling', 'wedocs-plugin')}
+					iconSize={iconSize}
+					iconColor={iconColor}
+					iconHoverColor={iconHoverColor}
+					iconPosition={iconPosition}
+					iconGap={iconGap}
+					onIconSizeChange={(value) => setAttributes({ iconSize: value })}
+					onIconColorChange={(value) => setAttributes({ iconColor: value })}
+					onIconHoverColorChange={(value) => setAttributes({ iconHoverColor: value })}
+					onIconPositionChange={(value) => setAttributes({ iconPosition: value })}
+					onIconGapChange={(value) => setAttributes({ iconGap: value })}
+					showPosition={true}
+					showSpacing={false}
+					showEffects={false}
+					initialOpen={false}
+				/>
+
+				<HoverStateControls
+					title={__('Transitions & Effects', 'wedocs-plugin')}
+					transitionDuration={transitionDuration}
+					transitionTimingFunction={transitionTimingFunction}
+					onTransitionDurationChange={(value) => setAttributes({ transitionDuration: value })}
+					onTransitionTimingFunctionChange={(value) => setAttributes({ transitionTimingFunction: value })}
+					showHoverState={false}
+					showActiveState={false}
+					showFocusState={false}
+					showTransforms={false}
+					initialOpen={false}
+				/>
 
 				<PanelBody title={__('AI Prompt Template', 'wedocs-plugin')} initialOpen={false}>
 					<TextareaControl
@@ -145,20 +294,35 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 			<div {...blockProps}>
 				<div className="doc-actions-container" style={containerStyle}>
 					{showCopyMarkdown && (
-						<button className={getButtonClasses()} style={getButtonStyles()}>
-							{getIconSVG('copy')}
+						<button
+							className={getButtonClasses()}
+							style={getButtonStyles('copy')}
+							onMouseEnter={() => setHoveredButton('copy')}
+							onMouseLeave={() => setHoveredButton(null)}
+						>
+							<span style={getIconStyles('copy')}>{getIconSVG('copy')}</span>
 							<span>{__('Copy Markdown for LLM', 'wedocs-plugin')}</span>
 						</button>
 					)}
 					{showChatGPT && (
-						<button className={getButtonClasses()} style={getButtonStyles()}>
-							{getIconSVG('chatgpt')}
+						<button
+							className={getButtonClasses()}
+							style={getButtonStyles('chatgpt')}
+							onMouseEnter={() => setHoveredButton('chatgpt')}
+							onMouseLeave={() => setHoveredButton(null)}
+						>
+							<span style={getIconStyles('chatgpt')}>{getIconSVG('chatgpt')}</span>
 							<span>{__('Open in ChatGPT', 'wedocs-plugin')}</span>
 						</button>
 					)}
 					{showClaude && (
-						<button className={getButtonClasses()} style={getButtonStyles()}>
-							{getIconSVG('claude')}
+						<button
+							className={getButtonClasses()}
+							style={getButtonStyles('claude')}
+							onMouseEnter={() => setHoveredButton('claude')}
+							onMouseLeave={() => setHoveredButton(null)}
+						>
+							<span style={getIconStyles('claude')}>{getIconSVG('claude')}</span>
 							<span>{__('Open in Claude', 'wedocs-plugin')}</span>
 						</button>
 					)}

@@ -313,3 +313,10 @@ export const DimensionControl = ({
         />
     );
 };
+
+// Export additional control components
+export { ButtonControls, ButtonGroupControls } from './ButtonControls';
+export { IconControls, IconLibraryControl } from './IconControls';
+export { HoverStateControls, AnimationControls } from './HoverStateControls';
+export { AdvancedTypographyControls, ResponsiveTypographyControls } from './AdvancedTypographyControls';
+export { InputFieldControls, LabelControls, TextareaControls } from './InputFieldControls';

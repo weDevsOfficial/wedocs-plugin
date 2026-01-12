@@ -4,7 +4,7 @@
 	"name": "wedocs/ai-summary",
 	"version": "1.0.0",
 	"title": "AI-Powered Summary",
-	"category": "text",
+	"category": "wedocs",
 	"icon": "lightbulb",
 	"description": "Display an AI-generated summary of documentation content with collapsible functionality.",
 	"example": {},
