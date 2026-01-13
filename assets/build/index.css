@@ -1903,6 +1903,40 @@ select {
     max-width: 1536px;
   }
 }
+.alert {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));
+  padding: 1rem;
+  border-radius: var(--rounded-box, 1rem);
+}
+.alert > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+@media (min-width: 768px) {
+
+  .alert {
+    flex-direction: row;
+  }
+
+  .alert > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0px * var(--tw-space-y-reverse));
+  }
+}
+.alert > :where(*) {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 .avatar {
   position: relative;
   display: inline-flex;
@@ -3934,6 +3968,15 @@ select {
 .wedocs-document :is(.animate-pulse) {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+@keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+.wedocs-document :is(.animate-spin) {
+  animation: spin 1s linear infinite;
+}
 .wedocs-document :is(.cursor-grab) {
   cursor: grab;
 }
@@ -5028,8 +5071,14 @@ select {
 .wedocs-document :is(.opacity-100) {
   opacity: 1;
 }
+.wedocs-document :is(.opacity-25) {
+  opacity: 0.25;
+}
 .wedocs-document :is(.opacity-50) {
   opacity: 0.5;
+}
+.wedocs-document :is(.opacity-75) {
+  opacity: 0.75;
 }
 .wedocs-document :is(.\!shadow-none) {
   --tw-shadow: 0 0 #0000 !important;
@@ -5795,9 +5844,17 @@ html.wp-toolbar {
   --tw-ring-offset-width: 2px;
 }
 
+.wedocs-document :is(.disabled\:cursor-not-allowed:disabled) {
+  cursor: not-allowed;
+}
+
 .wedocs-document :is(.disabled\:bg-\[\#F2F2F2\]:disabled) {
   --tw-bg-opacity: 1;
   background-color: rgb(242 242 242 / var(--tw-bg-opacity));
+}
+
+.wedocs-document :is(.disabled\:opacity-50:disabled) {
+  opacity: 0.5;
 }
 
 .wedocs-document :is(.disabled\:opacity-75:disabled) {
