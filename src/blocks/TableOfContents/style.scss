@@ -1,31 +1,28 @@
-/**
+
+  /**
  * The following styles get applied both on the front of your site
  * and in the editor.
  */
 
-.wp-block-wedocs-block-dynamic-table-of-contents {
+.wp-block-wedocs-table-of-contents {
 	background-color: #f9f9f9;
 	border: 1px solid #e0e0e0;
 	border-radius: 5px;
 	padding: 20px;
 	margin-bottom: 20px;
 	max-width: 100%;
+	box-sizing: border-box;
+	width: 100%;
 
 	.toc-title {
-		font-size: var(--toc-title-font-size, 1.25rem);
-		font-weight: var(--toc-title-font-weight, 600);
-		line-height: var(--toc-title-line-height, 1.4);
-		font-family: var(--toc-title-font-family, inherit);
-		color: var(--toc-title-color, inherit);
+		font-size: 18px;
+		font-weight: 600;
 		margin: 0 0 15px 0;
 		padding: 0;
+		color: inherit;
 	}
 
 	.toc-content {
-		font-size: var(--toc-list-font-size, 1rem);
-		line-height: var(--toc-list-line-height, 1.6);
-		font-family: var(--toc-list-font-family, inherit);
-
 		.toc-list {
 			margin: 0;
 			padding: 0;
@@ -57,18 +54,17 @@
 
 				a {
 					text-decoration: none;
-					color: var(--toc-link-color, inherit);
+					color: var(--list-item-sytle, inherit);
 					display: inline-block;
 					transition: color 0.2s ease;
 
 					&:hover {
-						color: var(--toc-link-hover-color, currentColor);
 						text-decoration: underline;
 					}
 
 					&.active {
 						font-weight: 600;
-						border-left: 3px solid currentColor;
+						border-left: 3px solid #0073aa;
 						padding-left: 10px;
 					}
 				}
@@ -97,11 +93,40 @@
 		z-index: 10;
 		max-height: 80vh;
 		overflow-y: auto;
+		transition: box-shadow 0.3s ease;
 
 		.toc-content {
 			max-height: calc(80vh - 100px);
 			overflow-y: auto;
+
+			// Custom scrollbar for webkit browsers
+			&::-webkit-scrollbar {
+				width: 6px;
+			}
+
+			&::-webkit-scrollbar-track {
+				background: rgba(0, 0, 0, 0.05);
+				border-radius: 3px;
+			}
+
+			&::-webkit-scrollbar-thumb {
+				background: rgba(0, 0, 0, 0.2);
+				border-radius: 3px;
+
+				&:hover {
+					background: rgba(0, 0, 0, 0.3);
+				}
+			}
 		}
+
+		// Add subtle shadow when stuck to top
+		&.is-stuck {
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		}
+
+		// Ensure it works in containers
+		// Force positioning context
+		align-self: flex-start;
 	}
 
 	// Mobile collapsible

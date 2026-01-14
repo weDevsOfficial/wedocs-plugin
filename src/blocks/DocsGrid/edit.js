@@ -520,7 +520,8 @@ const Edit = ({ attributes, setAttributes }) => {
                     </PanelRow>
                 </PanelBody>
             </InspectorControls>
-            <InspectorControls>
+
+            <InspectorControls group="styles">
                 <StyleControls attributes={attributes} setAttributes={setAttributes} />
             </InspectorControls>
 

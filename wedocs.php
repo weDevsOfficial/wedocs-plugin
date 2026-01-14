@@ -46,6 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
+require_once plugin_dir_path(__FILE__) . 'src/blocks/helpers/block-styles.php';
 
 /**
  * WeDocs class.
@@ -191,6 +192,17 @@ final class WeDocs {
             'assets/build/blocks/PrintButton',
             'assets/build/blocks/DocNavigation',
             'assets/build/blocks/Sidebar',
+            // 'assets/build/blocks/AdvanceContributors',
+            'assets/build/blocks/TableOfContents',
+            'assets/build/blocks/HelpfulModal',
+            'assets/build/blocks/HelpfulFeedback',
+            'assets/build/blocks/SocialShare',
+            'assets/build/blocks/AISummary',
+            'assets/build/blocks/DocActions',
+            'assets/build/blocks/LastUpdated',
+            'assets/build/blocks/ReadingProgress',
+            'assets/build/blocks/FontSizeSwitcher',
+
         ];
 
         foreach ( $block_directories as $block_dir ) {
@@ -359,3 +371,29 @@ function wedocs() {
 
 // kick it off
 wedocs();
+
+
+/**
+ * Dequeue wedocs-pro-frontend-css on non-docs post types
+ */
+function dequeue_wedocs_pro_frontend_css() {
+    // Check if we're not on a docs post type
+    if ( ! is_singular( 'docs' ) && ! is_post_type_archive( 'docs' ) && ! is_tax( array( 'doc_category', 'doc_tag' ) ) ) {
+        wp_dequeue_style( 'wedocs-pro-frontend-css' );
+        wp_deregister_style( 'wedocs-pro-frontend-css' );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'dequeue_wedocs_pro_frontend_css', 20 );
+
+
+// Add custom category for your blocks
+add_filter( 'block_categories_all', function( $categories, $post ) {
+    // Add "wedocs" category if not already there
+    $categories[] = array(
+        'slug'  => 'wedocs',
+        'title' => __( 'weDocs Blocks', 'wedocs' ),
+        'icon'  => null, // optional, doesn't show everywhere
+    );
+
+    return $categories;
+}, 10, 2 );

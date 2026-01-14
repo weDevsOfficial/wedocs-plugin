@@ -4,7 +4,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-	const tocBlocks = document.querySelectorAll('.wp-block-wedocs-block-dynamic-table-of-contents');
+	const tocBlocks = document.querySelectorAll('.wp-block-wedocs-table-of-contents');
 
 	tocBlocks.forEach(function(tocBlock) {
 		const tocContent = tocBlock.querySelector('.toc-content');
@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
 		// Get block attributes from data attributes or classes
 		const smoothScroll = tocBlock.classList.contains('smooth-scroll') || tocBlock.dataset.smoothScroll === 'true';
 		const collapsibleOnMobile = tocBlock.classList.contains('collapsible-mobile') || window.innerWidth <= 768;
+		const stickyMode = tocBlock.classList.contains('sticky-mode');
+
+		// Setup sticky mode
+		if (stickyMode) {
+			setupStickyMode(tocBlock);
+		}
 
 		// Enable smooth scrolling if requested
 		if (smoothScroll) {
@@ -43,14 +49,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		const showHierarchy = tocBlock.dataset.showHierarchy !== 'false';
 		const showNumbering = tocBlock.dataset.showNumbering === 'true';
 
-		// Find all headings in the weDocs content section only
-		const contentArea = document.querySelector('.entry-content');
-		if (!contentArea) {
-			const tocContent = tocBlock.querySelector('.toc-content');
-			tocContent.innerHTML = '<div class="toc-empty-state"><p>No weDocs content area found.</p></div>';
-			return;
-		}
-
+		// Find all headings in the page content
+		const contentArea = document.querySelector('.entry-content, .post-content, main, .content') || document.body;
 		const headingSelector = supportedHeadings.map(h => h.toLowerCase()).join(', ');
 		const headings = contentArea.querySelectorAll(headingSelector);
 
@@ -271,5 +271,57 @@ document.addEventListener('DOMContentLoaded', function() {
 	 */
 	function easeInOutQuad(t) {
 		return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+	}
+
+	/**
+	 * Setup sticky mode behavior
+	 */
+	function setupStickyMode(tocBlock) {
+		// Ensure the block has proper positioning context
+		// Check if parent containers have overflow issues
+		let parent = tocBlock.parentElement;
+		while (parent && parent !== document.body) {
+			const computedStyle = window.getComputedStyle(parent);
+			const overflow = computedStyle.overflow || computedStyle.overflowY;
+
+			// If parent has overflow hidden/auto/scroll, sticky won't work
+			// Add a warning class for debugging
+			if (overflow !== 'visible' && overflow !== '') {
+				tocBlock.setAttribute('data-sticky-parent-overflow', overflow);
+			}
+			parent = parent.parentElement;
+		}
+
+		// Add resize observer to adjust sticky behavior
+		if ('ResizeObserver' in window) {
+			const resizeObserver = new ResizeObserver(function(entries) {
+				entries.forEach(function(entry) {
+					const tocContent = entry.target.querySelector('.toc-content');
+					if (tocContent) {
+						// Ensure content doesn't exceed viewport height
+						const viewportHeight = window.innerHeight;
+						const maxHeight = viewportHeight * 0.8;
+						tocContent.style.maxHeight = maxHeight + 'px';
+					}
+				});
+			});
+			resizeObserver.observe(tocBlock);
+		}
+
+		// Handle scroll to ensure sticky positioning works
+		let lastScrollTop = 0;
+		window.addEventListener('scroll', function() {
+			const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+			// Check if TOC is in viewport
+			const rect = tocBlock.getBoundingClientRect();
+			if (rect.top <= 20) {
+				tocBlock.classList.add('is-stuck');
+			} else {
+				tocBlock.classList.remove('is-stuck');
+			}
+
+			lastScrollTop = scrollTop;
+		}, { passive: true });
 	}
 });
