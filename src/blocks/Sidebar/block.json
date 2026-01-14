@@ -3,9 +3,9 @@
 	"apiVersion": 3,
 	"name": "wedocs/sidebar",
 	"version": "1.0.0",
-	"title": "weDocs - Sidebar",
+	"title": "Sidebar",
 	"icon": "layout",
-	"category": "widgets",
+	"category": "wedocs",
 	"description": "Display a sidebar for documentation navigation",
 	"supports": {
 		"html": true,

@@ -1,0 +1,1 @@
+{"version":3,"file":"blocks/LastUpdated/index.css","mappings":";;;AAAA;;EAAA,C","sources":["webpack://weDocs/./src/blocks/LastUpdated/editor.scss"],"sourcesContent":["/**\n * Last Updated Date Block Editor Styles\n */\n\n.wp-block-wedocs-last-updated {\n\t// Editor-specific styles\n}\n"],"names":[],"ignoreList":[],"sourceRoot":""}

@@ -3,9 +3,9 @@
 	"apiVersion": 3,
 	"name": "wedocs/wedocs-docs-grid",
 	"version": "1.0.0",
-	"title": "weDocs - Docs Grid",
+	"title": "Docs Grid",
 	"icon": "grid-view",
-	"category": "widgets",
+	"category": "wedocs",
 	"description": "Display all the docs in a grid view",
 	"supports": {
 		"html": false,

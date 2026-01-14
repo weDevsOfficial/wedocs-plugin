@@ -23,7 +23,6 @@ ob_start();
 
 // Extract attributes with defaults
 $layout = isset($attributes['layout']) ? $attributes['layout'] : 'layout1';
-$alignment = isset($attributes['alignment']) ? $attributes['alignment'] : 'left';
 $button_text = isset($attributes['buttonText']) ? $attributes['buttonText'] : __('Print', 'wedocs');
 $show_icon = isset($attributes['showIcon']) ? $attributes['showIcon'] : true;
 $additional_classes = isset($attributes['additionalClasses']) ? $attributes['additionalClasses'] : '';
@@ -66,9 +65,6 @@ $font_weight = isset($attributes['fontWeight']) ? $attributes['fontWeight'] : 'n
 
 // Generate unique ID for styles
 $block_id = 'wedocs-print-btn-' . wp_generate_uuid4();
-
-// Container styles based on alignment
-$container_styles = sprintf('text-align: %s; width: 100%%;', esc_attr($alignment));
 
 // Build CSS classes
 $css_classes = sprintf('wedocs-print-article wedocs-print-button %s %s', 
@@ -161,11 +157,12 @@ switch ($layout) {
         }
     }
 </style>
-<div class="wp-block-wedocs-print-button wedocs-print-button-wrapper" style="<?php echo esc_attr($container_styles); ?>">
+<div class="wp-block-wedocs-print-button wedocs-print-button-wrapper">
     <?php echo $button_content; ?>
 </div>
 <?php
 return ob_get_clean();
     }
 }
-?>
+
+echo render_wedocs_print_button( $attributes );

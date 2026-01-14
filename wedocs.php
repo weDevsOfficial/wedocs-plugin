@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
-require_once plugin_dir_path(__FILE__) . 'src/blocks/helpers/block-styles.php';
+require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/helpers/block-styles.php';
 
 /**
  * WeDocs class.
@@ -54,8 +54,6 @@ require_once plugin_dir_path(__FILE__) . 'src/blocks/helpers/block-styles.php';
  * @class WeDocs The class that holds the entire WeDocs plugin
  */
 final class WeDocs {
-
-
     /**
      * Plugin version.
      *
@@ -184,7 +182,6 @@ final class WeDocs {
         // Modern WordPress block registration using block.json files
         $block_directories = [
             'assets/build/blocks/DocsGrid',
-            'assets/build/blocks/Contributors',
             'assets/build/blocks/Breadcrumb',
             'assets/build/blocks/TableOfContents',
             'assets/build/blocks/HelpfulFeedback',
@@ -192,16 +189,17 @@ final class WeDocs {
             'assets/build/blocks/PrintButton',
             'assets/build/blocks/DocNavigation',
             'assets/build/blocks/Sidebar',
+            // 'assets/build/blocks/HelpfulModal',
             // 'assets/build/blocks/AdvanceContributors',
-            'assets/build/blocks/TableOfContents',
-            'assets/build/blocks/HelpfulModal',
-            'assets/build/blocks/HelpfulFeedback',
-            'assets/build/blocks/SocialShare',
-            'assets/build/blocks/AISummary',
-            'assets/build/blocks/DocActions',
-            'assets/build/blocks/LastUpdated',
-            'assets/build/blocks/ReadingProgress',
-            'assets/build/blocks/FontSizeSwitcher',
+            // 'assets/build/blocks/Contributors',
+            // 'assets/build/blocks/TableOfContents',
+            // 'assets/build/blocks/HelpfulFeedback',
+            // 'assets/build/blocks/SocialShare',
+            // 'assets/build/blocks/AISummary',
+            // 'assets/build/blocks/DocActions',
+            // 'assets/build/blocks/LastUpdated',
+            // 'assets/build/blocks/ReadingProgress',
+            // 'assets/build/blocks/FontSizeSwitcher',
 
         ];
 

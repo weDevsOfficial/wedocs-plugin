@@ -2,6 +2,7 @@ const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const path = require( 'path' );
 const isProduction = process.env.NODE_ENV === 'production';
 const MiniCSSExtractPlugin = require( 'mini-css-extract-plugin' );
+const CopyPlugin = require( 'copy-webpack-plugin' );
 
 const updatedConfig = {
   ...defaultConfig,
@@ -70,6 +71,14 @@ const updatedConfig = {
   },
   plugins: [
     ...defaultConfig.plugins,
+    new CopyPlugin( {
+      patterns: [
+        {
+          from: 'src/blocks/helpers',
+          to: 'blocks/helpers',
+        },
+      ],
+    } ),
     new MiniCSSExtractPlugin( {
       filename: '[name].css',
       chunkFilename: '[id].css',

@@ -3,14 +3,13 @@
 	"apiVersion": 3,
 	"name": "wedocs/print-button",
 	"version": "1.0.0",
-	"title": "weDocs - Print Button",
+	"title": "Print Button",
 	"icon": "printer",
 	"category": "wedocs",
 	"description": "Add a print button to allow users to print the current page",
 	"keywords": ["print", "button", "wedocs", "documentation"],
 	"supports": {
-		"html": false,
-		"align": ["left", "center", "right"]
+		"html": false
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
@@ -20,10 +19,6 @@
 		"layout": {
 			"type": "string",
 			"default": "layout1"
-		},
-		"alignment": {
-			"type": "string",
-			"default": "left"
 		},
 		"buttonText": {
 			"type": "string",

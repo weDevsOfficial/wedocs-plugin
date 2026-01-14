@@ -3,9 +3,9 @@
 	"apiVersion": 3,
 	"name": "wedocs/doc-navigation",
 	"version": "1.0.0",
-	"title": "weDocs - Doc Navigation",
+	"title": "Doc Navigation",
 	"icon": "arrow-left-alt2",
-	"category": "widgets",
+	"category": "wedocs",
 	"description": "Display previous and next document navigation links",
 	"supports": {
 		"html": false,

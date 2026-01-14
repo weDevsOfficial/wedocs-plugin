@@ -1,0 +1,20 @@
+{
+    "name": "tareq1988/wp-php-cs-fixer",
+    "type": "library",
+    "description": "WordPress rules for php-cs-fixer",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tareq Hasan",
+            "email": "tareq@wedevs.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "WeDevs\\Fixer\\": "src"
+        }
+    },
+    "require": {
+    }
+}

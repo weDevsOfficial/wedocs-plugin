@@ -3,8 +3,8 @@
 	"apiVersion": 3,
 	"name": "wedocs/breadcrumbs",
 	"version": "1.0.0",
-	"title": "weDocs Breadcrumbs",
-	"category": "widgets",
+	"title": "Breadcrumbs",
+	"category": "wedocs",
 	"description": "Display the breadcrumbs for the current page.",
 	"icon": "arrow-right-alt",
 	"attributes": {

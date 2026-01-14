@@ -3,9 +3,9 @@
 	"apiVersion": 3,
 	"name": "wedocs/helpful-feedback",
 	"version": "1.0.0",
-	"title": "weDocs - Helpful Feedback",
+	"title": "Helpful Feedback",
 	"icon": "thumbs-up",
-	"category": "widgets",
+	"category": "wedocs",
 	"description": "Add a feedback voting system for articles with Yes/No buttons",
 	"supports": {
 		"html": false,

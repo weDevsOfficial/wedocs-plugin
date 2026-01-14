@@ -1,21 +1,20 @@
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { useBlockProps, InspectorControls, BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
-import { 
-    PanelBody, 
-    SelectControl, 
-    ToggleControl, 
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import {
+    PanelBody,
+    SelectControl,
+    ToggleControl,
     TextControl,
-    PanelRow 
+    PanelRow
 } from '@wordpress/components';
 import Inspector from './Inspector';
 
 const Edit = ({ attributes, setAttributes }) => {
     const blockProps = useBlockProps();
-    
+
     const {
         layout,
-        alignment,
         buttonText,
         showIcon,
         padding,
@@ -54,18 +53,12 @@ const Edit = ({ attributes, setAttributes }) => {
         '--hover-text-color': hoverTextColor
     };
 
-    // Container alignment styles
-    const containerStyles = {
-        textAlign: alignment,
-        width: '100%'
-    };
-
     // Layout variations
     const renderLayout = () => {
         switch (layout) {
             case 'layout2':
                 return (
-                    <div style={containerStyles}>
+                    <div>
                         <button
                             className={`wedocs-print-button layout-2 ${additionalClasses}`}
                             style={buttonInlineStyles}
@@ -78,7 +71,7 @@ const Edit = ({ attributes, setAttributes }) => {
                 );
             case 'layout3':
                 return (
-                    <div style={containerStyles}>
+                    <div>
                         <button
                             className={`wedocs-print-button layout-3 ${additionalClasses}`}
                             style={{
@@ -95,7 +88,7 @@ const Edit = ({ attributes, setAttributes }) => {
                 );
             default: // layout1
                 return (
-                    <div style={containerStyles}>
+                    <div>
                         <button
                             className={`wedocs-print-button layout-1 ${additionalClasses}`}
                             style={buttonInlineStyles}
@@ -111,13 +104,6 @@ const Edit = ({ attributes, setAttributes }) => {
 
     return (
         <Fragment>
-            <BlockControls>
-                <AlignmentToolbar
-                    value={alignment}
-                    onChange={(newAlignment) => setAttributes({ alignment: newAlignment || 'left' })}
-                />
-            </BlockControls>
-            
             <InspectorControls>
                 <PanelBody title={__('General Settings', 'wedocs')} initialOpen={true}>
                     <SelectControl
@@ -148,15 +134,7 @@ const Edit = ({ attributes, setAttributes }) => {
                 </PanelBody>
                 
                 <Inspector attributes={attributes} setAttributes={setAttributes} />
-                
-                <PanelBody title={__('Advanced', 'wedocs')} initialOpen={false}>
-                    <TextControl
-                        label={__('Additional CSS Classes', 'wedocs')}
-                        value={additionalClasses}
-                        onChange={(value) => setAttributes({ additionalClasses: value })}
-                        help={__('Add custom CSS classes separated by spaces', 'wedocs')}
-                    />
-                </PanelBody>
+
             </InspectorControls>
 
             <div {...blockProps}>

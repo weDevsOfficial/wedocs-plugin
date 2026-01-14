@@ -20,8 +20,4 @@ registerBlockType('wedocs/quick-search', {
             />
         </svg>
     ),
-    title: __( 'weDocs - Quick Search', 'wedocs' ),
-    keywords: [ 'Search', 'weDocs quick search', 'Modal', 'Documentation' ],
-    category: 'widgets',
-    description: __( 'Add a quick search block that opens a modal with documentation search', 'wedocs' ),
 });
