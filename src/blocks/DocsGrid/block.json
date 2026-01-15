@@ -4,17 +4,56 @@
 	"name": "wedocs/wedocs-docs-grid",
 	"version": "1.0.0",
 	"title": "weDocs - Docs Grid",
-  "icon": "grid-view",
+	"icon": "grid-view",
 	"category": "widgets",
 	"description": "Display all the docs in a grid view",
 	"supports": {
-		"html": false
+		"html": false,
+		"align": ["wide", "full"],
+		"anchor": true,
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true
+			}
+		}
 	},
 	"editorScript": "file:./index.js",
-  "editorStyle": "file:./index.css",
+	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
 	"render": "file:./render.php",
-  "attributes": {
+	"attributes": {
     "docStyle": {
       "type": "string",
       "default": "1x1"

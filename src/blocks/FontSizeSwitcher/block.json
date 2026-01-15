@@ -1,0 +1,110 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/font-size-switcher",
+	"version": "1.0.0",
+	"title": "Font Size Switcher",
+	"category": "widgets",
+	"icon": "editor-textcolor",
+	"description": "Allow readers to adjust font size for better readability with preset options or custom controls.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"blockId": {
+			"type": "string",
+			"default": ""
+		},
+		"displayStyle": {
+			"type": "string",
+			"default": "buttons"
+		},
+		"showLabel": {
+			"type": "boolean",
+			"default": true
+		},
+		"labelText": {
+			"type": "string",
+			"default": "Font Size:"
+		},
+		"buttonStyle": {
+			"type": "string",
+			"default": "outlined"
+		},
+		"alignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"showCurrentSize": {
+			"type": "boolean",
+			"default": true
+		},
+		"contentSelector": {
+			"type": "string",
+			"default": ".entry-content, .post-content, article, main"
+		},
+		"fontSizeOptions": {
+			"type": "array",
+			"default": [
+				{ "label": "Small", "value": "14px" },
+				{ "label": "Default", "value": "16px" },
+				{ "label": "Medium", "value": "18px" },
+				{ "label": "Large", "value": "20px" },
+				{ "label": "Extra Large", "value": "24px" }
+			]
+		},
+		"defaultSize": {
+			"type": "string",
+			"default": "16px"
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": "#f5f5f5"
+		},
+		"textColor": {
+			"type": "string",
+			"default": "#333333"
+		},
+		"activeColor": {
+			"type": "string",
+			"default": "#0073aa"
+		},
+		"borderColor": {
+			"type": "string",
+			"default": "#dddddd"
+		},
+		"borderRadius": {
+			"type": "string",
+			"default": "4px"
+		},
+		"spacing": {
+			"type": "string",
+			"default": "8px"
+		},
+		"padding": {
+			"type": "object",
+			"default": {
+				"top": "10px",
+				"right": "15px",
+				"bottom": "10px",
+				"left": "15px"
+			}
+		},
+		"margin": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "20px",
+				"left": "0px"
+			}
+		}
+	},
+	"textdomain": "wedocs-plugin",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

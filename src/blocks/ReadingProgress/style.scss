@@ -1,0 +1,114 @@
+/**
+ * Reading Progress Bar Block Styles
+ */
+
+.wp-block-wedocs-reading-progress {
+	width: 100%;
+	box-sizing: border-box;
+
+	&.position-fixed-top {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 1000;
+	}
+
+	&.position-fixed-bottom {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 1000;
+	}
+
+	&.position-top,
+	&.position-bottom {
+		position: relative;
+		margin: 20px 0;
+	}
+
+	.reading-progress-bar {
+		position: relative;
+		overflow: hidden;
+		background-color: #f0f0f0;
+	}
+
+	.reading-progress-fill {
+		height: 100%;
+		width: 0%;
+		transition: width 0.3s ease;
+		will-change: width;
+	}
+
+	.reading-progress-info {
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		padding: 5px 10px;
+		font-size: 12px;
+		color: #666;
+		background-color: rgba(255, 255, 255, 0.95);
+		user-select: none;
+
+		&.position-left {
+			justify-content: flex-start;
+		}
+
+		&.position-center {
+			justify-content: center;
+		}
+
+		&.position-right {
+			justify-content: flex-end;
+		}
+
+		.progress-percentage {
+			font-weight: 600;
+			min-width: 40px;
+			text-align: right;
+		}
+
+		.progress-time {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+		}
+	}
+}
+
+// Smooth scrolling enhancement
+html {
+	scroll-behavior: smooth;
+}
+
+// Ensure fixed bars don't interfere with content
+body:has(.wp-block-wedocs-reading-progress.position-fixed-top) {
+	.wp-block-wedocs-reading-progress.position-fixed-top {
+		+ * {
+			margin-top: 0;
+		}
+	}
+}
+
+// Animation classes for when progress changes
+.reading-progress-fill {
+	&.fast-animation {
+		transition: width 0.1s linear;
+	}
+
+	&.slow-animation {
+		transition: width 0.5s ease-out;
+	}
+
+	&.smooth-animation {
+		transition: width 0.3s ease;
+	}
+}
+
+// Print styles - hide progress bar when printing
+@media print {
+	.wp-block-wedocs-reading-progress {
+		display: none !important;
+	}
+}
