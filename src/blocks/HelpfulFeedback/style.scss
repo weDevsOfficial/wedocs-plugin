@@ -1,0 +1,294 @@
+/**
+ * Helpful Feedback Block Styles
+ * Frontend and Editor styles for the Helpful Feedback block
+ */
+
+.wedocs-helpful-feedback {
+    position: relative;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .wedocs-feedback-title {
+        margin: 0;
+        font-weight: 600;
+        line-height: 1.4;
+    }
+
+    .wedocs-feedback-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 16px;
+        justify-content: center;
+
+        .wedocs-feedback-button {
+            border: none;
+            background: none;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1;
+            text-decoration: none;
+            outline: none;
+            position: relative;
+            min-height: 44px; // Accessibility - minimum touch target
+            min-width: 44px;
+
+            &:focus {
+                outline: 2px solid #0073aa;
+                outline-offset: 2px;
+            }
+
+            &:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+            }
+
+            .wedocs-feedback-icon {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+
+                svg {
+                    display: block;
+                }
+            }
+
+            .vote-count {
+                font-size: 0.9em;
+                opacity: 0.8;
+            }
+        }
+    }
+
+    .wedocs-feedback-thank-you {
+        text-align: center;
+
+        .wedocs-feedback-title {
+            color: #28a745;
+            margin-bottom: 16px;
+        }
+
+        .wedocs-feedback-result {
+            .wedocs-feedback-voted-option {
+                font-weight: 500;
+                margin-bottom: 8px;
+
+                .wedocs-feedback-icon {
+                    display: inline-flex;
+                    align-items: center;
+                    margin-right: 8px;
+                }
+            }
+
+            .wedocs-feedback-vote-summary {
+                .vote-separator {
+                    margin: 0 8px;
+                    opacity: 0.6;
+                }
+            }
+        }
+    }
+
+    .wedocs-feedback-preview-note {
+        text-align: center;
+        font-style: italic;
+        color: #666;
+        border-top: 1px solid #eee;
+        padding-top: 10px;
+    }
+
+    // Alignment variations
+    &.left {
+        .wedocs-feedback-buttons {
+            justify-content: flex-start;
+        }
+    }
+
+    &.center {
+        .wedocs-feedback-buttons {
+            justify-content: center;
+        }
+    }
+
+    &.right {
+        .wedocs-feedback-buttons {
+            justify-content: flex-end;
+        }
+    }
+
+    // Layout 1: Standard rectangular buttons
+    &.layout1 {
+        .wedocs-feedback-button {
+            padding: 12px 24px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-direction: row;
+        }
+    }
+
+    // Layout 2: Circular buttons with text below
+    &.layout2 {
+        .wedocs-feedback-buttons {
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+
+            .wedocs-feedback-button {
+                flex-direction: column;
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                padding: 0;
+                gap: 8px;
+                position: relative;
+
+                .vote-count {
+                    position: absolute;
+                    bottom: -28px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    white-space: nowrap;
+                    font-size: 12px;
+                }
+            }
+        }
+
+        // For horizontal layout in layout2
+        @media (min-width: 480px) {
+            .wedocs-feedback-buttons {
+                flex-direction: row;
+                justify-content: center;
+                gap: 48px;
+            }
+        }
+    }
+
+    // Responsive design
+    @media (max-width: 480px) {
+        .wedocs-feedback-buttons {
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+
+            .wedocs-feedback-button {
+                width: 100%;
+                max-width: 200px;
+                justify-content: center;
+            }
+        }
+
+        &.layout2 .wedocs-feedback-buttons {
+            .wedocs-feedback-button {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    }
+
+    // Loading state
+    &.loading {
+        .wedocs-feedback-button {
+            opacity: 0.6;
+            cursor: wait;
+            pointer-events: none;
+        }
+    }
+
+    // Voted state
+    &.has-voted {
+        .wedocs-feedback-buttons {
+            display: none;
+        }
+    }
+
+    // Animation for feedback transitions
+    .wedocs-feedback-thank-you,
+    .wedocs-feedback-buttons {
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+// Editor specific styles
+.wp-block-wedocs-helpful-feedback {
+    .wedocs-helpful-feedback {
+        border: 1px dashed #ccc;
+        position: relative;
+
+        &::after {
+            content: 'Helpful Feedback Block';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            background: #0073aa;
+            color: white;
+            padding: 2px 8px;
+            font-size: 11px;
+            line-height: 1;
+            font-weight: 500;
+            z-index: 1;
+        }
+    }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+    .wedocs-helpful-feedback {
+        .wedocs-feedback-button {
+            border: 2px solid currentColor !important;
+        }
+    }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+    .wedocs-helpful-feedback {
+        .wedocs-feedback-button,
+        .wedocs-feedback-thank-you,
+        .wedocs-feedback-buttons {
+            animation: none !important;
+            transition: none !important;
+        }
+    }
+}
+
+// Print styles
+@media print {
+    .wedocs-helpful-feedback {
+        .wedocs-feedback-buttons {
+            display: none !important;
+        }
+
+        .wedocs-feedback-thank-you {
+            .wedocs-feedback-vote-summary {
+                display: inline !important;
+
+                &::before {
+                    content: " (";
+                }
+
+                &::after {
+                    content: ")";
+                }
+            }
+        }
+    }
+}
