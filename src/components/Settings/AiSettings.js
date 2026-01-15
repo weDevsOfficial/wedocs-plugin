@@ -95,6 +95,85 @@ const AiSettings = ({
         ...aiSettingsData
     });
 
+    const [loadingModels, setLoadingModels] = useState(false);
+    const [openrouterModels, setOpenrouterModels] = useState({});
+
+    /**
+     * Fetch available models from OpenRouter
+     */
+    const fetchOpenRouterModels = async (providerKey) => {
+        if (providerKey !== 'openrouter') return;
+        
+        const apiKey = aiSettings.providers[providerKey]?.api_key;
+        if (!apiKey) {
+            alert(__('Please enter your OpenRouter API key first', 'wedocs'));
+            return;
+        }
+
+        setLoadingModels(true);
+        
+        try {
+            const nonce = window.weDocsAdminVars?.nonce || '';
+            const response = await fetch(`/wp-json/wp/v2/docs/ai/models/${providerKey}`, {
+                method: 'GET',
+                headers: {
+                    'X-WP-Nonce': nonce
+                }
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message || __('Failed to fetch models', 'wedocs'));
+            }
+
+            const data = await response.json();
+            
+            // Update provider configs with fetched models
+            const modelOptions = [];
+            Object.keys(data.models).forEach(modelKey => {
+                modelOptions.push({
+                    value: modelKey,
+                    label: data.models[modelKey]
+                });
+            });
+            
+            providerConfigs[providerKey].models = modelOptions;
+            
+            // Update local state
+            setOpenrouterModels(data.models);
+            
+            // Update settings with first model selected if none selected
+            const currentModel = aiSettings.providers[providerKey]?.selected_model;
+            const firstModelKey = Object.keys(data.models)[0];
+            
+            if (!currentModel && firstModelKey) {
+                const updatedSettings = {
+                    ...aiSettings,
+                    providers: {
+                        ...aiSettings.providers,
+                        [providerKey]: {
+                            ...aiSettings.providers[providerKey],
+                            selected_model: firstModelKey
+                        }
+                    }
+                };
+                
+                setAiSettings(updatedSettings);
+                setSettings({
+                    ...settingsData,
+                    ai: updatedSettings
+                });
+            }
+
+            alert(__('Models fetched successfully!', 'wedocs'));
+
+        } catch (error) {
+            alert(error.message || __('Failed to fetch OpenRouter models', 'wedocs'));
+        } finally {
+            setLoadingModels(false);
+        }
+    };
+
     // Get provider configurations from centralized configs
     const getProviderConfigsForUI = () => {
         const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
@@ -558,6 +637,46 @@ const AiSettings = ({
                                 </p>
                             </div>
                         </div>
+
+                        {/* Fetch Models Button for OpenRouter */}
+                        {aiSettings.default_provider === 'openrouter' && (
+                            <div className="col-span-4">
+                                <div className="settings-content flex items-center justify-between">
+                                    <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+                                        <label
+                                            className="block text-sm font-medium text-gray-600"
+                                        >
+                                            {__('Fetch Available Models', 'wedocs')}
+                                        </label>
+                                    </div>
+                                    <div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => fetchOpenRouterModels('openrouter')}
+                                            disabled={loadingModels || !aiSettings.providers.openrouter?.api_key}
+                                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            {loadingModels ? (
+                                                <>
+                                                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                    </svg>
+                                                    {__('Fetching...', 'wedocs')}
+                                                </>
+                                            ) : (
+                                                __('Fetch Available Models', 'wedocs')
+                                            )}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
+                                    <p className="text-sm text-[#6B7280]">
+                                        {__('Click to load the latest available models from OpenRouter', 'wedocs')}
+                                    </p>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

@@ -661,6 +661,14 @@ function wedocs_get_ai_provider_configs() {
 				'gemini-pro-latest' => 'Gemini Pro Latest - Auto-Updated'
 			],
 			'requires_key' => true
+		],
+		'openrouter' => [
+			'name' => 'OpenRouter',
+			'endpoint' => 'https://openrouter.ai/api/v1/chat/completions',
+			'models' => [],
+			'requires_key' => true,
+			'supports_dynamic_models' => true,
+			'model_list_endpoint' => 'https://openrouter.ai/api/v1/models'
 		]
 	];
 
