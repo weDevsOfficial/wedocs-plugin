@@ -90,7 +90,7 @@ function wedocs_get_template( $template_name, $args = [] ) {
  */
 function wedocs_apply_short_content( $content, $max_content_number ) {
     // Control content length by substr.
-    return ( strlen( $content ) > $max_content_number ) ? mb_substr( $content, 0, $max_content_number ) . '...' : $content;
+    return ( mb_strlen( $content ) > $max_content_number ) ? mb_substr( $content, 0, $max_content_number ) . '...' : $content;
 }
 
 if ( !function_exists( 'wedocs_breadcrumbs' ) ) {
@@ -591,7 +591,7 @@ function wedocs_get_search_modal_active_colors() {
  */
 function wedocs_apply_extracted_content( $content, $max_content_number ) {
     // Control content length by substr.
-    return ( strlen( $content ) > $max_content_number ) ? substr( $content, 0, $max_content_number ) . '...' : $content;
+    return ( mb_strlen( $content ) > $max_content_number ) ? mb_substr( $content, 0, $max_content_number ) . '...' : $content;
 }
 
 /**
