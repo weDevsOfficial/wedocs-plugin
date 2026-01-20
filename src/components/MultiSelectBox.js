@@ -39,7 +39,7 @@ const MultiSelectBox = ( {
 
 			{ (index ===activeIndex) && options && (
 				<div className="relative">
-					<ul className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+					<ul className="absolute z-10 mt-1 max-h-60 w-full overflow-visible rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
 						{ Object.entries( options ).map( ( option ) => (
 							<li
 							key={option[1]}
@@ -75,7 +75,7 @@ const MultiSelectBox = ( {
 										option[ 1 ]
 									) }
 								</label>
-								 <Badge classes="opacity-0 group-hover:opacity-100 transition-opacity"/>
+								 <Badge position='absolute' right='60px' classes="opacity-0 group-hover:opacity-100 transition-opacity"/>
 							</li>
 						) ) }
 					{/* <ProSvg position='absolute' top="50%" left="85%" transform="translateY(-50%)"/> */}
