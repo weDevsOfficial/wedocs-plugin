@@ -23,6 +23,8 @@
     "tests",
     "src",
     ".wordpress-org",
-    ".github"
+    ".github",
+    ".distignore",
+    ".eslintrc"
   ]
 }
