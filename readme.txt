@@ -5,7 +5,7 @@ Tags: docs, documentation, knowledge base, wiki, ai powered knowledge base
 Requires at least: 5.6
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.1.17
+Stable tag: 2.1.18
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -190,6 +190,10 @@ Yes, weDocs supports custom permalinks for documentation pages.
 ---
 
 ## Changelog
+
+**v2.1.18 (22 Jan, 2026)**
+- **Fixed:** Multibyte character truncation in doc titles.
+- **Fixed:** Streamlines the admin interface by removing the Pro promotion notice logic.
 
 **v2.1.17 (15 Jan, 2026)**
 - **Fixed:** Restrict documentation editing capabilities to authorized roles only.
