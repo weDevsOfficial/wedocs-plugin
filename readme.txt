@@ -5,7 +5,7 @@ Tags: docs, documentation, knowledge base, wiki, ai powered knowledge base
 Requires at least: 5.6
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.1.18
+Stable tag: 2.1.19
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,8 @@ The free version of weDocs provides a solid foundation for building a profession
 – **Drag-and-Drop Functionality:** Organize, rearrange, and structure documentation using a simple drag-and-drop interface.
 
 – **Three-Level Nested Document Structure:** Categorize documentation into sections, subsections, and articles for clear hierarchy.
+
+– **Article Versioning:** Manage multiple versions of your documentation for different software releases or product versions.
 
 – **Easy Documentation Creation & Organization:** Create, publish, draft, and manage unlimited documents with full control.
 
@@ -190,6 +192,11 @@ Yes, weDocs supports custom permalinks for documentation pages.
 ---
 
 ## Changelog
+
+**v2.1.19 (22 Jan, 2026)**
+- **Added:** Article versioning support - manage multiple versions of documentation for different software releases.
+- **Added:** Version taxonomy for organizing docs by version.
+- **Added:** Version selector dropdown in documentation pages and sidebar.
 
 **v2.1.18 (22 Jan, 2026)**
 - **Fixed:** Multibyte character truncation in doc titles.
