@@ -1,0 +1,239 @@
+/* WeDocs Elementor Widgets Styles */
+
+/* Search Widget */
+.wedocs-search-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.wedocs-search-left {
+    text-align: left;
+}
+
+.wedocs-search-center {
+    text-align: center;
+}
+
+.wedocs-search-right {
+    text-align: right;
+}
+
+.wedocs-search-form {
+    display: inline-block;
+    position: relative;
+}
+
+.wedocs-search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.wedocs-search-input {
+    border: 1px solid #cccccc;
+    border-radius: 30px;
+    padding: 14px 70px 14px 22px;
+    background-color: #ffffff;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.wedocs-search-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.wedocs-search-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #3b82f6;
+    border: none;
+    border-radius: 30px;
+    padding: 24px 26px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wedocs-search-btn:hover {
+    background-color: #2563eb;
+}
+
+.wedocs-search-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: #ffffff;
+    stroke: #ffffff;
+}
+
+/* Docs Grid Widget */
+.wedocs-docs-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.wedocs-docs-grid__item {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 20px;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.wedocs-docs-grid__item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.wedocs-docs-grid__title {
+    margin: 0 0 15px 0;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #333333;
+}
+
+.wedocs-docs-grid__title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.wedocs-docs-grid__title a:hover {
+    color: #0073aa;
+}
+
+.wedocs-docs-grid__content {
+    margin-bottom: 15px;
+}
+
+.wedocs-docs-grid__section {
+    margin-bottom: 10px;
+}
+
+.wedocs-docs-grid__section-title {
+    font-weight: 500;
+    margin: 0 0 5px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wedocs-docs-grid__section-title svg {
+    width: 12px;
+    height: 12px;
+    transition: transform 0.3s ease;
+}
+
+.wedocs-docs-grid__section-title svg.active {
+    transform: rotate(180deg);
+}
+
+.wedocs-docs-grid__section-link {
+    color: #555;
+    text-decoration: none;
+}
+
+.wedocs-docs-grid__section-link:hover {
+    color: #0073aa;
+}
+
+.wedocs-docs-grid__articles {
+    padding-left: 15px;
+    transition: all 0.3s ease;
+}
+
+.wedocs-docs-grid__articles.collapsed {
+    display: none;
+}
+
+.wedocs-docs-grid__article {
+    margin: 5px 0;
+}
+
+.wedocs-docs-grid__article-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.wedocs-docs-grid__article-link:hover {
+    color: #0073aa;
+}
+
+.wedocs-docs-grid__details-link {
+    display: inline-block;
+    background-color: #0073aa;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.wedocs-docs-grid__details-link:hover {
+    background-color: #005177;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .wedocs-search-container {
+        max-width: 100%;
+    }
+
+    .wedocs-search-input {
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+
+    .wedocs-docs-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Pagination Styles */
+.wedocs-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    gap: 5px;
+}
+
+.wedocs-pagination a,
+.wedocs-pagination span {
+    padding: 8px 12px;
+    margin: 0 2px;
+    border: 1px solid var(--wedocs-pagination-border-color, #ddd);
+    background-color: var(--wedocs-pagination-background-color, #fff);
+    color: var(--wedocs-pagination-text-color, #333);
+    text-decoration: none;
+    border-radius: var(--wedocs-border-radius, 4px);
+    transition: all 0.3s ease;
+}
+
+.wedocs-pagination a:hover {
+    background-color: var(--wedocs-pagination-hover-color, #f5f5f5);
+    color: var(--wedocs-pagination-text-hover-color, #0073aa);
+}
+
+.wedocs-pagination .current {
+    background-color: var(--wedocs-pagination-text-hover-color, #0073aa);
+    color: var(--wedocs-pagination-background-color, #fff);
+    border-color: var(--wedocs-pagination-text-hover-color, #0073aa);
+}
+
+.wedocs-pagination .dots {
+    border: none;
+    background: none;
+    padding: 8px 4px;
+}
