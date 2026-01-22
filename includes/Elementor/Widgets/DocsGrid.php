@@ -79,16 +79,12 @@ class DocsGrid extends Widget_Base {
             'docsPerPage',
             [
                 'label' => __('Docs Per Page', 'wedocs'),
-                'type' => Controls_Manager::SELECT,
-                'default' => 'all',
-                'options' => [
-                    'all' => __('Show All', 'wedocs'),
-                    '3' => '3',
-                    '6' => '6',
-                    '9' => '9',
-                    '12' => '12',
-                    '15' => '15',
-                ],
+                'type' => Controls_Manager::NUMBER,
+                'default' => 9,
+                'min' => 1,
+                'max' => 100,
+                'step' => 1,
+                'description' => __('Set to -1 for unlimited docs', 'wedocs'),
             ]
         );
 
@@ -221,6 +217,219 @@ class DocsGrid extends Widget_Base {
                 'default' => __('View Details', 'wedocs'),
                 'condition' => [
                     'showViewDetails' => 'yes',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Pagination Section
+        $this->start_controls_section(
+            'pagination_section',
+            [
+                'label' => __('Pagination', 'wedocs'),
+                'tab' => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        $this->add_control(
+            'enablePagination',
+            [
+                'label' => __('Enable Pagination', 'wedocs'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'wedocs'),
+                'label_off' => __('No', 'wedocs'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+
+        $this->add_control(
+            'paginationType',
+            [
+                'label' => __('Pagination Type', 'wedocs'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'numbers',
+                'options' => [
+                    'numbers' => __('Numbers', 'wedocs'),
+                    'ajax' => __('AJAX Load More', 'wedocs'),
+                    'infinite' => __('Infinite Scroll', 'wedocs'),
+                    'prev_next' => __('Previous/Next Only', 'wedocs'),
+                ],
+                'condition' => [
+                    'enablePagination' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'loadMoreText',
+            [
+                'label' => __('Load More Button Text', 'wedocs'),
+                'type' => Controls_Manager::TEXT,
+                'default' => __('Load More', 'wedocs'),
+                'condition' => [
+                    'enablePagination' => 'yes',
+                    'paginationType' => 'ajax',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'showPageInfo',
+            [
+                'label' => __('Show Page Info', 'wedocs'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'wedocs'),
+                'label_off' => __('Hide', 'wedocs'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+                'description' => __('Show "Showing X-Y of Z docs"', 'wedocs'),
+                'condition' => [
+                    'enablePagination' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'showTotalCount',
+            [
+                'label' => __('Show Total Count', 'wedocs'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'wedocs'),
+                'label_off' => __('Hide', 'wedocs'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+                'description' => __('Display total number of docs at top', 'wedocs'),
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Advanced Filtering Section
+        $this->start_controls_section(
+            'filtering_section',
+            [
+                'label' => __('Advanced Filtering', 'wedocs'),
+                'tab' => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        $this->add_control(
+            'enableSearch',
+            [
+                'label' => __('Enable Search', 'wedocs'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'wedocs'),
+                'label_off' => __('No', 'wedocs'),
+                'return_value' => 'yes',
+                'default' => '',
+                'description' => __('Add search box above grid', 'wedocs'),
+            ]
+        );
+
+        $this->add_control(
+            'searchPlaceholder',
+            [
+                'label' => __('Search Placeholder', 'wedocs'),
+                'type' => Controls_Manager::TEXT,
+                'default' => __('Search documentation...', 'wedocs'),
+                'condition' => [
+                    'enableSearch' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'enableSorting',
+            [
+                'label' => __('Enable Sorting Dropdown', 'wedocs'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'wedocs'),
+                'label_off' => __('No', 'wedocs'),
+                'return_value' => 'yes',
+                'default' => '',
+                'description' => __('Let users sort docs dynamically', 'wedocs'),
+            ]
+        );
+
+        $this->add_control(
+            'enableViewToggle',
+            [
+                'label' => __('Enable View Toggle', 'wedocs'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'wedocs'),
+                'label_off' => __('No', 'wedocs'),
+                'return_value' => 'yes',
+                'default' => '',
+                'description' => __('Let users switch between grid/list view', 'wedocs'),
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Animation Section
+        $this->start_controls_section(
+            'animation_section',
+            [
+                'label' => __('Animations', 'wedocs'),
+                'tab' => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        $this->add_control(
+            'itemAnimation',
+            [
+                'label' => __('Item Animation', 'wedocs'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'none',
+                'options' => [
+                    'none' => __('None', 'wedocs'),
+                    'fadeIn' => __('Fade In', 'wedocs'),
+                    'fadeInUp' => __('Fade In Up', 'wedocs'),
+                    'fadeInDown' => __('Fade In Down', 'wedocs'),
+                    'fadeInLeft' => __('Fade In Left', 'wedocs'),
+                    'fadeInRight' => __('Fade In Right', 'wedocs'),
+                    'zoomIn' => __('Zoom In', 'wedocs'),
+                    'bounceIn' => __('Bounce In', 'wedocs'),
+                    'slideInUp' => __('Slide In Up', 'wedocs'),
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'animationDelay',
+            [
+                'label' => __('Animation Delay (ms)', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1000,
+                        'step' => 50,
+                    ],
+                ],
+                'default' => [
+                    'size' => 100,
+                ],
+                'condition' => [
+                    'itemAnimation!' => 'none',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'staggerAnimation',
+            [
+                'label' => __('Stagger Animation', 'wedocs'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'wedocs'),
+                'label_off' => __('No', 'wedocs'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+                'description' => __('Items appear one after another', 'wedocs'),
+                'condition' => [
+                    'itemAnimation!' => 'none',
                 ],
             ]
         );
@@ -592,6 +801,295 @@ class DocsGrid extends Widget_Base {
         );
 
         $this->end_controls_section();
+
+        // Style Section - Pagination
+        $this->start_controls_section(
+            'style_pagination',
+            [
+                'label' => __('Pagination', 'wedocs'),
+                'tab' => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'enablePagination' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'paginationAlign',
+            [
+                'label' => __('Alignment', 'wedocs'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => __('Left', 'wedocs'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'wedocs'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => __('Right', 'wedocs'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'default' => 'center',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-pagination' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'paginationTypography',
+                'label' => __('Typography', 'wedocs'),
+                'selector' => '{{WRAPPER}} .wedocs-pagination a, {{WRAPPER}} .wedocs-pagination span',
+            ]
+        );
+
+        $this->add_control(
+            'paginationColor',
+            [
+                'label' => __('Text Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#333333',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-pagination a' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'paginationBgColor',
+            [
+                'label' => __('Background Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#f5f5f5',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-pagination a' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'paginationActiveColor',
+            [
+                'label' => __('Active Text Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#ffffff',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-pagination .current' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'paginationActiveBgColor',
+            [
+                'label' => __('Active Background', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#0073aa',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-pagination .current' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'paginationHoverColor',
+            [
+                'label' => __('Hover Text Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#ffffff',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-pagination a:hover' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'paginationHoverBgColor',
+            [
+                'label' => __('Hover Background', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#0073aa',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-pagination a:hover' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'paginationPadding',
+            [
+                'label' => __('Padding', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 8,
+                    'right' => 12,
+                    'bottom' => 8,
+                    'left' => 12,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-pagination a, {{WRAPPER}} .wedocs-pagination span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'paginationMargin',
+            [
+                'label' => __('Margin', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 30,
+                    'right' => 0,
+                    'bottom' => 0,
+                    'left' => 0,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-pagination' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'paginationSpacing',
+            [
+                'label' => __('Item Spacing', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 30,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 5,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-pagination a, {{WRAPPER}} .wedocs-pagination span' => 'margin-right: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'paginationBorderRadius',
+            [
+                'label' => __('Border Radius', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 3,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-pagination a, {{WRAPPER}} .wedocs-pagination span' => 'border-radius: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Style Section - Search & Filters
+        $this->start_controls_section(
+            'style_filters',
+            [
+                'label' => __('Search & Filters', 'wedocs'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'filterTypography',
+                'label' => __('Typography', 'wedocs'),
+                'selector' => '{{WRAPPER}} .wedocs-grid-search input, {{WRAPPER}} .wedocs-grid-sort select',
+            ]
+        );
+
+        $this->add_control(
+            'filterBgColor',
+            [
+                'label' => __('Background Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#ffffff',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-search input' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .wedocs-grid-sort select' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'filterBorderColor',
+            [
+                'label' => __('Border Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#dddddd',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-search input' => 'border-color: {{VALUE}};',
+                    '{{WRAPPER}} .wedocs-grid-sort select' => 'border-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'filterPadding',
+            [
+                'label' => __('Padding', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 10,
+                    'right' => 15,
+                    'bottom' => 10,
+                    'left' => 15,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-search input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .wedocs-grid-sort select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'filterBorderRadius',
+            [
+                'label' => __('Border Radius', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 4,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-search input' => 'border-radius: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wedocs-grid-sort select' => 'border-radius: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
     }
 
     /**
@@ -602,7 +1100,7 @@ class DocsGrid extends Widget_Base {
 
         // Get settings
         $doc_style = $settings['docStyle'] ?? '1x1';
-        $docs_per_page = $settings['docsPerPage'] ?? 'all';
+        $docs_per_page = intval($settings['docsPerPage'] ?? 9);
         $exclude_docs = $settings['excludeDocs'] ?? [];
         $order = $settings['order'] ?? 'asc';
         $order_by = $settings['orderBy'] ?? 'menu_order';
@@ -613,6 +1111,21 @@ class DocsGrid extends Widget_Base {
         $show_view_details = ($settings['showViewDetails'] ?? 'yes') === 'yes';
         $button_text = $settings['buttonText'] ?? __('View Details', 'wedocs');
 
+        // Pagination settings
+        $enable_pagination = ($settings['enablePagination'] ?? 'no') === 'yes';
+        $pagination_type = $settings['paginationType'] ?? 'numbers';
+        $load_more_text = $settings['loadMoreText'] ?? __('Load More', 'wedocs');
+        $show_page_info = ($settings['showPageInfo'] ?? 'no') === 'yes';
+        $show_total_count = ($settings['showTotalCount'] ?? 'no') === 'yes';
+
+        // Filtering settings
+        $enable_search = ($settings['enableSearch'] ?? 'no') === 'yes';
+        $search_placeholder = $settings['searchPlaceholder'] ?? __('Search docs...', 'wedocs');
+        $enable_sorting = ($settings['enableSorting'] ?? 'no') === 'yes';
+
+        // Get current page
+        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
         // Query args
         $args = [
             'post_type' => 'docs',
@@ -622,17 +1135,24 @@ class DocsGrid extends Widget_Base {
             'order' => $order,
         ];
 
-        if ($docs_per_page !== 'all') {
-            $args['posts_per_page'] = intval($docs_per_page);
-        } else {
+        // Handle pagination
+        if ($enable_pagination && $docs_per_page > 0) {
+            $args['posts_per_page'] = $docs_per_page;
+            $args['paged'] = $paged;
+        } elseif ($docs_per_page == -1) {
             $args['posts_per_page'] = -1;
+        } else {
+            $args['posts_per_page'] = $docs_per_page;
         }
 
         if (!empty($exclude_docs)) {
             $args['post__not_in'] = $exclude_docs;
         }
 
-        $docs = get_posts($args);
+        $docs_query = new \WP_Query($args);
+        $docs = $docs_query->posts;
+        $total_docs = $docs_query->found_posts;
+        $max_pages = $docs_query->max_num_pages;
 
         if (empty($docs)) {
             echo '<p>' . __('No documentation found.', 'wedocs') . '</p>';
@@ -648,94 +1168,219 @@ class DocsGrid extends Widget_Base {
         }
 
 ?>
-        <div class="<?php echo esc_attr($grid_class); ?>">
-            <?php foreach ($docs as $doc): ?>
-                <div class="wedocs-docs-grid__item">
-                    <h3 class="wedocs-docs-grid__title">
-                        <?php if ($doc_style === 'list'): ?>
-                            <span class="wedocs-docs-grid__icon">📄</span>
+        <div class="wedocs-grid-wrapper">
+            <?php if ($enable_search || $enable_sorting): ?>
+                <div class="wedocs-grid-filters">
+                    <?php if ($enable_search): ?>
+                        <div class="wedocs-grid-search">
+                            <input type="text" placeholder="<?php echo esc_attr($search_placeholder); ?>" class="wedocs-grid-search-input" data-grid-id="<?php echo $this->get_id(); ?>">
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ($enable_sorting): ?>
+                        <div class="wedocs-grid-sort">
+                            <select class="wedocs-grid-sort-select" data-grid-id="<?php echo $this->get_id(); ?>">
+                                <option value="title_asc"><?php _e('Title (A-Z)', 'wedocs'); ?></option>
+                                <option value="title_desc"><?php _e('Title (Z-A)', 'wedocs'); ?></option>
+                                <option value="date_desc"><?php _e('Newest First', 'wedocs'); ?></option>
+                                <option value="date_asc"><?php _e('Oldest First', 'wedocs'); ?></option>
+                            </select>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($show_total_count): ?>
+                <div class="wedocs-grid-count">
+                    <?php printf(__('Total: %d documents', 'wedocs'), $total_docs); ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="<?php echo esc_attr($grid_class); ?>" data-grid-id="<?php echo $this->get_id(); ?>">
+                <?php foreach ($docs as $doc): ?>
+                    <div class="wedocs-docs-grid__item">
+                        <h3 class="wedocs-docs-grid__title">
+                            <?php if ($doc_style === 'list'): ?>
+                                <span class="wedocs-docs-grid__icon">📄</span>
+                            <?php endif; ?>
+                            <a href="<?php echo get_permalink($doc->ID); ?>"><?php echo esc_html($doc->post_title); ?></a>
+                        </h3>
+
+                        <?php if ($show_articles): ?>
+                            <div class="wedocs-docs-grid__content">
+                                <?php
+                                // Get sections (children of this doc)
+                                $section_args = [
+                                    'post_type' => 'docs',
+                                    'post_status' => 'publish',
+                                    'post_parent' => $doc->ID,
+                                    'orderby' => $order_by,
+                                    'order' => $order,
+                                ];
+
+                                if ($sections_per_doc !== 'all') {
+                                    $section_args['posts_per_page'] = intval($sections_per_doc);
+                                } else {
+                                    $section_args['posts_per_page'] = -1;
+                                }
+
+                                $sections = get_posts($section_args);
+
+                                if (!empty($sections)):
+                                    foreach ($sections as $section):
+                                ?>
+                                        <div class="wedocs-docs-grid__section">
+                                            <h4 class="wedocs-docs-grid__section-title">
+                                                <a href="<?php echo get_permalink($section->ID); ?>" class="wedocs-docs-grid__section-link">
+                                                    <?php echo esc_html($section->post_title); ?>
+                                                </a>
+                                            </h4>
+
+                                            <?php
+                                            // Get articles (children of this section)
+                                            $article_args = [
+                                                'post_type' => 'docs',
+                                                'post_status' => 'publish',
+                                                'post_parent' => $section->ID,
+                                                'orderby' => $order_by,
+                                                'order' => $order,
+                                            ];
+
+                                            if ($articles_per_section !== 'all') {
+                                                $article_args['posts_per_page'] = intval($articles_per_section);
+                                            } else {
+                                                $article_args['posts_per_page'] = -1;
+                                            }
+
+                                            $articles = get_posts($article_args);
+
+                                            if (!empty($articles)):
+                                            ?>
+                                                <ul class="wedocs-docs-grid__articles <?php echo $keep_collapsed ? 'wedocs-docs-grid__articles--collapsed' : ''; ?>">
+                                                    <?php foreach ($articles as $article): ?>
+                                                        <li>
+                                                            <a href="<?php echo get_permalink($article->ID); ?>" class="wedocs-docs-grid__article-link">
+                                                                → <?php echo esc_html($article->post_title); ?>
+                                                            </a>
+                                                        </li>
+                                                    <?php endforeach; ?>
+                                                </ul>
+                                            <?php endif; ?>
+                                        </div>
+                                <?php
+                                    endforeach;
+                                endif;
+                                ?>
+                            </div>
                         <?php endif; ?>
-                        <a href="<?php echo get_permalink($doc->ID); ?>"><?php echo esc_html($doc->post_title); ?></a>
-                    </h3>
 
-                    <?php if ($show_articles): ?>
-                        <div class="wedocs-docs-grid__content">
+                        <?php if ($show_view_details): ?>
+                            <a href="<?php echo get_permalink($doc->ID); ?>" class="wedocs-docs-grid__details-link">
+                                <?php echo esc_html($button_text); ?>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <?php if ($enable_pagination && $max_pages > 1): ?>
+                <div class="wedocs-pagination" data-pagination-type="<?php echo esc_attr($pagination_type); ?>">
+                    <?php if ($show_page_info): ?>
+                        <div class="wedocs-page-info">
                             <?php
-                            // Get sections (children of this doc)
-                            $section_args = [
-                                'post_type' => 'docs',
-                                'post_status' => 'publish',
-                                'post_parent' => $doc->ID,
-                                'orderby' => $order_by,
-                                'order' => $order,
-                            ];
-
-                            if ($sections_per_doc !== 'all') {
-                                $section_args['posts_per_page'] = intval($sections_per_doc);
-                            } else {
-                                $section_args['posts_per_page'] = -1;
-                            }
-
-                            $sections = get_posts($section_args);
-
-                            if (!empty($sections)):
-                                foreach ($sections as $section):
-                            ?>
-                                    <div class="wedocs-docs-grid__section">
-                                        <h4 class="wedocs-docs-grid__section-title">
-                                            <a href="<?php echo get_permalink($section->ID); ?>" class="wedocs-docs-grid__section-link">
-                                                <?php echo esc_html($section->post_title); ?>
-                                            </a>
-                                        </h4>
-
-                                        <?php
-                                        // Get articles (children of this section)
-                                        $article_args = [
-                                            'post_type' => 'docs',
-                                            'post_status' => 'publish',
-                                            'post_parent' => $section->ID,
-                                            'orderby' => $order_by,
-                                            'order' => $order,
-                                        ];
-
-                                        if ($articles_per_section !== 'all') {
-                                            $article_args['posts_per_page'] = intval($articles_per_section);
-                                        } else {
-                                            $article_args['posts_per_page'] = -1;
-                                        }
-
-                                        $articles = get_posts($article_args);
-
-                                        if (!empty($articles)):
-                                        ?>
-                                            <ul class="wedocs-docs-grid__articles <?php echo $keep_collapsed ? 'wedocs-docs-grid__articles--collapsed' : ''; ?>">
-                                                <?php foreach ($articles as $article): ?>
-                                                    <li>
-                                                        <a href="<?php echo get_permalink($article->ID); ?>" class="wedocs-docs-grid__article-link">
-                                                            → <?php echo esc_html($article->post_title); ?>
-                                                        </a>
-                                                    </li>
-                                                <?php endforeach; ?>
-                                            </ul>
-                                        <?php endif; ?>
-                                    </div>
-                            <?php
-                                endforeach;
-                            endif;
+                            $showing_from = (($paged - 1) * $docs_per_page) + 1;
+                            $showing_to = min($paged * $docs_per_page, $total_docs);
+                            printf(__('Showing %d-%d of %d', 'wedocs'), $showing_from, $showing_to, $total_docs);
                             ?>
                         </div>
                     <?php endif; ?>
 
-                    <?php if ($show_view_details): ?>
-                        <a href="<?php echo get_permalink($doc->ID); ?>" class="wedocs-docs-grid__details-link">
-                            <?php echo esc_html($button_text); ?>
-                        </a>
+                    <?php if ($pagination_type === 'numbers'): ?>
+                        <?php
+                        // Number pagination
+                        $big = 999999999;
+                        echo paginate_links([
+                            'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                            'format' => '?paged=%#%',
+                            'current' => max(1, $paged),
+                            'total' => $max_pages,
+                            'prev_text' => '&laquo;',
+                            'next_text' => '&raquo;',
+                            'type' => 'plain',
+                        ]);
+                        ?>
+                    <?php elseif ($pagination_type === 'prev_next'): ?>
+                        <div class="wedocs-prev-next">
+                            <?php if ($paged > 1): ?>
+                                <a href="<?php echo get_pagenum_link($paged - 1); ?>" class="wedocs-prev"><?php _e('Previous', 'wedocs'); ?></a>
+                            <?php endif; ?>
+
+                            <span class="wedocs-page-current"><?php printf(__('Page %d of %d', 'wedocs'), $paged, $max_pages); ?></span>
+
+                            <?php if ($paged < $max_pages): ?>
+                                <a href="<?php echo get_pagenum_link($paged + 1); ?>" class="wedocs-next"><?php _e('Next', 'wedocs'); ?></a>
+                            <?php endif; ?>
+                        </div>
+                    <?php elseif ($pagination_type === 'ajax' || $pagination_type === 'infinite'): ?>
+                        <?php if ($paged < $max_pages): ?>
+                            <button class="wedocs-load-more"
+                                data-page="<?php echo $paged; ?>"
+                                data-max-pages="<?php echo $max_pages; ?>"
+                                data-widget-id="<?php echo $this->get_id(); ?>">
+                                <?php echo esc_html($load_more_text); ?>
+                            </button>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
-            <?php endforeach; ?>
-        </div>
+            <?php endif; ?>
+        </div><?php // Close wedocs-grid-wrapper
+                ?>
 
         <style>
+            .wedocs-grid-wrapper {
+                width: 100%;
+            }
+
+            .wedocs-grid-filters {
+                display: flex;
+                gap: 15px;
+                margin-bottom: 25px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            .wedocs-grid-search {
+                flex: 1;
+                min-width: 200px;
+            }
+
+            .wedocs-grid-search input {
+                width: 100%;
+                padding: 10px 15px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 14px;
+            }
+
+            .wedocs-grid-sort {
+                min-width: 180px;
+            }
+
+            .wedocs-grid-sort select {
+                width: 100%;
+                padding: 10px 15px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 14px;
+                background: white;
+            }
+
+            .wedocs-grid-count {
+                margin-bottom: 15px;
+                color: #666;
+                font-size: 14px;
+            }
+
             .wedocs-docs-grid--2x2 {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
@@ -798,6 +1443,97 @@ class DocsGrid extends Widget_Base {
                 display: inline-block;
             }
 
+            /* Pagination Styles */
+            .wedocs-pagination {
+                margin-top: 30px;
+                text-align: center;
+            }
+
+            .wedocs-pagination a,
+            .wedocs-pagination span {
+                display: inline-block;
+                padding: 8px 12px;
+                margin: 0 5px 5px 0;
+                background: #f5f5f5;
+                color: #333;
+                text-decoration: none;
+                border-radius: 3px;
+                transition: all 0.3s ease;
+            }
+
+            .wedocs-pagination a:hover {
+                background: #0073aa;
+                color: #fff;
+            }
+
+            .wedocs-pagination .current {
+                background: #0073aa;
+                color: #fff;
+            }
+
+            .wedocs-page-info {
+                margin-bottom: 15px;
+                color: #666;
+                font-size: 14px;
+            }
+
+            .wedocs-prev-next {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .wedocs-prev-next a {
+                background: #0073aa;
+                color: #fff;
+                padding: 10px 20px;
+                border-radius: 4px;
+                text-decoration: none;
+            }
+
+            .wedocs-prev-next .wedocs-page-current {
+                background: transparent;
+                color: #333;
+            }
+
+            .wedocs-load-more {
+                background: #0073aa;
+                color: #fff;
+                border: none;
+                padding: 12px 30px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: all 0.3s ease;
+            }
+
+            .wedocs-load-more:hover {
+                background: #005177;
+                transform: translateY(-2px);
+            }
+
+            .wedocs-load-more.loading {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+
+            @media (max-width: 768px) {
+                .wedocs-docs-grid--2x2 {
+                    grid-template-columns: 1fr;
+                }
+
+                .wedocs-grid-filters {
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+
+                .wedocs-grid-search,
+                .wedocs-grid-sort {
+                    width: 100%;
+                }
+            }
+
             <?php if (($settings['gridHoverEffect'] ?? 'yes') === 'yes'): ?>.wedocs-docs-grid__item {
                 transition: transform 0.3s ease, box-shadow 0.3s ease;
             }
@@ -813,7 +1549,115 @@ class DocsGrid extends Widget_Base {
                 }
             }
         </style>
+
+        <script>
+            (function($) {
+                'use strict';
+
+                // Search functionality
+                $('.wedocs-grid-search-input').on('keyup', function() {
+                    var searchTerm = $(this).val().toLowerCase();
+                    var gridId = $(this).data('grid-id');
+                    var $grid = $('.wedocs-docs-grid[data-grid-id="' + gridId + '"]');
+
+                    $grid.find('.wedocs-docs-grid__item').each(function() {
+                        var $item = $(this);
+                        var text = $item.text().toLowerCase();
+
+                        if (text.indexOf(searchTerm) > -1) {
+                            $item.show();
+                        } else {
+                            $item.hide();
+                        }
+                    });
+                });
+
+                // Sort functionality
+                $('.wedocs-grid-sort-select').on('change', function() {
+                    var sortValue = $(this).val();
+                    var gridId = $(this).data('grid-id');
+                    var $grid = $('.wedocs-docs-grid[data-grid-id="' + gridId + '"]');
+                    var $items = $grid.find('.wedocs-docs-grid__item');
+
+                    $items.sort(function(a, b) {
+                        var aTitle = $(a).find('.wedocs-docs-grid__title a').text();
+                        var bTitle = $(b).find('.wedocs-docs-grid__title a').text();
+
+                        if (sortValue === 'title_asc') {
+                            return aTitle.localeCompare(bTitle);
+                        } else if (sortValue === 'title_desc') {
+                            return bTitle.localeCompare(aTitle);
+                        }
+                        return 0;
+                    });
+
+                    $grid.html($items);
+                });
+
+                // AJAX Load More
+                $('.wedocs-load-more').on('click', function(e) {
+                    e.preventDefault();
+                    var $button = $(this);
+                    var page = parseInt($button.data('page'));
+                    var maxPages = parseInt($button.data('max-pages'));
+                    var widgetId = $button.data('widget-id');
+                    var paginationType = $button.closest('.wedocs-pagination').data('pagination-type');
+
+                    if ($button.hasClass('loading')) return;
+
+                    $button.addClass('loading').text('<?php _e('Loading...', 'wedocs'); ?>');
+
+                    $.ajax({
+                        url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                        type: 'POST',
+                        data: {
+                            action: 'wedocs_load_more_docs',
+                            page: page + 1,
+                            widget_id: widgetId,
+                            nonce: '<?php echo wp_create_nonce('wedocs_load_more'); ?>'
+                        },
+                        success: function(response) {
+                            if (response.success && response.data.html) {
+                                var $newItems = $(response.data.html);
+                                $('.wedocs-docs-grid[data-grid-id="' + widgetId + '"]').append($newItems);
+
+                                $button.data('page', page + 1);
+                                $button.removeClass('loading').text('<?php echo esc_js($load_more_text); ?>');
+
+                                if (page + 1 >= maxPages) {
+                                    $button.fadeOut();
+                                }
+                            }
+                        },
+                        error: function() {
+                            $button.removeClass('loading').text('<?php _e('Try Again', 'wedocs'); ?>');
+                        }
+                    });
+                });
+
+                // Infinite Scroll
+                if ($('.wedocs-pagination[data-pagination-type="infinite"]').length) {
+                    var infiniteScrollObserver = new IntersectionObserver(function(entries) {
+                        entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                                var $button = $(entry.target).find('.wedocs-load-more');
+                                if ($button.length && !$button.hasClass('loading')) {
+                                    $button.trigger('click');
+                                }
+                            }
+                        });
+                    }, {
+                        threshold: 0.5
+                    });
+
+                    $('.wedocs-pagination[data-pagination-type="infinite"]').each(function() {
+                        infiniteScrollObserver.observe(this);
+                    });
+                }
+            })(jQuery);
+        </script>
     <?php
+        // Don't close the PHP tag if there's no content_template() after this
     }
 
     /**
@@ -826,6 +1670,11 @@ class DocsGrid extends Widget_Base {
             var showArticles=settings.showDocArticle==='yes' ;
             var showViewDetails=settings.showViewDetails==='yes' ;
             var buttonText=settings.buttonText || 'View Details' ;
+            var enablePagination=settings.enablePagination==='yes' ;
+            var paginationType=settings.paginationType || 'numbers' ;
+            var enableSearch=settings.enableSearch==='yes' ;
+            var enableSorting=settings.enableSorting==='yes' ;
+            var showTotalCount=settings.showTotalCount==='yes' ;
 
             // Grid classes based on doc style
             var gridClass='wedocs-docs-grid' ;
@@ -876,47 +1725,98 @@ class DocsGrid extends Widget_Base {
             buttonStyle +='text-decoration: none; display: inline-block; border: none; cursor: pointer;' ;
             #>
 
-            <div class="{{ gridClass }}" style="<# if (docStyle === '2x2') { #>display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;<# } #>">
-                <#
-                    var numItems=docStyle==='2x2' ? 4 : (docStyle==='list' ? 3 : 2);
-                    for (var i=1; i <=numItems; i++) {
-                    #>
-                    <div class="wedocs-docs-grid__item" style="{{ itemStyle }}">
-                        <h3 class="wedocs-docs-grid__title" style="{{ titleStyle }}">
-                            <# if (docStyle==='list' ) { #>
-                                📄
-                                <# } #>
-                                    Documentation {{ i }}
-                        </h3>
-
-                        <# if (showArticles) { #>
-                            <div class="wedocs-docs-grid__content">
-                                <div class="wedocs-docs-grid__section" style="margin-bottom: 10px;">
-                                    <h4 class="wedocs-docs-grid__section-title" style="{{ sectionTitleStyle }}">Getting Started</h4>
-                                    <ul style="list-style: none; padding: 0; margin: 0;">
-                                        <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ Introduction</a></li>
-                                        <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ Installation Guide</a></li>
-                                        <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ Quick Start</a></li>
-                                    </ul>
-                                </div>
-                                <div class="wedocs-docs-grid__section">
-                                    <h4 class="wedocs-docs-grid__section-title" style="{{ sectionTitleStyle }}">Advanced Topics</h4>
-                                    <ul style="list-style: none; padding: 0; margin: 0;">
-                                        <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ Configuration</a></li>
-                                        <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ API Reference</a></li>
-                                    </ul>
-                                </div>
+            <div class="wedocs-grid-wrapper">
+                <# if (enableSearch || enableSorting) { #>
+                    <div class="wedocs-grid-filters" style="display: flex; gap: 15px; margin-bottom: 25px; align-items: center; flex-wrap: wrap;">
+                        <# if (enableSearch) { #>
+                            <div class="wedocs-grid-search" style="flex: 1; min-width: 200px;">
+                                <input type="text" placeholder="{{ settings.searchPlaceholder || 'Search docs...' }}" style="width: 100%; padding: 10px 15px; border: 1px solid #ddd; border-radius: 4px;">
                             </div>
                             <# } #>
-
-                                <# if (showViewDetails) { #>
-                                    <a href="#" class="wedocs-docs-grid__details-link" style="{{ buttonStyle }}">
-                                        {{ buttonText }}
-                                    </a>
+                                <# if (enableSorting) { #>
+                                    <div class="wedocs-grid-sort" style="min-width: 180px;">
+                                        <select style="width: 100%; padding: 10px 15px; border: 1px solid #ddd; border-radius: 4px; background: white;">
+                                            <option>Title (A-Z)</option>
+                                            <option>Title (Z-A)</option>
+                                            <option>Newest First</option>
+                                            <option>Oldest First</option>
+                                        </select>
+                                    </div>
                                     <# } #>
                     </div>
                     <# } #>
-            </div>
+
+                        <# if (showTotalCount) { #>
+                            <div class="wedocs-grid-count" style="margin-bottom: 15px; color: #666; font-size: 14px;">
+                                Total: 24 documents
+                            </div>
+                            <# } #>
+
+                                <div class="{{ gridClass }}" style="<# if (docStyle === '2x2') { #>display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;<# } #>">
+                                    <#
+                                        var numItems=docStyle==='2x2' ? 4 : (docStyle==='list' ? 3 : 2);
+                                        for (var i=1; i <=numItems; i++) {
+                                        #>
+                                        <div class="wedocs-docs-grid__item" style="{{ itemStyle }}">
+                                            <h3 class="wedocs-docs-grid__title" style="{{ titleStyle }}">
+                                                <# if (docStyle==='list' ) { #>
+                                                    📄
+                                                    <# } #>
+                                                        Documentation {{ i }}
+                                            </h3>
+
+                                            <# if (showArticles) { #>
+                                                <div class="wedocs-docs-grid__content">
+                                                    <div class="wedocs-docs-grid__section" style="margin-bottom: 10px;">
+                                                        <h4 class="wedocs-docs-grid__section-title" style="{{ sectionTitleStyle }}">Getting Started</h4>
+                                                        <ul style="list-style: none; padding: 0; margin: 0;">
+                                                            <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ Introduction</a></li>
+                                                            <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ Installation Guide</a></li>
+                                                            <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ Quick Start</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="wedocs-docs-grid__section">
+                                                        <h4 class="wedocs-docs-grid__section-title" style="{{ sectionTitleStyle }}">Advanced Topics</h4>
+                                                        <ul style="list-style: none; padding: 0; margin: 0;">
+                                                            <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ Configuration</a></li>
+                                                            <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ API Reference</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <# } #>
+
+                                                    <# if (showViewDetails) { #>
+                                                        <a href="#" class="wedocs-docs-grid__details-link" style="{{ buttonStyle }}">
+                                                            {{ buttonText }}
+                                                        </a>
+                                                        <# } #>
+                                        </div>
+                                        <# } #>
+                                </div>
+
+                                <# if (enablePagination) { #>
+                                    <div class="wedocs-pagination" style="margin-top: 30px; text-align: center;">
+                                        <# if (paginationType==='numbers' ) { #>
+                                            <a href="#" style="display: inline-block; padding: 8px 12px; margin: 0 5px; background: #f5f5f5; color: #333; text-decoration: none; border-radius: 3px;">&laquo;</a>
+                                            <span class="current" style="display: inline-block; padding: 8px 12px; margin: 0 5px; background: #0073aa; color: #fff; border-radius: 3px;">1</span>
+                                            <a href="#" style="display: inline-block; padding: 8px 12px; margin: 0 5px; background: #f5f5f5; color: #333; text-decoration: none; border-radius: 3px;">2</a>
+                                            <a href="#" style="display: inline-block; padding: 8px 12px; margin: 0 5px; background: #f5f5f5; color: #333; text-decoration: none; border-radius: 3px;">3</a>
+                                            <a href="#" style="display: inline-block; padding: 8px 12px; margin: 0 5px; background: #f5f5f5; color: #333; text-decoration: none; border-radius: 3px;">&raquo;</a>
+                                            <# } else if (paginationType==='prev_next' ) { #>
+                                                <div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+                                                    <a href="#" style="background: #0073aa; color: #fff; padding: 10px 20px; border-radius: 4px; text-decoration: none;">Previous</a>
+                                                    <span style="color: #333;">Page 1 of 5</span>
+                                                    <a href="#" style="background: #0073aa; color: #fff; padding: 10px 20px; border-radius: 4px; text-decoration: none;">Next</a>
+                                                </div>
+                                                <# } else if (paginationType==='ajax' || paginationType==='infinite' ) { #>
+                                                    <button style="background: #0073aa; color: #fff; border: none; padding: 12px 30px; border-radius: 4px; cursor: pointer; font-size: 14px;">
+                                                        {{ settings.loadMoreText || 'Load More' }}
+                                                    </button>
+                                                    <# } #>
+                                    </div>
+                                    <# } #>
+            </div><?php // Close wedocs-grid-wrapper
+                    ?>
 
             <style>
                 .wedocs-docs-grid__article-link:hover,
