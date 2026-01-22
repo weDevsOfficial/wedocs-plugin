@@ -73,6 +73,8 @@ $skip_sidebar = ( get_post_meta( $post->ID, 'skip_sidebar', true ) == 'yes' ) ? 
             <div class="wedocs-single-content">
                 <?php wedocs_breadcrumbs(); ?>
 
+                <?php wedocs_version_selector( $post->ID ); ?>
+
                 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope itemtype="http://schema.org/Article">
                     <header class="entry-header">
                         <?php the_title( '<h1 class="entry-title" itemprop="headline">', '</h1>' ); ?>

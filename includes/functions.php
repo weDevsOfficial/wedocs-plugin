@@ -670,3 +670,125 @@ function wedocs_get_ai_provider_configs() {
 function wedocs_is_pro_active() {
     return defined( 'WEDOCS_PRO_VERSION' );
 }
+
+/**
+ * Get all available versions for documentation.
+ *
+ * @since 2.1.19
+ *
+ * @return array
+ */
+function wedocs_get_versions() {
+    $versions = get_terms( [
+        'taxonomy'   => 'doc_version',
+        'hide_empty' => false,
+        'orderby'    => 'term_id',
+        'order'      => 'DESC',
+    ] );
+
+    if ( is_wp_error( $versions ) ) {
+        return [];
+    }
+
+    return $versions;
+}
+
+/**
+ * Get the version(s) for a specific doc.
+ *
+ * @since 2.1.19
+ *
+ * @param int $post_id Post ID.
+ *
+ * @return array
+ */
+function wedocs_get_doc_version( $post_id ) {
+    $versions = wp_get_post_terms( $post_id, 'doc_version' );
+
+    if ( is_wp_error( $versions ) ) {
+        return [];
+    }
+
+    return $versions;
+}
+
+/**
+ * Get the current version being viewed.
+ *
+ * @since 2.1.19
+ *
+ * @param int $post_id Current post ID.
+ *
+ * @return object|null
+ */
+function wedocs_get_current_version( $post_id = 0 ) {
+    if ( ! $post_id ) {
+        $post_id = get_the_ID();
+    }
+
+    $versions = wedocs_get_doc_version( $post_id );
+
+    if ( ! empty( $versions ) ) {
+        return $versions[0];
+    }
+
+    return null;
+}
+
+/**
+ * Display version selector dropdown.
+ *
+ * @since 2.1.19
+ *
+ * @param int $post_id Current post ID.
+ *
+ * @return void
+ */
+function wedocs_version_selector( $post_id = 0 ) {
+    if ( ! $post_id ) {
+        $post_id = get_the_ID();
+    }
+
+    $versions = wedocs_get_versions();
+    $current_version = wedocs_get_current_version( $post_id );
+
+    if ( empty( $versions ) || count( $versions ) < 2 ) {
+        return;
+    }
+
+    $current_post = get_post( $post_id );
+    if ( ! $current_post ) {
+        return;
+    }
+
+    // Check if a version is requested via URL parameter
+    $requested_version_slug = isset( $_GET['version'] ) ? sanitize_text_field( $_GET['version'] ) : '';
+    if ( $requested_version_slug ) {
+        $requested_version = get_term_by( 'slug', $requested_version_slug, 'doc_version' );
+        if ( $requested_version ) {
+            $current_version = $requested_version;
+        }
+    }
+
+    ?>
+    <div class="wedocs-version-selector">
+        <label for="wedocs-version-dropdown">
+            <?php echo esc_html__( 'Version:', 'wedocs' ); ?>
+        </label>
+        <select id="wedocs-version-dropdown" class="wedocs-version-dropdown">
+            <?php foreach ( $versions as $version ) : ?>
+                <?php
+                $is_current = $current_version && $current_version->term_id === $version->term_id;
+                ?>
+                <option 
+                    value="<?php echo esc_attr( $version->term_id ); ?>"
+                    data-slug="<?php echo esc_attr( $version->slug ); ?>"
+                    <?php selected( $is_current ); ?>
+                >
+                    <?php echo esc_html( $version->name ); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <?php
+}
