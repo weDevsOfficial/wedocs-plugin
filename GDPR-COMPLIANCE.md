@@ -31,15 +31,19 @@ add_filter( 'wedocs_email_feedback_author_line', function( $author_line, $author
 
 ### Option 2: Anonymize IP Address
 
-If you want to keep the IP but anonymize it (e.g., remove the last octet):
+If you want to keep the IP but anonymize it (e.g., remove the last octet for IPv4):
+
+**Note:** This example only handles IPv4 addresses. For production use, consider adding IPv6 support or using a library that handles both.
 
 ```php
 add_filter( 'wedocs_email_feedback_author_line', function( $author_line, $author, $ip_address ) {
-    // Anonymize IP by removing last segment
-    $ip_parts = explode( '.', $ip_address );
-    if ( count( $ip_parts ) === 4 ) {
-        $ip_parts[3] = '0';
-        $ip_address = implode( '.', $ip_parts );
+    // Anonymize IPv4 by removing last segment
+    if ( filter_var( $ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) {
+        $ip_parts = explode( '.', $ip_address );
+        if ( count( $ip_parts ) === 4 ) {
+            $ip_parts[3] = '0';
+            $ip_address = implode( '.', $ip_parts );
+        }
     }
     
     return sprintf( 'Author: %s (IP: %s - anonymized)', $author, $ip_address );
