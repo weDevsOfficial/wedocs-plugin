@@ -90,7 +90,7 @@ function wedocs_get_template( $template_name, $args = [] ) {
  */
 function wedocs_apply_short_content( $content, $max_content_number ) {
     // Control content length by substr.
-    return ( strlen( $content ) > $max_content_number ) ? mb_substr( $content, 0, $max_content_number ) . '...' : $content;
+    return ( mb_strlen( $content ) > $max_content_number ) ? mb_substr( $content, 0, $max_content_number ) . '...' : $content;
 }
 
 if ( !function_exists( 'wedocs_breadcrumbs' ) ) {
@@ -510,12 +510,26 @@ function wedocs_user_documentation_handling_capabilities() {
         $wp_roles = new \WP_Roles(); // @codingStandardsIgnoreLine
     }
 
-    $roles        = $wp_roles->get_names();
-    $capabilities = array( 'edit_post', 'edit_docs', 'publish_docs', 'edit_others_docs', 'read_private_docs', 'edit_private_docs', 'edit_published_docs' );
-    // Push documentation handling access to users.
+    $permitted_roles = array( 'administrator', 'editor' );
+    $all_roles       = $wp_roles->get_names();
+    $capabilities    = array( 'edit_docs', 'publish_docs', 'edit_others_docs', 'read_private_docs', 'edit_private_docs', 'edit_published_docs' );
+
+    // First, remove capabilities from unauthorized roles (cleanup for existing installations)
     foreach ( $capabilities as $capability ) {
-        foreach ( $roles as $role_key => $role ) {
-            $wp_roles->add_cap( $role_key, $capability );
+        foreach ( array_keys( $all_roles ) as $role_key ) {
+            $role = $wp_roles->get_role( $role_key );
+            if ( $role && $role->has_cap( $capability ) && ! in_array( $role_key, $permitted_roles, true ) ) {
+                $wp_roles->remove_cap( $role_key, $capability );
+            }
+        }
+    }
+
+    // Push documentation handling access ONLY to permitted roles.
+    foreach ( $capabilities as $capability ) {
+        foreach ( $permitted_roles as $role_key ) {
+            if ( $wp_roles->is_role( $role_key ) ) {
+                $wp_roles->add_cap( $role_key, $capability );
+            }
         }
     }
 }
@@ -577,7 +591,7 @@ function wedocs_get_search_modal_active_colors() {
  */
 function wedocs_apply_extracted_content( $content, $max_content_number ) {
     // Control content length by substr.
-    return ( strlen( $content ) > $max_content_number ) ? substr( $content, 0, $max_content_number ) . '...' : $content;
+    return ( mb_strlen( $content ) > $max_content_number ) ? mb_substr( $content, 0, $max_content_number ) . '...' : $content;
 }
 
 /**
@@ -591,4 +605,68 @@ function wedocs_convert_utc_to_est() {
 	$current_time->setTimezone( new DateTimeZone( 'EST' ) );
 
 	return $current_time->format( 'Y-m-d H:i:s T' );
+}
+
+/**
+ * Get AI provider configurations
+ *
+ * @since 2.1.15
+ *
+ * @return array
+ */
+function wedocs_get_ai_provider_configs() {
+	$provider_configs = [
+		'openai' => [
+			'name' => 'OpenAI',
+			'endpoint' => 'https://api.openai.com/v1/chat/completions',
+			'models' => [
+				'gpt-4o' => 'GPT-4o - Most Capable Multimodal',
+				'gpt-4o-mini' => 'GPT-4o Mini - Efficient & Fast',
+				'gpt-4-turbo' => 'GPT-4 Turbo - High Performance',
+				'gpt-4' => 'GPT-4 - Advanced Reasoning',
+				'gpt-3.5-turbo' => 'GPT-3.5 Turbo - Fast & Affordable'
+			],
+			'requires_key' => true
+		],
+		'anthropic' => [
+			'name' => 'Anthropic Claude',
+			'endpoint' => 'https://api.anthropic.com/v1/messages',
+			'models' => [
+				'claude-4.1-opus' => 'Claude 4.1 Opus - Most Capable',
+				'claude-4-opus' => 'Claude 4 Opus - Best Coding Model',
+				'claude-4-sonnet' => 'Claude 4 Sonnet - Advanced Reasoning',
+				'claude-3.7-sonnet' => 'Claude 3.7 Sonnet - Hybrid Reasoning',
+				'claude-3-5-sonnet-20241022' => 'Claude 3.5 Sonnet Latest',
+				'claude-3-5-sonnet-20240620' => 'Claude 3.5 Sonnet',
+				'claude-3-5-haiku-20241022' => 'Claude 3.5 Haiku',
+				'claude-3-opus-20240229' => 'Claude 3 Opus',
+				'claude-3-sonnet-20240229' => 'Claude 3 Sonnet',
+				'claude-3-haiku-20240307' => 'Claude 3 Haiku'
+			],
+			'requires_key' => true
+		],
+		'google' => [
+			'name' => 'Google Gemini',
+			'endpoint' => 'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent',
+			'models' => [
+				'gemini-2.0-flash-exp' => 'Gemini 2.0 Flash Experimental - Latest',
+				'gemini-2.0-flash' => 'Gemini 2.0 Flash - Stable',
+				'gemini-2.0-flash-001' => 'Gemini 2.0 Flash 001 - Stable Version',
+				'gemini-2.0-flash-lite-001' => 'Gemini 2.0 Flash-Lite 001 - Lightweight',
+				'gemini-2.0-flash-lite' => 'Gemini 2.0 Flash-Lite - Lightweight',
+				'gemini-2.5-flash' => 'Gemini 2.5 Flash - Latest Stable',
+				'gemini-2.5-pro' => 'Gemini 2.5 Pro - Most Capable',
+				'gemini-2.5-flash-lite' => 'Gemini 2.5 Flash-Lite - Efficient',
+				'gemini-flash-latest' => 'Gemini Flash Latest - Auto-Updated',
+				'gemini-pro-latest' => 'Gemini Pro Latest - Auto-Updated'
+			],
+			'requires_key' => true
+		]
+	];
+
+	return apply_filters( 'wedocs_ai_provider_configs', $provider_configs );
+}
+
+function wedocs_is_pro_active() {
+    return defined( 'WEDOCS_PRO_VERSION' );
 }
