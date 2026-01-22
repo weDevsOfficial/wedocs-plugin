@@ -46,8 +46,8 @@ class Elementor {
         require_once WEDOCS_PATH . '/includes/Elementor/Widgets/DocsGrid.php';
 
         // Register widgets
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \WeDevs\WeDocs\Elementor\Widgets\Search() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \WeDevs\WeDocs\Elementor\Widgets\DocsGrid() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\Search() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\DocsGrid() );
     }
 
     /**
