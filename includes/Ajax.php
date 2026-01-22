@@ -139,6 +139,12 @@ class Ajax {
         $message = isset( $_POST['message'] ) ? strip_tags( $_POST['message'] ) : '';
         $doc_id  = isset( $_POST['doc_id'] ) ? intval( $_POST['doc_id'] ) : 0;
 
+        // GDPR consent validation
+        $gdpr_consent = isset( $_POST['gdpr_consent'] ) ? $_POST['gdpr_consent'] : '';
+        if ( empty( $gdpr_consent ) || $gdpr_consent !== 'on' ) {
+            wp_send_json_error( __( 'You must consent to the data collection to submit this form.', 'wedocs' ) );
+        }
+
         if ( !is_user_logged_in() ) {
             $email = isset( $_POST['email'] ) ? filter_var( $_POST['email'], FILTER_VALIDATE_EMAIL ) : false;
 

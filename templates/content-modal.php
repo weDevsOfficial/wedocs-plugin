@@ -50,6 +50,15 @@ if ( is_user_logged_in() ) {
                 </div>
             </div>
 
+            <div class="wedocs-form-row">
+                <div class="wedocs-form-field">
+                    <label style="display: flex; align-items: flex-start; gap: 8px; font-weight: normal; cursor: pointer;">
+                        <input type="checkbox" name="gdpr_consent" id="gdpr_consent" required style="margin-top: 3px;" />
+                        <span><?php _e( 'I consent to having this website collect my name, email and IP address so they can respond to my inquiry. My information will not be stored and will only be attached to the email sent to the site administrator.', 'wedocs' ); ?></span>
+                    </label>
+                </div>
+            </div>
+
             <div class="wedocs-form-action">
                 <input type="submit" name="submit" value="<?php esc_attr_e( 'Send', 'wedocs' ); ?>">
                 <input type="hidden" name="doc_id" value="<?php the_ID(); ?>">

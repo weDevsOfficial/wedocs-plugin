@@ -402,7 +402,9 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
     $subject  = sprintf( __( '[%1$s] New Doc Feedback: "%2$s"', 'wedocs' ), $blogname, $subject );
 
     $email_body = sprintf( __( 'New feedback on your doc "%s"', 'wedocs' ), apply_filters( 'wedocs_translate_text', $document->post_title ) ) . "\r\n";
-    $email_body .= sprintf( __( 'Author: %1$s (IP: %2$s)', 'wedocs' ), $author, wedocs_get_ip_address() ) . "\r\n";
+    $author_line = sprintf( __( 'Author: %1$s (IP: %2$s)', 'wedocs' ), $author, wedocs_get_ip_address() );
+    $author_line = apply_filters( 'wedocs_email_feedback_author_line', $author_line, $author, wedocs_get_ip_address(), $doc_id, $document );
+    $email_body .= $author_line . "\r\n";
     $email_body .= sprintf( __( 'Email: %s', 'wedocs' ), $email ) . "\r\n";
     $email_body .= sprintf( __( 'Feedback: %s', 'wedocs' ), "\r\n" . $message ) . "\r\n\r\n";
     $email_body .= sprintf( __( 'Doc Permalink: %s', 'wedocs' ), get_permalink( $document ) ) . "\r\n";
