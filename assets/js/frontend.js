@@ -427,7 +427,14 @@
     // Initialize version selector
     if ( $( '.wedocs-version-dropdown' ).length ) {
       $( '.wedocs-version-dropdown' ).on( 'change', function() {
-        const versionSlug = $( this ).find( 'option:selected' ).data( 'slug' );
+        const selectedOption = $( this ).find( 'option:selected' );
+        const versionSlug = selectedOption.data( 'slug' );
+        
+        // Only proceed if version slug exists
+        if ( ! versionSlug ) {
+          return;
+        }
+        
         const currentUrl = window.location.href;
         
         // Get the base URL without query parameters

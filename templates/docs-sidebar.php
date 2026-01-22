@@ -49,8 +49,7 @@
 
     <?php 
     // Show version selector in sidebar if versions exist
-    $versions = wedocs_get_versions();
-    if ( ! empty( $versions ) && count( $versions ) >= 2 ) {
+    if ( ! empty( $post->ID ) ) {
         wedocs_version_selector( $post->ID );
     }
     ?>

@@ -784,6 +784,7 @@ function wedocs_version_selector( $post_id = 0 ) {
                     value="<?php echo esc_attr( $version->term_id ); ?>"
                     data-slug="<?php echo esc_attr( $version->slug ); ?>"
                     <?php selected( $is_current ); ?>
+                    <?php echo $is_current ? 'aria-selected="true"' : 'aria-selected="false"'; ?>
                 >
                     <?php echo esc_html( $version->name ); ?>
                 </option>
