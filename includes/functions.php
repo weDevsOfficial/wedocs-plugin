@@ -403,6 +403,33 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
 
     $email_body = sprintf( __( 'New feedback on your doc "%s"', 'wedocs' ), apply_filters( 'wedocs_translate_text', $document->post_title ) ) . "\r\n";
     $author_line = sprintf( __( 'Author: %1$s (IP: %2$s)', 'wedocs' ), $author, wedocs_get_ip_address() );
+    /**
+     * Filters the author line in feedback email body.
+     *
+     * This filter allows developers to customize how the author information
+     * appears in the feedback email. You can use this to:
+     * - Remove the IP address for GDPR compliance
+     * - Add additional user information
+     * - Completely customize the author line format
+     *
+     * @since 2.1.19
+     *
+     * @param string  $author_line The formatted author line with IP address.
+     * @param string  $author      The author's name.
+     * @param string  $ip_address  The author's IP address.
+     * @param int     $doc_id      The document ID.
+     * @param WP_Post $document    The document post object.
+     *
+     * @example Remove IP address:
+     *     add_filter( 'wedocs_email_feedback_author_line', function( $author_line, $author ) {
+     *         return sprintf( 'Author: %s', $author );
+     *     }, 10, 2 );
+     *
+     * @example Add custom information:
+     *     add_filter( 'wedocs_email_feedback_author_line', function( $author_line, $author, $ip_address, $doc_id ) {
+     *         return sprintf( 'Author: %s (IP: %s, Doc: %d)', $author, $ip_address, $doc_id );
+     *     }, 10, 4 );
+     */
     $author_line = apply_filters( 'wedocs_email_feedback_author_line', $author_line, $author, wedocs_get_ip_address(), $doc_id, $document );
     $email_body .= $author_line . "\r\n";
     $email_body .= sprintf( __( 'Email: %s', 'wedocs' ), $email ) . "\r\n";
