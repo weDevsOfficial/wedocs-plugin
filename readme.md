@@ -20,3 +20,11 @@ You can host docs inside your WordPress, create/add new docs, organize with orde
 This plugin is extremely handy for delivering long and detailed documentation of your WordPress product / plugin by bundling this with it.
 
 weDocs makes browsing and creating documentation a fresh and streamlined experience within the familiarity of your WP environment.
+
+### Key Features
+
+- **Article Versioning**: Manage multiple versions of your documentation for different software releases. Easily switch between versions using the version selector dropdown.
+- **Hierarchical Structure**: Organize documentation in a nested structure with sections and articles.
+- **Tags Support**: Categorize your documentation with tags.
+- **Search Functionality**: Quick search to find documentation easily.
+- **Responsive Design**: Works great on all devices.

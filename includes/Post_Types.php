@@ -20,6 +20,7 @@ class Post_Types {
     public function __construct() {
         add_action( 'init', [ $this, 'register_post_type' ] );
         add_action( 'init', [ $this, 'register_taxonomy' ] );
+        add_action( 'init', [ $this, 'register_version_taxonomy' ] );
     }
 
     /**
@@ -70,7 +71,7 @@ class Post_Types {
             'rewrite'             => $rewrite,
             'map_meta_cap'        => true,
             'capability_type'     => array( 'doc', 'docs' ),
-            'taxonomies'          => array( 'doc_tag' ),
+            'taxonomies'          => array( 'doc_tag', 'doc_version' ),
         );
 
         register_post_type( $this->post_type, apply_filters( 'wedocs_post_type', $args ) );
@@ -124,5 +125,57 @@ class Post_Types {
         ];
 
         register_taxonomy( 'doc_tag', [ 'docs' ], $args );
+    }
+
+    /**
+     * Register doc version taxonomy.
+     *
+     * @since 2.1.19
+     *
+     * @return void
+     */
+    public function register_version_taxonomy() {
+        $labels = [
+            'name'                       => _x( 'Versions', 'Taxonomy General Name', 'wedocs' ),
+            'singular_name'              => _x( 'Version', 'Taxonomy Singular Name', 'wedocs' ),
+            'menu_name'                  => __( 'Versions', 'wedocs' ),
+            'all_items'                  => __( 'All Versions', 'wedocs' ),
+            'parent_item'                => __( 'Parent Version', 'wedocs' ),
+            'parent_item_colon'          => __( 'Parent Version:', 'wedocs' ),
+            'new_item_name'              => __( 'New Version Name', 'wedocs' ),
+            'add_new_item'               => __( 'Add New Version', 'wedocs' ),
+            'edit_item'                  => __( 'Edit Version', 'wedocs' ),
+            'update_item'                => __( 'Update Version', 'wedocs' ),
+            'view_item'                  => __( 'View Version', 'wedocs' ),
+            'separate_items_with_commas' => __( 'Separate versions with commas', 'wedocs' ),
+            'add_or_remove_items'        => __( 'Add or remove versions', 'wedocs' ),
+            'choose_from_most_used'      => __( 'Choose from the most used', 'wedocs' ),
+            'popular_items'              => __( 'Popular Versions', 'wedocs' ),
+            'search_items'               => __( 'Search Versions', 'wedocs' ),
+            'not_found'                  => __( 'Not Found', 'wedocs' ),
+            'no_terms'                   => __( 'No versions', 'wedocs' ),
+            'items_list'                 => __( 'Versions list', 'wedocs' ),
+            'items_list_navigation'      => __( 'Versions list navigation', 'wedocs' ),
+        ];
+
+        $rewrite = [
+            'slug'         => 'doc-version',
+            'with_front'   => true,
+            'hierarchical' => false,
+        ];
+
+        $args = [
+            'labels'            => $labels,
+            'hierarchical'      => true,
+            'public'            => true,
+            'show_ui'           => true,
+            'show_admin_column' => true,
+            'show_in_nav_menus' => true,
+            'show_tagcloud'     => false,
+            'show_in_rest'      => true,
+            'rewrite'           => $rewrite,
+        ];
+
+        register_taxonomy( 'doc_version', [ 'docs' ], $args );
     }
 }
