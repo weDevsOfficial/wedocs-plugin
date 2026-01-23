@@ -1,0 +1,151 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/social-share",
+	"version": "1.0.0",
+	"title": "weDocs - Social Share",
+	"icon": "share",
+	"category": "widgets",
+	"description": "Add social share buttons to allow users to share documentation on social media platforms",
+	"supports": {
+		"html": false,
+		"anchor": true
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"attributes": {
+		"labelText": {
+			"type": "string",
+			"default": "Share This Article:"
+		},
+		"showLabel": {
+			"type": "boolean",
+			"default": true
+		},
+		"enabledPlatforms": {
+			"type": "object",
+			"default": {
+				"facebook": true,
+				"twitter": true,
+				"linkedin": true,
+				"pinterest": true
+			}
+		},
+		"buttonStyle": {
+			"type": "string",
+			"default": "icon-only"
+		},
+		"buttonSize": {
+			"type": "string",
+			"default": "medium"
+		},
+		"buttonShape": {
+			"type": "string",
+			"default": "rounded"
+		},
+		"layout": {
+			"type": "string",
+			"default": "horizontal"
+		},
+		"alignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"spacing": {
+			"type": "number",
+			"default": 10
+		},
+		"labelColor": {
+			"type": "string",
+			"default": "#374151"
+		},
+		"labelFontSize": {
+			"type": "number",
+			"default": 16
+		},
+		"labelFontWeight": {
+			"type": "string",
+			"default": "500"
+		},
+		"buttonBgColor": {
+			"type": "string",
+			"default": "#6B7280"
+		},
+		"buttonBgHoverColor": {
+			"type": "string",
+			"default": "#4B5563"
+		},
+		"buttonIconColor": {
+			"type": "string",
+			"default": "#FFFFFF"
+		},
+		"buttonIconHoverColor": {
+			"type": "string",
+			"default": "#FFFFFF"
+		},
+		"useIndividualColors": {
+			"type": "boolean",
+			"default": false
+		},
+		"facebookColor": {
+			"type": "string",
+			"default": "#1877F2"
+		},
+		"twitterColor": {
+			"type": "string",
+			"default": "#000000"
+		},
+		"linkedinColor": {
+			"type": "string",
+			"default": "#0A66C2"
+		},
+		"pinterestColor": {
+			"type": "string",
+			"default": "#E60023"
+		},
+		"containerPadding": {
+			"type": "object",
+			"default": {
+				"top": "20px",
+				"right": "0px",
+				"bottom": "20px",
+				"left": "0px"
+			}
+		},
+		"containerMargin": {
+			"type": "object",
+			"default": {
+				"top": "20px",
+				"right": "0px",
+				"bottom": "20px",
+				"left": "0px"
+			}
+		},
+		"containerBorderStyle": {
+			"type": "string",
+			"default": "none"
+		},
+		"containerBorderColor": {
+			"type": "string",
+			"default": "#E5E7EB"
+		},
+		"containerBorderWidth": {
+			"type": "string",
+			"default": "1px"
+		},
+		"containerBorderRadius": {
+			"type": "string",
+			"default": "8px"
+		},
+		"containerBgColor": {
+			"type": "string",
+			"default": "transparent"
+		},
+		"additionalCssClass": {
+			"type": "string",
+			"default": ""
+		}
+	}
+}
