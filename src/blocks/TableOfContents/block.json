@@ -1,0 +1,112 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/block-dynamic-table-of-contents",
+	"version": "0.1.0",
+	"title": "Dynamic Table of Contents",
+	"category": "text",
+	"icon": "list-view",
+	"description": "Auto-generates a dynamic Table of Contents from selected heading levels with collapsible, numbered, and hierarchical list options.",
+	"example": {
+		"attributes": {
+			"tocTitle": "Table of Contents",
+			"supportedHeadings": ["h2", "h3"],
+			"showHierarchy": true,
+			"showNumbering": false
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"fontFamily": true,
+			"fontWeight": true,
+			"fontStyle": true
+		},
+		"__experimentalBorder": {
+			"radius": true,
+			"width": true,
+			"color": true,
+			"style": true
+		}
+	},
+	"attributes": {
+		"blockId": {
+			"type": "string",
+			"default": ""
+		},
+		"tocTitle": {
+			"type": "string",
+			"default": "Table of Contents"
+		},
+		"supportedHeadings": {
+			"type": "array",
+			"default": ["h2", "h3"]
+		},
+		"showHierarchy": {
+			"type": "boolean",
+			"default": true
+		},
+		"showNumbering": {
+			"type": "boolean",
+			"default": false
+		},
+		"collapsibleOnMobile": {
+			"type": "boolean",
+			"default": true
+		},
+		"titleTypography": {
+			"type": "object",
+			"default": {
+				"fontSize": "1.25rem",
+				"fontWeight": "600",
+				"lineHeight": "1.4"
+			}
+		},
+		"listTypography": {
+			"type": "object",
+			"default": {
+				"fontSize": "1rem",
+				"lineHeight": "1.6"
+			}
+		},
+		"titleColor": {
+			"type": "string"
+		},
+		"linkColor": {
+			"type": "string"
+		},
+		"linkHoverColor": {
+			"type": "string"
+		},
+		"smoothScroll": {
+			"type": "boolean",
+			"default": true
+		},
+		"stickyMode": {
+			"type": "boolean",
+			"default": false
+		},
+		"additionalCssClass": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"textdomain": "dynamic-table-of-contents-block-wp",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}
