@@ -207,11 +207,11 @@ function wedocs_doc_nav() {
         echo '<h3 class="assistive-text screen-reader-text">' . __( 'Doc navigation', 'wedocs' ) . '</h3>';
 
         if ( $prev_post_id ) {
-            echo '<span class="nav-prev"><a href="' . get_permalink( $prev_post_id ) . '">&larr; ' . apply_filters( 'wedocs_translate_text', get_post( $prev_post_id )->post_title ) . '</a></span>';
+            echo '<span class="nav-prev"><a href="' . get_permalink( $prev_post_id ) . '">&larr; ' . apply_filters( 'translate_text', get_post( $prev_post_id )->post_title ) . '</a></span>';
         }
 
         if ( $next_post_id ) {
-            echo '<span class="nav-next"><a href="' . get_permalink( $next_post_id ) . '">' . apply_filters( 'wedocs_translate_text', get_post( $next_post_id )->post_title ) . ' &rarr;</a></span>';
+            echo '<span class="nav-next"><a href="' . get_permalink( $next_post_id ) . '">' . apply_filters( 'translate_text', get_post( $next_post_id )->post_title ) . ' &rarr;</a></span>';
         }
 
         echo '</nav>';
