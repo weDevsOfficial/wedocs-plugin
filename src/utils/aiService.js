@@ -139,7 +139,22 @@ class AiService {
     }
 
     /**
-     * Generate content using AI
+     * Generate content using AI.
+     *
+     * @since 2.0.0
+     * @since 2.2.0 Added support for images parameter for vision analysis.
+     *
+     * @param {string} prompt  The prompt to send to the AI.
+     * @param {Object} options Generation options.
+     * @param {string} options.provider     AI provider (openai, anthropic, google).
+     * @param {string} options.model        Model to use.
+     * @param {string} options.feature      Feature identifier.
+     * @param {number} options.maxTokens    Maximum tokens to generate.
+     * @param {number} options.temperature  Temperature for generation.
+     * @param {string} options.systemPrompt System prompt for the AI.
+     * @param {Array}  options.images       Array of image objects for vision analysis.
+     *
+     * @return {Promise<Object>} Generated content and usage stats.
      */
     async generateContent(prompt, options = {}) {
         try {
@@ -147,10 +162,11 @@ class AiService {
             const {
                 provider = aiSettings.default_provider,
                 model = null,
-                feature = 'ai_doc_writer'
+                feature = 'ai_doc_writer',
+                images = [],
             } = options;
 
-            // Get provider and model configuration
+            // Get provider and model configuration.
             const providerConfig = aiSettings.providers[provider];
 
             if (!providerConfig) {
@@ -167,7 +183,8 @@ class AiService {
                 model: selectedModel,
                 maxTokens: options.maxTokens || 2000,
                 temperature: options.temperature || 0.7,
-                systemPrompt: options.systemPrompt || __('You are a helpful documentation assistant.', 'wedocs')
+                systemPrompt: options.systemPrompt || __('You are a helpful documentation assistant.', 'wedocs'),
+                images: images,
             };
 
             try {

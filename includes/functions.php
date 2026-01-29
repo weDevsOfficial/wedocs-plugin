@@ -608,65 +608,271 @@ function wedocs_convert_utc_to_est() {
 }
 
 /**
- * Get AI provider configurations
+ * Get AI provider configurations.
+ *
+ * Returns configuration for all supported AI providers including their models
+ * and vision capabilities for image analysis support.
  *
  * @since 2.1.15
+ * @since 2.2.0 Added vision capability metadata for image analysis support.
  *
- * @return array
+ * @return array Provider configurations with models and capabilities.
  */
 function wedocs_get_ai_provider_configs() {
 	$provider_configs = [
-		'openai' => [
-			'name' => 'OpenAI',
-			'endpoint' => 'https://api.openai.com/v1/chat/completions',
-			'models' => [
-				'gpt-4o' => 'GPT-4o - Most Capable Multimodal',
-				'gpt-4o-mini' => 'GPT-4o Mini - Efficient & Fast',
-				'gpt-4-turbo' => 'GPT-4 Turbo - High Performance',
-				'gpt-4' => 'GPT-4 - Advanced Reasoning',
-				'gpt-3.5-turbo' => 'GPT-3.5 Turbo - Fast & Affordable'
+		'openai'    => [
+			'name'         => 'OpenAI',
+			'endpoint'     => 'https://api.openai.com/v1/chat/completions',
+			'models'       => [
+				'gpt-4o'        => [
+					'name'   => 'GPT-4o - Most Capable Multimodal',
+					'vision' => true,
+				],
+				'gpt-4o-mini'   => [
+					'name'   => 'GPT-4o Mini - Efficient & Fast',
+					'vision' => true,
+				],
+				'gpt-4-turbo'   => [
+					'name'   => 'GPT-4 Turbo - High Performance',
+					'vision' => true,
+				],
+				'gpt-4'         => [
+					'name'   => 'GPT-4 - Advanced Reasoning',
+					'vision' => false,
+				],
+				'gpt-3.5-turbo' => [
+					'name'   => 'GPT-3.5 Turbo - Fast & Affordable',
+					'vision' => false,
+				],
 			],
-			'requires_key' => true
+			'requires_key' => true,
 		],
 		'anthropic' => [
-			'name' => 'Anthropic Claude',
-			'endpoint' => 'https://api.anthropic.com/v1/messages',
-			'models' => [
-				'claude-4.1-opus' => 'Claude 4.1 Opus - Most Capable',
-				'claude-4-opus' => 'Claude 4 Opus - Best Coding Model',
-				'claude-4-sonnet' => 'Claude 4 Sonnet - Advanced Reasoning',
-				'claude-3.7-sonnet' => 'Claude 3.7 Sonnet - Hybrid Reasoning',
-				'claude-3-5-sonnet-20241022' => 'Claude 3.5 Sonnet Latest',
-				'claude-3-5-sonnet-20240620' => 'Claude 3.5 Sonnet',
-				'claude-3-5-haiku-20241022' => 'Claude 3.5 Haiku',
-				'claude-3-opus-20240229' => 'Claude 3 Opus',
-				'claude-3-sonnet-20240229' => 'Claude 3 Sonnet',
-				'claude-3-haiku-20240307' => 'Claude 3 Haiku'
+			'name'         => 'Anthropic Claude',
+			'endpoint'     => 'https://api.anthropic.com/v1/messages',
+			'models'       => [
+				'claude-4.1-opus'            => [
+					'name'   => 'Claude 4.1 Opus - Most Capable',
+					'vision' => true,
+				],
+				'claude-4-opus'              => [
+					'name'   => 'Claude 4 Opus - Best Coding Model',
+					'vision' => true,
+				],
+				'claude-4-sonnet'            => [
+					'name'   => 'Claude 4 Sonnet - Advanced Reasoning',
+					'vision' => true,
+				],
+				'claude-3.7-sonnet'          => [
+					'name'   => 'Claude 3.7 Sonnet - Hybrid Reasoning',
+					'vision' => true,
+				],
+				'claude-3-5-sonnet-20241022' => [
+					'name'   => 'Claude 3.5 Sonnet Latest',
+					'vision' => true,
+				],
+				'claude-3-5-sonnet-20240620' => [
+					'name'   => 'Claude 3.5 Sonnet',
+					'vision' => true,
+				],
+				'claude-3-5-haiku-20241022'  => [
+					'name'   => 'Claude 3.5 Haiku',
+					'vision' => true,
+				],
+				'claude-3-opus-20240229'     => [
+					'name'   => 'Claude 3 Opus',
+					'vision' => true,
+				],
+				'claude-3-sonnet-20240229'   => [
+					'name'   => 'Claude 3 Sonnet',
+					'vision' => true,
+				],
+				'claude-3-haiku-20240307'    => [
+					'name'   => 'Claude 3 Haiku',
+					'vision' => true,
+				],
 			],
-			'requires_key' => true
+			'requires_key' => true,
 		],
-		'google' => [
-			'name' => 'Google Gemini',
-			'endpoint' => 'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent',
-			'models' => [
-				'gemini-2.0-flash-exp' => 'Gemini 2.0 Flash Experimental - Latest',
-				'gemini-2.0-flash' => 'Gemini 2.0 Flash - Stable',
-				'gemini-2.0-flash-001' => 'Gemini 2.0 Flash 001 - Stable Version',
-				'gemini-2.0-flash-lite-001' => 'Gemini 2.0 Flash-Lite 001 - Lightweight',
-				'gemini-2.0-flash-lite' => 'Gemini 2.0 Flash-Lite - Lightweight',
-				'gemini-2.5-flash' => 'Gemini 2.5 Flash - Latest Stable',
-				'gemini-2.5-pro' => 'Gemini 2.5 Pro - Most Capable',
-				'gemini-2.5-flash-lite' => 'Gemini 2.5 Flash-Lite - Efficient',
-				'gemini-flash-latest' => 'Gemini Flash Latest - Auto-Updated',
-				'gemini-pro-latest' => 'Gemini Pro Latest - Auto-Updated'
+		'google'    => [
+			'name'         => 'Google Gemini',
+			'endpoint'     => 'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent',
+			'models'       => [
+				'gemini-2.0-flash-exp'      => [
+					'name'   => 'Gemini 2.0 Flash Experimental - Latest',
+					'vision' => true,
+				],
+				'gemini-2.0-flash'          => [
+					'name'   => 'Gemini 2.0 Flash - Stable',
+					'vision' => true,
+				],
+				'gemini-2.0-flash-001'      => [
+					'name'   => 'Gemini 2.0 Flash 001 - Stable Version',
+					'vision' => true,
+				],
+				'gemini-2.0-flash-lite-001' => [
+					'name'   => 'Gemini 2.0 Flash-Lite 001 - Lightweight',
+					'vision' => true,
+				],
+				'gemini-2.0-flash-lite'     => [
+					'name'   => 'Gemini 2.0 Flash-Lite - Lightweight',
+					'vision' => true,
+				],
+				'gemini-2.5-flash'          => [
+					'name'   => 'Gemini 2.5 Flash - Latest Stable',
+					'vision' => true,
+				],
+				'gemini-2.5-pro'            => [
+					'name'   => 'Gemini 2.5 Pro - Most Capable',
+					'vision' => true,
+				],
+				'gemini-2.5-flash-lite'     => [
+					'name'   => 'Gemini 2.5 Flash-Lite - Efficient',
+					'vision' => true,
+				],
+				'gemini-flash-latest'       => [
+					'name'   => 'Gemini Flash Latest - Auto-Updated',
+					'vision' => true,
+				],
+				'gemini-pro-latest'         => [
+					'name'   => 'Gemini Pro Latest - Auto-Updated',
+					'vision' => true,
+				],
 			],
-			'requires_key' => true
-		]
+			'requires_key' => true,
+		],
 	];
 
 	return apply_filters( 'wedocs_ai_provider_configs', $provider_configs );
 }
 
+/**
+ * Check if a specific AI model supports vision/image analysis.
+ *
+ * @since 2.2.0
+ *
+ * @param string $provider The provider key (openai, anthropic, google).
+ * @param string $model    The model identifier.
+ *
+ * @return bool True if the model supports vision, false otherwise.
+ */
+function wedocs_model_supports_vision( $provider, $model ) {
+	$configs = wedocs_get_ai_provider_configs();
+
+	if ( ! isset( $configs[ $provider ]['models'][ $model ] ) ) {
+		return false;
+	}
+
+	$model_config = $configs[ $provider ]['models'][ $model ];
+
+	// Handle both old string format and new array format for backward compatibility.
+	if ( is_array( $model_config ) ) {
+		return ! empty( $model_config['vision'] );
+	}
+
+	return false;
+}
+
+/**
+ * Get the display name of an AI model.
+ *
+ * @since 2.2.0
+ *
+ * @param string $provider The provider key (openai, anthropic, google).
+ * @param string $model    The model identifier.
+ *
+ * @return string The model display name.
+ */
+function wedocs_get_model_name( $provider, $model ) {
+	$configs = wedocs_get_ai_provider_configs();
+
+	if ( ! isset( $configs[ $provider ]['models'][ $model ] ) ) {
+		return $model;
+	}
+
+	$model_config = $configs[ $provider ]['models'][ $model ];
+
+	// Handle both old string format and new array format for backward compatibility.
+	if ( is_array( $model_config ) ) {
+		return $model_config['name'] ?? $model;
+	}
+
+	return $model_config;
+}
+
+/**
+ * Check if weDocs Pro is active.
+ *
+ * @since 2.1.15
+ *
+ * @return bool True if Pro is active, false otherwise.
+ */
 function wedocs_is_pro_active() {
-    return defined( 'WEDOCS_PRO_VERSION' );
+	return defined( 'WEDOCS_PRO_VERSION' );
+}
+
+/**
+ * Cleanup orphaned temporary images used for AI analysis.
+ *
+ * This function is called by a scheduled cron event to remove
+ * temporary images that were uploaded but never cleaned up
+ * (e.g., if the user closed the browser before generation completed).
+ *
+ * @since 2.2.0
+ *
+ * @return void
+ */
+function wedocs_cleanup_ai_temp_images() {
+	$upload_dir = wp_upload_dir();
+	$temp_dir   = $upload_dir['basedir'] . '/wedocs-ai-temp/';
+
+	if ( ! is_dir( $temp_dir ) ) {
+		return;
+	}
+
+	$files = glob( $temp_dir . '*' );
+	$now   = time();
+
+	// Delete files older than 1 hour.
+	$max_age = 3600; // 1 hour in seconds.
+
+	foreach ( $files as $file ) {
+		// Skip index.php security file.
+		if ( basename( $file ) === 'index.php' ) {
+			continue;
+		}
+
+		if ( is_file( $file ) && ( $now - filemtime( $file ) ) > $max_age ) {
+			unlink( $file );
+		}
+	}
+}
+add_action( 'wedocs_cleanup_ai_temp_images', 'wedocs_cleanup_ai_temp_images' );
+
+/**
+ * Schedule the AI temp images cleanup cron event.
+ *
+ * @since 2.2.0
+ *
+ * @return void
+ */
+function wedocs_schedule_ai_cleanup_cron() {
+	if ( ! wp_next_scheduled( 'wedocs_cleanup_ai_temp_images' ) ) {
+		wp_schedule_event( time(), 'hourly', 'wedocs_cleanup_ai_temp_images' );
+	}
+}
+add_action( 'init', 'wedocs_schedule_ai_cleanup_cron' );
+
+/**
+ * Clear the AI temp images cleanup cron event on plugin deactivation.
+ *
+ * @since 2.2.0
+ *
+ * @return void
+ */
+function wedocs_clear_ai_cleanup_cron() {
+	$timestamp = wp_next_scheduled( 'wedocs_cleanup_ai_temp_images' );
+	if ( $timestamp ) {
+		wp_unschedule_event( $timestamp, 'wedocs_cleanup_ai_temp_images' );
+	}
 }
