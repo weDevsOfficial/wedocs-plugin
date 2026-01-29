@@ -21,6 +21,7 @@ import { __ } from '@wordpress/i18n';
 import { useState, useEffect, Fragment } from '@wordpress/element';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
+import AiImageAnalysisPreview from '../ProPreviews/AiImageAnalysisPreview';
 
 const AiSettings = ({
     settingsData,
@@ -605,6 +606,11 @@ const AiSettings = ({
                             aiSettings,
                             handleImageAnalysisChange,
                             providerConfigs
+                        )}
+
+                        {/* Show Pro preview when Pro is not loaded */}
+                        {!wp.hooks.applyFilters('wedocs_pro_loaded', false) && (
+                            <AiImageAnalysisPreview />
                         )}
                     </div>
                 </div>
