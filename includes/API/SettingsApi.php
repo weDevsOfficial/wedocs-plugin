@@ -256,6 +256,14 @@ class SettingsApi extends \WP_REST_Controller {
             }
         }
 
+        // Sanitize image analysis settings (Pro feature)
+        if ( isset( $ai_settings['image_analysis'] ) && is_array( $ai_settings['image_analysis'] ) ) {
+            $sanitized['image_analysis'] = array();
+            
+            if ( isset( $ai_settings['image_analysis']['enabled'] ) ) {
+                $sanitized['image_analysis']['enabled'] = (bool) $ai_settings['image_analysis']['enabled'];
+            }
+        }
 
         return $sanitized;
     }

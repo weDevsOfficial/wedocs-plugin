@@ -35,6 +35,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
     const [generatedContent, setGeneratedContent] = useState('');
     const [showPreview, setShowPreview] = useState(false);
     const [error, setError] = useState('');
+    const [images, setImages] = useState([]);
 
     // WordPress editor dispatch hooks
     const { insertBlocks, replaceBlocks, insertDefaultBlock } = useDispatch(blockEditorStore);
@@ -256,14 +257,21 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
 
             const selectedModel = aiSettings.providers[aiSettings.default_provider].selected_model;
 
-                const result = await aiService.generateContent(enhancedPrompt, {
-                    provider: aiSettings.default_provider,
-                    model: selectedModel,
-                    feature: 'ai_doc_writer',
-                    systemPrompt: systemPrompt,
-                    maxTokens: 2000,
-                    temperature: 0.7
-                });
+            // Prepare images for the API (only send filename and id).
+            const imagePayload = images.map(img => ({
+                filename: img.filename,
+                id: img.id,
+            }));
+
+            const result = await aiService.generateContent(enhancedPrompt, {
+                provider: aiSettings.default_provider,
+                model: selectedModel,
+                feature: 'ai_doc_writer',
+                systemPrompt: systemPrompt,
+                maxTokens: 2000,
+                temperature: 0.7,
+                images: imagePayload,
+            });
 
 
                 if (!result.content) {
@@ -418,6 +426,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
         setShowPreview(false);
         setGeneratedContent('');
         setError('');
+        setImages([]);
         onClose();
     };
 
@@ -462,6 +471,27 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
                                     help={__('Instructions are automatically generated from your title and keywords. You can edit them manually if needed.', 'wedocs')}
                                     __nextHasNoMarginBottom
                                 />
+
+                                {/**
+                                 * Filter: wedocs_ai_doc_writer_modal_fields
+                                 *
+                                 * Allows Pro and other extensions to add fields to the AI Doc Writer modal.
+                                 * Used for adding image upload functionality in Pro version.
+                                 *
+                                 * @since 2.2.0
+                                 *
+                                 * @param {null}     content      Default content (null).
+                                 * @param {Object}   modalState   Current modal state including title, keywords, prompt, images.
+                                 * @param {Object}   stateSetters Object containing state setter functions.
+                                 * @param {Object}   aiSettings   AI settings from weDocsEditorVars.
+                                 */}
+                                {wp.hooks.applyFilters(
+                                    'wedocs_ai_doc_writer_modal_fields',
+                                    null,
+                                    { title, keywords, prompt, images },
+                                    { setImages },
+                                    window.weDocsEditorVars?.aiSettings || {}
+                                )}
 
                                 <ToggleControl
                                     label={__('Use existing post content', 'wedocs')}

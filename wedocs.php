@@ -106,6 +106,7 @@ final class WeDocs {
         $this->init_actions();
 
         register_activation_hook( __FILE__, [ $this, 'activate' ] );
+        register_deactivation_hook( __FILE__, 'wedocs_clear_ai_cleanup_cron' );
 
         add_action( 'after_setup_theme', [ $this, 'init_classes' ] );
 

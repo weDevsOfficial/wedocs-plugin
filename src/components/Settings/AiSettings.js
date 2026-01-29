@@ -21,6 +21,7 @@ import { __ } from '@wordpress/i18n';
 import { useState, useEffect, Fragment } from '@wordpress/element';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
+import AiImageAnalysisPreview from '../ProPreviews/AiImageAnalysisPreview';
 
 const AiSettings = ({
     settingsData,
@@ -92,32 +93,59 @@ const AiSettings = ({
                 model: defaultModel
             }
         },
+        image_analysis: {
+            enabled: false
+        },
         ...aiSettingsData
     });
 
-    // Get provider configurations from centralized configs
+    // Get provider configurations from centralized configs.
     const getProviderConfigsForUI = () => {
         const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
         const providerConfigs = {};
-        
+
         Object.keys(configs).forEach(providerKey => {
             const provider = configs[providerKey];
             const models = [];
-            
+
             Object.keys(provider.models).forEach(modelKey => {
+                const modelConfig = provider.models[modelKey];
+
+                // Handle both old string format and new object format.
+                const modelName = typeof modelConfig === 'object' ? modelConfig.name : modelConfig;
+                const hasVision = typeof modelConfig === 'object' ? modelConfig.vision : false;
+
                 models.push({
                     value: modelKey,
-                    label: provider.models[modelKey]
+                    label: modelName,
+                    vision: hasVision,
                 });
             });
-            
+
             providerConfigs[providerKey] = {
                 name: provider.name,
-                models: models
+                models: models,
             };
         });
-        
+
         return providerConfigs;
+    };
+
+    // Handler for image analysis setting changes.
+    const handleImageAnalysisChange = (field, value) => {
+        const updatedSettings = {
+            ...aiSettings,
+            image_analysis: {
+                ...aiSettings.image_analysis,
+                [field]: value,
+            },
+        };
+
+        setAiSettings(updatedSettings);
+        setSettings({
+            ...settingsData,
+            ai: updatedSettings,
+        });
     };
 
     let providerConfigs = getProviderConfigsForUI();
@@ -558,6 +586,32 @@ const AiSettings = ({
                                 </p>
                             </div>
                         </div>
+
+                        {/**
+                         * Filter: wedocs_ai_settings_after_model
+                         *
+                         * Allows Pro and other extensions to add settings after the AI model selector.
+                         * Used for adding image analysis toggle and other Pro-specific settings.
+                         *
+                         * @since 2.2.0
+                         *
+                         * @param {null}     content                 Default content (null).
+                         * @param {Object}   aiSettings              Current AI settings state.
+                         * @param {Function} handleImageAnalysisChange Handler for image analysis setting changes.
+                         * @param {Object}   providerConfigs         Provider configurations with model info.
+                         */}
+                        {wp.hooks.applyFilters(
+                            'wedocs_ai_settings_after_model',
+                            null,
+                            aiSettings,
+                            handleImageAnalysisChange,
+                            providerConfigs
+                        )}
+
+                        {/* Show Pro preview when Pro is not loaded */}
+                        {!wp.hooks.applyFilters('wedocs_pro_loaded', false) && (
+                            <AiImageAnalysisPreview />
+                        )}
                     </div>
                 </div>
             </div>
