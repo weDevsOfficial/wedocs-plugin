@@ -53,7 +53,7 @@ class Post_Types {
 
         $args = array(
             'labels'              => $labels,
-            'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'comments' ),
+            'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'comments', 'elementor'),
             'hierarchical'        => true,
             'public'              => true,
             'show_ui'             => true,
