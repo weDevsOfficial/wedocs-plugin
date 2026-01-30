@@ -47,6 +47,13 @@
         <div class='short-key'>⌘K</div>
     </div>
 
+    <?php 
+    // Show version selector in sidebar if versions exist
+    if ( ! empty( $post->ID ) ) {
+        wedocs_version_selector( $post->ID );
+    }
+    ?>
+
     <?php if ( $children ) { ?>
         <ul class="doc-nav-list">
             <?php echo $children; ?>
