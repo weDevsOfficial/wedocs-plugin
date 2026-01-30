@@ -289,6 +289,23 @@ class API extends WP_REST_Controller {
                 ],
             ],
         ] );
+
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base . '/ai/models/(?P<provider>[\w]+)',
+            [
+                'methods' => WP_REST_Server::READABLE,
+                'callback' => [ $this, 'get_provider_models' ],
+                'permission_callback' => [ $this, 'ai_generate_permissions_check' ],
+                'args' => [
+                    'provider' => [
+                        'required' => true,
+                        'type' => 'string',
+                        'sanitize_callback' => 'sanitize_text_field',
+                    ]
+                ]
+            ]
+        );
     }
 
     /**
@@ -1118,6 +1135,101 @@ class API extends WP_REST_Controller {
     }
 
     /**
+     * Get available models for a provider
+     *
+     * @since 2.1.16
+     *
+     * @param \WP_REST_Request $request
+     *
+     * @return \WP_REST_Response|\WP_Error
+     */
+    public function get_provider_models( $request ) {
+        $provider = $request->get_param( 'provider' );
+        
+        if ( $provider !== 'openrouter' ) {
+            return new WP_Error(
+                'wedocs_ai_unsupported_provider',
+                __( 'Dynamic model fetching only supported for OpenRouter', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        // Get AI settings to retrieve API key
+        $ai_settings = wedocs_get_option( 'ai', 'wedocs_settings', '' );
+        $provider_config = $ai_settings['providers'][ $provider ] ?? null;
+        
+        if ( ! $provider_config || empty( $provider_config['api_key'] ) ) {
+            return new WP_Error(
+                'wedocs_ai_provider_not_configured',
+                __( 'Provider API key is required to fetch models', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        try {
+            $models = $this->fetch_openrouter_models( $provider_config['api_key'] );
+            return rest_ensure_response( [ 'models' => $models ] );
+        } catch ( \Exception $e ) {
+            return new WP_Error(
+                'wedocs_ai_model_fetch_failed',
+                $e->getMessage(),
+                [ 'status' => 500 ]
+            );
+        }
+    }
+
+    /**
+     * Fetch available models from OpenRouter API
+     *
+     * @since 2.1.16
+     *
+     * @param string $api_key OpenRouter API key
+     *
+     * @return array Array of models
+     * @throws \Exception
+     */
+    private function fetch_openrouter_models( $api_key ) {
+        $response = wp_remote_get(
+            'https://openrouter.ai/api/v1/models',
+            [
+                'timeout' => 30,
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $api_key,
+                    'HTTP-Referer' => home_url(),
+                    'X-Title' => get_bloginfo( 'name' )
+                ]
+            ]
+        );
+
+        if ( is_wp_error( $response ) ) {
+            throw new \Exception( $response->get_error_message() );
+        }
+
+        $response_code = wp_remote_retrieve_response_code( $response );
+        $response_body = wp_remote_retrieve_body( $response );
+        $data = json_decode( $response_body, true );
+
+        if ( $response_code !== 200 ) {
+            throw new \Exception( __( 'Failed to fetch OpenRouter models', 'wedocs' ) );
+        }
+
+        // Transform models to our format
+        $models = [];
+        if ( isset( $data['data'] ) && is_array( $data['data'] ) ) {
+            foreach ( $data['data'] as $model ) {
+                $model_id = $model['id'] ?? '';
+                $model_name = $model['name'] ?? $model_id;
+                
+                if ( ! empty( $model_id ) ) {
+                    $models[ $model_id ] = $model_name;
+                }
+            }
+        }
+
+        return $models;
+    }
+
+    /**
      * Make AI API call based on provider
      *
      * @since 2.0.0
@@ -1144,6 +1256,8 @@ class API extends WP_REST_Controller {
                 return $this->call_anthropic_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature );
             case 'google':
                 return $this->call_google_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature );
+            case 'openrouter':
+                return $this->call_openrouter_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature );
             default:
                 throw new \Exception( __( 'Unsupported AI provider', 'wedocs' ) );
         }
@@ -1384,6 +1498,96 @@ class API extends WP_REST_Controller {
 
         $error_message = $decoded['error']['message'] ?? __( 'Invalid Google API response', 'wedocs' );
         throw new \Exception( $error_message );
+    }
+
+    /**
+     * Call OpenRouter API
+     *
+     * @since 2.1.16
+     *
+     * @param string $endpoint API endpoint
+     * @param string $api_key API key
+     * @param string $model Model to use
+     * @param string $prompt User prompt
+     * @param string $system_prompt System prompt
+     * @param int $max_tokens Max tokens
+     * @param float $temperature Temperature
+     *
+     * @return array Response with content and usage
+     * @throws \Exception
+     */
+    private function call_openrouter_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature ) {
+        // Validate API key
+        if ( empty( $api_key ) || ! is_string( $api_key ) ) {
+            throw new \Exception( __( 'OpenRouter API key is required.', 'wedocs' ) );
+        }
+
+        // Prepare request body - OpenRouter uses OpenAI-compatible format
+        $body = [
+            'model' => $model,
+            'messages' => [
+                [
+                    'role' => 'system',
+                    'content' => $system_prompt
+                ],
+                [
+                    'role' => 'user',
+                    'content' => $prompt
+                ]
+            ],
+            'max_tokens' => $max_tokens,
+            'temperature' => $temperature
+        ];
+
+        // Make API request
+        $response = wp_remote_post(
+            $endpoint,
+            [
+                'timeout' => 60,
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . $api_key,
+                    'HTTP-Referer' => home_url(),
+                    'X-Title' => get_bloginfo( 'name' )
+                ],
+                'body' => wp_json_encode( $body )
+            ]
+        );
+
+        // Handle errors
+        if ( is_wp_error( $response ) ) {
+            $error_message = $response->get_error_message();
+            
+            // Handle timeout errors
+            if ( strpos( $error_message, 'timeout' ) !== false || strpos( $error_message, 'timed out' ) !== false ) {
+                throw new \Exception( __( 'The request took too long. Please try again with a shorter prompt or check your connection.', 'wedocs' ) );
+            }
+            
+            throw new \Exception( sprintf( __( 'OpenRouter API error: %s', 'wedocs' ), $error_message ) );
+        }
+
+        $response_code = wp_remote_retrieve_response_code( $response );
+        $response_body = wp_remote_retrieve_body( $response );
+        $data = json_decode( $response_body, true );
+
+        if ( $response_code !== 200 ) {
+            $error_message = $data['error']['message'] ?? __( 'OpenRouter API request failed', 'wedocs' );
+            throw new \Exception( $error_message );
+        }
+
+        // Extract content and usage
+        $content = $data['choices'][0]['message']['content'] ?? '';
+        $usage = [
+            'prompt_tokens' => $data['usage']['prompt_tokens'] ?? 0,
+            'completion_tokens' => $data['usage']['completion_tokens'] ?? 0,
+            'total_tokens' => $data['usage']['total_tokens'] ?? 0
+        ];
+
+        return [
+            'content' => $content,
+            'usage' => $usage,
+            'model' => $data['model'] ?? $model
+        ];
     }
 
     /**
