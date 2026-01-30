@@ -1,0 +1,339 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/block-need-more-help-contact-modal",
+	"version": "0.1.0",
+	"title": "Need More Help - Contact Modal",
+	"category": "widgets",
+	"icon": "sos",
+	"description": "A customizable contact modal block for documentation sites with extensive styling options and WordPress core integration.",
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": ["wide", "full"],
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true
+			}
+		}
+	},
+	"example": {
+		"attributes": {
+			"mainText": "Still stuck? How can we help?",
+			"buttonText": "Get Help",
+			"modalTitle": "How can we help?"
+		}
+	},
+	"attributes": {
+		"mainText": {
+			"type": "string",
+			"default": "Still stuck? How can we help?"
+		},
+		"buttonText": {
+			"type": "string",
+			"default": "Get Help"
+		},
+		"showLastUpdated": {
+			"type": "boolean",
+			"default": false
+		},
+		"modalTitle": {
+			"type": "string",
+			"default": "How can we help?"
+		},
+		"nameLabel": {
+			"type": "string",
+			"default": "Name:"
+		},
+		"emailLabel": {
+			"type": "string",
+			"default": "Email:"
+		},
+		"messageLabel": {
+			"type": "string",
+			"default": "Message:"
+		},
+		"emailPlaceholder": {
+			"type": "string",
+			"default": "you@example.com"
+		},
+		"submitButtonText": {
+			"type": "string",
+			"default": "Submit"
+		},
+		"showSubjectField": {
+			"type": "boolean",
+			"default": false
+		},
+		"subjectLabel": {
+			"type": "string",
+			"default": "Subject:"
+		},
+		"successMessage": {
+			"type": "string",
+			"default": "Thank you! Your message has been sent successfully."
+		},
+		"errorMessage": {
+			"type": "string",
+			"default": "Sorry, there was an error sending your message. Please try again."
+		},
+		"containerBackgroundColor": {
+			"type": "string"
+		},
+		"containerPadding": {
+			"type": "object",
+			"default": {
+				"top": "20px",
+				"right": "20px",
+				"bottom": "20px",
+				"left": "20px"
+			}
+		},
+		"containerMargin": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "20px",
+				"left": "0px"
+			}
+		},
+		"containerBorder": {
+			"type": "object",
+			"default": {
+				"width": "1px",
+				"style": "solid",
+				"color": "#ddd"
+			}
+		},
+		"containerBorderRadius": {
+			"type": "string",
+			"default": "8px"
+		},
+		"containerBoxShadow": {
+			"type": "string",
+			"default": "0 2px 4px rgba(0,0,0,0.1)"
+		},
+		"iconType": {
+			"type": "string",
+			"default": "email"
+		},
+		"iconColor": {
+			"type": "string"
+		},
+		"iconSize": {
+			"type": "string",
+			"default": "24px"
+		},
+		"textColor": {
+			"type": "string"
+		},
+		"textTypography": {
+			"type": "object",
+			"default": {
+				"fontSize": "16px",
+				"fontWeight": "normal"
+			}
+		},
+		"linkColor": {
+			"type": "string"
+		},
+		"linkTypography": {
+			"type": "object",
+			"default": {
+				"fontSize": "16px",
+				"fontWeight": "500"
+			}
+		},
+		"textAlignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"modalWidth": {
+			"type": "string",
+			"default": "500px"
+		},
+		"modalHeight": {
+			"type": "string",
+			"default": "auto"
+		},
+		"modalHeadingColor": {
+			"type": "string"
+		},
+		"modalHeadingTypography": {
+			"type": "object",
+			"default": {
+				"fontSize": "24px",
+				"fontWeight": "600"
+			}
+		},
+		"modalHeadingAlignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"labelColor": {
+			"type": "string"
+		},
+		"labelTypography": {
+			"type": "object",
+			"default": {
+				"fontSize": "14px",
+				"fontWeight": "500"
+			}
+		},
+		"buttonBackgroundColor": {
+			"type": "string"
+		},
+		"buttonTextColor": {
+			"type": "string"
+		},
+		"buttonTypography": {
+			"type": "object",
+			"default": {
+				"fontSize": "16px",
+				"fontWeight": "500"
+			}
+		},
+		"buttonWidth": {
+			"type": "string",
+			"default": "auto"
+		},
+		"buttonPadding": {
+			"type": "object",
+			"default": {
+				"top": "12px",
+				"right": "24px",
+				"bottom": "12px",
+				"left": "24px"
+			}
+		},
+		"buttonAlignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"successTextColor": {
+			"type": "string"
+		},
+		"successTypography": {
+			"type": "object",
+			"default": {
+				"fontSize": "16px",
+				"fontWeight": "normal"
+			}
+		},
+		"successAlignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"errorTextColor": {
+			"type": "string"
+		},
+		"errorTypography": {
+			"type": "object",
+			"default": {
+				"fontSize": "16px",
+				"fontWeight": "normal"
+			}
+		},
+		"errorAlignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"customClassName": {
+			"type": "string"
+		},
+		"analyticsEvent": {
+			"type": "string",
+			"default": "need-help-clicked"
+		}
+	},
+	"supports": {
+		"html": false,
+		"color": {
+			"gradients": true,
+			"link": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true,
+				"link": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"fontFamily": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true
+			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		},
+		"dimensions": {
+			"minHeight": true,
+			"__experimentalDefaultControls": {
+				"minHeight": false
+			}
+		}
+	},
+	"textdomain": "wedocs",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}

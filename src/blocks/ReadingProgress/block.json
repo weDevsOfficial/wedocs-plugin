@@ -1,0 +1,78 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/reading-progress",
+	"version": "1.0.0",
+	"title": "Reading Progress Bar",
+	"category": "widgets",
+	"icon": "chart-line",
+	"description": "Display a progress bar showing reading progress and estimated reading time based on content.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"blockId": {
+			"type": "string",
+			"default": ""
+		},
+		"position": {
+			"type": "string",
+			"default": "fixed-top"
+		},
+		"height": {
+			"type": "string",
+			"default": "4px"
+		},
+		"barColor": {
+			"type": "string",
+			"default": "#0073aa"
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": "#f0f0f0"
+		},
+		"showPercentage": {
+			"type": "boolean",
+			"default": false
+		},
+		"showReadingTime": {
+			"type": "boolean",
+			"default": true
+		},
+		"percentagePosition": {
+			"type": "string",
+			"default": "right"
+		},
+		"animationSpeed": {
+			"type": "string",
+			"default": "smooth"
+		},
+		"contentSelector": {
+			"type": "string",
+			"default": ".entry-content, .post-content, article, main"
+		},
+		"wordsPerMinute": {
+			"type": "number",
+			"default": 200
+		},
+		"borderRadius": {
+			"type": "string",
+			"default": "0px"
+		},
+		"showShadow": {
+			"type": "boolean",
+			"default": true
+		},
+		"zIndex": {
+			"type": "number",
+			"default": 1000
+		}
+	},
+	"textdomain": "wedocs-plugin",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

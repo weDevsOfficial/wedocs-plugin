@@ -289,6 +289,66 @@ class API extends WP_REST_Controller {
                 ],
             ],
         ] );
+
+        // AI Summary endpoints
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)/ai-summary', [
+            [
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => [ $this, 'get_ai_summary' ],
+                'permission_callback' => '__return_true',
+                'args'                => [
+                    'id' => [
+                        'validate_callback' => function( $param, $request, $key ) {
+                            return is_numeric( $param );
+                        }
+                    ],
+                ],
+            ],
+            [
+                'methods'             => WP_REST_Server::CREATABLE,
+                'callback'            => [ $this, 'save_ai_summary' ],
+                'permission_callback' => [ $this, 'ai_generate_permissions_check' ],
+                'args'                => [
+                    'id' => [
+                        'validate_callback' => function( $param, $request, $key ) {
+                            return is_numeric( $param );
+                        }
+                    ],
+                    'summary' => [
+                        'required'          => true,
+                        'type'              => 'string',
+                        'sanitize_callback' => 'wp_kses_post',
+                    ],
+                ],
+            ],
+            [
+                'methods'             => WP_REST_Server::DELETABLE,
+                'callback'            => [ $this, 'delete_ai_summary' ],
+                'permission_callback' => [ $this, 'ai_generate_permissions_check' ],
+                'args'                => [
+                    'id' => [
+                        'validate_callback' => function( $param, $request, $key ) {
+                            return is_numeric( $param );
+                        }
+                    ],
+                ],
+            ],
+        ] );
+
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)/ai-summary/generate', [
+            [
+                'methods'             => WP_REST_Server::CREATABLE,
+                'callback'            => [ $this, 'generate_ai_summary' ],
+                'permission_callback' => '__return_true', // Allow public access for frontend generation
+                'args'                => [
+                    'id' => [
+                        'validate_callback' => function( $param, $request, $key ) {
+                            return is_numeric( $param );
+                        }
+                    ],
+                ],
+            ],
+        ] );
     }
 
     /**
@@ -1419,5 +1479,208 @@ class API extends WP_REST_Controller {
         
         // Generic error
         throw new \Exception( sprintf( __( '%s API error: %s', 'wedocs' ), $provider_name, $error_message ) );
+    }
+
+    /**
+     * Get AI-generated summary for a doc
+     *
+     * @since 2.0.0
+     *
+     * @param WP_REST_Request $request full data about the request
+     *
+     * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure
+     */
+    public function get_ai_summary( $request ) {
+        $post_id = (int) $request->get_param( 'id' );
+
+        $post = get_post( $post_id );
+        if ( ! $post || $post->post_type !== 'docs' ) {
+            return new WP_Error(
+                'wedocs_invalid_doc',
+                __( 'Invalid documentation post.', 'wedocs' ),
+                [ 'status' => 404 ]
+            );
+        }
+
+        $summary = get_post_meta( $post_id, '_wedocs_ai_summary', true );
+
+        return rest_ensure_response( [
+            'summary' => $summary ?: '',
+            'exists'  => ! empty( $summary ),
+        ] );
+    }
+
+    /**
+     * Save AI-generated summary for a doc
+     *
+     * @since 2.0.0
+     *
+     * @param WP_REST_Request $request full data about the request
+     *
+     * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure
+     */
+    public function save_ai_summary( $request ) {
+        $post_id = (int) $request->get_param( 'id' );
+        $summary = $request->get_param( 'summary' );
+
+        $post = get_post( $post_id );
+        if ( ! $post || $post->post_type !== 'docs' ) {
+            return new WP_Error(
+                'wedocs_invalid_doc',
+                __( 'Invalid documentation post.', 'wedocs' ),
+                [ 'status' => 404 ]
+            );
+        }
+
+        update_post_meta( $post_id, '_wedocs_ai_summary', $summary );
+
+        return rest_ensure_response( [
+            'success' => true,
+            'message' => __( 'Summary saved successfully.', 'wedocs' ),
+        ] );
+    }
+
+    /**
+     * Delete AI-generated summary for a doc
+     *
+     * @since 2.0.0
+     *
+     * @param WP_REST_Request $request full data about the request
+     *
+     * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure
+     */
+    public function delete_ai_summary( $request ) {
+        $post_id = (int) $request->get_param( 'id' );
+
+        $post = get_post( $post_id );
+        if ( ! $post || $post->post_type !== 'docs' ) {
+            return new WP_Error(
+                'wedocs_invalid_doc',
+                __( 'Invalid documentation post.', 'wedocs' ),
+                [ 'status' => 404 ]
+            );
+        }
+
+        delete_post_meta( $post_id, '_wedocs_ai_summary' );
+
+        return rest_ensure_response( [
+            'success' => true,
+            'message' => __( 'Summary deleted successfully.', 'wedocs' ),
+        ] );
+    }
+
+    /**
+     * Generate AI summary for a doc
+     *
+     * @since 2.0.0
+     *
+     * @param WP_REST_Request $request full data about the request
+     *
+     * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure
+     */
+    public function generate_ai_summary( $request ) {
+        $post_id = (int) $request->get_param( 'id' );
+
+        $post = get_post( $post_id );
+        if ( ! $post || $post->post_type !== 'docs' ) {
+            return new WP_Error(
+                'wedocs_invalid_doc',
+                __( 'Invalid documentation post.', 'wedocs' ),
+                [ 'status' => 404 ]
+            );
+        }
+
+        // Get post content
+        $content = wp_strip_all_tags( $post->post_content );
+        $title = $post->post_title;
+
+        if ( empty( $content ) ) {
+            return new WP_Error(
+                'wedocs_empty_content',
+                __( 'Cannot generate summary for empty content.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        // Create prompt for AI
+        $prompt = sprintf(
+            __( 'Please create a concise summary (2-3 sentences, maximum 150 words) of the following documentation article titled "%s":\n\n%s', 'wedocs' ),
+            $title,
+            $content
+        );
+
+        $system_prompt = __( 'You are a technical documentation assistant. Create concise, accurate summaries that capture the key points of documentation articles. Keep summaries brief and to the point.', 'wedocs' );
+
+        // Use the existing AI generation logic
+        $ai_settings = wedocs_get_option( 'ai', 'wedocs_settings', '' );
+
+        if ( empty( $ai_settings ) || empty( $ai_settings['providers'] ) ) {
+            return new WP_Error(
+                'wedocs_ai_not_configured',
+                __( 'AI settings are not configured.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        $selected_provider = $ai_settings['default_provider'] ?? 'openai';
+        $provider_config = $ai_settings['providers'][ $selected_provider ] ?? null;
+
+        if ( ! $provider_config || empty( $provider_config['api_key'] ) ) {
+            return new WP_Error(
+                'wedocs_ai_provider_not_configured',
+                __( 'AI provider is not configured or API key is missing.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        $provider_configs = wedocs_get_ai_provider_configs();
+        $provider_endpoint_config = $provider_configs[ $selected_provider ] ?? null;
+
+        if ( ! $provider_endpoint_config ) {
+            return new WP_Error(
+                'wedocs_ai_invalid_provider',
+                __( 'Invalid AI provider specified.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        $selected_model = $provider_config['selected_model'] ?? null;
+
+        if ( ! $selected_model ) {
+            return new WP_Error(
+                'wedocs_ai_model_not_specified',
+                __( 'AI model is not specified.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        try {
+            $response = $this->make_ai_api_call(
+                $selected_provider,
+                $provider_endpoint_config,
+                $selected_model,
+                $provider_config['api_key'],
+                $prompt,
+                $system_prompt,
+                500, // Shorter max tokens for summaries
+                0.5  // Lower temperature for more focused summaries
+            );
+
+            // Save the generated summary
+            $summary = $response['content'];
+            update_post_meta( $post_id, '_wedocs_ai_summary', $summary );
+
+            return rest_ensure_response( [
+                'success' => true,
+                'summary' => $summary,
+                'usage'   => $response['usage'] ?? null,
+            ] );
+        } catch ( \Exception $e ) {
+            return new WP_Error(
+                'wedocs_ai_generation_failed',
+                $e->getMessage(),
+                [ 'status' => 500 ]
+            );
+        }
     }
 }

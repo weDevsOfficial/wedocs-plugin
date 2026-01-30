@@ -1,321 +1,295 @@
 import { __ } from '@wordpress/i18n';
-import { cog, shadow } from '@wordpress/icons';
 import { Fragment, useState } from '@wordpress/element';
-import { useBlockProps } from '@wordpress/block-editor';
-
-import UnitControl from '../CustomControls/UnitControl';
-import RadioImageControl from '../CustomControls/RadioImageControl';
-import { InspectorControls, PanelColorSettings } from '@wordpress/block-editor';
+import {
+    useBlockProps,
+    InspectorControls,
+    BlockControls,
+    AlignmentToolbar,
+    PanelColorSettings,
+} from '@wordpress/block-editor';
 import {
     PanelBody,
     TextControl,
-    RangeControl,
-    SelectControl,
     ToggleControl,
-    __experimentalBoxControl as BoxControl
+    SelectControl,
+    __experimentalBoxControl as BoxControl,
+    __experimentalUnitControl as UnitControl,
+    RangeControl,
 } from '@wordpress/components';
 
 const Edit = ({ attributes, setAttributes }) => {
-    const blockProps = useBlockProps();
-
     const {
-        margin,
-        bgColor,
-        padding,
-        btnRadius,
-        alignment,
-        iconColor,
-        widthUnit,
-        hoverColor,
-        borderType,
         hideSearch,
-        btnPadding,
         searchWidth,
-        btnPosition,
         placeholder,
-        borderColor,
-        borderWidth,
-        iconBgColor,
-        borderRadius,
-        svgHoverColor,
-        iconHoverColor,
+        alignment,
+        buttonText,
+        showButton,
+        buttonPosition,
+        buttonBackgroundColor,
+        buttonTextColor,
+        buttonHoverBackgroundColor,
+        buttonHoverTextColor,
+        buttonBorderRadius,
+        buttonPadding,
+        inputBorderRadius,
+        iconSize,
     } = attributes;
 
-    const alignmentOptions = [
-        {
-            value : 'left',
-            label : __( 'Align left', 'wedocs' ),
-            svg   : <svg width='24' height='25' fill='none' strokeWidth='2' strokeLinecap='round'
-                stroke={ alignment === 'left' ? '#007cba' : '#939494' } strokeLinejoin='round'>
-                <path d='M8 9.462h12m-12 6h6m-10-9v12' />
-            </svg>
-        },
-        {
-            value : 'center',
-            label : __( 'Align center', 'wedocs' ),
-            svg   : <svg width='24' height='25' fill='none' strokeWidth='2' strokeLinecap='round'
-                stroke={ alignment === 'center' ? '#007cba' : '#939494' } strokeLinejoin='round'>
-                <path d='M18 9.462H6m8.99 6h-6' />
-                <path d='M12 6.462v12' />
-            </svg>
-        },
-        {
-            value : 'right',
-            label : __( 'Align right', 'wedocs' ),
-            svg   : <svg width='24' height='25' fill='none' strokeWidth='2' strokeLinecap='round'
-                stroke={ alignment === 'right' ? '#007cba' : '#939494' } strokeLinejoin='round'>
-                <path d='M16 9.462H4m12 6h-6m10-9v12' />
-            </svg>
-        },
-    ];
+    const [isButtonHovered, setIsButtonHovered] = useState(false);
 
-    const [ hover, setHover ] = useState( false );
-    const [ svgHover, setSvgHover ] = useState( false );
-    const [ iconHover, setIconHover ] = useState( false );
+    const blockProps = useBlockProps({
+        className: `wedocs-search-block align-${alignment}`,
+    });
 
-    const containerStyles = {
-        display        : 'flex',
-        justifyContent : alignment,
+    const searchContainerStyles = {
+        display: 'flex',
+        justifyContent: alignment === 'center' ? 'center' : alignment === 'right' ? 'flex-end' : 'flex-start',
+        width: '100%',
     };
 
-    const colors = [
-        { name: 'Sweet', color: '#F43F5E' },
-        { name: 'Orange', color: '#F97316' },
-        { name: 'Yellow', color: '#FACC15' },
-        { name: 'Purple', color: '#8B5CF6' },
-        { name: 'Light Blue', color: '#3B82F6' },
-        { name: 'Light Green', color: '#10B981' },
-    ];
+    const searchWrapperStyles = {
+        display: 'flex',
+        flexDirection: buttonPosition === 'outside' ? 'row' : 'relative',
+        width: searchWidth,
+        gap: buttonPosition === 'outside' ? '8px' : '0',
+    };
 
     const inputStyles = {
-        border        : `${borderWidth}px ${borderType} ${borderColor}`,
-        paddingTop    : padding?.top,
-        background    : hover ? hoverColor : bgColor,
-        paddingLeft   : padding?.left,
-        paddingRight  : padding?.right,
-        borderRadius  : `${borderRadius}px`,
-        paddingBottom : padding?.bottom,
+        width: '100%',
+        borderRadius: inputBorderRadius,
+        paddingRight: showButton && buttonPosition === 'inside' ? '50px' : '16px',
     };
 
-    const searchStyles = {
-        top           : btnPosition?.top,
-        left          : btnPosition?.left,
-        right         : btnPosition?.right,
-        bottom        : btnPosition?.bottom,
-        height        : 'auto',
-        background    : iconHover ? iconHoverColor : iconBgColor,
-        paddingTop    : btnPadding?.top,
-        paddingLeft   : btnPadding?.left,
-        borderRadius  : btnRadius,
-        paddingRight  : btnPadding?.right,
-        paddingBottom : btnPadding?.bottom,
+    const buttonStyles = {
+        backgroundColor: isButtonHovered ? buttonHoverBackgroundColor || buttonBackgroundColor : buttonBackgroundColor,
+        color: isButtonHovered ? buttonHoverTextColor || buttonTextColor : buttonTextColor,
+        borderRadius: buttonBorderRadius,
+        padding: buttonPadding ? `${buttonPadding.top} ${buttonPadding.right} ${buttonPadding.bottom} ${buttonPadding.left}` : '12px 24px',
+        border: 'none',
+        cursor: 'pointer',
+        position: buttonPosition === 'inside' ? 'absolute' : 'relative',
+        right: buttonPosition === 'inside' ? '4px' : 'auto',
+        top: buttonPosition === 'inside' ? '50%' : 'auto',
+        transform: buttonPosition === 'inside' ? 'translateY(-50%)' : 'none',
+        whiteSpace: 'nowrap',
     };
 
-    const borderOptions = [
-        { label: __( 'Solid', 'wedocs' ), value: 'solid' },
-        { label: __( 'Dotted', 'wedocs' ), value: 'dotted' },
-        { label: __( 'Dashed', 'wedocs' ), value: 'dashed' },
-        { label: __( 'Double', 'wedocs' ), value: 'double' },
-        { label: __( 'Groove', 'wedocs' ), value: 'groove' },
-        { label: __( 'Ridge', 'wedocs' ), value: 'ridge' },
-        { label: __( 'Inset', 'wedocs' ), value: 'inset' },
-        { label: __( 'Outset', 'wedocs' ), value: 'outset' },
-        { label: __( 'None', 'wedocs' ), value: 'none' },
-        { label: __( 'Hidden', 'wedocs' ), value: 'hidden' },
-    ];
+    const searchIconSvg = (
+        <svg
+            width={iconSize}
+            height={iconSize}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ display: 'block' }}
+        >
+            <path
+                d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    );
 
     return (
         <Fragment>
+            <BlockControls>
+                <AlignmentToolbar
+                    value={alignment}
+                    onChange={(newAlignment) => setAttributes({ alignment: newAlignment })}
+                />
+            </BlockControls>
+
             <InspectorControls>
-                <PanelBody>
+                <PanelBody title={__('General Settings', 'wedocs')} initialOpen={true}>
                     <ToggleControl
-                        checked={ hideSearch }
-                        className={ 'wedocs-search-toggle' }
-                        label={ __( 'Disable Block', 'wedocs' ) }
-                        onChange={ ( newHideSearch ) => setAttributes( { hideSearch: newHideSearch } ) }
+                        label={__('Disable Block', 'wedocs')}
+                        checked={hideSearch}
+                        onChange={(value) => setAttributes({ hideSearch: value })}
+                        help={__('Hide this search block from display', 'wedocs')}
                     />
-                </PanelBody>
-                { !hideSearch && (
-                    <Fragment>
-                        <PanelBody title={__('Color Settings', 'wedocs')} icon={ shadow }
-                            initialOpen={ false } className={ `wedocs-search-color-settings` } >
-                            <PanelColorSettings
-                                colors={ colors }
-                                colorSettings={ [
-                                    {
-                                        value    : bgColor,
-                                        label    : __( 'Field Background Color', 'wedocs' ),
-                                        onChange : ( newBgColor ) => setAttributes( { bgColor: newBgColor } ),
-                                    },
-                                    {
-                                        value    : hoverColor,
-                                        label    : __( 'Field Hover Color', 'wedocs' ),
-                                        onChange : ( newHoverColor ) => setAttributes( { hoverColor: newHoverColor } ),
-                                    },
-                                    {
-                                        value    : borderColor,
-                                        label    : __('Border Color', 'wedocs'),
-                                        onChange : ( newBorderColor ) => setAttributes( { borderColor: newBorderColor } ),
-                                    },
-                                    {
-                                        value    : iconColor,
-                                        label    : __( 'Icon Color', 'wedocs' ),
-                                        onChange : ( newIconColor ) => setAttributes( { iconColor: newIconColor } ),
-                                    },
-                                    {
-                                        value    : iconBgColor,
-                                        label    : __( 'Button Color', 'wedocs' ),
-                                        onChange : ( newIconBgColor ) => setAttributes( { iconBgColor: newIconBgColor } ),
-                                    },
-                                    {
-                                        value    : iconHoverColor,
-                                        label    : __( 'Button Hover Color', 'wedocs' ),
-                                        onChange : ( newIconHoverColor ) => setAttributes( { iconHoverColor: newIconHoverColor } ),
-                                    },
-                                    {
-                                        value    : svgHoverColor,
-                                        label    : __( 'Icon Hover Color', 'wedocs' ),
-                                        onChange : ( newSvgHoverColor ) => setAttributes( { svgHoverColor: newSvgHoverColor } ),
-                                    },
-                                ] }
-                            />
-                        </PanelBody>
-                        <PanelBody title={ __('Search Bar Settings', 'wedocs' ) } icon={ cog }>
-                            <UnitControl
-                                unit={ widthUnit }
-                                value={ searchWidth }
-                                label={ __( 'Field Width', 'wedocs' ) }
-                                onUnitChange={ ( newWidthUnit ) => setAttributes( { widthUnit: newWidthUnit } ) }
-                                onValueChange={ ( newSearchWidth ) => setAttributes( { searchWidth: newSearchWidth ? parseInt( newSearchWidth ) : 0 } ) }
-                            />
+
+                    {!hideSearch && (
+                        <>
                             <TextControl
-                                value={ placeholder }
-                                label={ __( 'Placeholder', 'wedocs' ) }
-                                placeholder={ __(  'Search bar placeholder', 'wedocs' ) }
-                                onChange={ ( newPlaceholder ) => setAttributes( { placeholder: newPlaceholder } ) }
+                                label={__('Placeholder Text', 'wedocs')}
+                                value={placeholder}
+                                onChange={(value) => setAttributes({ placeholder: value })}
+                                help={__('Text shown inside the search input', 'wedocs')}
                             />
-                            <p style={ { fontSize: 11 } }>{ __( 'POSITION', 'wedocs' ) }</p>
-                            <RadioImageControl
-                                selected={ alignment }
-                                options={ alignmentOptions }
-                                onChange={ ( newAlignment ) => setAttributes( { alignment: newAlignment } ) }
+
+                            <UnitControl
+                                label={__('Search Width', 'wedocs')}
+                                value={searchWidth}
+                                onChange={(value) => setAttributes({ searchWidth: value })}
+                                units={[
+                                    { value: '%', label: '%' },
+                                    { value: 'px', label: 'px' },
+                                    { value: 'vw', label: 'vw' },
+                                ]}
                             />
-                            <BoxControl
-                                resetValues={ {
-                                    top: '14px',
-                                    left: '22px',
-                                    right: '22px',
-                                    bottom: '14px',
-                                } }
-                                values={ padding }
-                                label={ __( 'Field Padding', 'wedocs' ) }
-                                onChange={ ( newPadding ) => setAttributes( { padding: newPadding } ) }
-                            />
-                            <BoxControl
-                                resetValues={ {
-                                    top: '0px',
-                                    left: '0px',
-                                    right: '0px',
-                                    bottom: '0px',
-                                } }
-                                values={ margin }
-                                label={ __( 'Field Margin', 'wedocs' ) }
-                                onChange={ ( newMargin ) => setAttributes( { margin: newMargin } ) }
-                            />
-                            <RangeControl
-                                min={ 0 }
-                                max={ 10 }
-                                value={ borderWidth }
-                                label={ __( 'Border Width', 'wedocs' ) }
-                                onChange={ ( newBorderWidth ) => setAttributes( { borderWidth: newBorderWidth } ) }
-                            />
-                            <RangeControl
-                                min={ 0 }
-                                max={ 100 }
-                                value={ borderRadius }
-                                label={ __( 'Border Radius', 'wedocs' ) }
-                                onChange={ ( newBorderRadius ) => setAttributes( { borderRadius: newBorderRadius } ) }
-                            />
+
                             <SelectControl
-                                value={ borderType }
-                                options={ borderOptions }
-                                label={ __( 'Border Type', 'wedocs' ) }
-                                onChange={ ( newBorderType ) => setAttributes( { borderType: newBorderType } ) }
+                                label={__('Alignment', 'wedocs')}
+                                value={alignment}
+                                options={[
+                                    { label: __('Left', 'wedocs'), value: 'left' },
+                                    { label: __('Center', 'wedocs'), value: 'center' },
+                                    { label: __('Right', 'wedocs'), value: 'right' },
+                                ]}
+                                onChange={(value) => setAttributes({ alignment: value })}
                             />
-                            <BoxControl
-                                resetValues={ {
-                                    top: '24px',
-                                    left: '26px',
-                                    right: '26px',
-                                    bottom: '24px',
-                                } }
-                                values={ btnPadding }
-                                label={ __( 'Button Padding', 'wedocs' ) }
-                                onChange={ ( newBtnPadding ) => setAttributes( { btnPadding: newBtnPadding } ) }
-                            />
-                            <BoxControl
-                                resetValues={ {
-                                    top: '0px',
-                                    right: '0px',
-                                    bottom: '10px',
-                                } }
-                                values={ btnPosition }
-                                label={ __( 'Button Margin', 'wedocs' ) }
-                                onChange={ ( newBtnPosition ) => setAttributes( { btnPosition: newBtnPosition } ) }
-                            />
-                            <RangeControl
-                                min={ 0 }
-                                max={ 100 }
-                                value={ btnRadius }
-                                label={ __( 'Button Radius', 'wedocs' ) }
-                                onChange={ ( newBtnRadius ) => setAttributes( { btnRadius: newBtnRadius } ) }
+                        </>
+                    )}
+                </PanelBody>
+
+                {!hideSearch && (
+                    <PanelBody title={__('Button Settings', 'wedocs')} initialOpen={false}>
+                        <ToggleControl
+                            label={__('Show Search Button', 'wedocs')}
+                            checked={showButton}
+                            onChange={(value) => setAttributes({ showButton: value })}
+                        />
+
+                        {showButton && (
+                            <>
+                                <TextControl
+                                    label={__('Button Text', 'wedocs')}
+                                    value={buttonText}
+                                    onChange={(value) => setAttributes({ buttonText: value })}
+                                />
+
+                                <SelectControl
+                                    label={__('Button Position', 'wedocs')}
+                                    value={buttonPosition}
+                                    options={[
+                                        { label: __('Inside Input', 'wedocs'), value: 'inside' },
+                                        { label: __('Outside Input', 'wedocs'), value: 'outside' },
+                                    ]}
+                                    onChange={(value) => setAttributes({ buttonPosition: value })}
+                                />
+
+                                <UnitControl
+                                    label={__('Icon Size', 'wedocs')}
+                                    value={iconSize}
+                                    onChange={(value) => setAttributes({ iconSize: value })}
+                                />
+
+                                <BoxControl
+                                    label={__('Button Padding', 'wedocs')}
+                                    values={buttonPadding}
+                                    onChange={(value) => setAttributes({ buttonPadding: value })}
+                                />
+                            </>
+                        )}
+                    </PanelBody>
+                )}
+            </InspectorControls>
+
+            <InspectorControls group="styles">
+                {!hideSearch && (
+                    <>
+                        <PanelBody title={__('Input Styles', 'wedocs')} initialOpen={true}>
+                            <UnitControl
+                                label={__('Border Radius', 'wedocs')}
+                                value={inputBorderRadius}
+                                onChange={(value) => setAttributes({ inputBorderRadius: value })}
                             />
                         </PanelBody>
-                    </Fragment>
-                ) }
+
+                        {showButton && (
+                            <PanelBody title={__('Button Styles', 'wedocs')} initialOpen={false}>
+                                <PanelColorSettings
+                                    title={__('Button Colors', 'wedocs')}
+                                    colorSettings={[
+                                        {
+                                            value: buttonBackgroundColor,
+                                            onChange: (value) => setAttributes({ buttonBackgroundColor: value }),
+                                            label: __('Background Color', 'wedocs'),
+                                        },
+                                        {
+                                            value: buttonTextColor,
+                                            onChange: (value) => setAttributes({ buttonTextColor: value }),
+                                            label: __('Text Color', 'wedocs'),
+                                        },
+                                        {
+                                            value: buttonHoverBackgroundColor,
+                                            onChange: (value) => setAttributes({ buttonHoverBackgroundColor: value }),
+                                            label: __('Hover Background Color', 'wedocs'),
+                                        },
+                                        {
+                                            value: buttonHoverTextColor,
+                                            onChange: (value) => setAttributes({ buttonHoverTextColor: value }),
+                                            label: __('Hover Text Color', 'wedocs'),
+                                        },
+                                    ]}
+                                />
+
+                                <UnitControl
+                                    label={__('Button Border Radius', 'wedocs')}
+                                    value={buttonBorderRadius}
+                                    onChange={(value) => setAttributes({ buttonBorderRadius: value })}
+                                />
+                            </PanelBody>
+                        )}
+                    </>
+                )}
             </InspectorControls>
-            <div { ...blockProps } style={ containerStyles }>
-                <div
-                    className='wedocs-editor-search-input'
-                    style={ {
-                        width        : searchWidth + widthUnit,
-                        marginTop    : margin?.top,
-                        marginLeft   : margin?.left,
-                        marginRight  : margin?.right,
-                        marginBottom : margin?.bottom,
-                    } }
-                >
-                    <input
-                        readOnly={ true }
-                        style={ inputStyles }
-                        className='search-field'
-                        placeholder={ placeholder }
-                        onMouseEnter={ () => setHover( true ) }
-                        onMouseLeave={ () => setHover( false ) }
-                    />
-                    <input type='hidden' name='post_type' value='docs' />
-                    <button
-                        type='submit'
-                        style={ searchStyles }
-                        className='search-submit'
-                        onMouseEnter={ () => setIconHover( true ) }
-                        onMouseLeave={ () => setIconHover( false ) }
-                    >
-                        <svg
-                            width='15'
-                            height='16'
-                            fill='none'
-                            onMouseEnter={ () => setSvgHover( true ) }
-                            onMouseLeave={ () => setSvgHover( false ) }
+
+            <div {...blockProps}>
+                {!hideSearch && (
+                    <div style={searchContainerStyles}>
+                        <form
+                            className="wedocs-search-form"
+                            role="search"
+                            style={searchWrapperStyles}
+                            onSubmit={(e) => e.preventDefault()}
                         >
-                            <path fill={ svgHover ? svgHoverColor : iconColor } fillRule='evenodd' d='M11.856 10.847l2.883 2.883a.89.89 0 0 1 0 1.257c-.173.174-.401.261-.629.261s-.455-.087-.629-.261l-2.883-2.883c-1.144.874-2.532 1.353-3.996 1.353a6.56 6.56 0 0 1-4.671-1.935c-2.576-2.575-2.576-6.765 0-9.341C3.179.934 4.839.247 6.603.247s3.424.687 4.671 1.935a6.56 6.56 0 0 1 1.935 4.67 6.55 6.55 0 0 1-1.353 3.995zM3.189 3.439c-1.882 1.882-1.882 4.945 0 6.827.912.912 2.124 1.414 3.414 1.414s2.502-.502 3.414-1.414 1.414-2.124 1.414-3.413-.502-2.502-1.414-3.413-2.124-1.414-3.414-1.414-2.502.502-3.414 1.414z' />
-                        </svg>
-                    </button>
-                </div>
-                { hideSearch && <div className='backdrop'></div> }
+                            <div style={{ position: 'relative', flex: 1 }}>
+                                <input
+                                    type="search"
+                                    className="wedocs-search-input"
+                                    placeholder={placeholder}
+                                    style={inputStyles}
+                                    disabled
+                                />
+                                {showButton && buttonPosition === 'inside' && (
+                                    <button
+                                        type="button"
+                                        className="wedocs-search-button wedocs-search-button-inside"
+                                        style={buttonStyles}
+                                        onMouseEnter={() => setIsButtonHovered(true)}
+                                        onMouseLeave={() => setIsButtonHovered(false)}
+                                    >
+                                        {buttonText || searchIconSvg}
+                                    </button>
+                                )}
+                            </div>
+                            {showButton && buttonPosition === 'outside' && (
+                                <button
+                                    type="button"
+                                    className="wedocs-search-button wedocs-search-button-outside"
+                                    style={buttonStyles}
+                                    onMouseEnter={() => setIsButtonHovered(true)}
+                                    onMouseLeave={() => setIsButtonHovered(false)}
+                                >
+                                    {buttonText || searchIconSvg}
+                                </button>
+                            )}
+                        </form>
+                    </div>
+                )}
+                {hideSearch && (
+                    <div className="wedocs-search-disabled">
+                        {__('Search block is disabled', 'wedocs')}
+                    </div>
+                )}
             </div>
         </Fragment>
     );
-}
+};
 
 export default Edit;

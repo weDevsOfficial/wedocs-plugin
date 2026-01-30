@@ -1,0 +1,272 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wedocs/helpful-feedback",
+	"version": "1.0.0",
+	"title": "weDocs - Helpful Feedback",
+	"icon": "thumbs-up",
+	"category": "widgets",
+	"description": "Add a feedback voting system for articles with Yes/No buttons",
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": ["wide", "full"],
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true
+			}
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"attributes": {
+		"questionText": {
+			"type": "string",
+			"default": "Was this article helpful to you?"
+		},
+		"layout": {
+			"type": "string",
+			"default": "layout1"
+		},
+		"alignment": {
+			"type": "string",
+			"default": "center"
+		},
+		"showVoteCount": {
+			"type": "boolean",
+			"default": true
+		},
+		"allowAnonymous": {
+			"type": "boolean",
+			"default": true
+		},
+		"yesButtonText": {
+			"type": "string",
+			"default": "Yes"
+		},
+		"noButtonText": {
+			"type": "string",
+			"default": "No"
+		},
+		"thankYouMessage": {
+			"type": "string",
+			"default": "Thank you for your feedback!"
+		},
+		"containerBgColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"containerBgHoverColor": {
+			"type": "string",
+			"default": "#f9f9f9"
+		},
+		"containerPadding": {
+			"type": "object",
+			"default": {
+				"top": "20px",
+				"right": "20px",
+				"bottom": "20px",
+				"left": "20px"
+			}
+		},
+		"containerMargin": {
+			"type": "object",
+			"default": {
+				"top": "20px",
+				"right": "0px",
+				"bottom": "20px",
+				"left": "0px"
+			}
+		},
+		"containerBorderStyle": {
+			"type": "string",
+			"default": "solid"
+		},
+		"containerBorderColor": {
+			"type": "string",
+			"default": "#e0e0e0"
+		},
+		"containerBorderWidth": {
+			"type": "object",
+			"default": {
+				"top": "1px",
+				"right": "1px",
+				"bottom": "1px",
+				"left": "1px"
+			}
+		},
+		"containerBorderRadius": {
+			"type": "object",
+			"default": {
+				"top": "8px",
+				"right": "8px",
+				"bottom": "8px",
+				"left": "8px"
+			}
+		},
+		"containerBoxShadow": {
+			"type": "string",
+			"default": "0 2px 4px rgba(0,0,0,0.1)"
+		},
+		"titleColor": {
+			"type": "string",
+			"default": "#333333"
+		},
+		"titleFontSize": {
+			"type": "string",
+			"default": "16px"
+		},
+		"titleFontWeight": {
+			"type": "string",
+			"default": "600"
+		},
+		"titleLineHeight": {
+			"type": "string",
+			"default": "1.4"
+		},
+		"titleLetterSpacing": {
+			"type": "string",
+			"default": "0px"
+		},
+		"titlePadding": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "16px",
+				"left": "0px"
+			}
+		},
+		"titleMargin": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "0px",
+				"left": "0px"
+			}
+		},
+		"yesButtonColor": {
+			"type": "string",
+			"default": "#4CAF50"
+		},
+		"yesButtonHoverColor": {
+			"type": "string",
+			"default": "#45a049"
+		},
+		"yesButtonActiveColor": {
+			"type": "string",
+			"default": "#2e7d32"
+		},
+		"noButtonColor": {
+			"type": "string",
+			"default": "#9e9e9e"
+		},
+		"noButtonHoverColor": {
+			"type": "string",
+			"default": "#757575"
+		},
+		"noButtonActiveColor": {
+			"type": "string",
+			"default": "#616161"
+		},
+		"buttonTextColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"buttonTextHoverColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"iconWidth": {
+			"type": "string",
+			"default": "20px"
+		},
+		"iconHeight": {
+			"type": "string",
+			"default": "20px"
+		},
+		"iconColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"iconHoverColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"innerIconColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"innerIconHoverColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"buttonBorderStyle": {
+			"type": "string",
+			"default": "solid"
+		},
+		"buttonBorderColor": {
+			"type": "string",
+			"default": "transparent"
+		},
+		"buttonBorderHoverColor": {
+			"type": "string",
+			"default": "transparent"
+		},
+		"buttonBorderWidth": {
+			"type": "string",
+			"default": "1px"
+		},
+		"buttonBorderRadius": {
+			"type": "string",
+			"default": "6px"
+		},
+		"buttonBoxShadow": {
+			"type": "string",
+			"default": "0 2px 4px rgba(0,0,0,0.1)"
+		},
+		"additionalCssClass": {
+			"type": "string",
+			"default": ""
+		},
+		"dataAttributes": {
+			"type": "object",
+			"default": {}
+		}
+	}
+}

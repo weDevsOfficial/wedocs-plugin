@@ -1,111 +1,128 @@
-import { Fragment } from '@wordpress/element';
 import { useBlockProps } from '@wordpress/block-editor';
 
-const Save = ({ attributes } ) => {
+const Save = ({ attributes }) => {
     const {
-        margin,
-        bgColor,
-        padding,
-        btnRadius,
-        alignment,
-        iconColor,
-        widthUnit,
-        hoverColor,
-        borderType,
         hideSearch,
-        btnPadding,
         searchWidth,
-        btnPosition,
         placeholder,
-        borderColor,
-        borderWidth,
-        iconBgColor,
-        borderRadius,
-        svgHoverColor,
-        iconHoverColor,
+        alignment,
+        buttonText,
+        showButton,
+        buttonPosition,
+        buttonBackgroundColor,
+        buttonTextColor,
+        buttonHoverBackgroundColor,
+        buttonHoverTextColor,
+        buttonBorderRadius,
+        buttonPadding,
+        inputBorderRadius,
+        iconSize,
     } = attributes;
 
     if (hideSearch) {
-        return;
+        return null;
     }
 
-    const containerStyles = {
+    const blockProps = useBlockProps.save({
+        className: `wedocs-search-block align-${alignment}`,
+    });
+
+    const searchContainerStyles = {
         display: 'flex',
-        justifyContent: alignment,
+        justifyContent: alignment === 'center' ? 'center' : alignment === 'right' ? 'flex-end' : 'flex-start',
+        width: '100%',
+    };
+
+    const searchWrapperStyles = {
+        display: 'flex',
+        flexDirection: buttonPosition === 'outside' ? 'row' : 'relative',
+        width: searchWidth,
+        gap: buttonPosition === 'outside' ? '8px' : '0',
     };
 
     const inputStyles = {
-        border             : `${borderWidth}px ${borderType} ${borderColor}`,
-        paddingTop         : padding?.top,
-        paddingLeft        : padding?.left,
-        paddingRight       : padding?.right,
-        borderRadius       : `${borderRadius}px`,
-        paddingBottom      : padding?.bottom,
-        "--field-color"    : bgColor,
-        "--field-bg-color" : hoverColor,
+        width: '100%',
+        borderRadius: inputBorderRadius,
+        paddingRight: showButton && buttonPosition === 'inside' ? '50px' : '16px',
     };
 
-    const searchStyles = {
-        top                          : btnPosition?.top,
-        left                         : btnPosition?.left,
-        right                        : btnPosition?.right,
-        bottom                       : btnPosition?.bottom,
-        height                       : 'auto',
-        paddingTop                   : btnPadding?.top,
-        paddingLeft                  : btnPadding?.left,
-        borderRadius                 : btnRadius,
-        paddingRight                 : btnPadding?.right,
-        paddingBottom                : btnPadding?.bottom,
-        "--field-icon-color"         : iconColor,
-        "--field-btn-bg-color"       : iconBgColor,
-        "--field-icon-hover-color"   : svgHoverColor,
-        "--field-btn-bg-hover-color" : iconHoverColor
+    const buttonStyles = {
+        backgroundColor: buttonBackgroundColor,
+        color: buttonTextColor,
+        borderRadius: buttonBorderRadius,
+        padding: buttonPadding ? `${buttonPadding.top} ${buttonPadding.right} ${buttonPadding.bottom} ${buttonPadding.left}` : '12px 24px',
+        border: 'none',
+        cursor: 'pointer',
+        position: buttonPosition === 'inside' ? 'absolute' : 'relative',
+        right: buttonPosition === 'inside' ? '4px' : 'auto',
+        top: buttonPosition === 'inside' ? '50%' : 'auto',
+        transform: buttonPosition === 'inside' ? 'translateY(-50%)' : 'none',
+        whiteSpace: 'nowrap',
+        '--hover-bg': buttonHoverBackgroundColor,
+        '--hover-color': buttonHoverTextColor,
     };
+
+    const searchIconSvg = (
+        <svg
+            width={iconSize}
+            height={iconSize}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ display: 'block' }}
+        >
+            <path
+                d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    );
 
     return (
-        <Fragment>
-            <form
-                method='get'
-                role='search'
-                action={weDocsBlockVars?.siteUrl}
-                {...useBlockProps.save({
-                    className: 'search-form wedocs-search-form'
-                })}
-            >
-                <div style={containerStyles}>
-                    <div
-                        className='wedocs-search-input'
-                        style={{
-                            width: searchWidth + widthUnit,
-                            marginTop: margin?.top,
-                            marginLeft: margin?.left,
-                            marginRight: margin?.right,
-                            marginBottom: margin?.bottom,
-                        }}
-                    >
+        <div {...blockProps}>
+            <div style={searchContainerStyles}>
+                <form
+                    className="wedocs-search-form"
+                    role="search"
+                    method="get"
+                    action={typeof window !== 'undefined' ? window.location.origin : ''}
+                    style={searchWrapperStyles}
+                >
+                    <div style={{ position: 'relative', flex: 1 }}>
                         <input
-                            name='s'
-                            type='search'
-                            style={inputStyles}
-                            className='search-field'
+                            type="search"
+                            className="wedocs-search-input"
                             placeholder={placeholder}
+                            name="s"
+                            style={inputStyles}
                         />
-                        <input type='hidden' name='post_type' value='docs' />
-                        <button
-                            type='submit'
-                            style={searchStyles}
-                            className='search-submit'
-                        >
-                            <svg width='15' height='16' fill='none'>
-                                <path fillRule='evenodd'
-                                    d='M11.856 10.847l2.883 2.883a.89.89 0 0 1 0 1.257c-.173.174-.401.261-.629.261s-.455-.087-.629-.261l-2.883-2.883c-1.144.874-2.532 1.353-3.996 1.353a6.56 6.56 0 0 1-4.671-1.935c-2.576-2.575-2.576-6.765 0-9.341C3.179.934 4.839.247 6.603.247s3.424.687 4.671 1.935a6.56 6.56 0 0 1 1.935 4.67 6.55 6.55 0 0 1-1.353 3.995zM3.189 3.439c-1.882 1.882-1.882 4.945 0 6.827.912.912 2.124 1.414 3.414 1.414s2.502-.502 3.414-1.414 1.414-2.124 1.414-3.413-.502-2.502-1.414-3.413-2.124-1.414-3.414-1.414-2.502.502-3.414 1.414z' />
-                            </svg>
-                        </button>
+                        <input type="hidden" name="post_type" value="docs" />
+                        {showButton && buttonPosition === 'inside' && (
+                            <button
+                                type="submit"
+                                className="wedocs-search-button wedocs-search-button-inside"
+                                style={buttonStyles}
+                            >
+                                {buttonText || searchIconSvg}
+                            </button>
+                        )}
                     </div>
-                </div>
-            </form>
-        </Fragment>
+                    {showButton && buttonPosition === 'outside' && (
+                        <button
+                            type="submit"
+                            className="wedocs-search-button wedocs-search-button-outside"
+                            style={buttonStyles}
+                        >
+                            {buttonText || searchIconSvg}
+                        </button>
+                    )}
+                </form>
+            </div>
+        </div>
     );
-}
+};
 
 export default Save;

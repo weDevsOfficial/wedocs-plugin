@@ -1,0 +1,47 @@
+
+  /**
+ * The following styles get applied inside the editor only.
+ */
+
+.wp-block-wedocs-block-need-more-help-contact-modal {
+	.need-more-help-container {
+		border: 1px dashed #ccc;
+		position: relative;
+
+		&::after {
+			content: 'Need More Help Block';
+			position: absolute;
+			top: -12px;
+			left: 12px;
+			background: white;
+			padding: 2px 8px;
+			font-size: 12px;
+			color: #666;
+			font-weight: 500;
+		}
+	}
+
+	// Modal preview in editor
+	.need-more-help-modal {
+		position: relative !important;
+		margin-top: 20px;
+		height: auto !important;
+		width: auto !important;
+		padding: 0;
+
+		.modal-overlay {
+			position: relative;
+			background: rgba(0, 0, 0, 0.1);
+			height: 200px;
+			border-radius: 4px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.modal-content {
+			position: static;
+			margin: 20px;
+		}
+	}
+}

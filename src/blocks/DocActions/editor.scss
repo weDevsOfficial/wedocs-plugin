@@ -1,0 +1,10 @@
+/**
+ * Documentation Actions Block Editor Styles
+ */
+
+.wp-block-wedocs-doc-actions {
+	.doc-action-button {
+		pointer-events: none; // Prevent clicks in editor
+		opacity: 0.9;
+	}
+}
