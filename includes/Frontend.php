@@ -36,7 +36,7 @@ class Frontend {
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_single_scripts' ], 9 );
 
         // override the theme template
-        add_filter( 'template_include', [ $this, 'template_loader' ], 20 );
+        // add_filter( 'template_include', [ $this, 'template_loader' ], 20 );
 
         $this->init_classes();
     }
@@ -78,6 +78,7 @@ class Frontend {
         wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', [
             'nonce'             => wp_create_nonce( 'wedocs-ajax' ),
             'style'             => WEDOCS_ASSETS . '/build/print.css?v=10',
+            'assetsUrl'         => WEDOCS_ASSETS,
             'ajaxurl'           => admin_url( 'admin-ajax.php' ),
             'powered'           => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs plugin for WordPress', 'wedocs' ), home_url() ),
             'isSingleDoc'       => is_singular( 'docs' ),
