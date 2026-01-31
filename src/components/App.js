@@ -9,6 +9,7 @@ import ListingPage from './DocListing';
 import SettingsPage from './Settings';
 import Documentations from './Documentations';
 import Migrate from './Migrations';
+import ExportImport from './ExportImport';
 import NotFound from './NotFound';
 import PermissionSettingsDemo from './PermissionSettingsDemo';
 
@@ -19,6 +20,7 @@ const App = () => {
     { path: 'settings/permission', component: PermissionSettingsDemo },
     { path: 'settings/:panel', component: SettingsPage },
     { path: 'section/:id', component: ListingPage },
+    { path: 'export-import', component: ExportImport },
     { path: 'migrate', component: Migrate },
   ];
 
