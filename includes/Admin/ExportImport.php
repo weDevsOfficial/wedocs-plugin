@@ -54,6 +54,17 @@ class ExportImport {
             ] );
         }
 
+        /**
+         * Export data structure:
+         * - version: Plugin version at time of export
+         * - export_date: MySQL datetime of export
+         * - docs: Array of documentation posts with:
+         *   - id, title, content, excerpt, status, parent
+         *   - menu_order, date, modified, author, slug
+         *   - meta: Array of post metadata (positive, negative, wedocs_contributors)
+         *   - tags: Array of tag names assigned to the doc
+         * - tags: Array of all doc_tag taxonomy terms with name, slug, description
+         */
         $export_data = [
             'version'     => WEDOCS_VERSION,
             'export_date' => current_time( 'mysql' ),
@@ -115,7 +126,7 @@ class ExportImport {
 
         wp_send_json_success( [
             'data'     => $export_data,
-            'filename' => 'wedocs-export-' . date( 'Y-m-d-H-i-s' ) . '.json',
+            'filename' => 'wedocs-export-' . gmdate( 'Y-m-d-H-i-s' ) . '.json',
         ] );
     }
 
@@ -162,11 +173,11 @@ class ExportImport {
             foreach ( $import_data['tags'] as $tag_data ) {
                 if ( ! term_exists( $tag_data['slug'], 'doc_tag' ) ) {
                     wp_insert_term(
-                        $tag_data['name'],
+                        sanitize_text_field( $tag_data['name'] ),
                         'doc_tag',
                         [
-                            'slug'        => $tag_data['slug'],
-                            'description' => $tag_data['description'],
+                            'slug'        => sanitize_title( $tag_data['slug'] ),
+                            'description' => sanitize_textarea_field( $tag_data['description'] ),
                         ]
                     );
                 }
@@ -198,7 +209,7 @@ class ExportImport {
                 'post_status'  => sanitize_text_field( $doc_data['status'] ),
                 'post_name'    => sanitize_title( $doc_data['slug'] ),
                 'menu_order'   => absint( $doc_data['menu_order'] ),
-                'post_date'    => $doc_data['date'],
+                'post_date'    => sanitize_text_field( $doc_data['date'] ),
             ];
 
             // Handle parent relationship using mapped ID
@@ -220,13 +231,26 @@ class ExportImport {
             // Import meta data
             if ( ! empty( $doc_data['meta'] ) && is_array( $doc_data['meta'] ) ) {
                 foreach ( $doc_data['meta'] as $meta_key => $meta_value ) {
-                    update_post_meta( $new_doc_id, sanitize_key( $meta_key ), $meta_value );
+                    $sanitized_key = sanitize_key( $meta_key );
+                    
+                    // Sanitize based on known meta keys
+                    if ( in_array( $sanitized_key, [ 'positive', 'negative' ], true ) ) {
+                        $meta_value = absint( $meta_value );
+                    } elseif ( $sanitized_key === 'wedocs_contributors' && is_array( $meta_value ) ) {
+                        $meta_value = array_map( 'absint', $meta_value );
+                    } else {
+                        // Default sanitization for unknown meta
+                        $meta_value = sanitize_text_field( $meta_value );
+                    }
+                    
+                    update_post_meta( $new_doc_id, $sanitized_key, $meta_value );
                 }
             }
 
             // Import tags
             if ( ! empty( $doc_data['tags'] ) && is_array( $doc_data['tags'] ) ) {
-                wp_set_object_terms( $new_doc_id, $doc_data['tags'], 'doc_tag' );
+                $sanitized_tags = array_map( 'sanitize_text_field', $doc_data['tags'] );
+                wp_set_object_terms( $new_doc_id, $sanitized_tags, 'doc_tag' );
             }
 
             $imported_count++;

@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useState, useRef } from '@wordpress/element';
 import WedocsPromoNotice from '../WedocsPromoNotice';
 
 const ExportImport = () => {
@@ -10,6 +10,7 @@ const ExportImport = () => {
     const [importSuccess, setImportSuccess] = useState(false);
     const [importResult, setImportResult] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const fileInputRef = useRef(null);
 
     const handleExport = () => {
         setIsExporting(true);
@@ -92,8 +93,10 @@ const ExportImport = () => {
                             setImportSuccess(true);
                             setImportResult(response.data);
                             setImportFile(null);
-                            // Reset file input
-                            document.getElementById('import-file-input').value = '';
+                            // Reset file input using ref
+                            if (fileInputRef.current) {
+                                fileInputRef.current.value = '';
+                            }
                         } else {
                             setErrorMessage(response.data?.message || __('Import failed.', 'wedocs'));
                         }
@@ -208,7 +211,7 @@ const ExportImport = () => {
                                     {__('Select JSON file', 'wedocs')}
                                 </label>
                                 <input
-                                    id='import-file-input'
+                                    ref={fileInputRef}
                                     type='file'
                                     accept='.json'
                                     onChange={handleFileChange}
