@@ -28,6 +28,13 @@ const AiSettings = ({
     setSettings,
     searchQuery = '',
 }) => {
+    // Searchable terms for AI settings - defined at module level to avoid recreation
+    const AI_SEARCHABLE_TERMS = [
+        'AI Control', 'AI Provider', 'OpenAI', 'Anthropic', 'Google', 'Gemini',
+        'API Key', 'Model', 'GPT', 'Claude', 'Default Provider', 'AI Settings',
+        'artificial intelligence', 'machine learning', 'configuration', 'provider',
+    ];
+    
     // Get centralized provider configs from wedocs_get_ai_provider_configs() PHP function
     // This ensures consistency across all AI features and settings
     const getProviderConfigs = () => {
@@ -397,13 +404,7 @@ const AiSettings = ({
     const hasSearchMatch = useMemo(() => {
         if (!searchQuery || searchQuery.trim() === '') return true;
         
-        const searchableTerms = [
-            'AI Control', 'AI Provider', 'OpenAI', 'Anthropic', 'Google', 'Gemini',
-            'API Key', 'Model', 'GPT', 'Claude', 'Default Provider', 'AI Settings',
-            'artificial intelligence', 'machine learning', 'configuration', 'provider',
-        ];
-        
-        return searchableTerms.some(term => matchesSearch(term));
+        return AI_SEARCHABLE_TERMS.some(term => matchesSearch(term));
     }, [searchQuery]);
 
     return (

@@ -45,6 +45,7 @@ const SearchBox = ({ onSearch }) => {
           <button
             onClick={handleClear}
             className="absolute inset-y-0 right-0 flex items-center pr-3 hover:text-gray-700"
+            aria-label={__('Clear search', 'wedocs')}
           >
             <svg
               className="h-5 w-5 text-gray-400"
