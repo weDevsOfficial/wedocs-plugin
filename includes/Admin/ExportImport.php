@@ -27,6 +27,9 @@ class ExportImport {
      * @return void
      */
     public function export_docs() {
+        // Check nonce
+        check_ajax_referer( 'wedocs_export_docs', 'nonce' );
+
         // Check permissions
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_send_json_error( [
@@ -124,6 +127,9 @@ class ExportImport {
      * @return void
      */
     public function import_docs() {
+        // Check nonce
+        check_ajax_referer( 'wedocs_import_docs', 'nonce' );
+
         // Check permissions
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_send_json_error( [

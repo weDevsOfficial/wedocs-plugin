@@ -19,7 +19,10 @@ const ExportImport = () => {
         jQuery.ajax({
             url: ajaxurl,
             type: 'POST',
-            data: { action: 'wedocs_export_docs' },
+            data: { 
+                action: 'wedocs_export_docs',
+                nonce: weDocsAdminVars.exportNonce 
+            },
             dataType: 'json',
             success: (response) => {
                 setIsExporting(false);
@@ -79,7 +82,8 @@ const ExportImport = () => {
                     type: 'POST',
                     data: {
                         action: 'wedocs_import_docs',
-                        import_data: importData
+                        import_data: importData,
+                        nonce: weDocsAdminVars.importNonce
                     },
                     dataType: 'json',
                     success: (response) => {
