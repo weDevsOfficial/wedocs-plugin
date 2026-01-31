@@ -29,16 +29,23 @@ if ( $docs ) {
                             foreach ( $main_doc['sections'] as $section ) {
                                 $article_args = array(
                                     'post_type'      => 'docs',
-                                    'posts_per_page' => '-1',
+                                    'posts_per_page' => ! empty( $article_limit ) && $article_limit > 0 ? $article_limit : '-1',
                                     'orderby'        => 'menu_order',
                                     'order'          => 'ASC'
                                 );
 
                                 $article_args = apply_filters( 'wedocs_shortcode_page_section_args', $article_args );
-                                $my_wp_query  = new WP_Query();
-                                $all_wp_pages = $my_wp_query->query( $article_args );
+                                $article_args['post_parent'] = $section->ID;
+                                $article_args['post_status'] = 'publish';
 
-                                $children_docs = get_page_children( $section->ID, $all_wp_pages );
+                                $article_args = apply_filters( 'wedocs_shortcode_page_article_args', $article_args, $section );
+
+                                $children_docs = get_children( $article_args );
+                                $total_children = count( $children_docs );
+                                $has_more_articles = ! empty( $article_limit ) && $article_limit > 0 && $total_children > $article_limit;
+                                if ( $has_more_articles ) {
+                                    $children_docs = array_slice( $children_docs, 0, $article_limit );
+                                }
                                 $post_title    = wedocs_apply_short_content(
                                     __( $section->post_title, 'wedocs' ),
                                     $col > 1 ? 60 : 160
@@ -73,6 +80,13 @@ if ( $docs ) {
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>
+                                        <?php if ( $has_more_articles ) : ?>
+                                            <li class="wedocs-view-all">
+                                                <a href="<?php echo get_permalink( $section->ID ); ?>" target='_blank'>
+                                                    <?php esc_html_e( 'View all', 'wedocs' ); ?>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
                                     </ul>
                                 <?php endif; ?>
                             <?php } ?>

@@ -45,6 +45,7 @@ class Shortcode {
             'include' => 'any',
             'exclude' => '',
             'items'   => 10,
+            'articles'=> -1,
             'more'    => __( 'View Details', 'wedocs' ),
         ];
 
@@ -120,6 +121,7 @@ class Shortcode {
                 'more'          => $args['more'],
                 'col'           => (int) ( $docs_length === 1 ? $docs_length : $args['col'] ),
                 'enable_search' => wedocs_get_general_settings( 'enable_search', 'on' ),
+                'article_limit' => (int) $args['articles'],
             )
         );
 
