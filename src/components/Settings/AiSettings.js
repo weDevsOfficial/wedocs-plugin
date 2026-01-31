@@ -18,7 +18,7 @@
  */
 
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect, Fragment } from '@wordpress/element';
+import { useState, useEffect, Fragment, useMemo } from '@wordpress/element';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
 
@@ -26,6 +26,7 @@ const AiSettings = ({
     settingsData,
     aiSettingsData,
     setSettings,
+    searchQuery = '',
 }) => {
     // Get centralized provider configs from wedocs_get_ai_provider_configs() PHP function
     // This ensures consistency across all AI features and settings
@@ -386,6 +387,25 @@ const AiSettings = ({
         );
     };
 
+    // Helper function to check if AI settings match the search query
+    const matchesSearch = (text) => {
+        if (!searchQuery || searchQuery.trim() === '') return true;
+        return text.toLowerCase().includes(searchQuery.toLowerCase().trim());
+    };
+
+    // Check if any AI-related content matches the search
+    const hasSearchMatch = useMemo(() => {
+        if (!searchQuery || searchQuery.trim() === '') return true;
+        
+        const searchableTerms = [
+            'AI Control', 'AI Provider', 'OpenAI', 'Anthropic', 'Google', 'Gemini',
+            'API Key', 'Model', 'GPT', 'Claude', 'Default Provider', 'AI Settings',
+            'artificial intelligence', 'machine learning', 'configuration', 'provider',
+        ];
+        
+        return searchableTerms.some(term => matchesSearch(term));
+    }, [searchQuery]);
+
     return (
         <section>
             <div className="shadow sm:rounded-md">
@@ -396,6 +416,13 @@ const AiSettings = ({
                         </h2>
                     </div>
                     <hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200" />
+                    {searchQuery && !hasSearchMatch ? (
+                        <div className="pt-6 pb-20 px-8">
+                            <p className="text-gray-500 text-center">
+                                {__('No settings found matching your search.', 'wedocs')}
+                            </p>
+                        </div>
+                    ) : (
                     <div className="pt-6 pb-20 px-8 grid grid-cols-4 gap-5">
                         {/* Default AI Provider */}
                         <div className="col-span-4">
@@ -559,6 +586,7 @@ const AiSettings = ({
                             </div>
                         </div>
                     </div>
+                    )}
                 </div>
             </div>
         </section>
