@@ -92,6 +92,19 @@ const GeneralSettings = ( {
     );
   }, [searchQuery, settingItems]);
 
+  // Create a Set of visible setting IDs for efficient lookups
+  const visibleSettingIds = useMemo(() => {
+    return new Set(filteredSettings.map(item => item.id));
+  }, [filteredSettings]);
+
+  // Helper function to get highlight style for a setting
+  const getHighlightStyle = (settingId) => {
+    const setting = filteredSettings.find(s => s.id === settingId);
+    return {
+      backgroundColor: searchQuery && setting && matchesSearch(setting.label) ? '#fef3c7' : 'transparent'
+    };
+  };
+
   return (
       <section>
       <div className="shadow sm:rounded-md">
@@ -110,10 +123,8 @@ const GeneralSettings = ( {
             </div>
           ) }
           <div className="pt-6 pb-20 px-8 grid grid-cols-4 gap-5">
-            { filteredSettings.find(s => s.id === 'docs_home') && (
-            <div className="col-span-4"
-              style={{ backgroundColor: searchQuery && matchesSearch(filteredSettings.find(s => s.id === 'docs_home')?.label || '') ? '#fef3c7' : 'transparent' }}
-            >
+            { visibleSettingIds.has('docs_home') && (
+            <div className="col-span-4" style={getHighlightStyle('docs_home')}>
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
                   <label
@@ -155,10 +166,8 @@ const GeneralSettings = ( {
             </div>
             ) }
 
-            { filteredSettings.find(s => s.id === 'email') && (
-            <div className="col-span-4"
-              style={{ backgroundColor: searchQuery && matchesSearch(filteredSettings.find(s => s.id === 'email')?.label || '') ? '#fef3c7' : 'transparent' }}
-            >
+            { visibleSettingIds.has('email') && (
+            <div className="col-span-4" style={getHighlightStyle('email')}>
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
                   <label
@@ -205,11 +214,9 @@ const GeneralSettings = ( {
             </div>
             ) }
 
-              { filteredSettings.find(s => s.id === 'email_to') && (generalSettingsData?.email === 'on' ||
+              { visibleSettingIds.has('email_to') && (generalSettingsData?.email === 'on' ||
                   !Boolean(generalSettingsData?.email)) && (
-                  <div className="col-span-4"
-                    style={{ backgroundColor: searchQuery && matchesSearch(filteredSettings.find(s => s.id === 'email_to')?.label || '') ? '#fef3c7' : 'transparent' }}
-                  >
+                  <div className="col-span-4" style={getHighlightStyle('email_to')}>
                 <div className="settings-content flex items-center justify-between">
                   <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
                     <label
@@ -263,10 +270,8 @@ const GeneralSettings = ( {
               </div>
               ) }
 
-              { filteredSettings.find(s => s.id === 'enable_search') && (
-              <div className="col-span-4"
-                style={{ backgroundColor: searchQuery && matchesSearch(filteredSettings.find(s => s.id === 'enable_search')?.label || '') ? '#fef3c7' : 'transparent' }}
-              >
+              { visibleSettingIds.has('enable_search') && (
+              <div className="col-span-4" style={getHighlightStyle('enable_search')}>
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
                   <label
@@ -313,10 +318,8 @@ const GeneralSettings = ( {
             </div>
             ) }
 
-            { filteredSettings.find(s => s.id === 'helpful') && (
-            <div className="col-span-4"
-              style={{ backgroundColor: searchQuery && matchesSearch(filteredSettings.find(s => s.id === 'helpful')?.label || '') ? '#fef3c7' : 'transparent' }}
-            >
+            { visibleSettingIds.has('helpful') && (
+            <div className="col-span-4" style={getHighlightStyle('helpful')}>
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
                   <label
@@ -363,10 +366,8 @@ const GeneralSettings = ( {
             </div>
             ) }
 
-            { filteredSettings.find(s => s.id === 'comments') && (
-            <div className="col-span-4"
-              style={{ backgroundColor: searchQuery && matchesSearch(filteredSettings.find(s => s.id === 'comments')?.label || '') ? '#fef3c7' : 'transparent' }}
-            >
+            { visibleSettingIds.has('comments') && (
+            <div className="col-span-4" style={getHighlightStyle('comments')}>
               <div className="settings-content flex items-center justify-between mt-1">
                 <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
                   <label
@@ -413,10 +414,8 @@ const GeneralSettings = ( {
             </div>
             ) }
 
-            { filteredSettings.find(s => s.id === 'print') && (
-            <div className="col-span-4"
-              style={{ backgroundColor: searchQuery && matchesSearch(filteredSettings.find(s => s.id === 'print')?.label || '') ? '#fef3c7' : 'transparent' }}
-            >
+            { visibleSettingIds.has('print') && (
+            <div className="col-span-4" style={getHighlightStyle('print')}>
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
                   <label
