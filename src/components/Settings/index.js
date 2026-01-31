@@ -1,5 +1,6 @@
 import Menu from './Menu';
 import SaveButton from './SaveButton';
+import SearchBox from './SearchBox';
 import { Tab } from '@headlessui/react';
 import { useEffect, useState } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
@@ -31,6 +32,7 @@ const SettingsPage = () => {
   );
 
   const [ saving, setSaving ] = useState( false );
+  const [ searchQuery, setSearchQuery ] = useState( '' );
 
   const handleSettingsSave = () => {
     // Update wedocs settings data.
@@ -69,12 +71,14 @@ const SettingsPage = () => {
       settingsData={ docSettings }
       generalSettingsData={ docSettings?.general }
       setSettings={ setDocSettings }
+      searchQuery={ searchQuery }
     />,
     <AiSettings
       index={ selectedIndex }
       settingsData={ docSettings }
       aiSettingsData={ docSettings?.ai }
       setSettings={ setDocSettings }
+      searchQuery={ searchQuery }
     />,
   ];
 
@@ -151,6 +155,7 @@ const SettingsPage = () => {
           <div className="h-100">
             <div className="h-full">
               <main>
+                <SearchBox onSearch={ setSearchQuery } />
                 <div className="lg:grid lg:grid-cols-12 lg:gap-x-6">
                   <Tab.Group
                     vertical
@@ -160,7 +165,7 @@ const SettingsPage = () => {
                     <aside className="px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3 md:mb-6">
                       <nav className="py-[18px] min-h-[500px] bg-white rounded-md">
                         <Tab.List className="px-2 space-y-1">
-                          <Menu />
+                          <Menu searchQuery={ searchQuery } />
                         </Tab.List>
                       </nav>
                     </aside>

@@ -1,12 +1,13 @@
 import { __ } from '@wordpress/i18n';
 import Switcher from '../Switcher';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useState, useMemo } from '@wordpress/element';
 import SelectBox from '../SelectBox';
 
 const GeneralSettings = ( {
   settingsData,
   generalSettingsData,
   setSettings,
+  searchQuery = '',
 } ) => {
   const [ generalSettings, setGeneralSettings ] = useState( {
     ...generalSettingsData,
@@ -25,6 +26,85 @@ const GeneralSettings = ( {
     } );
   }, [ generalSettingsData ] );
 
+  // Helper function to check if a setting matches the search query
+  const matchesSearch = (text) => {
+    if (!searchQuery || searchQuery.trim() === '') return true;
+    return text.toLowerCase().includes(searchQuery.toLowerCase().trim());
+  };
+
+  // Define settings with their search keywords
+  const settingItems = useMemo(() => [
+    {
+      id: 'docs_home',
+      label: __('weDocs Home', 'wedocs'),
+      keywords: 'wedocs home page documentation shortcode',
+      visible: true,
+    },
+    {
+      id: 'email',
+      label: __('Email Feedback on Article', 'wedocs'),
+      keywords: 'email feedback article invite readers thoughts form contact',
+      visible: true,
+    },
+    {
+      id: 'email_to',
+      label: __('Email Address', 'wedocs'),
+      keywords: 'email address receive feedback contact',
+      visible: generalSettingsData?.email === 'on' || !Boolean(generalSettingsData?.email),
+    },
+    {
+      id: 'enable_search',
+      label: __('Enable searchbar on docs home', 'wedocs'),
+      keywords: 'enable searchbar docs home homepage search',
+      visible: true,
+    },
+    {
+      id: 'helpful',
+      label: __('Helpful Feedback on Article', 'wedocs'),
+      keywords: 'helpful feedback article readers opinions content',
+      visible: true,
+    },
+    {
+      id: 'comments',
+      label: __('Allow Comments on Article', 'wedocs'),
+      keywords: 'allow comments article reader engagement discussion',
+      visible: true,
+    },
+    {
+      id: 'print',
+      label: __('Allow Article Printing', 'wedocs'),
+      keywords: 'allow article printing print users website',
+      visible: true,
+    },
+  ], [generalSettingsData]);
+
+  // Filter settings based on search query
+  const filteredSettings = useMemo(() => {
+    if (!searchQuery || searchQuery.trim() === '') {
+      return settingItems;
+    }
+    
+    return settingItems.filter(item => 
+      item.visible && (
+        matchesSearch(item.label) || 
+        matchesSearch(item.keywords)
+      )
+    );
+  }, [searchQuery, settingItems]);
+
+  // Create a Set of visible setting IDs for efficient lookups
+  const visibleSettingIds = useMemo(() => {
+    return new Set(filteredSettings.map(item => item.id));
+  }, [filteredSettings]);
+
+  // Helper function to get highlight style for a setting
+  const getHighlightStyle = (settingId) => {
+    const setting = filteredSettings.find(s => s.id === settingId);
+    return {
+      backgroundColor: searchQuery && setting && matchesSearch(setting.label) ? '#fef3c7' : 'transparent'
+    };
+  };
+
   return (
       <section>
       <div className="shadow sm:rounded-md">
@@ -35,8 +115,16 @@ const GeneralSettings = ( {
             </h2>
           </div>
           <hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200" />
+          { searchQuery && filteredSettings.length === 0 && (
+            <div className="pt-6 pb-20 px-8">
+              <p className="text-gray-500 text-center">
+                {__('No settings found matching your search.', 'wedocs')}
+              </p>
+            </div>
+          ) }
           <div className="pt-6 pb-20 px-8 grid grid-cols-4 gap-5">
-            <div className="col-span-4">
+            { visibleSettingIds.has('docs_home') && (
+            <div className="col-span-4" style={getHighlightStyle('docs_home')}>
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
                   <label
@@ -76,8 +164,10 @@ const GeneralSettings = ( {
                 </p>
               </div>
             </div>
+            ) }
 
-            <div className="col-span-4">
+            { visibleSettingIds.has('email') && (
+            <div className="col-span-4" style={getHighlightStyle('email')}>
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
                   <label
@@ -122,10 +212,11 @@ const GeneralSettings = ( {
                 </div>
               </div>
             </div>
+            ) }
 
-              {(generalSettingsData?.email === 'on' ||
+              { visibleSettingIds.has('email_to') && (generalSettingsData?.email === 'on' ||
                   !Boolean(generalSettingsData?.email)) && (
-                  <div className="col-span-4">
+                  <div className="col-span-4" style={getHighlightStyle('email_to')}>
                 <div className="settings-content flex items-center justify-between">
                   <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
                     <label
@@ -177,9 +268,10 @@ const GeneralSettings = ( {
                   </div>
                 </div>
               </div>
-              )}
+              ) }
 
-              <div className="col-span-4">
+              { visibleSettingIds.has('enable_search') && (
+              <div className="col-span-4" style={getHighlightStyle('enable_search')}>
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
                   <label
@@ -224,8 +316,10 @@ const GeneralSettings = ( {
                 </div>
               </div>
             </div>
+            ) }
 
-            <div className="col-span-4">
+            { visibleSettingIds.has('helpful') && (
+            <div className="col-span-4" style={getHighlightStyle('helpful')}>
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
                   <label
@@ -270,8 +364,10 @@ const GeneralSettings = ( {
                 </div>
               </div>
             </div>
+            ) }
 
-            <div className="col-span-4">
+            { visibleSettingIds.has('comments') && (
+            <div className="col-span-4" style={getHighlightStyle('comments')}>
               <div className="settings-content flex items-center justify-between mt-1">
                 <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
                   <label
@@ -316,8 +412,10 @@ const GeneralSettings = ( {
                 </div>
               </div>
             </div>
+            ) }
 
-            <div className="col-span-4">
+            { visibleSettingIds.has('print') && (
+            <div className="col-span-4" style={getHighlightStyle('print')}>
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
                   <label
@@ -362,6 +460,7 @@ const GeneralSettings = ( {
                 </div>
               </div>
             </div>
+            ) }
           </div>
         </div>
       </div>
