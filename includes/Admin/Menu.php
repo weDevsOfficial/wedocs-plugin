@@ -84,6 +84,11 @@ class Menu {
                 $base . '#/settings',
             ),
             array(
+                __( 'Export/Import', 'wedocs' ),
+                apply_filters( 'wedocs_export_import_management_capabilities', 'manage_options' ),
+                $base . '#/export-import',
+            ),
+            array(
                 __( 'Migration', 'wedocs' ),
                 apply_filters( 'wedocs_migration_management_capabilities', 'manage_options' ),
                 $base . '#/migrate',
