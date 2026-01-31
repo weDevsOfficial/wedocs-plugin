@@ -29,16 +29,23 @@ if ( $docs ) {
                             foreach ( $main_doc['sections'] as $section ) {
                                 $article_args = array(
                                     'post_type'      => 'docs',
-                                    'posts_per_page' => '-1',
+                                    'posts_per_page' => $article_limit > 0 ? $article_limit + 1 : '-1',
                                     'orderby'        => 'menu_order',
-                                    'order'          => 'ASC'
+                                    'order'          => 'ASC',
                                 );
 
                                 $article_args = apply_filters( 'wedocs_shortcode_page_section_args', $article_args );
-                                $my_wp_query  = new WP_Query();
-                                $all_wp_pages = $my_wp_query->query( $article_args );
+                                $article_args['post_parent'] = $section->ID;
+                                $article_args['post_status'] = 'publish';
 
-                                $children_docs = get_page_children( $section->ID, $all_wp_pages );
+                                $article_args = apply_filters( 'wedocs_shortcode_page_article_args', $article_args, $section );
+
+                                $article_query  = new \WP_Query( $article_args );
+                                $children_docs  = $article_query->posts;
+                                $has_more_articles = $article_limit > 0 && count( $children_docs ) > $article_limit;
+                                if ( $has_more_articles ) {
+                                    $children_docs = array_slice( $children_docs, 0, $article_limit );
+                                }
                                 $post_title    = wedocs_apply_short_content(
                                     __( $section->post_title, 'wedocs' ),
                                     $col > 1 ? 60 : 160
@@ -47,7 +54,7 @@ if ( $docs ) {
                                 $collapse_section_articles = wedocs_get_general_settings( 'collapse_articles', 'off' );
                                 ?>
                                 <li>
-                                    <a class='icon-view' href="<?php echo get_permalink( $section->ID ); ?>" target='_blank'>
+                                    <a class='icon-view' href="<?php echo get_permalink( $section->ID ); ?>" target='_blank' rel='noopener noreferrer'>
                                         <?php echo esc_html( $post_title ); ?>
                                     </a>
                                     <?php if ( $children_docs ) : ?>
@@ -73,6 +80,13 @@ if ( $docs ) {
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>
+                                        <?php if ( $has_more_articles ) : ?>
+                                            <li class="wedocs-view-all">
+                                                <a href="<?php echo get_permalink( $section->ID ); ?>" target='_blank' rel='noopener noreferrer'>
+                                                    <?php esc_html_e( 'View all', 'wedocs' ); ?>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
                                     </ul>
                                 <?php endif; ?>
                             <?php } ?>
