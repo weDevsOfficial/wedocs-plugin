@@ -567,6 +567,759 @@ class DocsGrid extends Widget_Base {
 
         $this->end_controls_section();
 
+        // Style Section - Card Header
+        $this->start_controls_section(
+            'style_card_header',
+            [
+                'label' => __('Card Header', 'wedocs'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'cardHeaderBackgroundColor',
+            [
+                'label' => __('Background Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__header' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'cardHeaderPadding',
+            [
+                'label' => __('Padding', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 0,
+                    'right' => 0,
+                    'bottom' => 15,
+                    'left' => 0,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__header' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'cardHeaderMargin',
+            [
+                'label' => __('Margin', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 0,
+                    'right' => 0,
+                    'bottom' => 0,
+                    'left' => 0,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__header' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'cardHeaderBorder',
+                'label' => __('Border', 'wedocs'),
+                'selector' => '{{WRAPPER}} .wedocs-docs-grid__header',
+            ]
+        );
+
+        $this->add_control(
+            'cardHeaderBorderRadius',
+            [
+                'label' => __('Border Radius', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__header' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'cardHeaderAlign',
+            [
+                'label' => __('Alignment', 'wedocs'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => __('Left', 'wedocs'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'wedocs'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => __('Right', 'wedocs'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'default' => 'left',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__header' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Style Section - Card Content/Body
+        $this->start_controls_section(
+            'style_card_body',
+            [
+                'label' => __('Card Content/Body', 'wedocs'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'cardBodyBackgroundColor',
+            [
+                'label' => __('Background Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__content' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'cardBodyPadding',
+            [
+                'label' => __('Padding', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 0,
+                    'right' => 0,
+                    'bottom' => 10,
+                    'left' => 0,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'cardBodyMargin',
+            [
+                'label' => __('Margin', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 0,
+                    'right' => 0,
+                    'bottom' => 10,
+                    'left' => 0,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'cardBodyBorder',
+                'label' => __('Border', 'wedocs'),
+                'selector' => '{{WRAPPER}} .wedocs-docs-grid__content',
+            ]
+        );
+
+        $this->add_control(
+            'cardBodyBorderRadius',
+            [
+                'label' => __('Border Radius', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'cardBodyMaxHeight',
+            [
+                'label' => __('Max Height', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1000,
+                        'step' => 10,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__content' => 'max-height: {{SIZE}}{{UNIT}}; overflow-y: auto;',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Style Section - List View Specific
+        $this->start_controls_section(
+            'style_list_view',
+            [
+                'label' => __('List View', 'wedocs'),
+                'tab' => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'docStyle' => 'list',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'listItemSpacing',
+            [
+                'label' => __('Item Spacing', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 15,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid--list .wedocs-docs-grid__item' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'listIcon',
+            [
+                'label' => __('List Icon', 'wedocs'),
+                'type' => Controls_Manager::ICONS,
+                'default' => [
+                    'value' => 'fas fa-file-alt',
+                    'library' => 'fa-solid',
+                ],
+                'recommended' => [
+                    'fa-solid' => [
+                        'file-alt',
+                        'file',
+                        'book',
+                        'folder',
+                        'file-lines',
+                        'scroll',
+                        'newspaper',
+                        'bookmark',
+                    ],
+                    'fa-regular' => [
+                        'file-alt',
+                        'file',
+                        'folder',
+                        'bookmark',
+                    ],
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'listIconSize',
+            [
+                'label' => __('Icon Size', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 10,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 20,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__icon' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wedocs-docs-grid__icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wedocs-docs-grid__icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'listIconColor',
+            [
+                'label' => __('Icon Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__icon' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .wedocs-docs-grid__icon i' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .wedocs-docs-grid__icon svg' => 'fill: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'listIconSpacing',
+            [
+                'label' => __('Icon Spacing', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 30,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 8,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__icon' => 'margin-right: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'listItemDivider',
+            [
+                'label' => __('Show Divider', 'wedocs'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'wedocs'),
+                'label_off' => __('No', 'wedocs'),
+                'return_value' => 'yes',
+                'default' => '',
+            ]
+        );
+
+        $this->add_control(
+            'listDividerColor',
+            [
+                'label' => __('Divider Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#e0e0e0',
+                'condition' => [
+                    'listItemDivider' => 'yes',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid--list .wedocs-docs-grid__item' => 'border-bottom: 1px solid {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'listDividerWidth',
+            [
+                'label' => __('Divider Width', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 1,
+                        'max' => 10,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 1,
+                ],
+                'condition' => [
+                    'listItemDivider' => 'yes',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid--list .wedocs-docs-grid__item' => 'border-bottom-width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Style Section - Sections (nested sections within cards)
+        $this->start_controls_section(
+            'style_sections',
+            [
+                'label' => __('Sections', 'wedocs'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'sectionBackgroundColor',
+            [
+                'label' => __('Background Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__section' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'sectionPadding',
+            [
+                'label' => __('Padding', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 0,
+                    'right' => 0,
+                    'bottom' => 0,
+                    'left' => 0,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__section' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'sectionMargin',
+            [
+                'label' => __('Margin', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 0,
+                    'right' => 0,
+                    'bottom' => 15,
+                    'left' => 0,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__section' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'sectionBorder',
+                'label' => __('Border', 'wedocs'),
+                'selector' => '{{WRAPPER}} .wedocs-docs-grid__section',
+            ]
+        );
+
+        $this->add_control(
+            'sectionBorderRadius',
+            [
+                'label' => __('Border Radius', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__section' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'sectionSpacing',
+            [
+                'label' => __('Spacing Between Sections', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 15,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__section' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Style Section - Article Items
+        $this->start_controls_section(
+            'style_articles',
+            [
+                'label' => __('Article Items', 'wedocs'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'articleBackgroundColor',
+            [
+                'label' => __('Background Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__articles li' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'articleHoverBackgroundColor',
+            [
+                'label' => __('Hover Background Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#f5f5f5',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__articles li:hover' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'articlePadding',
+            [
+                'label' => __('Padding', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 5,
+                    'right' => 0,
+                    'bottom' => 5,
+                    'left' => 0,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__articles li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'articleMargin',
+            [
+                'label' => __('Margin', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 0,
+                    'right' => 0,
+                    'bottom' => 3,
+                    'left' => 0,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__articles li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'articleBorder',
+                'label' => __('Border', 'wedocs'),
+                'selector' => '{{WRAPPER}} .wedocs-docs-grid__articles li',
+            ]
+        );
+
+        $this->add_control(
+            'articleBorderRadius',
+            [
+                'label' => __('Border Radius', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 30,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 0,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__articles li' => 'border-radius: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'articleIconHeading',
+            [
+                'label' => __('Article Icon/Prefix', 'wedocs'),
+                'type' => Controls_Manager::HEADING,
+                'separator' => 'before',
+            ]
+        );
+
+        $this->add_control(
+            'articlePrefixType',
+            [
+                'label' => __('Prefix Type', 'wedocs'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'icon',
+                'options' => [
+                    'icon' => __('Icon', 'wedocs'),
+                    'text' => __('Text/Emoji', 'wedocs'),
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'articlePrefixIcon',
+            [
+                'label' => __('Prefix Icon', 'wedocs'),
+                'type' => Controls_Manager::ICONS,
+                'default' => [
+                    'value' => 'fas fa-arrow-right',
+                    'library' => 'fa-solid',
+                ],
+                'recommended' => [
+                    'fa-solid' => [
+                        'arrow-right',
+                        'chevron-right',
+                        'angle-right',
+                        'caret-right',
+                        'circle',
+                        'check',
+                        'play',
+                        'minus',
+                        'square',
+                    ],
+                ],
+                'condition' => [
+                    'articlePrefixType' => 'icon',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'articlePrefix',
+            [
+                'label' => __('Prefix Text', 'wedocs'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '→',
+                'description' => __('Enter text or emoji', 'wedocs'),
+                'condition' => [
+                    'articlePrefixType' => 'text',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'articlePrefixSize',
+            [
+                'label' => __('Prefix Size', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 8,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 14,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__article-link::before' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wedocs-docs-grid__article-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wedocs-docs-grid__article-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'articlePrefixColor',
+            [
+                'label' => __('Prefix Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#999999',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__article-link::before' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .wedocs-docs-grid__article-icon' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .wedocs-docs-grid__article-icon i' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .wedocs-docs-grid__article-icon svg' => 'fill: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'articlePrefixSpacing',
+            [
+                'label' => __('Prefix Spacing', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 30,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 8,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__article-link::before' => 'margin-right: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wedocs-docs-grid__article-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'articleSpacing',
+            [
+                'label' => __('Spacing Between Items', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 30,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 3,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__articles li' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'articleListIndent',
+            [
+                'label' => __('List Indent', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 10,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__articles' => 'padding-left: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
         // Style Section - Typography
         $this->start_controls_section(
             'style_typography',
@@ -1199,12 +1952,22 @@ class DocsGrid extends Widget_Base {
             <div class="<?php echo esc_attr($grid_class); ?>" data-grid-id="<?php echo $this->get_id(); ?>">
                 <?php foreach ($docs as $doc): ?>
                     <div class="wedocs-docs-grid__item">
-                        <h3 class="wedocs-docs-grid__title">
-                            <?php if ($doc_style === 'list'): ?>
-                                <span class="wedocs-docs-grid__icon">📄</span>
-                            <?php endif; ?>
-                            <a href="<?php echo get_permalink($doc->ID); ?>"><?php echo esc_html($doc->post_title); ?></a>
-                        </h3>
+                        <div class="wedocs-docs-grid__header">
+                            <h3 class="wedocs-docs-grid__title">
+                                <?php if ($doc_style === 'list'): ?>
+                                    <span class="wedocs-docs-grid__icon">
+                                        <?php
+                                        if (!empty($settings['listIcon']['value'])) {
+                                            \Elementor\Icons_Manager::render_icon($settings['listIcon'], ['aria-hidden' => 'true']);
+                                        } else {
+                                            echo '📄';
+                                        }
+                                        ?>
+                                    </span>
+                                <?php endif; ?>
+                                <a href="<?php echo get_permalink($doc->ID); ?>"><?php echo esc_html($doc->post_title); ?></a>
+                            </h3>
+                        </div>
 
                         <?php if ($show_articles): ?>
                             <div class="wedocs-docs-grid__content">
@@ -1257,11 +2020,23 @@ class DocsGrid extends Widget_Base {
                                             if (!empty($articles)):
                                             ?>
                                                 <ul class="wedocs-docs-grid__articles <?php echo $keep_collapsed ? 'wedocs-docs-grid__articles--collapsed' : ''; ?>">
-                                                    <?php foreach ($articles as $article): ?>
+                                                    <?php
+                                                    $prefix_type = $settings['articlePrefixType'] ?? 'icon';
+                                                    foreach ($articles as $article):
+                                                    ?>
                                                         <li>
-                                                            <a href="<?php echo get_permalink($article->ID); ?>" class="wedocs-docs-grid__article-link">
-                                                                → <?php echo esc_html($article->post_title); ?>
-                                                            </a>
+                                                            <?php if ($prefix_type === 'icon' && !empty($settings['articlePrefixIcon']['value'])): ?>
+                                                                <span class="wedocs-docs-grid__article-icon">
+                                                                    <?php \Elementor\Icons_Manager::render_icon($settings['articlePrefixIcon'], ['aria-hidden' => 'true']); ?>
+                                                                </span>
+                                                                <a href="<?php echo get_permalink($article->ID); ?>" class="wedocs-docs-grid__article-link">
+                                                                    <?php echo esc_html($article->post_title); ?>
+                                                                </a>
+                                                            <?php else: ?>
+                                                                <a href="<?php echo get_permalink($article->ID); ?>" class="wedocs-docs-grid__article-link" data-prefix="<?php echo esc_attr($settings['articlePrefix'] ?? '→'); ?>">
+                                                                    <?php echo esc_html($article->post_title); ?>
+                                                                </a>
+                                                            <?php endif; ?>
                                                         </li>
                                                     <?php endforeach; ?>
                                                 </ul>
@@ -1391,6 +2166,10 @@ class DocsGrid extends Widget_Base {
                 position: relative;
             }
 
+            .wedocs-docs-grid__header {
+                display: block;
+            }
+
             .wedocs-docs-grid__title {
                 margin-top: 0;
                 margin-bottom: 15px;
@@ -1403,6 +2182,26 @@ class DocsGrid extends Widget_Base {
 
             .wedocs-docs-grid__icon {
                 margin-right: 8px;
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .wedocs-docs-grid__icon i,
+            .wedocs-docs-grid__icon svg {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .wedocs-docs-grid__article-icon {
+                display: inline-flex;
+                align-items: center;
+                margin-right: 8px;
+                flex-shrink: 0;
+            }
+
+            .wedocs-docs-grid__article-icon i,
+            .wedocs-docs-grid__article-icon svg {
+                display: block;
             }
 
             .wedocs-docs-grid__section {
@@ -1427,11 +2226,21 @@ class DocsGrid extends Widget_Base {
 
             .wedocs-docs-grid__articles li {
                 padding: 3px 0;
+                transition: background-color 0.3s ease;
+                display: flex;
+                align-items: center;
             }
 
             .wedocs-docs-grid__article-link {
                 text-decoration: none;
-                display: block;
+                display: inline;
+                transition: all 0.3s ease;
+            }
+
+            .wedocs-docs-grid__article-link::before {
+                content: attr(data-prefix);
+                display: inline-block;
+                margin-right: 8px;
             }
 
             .wedocs-docs-grid__articles--collapsed {
@@ -1442,6 +2251,23 @@ class DocsGrid extends Widget_Base {
                 text-decoration: none;
                 display: inline-block;
             }
+
+            /* List view specific styles */
+            .wedocs-docs-grid--list .wedocs-docs-grid__item {
+                display: flex;
+                flex-direction: column;
+            }
+
+            <?php if (($settings['listItemDivider'] ?? '') === 'yes'): ?>.wedocs-docs-grid--list .wedocs-docs-grid__item {
+                border-bottom: 1px solid <?php echo $settings['listDividerColor'] ?? '#e0e0e0'; ?>;
+                padding-bottom: 15px;
+            }
+
+            .wedocs-docs-grid--list .wedocs-docs-grid__item:last-child {
+                border-bottom: none;
+            }
+
+            <?php endif; ?>
 
             /* Pagination Styles */
             .wedocs-pagination {
@@ -1702,6 +2528,127 @@ class DocsGrid extends Widget_Base {
             itemStyle +='box-shadow: 0 2px 8px rgba(0,0,0,0.1); ' ;
             }
 
+            // Card Header Styles
+            var headerStyle='' ;
+            if (settings.cardHeaderBackgroundColor) {
+            headerStyle +='background-color: ' + settings.cardHeaderBackgroundColor + '; ' ;
+            }
+            headerStyle +='padding: ' + (settings.cardHeaderPadding?.top || '0' ) + (settings.cardHeaderPadding?.unit || 'px' ) + ' ' ;
+            headerStyle +=(settings.cardHeaderPadding?.right || '0' ) + (settings.cardHeaderPadding?.unit || 'px' ) + ' ' ;
+            headerStyle +=(settings.cardHeaderPadding?.bottom || '15' ) + (settings.cardHeaderPadding?.unit || 'px' ) + ' ' ;
+            headerStyle +=(settings.cardHeaderPadding?.left || '0' ) + (settings.cardHeaderPadding?.unit || 'px' ) + '; ' ;
+            headerStyle +='margin: ' + (settings.cardHeaderMargin?.top || '0' ) + (settings.cardHeaderMargin?.unit || 'px' ) + ' ' ;
+            headerStyle +=(settings.cardHeaderMargin?.right || '0' ) + (settings.cardHeaderMargin?.unit || 'px' ) + ' ' ;
+            headerStyle +=(settings.cardHeaderMargin?.bottom || '0' ) + (settings.cardHeaderMargin?.unit || 'px' ) + ' ' ;
+            headerStyle +=(settings.cardHeaderMargin?.left || '0' ) + (settings.cardHeaderMargin?.unit || 'px' ) + '; ' ;
+            headerStyle +='text-align: ' + (settings.cardHeaderAlign || 'left' ) + '; ' ;
+            if (settings.cardHeaderBorder_border && settings.cardHeaderBorder_border !=='none' ) {
+            headerStyle +='border: ' + settings.cardHeaderBorder_border + ' ' ;
+            headerStyle +=(settings.cardHeaderBorder_width?.top || '0' ) + 'px ' ;
+            headerStyle +=(settings.cardHeaderBorder_color || '#ddd' ) + '; ' ;
+            }
+            if (settings.cardHeaderBorderRadius) {
+            headerStyle +='border-radius: ' + (settings.cardHeaderBorderRadius.top || '0' ) + (settings.cardHeaderBorderRadius.unit || 'px' ) + ' ' ;
+            headerStyle +=(settings.cardHeaderBorderRadius.right || '0' ) + (settings.cardHeaderBorderRadius.unit || 'px' ) + ' ' ;
+            headerStyle +=(settings.cardHeaderBorderRadius.bottom || '0' ) + (settings.cardHeaderBorderRadius.unit || 'px' ) + ' ' ;
+            headerStyle +=(settings.cardHeaderBorderRadius.left || '0' ) + (settings.cardHeaderBorderRadius.unit || 'px' ) + '; ' ;
+            }
+
+            // Card Body Styles
+            var bodyStyle='' ;
+            if (settings.cardBodyBackgroundColor) {
+            bodyStyle +='background-color: ' + settings.cardBodyBackgroundColor + '; ' ;
+            }
+            bodyStyle +='padding: ' + (settings.cardBodyPadding?.top || '0' ) + (settings.cardBodyPadding?.unit || 'px' ) + ' ' ;
+            bodyStyle +=(settings.cardBodyPadding?.right || '0' ) + (settings.cardBodyPadding?.unit || 'px' ) + ' ' ;
+            bodyStyle +=(settings.cardBodyPadding?.bottom || '10' ) + (settings.cardBodyPadding?.unit || 'px' ) + ' ' ;
+            bodyStyle +=(settings.cardBodyPadding?.left || '0' ) + (settings.cardBodyPadding?.unit || 'px' ) + '; ' ;
+            bodyStyle +='margin: ' + (settings.cardBodyMargin?.top || '0' ) + (settings.cardBodyMargin?.unit || 'px' ) + ' ' ;
+            bodyStyle +=(settings.cardBodyMargin?.right || '0' ) + (settings.cardBodyMargin?.unit || 'px' ) + ' ' ;
+            bodyStyle +=(settings.cardBodyMargin?.bottom || '10' ) + (settings.cardBodyMargin?.unit || 'px' ) + ' ' ;
+            bodyStyle +=(settings.cardBodyMargin?.left || '0' ) + (settings.cardBodyMargin?.unit || 'px' ) + '; ' ;
+            if (settings.cardBodyBorder_border && settings.cardBodyBorder_border !=='none' ) {
+            bodyStyle +='border: ' + settings.cardBodyBorder_border + ' ' ;
+            bodyStyle +=(settings.cardBodyBorder_width?.top || '0' ) + 'px ' ;
+            bodyStyle +=(settings.cardBodyBorder_color || '#ddd' ) + '; ' ;
+            }
+            if (settings.cardBodyBorderRadius) {
+            bodyStyle +='border-radius: ' + (settings.cardBodyBorderRadius.top || '0' ) + (settings.cardBodyBorderRadius.unit || 'px' ) + ' ' ;
+            bodyStyle +=(settings.cardBodyBorderRadius.right || '0' ) + (settings.cardBodyBorderRadius.unit || 'px' ) + ' ' ;
+            bodyStyle +=(settings.cardBodyBorderRadius.bottom || '0' ) + (settings.cardBodyBorderRadius.unit || 'px' ) + ' ' ;
+            bodyStyle +=(settings.cardBodyBorderRadius.left || '0' ) + (settings.cardBodyBorderRadius.unit || 'px' ) + '; ' ;
+            }
+            if (settings.cardBodyMaxHeight?.size) {
+            bodyStyle +='max-height: ' + settings.cardBodyMaxHeight.size + 'px; overflow-y: auto; ' ;
+            }
+
+            // Section Styles
+            var sectionStyle='' ;
+            if (settings.sectionBackgroundColor) {
+            sectionStyle +='background-color: ' + settings.sectionBackgroundColor + '; ' ;
+            }
+            sectionStyle +='padding: ' + (settings.sectionPadding?.top || '0' ) + (settings.sectionPadding?.unit || 'px' ) + ' ' ;
+            sectionStyle +=(settings.sectionPadding?.right || '0' ) + (settings.sectionPadding?.unit || 'px' ) + ' ' ;
+            sectionStyle +=(settings.sectionPadding?.bottom || '0' ) + (settings.sectionPadding?.unit || 'px' ) + ' ' ;
+            sectionStyle +=(settings.sectionPadding?.left || '0' ) + (settings.sectionPadding?.unit || 'px' ) + '; ' ;
+            sectionStyle +='margin: ' + (settings.sectionMargin?.top || '0' ) + (settings.sectionMargin?.unit || 'px' ) + ' ' ;
+            sectionStyle +=(settings.sectionMargin?.right || '0' ) + (settings.sectionMargin?.unit || 'px' ) + ' ' ;
+            sectionStyle +=(settings.sectionMargin?.bottom || '15' ) + (settings.sectionMargin?.unit || 'px' ) + ' ' ;
+            sectionStyle +=(settings.sectionMargin?.left || '0' ) + (settings.sectionMargin?.unit || 'px' ) + '; ' ;
+            if (settings.sectionBorder_border && settings.sectionBorder_border !=='none' ) {
+            sectionStyle +='border: ' + settings.sectionBorder_border + ' ' ;
+            sectionStyle +=(settings.sectionBorder_width?.top || '0' ) + 'px ' ;
+            sectionStyle +=(settings.sectionBorder_color || '#ddd' ) + '; ' ;
+            }
+            if (settings.sectionBorderRadius) {
+            sectionStyle +='border-radius: ' + (settings.sectionBorderRadius.top || '0' ) + (settings.sectionBorderRadius.unit || 'px' ) + ' ' ;
+            sectionStyle +=(settings.sectionBorderRadius.right || '0' ) + (settings.sectionBorderRadius.unit || 'px' ) + ' ' ;
+            sectionStyle +=(settings.sectionBorderRadius.bottom || '0' ) + (settings.sectionBorderRadius.unit || 'px' ) + ' ' ;
+            sectionStyle +=(settings.sectionBorderRadius.left || '0' ) + (settings.sectionBorderRadius.unit || 'px' ) + '; ' ;
+            }
+
+            // Article Item Styles
+            var articleItemStyle='' ;
+            if (settings.articleBackgroundColor) {
+            articleItemStyle +='background-color: ' + settings.articleBackgroundColor + '; ' ;
+            }
+            articleItemStyle +='padding: ' + (settings.articlePadding?.top || '5' ) + (settings.articlePadding?.unit || 'px' ) + ' ' ;
+            articleItemStyle +=(settings.articlePadding?.right || '0' ) + (settings.articlePadding?.unit || 'px' ) + ' ' ;
+            articleItemStyle +=(settings.articlePadding?.bottom || '5' ) + (settings.articlePadding?.unit || 'px' ) + ' ' ;
+            articleItemStyle +=(settings.articlePadding?.left || '0' ) + (settings.articlePadding?.unit || 'px' ) + '; ' ;
+            articleItemStyle +='margin: ' + (settings.articleMargin?.top || '0' ) + (settings.articleMargin?.unit || 'px' ) + ' ' ;
+            articleItemStyle +=(settings.articleMargin?.right || '0' ) + (settings.articleMargin?.unit || 'px' ) + ' ' ;
+            articleItemStyle +=(settings.articleMargin?.bottom || '3' ) + (settings.articleMargin?.unit || 'px' ) + ' ' ;
+            articleItemStyle +=(settings.articleMargin?.left || '0' ) + (settings.articleMargin?.unit || 'px' ) + '; ' ;
+            if (settings.articleBorder_border && settings.articleBorder_border !=='none' ) {
+            articleItemStyle +='border: ' + settings.articleBorder_border + ' ' ;
+            articleItemStyle +=(settings.articleBorder_width?.top || '0' ) + 'px ' ;
+            articleItemStyle +=(settings.articleBorder_color || '#ddd' ) + '; ' ;
+            }
+            if (settings.articleBorderRadius?.size) {
+            articleItemStyle +='border-radius: ' + settings.articleBorderRadius.size + 'px; ' ;
+            }
+            articleItemStyle +='transition: background-color 0.3s ease; ' ;
+            articleItemStyle +='display: flex; align-items: center; ' ;
+
+            // Article List Styles
+            var articleListStyle='list-style: none; padding: 0; margin: 0; ' ;
+            if (settings.articleListIndent?.size) {
+            articleListStyle +='padding-left: ' + settings.articleListIndent.size + 'px; ' ;
+            }
+
+            // Icon Styles (for list view)
+            var iconStyle='display: inline-block; vertical-align: middle; ' ;
+            if (settings.listIconSize?.size) {
+            iconStyle +='font-size: ' + settings.listIconSize.size + 'px; ' ;
+            }
+            if (settings.listIconColor) {
+            iconStyle +='color: ' + settings.listIconColor + '; ' ;
+            }
+            if (settings.listIconSpacing?.size) {
+            iconStyle +='margin-right: ' + settings.listIconSpacing.size + 'px; ' ;
+            }
+
             var titleStyle='color: ' + (settings.docTitleColor || '#333333' ) + '; ' ;
             titleStyle +='margin-top: 0; margin-bottom: 15px;' ;
 
@@ -1709,20 +2656,20 @@ class DocsGrid extends Widget_Base {
             sectionTitleStyle +='margin: 10px 0 5px; font-weight: 600;' ;
 
             var linkStyle='color: ' + (settings.articleLinkColor || '#666666' ) + '; ' ;
-            linkStyle +='text-decoration: none; display: block; padding: 3px 0;' ;
+            linkStyle +='text-decoration: none; display: inline;' ;
 
             var buttonStyle='background-color: ' + (settings.buttonColor || '#0073aa' ) + '; ' ;
             buttonStyle +='color: ' + (settings.buttonTextColor || '#ffffff' ) + '; ' ;
-            buttonStyle +='padding: ' + (settings.buttonPadding.top || '10' ) + settings.buttonPadding.unit + ' ' ;
-            buttonStyle +=(settings.buttonPadding.right || '20' ) + settings.buttonPadding.unit + ' ' ;
-            buttonStyle +=(settings.buttonPadding.bottom || '10' ) + settings.buttonPadding.unit + ' ' ;
-            buttonStyle +=(settings.buttonPadding.left || '20' ) + settings.buttonPadding.unit + '; ' ;
-            buttonStyle +='margin: ' + (settings.buttonMargin.top || '10' ) + settings.buttonMargin.unit + ' ' ;
-            buttonStyle +=(settings.buttonMargin.right || '0' ) + settings.buttonMargin.unit + ' ' ;
-            buttonStyle +=(settings.buttonMargin.bottom || '0' ) + settings.buttonMargin.unit + ' ' ;
-            buttonStyle +=(settings.buttonMargin.left || '0' ) + settings.buttonMargin.unit + '; ' ;
-            buttonStyle +='border-radius: ' + (settings.buttonBorderRadius.size || '4' ) + 'px; ' ;
-            buttonStyle +='text-decoration: none; display: inline-block; border: none; cursor: pointer;' ;
+            buttonStyle +='padding: ' + (settings.buttonPadding?.top || '10' ) + (settings.buttonPadding?.unit || 'px' ) + ' ' ;
+            buttonStyle +=(settings.buttonPadding?.right || '20' ) + (settings.buttonPadding?.unit || 'px' ) + ' ' ;
+            buttonStyle +=(settings.buttonPadding?.bottom || '10' ) + (settings.buttonPadding?.unit || 'px' ) + ' ' ;
+            buttonStyle +=(settings.buttonPadding?.left || '20' ) + (settings.buttonPadding?.unit || 'px' ) + '; ' ;
+            buttonStyle +='margin: ' + (settings.buttonMargin?.top || '10' ) + (settings.buttonMargin?.unit || 'px' ) + ' ' ;
+            buttonStyle +=(settings.buttonMargin?.right || '0' ) + (settings.buttonMargin?.unit || 'px' ) + ' ' ;
+            buttonStyle +=(settings.buttonMargin?.bottom || '0' ) + (settings.buttonMargin?.unit || 'px' ) + ' ' ;
+            buttonStyle +=(settings.buttonMargin?.left || '0' ) + (settings.buttonMargin?.unit || 'px' ) + '; ' ;
+            buttonStyle +='border-radius: ' + (settings.buttonBorderRadius?.size || '4' ) + 'px; ' ;
+            buttonStyle +='text-decoration: none; display: inline-block; border: none; cursor: pointer; transition: all 0.3s ease;' ;
             #>
 
             <div class="wedocs-grid-wrapper">
@@ -1752,34 +2699,67 @@ class DocsGrid extends Widget_Base {
                             </div>
                             <# } #>
 
-                                <div class="{{ gridClass }}" style="<# if (docStyle === '2x2') { #>display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;<# } #>">
+                                <div class="{{ gridClass }}" style="<# if (docStyle === '2x2') { #>display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;<# } else if (docStyle === 'list') { #>display: flex; flex-direction: column;<# } #>">
                                     <#
                                         var numItems=docStyle==='2x2' ? 4 : (docStyle==='list' ? 3 : 2);
                                         for (var i=1; i <=numItems; i++) {
                                         #>
                                         <div class="wedocs-docs-grid__item" style="{{ itemStyle }}">
-                                            <h3 class="wedocs-docs-grid__title" style="{{ titleStyle }}">
-                                                <# if (docStyle==='list' ) { #>
-                                                    📄
-                                                    <# } #>
-                                                        Documentation {{ i }}
-                                            </h3>
+                                            <div class="wedocs-docs-grid__header" style="{{ headerStyle }}">
+                                                <h3 class="wedocs-docs-grid__title" style="{{ titleStyle }}">
+                                                    <# if (docStyle==='list' ) {
+                                                        var iconHTML=elementor.helpers.renderIcon( view, settings.listIcon, { 'aria-hidden' : true }, 'i' , 'object' );
+                                                        #>
+                                                        <span class="wedocs-docs-grid__icon" style="{{ iconStyle }}">
+                                                            <# if ( iconHTML && iconHTML.rendered ) { #>
+                                                                {{{ iconHTML.value }}}
+                                                                <# } else { #>
+                                                                    <i class="{{ settings.listIcon.value }}" aria-hidden="true"></i>
+                                                                    <# } #>
+                                                        </span>
+                                                        <# } #>
+                                                            Documentation {{ i }}
+                                                </h3>
+                                            </div>
 
                                             <# if (showArticles) { #>
-                                                <div class="wedocs-docs-grid__content">
-                                                    <div class="wedocs-docs-grid__section" style="margin-bottom: 10px;">
+                                                <div class="wedocs-docs-grid__content" style="{{ bodyStyle }}">
+                                                    <div class="wedocs-docs-grid__section" style="{{ sectionStyle }}">
                                                         <h4 class="wedocs-docs-grid__section-title" style="{{ sectionTitleStyle }}">Getting Started</h4>
-                                                        <ul style="list-style: none; padding: 0; margin: 0;">
-                                                            <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ Introduction</a></li>
-                                                            <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ Installation Guide</a></li>
-                                                            <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ Quick Start</a></li>
+                                                        <ul class="wedocs-docs-grid__articles" style="{{ articleListStyle }}">
+                                                            <#
+                                                                var articlePrefixType=settings.articlePrefixType || 'icon' ;
+                                                                var renderArticleLine=function(title) {
+                                                                if (articlePrefixType==='icon' && settings.articlePrefixIcon && settings.articlePrefixIcon.value) {
+                                                                var prefixIconHTML=elementor.helpers.renderIcon( view, settings.articlePrefixIcon, { 'aria-hidden' : true }, 'i' , 'object' );
+                                                                #>
+                                                                <li style="{{ articleItemStyle }}">
+                                                                    <span class="wedocs-docs-grid__article-icon" style="display: inline-flex; align-items: center; flex-shrink: 0; margin-right: {{ settings.articlePrefixSpacing?.size || '8' }}px; font-size: {{ settings.articlePrefixSize?.size || '14' }}px; color: {{ settings.articlePrefixColor || '#999999' }};">
+                                                                        <# if ( prefixIconHTML && prefixIconHTML.rendered ) { #>
+                                                                            {{{ prefixIconHTML.value }}}
+                                                                            <# } else { #>
+                                                                                <i class="{{ settings.articlePrefixIcon.value }}" aria-hidden="true"></i>
+                                                                                <# } #>
+                                                                    </span>
+                                                                    <a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">{{ title }}</a>
+                                                                </li>
+                                                                <# } else { #>
+                                                                    <li style="{{ articleItemStyle }}"><a href="#" class="wedocs-docs-grid__article-link" data-prefix="{{ settings.articlePrefix || '→' }}" style="{{ linkStyle }}">{{ title }}</a></li>
+                                                                    <# }
+                                                                        };
+                                                                        renderArticleLine('Introduction');
+                                                                        renderArticleLine('Installation Guide');
+                                                                        renderArticleLine('Quick Start');
+                                                                        #>
                                                         </ul>
                                                     </div>
-                                                    <div class="wedocs-docs-grid__section">
+                                                    <div class="wedocs-docs-grid__section" style="{{ sectionStyle }}">
                                                         <h4 class="wedocs-docs-grid__section-title" style="{{ sectionTitleStyle }}">Advanced Topics</h4>
-                                                        <ul style="list-style: none; padding: 0; margin: 0;">
-                                                            <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ Configuration</a></li>
-                                                            <li><a href="#" class="wedocs-docs-grid__article-link" style="{{ linkStyle }}">→ API Reference</a></li>
+                                                        <ul class="wedocs-docs-grid__articles" style="{{ articleListStyle }}">
+                                                            <#
+                                                                renderArticleLine('Configuration');
+                                                                renderArticleLine('API Reference');
+                                                                #>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -1819,6 +2799,64 @@ class DocsGrid extends Widget_Base {
                     ?>
 
             <style>
+                <# if (settings.articlePrefixType==='text') {
+                    #>.wedocs-docs-grid__article-link::before {
+                        content: attr(data-prefix);
+                        display: inline-block;
+
+                        margin-right: {
+                                {
+                                settings.articlePrefixSpacing?.size || '8'
+                            }
+                        }
+
+                        px;
+
+                        <# if (settings.articlePrefixColor) {
+                            #>color: {
+                                    {
+                                    settings.articlePrefixColor
+                                }
+                            }
+
+                            ;
+                            <#
+                        }
+
+                        #><# if (settings.articlePrefixSize?.size) {
+                            #>font-size: {
+                                    {
+                                    settings.articlePrefixSize.size
+                                }
+                            }
+
+                            px;
+                            <#
+                        }
+
+                        #>
+                    }
+
+                    <#
+                }
+
+                #>.wedocs-docs-grid__article-icon {
+                    display: inline-flex;
+                    align-items: center;
+                    flex-shrink: 0;
+                }
+
+                .wedocs-docs-grid__article-icon i,
+                .wedocs-docs-grid__article-icon svg {
+                    display: block;
+                }
+
+                .wedocs-docs-grid__icon i,
+                .wedocs-docs-grid__icon svg {
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+
                 .wedocs-docs-grid__article-link:hover,
                 .wedocs-docs-grid__section-link:hover {
                     color: {
@@ -1830,25 +2868,74 @@ class DocsGrid extends Widget_Base {
                     !important;
                 }
 
-                .wedocs-docs-grid__details-link:hover {
-                    background-color: {
-                            {
-                            settings.buttonHoverColor || '#005177'
+                .wedocs-docs-grid__articles li:hover {
+                    <# if (settings.articleHoverBackgroundColor) {
+                        #>background-color: {
+                                {
+                                settings.articleHoverBackgroundColor
+                            }
                         }
+
+                        !important;
+                        <#
                     }
 
-                    !important;
-
-                    color: {
-                            {
-                            settings.buttonHoverTextColor || '#ffffff'
-                        }
-                    }
-
-                    !important;
+                    #>
                 }
 
-                <# if (settings.gridHoverEffect==='yes') {
+                .wedocs-docs-grid__details-link:hover {
+                    background-color: {{ settings.buttonHoverColor || '#005177' }} !important;
+                    color: {{ settings.buttonHoverTextColor || '#ffffff' }} !important;
+                }
+
+                .wedocs-docs-grid__header {
+                    display: block;
+                }
+
+                .wedocs-docs-grid__articles li {
+                    transition: background-color 0.3s ease;
+                }
+
+                <# if (docStyle==='list' && settings.listItemDivider==='yes') {
+                    #>.wedocs-docs-grid--list .wedocs-docs-grid__item {
+                        border-bottom: {
+                                {
+                                settings.listDividerWidth?.size || '1'
+                            }
+                        }
+
+                        px solid {
+                                {
+                                settings.listDividerColor || '#e0e0e0'
+                            }
+                        }
+
+                        ;
+                        padding-bottom: 15px;
+                    }
+
+                    .wedocs-docs-grid--list .wedocs-docs-grid__item:last-child {
+                        border-bottom: none;
+                    }
+
+                    <#
+                }
+
+                #><# if (docStyle==='list' && settings.listItemSpacing?.size) {
+                    #>.wedocs-docs-grid--list .wedocs-docs-grid__item {
+                        margin-bottom: {
+                                {
+                                settings.listItemSpacing.size
+                            }
+                        }
+
+                        px;
+                    }
+
+                    <#
+                }
+
+                #><# if (settings.gridHoverEffect==='yes') {
                     #>.wedocs-docs-grid__item {
                         transition: transform 0.3s ease, box-shadow 0.3s ease;
                     }
@@ -1861,7 +2948,11 @@ class DocsGrid extends Widget_Base {
                     <#
                 }
 
-                #>
+                #>@media (max-width: 768px) {
+                    .wedocs-docs-grid--2x2 {
+                        grid-template-columns: 1fr;
+                    }
+                }
             </style>
     <?php
     }
