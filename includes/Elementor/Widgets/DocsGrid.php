@@ -84,7 +84,6 @@ class DocsGrid extends Widget_Base {
                 'min' => 1,
                 'max' => 100,
                 'step' => 1,
-                'description' => __('Set to -1 for unlimited docs', 'wedocs'),
             ]
         );
 
@@ -445,6 +444,53 @@ class DocsGrid extends Widget_Base {
             ]
         );
 
+        $this->add_responsive_control(
+            'gridGap',
+            [
+                'label' => __('Grid Gap', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'em'],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 100,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 20,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid--2x2' => 'gap: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'docStyle' => '2x2',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'grid2x2Columns',
+            [
+                'label' => __('Columns', 'wedocs'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    '1' => __('1 Column', 'wedocs'),
+                    '2' => __('2 Columns', 'wedocs'),
+                    '3' => __('3 Columns', 'wedocs'),
+                    '4' => __('4 Columns', 'wedocs'),
+                ],
+                'default' => '2',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid--2x2' => 'grid-template-columns: repeat({{VALUE}}, 1fr);',
+                ],
+                'condition' => [
+                    'docStyle' => '2x2',
+                ],
+            ]
+        );
+
         $this->add_control(
             'gridBackgroundColor',
             [
@@ -541,27 +587,143 @@ class DocsGrid extends Widget_Base {
             ]
         );
 
-        $this->add_control(
-            'gridBoxShadow',
+        $this->add_group_control(
+            \Elementor\Group_Control_Box_Shadow::get_type(),
             [
+                'name' => 'gridBoxShadow',
                 'label' => __('Box Shadow', 'wedocs'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => __('Yes', 'wedocs'),
-                'label_off' => __('No', 'wedocs'),
-                'return_value' => 'yes',
-                'default' => '',
+                'selector' => '{{WRAPPER}} .wedocs-docs-grid__item',
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Box_Shadow::get_type(),
+            [
+                'name' => 'gridHoverBoxShadow',
+                'label' => __('Hover Box Shadow', 'wedocs'),
+                'selector' => '{{WRAPPER}} .wedocs-docs-grid__item:hover',
             ]
         );
 
         $this->add_control(
             'gridHoverEffect',
             [
-                'label' => __('Hover Effect', 'wedocs'),
+                'label' => __('Hover Lift Effect', 'wedocs'),
                 'type' => Controls_Manager::SWITCHER,
                 'label_on' => __('Yes', 'wedocs'),
                 'label_off' => __('No', 'wedocs'),
                 'return_value' => 'yes',
                 'default' => 'yes',
+                'description' => __('Lift card up on hover', 'wedocs'),
+            ]
+        );
+
+        $this->add_control(
+            'gridHoverTransform',
+            [
+                'label' => __('Hover Lift Distance', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => -20,
+                        'max' => 20,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => -2,
+                ],
+                'condition' => [
+                    'gridHoverEffect' => 'yes',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__item:hover' => 'transform: translateY({{SIZE}}{{UNIT}});',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'gridTransitionSpeed',
+            [
+                'label' => __('Transition Duration (ms)', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1000,
+                        'step' => 50,
+                    ],
+                ],
+                'default' => [
+                    'size' => 300,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__item' => 'transition: all {{SIZE}}ms ease;',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'gridOpacity',
+            [
+                'label' => __('Opacity', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__item' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'gridHoverOpacity',
+            [
+                'label' => __('Hover Opacity', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__item:hover' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'gridHoverBackgroundColor',
+            [
+                'label' => __('Hover Background Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__item:hover' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'gridHoverBorderColor',
+            [
+                'label' => __('Hover Border Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__item:hover' => 'border-color: {{VALUE}};',
+                ],
             ]
         );
 
@@ -892,6 +1054,75 @@ class DocsGrid extends Widget_Base {
                 ],
                 'selectors' => [
                     '{{WRAPPER}} .wedocs-docs-grid__icon' => 'margin-right: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'listIconRotate',
+            [
+                'label' => __('Icon Rotation', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 360,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 0,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__icon i' => 'transform: rotate({{SIZE}}deg);',
+                    '{{WRAPPER}} .wedocs-docs-grid__icon svg' => 'transform: rotate({{SIZE}}deg);',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'listIconBackgroundColor',
+            [
+                'label' => __('Icon Background Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__icon' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'listIconPadding',
+            [
+                'label' => __('Icon Padding', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 30,
+                        'step' => 1,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__icon' => 'padding: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'listIconBorderRadius',
+            [
+                'label' => __('Icon Border Radius', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__icon' => 'border-radius: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -1277,6 +1508,87 @@ class DocsGrid extends Widget_Base {
         );
 
         $this->add_control(
+            'articlePrefixRotate',
+            [
+                'label' => __('Prefix Rotation', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 360,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 0,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__article-icon i' => 'transform: rotate({{SIZE}}deg);',
+                    '{{WRAPPER}} .wedocs-docs-grid__article-icon svg' => 'transform: rotate({{SIZE}}deg);',
+                ],
+                'condition' => [
+                    'articlePrefixType' => 'icon',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'articlePrefixBackgroundColor',
+            [
+                'label' => __('Prefix Background Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__article-icon' => 'background-color: {{VALUE}};',
+                ],
+                'condition' => [
+                    'articlePrefixType' => 'icon',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'articlePrefixPadding',
+            [
+                'label' => __('Prefix Padding', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 30,
+                        'step' => 1,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__article-icon' => 'padding: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'articlePrefixType' => 'icon',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'articlePrefixBorderRadius',
+            [
+                'label' => __('Prefix Border Radius', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__article-icon' => 'border-radius: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'articlePrefixType' => 'icon',
+                ],
+            ]
+        );
+
+        $this->add_control(
             'articleSpacing',
             [
                 'label' => __('Spacing Between Items', 'wedocs'),
@@ -1358,6 +1670,38 @@ class DocsGrid extends Widget_Base {
             ]
         );
 
+        $this->add_responsive_control(
+            'docTitleSpacing',
+            [
+                'label' => __('Bottom Spacing', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 15,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'docTitleHoverColor',
+            [
+                'label' => __('Hover Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__title:hover' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
         $this->add_control(
             'sectionTitleHeading',
             [
@@ -1385,6 +1729,38 @@ class DocsGrid extends Widget_Base {
                 'name' => 'sectionTitleTypography',
                 'label' => __('Typography', 'wedocs'),
                 'selector' => '{{WRAPPER}} .wedocs-docs-grid__section-title',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'sectionTitleSpacing',
+            [
+                'label' => __('Bottom Spacing', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 30,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 10,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__section-title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'sectionTitleHoverColor',
+            [
+                'label' => __('Hover Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__section-title:hover' => 'color: {{VALUE}};',
+                ],
             ]
         );
 
@@ -1432,6 +1808,66 @@ class DocsGrid extends Widget_Base {
             ]
         );
 
+        $this->add_control(
+            'articleLinkDecoration',
+            [
+                'label' => __('Text Decoration', 'wedocs'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'none' => __('None', 'wedocs'),
+                    'underline' => __('Underline', 'wedocs'),
+                    'overline' => __('Overline', 'wedocs'),
+                    'line-through' => __('Line Through', 'wedocs'),
+                ],
+                'default' => 'none',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__article-link' => 'text-decoration: {{VALUE}};',
+                    '{{WRAPPER}} .wedocs-docs-grid__section-link' => 'text-decoration: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'articleLinkHoverDecoration',
+            [
+                'label' => __('Hover Text Decoration', 'wedocs'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'none' => __('None', 'wedocs'),
+                    'underline' => __('Underline', 'wedocs'),
+                    'overline' => __('Overline', 'wedocs'),
+                    'line-through' => __('Line Through', 'wedocs'),
+                ],
+                'default' => 'underline',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__article-link:hover' => 'text-decoration: {{VALUE}};',
+                    '{{WRAPPER}} .wedocs-docs-grid__section-link:hover' => 'text-decoration: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'articleLinkTransition',
+            [
+                'label' => __('Transition Duration (ms)', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1000,
+                        'step' => 50,
+                    ],
+                ],
+                'default' => [
+                    'size' => 300,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__article-link' => 'transition: all {{SIZE}}ms ease;',
+                    '{{WRAPPER}} .wedocs-docs-grid__section-link' => 'transition: all {{SIZE}}ms ease;',
+                ],
+            ]
+        );
+
         $this->end_controls_section();
 
         // Style Section - Button
@@ -1443,6 +1879,15 @@ class DocsGrid extends Widget_Base {
                 'condition' => [
                     'showViewDetails' => 'yes',
                 ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'buttonTypography',
+                'label' => __('Typography', 'wedocs'),
+                'selector' => '{{WRAPPER}} .wedocs-docs-grid__details-link',
             ]
         );
 
@@ -1549,6 +1994,216 @@ class DocsGrid extends Widget_Base {
                 ],
                 'selectors' => [
                     '{{WRAPPER}} .wedocs-docs-grid__details-link' => 'border-radius: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'buttonBorder',
+                'label' => __('Border', 'wedocs'),
+                'selector' => '{{WRAPPER}} .wedocs-docs-grid__details-link',
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Box_Shadow::get_type(),
+            [
+                'name' => 'buttonBoxShadow',
+                'label' => __('Box Shadow', 'wedocs'),
+                'selector' => '{{WRAPPER}} .wedocs-docs-grid__details-link',
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Box_Shadow::get_type(),
+            [
+                'name' => 'buttonHoverBoxShadow',
+                'label' => __('Hover Box Shadow', 'wedocs'),
+                'selector' => '{{WRAPPER}} .wedocs-docs-grid__details-link:hover',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'buttonAlign',
+            [
+                'label' => __('Alignment', 'wedocs'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'flex-start' => [
+                        'title' => __('Left', 'wedocs'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'wedocs'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'flex-end' => [
+                        'title' => __('Right', 'wedocs'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'default' => 'flex-start',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__details-link' => 'align-self: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'buttonWidth',
+            [
+                'label' => __('Width', 'wedocs'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'auto' => __('Auto', 'wedocs'),
+                    'full' => __('Full Width', 'wedocs'),
+                    'custom' => __('Custom', 'wedocs'),
+                ],
+                'default' => 'auto',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__details-link' => 'width: {{VALUE}};',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__details-link[data-width="full"]' => 'width: 100%; align-self: stretch;',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'buttonCustomWidth',
+            [
+                'label' => __('Custom Width', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'em'],
+                'range' => [
+                    'px' => [
+                        'min' => 50,
+                        'max' => 500,
+                        'step' => 1,
+                    ],
+                    '%' => [
+                        'min' => 10,
+                        'max' => 100,
+                        'step' => 1,
+                    ],
+                ],
+                'condition' => [
+                    'buttonWidth' => 'custom',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__details-link' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'buttonTextAlign',
+            [
+                'label' => __('Text Align', 'wedocs'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => __('Left', 'wedocs'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'wedocs'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => __('Right', 'wedocs'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'default' => 'center',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__details-link' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'buttonTransitionSpeed',
+            [
+                'label' => __('Transition Duration (ms)', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1000,
+                        'step' => 50,
+                    ],
+                ],
+                'default' => [
+                    'size' => 300,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__details-link' => 'transition: all {{SIZE}}ms ease;',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'buttonOpacity',
+            [
+                'label' => __('Opacity', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__details-link' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'buttonHoverOpacity',
+            [
+                'label' => __('Hover Opacity', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__details-link:hover' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'buttonHoverTransform',
+            [
+                'label' => __('Hover Scale', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0.5,
+                        'max' => 1.5,
+                        'step' => 0.05,
+                    ],
+                ],
+                'default' => [
+                    'size' => 1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-docs-grid__details-link:hover' => 'transform: scale({{SIZE}});',
                 ],
             ]
         );
@@ -1775,6 +2430,31 @@ class DocsGrid extends Widget_Base {
         );
 
         $this->add_control(
+            'filterTextColor',
+            [
+                'label' => __('Text Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#333333',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-search input' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .wedocs-grid-sort select' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'filterPlaceholderColor',
+            [
+                'label' => __('Placeholder Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#999999',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-search input::placeholder' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
             'filterBgColor',
             [
                 'label' => __('Background Color', 'wedocs'),
@@ -1796,6 +2476,41 @@ class DocsGrid extends Widget_Base {
                 'selectors' => [
                     '{{WRAPPER}} .wedocs-grid-search input' => 'border-color: {{VALUE}};',
                     '{{WRAPPER}} .wedocs-grid-sort select' => 'border-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'filterBorderWidth',
+            [
+                'label' => __('Border Width', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 10,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-search input' => 'border-width: {{SIZE}}{{UNIT}}; border-style: solid;',
+                    '{{WRAPPER}} .wedocs-grid-sort select' => 'border-width: {{SIZE}}{{UNIT}}; border-style: solid;',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'filterFocusBorderColor',
+            [
+                'label' => __('Focus Border Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#0073aa',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-search input:focus' => 'border-color: {{VALUE}}; outline: none;',
+                    '{{WRAPPER}} .wedocs-grid-sort select:focus' => 'border-color: {{VALUE}}; outline: none;',
                 ],
             ]
         );
@@ -1839,6 +2554,183 @@ class DocsGrid extends Widget_Base {
                     '{{WRAPPER}} .wedocs-grid-search input' => 'border-radius: {{SIZE}}{{UNIT}};',
                     '{{WRAPPER}} .wedocs-grid-sort select' => 'border-radius: {{SIZE}}{{UNIT}};',
                 ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'filterMargin',
+            [
+                'label' => __('Margin', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 0,
+                    'right' => 0,
+                    'bottom' => 25,
+                    'left' => 0,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-filters' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'filterGap',
+            [
+                'label' => __('Gap Between Items', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 15,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-filters' => 'gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Style Section - Document Count
+        $this->start_controls_section(
+            'style_document_count',
+            [
+                'label' => __('Document Count', 'wedocs'),
+                'tab' => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'showTotalCount' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'documentCountTypography',
+                'label' => __('Typography', 'wedocs'),
+                'selector' => '{{WRAPPER}} .wedocs-grid-count',
+            ]
+        );
+
+        $this->add_control(
+            'documentCountColor',
+            [
+                'label' => __('Text Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#666666',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-count' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'documentCountBgColor',
+            [
+                'label' => __('Background Color', 'wedocs'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-count' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'documentCountAlign',
+            [
+                'label' => __('Alignment', 'wedocs'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => __('Left', 'wedocs'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'wedocs'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => __('Right', 'wedocs'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'default' => 'left',
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-count' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'documentCountPadding',
+            [
+                'label' => __('Padding', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 10,
+                    'right' => 15,
+                    'bottom' => 10,
+                    'left' => 15,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-count' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'documentCountMargin',
+            [
+                'label' => __('Margin', 'wedocs'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 0,
+                    'right' => 0,
+                    'bottom' => 20,
+                    'left' => 0,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-count' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'documentCountBorderRadius',
+            [
+                'label' => __('Border Radius', 'wedocs'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wedocs-grid-count' => 'border-radius: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'documentCountBorder',
+                'label' => __('Border', 'wedocs'),
+                'selector' => '{{WRAPPER}} .wedocs-grid-count',
             ]
         );
 
@@ -2256,6 +3148,10 @@ class DocsGrid extends Widget_Base {
             .wedocs-docs-grid--list .wedocs-docs-grid__item {
                 display: flex;
                 flex-direction: column;
+            }
+
+            .wedocs-docs-grid--list .wedocs-docs-grid__details-link {
+                align-self: flex-start;
             }
 
             <?php if (($settings['listItemDivider'] ?? '') === 'yes'): ?>.wedocs-docs-grid--list .wedocs-docs-grid__item {
@@ -2694,7 +3590,7 @@ class DocsGrid extends Widget_Base {
                     <# } #>
 
                         <# if (showTotalCount) { #>
-                            <div class="wedocs-grid-count" style="margin-bottom: 15px; color: #666; font-size: 14px;">
+                            <div class="wedocs-grid-count">
                                 Total: 24 documents
                             </div>
                             <# } #>
@@ -2884,8 +3780,21 @@ class DocsGrid extends Widget_Base {
                 }
 
                 .wedocs-docs-grid__details-link:hover {
-                    background-color: {{ settings.buttonHoverColor || '#005177' }} !important;
-                    color: {{ settings.buttonHoverTextColor || '#ffffff' }} !important;
+                    background-color: {
+                            {
+                            settings.buttonHoverColor || '#005177'
+                        }
+                    }
+
+                    !important;
+
+                    color: {
+                            {
+                            settings.buttonHoverTextColor || '#ffffff'
+                        }
+                    }
+
+                    !important;
                 }
 
                 .wedocs-docs-grid__header {
@@ -2948,7 +3857,11 @@ class DocsGrid extends Widget_Base {
                     <#
                 }
 
-                #>@media (max-width: 768px) {
+                #>.wedocs-docs-grid--list .wedocs-docs-grid__details-link {
+                    align-self: flex-start;
+                }
+
+                @media (max-width: 768px) {
                     .wedocs-docs-grid--2x2 {
                         grid-template-columns: 1fr;
                     }
