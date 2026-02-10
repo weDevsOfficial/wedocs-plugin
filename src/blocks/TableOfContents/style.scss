@@ -1,0 +1,182 @@
+
+  /**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ */
+
+.wp-block-wedocs-table-of-contents {
+	background-color: #f9f9f9;
+	border: 1px solid #e0e0e0;
+	border-radius: 5px;
+	padding: 20px;
+	margin-bottom: 20px;
+	max-width: 100%;
+	box-sizing: border-box;
+	width: 100%;
+
+	.toc-title {
+		font-size: 18px;
+		font-weight: 600;
+		margin: 0 0 15px 0;
+		padding: 0;
+		color: inherit;
+	}
+
+	.toc-content {
+		.toc-list {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+
+			&.numbered {
+				counter-reset: toc-counter;
+
+				li {
+					counter-increment: toc-counter;
+				}
+			}
+
+			&.bulleted li {
+				position: relative;
+				padding-left: 20px;
+
+				&:before {
+					content: "•";
+					position: absolute;
+					left: 0;
+					color: inherit;
+				}
+			}
+
+			li {
+				margin: 8px 0;
+				line-height: 1.5;
+
+				a {
+					text-decoration: none;
+					color: var(--list-item-sytle, inherit);
+					display: inline-block;
+					transition: color 0.2s ease;
+
+					&:hover {
+						text-decoration: underline;
+					}
+
+					&.active {
+						font-weight: 600;
+						border-left: 3px solid #0073aa;
+						padding-left: 10px;
+					}
+				}
+
+				.toc-number {
+					font-weight: 600;
+					margin-right: 5px;
+				}
+			}
+		}
+
+		.toc-empty-state {
+			color: #666;
+			font-style: italic;
+
+			p {
+				margin: 0;
+			}
+		}
+	}
+
+	// Sticky mode
+	&.sticky-mode {
+		position: sticky;
+		top: 20px;
+		z-index: 10;
+		max-height: 80vh;
+		overflow-y: auto;
+		transition: box-shadow 0.3s ease;
+
+		.toc-content {
+			max-height: calc(80vh - 100px);
+			overflow-y: auto;
+
+			// Custom scrollbar for webkit browsers
+			&::-webkit-scrollbar {
+				width: 6px;
+			}
+
+			&::-webkit-scrollbar-track {
+				background: rgba(0, 0, 0, 0.05);
+				border-radius: 3px;
+			}
+
+			&::-webkit-scrollbar-thumb {
+				background: rgba(0, 0, 0, 0.2);
+				border-radius: 3px;
+
+				&:hover {
+					background: rgba(0, 0, 0, 0.3);
+				}
+			}
+		}
+
+		// Add subtle shadow when stuck to top
+		&.is-stuck {
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		}
+
+		// Ensure it works in containers
+		// Force positioning context
+		align-self: flex-start;
+	}
+
+	// Mobile collapsible
+	@media (max-width: 768px) {
+		&.collapsible-mobile {
+			.toc-title {
+				cursor: pointer;
+				position: relative;
+
+				&:after {
+					content: "▼";
+					float: right;
+					transition: transform 0.2s ease;
+				}
+
+				&.collapsed:after {
+					transform: rotate(-90deg);
+				}
+			}
+
+			.toc-content {
+				max-height: 1000px;
+				overflow: hidden;
+				transition: max-height 0.3s ease;
+
+				&.collapsed {
+					max-height: 0;
+				}
+			}
+		}
+	}
+}
+
+// Smooth scroll
+html.smooth-scroll {
+	scroll-behavior: smooth;
+}
+
+// Loading state
+.toc-loading {
+	.toc-content {
+		opacity: 0.5;
+
+		&:after {
+			content: "Loading headings...";
+			display: block;
+			text-align: center;
+			margin-top: 20px;
+			font-style: italic;
+			color: #666;
+		}
+	}
+}
