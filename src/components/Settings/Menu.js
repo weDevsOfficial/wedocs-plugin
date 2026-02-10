@@ -1,9 +1,9 @@
 import { __ } from '@wordpress/i18n';
 import { Tab } from '@headlessui/react';
 import Badge from '../ProPreviews/common/Badge';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useState, useMemo } from '@wordpress/element';
 
-const Menu = () => {
+const Menu = ({ searchQuery = '' }) => {
   let menus = {
     general: {
       text: __( 'General', 'wedocs' ),
@@ -48,9 +48,40 @@ const Menu = () => {
 
   menus = wp.hooks.applyFilters( 'wedocs_settings_menu', menus );
 
+  // Filter menus based on search query
+  const filteredMenus = useMemo(() => {
+    if (!searchQuery || searchQuery.trim() === '') {
+      return Object.entries(menus);
+    }
+
+    const query = searchQuery.toLowerCase().trim();
+    const filtered = Object.entries(menus).filter(([key, menu]) => {
+      // Check if menu text matches
+      if (menu.text.toLowerCase().includes(query)) {
+        return true;
+      }
+
+      // Check if any subtabs match
+      if (menu.subtabs) {
+        return menu.subtabs.some(subtab => 
+          subtab.text.toLowerCase().includes(query)
+        );
+      }
+
+      return false;
+    });
+
+    return filtered;
+  }, [menus, searchQuery]);
+
   return (
     <Fragment>
-      { Object.entries( menus ).map( ( tab, index ) => (
+      { searchQuery && filteredMenus.length === 0 && (
+        <div className="px-5 py-3 text-sm text-gray-500 text-center">
+          { __( 'No settings found', 'wedocs' ) }
+        </div>
+      ) }
+      { filteredMenus.map( ( tab, index ) => (
         <Fragment key={ index }>
           { !tab[ 1 ]?.disabled ? (
             <Tab className="settings-tab w-full focus:outline-0 !text-black aria-selected:text-gray-600 aria-selected:bg-gray-100 hover:text-gray-600 hover:bg-gray-100 group rounded-md px-5 py-3 flex items-center text-sm font-medium cursor-pointer">
