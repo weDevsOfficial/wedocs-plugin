@@ -287,10 +287,106 @@ class API extends WP_REST_Controller {
                         'sanitize_callback' => 'sanitize_textarea_field',
                     ],
                     'images'       => [
-                        'required'    => false,
-                        'type'        => 'array',
-                        'default'     => [],
-                        'description' => __( 'Array of image objects with filename and id for vision analysis.', 'wedocs' ),
+                        'required'          => false,
+                        'type'              => 'array',
+                        'default'           => [],
+                        'description'       => __( 'Array of attachment IDs for vision analysis.', 'wedocs' ),
+                        'sanitize_callback' => function( $images ) {
+                            if ( ! is_array( $images ) ) {
+                                return [];
+                            }
+
+                            $sanitized = [];
+
+                            foreach ( $images as $item ) {
+                                $attachment_id = null;
+
+                                // Support both formats: [759] or [{"id": 759}]
+                                if ( is_array( $item ) && isset( $item['id'] ) ) {
+                                    // Object format from JSON: {"id": 759}
+                                    $attachment_id = absint( $item['id'] );
+                                } elseif ( is_object( $item ) && isset( $item->id ) ) {
+                                    // Object format: stdClass with id property
+                                    $attachment_id = absint( $item->id );
+                                } elseif ( is_numeric( $item ) ) {
+                                    // Direct integer format: 759
+                                    $attachment_id = absint( $item );
+                                }
+
+                                // Only add valid attachment IDs
+                                if ( $attachment_id > 0 ) {
+                                    $sanitized[] = $attachment_id;
+                                }
+                            }
+
+                            // Remove duplicates and reindex array
+                            return array_values( array_unique( $sanitized ) );
+                        },
+                        'validate_callback' => function( $images ) {
+                            if ( ! is_array( $images ) ) {
+                                return new WP_Error(
+                                    'wedocs_invalid_images_type',
+                                    __( 'Images parameter must be an array.', 'wedocs' ),
+                                    [ 'status' => 400 ]
+                                );
+                            }
+
+                            if ( empty( $images ) ) {
+                                // Empty array is valid
+                                return true;
+                            }
+
+                            foreach ( $images as $index => $item ) {
+                                $attachment_id = null;
+
+                                // Support both formats
+                                if ( is_array( $item ) && isset( $item['id'] ) ) {
+                                    $attachment_id = absint( $item['id'] );
+                                } elseif ( is_object( $item ) && isset( $item->id ) ) {
+                                    $attachment_id = absint( $item->id );
+                                } elseif ( is_numeric( $item ) ) {
+                                    $attachment_id = absint( $item );
+                                } else {
+                                    return new WP_Error(
+                                        'wedocs_invalid_image_format',
+                                        sprintf(
+                                            /* translators: %d: array index */
+                                            __( 'Image at index %d must be an integer ID or object with id property. Example: [759] or [{"id": 759}]', 'wedocs' ),
+                                            $index
+                                        ),
+                                        [ 'status' => 400 ]
+                                    );
+                                }
+
+                                // Validate attachment ID is positive
+                                if ( $attachment_id <= 0 ) {
+                                    return new WP_Error(
+                                        'wedocs_invalid_attachment_id',
+                                        sprintf(
+                                            /* translators: %d: array index */
+                                            __( 'Invalid attachment ID at index %d.', 'wedocs' ),
+                                            $index
+                                        ),
+                                        [ 'status' => 400 ]
+                                    );
+                                }
+
+                                // Validate attachment exists and is an image
+                                if ( ! wp_attachment_is_image( $attachment_id ) ) {
+                                    return new WP_Error(
+                                        'wedocs_invalid_attachment',
+                                        sprintf(
+                                            /* translators: %d: attachment ID */
+                                            __( 'Attachment ID %d is not a valid image or does not exist.', 'wedocs' ),
+                                            $attachment_id
+                                        ),
+                                        [ 'status' => 400 ]
+                                    );
+                                }
+                            }
+
+                            return true;
+                        },
                     ],
                 ],
             ],
@@ -305,21 +401,6 @@ class API extends WP_REST_Controller {
             ],
         ] );
 
-        // Image delete endpoint for AI Doc Writer.
-        register_rest_route( $this->namespace, '/' . $this->rest_base . '/ai/delete-image', [
-            [
-                'methods'             => WP_REST_Server::CREATABLE,
-                'callback'            => [ $this, 'delete_temp_image' ],
-                'permission_callback' => [ $this, 'ai_upload_permissions_check' ],
-                'args'                => [
-                    'filename' => [
-                        'required'          => true,
-                        'type'              => 'string',
-                        'sanitize_callback' => 'sanitize_file_name',
-                    ],
-                ],
-            ],
-        ] );
     }
 
     /**
@@ -1048,6 +1129,15 @@ class API extends WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function ai_upload_permissions_check( $request ) {
+        // Image analysis is a PRO feature only.
+        if ( ! wedocs_is_pro_active() ) {
+            return new WP_Error(
+                'wedocs_pro_feature',
+                __( 'AI image analysis is a pro feature. Please upgrade to weDocs Pro to use this feature.', 'wedocs' ),
+                [ 'status' => 403 ]
+            );
+        }
+
         if ( ! current_user_can( 'edit_docs' ) ) {
             return new WP_Error(
                 'wedocs_permission_failure',
@@ -1068,7 +1158,7 @@ class API extends WP_REST_Controller {
     }
 
     /**
-     * Upload a temporary image for AI analysis.
+     * Upload an image to WordPress media library for AI analysis.
      *
      * @since 2.2.0
      *
@@ -1077,6 +1167,10 @@ class API extends WP_REST_Controller {
      * @return WP_Error|WP_REST_Response
      */
     public function upload_temp_image( $request ) {
+        require_once ABSPATH . 'wp-admin/includes/image.php';
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+        require_once ABSPATH . 'wp-admin/includes/media.php';
+
         $files = $request->get_file_params();
 
         if ( empty( $files['image'] ) ) {
@@ -1089,12 +1183,33 @@ class API extends WP_REST_Controller {
 
         $file = $files['image'];
 
-        // Validate file type.
+        // Validate file type - Check actual file contents, not just extension.
         $allowed_types = [ 'image/png', 'image/jpeg', 'image/webp' ];
-        $file_type     = wp_check_filetype( $file['name'] );
-        $mime_type     = $file_type['type'];
 
-        // Additional check: verify file_type detection succeeded
+        // First check: WordPress file type validation (checks both name and content).
+        $file_type_check = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );
+        $mime_type       = $file_type_check['type'];
+
+        // Second check: Use finfo to verify actual file content.
+        if ( function_exists( 'finfo_open' ) ) {
+            $finfo = finfo_open( FILEINFO_MIME_TYPE );
+            $real_mime = finfo_file( $finfo, $file['tmp_name'] );
+            finfo_close( $finfo );
+
+            // Ensure detected MIME matches actual content.
+            if ( $real_mime && $mime_type !== $real_mime ) {
+                return new WP_Error(
+                    'wedocs_file_type_mismatch',
+                    __( 'File type mismatch detected. The file may be corrupted or malicious.', 'wedocs' ),
+                    [ 'status' => 400 ]
+                );
+            }
+
+            // Use real MIME type from content inspection.
+            $mime_type = $real_mime ?: $mime_type;
+        }
+
+        // Verify file type detection succeeded.
         if ( empty( $mime_type ) ) {
             return new WP_Error(
                 'wedocs_invalid_file_type',
@@ -1103,6 +1218,7 @@ class API extends WP_REST_Controller {
             );
         }
 
+        // Verify MIME type is in allowed list.
         if ( ! in_array( $mime_type, $allowed_types, true ) ) {
             return new WP_Error(
                 'wedocs_invalid_file_type',
@@ -1111,172 +1227,151 @@ class API extends WP_REST_Controller {
             );
         }
 
-        // Validate file size (1MB max).
-        $max_size = 1024 * 1024; // 1MB in bytes.
-        if ( $file['size'] > $max_size ) {
+        // Third check: Verify it's actually a valid image by attempting to read it.
+        $image_info = @getimagesize( $file['tmp_name'] );
+        if ( ! $image_info ) {
             return new WP_Error(
-                'wedocs_file_too_large',
-                __( 'Image must be under 1MB.', 'wedocs' ),
+                'wedocs_invalid_image',
+                __( 'File is not a valid image.', 'wedocs' ),
                 [ 'status' => 400 ]
             );
         }
 
-        // Create temp directory if not exists.
-        $upload_dir = wp_upload_dir();
-        $temp_dir   = $upload_dir['basedir'] . '/wedocs-ai-temp/';
-
-        if ( ! file_exists( $temp_dir ) ) {
-            wp_mkdir_p( $temp_dir );
-
-            // Add index.php for security.
-            file_put_contents( $temp_dir . 'index.php', '<?php // Silence is golden.' );
+        // Verify image dimensions are reasonable (prevent decompression bombs).
+        if ( $image_info[0] > 10000 || $image_info[1] > 10000 ) {
+            return new WP_Error(
+                'wedocs_image_too_large',
+                __( 'Image dimensions are too large. Maximum 10000x10000 pixels.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
         }
 
-        // Process and resize image.
-        $processed = $this->process_image_for_ai( $file['tmp_name'], $mime_type );
+        // Get max file size from settings (default 1MB).
+        $ai_settings = wedocs_get_option( 'ai', 'wedocs_settings', [] );
+        $max_size_kb = isset( $ai_settings['image_analysis']['max_size'] )
+            ? absint( $ai_settings['image_analysis']['max_size'] )
+            : 1024; // Default 1MB in KB
 
-        if ( is_wp_error( $processed ) ) {
-            return $processed;
+        // Ensure max_size_kb is within safe bounds to prevent integer overflow.
+        $max_size_kb = max( 100, min( 5120, $max_size_kb ) );
+        $max_size = $max_size_kb * 1024; // Convert KB to bytes
+
+        if ( $file['size'] > $max_size ) {
+            return new WP_Error(
+                'wedocs_file_too_large',
+                sprintf(
+                    /* translators: %s: Maximum file size in MB or KB */
+                    __( 'Image must be under %s.', 'wedocs' ),
+                    $max_size_kb >= 1024
+                        ? number_format( $max_size_kb / 1024, 1 ) . 'MB'
+                        : $max_size_kb . 'KB'
+                ),
+                [ 'status' => 400 ]
+            );
         }
 
-        // Generate unique filename.
-        $extension = $file_type['ext'] ?: 'jpg';
-        $filename  = wp_unique_filename( $temp_dir, 'ai-img-' . uniqid() . '.' . $extension );
-        $filepath  = $temp_dir . $filename;
+        // Create a closure with unique ID to prevent race conditions.
+        $unique_id = uniqid( 'wedocs-ai-', true );
+        $upload_filter = function( $file ) use ( $unique_id ) {
+            // Only process if this is our specific upload.
+            if ( isset( $file['wedocs_upload_id'] ) && $file['wedocs_upload_id'] === $unique_id ) {
+                $file['name'] = $unique_id . '-' . sanitize_file_name( basename( $file['name'] ) );
+                unset( $file['wedocs_upload_id'] );
+            }
+            return $file;
+        };
 
-        // Move uploaded file.
-        if ( isset( $processed['tmp_name'] ) ) {
-            // Processed image was saved to a temp file.
-            rename( $processed['tmp_name'], $filepath );
-        } else {
-            // Use original file.
-            move_uploaded_file( $file['tmp_name'], $filepath );
+        // Mark this file for our filter.
+        $file['wedocs_upload_id'] = $unique_id;
+
+        add_filter( 'wp_handle_upload_prefilter', $upload_filter, 10, 1 );
+
+        // Upload to WordPress media library.
+        $attachment_id = media_handle_upload( 'image', 0, [], [
+            'test_form'   => false,
+            'test_size'   => true,
+            'test_upload' => true,
+        ] );
+
+        // Always remove the filter, even on error.
+        remove_filter( 'wp_handle_upload_prefilter', $upload_filter, 10 );
+
+        if ( is_wp_error( $attachment_id ) ) {
+            return new WP_Error(
+                'wedocs_upload_failed',
+                $attachment_id->get_error_message(),
+                [ 'status' => 400 ]
+            );
         }
 
-        // Get image dimensions.
-        $image_size = getimagesize( $filepath );
-        $width      = $image_size[0] ?? 0;
-        $height     = $image_size[1] ?? 0;
+        // Get attachment metadata.
+        $attachment_url  = wp_get_attachment_url( $attachment_id );
+        $attachment_meta = wp_get_attachment_metadata( $attachment_id );
+        $width           = $attachment_meta['width'] ?? 0;
+        $height          = $attachment_meta['height'] ?? 0;
 
         // Check for low resolution warning.
         $low_resolution = ( $width < 600 || $height < 600 );
 
+        // Mark this attachment as temporary for cleanup.
+        update_post_meta( $attachment_id, '_wedocs_ai_temp', true );
+        update_post_meta( $attachment_id, '_wedocs_ai_temp_created', time() );
+
         return rest_ensure_response( [
-            'id'             => uniqid( 'wedocs_img_' ),
-            'filename'       => $filename,
-            'url'            => $upload_dir['baseurl'] . '/wedocs-ai-temp/' . $filename,
+            'id'             => $attachment_id,
+            'attachment_id'  => $attachment_id,
+            'url'            => $attachment_url,
             'width'          => $width,
             'height'         => $height,
             'low_resolution' => $low_resolution,
         ] );
     }
 
+
+
     /**
-     * Delete a temporary image.
+     * Get image as base64 encoded string from attachment ID.
      *
      * @since 2.2.0
      *
-     * @param WP_REST_Request $request Current request.
-     *
-     * @return WP_Error|WP_REST_Response
-     */
-    public function delete_temp_image( $request ) {
-        $filename = $request->get_param( 'filename' );
-
-        if ( empty( $filename ) ) {
-            return new WP_Error(
-                'wedocs_no_filename',
-                __( 'No filename provided.', 'wedocs' ),
-                [ 'status' => 400 ]
-            );
-        }
-
-        $upload_dir = wp_upload_dir();
-        $temp_dir   = $upload_dir['basedir'] . '/wedocs-ai-temp/';
-        $filepath   = $temp_dir . $filename;
-
-        // Security check - ensure file is within temp directory.
-        $real_path     = realpath( $filepath );
-        $real_temp_dir = realpath( $temp_dir );
-
-        if ( ! $real_path || strpos( $real_path, $real_temp_dir ) !== 0 ) {
-            return new WP_Error(
-                'wedocs_invalid_file',
-                __( 'Invalid file path.', 'wedocs' ),
-                [ 'status' => 400 ]
-            );
-        }
-
-        if ( file_exists( $filepath ) ) {
-            unlink( $filepath );
-        }
-
-        return rest_ensure_response( [ 'deleted' => true ] );
-    }
-
-    /**
-     * Process and resize image for AI analysis.
-     *
-     * @since 2.2.0
-     *
-     * @param string $file_path Path to the uploaded file.
-     * @param string $mime_type The mime type of the image.
-     *
-     * @return array|WP_Error Processed image data or error.
-     */
-    private function process_image_for_ai( $file_path, $mime_type ) {
-        $editor = wp_get_image_editor( $file_path );
-
-        if ( is_wp_error( $editor ) ) {
-            // Return original if can't process.
-            return [ 'tmp_name' => $file_path ];
-        }
-
-        $size          = $editor->get_size();
-        $max_dimension = 1024;
-
-        // Resize if larger than max dimension.
-        if ( $size['width'] > $max_dimension || $size['height'] > $max_dimension ) {
-            $editor->resize( $max_dimension, $max_dimension, false );
-        }
-
-        // Set quality for compression.
-        $editor->set_quality( 85 );
-
-        // Save to temp file.
-        // Use wp_tempnam() if available (WP 6.2+), otherwise use fallback.
-        if ( function_exists( 'wp_tempnam' ) ) {
-            $temp_file = wp_tempnam( 'wedocs_ai_' );
-        } else {
-            $temp_file = tempnam( sys_get_temp_dir(), 'wedocs_ai_' );
-        }
-        $saved     = $editor->save( $temp_file, $mime_type );
-
-        if ( is_wp_error( $saved ) ) {
-            return [ 'tmp_name' => $file_path ];
-        }
-
-        return [
-            'tmp_name' => $saved['path'],
-            'width'    => $saved['width'],
-            'height'   => $saved['height'],
-        ];
-    }
-
-    /**
-     * Get image as base64 encoded string.
-     *
-     * @since 2.2.0
-     *
-     * @param string $filename The filename in the temp directory.
+     * @param int $attachment_id The attachment ID.
      *
      * @return string Base64 encoded image data.
      */
-    private function get_image_base64( $filename ) {
-        $upload_dir = wp_upload_dir();
-        $filepath   = $upload_dir['basedir'] . '/wedocs-ai-temp/' . $filename;
+    private function get_image_base64( $attachment_id ) {
+        $attachment_id = absint( $attachment_id );
 
-        if ( ! file_exists( $filepath ) ) {
+        // Validate attachment exists and is an image.
+        if ( ! wp_attachment_is_image( $attachment_id ) ) {
+            return '';
+        }
+
+        // Get the file path from attachment.
+        $filepath = get_attached_file( $attachment_id );
+
+        if ( ! $filepath || ! file_exists( $filepath ) ) {
+            return '';
+        }
+
+        // Validate the file is within WordPress uploads directory.
+        $upload_dir      = wp_upload_dir();
+        $real_path       = realpath( $filepath );
+        $real_upload_dir = realpath( $upload_dir['basedir'] );
+
+        // Validate all paths resolved successfully and upload dir is not empty.
+        if ( ! $real_path || ! $real_upload_dir || empty( $real_upload_dir ) ) {
+            return '';
+        }
+
+        // Ensure file is within uploads directory (prevent path traversal).
+        // Add DIRECTORY_SEPARATOR to prevent partial path matches.
+        if ( strpos( $real_path, $real_upload_dir . DIRECTORY_SEPARATOR ) !== 0 &&
+             $real_path !== $real_upload_dir ) {
+            return '';
+        }
+
+        // Re-validate file is actually an image before reading.
+        if ( ! @getimagesize( $filepath ) ) {
             return '';
         }
 
@@ -1284,55 +1379,62 @@ class API extends WP_REST_Controller {
     }
 
     /**
-     * Get image media type from filename.
+     * Get image media type from attachment ID.
      *
      * @since 2.2.0
      *
-     * @param string $filename The filename.
+     * @param int $attachment_id The attachment ID.
      *
      * @return string The media type.
      */
-    private function get_image_media_type( $filename ) {
-        $ext   = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
-        $types = [
-            'jpg'  => 'image/jpeg',
-            'jpeg' => 'image/jpeg',
-            'png'  => 'image/png',
-            'webp' => 'image/webp',
+    private function get_image_media_type( $attachment_id ) {
+        $attachment_id = absint( $attachment_id );
+
+        // Re-validate file content instead of trusting database.
+        $filepath = get_attached_file( $attachment_id );
+
+        if ( ! $filepath || ! file_exists( $filepath ) ) {
+            return 'image/jpeg';
+        }
+
+        // Use finfo to check actual file content.
+        $real_mime = 'image/jpeg'; // Default fallback
+
+        if ( function_exists( 'finfo_open' ) ) {
+            $finfo = finfo_open( FILEINFO_MIME_TYPE );
+            $detected_mime = finfo_file( $finfo, $filepath );
+            finfo_close( $finfo );
+
+            if ( $detected_mime ) {
+                $real_mime = $detected_mime;
+            }
+        }
+
+        // Strict whitelist - only allow exact matches and normalize.
+        $allowed_types = [
+            'image/png'  => 'image/png',
+            'image/jpeg' => 'image/jpeg',
+            'image/webp' => 'image/webp',
+            'image/jpg'  => 'image/jpeg', // Normalize jpg to jpeg
         ];
 
-        return $types[ $ext ] ?? 'image/jpeg';
-    }
-
-    /**
-     * Cleanup temporary images after generation.
-     *
-     * @since 2.2.0
-     *
-     * @param array $images Array of image objects with filename.
-     *
-     * @return void
-     */
-    private function cleanup_temp_images( $images ) {
-        if ( empty( $images ) || ! is_array( $images ) ) {
-            return;
+        if ( isset( $allowed_types[ $real_mime ] ) ) {
+            return $allowed_types[ $real_mime ];
         }
 
-        $upload_dir = wp_upload_dir();
-        $temp_dir   = $upload_dir['basedir'] . '/wedocs-ai-temp/';
-
-        foreach ( $images as $image ) {
-            if ( empty( $image['filename'] ) ) {
-                continue;
-            }
-
-            $filepath = $temp_dir . $image['filename'];
-
-            if ( file_exists( $filepath ) ) {
-                unlink( $filepath );
-            }
+        // Log unexpected MIME type for security monitoring.
+        if ( $real_mime !== 'image/jpeg' ) {
+            error_log( sprintf(
+                'WeDocs Unexpected MIME type "%s" for attachment %d at %s',
+                $real_mime,
+                $attachment_id,
+                $filepath
+            ) );
         }
+
+        return 'image/jpeg';
     }
+
 
     /**
      * Generate AI content.
@@ -1377,6 +1479,49 @@ class API extends WP_REST_Controller {
                 __( 'Maximum 5 images allowed.', 'wedocs' ),
                 [ 'status' => 400 ]
             );
+        }
+
+        // Image analysis is a PRO feature only.
+        if ( ! empty( $images ) && ! wedocs_is_pro_active() ) {
+            return new WP_Error(
+                'wedocs_pro_feature',
+                __( 'AI image analysis is a pro feature. Please upgrade to weDocs Pro to use this feature.', 'wedocs' ),
+                [ 'status' => 403 ]
+            );
+        }
+
+        // Verify user has permission to access the attachments.
+        if ( ! empty( $images ) ) {
+            $current_user_id = get_current_user_id();
+
+            foreach ( $images as $attachment_id ) {
+                $attachment = get_post( $attachment_id );
+
+                if ( ! $attachment ) {
+                    return new WP_Error(
+                        'wedocs_attachment_not_found',
+                        sprintf(
+                            /* translators: %d: attachment ID */
+                            __( 'Attachment ID %d not found.', 'wedocs' ),
+                            $attachment_id
+                        ),
+                        [ 'status' => 404 ]
+                    );
+                }
+
+                // Check if user owns the attachment OR has manage_options capability.
+                if ( (int) $attachment->post_author !== $current_user_id && ! current_user_can( 'manage_options' ) ) {
+                    return new WP_Error(
+                        'wedocs_attachment_permission_denied',
+                        sprintf(
+                            /* translators: %d: attachment ID */
+                            __( 'You do not have permission to analyze attachment ID %d.', 'wedocs' ),
+                            $attachment_id
+                        ),
+                        [ 'status' => 403 ]
+                    );
+                }
+            }
         }
 
         // Get AI settings.
@@ -1453,8 +1598,56 @@ class API extends WP_REST_Controller {
                 $images
             );
 
-            // Cleanup temp images after successful generation.
-            $this->cleanup_temp_images( $images );
+            // Sanitize AI-generated HTML to prevent XSS attacks.
+            if ( isset( $response['content'] ) && ! empty( $response['content'] ) ) {
+                // Define allowed HTML tags and attributes for documentation content.
+                $allowed_html = [
+                    'p'      => [],
+                    'h1'     => [],
+                    'h2'     => [],
+                    'h3'     => [],
+                    'h4'     => [],
+                    'h5'     => [],
+                    'h6'     => [],
+                    'span'   => [
+                        'class' => true,
+                    ],
+                    'strong' => [],
+                    'em'     => [],
+                    'b'      => [],
+                    'i'      => [],
+                    'u'      => [],
+                    'ul'     => [],
+                    'ol'     => [],
+                    'li'     => [],
+                    'br'     => [],
+                    'code'   => [],
+                    'pre'    => [],
+                    'a'      => [
+                        'href'   => true,
+                        'title'  => true,
+                        'target' => true,
+                        'rel'    => true,
+                    ],
+                    'img'    => [
+                        'src'    => true,
+                        'alt'    => true,
+                        'title'  => true,
+                        'width'  => true,
+                        'height' => true,
+                    ],
+                    'table'  => [],
+                    'thead'  => [],
+                    'tbody'  => [],
+                    'tr'     => [],
+                    'th'     => [],
+                    'td'     => [],
+                    'blockquote' => [],
+                ];
+
+                // Apply wp_kses to strip dangerous HTML/JS.
+                $response['content'] = wp_kses( $response['content'], $allowed_html );
+            }
 
             return rest_ensure_response( $response );
         } catch ( \Exception $e ) {
@@ -1558,18 +1751,20 @@ class API extends WP_REST_Controller {
             ];
 
             // Add images.
-            foreach ( $images as $image ) {
-                if ( empty( $image['filename'] ) ) {
+            foreach ( $images as $attachment_id ) {
+                $attachment_id = absint( $attachment_id );
+
+                if ( ! $attachment_id ) {
                     continue;
                 }
 
-                $image_data = $this->get_image_base64( $image['filename'] );
+                $image_data = $this->get_image_base64( $attachment_id );
 
                 if ( empty( $image_data ) ) {
                     continue;
                 }
 
-                $media_type = $this->get_image_media_type( $image['filename'] );
+                $media_type = $this->get_image_media_type( $attachment_id );
 
                 $content[] = [
                     'type'      => 'image_url',
@@ -1671,18 +1866,20 @@ class API extends WP_REST_Controller {
             $content = [];
 
             // Add images first for Anthropic.
-            foreach ( $images as $image ) {
-                if ( empty( $image['filename'] ) ) {
+            foreach ( $images as $attachment_id ) {
+                $attachment_id = absint( $attachment_id );
+
+                if ( ! $attachment_id ) {
                     continue;
                 }
 
-                $image_data = $this->get_image_base64( $image['filename'] );
+                $image_data = $this->get_image_base64( $attachment_id );
 
                 if ( empty( $image_data ) ) {
                     continue;
                 }
 
-                $media_type = $this->get_image_media_type( $image['filename'] );
+                $media_type = $this->get_image_media_type( $attachment_id );
 
                 $content[] = [
                     'type'   => 'image',
@@ -1786,18 +1983,20 @@ class API extends WP_REST_Controller {
 
         // Add images first.
         if ( ! empty( $images ) ) {
-            foreach ( $images as $image ) {
-                if ( empty( $image['filename'] ) ) {
+            foreach ( $images as $attachment_id ) {
+                $attachment_id = absint( $attachment_id );
+
+                if ( ! $attachment_id ) {
                     continue;
                 }
 
-                $image_data = $this->get_image_base64( $image['filename'] );
+                $image_data = $this->get_image_base64( $attachment_id );
 
                 if ( empty( $image_data ) ) {
                     continue;
                 }
 
-                $media_type = $this->get_image_media_type( $image['filename'] );
+                $media_type = $this->get_image_media_type( $attachment_id );
 
                 $parts[] = [
                     'inline_data' => [
