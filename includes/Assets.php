@@ -120,7 +120,7 @@ class Assets {
                     'ajaxurl'           => admin_url( 'admin-ajax.php' ),
                     'nonce'             => wp_create_nonce( 'wp_rest' ),
                     'aiProviderConfigs' => wedocs_get_ai_provider_configs(),
-                    'aiSettings'        => wedocs_get_option( 'ai', 'wedocs_settings', [] ),
+                    'aiSettings'        => wedocs_get_ai_settings_for_frontend(),
                 ),
             );
         }

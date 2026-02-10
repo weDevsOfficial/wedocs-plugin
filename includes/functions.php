@@ -801,6 +801,43 @@ function wedocs_get_model_name( $provider, $model ) {
 }
 
 /**
+ * Get AI settings safe for frontend localization.
+ *
+ * Strips sensitive fields such as API keys and secrets from the AI
+ * settings array so they are never exposed via wp_localize_script.
+ *
+ * @since 2.2.1
+ *
+ * @return array Sanitized AI settings without sensitive data.
+ */
+function wedocs_get_ai_settings_for_frontend() {
+	$ai_settings = wedocs_get_option( 'ai', 'wedocs_settings', [] );
+
+	// Fields that must never be sent to the frontend.
+	$sensitive_fields = [ 'api_key', 'api_secret', 'secret_key', 'access_token' ];
+
+	if ( ! empty( $ai_settings['providers'] ) && is_array( $ai_settings['providers'] ) ) {
+		foreach ( $ai_settings['providers'] as $provider => &$config ) {
+			if ( ! is_array( $config ) ) {
+				continue;
+			}
+
+			foreach ( $sensitive_fields as $field ) {
+				unset( $config[ $field ] );
+			}
+
+			// Let the frontend know whether a key has been configured.
+			$original_config = wedocs_get_option( 'ai', 'wedocs_settings', [] );
+			$has_key         = ! empty( $original_config['providers'][ $provider ]['api_key'] );
+			$config['has_api_key'] = $has_key;
+		}
+		unset( $config );
+	}
+
+	return $ai_settings;
+}
+
+/**
  * Check if weDocs Pro is active.
  *
  * @since 2.1.15

@@ -1186,27 +1186,58 @@ class API extends WP_REST_Controller {
         // Validate file type - Check actual file contents, not just extension.
         $allowed_types = [ 'image/png', 'image/jpeg', 'image/webp' ];
 
+        // MIME type normalization map - handles variations across different systems.
+        $mime_normalization = [
+            'image/jpg'     => 'image/jpeg',
+            'image/pjpeg'   => 'image/jpeg', // Progressive JPEG
+            'image/x-png'   => 'image/png',
+            'image/x-webp'  => 'image/webp',
+        ];
+
+        /**
+         * Normalize MIME type to standard format.
+         *
+         * @param string $mime The MIME type to normalize.
+         * @return string Normalized MIME type.
+         */
+        $normalize_mime = function( $mime ) use ( $mime_normalization ) {
+            $mime = strtolower( trim( $mime ) );
+            return isset( $mime_normalization[ $mime ] ) ? $mime_normalization[ $mime ] : $mime;
+        };
+
         // First check: WordPress file type validation (checks both name and content).
         $file_type_check = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );
-        $mime_type       = $file_type_check['type'];
+        $mime_type       = $normalize_mime( $file_type_check['type'] );
 
         // Second check: Use finfo to verify actual file content.
+        $real_mime = null;
         if ( function_exists( 'finfo_open' ) ) {
             $finfo = finfo_open( FILEINFO_MIME_TYPE );
-            $real_mime = finfo_file( $finfo, $file['tmp_name'] );
+            $detected = finfo_file( $finfo, $file['tmp_name'] );
             finfo_close( $finfo );
 
-            // Ensure detected MIME matches actual content.
-            if ( $real_mime && $mime_type !== $real_mime ) {
+            if ( $detected ) {
+                $real_mime = $normalize_mime( $detected );
+            }
+        }
+
+        // SECURITY: Cross-validate MIME types - both must be in allowed list.
+        // This prevents attacks while allowing legitimate MIME variations.
+        if ( $real_mime ) {
+            $mime_in_allowed = in_array( $mime_type, $allowed_types, true );
+            $real_in_allowed = in_array( $real_mime, $allowed_types, true );
+
+            // If either is not allowed, it's potentially malicious.
+            if ( ! $mime_in_allowed || ! $real_in_allowed ) {
                 return new WP_Error(
                     'wedocs_file_type_mismatch',
-                    __( 'File type mismatch detected. The file may be corrupted or malicious.', 'wedocs' ),
+                    __( 'File type validation failed. The file may be corrupted or malicious.', 'wedocs' ),
                     [ 'status' => 400 ]
                 );
             }
 
-            // Use real MIME type from content inspection.
-            $mime_type = $real_mime ?: $mime_type;
+            // Use the more specific type from finfo.
+            $mime_type = $real_mime;
         }
 
         // Verify file type detection succeeded.
@@ -1270,19 +1301,12 @@ class API extends WP_REST_Controller {
             );
         }
 
-        // Create a closure with unique ID to prevent race conditions.
+        // Add unique prefix to uploaded filename to prevent conflicts.
         $unique_id = uniqid( 'wedocs-ai-', true );
         $upload_filter = function( $file ) use ( $unique_id ) {
-            // Only process if this is our specific upload.
-            if ( isset( $file['wedocs_upload_id'] ) && $file['wedocs_upload_id'] === $unique_id ) {
-                $file['name'] = $unique_id . '-' . sanitize_file_name( basename( $file['name'] ) );
-                unset( $file['wedocs_upload_id'] );
-            }
+            $file['name'] = $unique_id . '-' . sanitize_file_name( basename( $file['name'] ) );
             return $file;
         };
-
-        // Mark this file for our filter.
-        $file['wedocs_upload_id'] = $unique_id;
 
         add_filter( 'wp_handle_upload_prefilter', $upload_filter, 10, 1 );
 
@@ -1903,9 +1927,10 @@ class API extends WP_REST_Controller {
         }
 
         $data = [
-            'model'      => $model,
-            'max_tokens' => $max_tokens,
-            'messages'   => [
+            'model'       => $model,
+            'max_tokens'  => $max_tokens,
+            'temperature' => (float) $temperature,
+            'messages'    => [
                 [
                     'role'    => 'user',
                     'content' => $message_content,
