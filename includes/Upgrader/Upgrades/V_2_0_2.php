@@ -91,28 +91,7 @@ class V_2_0_2 extends UpgradeHandler {
      * @return void
      */
     private function add_documentation_handling_capabilities() {
-        global $wp_roles;
-
-        if ( class_exists( 'WP_Roles' ) && ! isset( $wp_roles ) ) {
-            $wp_roles = new \WP_Roles(); // @codingStandardsIgnoreLine
-        }
-
-        $roles        = $wp_roles->get_names();
-        $capabilities = array(
-            'edit_post',
-            'edit_docs',
-            'publish_docs',
-            'edit_others_docs',
-            'read_private_docs',
-            'edit_private_docs',
-            'edit_published_docs'
-        );
-
-        // Push documentation handling access to users.
-        foreach ( $capabilities as $capability ) {
-            foreach ( $roles as $role_key => $role ) {
-                $wp_roles->add_cap( $role_key, $capability );
-            }
-        }
+        // Use the centralized function that restricts capabilities to administrator and editor only.
+        wedocs_user_documentation_handling_capabilities();
     }
 }
