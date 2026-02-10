@@ -11,7 +11,7 @@ class Elementor {
      * Initialize the class
      */
     public function __construct() {
-        add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_widgets' ] );
+        add_action( 'elementor/widgets/register', [ $this, 'register_widgets' ] );
         add_action( 'elementor/elements/categories_registered', [ $this, 'register_widget_category' ] );
 
         // Register widget scripts
