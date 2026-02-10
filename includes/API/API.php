@@ -1092,7 +1092,16 @@ class API extends WP_REST_Controller {
         // Validate file type.
         $allowed_types = [ 'image/png', 'image/jpeg', 'image/webp' ];
         $file_type     = wp_check_filetype( $file['name'] );
-        $mime_type     = $file['type'];
+        $mime_type     = $file_type['type'];
+
+        // Additional check: verify file_type detection succeeded
+        if ( empty( $mime_type ) ) {
+            return new WP_Error(
+                'wedocs_invalid_file_type',
+                __( 'Could not determine file type.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
 
         if ( ! in_array( $mime_type, $allowed_types, true ) ) {
             return new WP_Error(
