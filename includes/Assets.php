@@ -67,13 +67,13 @@ class Assets {
                 'wedocs-app-script',
                 'weDocsAdminVars',
                 array(
-                    'adminUrl'     => admin_url(),
-                    'hasManageCap' => current_user_can( 'manage_options' ),
+                    'adminUrl'          => admin_url(),
+                    'hasManageCap'      => current_user_can( 'manage_options' ),
                     'aiProviderConfigs' => wedocs_get_ai_provider_configs(),
-                    'adminUrl'      => admin_url(),
-                    'hasManageCap'  => current_user_can( 'manage_options' ),
-                    'weDocsUrl'     => admin_url( 'admin.php?page=wedocs#/' ),
-                    'pro_active'    => wedocs_is_pro_active(),
+                    'weDocsUrl'         => admin_url( 'admin.php?page=wedocs#/' ),
+                    'pro_active'        => wedocs_is_pro_active(),
+                    'exportNonce'       => wp_create_nonce( 'wedocs_export_docs' ),
+                    'importNonce'       => wp_create_nonce( 'wedocs_import_docs' ),
                 ),
             );
         }
