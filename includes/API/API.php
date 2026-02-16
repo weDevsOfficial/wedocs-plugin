@@ -106,7 +106,7 @@ class API extends WP_REST_Controller {
             [
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => [ $this, 'get_parents' ],
-                'permission_callback' => '__return_true',
+                'permission_callback' => [ $this, 'get_parents_permissions_check' ],
             ],
         ] );
 
@@ -801,6 +801,62 @@ class API extends WP_REST_Controller {
         $responsed_doc_ids = implode( ',', $previous );
 
         update_user_meta( $user_id, 'wedocs_response', $responsed_doc_ids );
+
+        return true;
+    }
+
+    /**
+     * Check if a given request has access to get parents.
+     *
+     * @since 2.1.19
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return bool|WP_Error True if the request has read access, WP_Error object otherwise.
+     */
+    public function get_parents_permissions_check( $request ) {
+        $doc = $this->get_doc( $request['id'] );
+
+        if ( is_wp_error( $doc ) ) {
+            return $doc;
+        }
+
+        // Check if the user can read this post based on its status
+        $post_status = get_post_status( $doc );
+
+        // Published posts are readable by everyone
+        if ( 'publish' === $post_status ) {
+            return true;
+        }
+
+        // For non-published posts, check if user is logged in and has proper capabilities
+        if ( ! is_user_logged_in() ) {
+            return new WP_Error(
+                'rest_cannot_read',
+                __( 'Sorry, you are not allowed to view this documentation.', 'wedocs' ),
+                array( 'status' => 401 )
+            );
+        }
+
+        // Check if user can read private posts
+        if ( 'private' === $post_status && ! current_user_can( 'read_private_docs' ) ) {
+            return new WP_Error(
+                'rest_cannot_read',
+                __( 'Sorry, you are not allowed to view this documentation.', 'wedocs' ),
+                array( 'status' => 403 )
+            );
+        }
+
+        // For draft, pending, and other non-published statuses, check if user can edit docs
+        if ( in_array( $post_status, array( 'draft', 'pending', 'future', 'trash' ) ) ) {
+            if ( ! current_user_can( 'edit_docs' ) && (int) get_current_user_id() !== (int) $doc->post_author ) {
+                return new WP_Error(
+                    'rest_cannot_read',
+                    __( 'Sorry, you are not allowed to view this documentation.', 'wedocs' ),
+                    array( 'status' => 403 )
+                );
+            }
+        }
 
         return true;
     }
