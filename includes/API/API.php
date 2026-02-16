@@ -824,6 +824,15 @@ class API extends WP_REST_Controller {
         // Check if the user can read this post based on its status
         $post_status = get_post_status( $doc );
 
+        // Trashed posts should not be accessible via this API endpoint
+        if ( 'trash' === $post_status ) {
+            return new WP_Error(
+                'rest_cannot_read',
+                __( 'Sorry, you are not allowed to view this documentation.', 'wedocs' ),
+                array( 'status' => 403 )
+            );
+        }
+
         // Published posts are readable by everyone
         if ( 'publish' === $post_status ) {
             return true;
@@ -847,8 +856,8 @@ class API extends WP_REST_Controller {
             );
         }
 
-        // For draft, pending, and other non-published statuses, check if user can edit docs
-        if ( in_array( $post_status, array( 'draft', 'pending', 'future', 'trash' ) ) ) {
+        // For draft, pending, and future statuses, check if user can edit docs or is the author
+        if ( in_array( $post_status, array( 'draft', 'pending', 'future' ) ) ) {
             if ( ! current_user_can( 'edit_docs' ) && (int) get_current_user_id() !== (int) $doc->post_author ) {
                 return new WP_Error(
                     'rest_cannot_read',
