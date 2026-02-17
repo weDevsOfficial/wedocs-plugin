@@ -488,6 +488,8 @@ class DocsGrid extends Widget_Base {
                     '4' => __('4 Columns', 'wedocs'),
                 ],
                 'default' => '2',
+                'tablet_default' => '2',
+                'mobile_default' => '1',
                 'selectors' => [
                     '{{WRAPPER}} .wedocs-docs-grid--2x2' => 'grid-template-columns: repeat({{VALUE}}, 1fr);',
                 ],
@@ -2773,6 +2775,12 @@ class DocsGrid extends Widget_Base {
         $enable_search = ($settings['enableSearch'] ?? 'no') === 'yes';
         $search_placeholder = $settings['searchPlaceholder'] ?? __('Search docs...', 'wedocs');
         $enable_sorting = ($settings['enableSorting'] ?? 'no') === 'yes';
+        $enable_view_toggle = ($settings['enableViewToggle'] ?? '') === 'yes';
+
+        // Animation settings
+        $item_animation = $settings['itemAnimation'] ?? 'none';
+        $animation_delay = $settings['animationDelay']['size'] ?? 100;
+        $stagger_animation = ($settings['staggerAnimation'] ?? 'yes') === 'yes';
 
         // Get current page
         $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
@@ -2820,7 +2828,7 @@ class DocsGrid extends Widget_Base {
 
 ?>
         <div class="wedocs-grid-wrapper">
-            <?php if ($enable_search || $enable_sorting): ?>
+            <?php if ($enable_search || $enable_sorting || $enable_view_toggle): ?>
                 <div class="wedocs-grid-filters">
                     <?php if ($enable_search): ?>
                         <div class="wedocs-grid-search">
@@ -2838,6 +2846,17 @@ class DocsGrid extends Widget_Base {
                             </select>
                         </div>
                     <?php endif; ?>
+
+                    <?php if ($enable_view_toggle): ?>
+                        <div class="wedocs-view-toggle" data-grid-id="<?php echo $this->get_id(); ?>">
+                            <button type="button" class="wedocs-view-toggle__btn <?php echo ($doc_style !== 'list') ? 'active' : ''; ?>" data-view="grid" title="<?php esc_attr_e('Grid View', 'wedocs'); ?>">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="0" y="0" width="7" height="7"/><rect x="9" y="0" width="7" height="7"/><rect x="0" y="9" width="7" height="7"/><rect x="9" y="9" width="7" height="7"/></svg>
+                            </button>
+                            <button type="button" class="wedocs-view-toggle__btn <?php echo ($doc_style === 'list') ? 'active' : ''; ?>" data-view="list" title="<?php esc_attr_e('List View', 'wedocs'); ?>">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="0" y="1" width="16" height="3"/><rect x="0" y="6.5" width="16" height="3"/><rect x="0" y="12" width="16" height="3"/></svg>
+                            </button>
+                        </div>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
 
@@ -2848,8 +2867,11 @@ class DocsGrid extends Widget_Base {
             <?php endif; ?>
 
             <div class="<?php echo esc_attr($grid_class); ?>" data-grid-id="<?php echo $this->get_id(); ?>">
-                <?php foreach ($docs as $doc): ?>
-                    <div class="wedocs-docs-grid__item">
+                <?php foreach ($docs as $index => $doc):
+                    $anim_class = ($item_animation !== 'none') ? ' wedocs-anim wedocs-anim--' . esc_attr($item_animation) : '';
+                    $anim_delay = ($item_animation !== 'none' && $stagger_animation) ? ($index * $animation_delay) : 0;
+                ?>
+                    <div class="wedocs-docs-grid__item<?php echo $anim_class; ?>"<?php if ($item_animation !== 'none'): ?> data-anim-delay="<?php echo esc_attr($anim_delay); ?>"<?php endif; ?>>
                         <div class="wedocs-docs-grid__header">
                             <h3 class="wedocs-docs-grid__title">
                                 <?php if ($doc_style === 'list'): ?>
@@ -3276,6 +3298,85 @@ class DocsGrid extends Widget_Base {
                     grid-template-columns: 1fr;
                 }
             }
+
+            /* View Toggle */
+            .wedocs-view-toggle {
+                display: flex;
+                gap: 4px;
+                align-items: center;
+            }
+
+            .wedocs-view-toggle__btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                background: #fff;
+                color: #999;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                padding: 0;
+            }
+
+            .wedocs-view-toggle__btn:hover {
+                color: #333;
+                border-color: #999;
+            }
+
+            .wedocs-view-toggle__btn.active {
+                background: #0073aa;
+                color: #fff;
+                border-color: #0073aa;
+            }
+
+            /* Animations */
+            .wedocs-anim {
+                opacity: 0;
+            }
+
+            .wedocs-anim.wedocs-anim--visible {
+                animation-fill-mode: forwards;
+            }
+
+            .wedocs-anim--fadeIn.wedocs-anim--visible { animation-name: wedocsFadeIn; }
+            .wedocs-anim--fadeInUp.wedocs-anim--visible { animation-name: wedocsFadeInUp; }
+            .wedocs-anim--fadeInDown.wedocs-anim--visible { animation-name: wedocsFadeInDown; }
+            .wedocs-anim--fadeInLeft.wedocs-anim--visible { animation-name: wedocsFadeInLeft; }
+            .wedocs-anim--fadeInRight.wedocs-anim--visible { animation-name: wedocsFadeInRight; }
+            .wedocs-anim--zoomIn.wedocs-anim--visible { animation-name: wedocsZoomIn; }
+            .wedocs-anim--bounceIn.wedocs-anim--visible { animation-name: wedocsBounceIn; }
+            .wedocs-anim--slideInUp.wedocs-anim--visible { animation-name: wedocsSlideInUp; }
+
+            @keyframes wedocsFadeIn {
+                from { opacity: 0; } to { opacity: 1; }
+            }
+            @keyframes wedocsFadeInUp {
+                from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes wedocsFadeInDown {
+                from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes wedocsFadeInLeft {
+                from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); }
+            }
+            @keyframes wedocsFadeInRight {
+                from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); }
+            }
+            @keyframes wedocsZoomIn {
+                from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); }
+            }
+            @keyframes wedocsBounceIn {
+                0% { opacity: 0; transform: scale(0.3); }
+                50% { opacity: 1; transform: scale(1.05); }
+                70% { transform: scale(0.95); }
+                100% { opacity: 1; transform: scale(1); }
+            }
+            @keyframes wedocsSlideInUp {
+                from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); }
+            }
         </style>
 
         <script>
@@ -3363,6 +3464,45 @@ class DocsGrid extends Widget_Base {
                     });
                 });
 
+                // View Toggle
+                $('.wedocs-view-toggle__btn').on('click', function() {
+                    var $btn = $(this);
+                    var view = $btn.data('view');
+                    var gridId = $btn.closest('.wedocs-view-toggle').data('grid-id');
+                    var $grid = $('.wedocs-docs-grid[data-grid-id="' + gridId + '"]');
+
+                    $btn.addClass('active').siblings().removeClass('active');
+
+                    if (view === 'list') {
+                        $grid.removeClass('wedocs-docs-grid--2x2').addClass('wedocs-docs-grid--list');
+                        $grid.css({'display': 'flex', 'flex-direction': 'column', 'grid-template-columns': ''});
+                    } else {
+                        $grid.removeClass('wedocs-docs-grid--list').addClass('wedocs-docs-grid--2x2');
+                        $grid.css({'display': 'grid', 'grid-template-columns': 'repeat(2, 1fr)', 'flex-direction': ''});
+                    }
+                });
+
+                // Animations - trigger when items enter viewport
+                if ($('.wedocs-anim').length) {
+                    var animObserver = new IntersectionObserver(function(entries) {
+                        entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                                var $el = $(entry.target);
+                                var delay = parseInt($el.data('anim-delay')) || 0;
+                                setTimeout(function() {
+                                    $el.css('animation-duration', '0.6s');
+                                    $el.addClass('wedocs-anim--visible');
+                                }, delay);
+                                animObserver.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.1 });
+
+                    $('.wedocs-anim').each(function() {
+                        animObserver.observe(this);
+                    });
+                }
+
                 // Infinite Scroll
                 if ($('.wedocs-pagination[data-pagination-type="infinite"]').length) {
                     var infiniteScrollObserver = new IntersectionObserver(function(entries) {
@@ -3403,6 +3543,10 @@ class DocsGrid extends Widget_Base {
             var enableSearch=settings.enableSearch==='yes' ;
             var enableSorting=settings.enableSorting==='yes' ;
             var showTotalCount=settings.showTotalCount==='yes' ;
+            var enableViewToggle=settings.enableViewToggle==='yes' ;
+            var itemAnimation=settings.itemAnimation || 'none' ;
+            var animationDelay=settings.animationDelay?.size || 100 ;
+            var staggerAnimation=settings.staggerAnimation==='yes' ;
 
             // Grid classes based on doc style
             var gridClass='wedocs-docs-grid' ;
@@ -3575,7 +3719,7 @@ class DocsGrid extends Widget_Base {
             #>
 
             <div class="wedocs-grid-wrapper">
-                <# if (enableSearch || enableSorting) { #>
+                <# if (enableSearch || enableSorting || enableViewToggle) { #>
                     <div class="wedocs-grid-filters" style="display: flex; gap: 15px; margin-bottom: 25px; align-items: center; flex-wrap: wrap;">
                         <# if (enableSearch) { #>
                             <div class="wedocs-grid-search" style="flex: 1; min-width: 200px;">
@@ -3592,6 +3736,16 @@ class DocsGrid extends Widget_Base {
                                         </select>
                                     </div>
                                     <# } #>
+                                <# if (enableViewToggle) { #>
+                                    <div class="wedocs-view-toggle" style="display: flex; gap: 4px; align-items: center;">
+                                        <button type="button" class="wedocs-view-toggle__btn {{ docStyle !== 'list' ? 'active' : '' }}" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid {{ docStyle !== 'list' ? '#0073aa' : '#ddd' }}; border-radius: 4px; background: {{ docStyle !== 'list' ? '#0073aa' : '#fff' }}; color: {{ docStyle !== 'list' ? '#fff' : '#999' }}; cursor: pointer; padding: 0;">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="0" y="0" width="7" height="7"/><rect x="9" y="0" width="7" height="7"/><rect x="0" y="9" width="7" height="7"/><rect x="9" y="9" width="7" height="7"/></svg>
+                                        </button>
+                                        <button type="button" class="wedocs-view-toggle__btn {{ docStyle === 'list' ? 'active' : '' }}" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid {{ docStyle === 'list' ? '#0073aa' : '#ddd' }}; border-radius: 4px; background: {{ docStyle === 'list' ? '#0073aa' : '#fff' }}; color: {{ docStyle === 'list' ? '#fff' : '#999' }}; cursor: pointer; padding: 0;">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="0" y="1" width="16" height="3"/><rect x="0" y="6.5" width="16" height="3"/><rect x="0" y="12" width="16" height="3"/></svg>
+                                        </button>
+                                    </div>
+                                    <# } #>
                     </div>
                     <# } #>
 
@@ -3605,8 +3759,10 @@ class DocsGrid extends Widget_Base {
                                     <#
                                         var numItems=docStyle==='2x2' ? 4 : (docStyle==='list' ? 3 : 2);
                                         for (var i=1; i <=numItems; i++) {
+                                            var animClass = (itemAnimation !== 'none') ? ' wedocs-anim wedocs-anim--' + itemAnimation + ' wedocs-anim--visible' : '';
+                                            var animStyle = (itemAnimation !== 'none') ? 'animation-duration: 0.6s; animation-delay: ' + (staggerAnimation ? ((i-1) * animationDelay) : 0) + 'ms;' : '';
                                         #>
-                                        <div class="wedocs-docs-grid__item" style="{{ itemStyle }}">
+                                        <div class="wedocs-docs-grid__item{{ animClass }}" style="{{ itemStyle }} {{ animStyle }}">
                                             <div class="wedocs-docs-grid__header" style="{{ headerStyle }}">
                                                 <h3 class="wedocs-docs-grid__title" style="{{ titleStyle }}">
                                                     <# if (docStyle==='list' ) {
