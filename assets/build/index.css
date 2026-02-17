@@ -4704,9 +4704,6 @@ select {
 .wedocs-document :is(.pr-10) {
   padding-right: 2.5rem;
 }
-.wedocs-document :is(.pr-14) {
-  padding-right: 3.5rem;
-}
 .wedocs-document :is(.pr-16) {
   padding-right: 4rem;
 }
