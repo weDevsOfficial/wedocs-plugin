@@ -27,7 +27,7 @@ class Elementor {
             'wedocs-category',
             [
                 'title' => __( 'weDocs', 'wedocs' ),
-                'icon' => 'fa fa-file-text-o',
+                'icon' => 'fa fa-book',
             ]
         );
     }

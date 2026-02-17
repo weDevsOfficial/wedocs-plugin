@@ -30,7 +30,7 @@ class DocsGrid extends Widget_Base {
      * Get widget icon.
      */
     public function get_icon() {
-        return 'eicon-grid';
+        return 'eicon-posts-grid';
     }
 
     /**
