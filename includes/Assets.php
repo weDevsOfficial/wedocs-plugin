@@ -74,6 +74,7 @@ class Assets {
                     'hasManageCap'  => current_user_can( 'manage_options' ),
                     'weDocsUrl'     => admin_url( 'admin.php?page=wedocs#/' ),
                     'pro_active'    => wedocs_is_pro_active(),
+                    'upgradePopupContent' => wedocs_get_upgrade_popup_content(),
                 ),
             );
         }

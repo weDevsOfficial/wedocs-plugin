@@ -670,3 +670,119 @@ function wedocs_get_ai_provider_configs() {
 function wedocs_is_pro_active() {
     return defined( 'WEDOCS_PRO_VERSION' );
 }
+
+/**
+ * Get the upgrade popup content for Free to Pro promotion.
+ *
+ * This function provides the default content for the upgrade popup and allows
+ * developers to customize it via filters for campaigns and promotions.
+ *
+ * @since 2.1.19
+ *
+ * @return array {
+ *     Array of popup content data.
+ *
+ *     @type string $title               Popup title text.
+ *     @type string $subtitle            Popup subtitle text.
+ *     @type array  $features            Array of feature items.
+ *     @type string $button_text         Upgrade button text.
+ *     @type string $button_url          Upgrade button URL.
+ *     @type array  $footer_features     Array of footer feature texts.
+ * }
+ */
+function wedocs_get_upgrade_popup_content() {
+	$default_content = array(
+		'title'    => __( 'Upgrade to', 'wedocs' ),
+		'subtitle' => __( 'to experience even more Powerful features 🎉', 'wedocs' ),
+		'features' => array(
+			array(
+				'title'       => __( 'Role based permission management ', 'wedocs' ),
+				'description' => __( 'or viewing, managing, and configuring permission settings.', 'wedocs' ),
+			),
+			array(
+				'title'       => __( 'Arrange content automatically or manually ', 'wedocs' ),
+				'description' => __( 'giving you full control over its presentation.', 'wedocs' ),
+			),
+			array(
+				'title'       => __( 'Personalize messaging tab with custom titles ', 'wedocs' ),
+				'description' => __( 'and messages for seamless communication.', 'wedocs' ),
+			),
+			array(
+				'title'       => '',
+				'description' => sprintf( 
+					/* translators: Full sentence combining: Customize with design widgets, colors, and pre-built options for an appealing interface. */
+					__( '%1$s %2$s %3$s', 'wedocs' ),
+					__( 'Customize with', 'wedocs' ),
+					__( 'design widgets, colors, and pre-built options', 'wedocs' ),
+					__( 'for an appealing interface.', 'wedocs' )
+				),
+			),
+			array(
+				'title'       => __( 'Get assisted by A.I. Powered Chatbot ', 'wedocs' ),
+				'description' => __( '24/7 with updated information and support.', 'wedocs' ),
+			),
+		),
+		'button_text' => __( 'Get weDocs Pro', 'wedocs' ),
+		'button_url'  => 'https://wedocs.co/pricing/?utm_source=wp-admin&utm_medium=freemium&utm_campaign=upgrade-popup',
+		'footer_features' => array(
+			__( '10,000+ successful businesses', 'wedocs' ),
+			__( '14 days no questions asked refund policy', 'wedocs' ),
+			__( 'Industry leading 24x7 support', 'wedocs' ),
+		),
+	);
+
+	/**
+	 * Filters the upgrade popup content.
+	 *
+	 * Use this filter to customize the popup content for campaigns and promotions.
+	 *
+	 * @since 2.1.19
+	 *
+	 * @param array $content {
+	 *     Array of popup content data.
+	 *
+	 *     @type string $title               Popup title text.
+	 *     @type string $subtitle            Popup subtitle text.
+	 *     @type array  $features            Array of feature items with 'title' and 'description' keys.
+	 *     @type string $button_text         Upgrade button text.
+	 *     @type string $button_url          Upgrade button URL.
+	 *     @type array  $footer_features     Array of footer feature texts.
+	 * }
+	 *
+	 * @example
+	 * add_filter( 'wedocs_upgrade_popup_content', function( $content ) {
+	 *     // Customize for a campaign
+	 *     $content['title'] = 'Special Offer!';
+	 *     $content['subtitle'] = 'Get 30% OFF weDocs Pro - Limited Time!';
+	 *     $content['button_text'] = 'Claim Your Discount Now';
+	 *     $content['button_url'] = 'https://wedocs.co/pricing/?discount=CAMPAIGN30';
+	 *     
+	 *     // Update features
+	 *     $content['features'] = array(
+	 *         array(
+	 *             'title' => 'Role-Based Permission Management',
+	 *             'description' => '',
+	 *         ),
+	 *         array(
+	 *             'title' => 'Docs Duplicator',
+	 *             'description' => '',
+	 *         ),
+	 *         array(
+	 *             'title' => '7-layer hierarchical article creation',
+	 *             'description' => '',
+	 *         ),
+	 *         array(
+	 *             'title' => 'Social Sharing Options',
+	 *             'description' => '',
+	 *         ),
+	 *         array(
+	 *             'title' => 'Floating Contact form',
+	 *             'description' => '',
+	 *         ),
+	 *     );
+	 *     
+	 *     return $content;
+	 * } );
+	 */
+	return apply_filters( 'wedocs_upgrade_popup_content', $default_content );
+}
