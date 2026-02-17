@@ -88,16 +88,22 @@ class DocsGrid extends Widget_Base {
         );
 
         // Get all docs for exclude option
-        $docs = get_posts([
-            'post_type' => 'docs',
-            'post_status' => 'publish',
-            'numberposts' => -1,
-            'post_parent' => 0,
-        ]);
+        $cache_key = 'wedocs_parent_docs_options';
+        $docs_options = wp_cache_get($cache_key);
 
-        $docs_options = [];
-        foreach ($docs as $doc) {
-            $docs_options[$doc->ID] = $doc->post_title;
+        if ($docs_options === false) {
+            $docs = get_posts([
+                'post_type' => 'docs',
+                'post_status' => 'publish',
+                'numberposts' => -1,
+                'post_parent' => 0,
+            ]);
+
+            $docs_options = [];
+            foreach ($docs as $doc) {
+                $docs_options[$doc->ID] = $doc->post_title;
+            }
+            wp_cache_set($cache_key, $docs_options, '', HOUR_IN_SECONDS);
         }
 
         $this->add_control(
