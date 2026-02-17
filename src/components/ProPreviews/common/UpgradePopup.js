@@ -29,6 +29,19 @@ const UpgradePopup = ({ children, className }) => {
     { src: SliderImgFourSrc, text: __( 'Pop-up slider fourth image', 'wedocs' ) },
   ];
 
+  // Get popup content from localized data, with fallbacks
+  const popupContent = window.weDocsAdminVars?.upgradePopupContent || {};
+  const title = popupContent.title || __( 'Upgrade to', 'wedocs' );
+  const subtitle = popupContent.subtitle || __( 'to experience even more Powerful features 🎉', 'wedocs' );
+  const features = popupContent.features || [];
+  const buttonText = popupContent.button_text || __( 'Get weDocs Pro', 'wedocs' );
+  const buttonUrl = popupContent.button_url || 'https://wedocs.co/pricing/?utm_source=wp-admin&utm_medium=freemium&utm_campaign=upgrade-popup';
+  const footerFeatures = popupContent.footer_features || [
+    __( '10,000+ successful businesses', 'wedocs' ),
+    __( '14 days no questions asked refund policy', 'wedocs' ),
+    __( 'Industry leading 24x7 support', 'wedocs' ),
+  ];
+
   return (
     <>
       {/* Pro upgrade button. */}
@@ -92,95 +105,36 @@ const UpgradePopup = ({ children, className }) => {
                                 <path d='M15.889 1v4M8.351 2l3.122 2.828M23.427 2l-3.122 2.828' stroke='#ff8c5a' strokeLinecap='round' />
                               </svg>
                             </div>
-                            <h2 className='font-orange header-one font-semibold text-3xl text-[#ff9000] leading-[3rem]'>{ __( 'Upgrade to', 'wedocs' ) }</h2>
+                            <h2 className='font-orange header-one font-semibold text-3xl text-[#ff9000] leading-[3rem]'>{ title }</h2>
                           </div>
                           <h2 className='header-two text-3xl font-normal leading-[3rem]'>
                             weDocs <span className='font-bold'>Pro</span>
                           </h2>
                           <h2 className='header-three text-[#656668] mb-0.5 pr-16 font-normal text-xl leading-8'>
-                            { __( 'to experience even more Powerful features 🎉', 'wedocs' ) }
+                            { subtitle }
                           </h2>
                         </div>
                       </Dialog.Title>
                       <div className='popup-list-area mb-[60px] space-y-0.5'>
-                        <div className='single-checklist flex'>
-                          <div className='check-icon mt-[13px] mr-3.5'>
-                            <div className='check-img bg-[#139f84] py-1.5 px-[5px] rounded-full'>
-                              <svg width='10' height='8' fill='none'>
-                                <path fillRule='evenodd' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z' fill='#fff' />
-                              </svg>
+                        { features.map( ( feature, index ) => (
+                          <div key={ index } className='single-checklist flex'>
+                            <div className='check-icon mt-[13px] mr-3.5'>
+                              <div className='check-img bg-[#139f84] py-1.5 px-[5px] rounded-full'>
+                                <svg width='10' height='8' fill='none'>
+                                  <path fillRule='evenodd' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z' fill='#fff' />
+                                </svg>
+                              </div>
+                            </div>
+                            <div className='check-list'>
+                              <p className='text-[#656668] mb-0.5 mt-[13px] pr-8 text-[13px] leading-normal font-normal'>
+                                { feature.title && <span className='font-medium text-black'>{ feature.title }</span> }
+                                { feature.description }
+                              </p>
                             </div>
                           </div>
-                          <div className='check-list'>
-                            <p className='text-[#656668] mb-0.5 mt-[13px] pr-8 text-[13px] leading-normal font-normal'>
-                              <span className='font-medium text-black'>{ __( 'Role based permission management ', 'wedocs' ) }</span>
-                              { __( 'or viewing, managing, and configuring permission settings.', 'wedocs' ) }
-                            </p>
-                          </div>
-                        </div>
-                        <div className='single-checklist flex'>
-                          <div className='check-icon mt-[13px] mr-3.5'>
-                            <div className='check-img bg-[#139f84] py-1.5 px-[5px] rounded-full'>
-                              <svg width='10' height='8' fill='none'>
-                                <path fillRule='evenodd' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z' fill='#fff' />
-                              </svg>
-                            </div>
-                          </div>
-                          <div className='check-list'>
-                            <p className='text-[#656668] mb-0.5 mt-[13px] pr-8 text-[13px] leading-normal font-normal'>
-                              <span className='font-medium text-black'>{ __( 'Arrange content automatically or manually ', 'wedocs' ) }</span>
-                              { __( 'giving you full control over its presentation.', 'wedocs' ) }
-                            </p>
-                          </div>
-                        </div>
-                        <div className='single-checklist flex'>
-                          <div className='check-icon mt-[13px] mr-3.5'>
-                            <div className='check-img bg-[#139f84] py-1.5 px-[5px] rounded-full'>
-                              <svg width='10' height='8' fill='none'>
-                                <path fillRule='evenodd' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z' fill='#fff' />
-                              </svg>
-                            </div>
-                          </div>
-                          <div className='check-list'>
-                            <p className='text-[#656668] mb-0.5 mt-[13px] pr-8 text-[13px] leading-normal font-normal'>
-                              <span className='font-medium text-black'>{ __( 'Personalize messaging tab with custom titles ', 'wedocs' ) }</span>
-                              { __( 'and messages for seamless communication.', 'wedocs' ) }
-                            </p>
-                          </div>
-                        </div>
-                        <div className='single-checklist flex'>
-                          <div className='check-icon mt-[13px] mr-3.5'>
-                            <div className='check-img bg-[#139f84] py-1.5 px-[5px] rounded-full'>
-                              <svg width='10' height='8' fill='none'>
-                                <path fillRule='evenodd' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z' fill='#fff' />
-                              </svg>
-                            </div>
-                          </div>
-                          <div className='check-list'>
-                            <p className='text-[#656668] mb-0.5 mt-[13px] pr-14 text-[13px] leading-normal font-normal'>
-                              { __( 'Customize with ', 'wedocs' ) }
-                              <span className='font-medium text-black'>{ __( 'design widgets, colors, and pre-built options ', 'wedocs' ) }</span>
-                              { __( 'for an appealing interface.', 'wedocs' ) }
-                            </p>
-                          </div>
-                        </div>
-                        <div className='single-checklist flex'>
-                          <div className='check-icon mt-[13px] mr-3.5'>
-                            <div className='check-img bg-[#139f84] py-1.5 px-[5px] rounded-full'>
-                              <svg width='10' height='8' fill='none'>
-                                <path fillRule='evenodd' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z' fill='#fff' />
-                              </svg>
-                            </div>
-                          </div>
-                          <div className='check-list'>
-                            <p className='text-[#656668] mb-0.5 mt-[13px] pr-14 text-[13px] leading-normal font-normal'>
-                              <span className='font-medium text-black'>{ __( 'Get assisted by A.I. Powered Chatbot ', 'wedocs' ) }</span>
-                              { __( '24/7 with updated information and support.', 'wedocs' ) }
-                            </p>
-                          </div>
-                        </div>
+                        ) ) }
                       </div>
-                      <UpgradeButton classes={ `px-6 py-3.5 !font-normal !mt-14` } />
+                      <UpgradeButton classes={ `px-6 py-3.5 !font-normal !mt-14` } customUrl={ buttonUrl } customText={ buttonText } />
                     </div>
                     <div className='modal-window-inner'>
                       <div className='slider-area'>
@@ -217,32 +171,14 @@ const UpgradePopup = ({ children, className }) => {
                   </div>
                   <div className='modal-footer mt-8 mb-0.5'>
                     <div className='footer-feature flex justify-between'>
-                      <p className='flex items-center'>
-                        <svg className='mr-3.5 mt-0.5' width='10' height='8'>
-                          <path fillRule='evenodd' fill='#139F84' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z'/>
-                        </svg>
-                        { __( '10,000+ successful businesses', 'wedocs' ) }
-                      </p>
-                      <p className='flex items-center'>
-                        <svg className='mr-3.5 mt-0.5' width='10' height='8'>
-                          <path
-                            fill='#139F84'
-                            fillRule='evenodd'
-                            d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z'
-                          />
-                        </svg>
-                        { __( '14 days no questions asked refund policy', 'wedocs' ) }
-                      </p>
-                      <p className='flex items-center'>
-                        <svg className='mr-3.5 mt-0.5' width='10' height='8'>
-                          <path
-                            fill='#139F84'
-                            fillRule='evenodd'
-                            d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z'
-                          />
-                        </svg>
-                        { __( 'Industry leading 24x7 support', 'wedocs' ) }
-                      </p>
+                      { footerFeatures.map( ( feature, index ) => (
+                        <p key={ index } className='flex items-center'>
+                          <svg className='mr-3.5 mt-0.5' width='10' height='8'>
+                            <path fillRule='evenodd' fill='#139F84' d='M8.927 1.134c-.33-.33-.865-.33-1.195 0L3.374 5.492 1.897 4.015c-.33-.33-.865-.33-1.195 0s-.33.865 0 1.195l2.075 2.075c.33.33.865.33 1.195 0l4.955-4.955c.33-.33.33-.865 0-1.195zM.992 4.853c.01.012.02.024.031.035l2.075 2.075a.39.39 0 0 0 .552 0l4.955-4.955a.39.39 0 0 0 .031-.517.39.39 0 0 1-.031.517L3.65 6.963a.39.39 0 0 1-.552 0L1.023 4.888c-.011-.011-.022-.023-.031-.035z'/>
+                          </svg>
+                          { feature }
+                        </p>
+                      ) ) }
                     </div>
                   </div>
                 </Dialog.Panel>

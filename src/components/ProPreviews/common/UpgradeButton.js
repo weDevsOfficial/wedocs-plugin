@@ -1,6 +1,9 @@
 import { __ } from '@wordpress/i18n';
 
-const UpgradeButton = ( { classes, showPopup, children, className } ) => {
+const UpgradeButton = ( { classes, showPopup, children, className, customUrl, customText } ) => {
+  const buttonUrl = customUrl || '//wedocs.co/';
+  const buttonText = customText || __( 'Go Pro – Up to 50% OFF! 🔥', 'wedocs' );
+
   return (
     <>
       { children ? (
@@ -8,11 +11,11 @@ const UpgradeButton = ( { classes, showPopup, children, className } ) => {
       ) : (
         <a
           target='_blank'
-          href='//wedocs.co/'
+          href={ buttonUrl }
           onClick={ showPopup }
           className={ `upgrade-button text-white hover:text-white focus:text-white focus:ring-0 px-3.5 py-2.5 inline-flex items-center rounded-md bg-[#4F46E5] hover:bg-[#443aff] font-semibold text-sm gap-2.5 ${ classes ? classes : '' }` }
         >
-          { __( 'Go Pro – Up to 50% OFF! 🔥', 'wedocs' ) }
+          { buttonText }
          {/* {
           
              <svg className='crown-icon' xmlns="http://www.w3.org/2000/svg" width="20" fill="#fff" height="15">
