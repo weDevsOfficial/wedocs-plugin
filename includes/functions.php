@@ -709,7 +709,13 @@ function wedocs_get_upgrade_popup_content() {
 			),
 			array(
 				'title'       => '',
-				'description' => __( 'Customize with ', 'wedocs' ) . __( 'design widgets, colors, and pre-built options ', 'wedocs' ) . __( 'for an appealing interface.', 'wedocs' ),
+				'description' => sprintf( 
+					/* translators: Full sentence combining: Customize with design widgets, colors, and pre-built options for an appealing interface. */
+					__( '%1$s %2$s %3$s', 'wedocs' ),
+					__( 'Customize with', 'wedocs' ),
+					__( 'design widgets, colors, and pre-built options', 'wedocs' ),
+					__( 'for an appealing interface.', 'wedocs' )
+				),
 			),
 			array(
 				'title'       => __( 'Get assisted by A.I. Powered Chatbot ', 'wedocs' ),

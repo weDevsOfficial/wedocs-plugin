@@ -123,10 +123,10 @@ Change content based on the current date/season:
 
 ```php
 add_filter( 'wedocs_upgrade_popup_content', function( $content ) {
-    $current_month = date( 'n' );
+    $current_month = (int) date( 'n' );
     
     // December holiday campaign
-    if ( $current_month === 12 ) {
+    if ( 12 === $current_month ) {
         $content['title'] = 'Holiday Special! 🎄';
         $content['subtitle'] = 'End the year with powerful documentation tools - 25% OFF!';
         $content['button_text'] = 'Get Holiday Deal';

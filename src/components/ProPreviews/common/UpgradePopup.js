@@ -127,7 +127,7 @@ const UpgradePopup = ({ children, className }) => {
                             </div>
                             <div className='check-list'>
                               <p className='text-[#656668] mb-0.5 mt-[13px] pr-8 text-[13px] leading-normal font-normal'>
-                                { feature.title && <span className='font-medium text-black'>{ feature.title }</span> }
+                                { feature.title ? <span className='font-medium text-black'>{ feature.title }</span> : null }
                                 { feature.description }
                               </p>
                             </div>
