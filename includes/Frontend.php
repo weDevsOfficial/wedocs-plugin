@@ -158,6 +158,11 @@ class Frontend {
      * @return string
      */
     public function template_loader( $template ) {
+        // override if builder use_wedocs_builder_template is set to true
+        if ( ! use_wedocs_legacy_template() ) {
+            return $template;
+        }
+
         $find = [ 'docs.php' ];
         $file = '';
 
