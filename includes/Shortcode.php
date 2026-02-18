@@ -41,11 +41,12 @@ class Shortcode {
      */
     public static function wedocs( $args = [] ) {
         $defaults = [
-            'col'     => '2',
-            'include' => 'any',
-            'exclude' => '',
-            'items'   => 10,
-            'more'    => __( 'View Details', 'wedocs' ),
+            'col'      => '2',
+            'include'  => 'any',
+            'exclude'  => '',
+            'items'    => 10,
+            'more'     => __( 'View Details', 'wedocs' ),
+            'paginate' => '',
         ];
 
         $args     = wp_parse_args( $args, $defaults );
@@ -67,6 +68,23 @@ class Shortcode {
 
         $parent_args = apply_filters( 'wedocs_shortcode_page_parent_args', $parent_args );
         $parent_docs = get_pages( $parent_args );
+
+        // Pagination support.
+        $per_page    = ! empty( $args['paginate'] ) ? absint( $args['paginate'] ) : 0;
+        $total_docs  = is_array( $parent_docs ) ? count( $parent_docs ) : 0;
+        $total_pages = 1;
+        $current_page = 1;
+
+        if ( $per_page > 0 && $total_docs > $per_page ) {
+            $raw_page     = isset( $_GET['wedocs_page'] ) && is_scalar( $_GET['wedocs_page'] )
+                                ? wp_unslash( $_GET['wedocs_page'] )
+                                : 1;
+            $current_page = max( 1, absint( $raw_page ) );
+            $total_pages  = (int) ceil( $total_docs / $per_page );
+            $current_page = min( $current_page, $total_pages );
+            $offset       = ( $current_page - 1 ) * $per_page;
+            $parent_docs  = array_slice( $parent_docs, $offset, $per_page );
+        }
 
         // Arrange the section docs.
         if ( $parent_docs ) {
@@ -120,6 +138,8 @@ class Shortcode {
                 'more'          => $args['more'],
                 'col'           => (int) ( $docs_length === 1 ? $docs_length : $args['col'] ),
                 'enable_search' => wedocs_get_general_settings( 'enable_search', 'on' ),
+                'current_page'  => $current_page,
+                'total_pages'   => $total_pages,
             )
         );
 

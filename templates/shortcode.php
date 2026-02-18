@@ -99,6 +99,73 @@ if ( $docs ) {
             </li>
         <?php } ?>
     </ul>
+
+    <?php if ( ! empty( $total_pages ) && $total_pages > 1 ) : ?>
+        <nav class="wedocs-pagination">
+            <?php if ( $current_page > 1 ) : ?>
+                <a href="<?php echo esc_url( add_query_arg( 'wedocs_page', $current_page - 1 ) ); ?>" class="wedocs-pagination__prev">
+                    &larr; <?php esc_html_e( 'Previous', 'wedocs' ); ?>
+                </a>
+            <?php else : ?>
+                <span class="wedocs-pagination__prev wedocs-pagination__disabled">
+                    &larr; <?php esc_html_e( 'Previous', 'wedocs' ); ?>
+                </span>
+            <?php endif; ?>
+
+            <span class="wedocs-pagination__info">
+                <?php printf( esc_html__( 'Page %1$d of %2$d', 'wedocs' ), $current_page, $total_pages ); ?>
+            </span>
+
+            <?php if ( $current_page < $total_pages ) : ?>
+                <a href="<?php echo esc_url( add_query_arg( 'wedocs_page', $current_page + 1 ) ); ?>" class="wedocs-pagination__next">
+                    <?php esc_html_e( 'Next', 'wedocs' ); ?> &rarr;
+                </a>
+            <?php else : ?>
+                <span class="wedocs-pagination__next wedocs-pagination__disabled">
+                    <?php esc_html_e( 'Next', 'wedocs' ); ?> &rarr;
+                </span>
+            <?php endif; ?>
+        </nav>
+
+        <style>
+            .wedocs-pagination {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 16px;
+                margin-top: 30px;
+                padding: 12px 0;
+            }
+            .wedocs-pagination__prev,
+            .wedocs-pagination__next {
+                display: inline-flex;
+                align-items: center;
+                padding: 8px 18px;
+                border-radius: 6px;
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: 500;
+                border: 1px solid currentColor;
+                color: inherit;
+                transition: opacity 0.2s ease;
+            }
+            .wedocs-pagination__prev:hover,
+            .wedocs-pagination__next:hover {
+                opacity: 0.75;
+            }
+            .wedocs-pagination__disabled {
+                opacity: 0.4;
+                pointer-events: none;
+                cursor: default;
+            }
+            .wedocs-pagination__info {
+                font-size: 14px;
+                color: inherit;
+                opacity: 0.7;
+            }
+        </style>
+    <?php endif; ?>
+
 </div>
 
 <?php }
