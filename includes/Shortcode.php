@@ -76,7 +76,10 @@ class Shortcode {
         $current_page = 1;
 
         if ( $per_page > 0 && $total_docs > $per_page ) {
-            $current_page = max( 1, absint( isset( $_GET['wedocs_page'] ) ? $_GET['wedocs_page'] : 1 ) );
+            $raw_page     = isset( $_GET['wedocs_page'] ) && is_scalar( $_GET['wedocs_page'] )
+                                ? wp_unslash( $_GET['wedocs_page'] )
+                                : 1;
+            $current_page = max( 1, absint( $raw_page ) );
             $total_pages  = (int) ceil( $total_docs / $per_page );
             $current_page = min( $current_page, $total_pages );
             $offset       = ( $current_page - 1 ) * $per_page;
