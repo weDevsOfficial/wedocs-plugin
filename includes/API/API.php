@@ -562,8 +562,9 @@ class API extends WP_REST_Controller {
                 continue;
             }
 
-            $positive = (int) get_post_meta( $doc->ID, 'positive', true );
-            $negative = (int) get_post_meta( $doc->ID, 'negative', true );
+            // Get feedback counts
+            $positive = (int) get_post_meta($doc->ID, 'positive', true);
+            $negative = (int) get_post_meta($doc->ID, 'negative', true);
             if ( empty( $positive ) && empty( $negative ) ) {
                 continue;
             }
@@ -980,7 +981,7 @@ class API extends WP_REST_Controller {
 
     /**
      * Get the data needed for promotional notice.
-     * 
+     *
      * @since 2.1.11
      *
      * @return bool|WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
@@ -1031,11 +1032,11 @@ class API extends WP_REST_Controller {
         return false;
     }
 
-     /**
+    /**
      * Handle promotional notice hidden action
-     * 
+     *
      * @since 2.1.11
-     * 
+     *
      * @param WP_REST_Request $request Current request.
      *
      */
@@ -1108,7 +1109,7 @@ class API extends WP_REST_Controller {
 
         // Get AI settings
         $ai_settings = wedocs_get_option( 'ai', 'wedocs_settings', '' );
-        
+
         if ( empty( $ai_settings ) || empty( $ai_settings['providers'] ) ) {
             return new WP_Error(
                 'wedocs_ai_not_configured',
@@ -1119,10 +1120,10 @@ class API extends WP_REST_Controller {
 
         // Use provided provider or default
         $selected_provider = $provider ?: ( $ai_settings['default_provider'] ?? 'openai' );
-        
+
         // Get provider config
         $provider_config = $ai_settings['providers'][ $selected_provider ] ?? null;
-        
+
         if ( ! $provider_config || empty( $provider_config['api_key'] ) ) {
             return new WP_Error(
                 'wedocs_ai_provider_not_configured',
@@ -1134,7 +1135,7 @@ class API extends WP_REST_Controller {
         // Get provider endpoint and config
         $provider_configs = wedocs_get_ai_provider_configs();
         $provider_endpoint_config = $provider_configs[ $selected_provider ] ?? null;
-        
+
         if ( ! $provider_endpoint_config ) {
             return new WP_Error(
                 'wedocs_ai_invalid_provider',
@@ -1144,7 +1145,7 @@ class API extends WP_REST_Controller {
         }
 
         $selected_model = $model ?: ( $provider_config['selected_model'] ?? null );
-        
+
         if ( ! $selected_model ) {
             return new WP_Error(
                 'wedocs_ai_model_not_specified',
@@ -1265,12 +1266,12 @@ class API extends WP_REST_Controller {
 
         if ( is_wp_error( $response ) ) {
             $error_message = $response->get_error_message();
-            
+
             // Handle timeout errors
             if ( strpos( $error_message, 'timeout' ) !== false || strpos( $error_message, 'timed out' ) !== false ) {
                 throw new \Exception( __( 'The request took too long. Please try again with a shorter prompt or check your connection.', 'wedocs' ) );
             }
-            
+
             throw new \Exception( sprintf( __( 'OpenAI API error: %s', 'wedocs' ), $error_message ) );
         }
 
@@ -1341,12 +1342,12 @@ class API extends WP_REST_Controller {
 
         if ( is_wp_error( $response ) ) {
             $error_message = $response->get_error_message();
-            
+
             // Handle timeout errors
             if ( strpos( $error_message, 'timeout' ) !== false || strpos( $error_message, 'timed out' ) !== false ) {
                 throw new \Exception( __( 'The request took too long. Please try again with a shorter prompt or check your connection.', 'wedocs' ) );
             }
-            
+
             throw new \Exception( sprintf( __( 'Anthropic API error: %s', 'wedocs' ), $error_message ) );
         }
 
@@ -1421,12 +1422,12 @@ class API extends WP_REST_Controller {
 
         if ( is_wp_error( $response ) ) {
             $error_message = $response->get_error_message();
-            
+
             // Handle timeout errors
             if ( strpos( $error_message, 'timeout' ) !== false || strpos( $error_message, 'timed out' ) !== false ) {
                 throw new \Exception( __( 'The request took too long. Please try again with a shorter prompt or check your connection.', 'wedocs' ) );
             }
-            
+
             throw new \Exception( sprintf( __( 'Google API error: %s', 'wedocs' ), $error_message ) );
         }
 
@@ -1464,7 +1465,7 @@ class API extends WP_REST_Controller {
      */
     private function handle_api_error( $response_code, $decoded, $provider_name ) {
         $error_message = $decoded['error']['message'] ?? $decoded['error']['type'] ?? $decoded['error']['status'] ?? sprintf( __( '%s API request failed', 'wedocs' ), $provider_name );
-        
+
         // User-friendly error messages
         if ( $response_code === 401 ) {
             if ( strpos( strtolower( $error_message ), 'invalid' ) !== false || strpos( strtolower( $error_message ), 'api' ) !== false ) {
@@ -1481,7 +1482,7 @@ class API extends WP_REST_Controller {
         } elseif ( $response_code === 500 || $response_code === 503 ) {
             throw new \Exception( sprintf( __( '%s service is temporarily unavailable. Please try again later.', 'wedocs' ), $provider_name ) );
         }
-        
+
         // Generic error
         throw new \Exception( sprintf( __( '%s API error: %s', 'wedocs' ), $provider_name, $error_message ) );
     }

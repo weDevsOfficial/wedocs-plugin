@@ -334,13 +334,13 @@ class Ajax {
             wp_send_json_error(['message' => __('Invalid vote.', 'wedocs')]);
         }
 
-        $meta_key = $vote === 'yes' ? '_wedocs_helpful_yes' : '_wedocs_helpful_no';
+        $meta_key = $vote === 'yes' ? 'positive' : 'negative';
         $current = (int) get_post_meta($post_id, $meta_key, true);
         update_post_meta($post_id, $meta_key, $current + 1);
 
         wp_send_json_success([
-            'yes' => (int) get_post_meta($post_id, '_wedocs_helpful_yes', true),
-            'no' => (int) get_post_meta($post_id, '_wedocs_helpful_no', true),
+            'yes' => (int) get_post_meta($post_id, 'positive', true),
+            'no' => (int) get_post_meta($post_id, 'negative', true),
         ]);
     }
 

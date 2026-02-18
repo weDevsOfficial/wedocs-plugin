@@ -33,6 +33,31 @@ class DocNavigation extends Widget_Base {
         return ['navigation', 'next', 'previous', 'prev', 'wedocs', 'docs'];
     }
 
+    /**
+     * Get the proper post context for editor mode
+     */
+    protected function get_editor_post_context() {
+        global $post;
+
+        // If we have a valid docs post, use it
+        if ($post && $post->post_type === 'docs') {
+            return $post;
+        }
+
+        // In editor mode, try to get the post being edited
+        if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
+            $document = \Elementor\Plugin::$instance->documents->get_current();
+            if ($document) {
+                $edit_post = get_post($document->get_main_id());
+                if ($edit_post && $edit_post->post_type === 'docs') {
+                    return $edit_post;
+                }
+            }
+        }
+
+        return null;
+    }
+
     protected function register_controls() {
 
         // Content Section
@@ -110,6 +135,20 @@ class DocNavigation extends Widget_Base {
                     'side-by-side' => __('Side by Side', 'wedocs'),
                     'stacked' => __('Stacked', 'wedocs'),
                 ],
+            ]
+        );
+
+        $this->add_control(
+            'mobile_stack',
+            [
+                'label' => __('Stack on Mobile', 'wedocs'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'wedocs'),
+                'label_off' => __('No', 'wedocs'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+                'description' => __('Stack prev/next vertically on screens ≤768px', 'wedocs'),
+                'condition' => ['layout' => 'side-by-side'],
             ]
         );
 
@@ -344,21 +383,23 @@ class DocNavigation extends Widget_Base {
         $show_arrows = ($settings['show_arrows'] ?? 'yes') === 'yes';
         $layout = $settings['layout'] ?? 'side-by-side';
 
-        global $post, $wpdb;
+        $current_post = $this->get_editor_post_context();
 
-        if (empty($post) || $post->post_type !== 'docs') {
+        if (!$current_post) {
             if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
-                echo '<p style="color: #999; font-style: italic; padding: 20px; text-align: center;">' . __('Doc Navigation: Preview it on a single doc page.', 'wedocs') . '</p>';
+                $this->render_editor_preview($settings);
             }
             return;
         }
+
+        global $wpdb;
 
         $next_post_id = 0;
         $prev_post_id = 0;
 
         if ($show_next) {
             $next_query = "SELECT ID FROM {$wpdb->posts}
-                WHERE post_parent = {$post->post_parent} AND post_type = 'docs' AND post_status = 'publish' AND menu_order > {$post->menu_order}
+                WHERE post_parent = {$current_post->post_parent} AND post_type = 'docs' AND post_status = 'publish' AND menu_order > {$current_post->menu_order}
                 ORDER BY menu_order ASC
                 LIMIT 0, 1";
             $next_post_id = (int) $wpdb->get_var($next_query);
@@ -366,7 +407,7 @@ class DocNavigation extends Widget_Base {
 
         if ($show_prev) {
             $prev_query = "SELECT ID FROM {$wpdb->posts}
-                WHERE post_parent = {$post->post_parent} AND post_type = 'docs' AND post_status = 'publish' AND menu_order < {$post->menu_order}
+                WHERE post_parent = {$current_post->post_parent} AND post_type = 'docs' AND post_status = 'publish' AND menu_order < {$current_post->menu_order}
                 ORDER BY menu_order DESC
                 LIMIT 0, 1";
             $prev_post_id = (int) $wpdb->get_var($prev_query);
@@ -374,13 +415,18 @@ class DocNavigation extends Widget_Base {
 
         if (!$next_post_id && !$prev_post_id) {
             if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
-                echo '<p style="color: #999; font-style: italic; padding: 20px; text-align: center;">' . __('Doc Navigation: No adjacent docs found.', 'wedocs') . '</p>';
+                $this->render_editor_preview($settings);
             }
             return;
         }
 
+        $mobile_stack = ($settings['mobile_stack'] ?? 'yes') === 'yes';
+
         $nav_class = 'wedocs-el-nav wedocs-el-nav--' . $layout;
-        ?>
+        if ($mobile_stack && $layout === 'side-by-side') {
+            $nav_class .= ' wedocs-el-nav--mobile-stack';
+        }
+?>
 
         <nav class="<?php echo esc_attr($nav_class); ?>">
             <?php if ($show_prev && $prev_post_id): ?>
@@ -389,7 +435,10 @@ class DocNavigation extends Widget_Base {
                     <a href="<?php echo esc_url(get_permalink($prev_post_id)); ?>" class="wedocs-el-nav__link">
                         <?php if ($show_arrows): ?>
                             <span class="wedocs-el-nav__arrow wedocs-el-nav__arrow--prev">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M19 12H5" />
+                                    <path d="M12 19l-7-7 7-7" />
+                                </svg>
                             </span>
                         <?php endif; ?>
                         <span class="wedocs-el-nav__content">
@@ -416,7 +465,10 @@ class DocNavigation extends Widget_Base {
                         </span>
                         <?php if ($show_arrows): ?>
                             <span class="wedocs-el-nav__arrow wedocs-el-nav__arrow--next">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14" />
+                                    <path d="M12 5l7 7-7 7" />
+                                </svg>
                             </span>
                         <?php endif; ?>
                     </a>
@@ -442,7 +494,7 @@ class DocNavigation extends Widget_Base {
                 min-width: 0;
             }
 
-            .wedocs-el-nav--stacked .wedocs-el-nav__item + .wedocs-el-nav__item {
+            .wedocs-el-nav--stacked .wedocs-el-nav__item+.wedocs-el-nav__item {
                 border-top: 1px solid;
                 margin-top: 12px;
                 padding-top: 12px;
@@ -512,6 +564,28 @@ class DocNavigation extends Widget_Base {
             .wedocs-el-nav__item--empty {
                 visibility: hidden;
             }
+
+            @media screen and (max-width: 768px) {
+                .wedocs-el-nav--mobile-stack {
+                    flex-direction: column;
+                    gap: 0;
+                }
+
+                .wedocs-el-nav--mobile-stack .wedocs-el-nav__separator {
+                    display: none;
+                }
+
+                .wedocs-el-nav--mobile-stack .wedocs-el-nav__item+.wedocs-el-nav__item {
+                    border-top: 1px solid #e2e8f0;
+                    margin-top: 12px;
+                    padding-top: 12px;
+                }
+
+                .wedocs-el-nav--mobile-stack .wedocs-el-nav__item--next .wedocs-el-nav__link {
+                    justify-content: flex-start;
+                    text-align: left;
+                }
+            }
         </style>
     <?php
     }
@@ -519,59 +593,133 @@ class DocNavigation extends Widget_Base {
     protected function content_template() {
     ?>
         <#
-        var showPrev = settings.show_prev === 'yes';
-        var showNext = settings.show_next === 'yes';
-        var showArrows = settings.show_arrows === 'yes';
-        var layout = settings.layout || 'side-by-side';
-        var prevLabel = settings.prev_label || 'Previous';
-        var nextLabel = settings.next_label || 'Next';
-        var arrowColor = settings.arrow_color || '#94a3b8';
-        var labelColor = settings.label_color || '#94a3b8';
-        var titleColor = settings.title_color || '#1e293b';
-        var arrowSize = settings.arrow_size?.size || 20;
-        #>
+            var showPrev=settings.show_prev==='yes' ;
+            var showNext=settings.show_next==='yes' ;
+            var showArrows=settings.show_arrows==='yes' ;
+            var layout=settings.layout || 'side-by-side' ;
+            var prevLabel=settings.prev_label || 'Previous' ;
+            var nextLabel=settings.next_label || 'Next' ;
+            var arrowColor=settings.arrow_color || '#94a3b8' ;
+            var labelColor=settings.label_color || '#94a3b8' ;
+            var titleColor=settings.title_color || '#1e293b' ;
+            var arrowSize=settings.arrow_size?.size || 20;
+            #>
 
-        <nav class="wedocs-el-nav wedocs-el-nav--{{ layout }}" style="display: {{ layout === 'side-by-side' ? 'flex' : 'block' }}; align-items: stretch;">
-            <# if (showPrev) { #>
-                <div class="wedocs-el-nav__item wedocs-el-nav__item--prev" style="{{ layout === 'side-by-side' ? 'flex: 1;' : '' }}">
-                    <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; padding: 8px 0;">
-                        <# if (showArrows) { #>
-                            <span style="flex-shrink: 0; display: flex; color: {{ arrowColor }};">
-                                <svg width="{{ arrowSize }}" height="{{ arrowSize }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            <nav class="wedocs-el-nav wedocs-el-nav--{{ layout }}" style="display: {{ layout === 'side-by-side' ? 'flex' : 'block' }}; align-items: stretch;">
+                <# if (showPrev) { #>
+                    <div class="wedocs-el-nav__item wedocs-el-nav__item--prev" style="{{ layout === 'side-by-side' ? 'flex: 1;' : '' }}">
+                        <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; padding: 8px 0;">
+                            <# if (showArrows) { #>
+                                <span style="flex-shrink: 0; display: flex; color: {{ arrowColor }};">
+                                    <svg width="{{ arrowSize }}" height="{{ arrowSize }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 12H5" />
+                                        <path d="M12 19l-7-7 7-7" />
+                                    </svg>
+                                </span>
+                                <# } #>
+                                    <span style="display: flex; flex-direction: column; gap: 4px;">
+                                        <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; color: {{ labelColor }};">{{ prevLabel }}</span>
+                                        <span style="font-size: 15px; font-weight: 600; color: {{ titleColor }};">Getting Started Guide</span>
+                                    </span>
+                        </a>
+                    </div>
+                    <# } #>
+
+                        <# if (showPrev && showNext && layout==='side-by-side' ) { #>
+                            <div style="width: {{ settings.separator_width?.size || 1 }}px; background: {{ settings.separator_color || '#e2e8f0' }}; margin: 0 20px; align-self: stretch;"></div>
+                            <# } #>
+
+                                <# if (showPrev && showNext && layout==='stacked' ) { #>
+                                    <div style="border-top: {{ settings.separator_width?.size || 1 }}px solid {{ settings.separator_color || '#e2e8f0' }}; margin-top: 12px; padding-top: 12px;"></div>
+                                    <# } #>
+
+                                        <# if (showNext) { #>
+                                            <div class="wedocs-el-nav__item wedocs-el-nav__item--next" style="{{ layout === 'side-by-side' ? 'flex: 1;' : '' }}">
+                                                <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; padding: 8px 0; justify-content: flex-end; text-align: right;">
+                                                    <span style="display: flex; flex-direction: column; gap: 4px;">
+                                                        <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; color: {{ labelColor }};">{{ nextLabel }}</span>
+                                                        <span style="font-size: 15px; font-weight: 600; color: {{ titleColor }};">Advanced Configuration</span>
+                                                    </span>
+                                                    <# if (showArrows) { #>
+                                                        <span style="flex-shrink: 0; display: flex; color: {{ arrowColor }};">
+                                                            <svg width="{{ arrowSize }}" height="{{ arrowSize }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M5 12h14" />
+                                                                <path d="M12 5l7 7-7 7" />
+                                                            </svg>
+                                                        </span>
+                                                        <# } #>
+                                                </a>
+                                            </div>
+                                            <# } #>
+            </nav>
+        <?php
+    }
+
+    /**
+     * Render preview for editor mode with sample data
+     */
+    protected function render_editor_preview($settings) {
+        $show_prev = ($settings['show_prev'] ?? 'yes') === 'yes';
+        $show_next = ($settings['show_next'] ?? 'yes') === 'yes';
+        $prev_label = $settings['prev_label'] ?? __('Previous', 'wedocs');
+        $next_label = $settings['next_label'] ?? __('Next', 'wedocs');
+        $show_arrows = ($settings['show_arrows'] ?? 'yes') === 'yes';
+        $layout = $settings['layout'] ?? 'side-by-side';
+        $mobile_stack = ($settings['mobile_stack'] ?? 'yes') === 'yes';
+
+        $nav_class = 'wedocs-el-nav wedocs-el-nav--' . $layout;
+        if ($layout === 'side-by-side' && $mobile_stack) {
+            $nav_class .= ' wedocs-el-nav--mobile-stack';
+        }
+        ?>
+
+            <nav class="<?php echo esc_attr($nav_class); ?>">
+                <?php if ($show_prev): ?>
+                    <div class="wedocs-el-nav__item wedocs-el-nav__item--prev">
+                        <a href="#" class="wedocs-el-nav__link">
+                            <?php if ($show_arrows): ?>
+                                <span class="wedocs-el-nav__arrow wedocs-el-nav__arrow--prev">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 12H5" />
+                                        <path d="M12 19l-7-7 7-7" />
+                                    </svg>
+                                </span>
+                            <?php endif; ?>
+                            <span class="wedocs-el-nav__content">
+                                <span class="wedocs-el-nav__label"><?php echo esc_html($prev_label); ?></span>
+                                <span class="wedocs-el-nav__title"><?php _e('Getting Started', 'wedocs'); ?></span>
                             </span>
-                        <# } #>
-                        <span style="display: flex; flex-direction: column; gap: 4px;">
-                            <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; color: {{ labelColor }};">{{ prevLabel }}</span>
-                            <span style="font-size: 15px; font-weight: 600; color: {{ titleColor }};">Getting Started Guide</span>
-                        </span>
-                    </a>
-                </div>
-            <# } #>
+                        </a>
+                    </div>
+                <?php endif; ?>
 
-            <# if (showPrev && showNext && layout === 'side-by-side') { #>
-                <div style="width: {{ settings.separator_width?.size || 1 }}px; background: {{ settings.separator_color || '#e2e8f0' }}; margin: 0 20px; align-self: stretch;"></div>
-            <# } #>
+                <?php if ($show_prev && $show_next && $layout === 'side-by-side'): ?>
+                    <div class="wedocs-el-nav__separator"></div>
+                <?php endif; ?>
 
-            <# if (showPrev && showNext && layout === 'stacked') { #>
-                <div style="border-top: {{ settings.separator_width?.size || 1 }}px solid {{ settings.separator_color || '#e2e8f0' }}; margin-top: 12px; padding-top: 12px;"></div>
-            <# } #>
-
-            <# if (showNext) { #>
-                <div class="wedocs-el-nav__item wedocs-el-nav__item--next" style="{{ layout === 'side-by-side' ? 'flex: 1;' : '' }}">
-                    <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; padding: 8px 0; justify-content: flex-end; text-align: right;">
-                        <span style="display: flex; flex-direction: column; gap: 4px;">
-                            <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; color: {{ labelColor }};">{{ nextLabel }}</span>
-                            <span style="font-size: 15px; font-weight: 600; color: {{ titleColor }};">Advanced Configuration</span>
-                        </span>
-                        <# if (showArrows) { #>
-                            <span style="flex-shrink: 0; display: flex; color: {{ arrowColor }};">
-                                <svg width="{{ arrowSize }}" height="{{ arrowSize }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                <?php if ($show_next): ?>
+                    <div class="wedocs-el-nav__item wedocs-el-nav__item--next">
+                        <a href="#" class="wedocs-el-nav__link">
+                            <span class="wedocs-el-nav__content">
+                                <span class="wedocs-el-nav__label"><?php echo esc_html($next_label); ?></span>
+                                <span class="wedocs-el-nav__title"><?php _e('Advanced Configuration', 'wedocs'); ?></span>
                             </span>
-                        <# } #>
-                    </a>
+                            <?php if ($show_arrows): ?>
+                                <span class="wedocs-el-nav__arrow wedocs-el-nav__arrow--next">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14" />
+                                        <path d="M12 5l7 7-7 7" />
+                                    </svg>
+                                </span>
+                            <?php endif; ?>
+                        </a>
+                    </div>
+                <?php endif; ?>
+
+                <div style="margin-top: 10px; padding: 10px; background: #f0f8ff; border-left: 3px solid #2196f3; font-size: 12px; color: #666;">
+                    📝 <?php _e('Preview: This widget shows navigation between documentation pages.', 'wedocs'); ?>
                 </div>
-            <# } #>
-        </nav>
+            </nav>
     <?php
     }
 }

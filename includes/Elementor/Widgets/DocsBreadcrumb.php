@@ -31,6 +31,31 @@ class DocsBreadcrumb extends Widget_Base {
         return ['breadcrumb', 'navigation', 'path', 'wedocs', 'docs'];
     }
 
+    /**
+     * Get the proper post context for editor mode
+     */
+    protected function get_editor_post_context() {
+        global $post;
+
+        // If we have a valid docs post, use it
+        if ($post && $post->post_type === 'docs') {
+            return $post;
+        }
+
+        // In editor mode, try to get the post being edited
+        if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
+            $document = \Elementor\Plugin::$instance->documents->get_current();
+            if ($document) {
+                $edit_post = get_post($document->get_main_id());
+                if ($edit_post && $edit_post->post_type === 'docs') {
+                    return $edit_post;
+                }
+            }
+        }
+
+        return null;
+    }
+
     protected function register_controls() {
 
         // Content Section
@@ -316,11 +341,11 @@ class DocsBreadcrumb extends Widget_Base {
         ];
         $sep_char = $separators[$separator] ?? '›';
 
-        global $post;
+        $current_post = $this->get_editor_post_context();
 
-        if (empty($post) || $post->post_type !== 'docs') {
+        if (!$current_post) {
             if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
-                echo '<p style="color: #999; font-style: italic; padding: 20px; text-align: center;">' . __('Docs Breadcrumb: Preview it on a single doc page.', 'wedocs') . '</p>';
+                $this->render_editor_preview($settings);
             }
             return;
         }
@@ -345,8 +370,8 @@ class DocsBreadcrumb extends Widget_Base {
         }
 
         // Parent hierarchy
-        if ($post->post_parent) {
-            $parent_id = $post->post_parent;
+        if ($current_post->post_parent) {
+            $parent_id = $current_post->post_parent;
             $parents = [];
 
             while ($parent_id) {
@@ -367,7 +392,7 @@ class DocsBreadcrumb extends Widget_Base {
             'current' => true,
         ];
 
-        ?>
+?>
         <nav class="wedocs-el-breadcrumb" aria-label="<?php esc_attr_e('Breadcrumb', 'wedocs'); ?>" itemscope itemtype="http://schema.org/BreadcrumbList">
             <ol class="wedocs-el-breadcrumb__list">
                 <?php foreach ($items as $i => $item):
@@ -391,7 +416,9 @@ class DocsBreadcrumb extends Widget_Base {
                             <a href="<?php echo esc_url($item['url']); ?>" class="wedocs-el-breadcrumb__link" itemprop="item">
                                 <?php if ($is_home && $show_home_icon): ?>
                                     <span class="wedocs-el-breadcrumb__home-icon">
-                                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+                                        <svg viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                        </svg>
                                     </span>
                                 <?php endif; ?>
                                 <span itemprop="name"><?php echo esc_html($label); ?></span>
@@ -456,53 +483,137 @@ class DocsBreadcrumb extends Widget_Base {
     protected function content_template() {
     ?>
         <#
-        var homeText = settings.home_text || 'Home';
-        var showHomeIcon = settings.show_home_icon === 'yes';
-        var separator = settings.separator || 'angle';
-        var linkColor = settings.link_color || '#64748b';
-        var currentColor = settings.current_color || '#1e293b';
-        var sepColor = settings.separator_color || '#cbd5e1';
-        var sepSize = settings.separator_size?.size || 14;
-        var iconColor = settings.home_icon_color || '#94a3b8';
-        var iconSize = settings.home_icon_size?.size || 16;
-        var currentWeight = settings.current_font_weight || '600';
+            var homeText=settings.home_text || 'Home' ;
+            var showHomeIcon=settings.show_home_icon==='yes' ;
+            var separator=settings.separator || 'angle' ;
+            var linkColor=settings.link_color || '#64748b' ;
+            var currentColor=settings.current_color || '#1e293b' ;
+            var sepColor=settings.separator_color || '#cbd5e1' ;
+            var sepSize=settings.separator_size?.size || 14;
+            var iconColor=settings.home_icon_color || '#94a3b8' ;
+            var iconSize=settings.home_icon_size?.size || 16;
+            var currentWeight=settings.current_font_weight || '600' ;
 
-        var seps = { angle: '›', slash: '/', arrow: '→', dot: '·', dash: '—' };
-        var sepChar = seps[separator] || '›';
+            var seps={ angle: '›' , slash: '/' , arrow: '→' , dot: '·' , dash: '—' };
+            var sepChar=seps[separator] || '›' ;
 
-        var items = [
+            var items=[
             { label: homeText, home: true },
             { label: 'Documentation' },
             { label: 'Getting Started' },
-            { label: 'Installation Guide', current: true }
-        ];
-        #>
+            { label: 'Installation Guide' , current: true }
+            ];
+            #>
 
-        <nav class="wedocs-el-breadcrumb">
-            <ol style="display: flex; align-items: center; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; gap: {{ settings.item_gap?.size || 8 }}px;">
-                <# for (var i = 0; i < items.length; i++) {
-                    var item = items[i];
-                    if (i > 0) { #>
+            <nav class="wedocs-el-breadcrumb">
+                <ol style="display: flex; align-items: center; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; gap: {{ settings.item_gap?.size || 8 }}px;">
+                    <# for (var i=0; i < items.length; i++) {
+                        var item=items[i];
+                        if (i> 0) { #>
                         <li style="color: {{ sepColor }}; font-size: {{ sepSize }}px; user-select: none;">{{ sepChar }}</li>
-                <# } #>
+                        <# } #>
 
-                    <# if (item.current) { #>
-                        <li><span style="color: {{ currentColor }}; font-weight: {{ currentWeight }};">{{ item.label }}</span></li>
-                    <# } else { #>
-                        <li>
-                            <a href="#" style="display: inline-flex; align-items: center; gap: 4px; text-decoration: none; color: {{ linkColor }};">
-                                <# if (item.home && showHomeIcon) { #>
-                                    <span style="display: inline-flex;">
-                                        <svg width="{{ iconSize }}" height="{{ iconSize }}" viewBox="0 0 20 20" fill="{{ iconColor }}"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
-                                    </span>
-                                <# } #>
-                                <span>{{ item.label }}</span>
-                            </a>
-                        </li>
-                    <# } #>
-                <# } #>
-            </ol>
-        </nav>
+                            <# if (item.current) { #>
+                                <li><span style="color: {{ currentColor }}; font-weight: {{ currentWeight }};">{{ item.label }}</span></li>
+                                <# } else { #>
+                                    <li>
+                                        <a href="#" style="display: inline-flex; align-items: center; gap: 4px; text-decoration: none; color: {{ linkColor }};">
+                                            <# if (item.home && showHomeIcon) { #>
+                                                <span style="display: inline-flex;">
+                                                    <svg width="{{ iconSize }}" height="{{ iconSize }}" viewBox="0 0 20 20" fill="{{ iconColor }}">
+                                                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                                    </svg>
+                                                </span>
+                                                <# } #>
+                                                    <span>{{ item.label }}</span>
+                                        </a>
+                                    </li>
+                                    <# } #>
+                                        <# } #>
+                </ol>
+            </nav>
+        <?php
+    }
+
+    /**
+     * Render preview for editor mode with sample data
+     */
+    protected function render_editor_preview($settings) {
+        $home_text = $settings['home_text'] ?? __('Home', 'wedocs');
+        $show_home_icon = ($settings['show_home_icon'] ?? 'yes') === 'yes';
+        $separator = $settings['separator'] ?? 'angle';
+        $truncate = absint($settings['truncate_length'] ?? 0);
+
+        $separators = [
+            'angle' => '›',
+            'slash' => '/',
+            'arrow' => '→',
+            'dot'   => '·',
+            'dash'  => '—',
+        ];
+        $sep_char = $separators[$separator] ?? '›';
+
+        // Sample breadcrumb items for preview
+        $items = [
+            [
+                'label' => $home_text,
+                'url'   => '#',
+                'home'  => true,
+            ],
+            [
+                'label' => __('Documentation', 'wedocs'),
+                'url'   => '#',
+            ],
+            [
+                'label' => __('Getting Started', 'wedocs'),
+                'url'   => '#',
+            ],
+            [
+                'label' => __('Installation Guide', 'wedocs'),
+                'current' => true,
+            ]
+        ];
+
+        ?>
+            <nav class="wedocs-el-breadcrumb" aria-label="<?php esc_attr_e('Breadcrumb', 'wedocs'); ?>">
+                <ol class="wedocs-el-breadcrumb__list">
+                    <?php foreach ($items as $i => $item):
+                        $is_current = !empty($item['current']);
+                        $is_home = !empty($item['home']);
+                        $label = $item['label'];
+                        if ($truncate > 0 && mb_strlen($label) > $truncate && !$is_current) {
+                            $label = mb_substr($label, 0, $truncate) . '…';
+                        }
+                    ?>
+                        <?php if ($i > 0): ?>
+                            <li class="wedocs-el-breadcrumb__sep" aria-hidden="true"><?php echo esc_html($sep_char); ?></li>
+                        <?php endif; ?>
+
+                        <?php if ($is_current): ?>
+                            <li class="wedocs-el-breadcrumb__item" aria-current="page">
+                                <span class="wedocs-el-breadcrumb__current"><?php echo esc_html($label); ?></span>
+                            </li>
+                        <?php else: ?>
+                            <li class="wedocs-el-breadcrumb__item">
+                                <a href="#" class="wedocs-el-breadcrumb__link">
+                                    <?php if ($is_home && $show_home_icon): ?>
+                                        <span class="wedocs-el-breadcrumb__home-icon">
+                                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                            </svg>
+                                        </span>
+                                    <?php endif; ?>
+                                    <span><?php echo esc_html($label); ?></span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ol>
+
+                <div style="margin-top: 10px; padding: 10px; background: #f0f8ff; border-left: 3px solid #2196f3; font-size: 12px; color: #666;">
+                    📝 <?php _e('Preview: This widget shows the navigation path on documentation pages.', 'wedocs'); ?>
+                </div>
+            </nav>
     <?php
     }
 }

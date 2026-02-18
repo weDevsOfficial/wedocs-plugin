@@ -346,11 +346,30 @@ class WasThisHelpful extends Widget_Base {
         $show_count = ($settings['show_count'] ?? '') === 'yes';
         $negative_follow_up = ($settings['negative_follow_up'] ?? '') === 'yes';
         $widget_id = $this->get_id();
+
+        // Get post ID - handle editor mode
         $post_id = get_the_ID();
+        if (!$post_id && \Elementor\Plugin::$instance->editor->is_edit_mode()) {
+            $document = \Elementor\Plugin::$instance->documents->get_current();
+            if ($document) {
+                $post_id = $document->get_main_id();
+            }
+        }
+
+        // Fallback for editor preview
+        if (!$post_id) {
+            $post_id = 0;
+        }
 
         // Get existing vote counts
-        $positive_count = (int) get_post_meta($post_id, '_wedocs_helpful_yes', true);
-        $negative_count = (int) get_post_meta($post_id, '_wedocs_helpful_no', true);
+        $positive_count = (int) get_post_meta($post_id, 'positive', true);
+        $negative_count = (int) get_post_meta($post_id, 'negative', true);
+
+        // Show sample counts in editor mode for better preview
+        if (\Elementor\Plugin::$instance->editor->is_edit_mode() && !$positive_count && !$negative_count) {
+            $positive_count = 12;
+            $negative_count = 3;
+        }
         ?>
 
         <div class="wedocs-helpful" data-post-id="<?php echo esc_attr($post_id); ?>" data-widget-id="<?php echo esc_attr($widget_id); ?>">
