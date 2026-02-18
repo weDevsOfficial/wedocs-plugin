@@ -282,6 +282,11 @@ final class WeDocs {
         $this->container['upgrader']   = new WeDevs\WeDocs\Upgrader\Upgrader();
         $this->container['capability'] = new Capability();
         $this->container['templates']  = new WeDevs\WeDocs\Templates\TemplateManager();
+
+        // Initialize Elementor integration if Elementor is active
+        if ( did_action( 'elementor/loaded' ) ) {
+            $this->container['elementor'] = new WeDevs\WeDocs\Elementor();
+        }
     }
 
     /**
