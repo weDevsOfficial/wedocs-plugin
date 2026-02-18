@@ -11,6 +11,31 @@
 }
 
 @media screen and (max-width: 768px) {
+    #wedocs-single-doc-search-modal {
+        align-items: center;
+        justify-content: center;
+
+        .doc-search-container {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+
+            .doc-search-modal {
+                max-width: 100%;
+
+                .modal-body {
+                    .doc-search-dropdown-container {
+                        .doc-search-hits {
+                            max-height: 50vh;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     .wedocs-single-wrap {
         display: flex;
 
@@ -82,6 +107,54 @@
 }
 
 @media screen and (max-width: 425px) {
+    #wedocs-single-doc-search-modal {
+        .doc-search-container {
+            padding: 0.5rem;
+
+            .doc-search-modal {
+                .modal-header {
+                    .doc-search-form {
+                        .doc-search-field {
+                            #doc-search-input {
+                                height: 2.75rem;
+                                font-size: 0.875rem;
+                                margin-right: 0.5rem;
+                            }
+                        }
+                    }
+                }
+
+                .modal-body {
+                    .doc-search-dropdown-container {
+                        .doc-search-hits {
+                            max-height: 40vh;
+                            padding: 0.5rem;
+
+                            #doc-search-list {
+                                .doc-search-hit {
+                                    .doc-search-hit-result {
+                                        padding: 0.75rem;
+
+                                        .doc-search-hit-container {
+                                            .doc-search-hit-icon {
+                                                width: 2rem;
+                                                height: 2rem;
+                                                margin-right: 0.5rem;
+                                            }
+
+                                            .doc-search-hit-content-wrapper {
+                                                max-width: 100%;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     .wedocs-hide-mobile {
         display: none;

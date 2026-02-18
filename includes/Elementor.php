@@ -49,6 +49,9 @@ class Elementor {
         require_once WEDOCS_PATH . '/includes/Elementor/Widgets/WasThisHelpful.php';
         require_once WEDOCS_PATH . '/includes/Elementor/Widgets/DocsSidebar.php';
         require_once WEDOCS_PATH . '/includes/Elementor/Widgets/SearchModal.php';
+        require_once WEDOCS_PATH . '/includes/Elementor/Widgets/DocNavigation.php';
+        require_once WEDOCS_PATH . '/includes/Elementor/Widgets/DocsHamburgerMenu.php';
+        require_once WEDOCS_PATH . '/includes/Elementor/Widgets/DocsBreadcrumb.php';
 
         // Register widgets
         // \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\Search() );
@@ -58,6 +61,9 @@ class Elementor {
         \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\WasThisHelpful() );
         \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\DocsSidebar() );
         \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\SearchModal() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\DocNavigation() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\DocsHamburgerMenu() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\DocsBreadcrumb() );
     }
 
     /**
