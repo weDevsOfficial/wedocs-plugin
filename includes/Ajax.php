@@ -42,6 +42,18 @@ class Ajax {
         // Handle load more for DocsGrid widget
         add_action('wp_ajax_wedocs_load_more_docs', [$this, 'load_more_docs']);
         add_action('wp_ajax_nopriv_wedocs_load_more_docs', [$this, 'load_more_docs']);
+
+        // Handle "Was This Helpful" votes
+        add_action('wp_ajax_wedocs_helpful_vote', [$this, 'handle_helpful_vote']);
+        add_action('wp_ajax_nopriv_wedocs_helpful_vote', [$this, 'handle_helpful_vote']);
+
+        // Handle "Was This Helpful" feedback
+        add_action('wp_ajax_wedocs_helpful_feedback', [$this, 'handle_helpful_feedback']);
+        add_action('wp_ajax_nopriv_wedocs_helpful_feedback', [$this, 'handle_helpful_feedback']);
+
+        // Handle "Need More Help" form submission
+        add_action('wp_ajax_wedocs_need_help_submit', [$this, 'handle_need_help_submit']);
+        add_action('wp_ajax_nopriv_wedocs_need_help_submit', [$this, 'handle_need_help_submit']);
     }
 
     /**
@@ -307,5 +319,177 @@ class Ajax {
             'page' => $page,
             'max_pages' => $docs_query->max_num_pages
         ]);
+    }
+
+    /**
+     * Handle "Was This Helpful" vote.
+     */
+    public function handle_helpful_vote() {
+        check_ajax_referer('wedocs_helpful_vote', 'nonce');
+
+        $post_id = intval($_POST['post_id'] ?? 0);
+        $vote = sanitize_text_field($_POST['vote'] ?? '');
+
+        if (!$post_id || !in_array($vote, ['yes', 'no'], true)) {
+            wp_send_json_error(['message' => __('Invalid vote.', 'wedocs')]);
+        }
+
+        $meta_key = $vote === 'yes' ? '_wedocs_helpful_yes' : '_wedocs_helpful_no';
+        $current = (int) get_post_meta($post_id, $meta_key, true);
+        update_post_meta($post_id, $meta_key, $current + 1);
+
+        wp_send_json_success([
+            'yes' => (int) get_post_meta($post_id, '_wedocs_helpful_yes', true),
+            'no' => (int) get_post_meta($post_id, '_wedocs_helpful_no', true),
+        ]);
+    }
+
+    /**
+     * Handle "Was This Helpful" negative feedback text.
+     */
+    public function handle_helpful_feedback() {
+        check_ajax_referer('wedocs_helpful_vote', 'nonce');
+
+        $post_id = intval($_POST['post_id'] ?? 0);
+        $feedback = sanitize_textarea_field($_POST['feedback'] ?? '');
+
+        if (!$post_id || empty($feedback)) {
+            wp_send_json_error(['message' => __('Invalid feedback.', 'wedocs')]);
+        }
+
+        $existing = get_post_meta($post_id, '_wedocs_helpful_feedback', true);
+        if (!is_array($existing)) {
+            $existing = [];
+        }
+
+        $existing[] = [
+            'feedback' => $feedback,
+            'date' => current_time('mysql'),
+            'ip' => sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? ''),
+        ];
+
+        update_post_meta($post_id, '_wedocs_helpful_feedback', $existing);
+        wp_send_json_success();
+    }
+
+    /**
+     * Handle "Need More Help" contact form submission.
+     */
+    public function handle_need_help_submit() {
+        $widget_id = sanitize_text_field($_POST['widget_id'] ?? '');
+
+        if (!wp_verify_nonce($_POST['nonce'] ?? '', 'wedocs_need_help_' . $widget_id)) {
+            wp_send_json_error(['message' => __('Security check failed.', 'wedocs')]);
+        }
+
+        $name = sanitize_text_field($_POST['name'] ?? '');
+        $email = sanitize_email($_POST['email'] ?? '');
+        $subject = sanitize_text_field($_POST['subject'] ?? '');
+        $message = sanitize_textarea_field($_POST['message'] ?? '');
+        $page_url = esc_url_raw($_POST['page_url'] ?? '');
+        $page_title = sanitize_text_field($_POST['page_title'] ?? '');
+        $recipient = sanitize_email($_POST['recipient'] ?? get_option('admin_email'));
+        $save_to_elementor = sanitize_text_field($_POST['save_to_elementor'] ?? '');
+        $post_id = intval($_POST['post_id'] ?? 0);
+
+        if (empty($message)) {
+            wp_send_json_error(['message' => __('Message is required.', 'wedocs')]);
+        }
+
+        if (empty($recipient) || !is_email($recipient)) {
+            $recipient = get_option('admin_email');
+        }
+
+        // Send email
+        $email_subject = !empty($subject) ? $subject : sprintf(__('[weDocs] Support request from %s', 'wedocs'), $page_title);
+
+        $body = sprintf(__("Name: %s\n", 'wedocs'), $name ?: __('Not provided', 'wedocs'));
+        $body .= sprintf(__("Email: %s\n", 'wedocs'), $email ?: __('Not provided', 'wedocs'));
+        $body .= sprintf(__("Page: %s (%s)\n\n", 'wedocs'), $page_title, $page_url);
+        $body .= sprintf(__("Message:\n%s", 'wedocs'), $message);
+
+        $headers = ['Content-Type: text/plain; charset=UTF-8'];
+        if (!empty($email) && is_email($email)) {
+            $headers[] = 'Reply-To: ' . ($name ? "$name <$email>" : $email);
+        }
+
+        $sent = wp_mail($recipient, $email_subject, $body, $headers);
+
+        // Save to Elementor Pro submissions if enabled
+        if ($save_to_elementor === 'yes') {
+            $this->save_to_elementor_submissions($widget_id, $post_id, $page_url, $page_title, [
+                'name' => $name,
+                'email' => $email,
+                'subject' => $subject,
+                'message' => $message,
+            ]);
+        }
+
+        if ($sent) {
+            wp_send_json_success();
+        } else {
+            wp_send_json_error(['message' => __('Failed to send email. Please try again.', 'wedocs')]);
+        }
+    }
+
+    /**
+     * Save form data to Elementor Pro submissions table.
+     *
+     * @param string $widget_id   The Elementor widget ID.
+     * @param int    $post_id     The post/page ID where the form was submitted.
+     * @param string $page_url    The page URL (referer).
+     * @param string $page_title  The page title.
+     * @param array  $fields      Associative array of field id => value.
+     */
+    private function save_to_elementor_submissions($widget_id, $post_id, $page_url, $page_title, $fields) {
+        // Check if Elementor Pro submissions are available
+        if (!class_exists('\ElementorPro\Modules\Forms\Submissions\Database\Query')) {
+            return;
+        }
+
+        $query = \ElementorPro\Modules\Forms\Submissions\Database\Query::get_instance();
+
+        $fields_data = [];
+        foreach ($fields as $id => $value) {
+            if (empty($value)) {
+                continue;
+            }
+
+            $type = 'text';
+            if ($id === 'email') {
+                $type = 'email';
+            } elseif ($id === 'message') {
+                $type = 'textarea';
+            }
+
+            $fields_data[] = [
+                'id'    => $id,
+                'value' => $value,
+                'type'  => $type,
+            ];
+        }
+
+        if (empty($fields_data)) {
+            return;
+        }
+
+        $submission_data = [
+            'post_id'                 => $post_id ?: 0,
+            'referer'                 => $page_url,
+            'referer_title'           => $page_title,
+            'element_id'              => $widget_id,
+            'form_name'               => __('weDocs - Need More Help', 'wedocs'),
+            'campaign_id'             => 0,
+            'user_id'                 => get_current_user_id() ?: null,
+            'user_ip'                 => sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? ''),
+            'user_agent'              => sanitize_text_field($_SERVER['HTTP_USER_AGENT'] ?? ''),
+            'actions_count'           => 1,
+            'actions_succeeded_count' => 1,
+            'meta'                    => wp_json_encode([
+                'edit_post_id' => $post_id ?: 0,
+            ]),
+        ];
+
+        $query->add_submission($submission_data, $fields_data);
     }
 }
