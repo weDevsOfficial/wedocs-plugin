@@ -44,10 +44,20 @@ class Elementor {
         // Include widget files
         // require_once WEDOCS_PATH . '/includes/Elementor/Widgets/Search.php';
         require_once WEDOCS_PATH . '/includes/Elementor/Widgets/DocsGrid.php';
+        require_once WEDOCS_PATH . '/includes/Elementor/Widgets/TableOfContents.php';
+        require_once WEDOCS_PATH . '/includes/Elementor/Widgets/NeedHelp.php';
+        require_once WEDOCS_PATH . '/includes/Elementor/Widgets/WasThisHelpful.php';
+        require_once WEDOCS_PATH . '/includes/Elementor/Widgets/DocsSidebar.php';
+        require_once WEDOCS_PATH . '/includes/Elementor/Widgets/SearchModal.php';
 
         // Register widgets
         // \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\Search() );
         \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\DocsGrid() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\TableOfContents() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\NeedHelp() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\WasThisHelpful() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\DocsSidebar() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new \WeDevs\WeDocs\Elementor\Widgets\SearchModal() );
     }
 
     /**
