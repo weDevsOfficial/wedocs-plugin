@@ -118,7 +118,7 @@ if (function_exists('wp_is_block_theme') && wp_is_block_theme()) {
 
                             if ($children) {
                                 echo '<div class="article-child well">';
-                                echo '<h3>' . __('Articles', 'wedocs') . '</h3>';
+                                echo '<h3>' . esc_html__('Articles', 'wedocs') . '</h3>';
                                 echo '<ul>';
                                 echo $children;
                                 echo '</ul>';
@@ -154,15 +154,15 @@ if (function_exists('wp_is_block_theme') && wp_is_block_theme()) {
                                             </svg>
                                         </span>
                                         <span class="wedocs-help-link wedocs-hide-print wedocs-hide-mobile">
-                                            <?php printf('%s <a id="wedocs-stuck-modal" href="%s">%s</a>', __('Still stuck? ', 'wedocs'), '#', __('How can we help?', 'wedocs')); ?>
+                                            <?php printf('%s <a id="wedocs-stuck-modal" href="%s">%s</a>', esc_html__('Still stuck? ', 'wedocs'), '#', esc_html__('How can we help?', 'wedocs')); ?>
 
                                             <div class="wedocs-article-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
-                                                <meta itemprop="name" content="<?php echo get_the_author(); ?>" />
-                                                <meta itemprop="url" content="<?php echo get_author_posts_url(get_the_author_meta('ID')); ?>" />
+                                                <meta itemprop="name" content="<?php echo esc_attr(get_the_author()); ?>" />
+                                                <meta itemprop="url" content="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>" />
                                             </div>
 
-                                            <meta itemprop="datePublished" content="<?php echo get_the_time('c'); ?>" />
-                                            <time itemprop="dateModified" datetime="<?php echo esc_attr(get_the_modified_date('c')); ?>"><?php printf(__('Updated on %s', 'wedocs'), get_the_modified_date()); ?></time>
+                                            <meta itemprop="datePublished" content="<?php echo esc_attr(get_the_time('c')); ?>" />
+                                            <time itemprop="dateModified" datetime="<?php echo esc_attr(get_the_modified_date('c')); ?>"><?php printf(esc_html__('Updated on %s', 'wedocs'), esc_html(get_the_modified_date())); ?></time>
                                         </span>
                                     </div>
                                 </div>
