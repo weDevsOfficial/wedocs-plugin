@@ -1,11 +1,11 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "wedocs/contributors",
+  "name": "wedocs/advance-contributors",
   "version": "1.0.0",
   "title": "Doc Contributors",
   "icon": "groups",
-  "category": "widgets",
+  "category": "wedocs",
   "description": "Display the author(s)/contributors of a doc along with the last updated date.",
   "supports": {
     "html": false

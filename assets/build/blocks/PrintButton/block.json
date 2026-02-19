@@ -33,67 +33,91 @@
       "type": "boolean",
       "default": true
     },
+    "additionalClasses": {
+      "type": "string",
+      "default": ""
+    },
+    "typography": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "fontSize": "16px",
+          "fontWeight": "normal"
+        },
+        "tablet": {},
+        "mobile": {}
+      }
+    },
     "padding": {
       "type": "object",
       "default": {
-        "top": "10px",
-        "right": "15px",
-        "bottom": "10px",
-        "left": "15px"
+        "desktop": {
+          "top": "10px",
+          "right": "15px",
+          "bottom": "10px",
+          "left": "15px"
+        },
+        "tablet": {},
+        "mobile": {}
       }
     },
     "margin": {
       "type": "object",
       "default": {
-        "top": "0px",
-        "right": "0px",
-        "bottom": "10px",
-        "left": "0px"
+        "desktop": {
+          "top": "0px",
+          "right": "0px",
+          "bottom": "10px",
+          "left": "0px"
+        },
+        "tablet": {},
+        "mobile": {}
       }
     },
     "backgroundColor": {
-      "type": "string",
-      "default": "#0073aa"
+      "type": "object",
+      "default": {
+        "desktop": "#0073aa",
+        "tablet": "",
+        "mobile": ""
+      }
     },
     "textColor": {
-      "type": "string",
-      "default": "#ffffff"
+      "type": "object",
+      "default": {
+        "desktop": "#ffffff",
+        "tablet": "",
+        "mobile": ""
+      }
     },
     "hoverBackgroundColor": {
-      "type": "string",
-      "default": "#005177"
+      "type": "object",
+      "default": {
+        "desktop": "#005177",
+        "tablet": "",
+        "mobile": ""
+      }
     },
     "hoverTextColor": {
-      "type": "string",
-      "default": "#ffffff"
+      "type": "object",
+      "default": {
+        "desktop": "#ffffff",
+        "tablet": "",
+        "mobile": ""
+      }
     },
-    "borderRadius": {
-      "type": "string",
-      "default": "4px"
-    },
-    "borderWidth": {
-      "type": "string",
-      "default": "1px"
-    },
-    "borderColor": {
-      "type": "string",
-      "default": "#0073aa"
-    },
-    "borderStyle": {
-      "type": "string",
-      "default": "solid"
-    },
-    "fontSize": {
-      "type": "string",
-      "default": "16px"
-    },
-    "fontWeight": {
-      "type": "string",
-      "default": "normal"
-    },
-    "additionalClasses": {
-      "type": "string",
-      "default": ""
+    "border": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "radius": "4px",
+          "width": "1px",
+          "color": "#0073aa",
+          "style": "solid"
+        },
+        "tablet": {},
+        "mobile": {}
+      }
     }
   }
 }

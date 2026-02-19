@@ -321,6 +321,22 @@ if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
                     </div>
                 <?php endforeach; ?>
             </div>
+
+            <?php if ( $docs_per_page !== 'all' && $total_pages > 1 ) :
+                echo get_pagination_style_tag( $attributes );
+            ?>
+                <nav class="wedocs-docs-pagination" aria-label="<?php esc_attr_e( 'Docs pagination', 'wedocs' ); ?>">
+                    <?php
+                    echo paginate_links( array(
+                        'total'     => $total_pages,
+                        'current'   => $current_page,
+                        'format'    => '?paged=%#%',
+                        'prev_text' => '&larr;',
+                        'next_text' => '&rarr;',
+                    ) );
+                    ?>
+                </nav>
+            <?php endif; ?>
         </div>
         <?php
         return ob_get_clean();

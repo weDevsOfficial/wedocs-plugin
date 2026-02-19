@@ -4,7 +4,7 @@
   "name": "wedocs/font-size-switcher",
   "version": "1.0.0",
   "title": "Font Size Switcher",
-  "category": "widgets",
+  "category": "wedocs",
   "icon": "editor-textcolor",
   "description": "Allow readers to adjust font size for better readability with preset options or custom controls.",
   "example": {},

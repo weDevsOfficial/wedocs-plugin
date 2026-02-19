@@ -161,16 +161,69 @@ if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
         $tree_styles        = $attributes['treeStyles'] ?? [];
         $count_badge_styles = $attributes['countBadgeStyles'] ?? [];
         $className          = $attributes['className'] ?? '';
-        // Get all docs
-        $all_docs = get_posts(
-            [
-                'post_type'   => 'docs',
-                'post_status' => 'publish',
-                'numberposts' => - 1,
-                'orderby'     => 'menu_order',
-                'order'       => 'ASC',
-            ]
-        );
+
+        // Determine the root parent doc for the current page.
+        // On a single docs page, scope to the current doc's section only.
+        $root_parent = 0;
+        if ( is_singular( 'docs' ) ) {
+            global $post;
+            if ( ! empty( $post->post_parent ) ) {
+                $ancestors   = get_post_ancestors( $post->ID );
+                $root_parent = end( $ancestors ); // Topmost ancestor.
+            } else {
+                $root_parent = $post->ID;
+            }
+        }
+
+        // Get docs scoped to the current section's root parent.
+        $query_args = [
+            'post_type'   => 'docs',
+            'post_status' => 'publish',
+            'numberposts' => -1,
+            'orderby'     => 'menu_order',
+            'order'       => 'ASC',
+        ];
+
+        if ( $root_parent ) {
+            $query_args['post_parent'] = $root_parent;
+        }
+
+        $all_docs = get_posts( $query_args );
+
+        // When scoped to a root parent, we only got direct children.
+        // We need to also fetch all nested descendants for the tree.
+        if ( $root_parent ) {
+            $all_descendant_docs = $all_docs;
+            $parent_ids          = wp_list_pluck( $all_docs, 'ID' );
+
+            // Iteratively fetch deeper levels until no more children found.
+            while ( ! empty( $parent_ids ) ) {
+                $deeper_docs = get_posts( [
+                    'post_type'      => 'docs',
+                    'post_status'    => 'publish',
+                    'numberposts'    => -1,
+                    'orderby'        => 'menu_order',
+                    'order'          => 'ASC',
+                    'post_parent__in' => $parent_ids,
+                ] );
+
+                if ( empty( $deeper_docs ) ) {
+                    break;
+                }
+
+                $all_descendant_docs = array_merge( $all_descendant_docs, $deeper_docs );
+                $parent_ids          = wp_list_pluck( $deeper_docs, 'ID' );
+            }
+
+            $all_docs = $all_descendant_docs;
+
+            // Prepend the root parent itself as the section header.
+            $root_post = get_post( $root_parent );
+            if ( $root_post ) {
+                array_unshift( $all_docs, $root_post );
+            }
+        }
+
         // Apply exclude filter
         if ( ! empty( $exclude_sections ) ) {
             $all_docs = array_filter(
@@ -183,7 +236,7 @@ if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
         $sections            = [];
         $articles_by_section = [];
         foreach ( $all_docs as $doc ) {
-            if ( $doc->post_parent == 0 ) {
+            if ( $doc->post_parent == 0 || ( $root_parent && $doc->ID == $root_parent ) ) {
                 $sections[] = $doc;
             } else {
                 if ( ! isset( $articles_by_section[ $doc->post_parent ] ) ) {
