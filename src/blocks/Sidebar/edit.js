@@ -26,12 +26,14 @@ const Edit = ({ attributes, setAttributes }) => {
         className: 'wedocs-sidebar-block'
     });
 
-    // Fetch theme colors and gradients
-    const { themeColors, themeGradients } = useSelect((select) => {
+    // Fetch theme colors, gradients, and current post context
+    const { themeColors, themeGradients, currentPost } = useSelect((select) => {
         const editorSettings = select('core/block-editor').getSettings();
+        const post = select('core/editor')?.getCurrentPost?.() || null;
         return {
             themeColors: editorSettings.colors,
             themeGradients: editorSettings.gradients,
+            currentPost: post,
         };
     });
 
@@ -82,11 +84,42 @@ const Edit = ({ attributes, setAttributes }) => {
     const [sections, setSections] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    // Find root parent of a doc by walking up ancestors via REST API
+    const findRootParent = async (postId, parentId) => {
+        if (!parentId || parentId === 0) {
+            return postId;
+        }
+
+        // Walk up the ancestor chain to find the topmost parent
+        let currentParentId = parentId;
+        let rootId = parentId;
+
+        while (currentParentId && currentParentId !== 0) {
+            try {
+                const parentDoc = await wp.apiFetch({
+                    path: `/wp/v2/docs/${currentParentId}`
+                });
+                rootId = parentDoc.id;
+                currentParentId = parentDoc.parent;
+            } catch {
+                break;
+            }
+        }
+
+        return rootId;
+    };
+
     // Fetch real weDocs data using WordPress REST API
     useEffect(() => {
         const fetchDocsData = async () => {
             setIsLoading(true);
             try {
+                // Determine root parent if editing a docs post
+                let rootParent = 0;
+                if (currentPost && currentPost.type === 'docs') {
+                    rootParent = await findRootParent(currentPost.id, currentPost.parent);
+                }
+
                 // Build query parameters based on block attributes
                 const queryParams = new URLSearchParams({
                     per_page: -1,
@@ -109,7 +142,7 @@ const Edit = ({ attributes, setAttributes }) => {
                 } else {
                     apiOrderBy = 'menu_order';
                 }
-                
+
                 queryParams.append('orderby', apiOrderBy);
                 queryParams.append('order', sectionsOrder);
 
@@ -123,9 +156,25 @@ const Edit = ({ attributes, setAttributes }) => {
                     path: `/wp/v2/docs?${queryParams.toString()}`
                 });
 
+                let docsToProcess = response;
+
+                // If editing a docs post, filter to only the current section's tree
+                if (rootParent) {
+                    const isDescendantOf = (doc, ancestorId, allDocs) => {
+                        if (doc.id === ancestorId) return true;
+                        if (!doc.parent || doc.parent === 0) return false;
+                        const parentDoc = allDocs.find(d => d.id === doc.parent);
+                        if (!parentDoc) return doc.parent === ancestorId;
+                        return isDescendantOf(parentDoc, ancestorId, allDocs);
+                    };
+
+                    docsToProcess = response.filter(doc =>
+                        isDescendantOf(doc, rootParent, response)
+                    );
+                }
 
                 // Process the data to build hierarchical structure
-                const processedSections = processDocsData(response);
+                const processedSections = processDocsData(docsToProcess);
                 setSections(processedSections);
             } catch (error) {
                 // Fallback to empty array on error
@@ -136,7 +185,7 @@ const Edit = ({ attributes, setAttributes }) => {
         };
 
         fetchDocsData();
-    }, [excludeSections, sectionsOrderBy, sectionsOrder, articleOrderBy, articleOrder, enableNestedArticles]);
+    }, [excludeSections, sectionsOrderBy, sectionsOrder, articleOrderBy, articleOrder, enableNestedArticles, currentPost?.id]);
 
     // Process flat docs array into hierarchical structure - matching admin interface logic
     const processDocsData = (docs) => {
