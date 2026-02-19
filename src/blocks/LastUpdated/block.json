@@ -4,7 +4,7 @@
 	"name": "wedocs/last-updated",
 	"version": "1.0.0",
 	"title": "Last Updated Date",
-	"category": "text",
+	"category": "wedocs",
 	"icon": "clock",
 	"description": "Display the last updated date of the current post or page.",
 	"example": {},

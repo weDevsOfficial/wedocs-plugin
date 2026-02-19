@@ -4,7 +4,7 @@
 	"name": "wedocs/doc-actions",
 	"version": "1.0.0",
 	"title": "Documentation Actions",
-	"category": "widgets",
+	"category": "wedocs",
 	"icon": "share",
 	"description": "Action buttons for documentation - Copy Markdown, Open in ChatGPT, Open in Claude, and more.",
 	"example": {},
