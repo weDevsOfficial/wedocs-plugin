@@ -64,6 +64,12 @@ $error_alignment = $attributes['errorAlignment'] ?? 'left';
 $custom_class_name = $attributes['customClassName'] ?? '';
 $analytics_event = $attributes['analyticsEvent'] ?? 'need-help-clicked';
 
+// CAPTCHA settings
+$captcha_enabled = $attributes['captchaEnabled'] ?? false;
+$captcha_type = $attributes['captchaType'] ?? 'recaptcha'; // 'recaptcha' or 'turnstile'
+$recaptcha_site_key = $attributes['recaptchaSiteKey'] ?? get_option('wedocs_recaptcha_site_key', '');
+$turnstile_site_key = $attributes['turnstileSiteKey'] ?? get_option('wedocs_turnstile_site_key', '');
+
 // Build styles
 $container_styles = sprintf(
     'background-color: %s; padding: %s %s %s %s; margin: %s %s %s %s; border: %s %s %s; border-radius: %s; box-shadow: %s; text-align: %s;',
@@ -172,7 +178,11 @@ $modal_data = [
     'headingStyles' => $heading_styles,
     'labelStyles' => $label_styles,
     'buttonStyles' => $button_styles,
-    'buttonAlignment' => $button_alignment
+    'buttonAlignment' => $button_alignment,
+    'captchaEnabled' => $captcha_enabled,
+    'captchaType' => $captcha_type,
+    'recaptchaSiteKey' => $recaptcha_site_key,
+    'turnstileSiteKey' => $turnstile_site_key
 ];
 
 $wrapper_attributes = get_block_wrapper_attributes([
@@ -206,6 +216,27 @@ $wrapper_attributes = get_block_wrapper_attributes([
     </script>
 </div>
 <?php
+// Enqueue CAPTCHA scripts if enabled
+if ($captcha_enabled) {
+    if ($captcha_type === 'recaptcha' && !empty($recaptcha_site_key)) {
+        wp_enqueue_script(
+            'google-recaptcha',
+            'https://www.google.com/recaptcha/api.js',
+            [],
+            null,
+            true
+        );
+    } elseif ($captcha_type === 'turnstile' && !empty($turnstile_site_key)) {
+        wp_enqueue_script(
+            'cloudflare-turnstile',
+            'https://challenges.cloudflare.com/turnstile/v0/api.js',
+            [],
+            null,
+            true
+        );
+    }
+}
+
 // Localize AJAX data for the view script
 if (! defined('WEDOCS_NEED_MORE_HELP_AJAX_LOCALIZED')) {
     define('WEDOCS_NEED_MORE_HELP_AJAX_LOCALIZED', true);

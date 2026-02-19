@@ -100,7 +100,11 @@ export default function Edit({ attributes, setAttributes }) {
 		errorTypography,
 		errorAlignment,
 		customClassName,
-		analyticsEvent
+		analyticsEvent,
+		captchaEnabled,
+		captchaType,
+		recaptchaSiteKey,
+		turnstileSiteKey
 	} = attributes;
 
 	const [showModal, setShowModal] = useState(false);
@@ -553,10 +557,51 @@ export default function Edit({ attributes, setAttributes }) {
 						help={__('Used for data-track attribute', 'wedocs')}
 					/>
 				</PanelBody>
-			</InspectorControls>
 
-			<div {...blockProps}>
-				<div className="need-more-help-container" style={containerStyles}>
+			<PanelBody title={__('CAPTCHA Protection', 'wedocs')} initialOpen={false}>
+				<ToggleControl
+					label={__('Enable CAPTCHA', 'wedocs')}
+					checked={captchaEnabled}
+					onChange={(value) => setAttributes({ captchaEnabled: value })}
+					help={__('Protect your form from spam and bot attacks', 'wedocs')}
+				/>
+				{captchaEnabled && (
+					<>
+						<SelectControl
+							label={__('CAPTCHA Provider', 'wedocs')}
+							value={captchaType}
+							options={[
+								{ label: 'Google reCAPTCHA', value: 'recaptcha' },
+								{ label: 'Cloudflare Turnstile', value: 'turnstile' }
+							]}
+							onChange={(value) => setAttributes({ captchaType: value })}
+							help={__('Choose your preferred CAPTCHA provider', 'wedocs')}
+						/>
+						{captchaType === 'recaptcha' && (
+							<TextControl
+								label={__('reCAPTCHA Site Key', 'wedocs')}
+								value={recaptchaSiteKey}
+								onChange={(value) => setAttributes({ recaptchaSiteKey: value })}
+								help={__('Optional: Override global reCAPTCHA site key for this block', 'wedocs')}
+								placeholder={__('Leave empty to use global setting', 'wedocs')}
+							/>
+						)}
+						{captchaType === 'turnstile' && (
+							<TextControl
+								label={__('Turnstile Site Key', 'wedocs')}
+								value={turnstileSiteKey}
+								onChange={(value) => setAttributes({ turnstileSiteKey: value })}
+								help={__('Optional: Override global Turnstile site key for this block', 'wedocs')}
+								placeholder={__('Leave empty to use global setting', 'wedocs')}
+							/>
+						)}
+					</>
+				)}
+			</PanelBody>
+		</InspectorControls>
+
+		<div {...blockProps}>
+			<div className="need-more-help-container" style={containerStyles}>
 					<p style={textStyles}>{mainText}</p>
 					<a
 						style={linkStyles}

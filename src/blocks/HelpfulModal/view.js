@@ -32,6 +32,13 @@ function initializeHelpBlock(block) {
 	const modal = createModal(modalData);
 	document.body.appendChild(modal);
 
+	// Initialize CAPTCHA widgets after modal is added to DOM
+	if (modalData.captchaEnabled) {
+		setTimeout(() => {
+			initializeCaptcha(modalData);
+		}, 100);
+	}
+
 	// Add click event to trigger button
 	triggerButton.addEventListener('click', function(e) {
 		e.preventDefault();
@@ -138,6 +145,47 @@ function initializeHelpBlock(block) {
 			return;
 		}
 
+		// Handle CAPTCHA validation if enabled
+		let captchaToken = null;
+		if (modalData.captchaEnabled) {
+			if (modalData.captchaType === 'recaptcha' && window.grecaptcha) {
+				try {
+					captchaToken = grecaptcha.getResponse();
+					if (!captchaToken) {
+						showMessage(messageContainer, 'Please complete the reCAPTCHA verification.', 'error');
+						submitButton.disabled = false;
+						submitButton.textContent = originalText;
+						return;
+					}
+				} catch (error) {
+					console.error('reCAPTCHA error:', error);
+					showMessage(messageContainer, 'CAPTCHA verification failed. Please try again.', 'error');
+					submitButton.disabled = false;
+					submitButton.textContent = originalText;
+					return;
+				}
+			} else if (modalData.captchaType === 'turnstile' && window.turnstile) {
+				try {
+					const turnstileWidget = document.querySelector('.cf-turnstile');
+					if (turnstileWidget) {
+						captchaToken = turnstile.getResponse(turnstileWidget);
+						if (!captchaToken) {
+							showMessage(messageContainer, 'Please complete the Turnstile verification.', 'error');
+							submitButton.disabled = false;
+							submitButton.textContent = originalText;
+							return;
+						}
+					}
+				} catch (error) {
+					console.error('Turnstile error:', error);
+					showMessage(messageContainer, 'CAPTCHA verification failed. Please try again.', 'error');
+					submitButton.disabled = false;
+					submitButton.textContent = originalText;
+					return;
+				}
+			}
+		}
+
 		// Prepare AJAX data
 		const ajaxData = {
 			action: 'wedocs_contact_feedback',
@@ -146,7 +194,9 @@ function initializeHelpBlock(block) {
 			subject: formData.get('subject') || 'Need More Help',
 			message: message,
 			doc_id: 0,
-			_ajax_nonce: needMoreHelpAjax.nonce
+			_ajax_nonce: needMoreHelpAjax.nonce,
+			captcha_token: captchaToken,
+			captcha_type: modalData.captchaEnabled ? modalData.captchaType : null
 		};
 
 		// Send AJAX request
@@ -162,6 +212,18 @@ function initializeHelpBlock(block) {
 			if (data.success) {
 				showMessage(messageContainer, data.data, 'success');
 				form.reset();
+
+				// Reset CAPTCHA after successful submission
+				if (modalData.captchaEnabled) {
+					if (modalData.captchaType === 'recaptcha' && window.grecaptcha) {
+						grecaptcha.reset();
+					} else if (modalData.captchaType === 'turnstile' && window.turnstile) {
+						const turnstileWidget = document.querySelector('.cf-turnstile');
+						if (turnstileWidget) {
+							turnstile.reset(turnstileWidget);
+						}
+					}
+				}
 
 				// Auto close modal after success (optional)
 				setTimeout(() => {
@@ -242,6 +304,7 @@ function createModal(modalData) {
 					<label style="${modalData.labelStyles || ''}">${escapeHtml(modalData.messageLabel)}</label>
 					<textarea name="message" required rows="4"></textarea>
 				</div>
+				${modalData.captchaEnabled ? createCaptchaHtml(modalData) : ''}
 				<div class="form-submit" style="justify-content: ${modalData.buttonAlignment || 'flex-start'}">
 					<button type="submit" style="${modalData.buttonStyles || ''}">
 						${escapeHtml(modalData.submitText)}
@@ -252,6 +315,52 @@ function createModal(modalData) {
 	`;
 
 	return modal;
+}
+
+function createCaptchaHtml(modalData) {
+	if (!modalData.captchaEnabled) return '';
+
+	if (modalData.captchaType === 'recaptcha' && modalData.recaptchaSiteKey) {
+		return `
+			<div class="form-field captcha-field">
+				<div class="g-recaptcha" data-sitekey="${modalData.recaptchaSiteKey}"></div>
+			</div>`;
+	} else if (modalData.captchaType === 'turnstile' && modalData.turnstileSiteKey) {
+		return `
+			<div class="form-field captcha-field">
+				<div class="cf-turnstile" data-sitekey="${modalData.turnstileSiteKey}"></div>
+			</div>`;
+	}
+
+	return '';
+}
+
+function initializeCaptcha(modalData) {
+	if (!modalData.captchaEnabled) return;
+
+	if (modalData.captchaType === 'recaptcha' && window.grecaptcha && typeof grecaptcha.render === 'function') {
+		try {
+			const recaptchaContainer = document.querySelector('.g-recaptcha');
+			if (recaptchaContainer && !recaptchaContainer.hasChildNodes()) {
+				grecaptcha.render(recaptchaContainer, {
+					sitekey: modalData.recaptchaSiteKey
+				});
+			}
+		} catch (error) {
+			console.error('Failed to render reCAPTCHA:', error);
+		}
+	} else if (modalData.captchaType === 'turnstile' && window.turnstile && typeof turnstile.render === 'function') {
+		try {
+			const turnstileContainer = document.querySelector('.cf-turnstile');
+			if (turnstileContainer && !turnstileContainer.hasChildNodes()) {
+				turnstile.render(turnstileContainer, {
+					sitekey: modalData.turnstileSiteKey
+				});
+			}
+		} catch (error) {
+			console.error('Failed to render Turnstile:', error);
+		}
+	}
 }
 
 function escapeHtml(unsafe) {

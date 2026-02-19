@@ -277,6 +277,21 @@
 		"analyticsEvent": {
 			"type": "string",
 			"default": "need-help-clicked"
+		},
+		"captchaEnabled": {
+			"type": "boolean",
+			"default": false
+		},
+		"captchaType": {
+			"type": "string",
+			"default": "recaptcha",
+			"enum": ["recaptcha", "turnstile"]
+		},
+		"recaptchaSiteKey": {
+			"type": "string"
+		},
+		"turnstileSiteKey": {
+			"type": "string"
 		}
 	},
 	"supports": {
