@@ -1,4 +1,4 @@
-<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- wp:template-part {"slug":"header","theme":"twentytwentyfive","tagName":"header"} /-->
 
 <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"90%"}} -->
 <div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:columns -->
@@ -11,10 +11,8 @@
 <!-- /wp:column -->
 
 <!-- wp:column {"width":"50%"} -->
-<div class="wp-block-column" style="flex-basis:50%"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
-<div class="wp-block-group"><!-- wp:wedocs/breadcrumbs {"style":{"spacing":{"padding":{"top":"var:preset|spacing|20","right":"0","bottom":"var:preset|spacing|20","left":"0"}},"border":{"radius":"var:preset|spacing|20"}}} /-->
-
-<!-- wp:wedocs/print-button /--></div>
+<div class="wp-block-column" style="flex-basis:50%"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->
+<div class="wp-block-group"><!-- wp:wedocs/breadcrumbs {"style":{"spacing":{"padding":{"top":"var:preset|spacing|20","right":"0","bottom":"var:preset|spacing|20","left":"0"}},"border":{"radius":"var:preset|spacing|20"}}} /--></div>
 <!-- /wp:group -->
 
 <!-- wp:post-content /-->
@@ -25,12 +23,9 @@
 <!-- /wp:column -->
 
 <!-- wp:column {"width":"20%"} -->
-<div class="wp-block-column" style="flex-basis:20%"><!-- wp:wedocs/table-of-contents {"blockId":"toc-8b67ce60-0792-4f27-a9b5-14f2438c9eb2","showNumbering":true,"stickyMode":true} -->
-<div class="wp-block-wedocs-table-of-contents sticky-mode smooth-scroll collapsible-mobile" data-block-id="toc-8b67ce60-0792-4f27-a9b5-14f2438c9eb2" data-supported-headings="[&quot;h2&quot;,&quot;h3&quot;]" data-show-hierarchy="true" data-show-numbering="true" data-smooth-scroll="true" style="width:100%;padding:20px 20px 20px 20px;margin:0px 0px 20px 0px;border-style:solid;border-width:1px;border-color:#e0e0e0;border-radius:5px"><div class="toc-title" style="font-size:18px;font-weight:600;padding:0px 0px 15px 0px">Table of Contents</div><div class="toc-content" style="font-size:14px"><div class="toc-loading">Loading table of contents...</div></div></div>
-<!-- /wp:wedocs/table-of-contents --></div>
+<div class="wp-block-column" style="flex-basis:20%"><!-- wp:wedocs/print-button /--></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
-
+<!-- wp:template-part {"slug":"footer","theme":"twentytwentyfive","tagName":"footer"} /-->
