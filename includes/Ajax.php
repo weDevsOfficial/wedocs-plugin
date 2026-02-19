@@ -147,6 +147,17 @@ class Ajax {
     public function handle_contact() {
         check_ajax_referer('wedocs-ajax');
 
+        // Verify CAPTCHA if provided
+        $captcha_token = isset($_POST['captcha_token']) ? sanitize_text_field($_POST['captcha_token']) : '';
+        $captcha_type = isset($_POST['captcha_type']) ? sanitize_text_field($_POST['captcha_type']) : '';
+
+        if (!empty($captcha_token) && !empty($captcha_type)) {
+            $captcha_valid = $this->verify_captcha($captcha_token, $captcha_type);
+            if (!$captcha_valid) {
+                wp_send_json_error(__('CAPTCHA verification failed. Please try again.', 'wedocs'));
+            }
+        }
+
         $name    = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
         $subject = isset($_POST['subject']) ? sanitize_text_field($_POST['subject']) : '';
         $message = isset($_POST['message']) ? strip_tags($_POST['message']) : '';
@@ -173,6 +184,94 @@ class Ajax {
         wedocs_doc_feedback_email($doc_id, $name, $email, $subject, $message);
 
         wp_send_json_success(__('Thanks for your feedback.', 'wedocs'));
+    }
+
+    /**
+     * Verify CAPTCHA token
+     *
+     * @param string $token
+     * @param string $type
+     * @return bool
+     */
+    private function verify_captcha($token, $type) {
+        if (empty($token) || empty($type)) {
+            return false;
+        }
+
+        switch ($type) {
+            case 'recaptcha':
+                return $this->verify_recaptcha($token);
+            case 'turnstile':
+                return $this->verify_turnstile($token);
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Verify reCAPTCHA token
+     *
+     * @param string $token
+     * @return bool
+     */
+    private function verify_recaptcha($token) {
+        $secret_key = get_option('wedocs_recaptcha_secret_key', '');
+
+        if (empty($secret_key)) {
+            return true; // If no secret key is set, skip verification
+        }
+
+        $response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
+            'body' => [
+                'secret'   => $secret_key,
+                'response' => $token,
+                'remoteip' => $_SERVER['REMOTE_ADDR'] ?? ''
+            ],
+            'timeout' => 15
+        ]);
+
+        if (is_wp_error($response)) {
+            error_log('reCAPTCHA verification error: ' . $response->get_error_message());
+            return false;
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        $result = json_decode($body, true);
+
+        return isset($result['success']) && $result['success'] === true;
+    }
+
+    /**
+     * Verify Turnstile token
+     *
+     * @param string $token
+     * @return bool
+     */
+    private function verify_turnstile($token) {
+        $secret_key = get_option('wedocs_turnstile_secret_key', '');
+
+        if (empty($secret_key)) {
+            return true; // If no secret key is set, skip verification
+        }
+
+        $response = wp_remote_post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+            'body' => [
+                'secret'   => $secret_key,
+                'response' => $token,
+                'remoteip' => $_SERVER['REMOTE_ADDR'] ?? ''
+            ],
+            'timeout' => 15
+        ]);
+
+        if (is_wp_error($response)) {
+            error_log('Turnstile verification error: ' . $response->get_error_message());
+            return false;
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        $result = json_decode($body, true);
+
+        return isset($result['success']) && $result['success'] === true;
     }
 
     /**

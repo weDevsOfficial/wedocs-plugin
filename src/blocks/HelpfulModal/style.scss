@@ -191,6 +191,22 @@
 			display: block;
 		}
 	}
+
+	// CAPTCHA field styles
+	.captcha-field {
+		margin: 16px 0;
+		text-align: center;
+
+		.g-recaptcha {
+			display: inline-block;
+			max-width: 100%;
+		}
+
+		.cf-turnstile {
+			display: inline-block;
+			max-width: 100%;
+		}
+	}
 }
 
 // Responsive styles
