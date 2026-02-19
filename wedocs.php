@@ -47,6 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/helpers/block-styles.php';
+require_once __DIR__ . '/includes/captcha-config.php';
 
 /**
  * WeDocs class.
@@ -183,25 +184,30 @@ final class WeDocs {
         $block_directories = [
             'assets/build/blocks/DocsGrid',
             'assets/build/blocks/Breadcrumb',
-            'assets/build/blocks/TableOfContents',
             'assets/build/blocks/HelpfulFeedback',
             'assets/build/blocks/QuickSearch',
             'assets/build/blocks/PrintButton',
             'assets/build/blocks/DocNavigation',
             'assets/build/blocks/Sidebar',
-            // 'assets/build/blocks/HelpfulModal',
-            // 'assets/build/blocks/AdvanceContributors',
-            // 'assets/build/blocks/Contributors',
-            // 'assets/build/blocks/TableOfContents',
-            // 'assets/build/blocks/HelpfulFeedback',
-            // 'assets/build/blocks/SocialShare',
-            // 'assets/build/blocks/AISummary',
-            // 'assets/build/blocks/DocActions',
-            // 'assets/build/blocks/LastUpdated',
-            // 'assets/build/blocks/ReadingProgress',
-            // 'assets/build/blocks/FontSizeSwitcher',
 
         ];
+
+         if(wedocs_pro_exists()) {
+            $block_directories = array_merge($block_directories, [
+                // 'assets/build/blocks/TableOfContents',
+                'assets/build/blocks/HelpfulModal',
+                // 'assets/build/blocks/AdvanceContributors',
+                // 'assets/build/blocks/Contributors',
+                // 'assets/build/blocks/SocialShare',
+                // 'assets/build/blocks/AISummary',
+                // 'assets/build/blocks/DocActions',
+                // 'assets/build/blocks/LastUpdated',
+                // 'assets/build/blocks/ReadingProgress',
+                // 'assets/build/blocks/FontSizeSwitcher',
+            ]);
+
+        }
+
 
         foreach ( $block_directories as $block_dir ) {
             $block_path = plugin_dir_path(__FILE__) . $block_dir;
