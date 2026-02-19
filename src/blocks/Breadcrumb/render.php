@@ -238,11 +238,20 @@ if (!function_exists('get_breadcrumb_items')) {
     if (is_singular('docs')) {
         global $post;
 
+        // Add Docs home page link if configured.
+        $docs_home = wedocs_get_general_settings( 'docs_home' );
+        if ( $docs_home ) {
+            $breadcrumbs[] = [
+                'title' => __('Docs', 'wedocs'),
+                'url' => get_permalink( $docs_home )
+            ];
+        }
+
         // Add parent docs
         $parent_docs = get_doc_ancestors($post);
         foreach ($parent_docs as $parent) {
             $breadcrumbs[] = [
-                'title' => $parent->post_title,
+                'title' => wedocs_apply_short_content( $parent->post_title, 25 ),
                 'url' => get_permalink($parent->ID)
             ];
         }
@@ -381,7 +390,7 @@ $breadcrumbs = get_breadcrumb_items();
         }
         </style>
         <div class="wedocs-document">
-    <nav aria-label="Breadcrumb" class="wedocs-breadcrumb">
+    <nav aria-label="Breadcrumb" class="wedocs-breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <?php
         // Build CSS classes for WordPress style system
         $ol_classes = ['flex', get_alignment_class($alignment)];
@@ -425,8 +434,8 @@ $breadcrumbs = get_breadcrumb_items();
             <?php if ($text_decoration): ?>text-decoration: <?php echo esc_attr($text_decoration); ?>;<?php endif; ?>
             <?php if ($letter_spacing): ?>letter-spacing: <?php echo esc_attr($letter_spacing); ?>;<?php endif; ?>
         ">
-            <?php foreach ($breadcrumbs as $index => $breadcrumb): ?>
-                <li class="flex">
+            <?php $breadcrumb_position = 0; foreach ($breadcrumbs as $index => $breadcrumb): ?>
+                <li class="flex" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
                     <div class="flex items-center">
                         <?php if ($index > 0): ?>
                             <!-- Separator -->
@@ -434,8 +443,9 @@ $breadcrumbs = get_breadcrumb_items();
                                 <?php echo esc_html($separator_icon); ?>
                             </span>
                         <?php endif; ?>
-                        
+
                         <?php if ($breadcrumb['url']): ?>
+                            <?php $breadcrumb_position++; ?>
                             <!-- Link with home icon for first item -->
                             <?php if (!$hide_home_icon && $index === 0): ?>
                                 <?php
@@ -445,11 +455,11 @@ $breadcrumbs = get_breadcrumb_items();
                                     $home_link_classes[] = 'has-' . sanitize_key(str_replace('var:preset|color|', '', $link_color)) . '-link-color';
                                 }
                                 ?>
-                                <a href="<?php echo esc_url($breadcrumb['url']); ?>" class="<?php echo esc_attr(implode(' ', $home_link_classes)); ?>" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?><?php if ($link_color): ?>color: <?php echo esc_attr(get_color_value($link_color)); ?>;<?php endif; ?><?php if ($link_hover_color): ?> --hover-color: <?php echo esc_attr(get_color_value($link_hover_color)); ?>;<?php endif; ?><?php if ($link_hover_background): ?> --hover-background: <?php echo esc_attr(get_color_value($link_hover_background)); ?>;<?php endif; ?>">
+                                <a itemprop="item" href="<?php echo esc_url($breadcrumb['url']); ?>" class="<?php echo esc_attr(implode(' ', $home_link_classes)); ?>" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?><?php if ($link_color): ?>color: <?php echo esc_attr(get_color_value($link_color)); ?>;<?php endif; ?><?php if ($link_hover_color): ?> --hover-color: <?php echo esc_attr(get_color_value($link_hover_color)); ?>;<?php endif; ?><?php if ($link_hover_background): ?> --hover-background: <?php echo esc_attr(get_color_value($link_hover_background)); ?>;<?php endif; ?>">
                                     <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="w-5 h-5 shrink-0 mr-1">
                                         <path d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z" clip-rule="evenodd" fill-rule="evenodd" />
                                     </svg>
-                                    <span class="sr-only"><?php echo esc_html($breadcrumb['title']); ?></span>
+                                    <span itemprop="name" class="sr-only"><?php echo esc_html($breadcrumb['title']); ?></span>
                                 </a>
                             <?php else: ?>
                                 <!-- Regular link -->
@@ -459,14 +469,15 @@ $breadcrumbs = get_breadcrumb_items();
                                     $link_classes[] = '';
                                 }
                                 ?>
-                                <a href="<?php echo esc_url($breadcrumb['url']); ?>" class="<?php echo esc_attr(implode(' ', $link_classes)); ?>" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?><?php if ($link_color): ?>color: <?php echo esc_attr(get_color_value($link_color)); ?>;<?php endif; ?><?php if ($link_hover_color): ?> --hover-color: <?php echo esc_attr(get_color_value($link_hover_color)); ?>;<?php endif; ?><?php if ($link_hover_background): ?> --hover-background: <?php echo esc_attr(get_color_value($link_hover_background)); ?>;<?php endif; ?>">
-                                    <?php echo esc_html($breadcrumb['title']); ?>
+                                <a itemprop="item" href="<?php echo esc_url($breadcrumb['url']); ?>" class="<?php echo esc_attr(implode(' ', $link_classes)); ?>" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?><?php if ($link_color): ?>color: <?php echo esc_attr(get_color_value($link_color)); ?>;<?php endif; ?><?php if ($link_hover_color): ?> --hover-color: <?php echo esc_attr(get_color_value($link_hover_color)); ?>;<?php endif; ?><?php if ($link_hover_background): ?> --hover-background: <?php echo esc_attr(get_color_value($link_hover_background)); ?>;<?php endif; ?>">
+                                    <span itemprop="name"><?php echo esc_html($breadcrumb['title']); ?></span>
                                 </a>
                             <?php endif; ?>
+                            <meta itemprop="position" content="<?php echo esc_attr($breadcrumb_position); ?>" />
                         <?php else: ?>
                             <!-- Current page (no link) -->
-                            <span <?php echo $index === 0 ? '' : 'class=""'; ?> aria-current="page" class="" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?>">
-                                <?php echo esc_html($breadcrumb['title']); ?>
+                            <span aria-current="page" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?>">
+                                <span itemprop="name"><?php echo esc_html($breadcrumb['title']); ?></span>
                             </span>
                         <?php endif; ?>
                     </div>
