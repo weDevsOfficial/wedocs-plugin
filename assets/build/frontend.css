@@ -1125,6 +1125,12 @@ footer.entry-footer.wedocs-entry-footer.on .help-content .help-button #wedocs-st
   .feedback-content .wedocs-feedback-wrap .vote-link-wrap {
     display: block;
   }
+  .wedocs-hide-mobile {
+    display: none !important;
+  }
+  #wedocs-single-doc-search-modal .doc-search-container {
+    padding: 23vh 5vw;
+  }
 }
 @media screen and (max-width: 768px) {
   .wedocs-single-wrap {
@@ -1170,7 +1176,7 @@ footer.entry-footer.wedocs-entry-footer.on .help-content .help-button #wedocs-st
     margin: 0;
   }
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 480px) {
   .wedocs-hide-mobile {
     display: none;
   }
