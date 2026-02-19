@@ -233,19 +233,6 @@
         border: 1px dashed #ccc;
         position: relative;
 
-        &::after {
-            content: 'Helpful Feedback Block';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            background: #0073aa;
-            color: white;
-            padding: 2px 8px;
-            font-size: 11px;
-            line-height: 1;
-            font-weight: 500;
-            z-index: 1;
-        }
     }
 }
 
