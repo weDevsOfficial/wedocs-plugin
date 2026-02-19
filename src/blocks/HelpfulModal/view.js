@@ -140,13 +140,13 @@ function initializeHelpBlock(block) {
 
 		// Prepare AJAX data
 		const ajaxData = {
-			action: 'need_more_help_submit',
+			action: 'wedocs_contact_feedback',
 			name: name,
 			email: email,
-			subject: formData.get('subject') || '',
+			subject: formData.get('subject') || 'Need More Help',
 			message: message,
-			page_url: window.location.href,
-			nonce: needMoreHelpAjax.nonce
+			doc_id: 0,
+			_ajax_nonce: needMoreHelpAjax.nonce
 		};
 
 		// Send AJAX request
