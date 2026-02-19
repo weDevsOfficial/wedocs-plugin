@@ -201,6 +201,10 @@ export default function Edit({ attributes, setAttributes }) {
 			url: "#"
 		},
 		{
+			title: "Docs",
+			url: "#"
+		},
+		{
 			title: "Documentation",
 			url: "#"
 		},
