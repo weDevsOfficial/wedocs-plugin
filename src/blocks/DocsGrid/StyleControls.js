@@ -276,44 +276,38 @@ const StyleControls = ({ attributes, setAttributes }) => {
                 </div>
             </PanelBody>
 
-          {/*<PanelBody*/}
-          {/*    title={__('Pagination Styles', 'wedocs')}*/}
-          {/*    icon="admin-appearance"*/}
-          {/*    initialOpen={false}*/}
-          {/*>*/}
-          {/*    <div className="wedocs-color-control">*/}
-          {/*        <label>{__('Text Color', 'wedocs')}</label>*/}
-          {/*        <ColorPicker*/}
-          {/*            color={attributes.paginationTextColor}*/}
-          {/*            onChange={updateAttribute('paginationTextColor')}*/}
-          {/*            enableAlpha*/}
-          {/*        />*/}
-          {/*    </div>*/}
-          {/*    <div className="wedocs-color-control">*/}
-          {/*        <label>{__('Text Hover Color', 'wedocs')}</label>*/}
-          {/*        <ColorPicker*/}
-          {/*            color={attributes.paginationTextHoverColor}*/}
-          {/*            onChange={updateAttribute('paginationTextHoverColor')}*/}
-          {/*            enableAlpha*/}
-          {/*        />*/}
-          {/*    </div>*/}
-          {/*    <div className="wedocs-color-control">*/}
-          {/*        <label>{__('Background Color', 'wedocs')}</label>*/}
-          {/*        <ColorPicker*/}
-          {/*            color={attributes.paginationBackgroundColor}*/}
-          {/*            onChange={updateAttribute('paginationBackgroundColor')}*/}
-          {/*            enableAlpha*/}
-          {/*        />*/}
-          {/*    </div>*/}
-          {/*    <div className="wedocs-color-control">*/}
-          {/*        <label>{__('Hover Color', 'wedocs')}</label>*/}
-          {/*        <ColorPicker*/}
-            {/*            color={attributes.paginationHoverColor}*/}
-            {/*            onChange={updateAttribute('paginationHoverColor')}*/}
-            {/*            enableAlpha*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*</PanelBody>*/}
+            <PanelBody
+                title={__('Pagination Styles', 'wedocs')}
+                icon="admin-appearance"
+                initialOpen={false}
+            >
+                <label>{__('Pagination Colors', 'wedocs')}</label>
+                <PanelColorSettings
+                    colors={colors}
+                    colorSettings={[
+                        {
+                            value: attributes.paginationTextColor,
+                            label: __('Text Color', 'wedocs'),
+                            onChange: (newColor) => updateAttribute('paginationTextColor')(newColor)
+                        },
+                        {
+                            value: attributes.paginationTextHoverColor,
+                            label: __('Text Hover Color', 'wedocs'),
+                            onChange: (newColor) => updateAttribute('paginationTextHoverColor')(newColor)
+                        },
+                        {
+                            value: attributes.paginationBackgroundColor,
+                            label: __('Background Color', 'wedocs'),
+                            onChange: (newColor) => updateAttribute('paginationBackgroundColor')(newColor)
+                        },
+                        {
+                            value: attributes.paginationHoverColor,
+                            label: __('Hover Color', 'wedocs'),
+                            onChange: (newColor) => updateAttribute('paginationHoverColor')(newColor)
+                        }
+                    ]}
+                />
+            </PanelBody>
         </>
     );
 };
