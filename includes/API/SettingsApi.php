@@ -198,6 +198,12 @@ class SettingsApi extends \WP_REST_Controller {
         
         $settings_data_filtered = apply_filters( 'wedocs_settings_data', $settings_data );
 
+        // Preserve integrate_ai (AI connection state) when saving general settings.
+        $existing_settings = get_option( 'wedocs_settings', [] );
+        if ( ! empty( $existing_settings['integrate_ai'] ) && empty( $settings_data_filtered['integrate_ai'] ) ) {
+            $settings_data_filtered['integrate_ai'] = $existing_settings['integrate_ai'];
+        }
+
         // Update wedocs_settings via docs store.
         update_option( 'wedocs_settings', $settings_data_filtered );
         $response = apply_filters( 'wedocs_settings_data_rest_response', $settings_data_filtered, $settings_data );
