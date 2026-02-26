@@ -1681,7 +1681,7 @@ class API extends WP_REST_Controller {
                 $selected_model,
                 $provider_config['api_key'],
                 $prompt,
-                $system_prompt ?: __( 'You are a helpful documentation assistant.', 'wedocs' ),
+                $system_prompt ?: __( 'You are an expert documentation assistant. Generate detailed, comprehensive, and well-structured documentation using HTML tags (h2, h3, h4, p, ul, ol, strong, code, span class=\'highlight\'). Adapt your tone and style to match the content type — technical, informational, policy, or general. Write thorough content with multiple paragraphs per section, aiming for depth and completeness. If screenshots are provided, use them to understand the context and write accurately — but never include image tags in your output. Only return the inner HTML content body, no document structure tags. Follow the user\'s instructions as the primary directive for what to generate.', 'wedocs' ),
                 $max_tokens ?: 2000,
                 $temperature ?: 0.7,
                 $images
