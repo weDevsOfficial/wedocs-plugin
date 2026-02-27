@@ -201,6 +201,9 @@ class Post_Types {
     /**
      * Load the vendor docs template when the docs query var is set.
      *
+     * If the query var has a numeric value, load a single doc view
+     * inside the dashboard. Otherwise, load the doc listing.
+     *
      * @since WEDOCS_SINCE
      *
      * @param array $query_vars Current query vars.
@@ -210,6 +213,20 @@ class Post_Types {
     public function load_vendor_docs_template( $query_vars ) {
         if ( ! isset( $query_vars['docs'] ) ) {
             return;
+        }
+
+        // Check for a single doc view via query parameter.
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $doc_id = ! empty( $_GET['doc_id'] ) ? absint( $_GET['doc_id'] ) : 0;
+
+        if ( $doc_id > 0 ) {
+            $post = get_post( $doc_id );
+
+            if ( $post && 'docs' === $post->post_type && 'publish' === $post->post_status ) {
+                require WEDOCS_PATH . '/templates/vendor-single-doc.php';
+
+                return;
+            }
         }
 
         require WEDOCS_PATH . '/templates/vendor-docs.php';
