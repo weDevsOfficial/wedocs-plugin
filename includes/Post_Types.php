@@ -20,6 +20,11 @@ class Post_Types {
     public function __construct() {
         add_action( 'init', [ $this, 'register_post_type' ] );
         add_action( 'init', [ $this, 'register_taxonomy' ] );
+        add_action( 'init', [ $this, 'register_post_meta' ] );
+        add_filter( 'dokan_settings_general_site_options', [ $this, 'add_vendor_docs_setting' ] );
+        add_filter( 'dokan_get_dashboard_nav', [ $this, 'add_docs_vendor_dashboard_menu' ] );
+        add_filter( 'dokan_query_var_filter', [ $this, 'register_docs_query_var' ] );
+        add_action( 'dokan_load_custom_template', [ $this, 'load_vendor_docs_template' ] );
     }
 
     /**
@@ -53,7 +58,7 @@ class Post_Types {
 
         $args = array(
             'labels'              => $labels,
-            'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'comments', 'elementor'),
+            'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'comments', 'elementor', 'custom-fields'),
             'hierarchical'        => true,
             'public'              => true,
             'show_ui'             => true,
@@ -124,5 +129,108 @@ class Post_Types {
         ];
 
         register_taxonomy( 'doc_tag', [ 'docs' ], $args );
+    }
+
+    /**
+     * Add vendor docs toggle to Dokan general site settings.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param array $settings_fields Existing settings fields.
+     *
+     * @return array
+     */
+    public function add_vendor_docs_setting( $settings_fields ) {
+        $settings_fields['show_docs_in_vendor_dashboard'] = [
+            'name'    => 'show_docs_in_vendor_dashboard',
+            'label'   => __( 'Show Docs in Vendor Dashboard', 'wedocs' ),
+            'desc'    => __( 'Allow vendors to view from their dashboard', 'wedocs' ),
+            'type'    => 'switcher',
+            'default' => 'off',
+        ];
+
+        return $settings_fields;
+    }
+
+    /**
+     * Add Docs menu item to the Dokan vendor dashboard sidebar.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param array $menus Existing dashboard nav menus.
+     *
+     * @return array
+     */
+    public function add_docs_vendor_dashboard_menu( $menus ) {
+        if ( ! function_exists( 'dokan_get_option' ) ) {
+            return $menus;
+        }
+
+        $show_docs = dokan_get_option( 'show_docs_in_vendor_dashboard', 'dokan_general', 'off' );
+
+        if ( 'on' !== $show_docs ) {
+            return $menus;
+        }
+
+        $menus['docs'] = [
+            'title'     => __( 'Docs', 'wedocs' ),
+            'icon'      => '<i class="fas fa-book"></i>',
+            'icon_name' => 'BookOpen',
+            'url'       => dokan_get_navigation_url( 'docs' ),
+            'pos'       => 185,
+        ];
+
+        return $menus;
+    }
+
+    /**
+     * Register docs query var for the Dokan vendor dashboard.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param array $query_vars Existing query vars.
+     *
+     * @return array
+     */
+    public function register_docs_query_var( $query_vars ) {
+        $query_vars[] = 'docs';
+
+        return $query_vars;
+    }
+
+    /**
+     * Load the vendor docs template when the docs query var is set.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param array $query_vars Current query vars.
+     *
+     * @return void
+     */
+    public function load_vendor_docs_template( $query_vars ) {
+        if ( ! isset( $query_vars['docs'] ) ) {
+            return;
+        }
+
+        require WEDOCS_PATH . '/templates/vendor-docs.php';
+    }
+
+    /**
+     * Register post meta fields for the docs post type.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function register_post_meta() {
+        register_post_meta( $this->post_type, '_is_vendor_doc', [
+            'show_in_rest'  => true,
+            'single'        => true,
+            'type'          => 'string',
+            'default'       => '0',
+            'auth_callback' => function () {
+                return current_user_can( 'edit_docs' );
+            },
+        ] );
     }
 }

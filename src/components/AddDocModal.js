@@ -1,6 +1,6 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { Fragment, useRef, useState } from '@wordpress/element';
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, Switch, Transition } from '@headlessui/react';
 import { dispatch, useSelect } from '@wordpress/data';
 import docStore from '../data/docs';
 import { ChevronDownIcon, ExclamationCircleIcon } from '@heroicons/react/20/solid';
@@ -17,6 +17,7 @@ const AddDocModal = ( { className, children } ) => {
   } );
 
   const [ formError, setFormError ] = useState( false );
+  const [ isVendorDoc, setIsVendorDoc ] = useState( false );
 
   const onTitleChange = ( e ) => {
     setNewDoc( { ...newDoc, title: { raw: e.target.value } } );
@@ -34,10 +35,16 @@ const AddDocModal = ( { className, children } ) => {
     // Make it disabled for creating a doc.
     setDisabled( true );
 
+    const docData = {
+      ...newDoc,
+      meta: { _is_vendor_doc: isVendorDoc ? '1' : '0' },
+    };
+
     dispatch( docStore )
-      .createDoc( newDoc )
+      .createDoc( docData )
       .then( ( result ) => {
         setNewDoc( { ...newDoc, title: { raw: '' } } );
+        setIsVendorDoc( false );
         Swal.fire( {
           title: __( 'New doc added!', 'wedocs' ),
           text: __( 'New doc has been added successfully', 'wedocs' ),
@@ -160,6 +167,39 @@ const AddDocModal = ( { className, children } ) => {
                         />
                       </div>
                     ) }
+                  </div>
+
+                  <div className="mt-4 flex items-center">
+                    <Switch
+                      checked={ isVendorDoc }
+                      onChange={ setIsVendorDoc }
+                      className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer outline-0 items-center justify-center rounded-full"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute h-full w-full rounded-md bg-white"
+                      />
+                      <span
+                        aria-hidden="true"
+                        className={ `${
+                          isVendorDoc ? 'bg-indigo-600' : 'bg-gray-200'
+                        } pointer-events-none absolute mx-auto h-4 w-9 rounded-full transition-colors duration-200 ease-in-out` }
+                      />
+                      <span
+                        aria-hidden="true"
+                        className={ `${
+                          isVendorDoc ? 'translate-x-5' : 'translate-x-0'
+                        } pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out` }
+                      />
+                    </Switch>
+                    <div className="ml-3 text-left">
+                      <span className="text-sm font-medium text-gray-700">
+                        { __( 'Dokan vendor doc', 'wedocs' ) }
+                      </span>
+                      <p className="text-xs text-gray-500">
+                        { __( 'This is a vendor doc, it will be shown in vendor dashboard', 'wedocs' ) }
+                      </p>
+                    </div>
                   </div>
 
                   <div className="mt-6 flex items-center justify-center space-x-3.5">

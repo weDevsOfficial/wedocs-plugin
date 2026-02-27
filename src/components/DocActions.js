@@ -20,6 +20,29 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
   );
 
   const [ showActions, setShowActions ] = useState( false );
+  const [ isVendorDoc, setIsVendorDoc ] = useState( doc?.meta?._is_vendor_doc === '1' );
+
+  // Toggle vendor doc meta.
+  const toggleVendorDoc = () => {
+    const newValue = isVendorDoc ? '0' : '1';
+
+    dispatch( 'wedocs/docs' )
+      .updateDoc( doc?.id, { meta: { _is_vendor_doc: newValue } } )
+      .then( () => {
+        setIsVendorDoc( ! isVendorDoc );
+        Swal.fire( {
+          icon: 'success',
+          toast: true,
+          title: isVendorDoc
+            ? __( 'Removed from vendor docs', 'wedocs' )
+            : __( 'Marked as vendor doc', 'wedocs' ),
+          timer: 2000,
+          position: 'bottom-end',
+          showConfirmButton: false,
+        } );
+      } )
+      .catch( ( err ) => console.log( err ) );
+  };
 
   // Update documentation data.
   const updateDocStatus = () => {
@@ -89,6 +112,15 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           >
             { __( 'View', 'wedocs' ) }
           </a>
+
+          { type === 'doc' && (
+            <span
+              onClick={ toggleVendorDoc }
+              className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none cursor-pointer"
+            >
+              { isVendorDoc ? __( 'Unmark as vendor doc', 'wedocs' ) : __( 'Mark as vendor doc', 'wedocs' ) }
+            </span>
+          ) }
 
           <span
             onClick={ updateDocStatus }
