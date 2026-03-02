@@ -1422,10 +1422,6 @@ class API extends WP_REST_Controller {
         // Check for low resolution warning.
         $low_resolution = ( $width < 600 || $height < 600 );
 
-        // Mark this attachment as temporary for cleanup.
-        update_post_meta( $attachment_id, '_wedocs_ai_temp', true );
-        update_post_meta( $attachment_id, '_wedocs_ai_temp_created', time() );
-
         return rest_ensure_response( [
             'id'             => $attachment_id,
             'attachment_id'  => $attachment_id,
