@@ -256,6 +256,27 @@ class SettingsApi extends \WP_REST_Controller {
             }
         }
 
+        // Sanitize feature toggles
+        if ( isset( $ai_settings['features'] ) && is_array( $ai_settings['features'] ) ) {
+            $sanitized['features'] = array();
+            $allowed_features = [ 'ai_summaries', 'ai_search', 'ai_qa', 'ai_recommendations', 'ai_acknowledgements' ];
+
+            foreach ( $allowed_features as $feature ) {
+                if ( isset( $ai_settings['features'][ $feature ] ) ) {
+                    $sanitized['features'][ $feature ] = [
+                        'enabled' => ! empty( $ai_settings['features'][ $feature ]['enabled'] ),
+                    ];
+
+                    if ( $feature === 'ai_summaries' ) {
+                        $allowed_modes = [ 'summary', 'highlights' ];
+                        $mode = isset( $ai_settings['features'][ $feature ]['display_mode'] )
+                            ? sanitize_text_field( $ai_settings['features'][ $feature ]['display_mode'] )
+                            : 'summary';
+                        $sanitized['features'][ $feature ]['display_mode'] = in_array( $mode, $allowed_modes, true ) ? $mode : 'summary';
+                    }
+                }
+            }
+        }
 
         return $sanitized;
     }
