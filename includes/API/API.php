@@ -392,6 +392,27 @@ class API extends WP_REST_Controller {
             ],
         ] );
 
+        // Dynamic model list endpoint — proxies the provider's models API.
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/ai/models/(?P<provider>[a-z0-9_-]+)', [
+            [
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => [ $this, 'get_ai_models' ],
+                'permission_callback' => [ $this, 'ai_generate_permissions_check' ],
+                'args'                => [
+                    'provider' => [
+                        'required'          => true,
+                        'type'              => 'string',
+                        'sanitize_callback' => 'sanitize_key',
+                    ],
+                    'refresh'  => [
+                        'required' => false,
+                        'type'     => 'boolean',
+                        'default'  => false,
+                    ],
+                ],
+            ],
+        ] );
+
         // Image upload endpoint for AI Doc Writer.
         register_rest_route( $this->namespace, '/' . $this->rest_base . '/ai/upload-image', [
             [
@@ -1276,10 +1297,9 @@ class API extends WP_REST_Controller {
 
         // Second check: Use finfo to verify actual file content.
         $real_mime = null;
-        if ( function_exists( 'finfo_open' ) ) {
-            $finfo = finfo_open( FILEINFO_MIME_TYPE );
-            $detected = finfo_file( $finfo, $file['tmp_name'] );
-            finfo_close( $finfo );
+        if ( class_exists( 'finfo' ) ) {
+            $finfo    = new \finfo( FILEINFO_MIME_TYPE );
+            $detected = $finfo->file( $file['tmp_name'] );
 
             if ( $detected ) {
                 $real_mime = $normalize_mime( $detected );
@@ -1396,8 +1416,8 @@ class API extends WP_REST_Controller {
         // Get attachment metadata.
         $attachment_url  = wp_get_attachment_url( $attachment_id );
         $attachment_meta = wp_get_attachment_metadata( $attachment_id );
-        $width           = $attachment_meta['width'] ?? 0;
-        $height          = $attachment_meta['height'] ?? 0;
+        $width           = \is_array( $attachment_meta ) ? ( $attachment_meta['width']  ?? 0 ) : 0;
+        $height          = \is_array( $attachment_meta ) ? ( $attachment_meta['height'] ?? 0 ) : 0;
 
         // Check for low resolution warning.
         $low_resolution = ( $width < 600 || $height < 600 );
@@ -1489,10 +1509,9 @@ class API extends WP_REST_Controller {
         // Use finfo to check actual file content.
         $real_mime = 'image/jpeg'; // Default fallback
 
-        if ( function_exists( 'finfo_open' ) ) {
-            $finfo = finfo_open( FILEINFO_MIME_TYPE );
-            $detected_mime = finfo_file( $finfo, $filepath );
-            finfo_close( $finfo );
+        if ( class_exists( 'finfo' ) ) {
+            $finfo         = new \finfo( FILEINFO_MIME_TYPE );
+            $detected_mime = $finfo->file( $filepath );
 
             if ( $detected_mime ) {
                 $real_mime = $detected_mime;
@@ -2188,4 +2207,377 @@ class API extends WP_REST_Controller {
         // Generic error
         throw new \Exception( sprintf( __( '%s API error: %s', 'wedocs' ), $provider_name, $error_message ) );
     }
+
+    // -------------------------------------------------------------------------
+    // Dynamic model listing
+    // -------------------------------------------------------------------------
+
+    /**
+     * Return the available models for an AI provider.
+     *
+     * Proxies the provider's model-list API using the saved API key, caches the
+     * result for one hour, and falls back to the static list when no key is
+     * configured or the remote request fails.
+     *
+     * @since 2.2.1
+     *
+     * @param \WP_REST_Request $request Accepts `provider` (path) and `refresh` (query).
+     *
+     * @return \WP_Error|\WP_REST_Response
+     */
+    public function get_ai_models( $request ) {
+        $provider         = $request->get_param( 'provider' );
+        $refresh          = (bool) $request->get_param( 'refresh' );
+        $provider_configs = wedocs_get_ai_provider_configs();
+
+        if ( ! isset( $provider_configs[ $provider ] ) ) {
+            return new WP_Error(
+                'wedocs_ai_invalid_provider',
+                __( 'Invalid AI provider.', 'wedocs' ),
+                [ 'status' => 404 ]
+            );
+        }
+
+        $static_models = $this->normalize_static_models( $provider_configs[ $provider ]['models'] );
+
+        $all_settings = get_option( 'wedocs_settings', [] );
+        $ai_settings  = \is_array( $all_settings['ai'] ?? null ) ? $all_settings['ai'] : [];
+        $api_key      = $ai_settings['providers'][ $provider ]['api_key'] ?? '';
+
+        if ( empty( $api_key ) ) {
+            return rest_ensure_response( [
+                'models'  => $static_models,
+                'dynamic' => false,
+                'source'  => 'static',
+            ] );
+        }
+
+        // The cache key encodes the first 8 hex chars of the key's MD5 so a new
+        // key automatically bypasses the old entry without explicit purging.
+        $cache_key = 'wedocs_ai_models_' . $provider . '_' . substr( md5( $api_key ), 0, 8 );
+
+        if ( ! $refresh ) {
+            $cached = get_transient( $cache_key );
+            if ( $cached !== false ) {
+                return rest_ensure_response( [
+                    'models'  => $cached,
+                    'dynamic' => true,
+                    'source'  => 'cache',
+                ] );
+            }
+        }
+
+        $live_models = $this->fetch_provider_models( $provider, $api_key );
+
+        if ( \is_wp_error( $live_models ) || empty( $live_models ) ) {
+            return rest_ensure_response( [
+                'models'  => $static_models,
+                'dynamic' => false,
+                'source'  => 'static_fallback',
+            ] );
+        }
+
+        set_transient( $cache_key, $live_models, HOUR_IN_SECONDS );
+
+        return rest_ensure_response( [
+            'models'  => $live_models,
+            'dynamic' => true,
+            'source'  => 'live',
+        ] );
+    }
+
+    /**
+     * Convert the static model map `['model-id' => ['name'=>…,'vision'=>…]]`
+     * to a flat array `[['id'=>…,'name'=>…,'vision'=>…]]`.
+     *
+     * @since 2.2.1
+     *
+     * @param array $models_map Associative map from model ID to config.
+     *
+     * @return array[]
+     */
+    private function normalize_static_models( array $models_map ) {
+        $out = [];
+        foreach ( $models_map as $id => $config ) {
+            $out[] = [
+                'id'     => $id,
+                'name'   => \is_array( $config ) ? ( $config['name'] ?? $id ) : $config,
+                'vision' => \is_array( $config ) ? ! empty( $config['vision'] ) : false,
+            ];
+        }
+        return $out;
+    }
+
+    /**
+     * Dispatch a live model-list request to the correct provider.
+     *
+     * @since 2.2.1
+     *
+     * @param string $provider Provider key (openai | anthropic | google).
+     * @param string $api_key  Saved API key.
+     *
+     * @return array[]|\WP_Error Normalized `[['id','name','vision']]` list or error.
+     */
+    private function fetch_provider_models( $provider, $api_key ) {
+        switch ( $provider ) {
+            case 'openai':
+                return $this->fetch_openai_models( $api_key );
+            case 'anthropic':
+                return $this->fetch_anthropic_models( $api_key );
+            case 'google':
+                return $this->fetch_google_models( $api_key );
+            default:
+                return new WP_Error(
+                    'wedocs_ai_unsupported_provider',
+                    __( 'Dynamic model listing is not supported for this provider.', 'wedocs' )
+                );
+        }
+    }
+
+    /**
+     * Fetch chat-completion capable models from the OpenAI API.
+     *
+     * Only models whose IDs begin with a known chat prefix (gpt-4, gpt-3.5-turbo,
+     * o1, o3, o4, chatgpt-4o) are included.  Vision capability is detected by
+     * matching well-known sub-strings in the model ID.
+     *
+     * @since 2.2.1
+     *
+     * @param string $api_key OpenAI API key.
+     *
+     * @return array[]|\WP_Error
+     */
+    private function fetch_openai_models( $api_key ) {
+        $response = wp_remote_get( 'https://api.openai.com/v1/models', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $api_key,
+                'Content-Type'  => 'application/json',
+            ],
+            'timeout' => 15,
+        ] );
+
+        if ( \is_wp_error( $response ) ) {
+            return $response;
+        }
+
+        $code = wp_remote_retrieve_response_code( $response );
+        if ( 200 !== $code ) {
+            return new WP_Error(
+                'wedocs_openai_models_error',
+                /* translators: %d: HTTP status code */
+                \sprintf( __( 'OpenAI API returned HTTP %d.', 'wedocs' ), $code )
+            );
+        }
+
+        $body = json_decode( wp_remote_retrieve_body( $response ), true );
+        $data = $body['data'] ?? [];
+
+        $chat_prefixes = [ 'gpt-4', 'gpt-3.5-turbo', 'o1', 'o3', 'o4', 'chatgpt-4o' ];
+        $models        = [];
+
+        foreach ( $data as $item ) {
+            $id = $item['id'] ?? '';
+            if ( ! $id ) {
+                continue;
+            }
+
+            $is_chat = false;
+            foreach ( $chat_prefixes as $prefix ) {
+                if ( strpos( $id, $prefix ) === 0 ) {
+                    $is_chat = true;
+                    break;
+                }
+            }
+
+            if ( ! $is_chat ) {
+                continue;
+            }
+
+            $vision =
+                strpos( $id, 'gpt-4o' ) !== false       ||
+                strpos( $id, 'gpt-4-turbo' ) !== false  ||
+                strpos( $id, 'gpt-4-vision' ) !== false ||
+                strpos( $id, 'chatgpt-4o' ) !== false   ||
+                preg_match( '/^o[1-9][-_]/', $id ) === 1;
+
+            $models[] = [
+                'id'     => $id,
+                'name'   => $id,
+                'vision' => $vision,
+            ];
+        }
+
+        // Vision-capable first, then alphabetical within each group.
+        usort( $models, static function ( $a, $b ) {
+            if ( $a['vision'] !== $b['vision'] ) {
+                return $a['vision'] ? -1 : 1;
+            }
+            return strcmp( $a['id'], $b['id'] );
+        } );
+
+        return $models;
+    }
+
+    /**
+     * Fetch models from the Anthropic API.
+     *
+     * All Claude 3 and later models support vision.
+     *
+     * @since 2.2.1
+     *
+     * @param string $api_key Anthropic API key.
+     *
+     * @return array[]|\WP_Error
+     */
+    private function fetch_anthropic_models( $api_key ) {
+        $response = wp_remote_get( 'https://api.anthropic.com/v1/models', [
+            'headers' => [
+                'x-api-key'         => $api_key,
+                'anthropic-version' => '2023-06-01',
+                'Content-Type'      => 'application/json',
+            ],
+            'timeout' => 15,
+        ] );
+
+        if ( \is_wp_error( $response ) ) {
+            return $response;
+        }
+
+        $code = wp_remote_retrieve_response_code( $response );
+        if ( 200 !== $code ) {
+            return new WP_Error(
+                'wedocs_anthropic_models_error',
+                /* translators: %d: HTTP status code */
+                \sprintf( __( 'Anthropic API returned HTTP %d.', 'wedocs' ), $code )
+            );
+        }
+
+        $body   = json_decode( wp_remote_retrieve_body( $response ), true );
+        $data   = $body['data'] ?? [];
+        $models = [];
+
+        foreach ( $data as $item ) {
+            $id   = $item['id'] ?? '';
+            $name = $item['display_name'] ?? $id;
+
+            if ( ! $id || strpos( $id, 'claude' ) !== 0 ) {
+                continue;
+            }
+
+            // claude-3 and all claude-4 families support multimodal input.
+            $vision = (bool) preg_match( '/^claude-(3|3-[57]|opus-4|sonnet-4|haiku-4)/', $id );
+
+            $models[] = [
+                'id'     => $id,
+                'name'   => $name,
+                'vision' => $vision,
+            ];
+        }
+
+        return $models;
+    }
+
+    /**
+     * Fetch generateContent-capable models from the Google Gemini API.
+     *
+     * Models that only support `countTokens` or `embedContent` are excluded.
+     *
+     * @since 2.2.1
+     *
+     * @param string $api_key Google AI API key.
+     *
+     * @return array[]|\WP_Error
+     */
+    private function fetch_google_models( $api_key ) {
+        $url      = add_query_arg( 'key', $api_key, 'https://generativelanguage.googleapis.com/v1beta/models' );
+        $response = wp_remote_get( $url, [ 'timeout' => 15 ] );
+
+        if ( \is_wp_error( $response ) ) {
+            return $response;
+        }
+
+        $code = wp_remote_retrieve_response_code( $response );
+        if ( 200 !== $code ) {
+            return new WP_Error(
+                'wedocs_google_models_error',
+                /* translators: %d: HTTP status code */
+                \sprintf( __( 'Google API returned HTTP %d.', 'wedocs' ), $code )
+            );
+        }
+
+        $body   = json_decode( wp_remote_retrieve_body( $response ), true );
+        $data   = $body['models'] ?? [];
+        $models = [];
+
+        foreach ( $data as $item ) {
+            // Raw name is "models/gemini-…"; strip the prefix for the ID.
+            $raw  = $item['name'] ?? '';
+            $id   = str_replace( 'models/', '', $raw );
+            $name = $item['displayName'] ?? $id;
+
+            if ( ! $id || strpos( $id, 'gemini' ) === false ) {
+                continue;
+            }
+
+            $methods = $item['supportedGenerationMethods'] ?? [];
+            if ( ! \in_array( 'generateContent', $methods, true ) ) {
+                continue;
+            }
+
+            // Most Gemini models support vision; exclude the AQA (text-only) variant.
+            $vision = strpos( $id, 'aqa' ) === false;
+
+            $models[] = [
+                'id'     => $id,
+                'name'   => $name,
+                'vision' => $vision,
+            ];
+        }
+
+        return $models;
+    }
 }
+
+/**
+ * Delete temporary AI image attachments that have exceeded the configured TTL.
+ *
+ * Queries all attachments marked with the `_wedocs_ai_temp` meta key, compares
+ * their `_wedocs_ai_temp_created` timestamp against the TTL (default 24 hours),
+ * and permanently removes any that have expired via wp_delete_attachment().
+ *
+ * Hooked to the `wedocs_cleanup_ai_temp_images` WP-Cron event, which is
+ * scheduled on plugin activation and cleared on deactivation.
+ *
+ * @since 2.2.1
+ *
+ * @return void
+ */
+function wedocs_cleanup_ai_temp_images() {
+    /** @var int $ttl Maximum age in seconds before a temp attachment is deleted (default 24 h). */
+    $ttl = (int) apply_filters( 'wedocs_ai_temp_image_ttl', DAY_IN_SECONDS );
+    $now = time();
+
+    $attachments = get_posts( [
+        'post_type'      => 'attachment',
+        'post_status'    => 'any',
+        'posts_per_page' => 100,
+        'fields'         => 'ids',
+        'meta_query'     => [
+            [
+                'key'     => '_wedocs_ai_temp',
+                'compare' => 'EXISTS',
+            ],
+        ],
+    ] );
+
+    foreach ( $attachments as $attachment_id ) {
+        $created = (int) get_post_meta( $attachment_id, '_wedocs_ai_temp_created', true );
+
+        // If no timestamp was stored, treat the attachment as expired.
+        if ( ! $created || $now - $created >= $ttl ) {
+            wp_delete_attachment( $attachment_id, true );
+        }
+    }
+}
+
+add_action( 'wedocs_cleanup_ai_temp_images', 'WeDevs\WeDocs\API\wedocs_cleanup_ai_temp_images' );

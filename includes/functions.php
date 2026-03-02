@@ -651,19 +651,19 @@ function wedocs_get_ai_provider_configs() {
 			'name'         => 'Anthropic Claude',
 			'endpoint'     => 'https://api.anthropic.com/v1/messages',
 			'models'       => [
-				'claude-4.1-opus'            => [
-					'name'   => 'Claude 4.1 Opus - Most Capable',
+				'claude-opus-4-5-20251101'   => [
+					'name'   => 'Claude Opus 4.5 - Most Capable',
 					'vision' => true,
 				],
-				'claude-4-opus'              => [
-					'name'   => 'Claude 4 Opus - Best Coding Model',
+				'claude-opus-4-20250514'     => [
+					'name'   => 'Claude Opus 4 - Best Coding Model',
 					'vision' => true,
 				],
-				'claude-4-sonnet'            => [
-					'name'   => 'Claude 4 Sonnet - Advanced Reasoning',
+				'claude-sonnet-4-20250514'   => [
+					'name'   => 'Claude Sonnet 4 - Advanced Reasoning',
 					'vision' => true,
 				],
-				'claude-3.7-sonnet'          => [
+				'claude-3-7-sonnet-20250219' => [
 					'name'   => 'Claude 3.7 Sonnet - Hybrid Reasoning',
 					'vision' => true,
 				],
@@ -681,10 +681,6 @@ function wedocs_get_ai_provider_configs() {
 				],
 				'claude-3-opus-20240229'     => [
 					'name'   => 'Claude 3 Opus',
-					'vision' => true,
-				],
-				'claude-3-sonnet-20240229'   => [
-					'name'   => 'Claude 3 Sonnet',
 					'vision' => true,
 				],
 				'claude-3-haiku-20240307'    => [
@@ -759,18 +755,71 @@ function wedocs_get_ai_provider_configs() {
 function wedocs_model_supports_vision( $provider, $model ) {
 	$configs = wedocs_get_ai_provider_configs();
 
-	if ( ! isset( $configs[ $provider ]['models'][ $model ] ) ) {
+	// 1. Check the static config first — cheapest path.
+	if ( isset( $configs[ $provider ]['models'][ $model ] ) ) {
+		$model_config = $configs[ $provider ]['models'][ $model ];
+		if ( is_array( $model_config ) ) {
+			return ! empty( $model_config['vision'] );
+		}
 		return false;
 	}
 
-	$model_config = $configs[ $provider ]['models'][ $model ];
+	// 2. Model not in the static list — check the transient cached by the dynamic
+	//    model endpoint (wedocs_ai_models_{provider}_{key_hash}).
+	$all_settings = get_option( 'wedocs_settings', [] );
+	$ai_settings  = is_array( $all_settings['ai'] ?? null ) ? $all_settings['ai'] : [];
+	$api_key      = $ai_settings['providers'][ $provider ]['api_key'] ?? '';
 
-	// Handle both old string format and new array format for backward compatibility.
-	if ( is_array( $model_config ) ) {
-		return ! empty( $model_config['vision'] );
+	if ( $api_key ) {
+		$cache_key     = 'wedocs_ai_models_' . $provider . '_' . substr( md5( $api_key ), 0, 8 );
+		$cached_models = get_transient( $cache_key );
+
+		if ( is_array( $cached_models ) ) {
+			foreach ( $cached_models as $m ) {
+				if ( ( $m['id'] ?? '' ) === $model ) {
+					return ! empty( $m['vision'] );
+				}
+			}
+		}
 	}
 
-	return false;
+	// 3. Pattern-based fallback for models unknown to both sources.
+	return wedocs_model_has_vision_by_pattern( $provider, $model );
+}
+
+/**
+ * Detect vision support by matching well-known model ID patterns.
+ *
+ * Used as a last resort when a model is absent from both the static config and
+ * the cached dynamic model list (e.g. a brand-new model released after the
+ * cache was last populated).
+ *
+ * @since 2.2.1
+ *
+ * @param string $provider Provider key (openai | anthropic | google).
+ * @param string $model    Model identifier.
+ *
+ * @return bool
+ */
+function wedocs_model_has_vision_by_pattern( $provider, $model ) {
+	switch ( $provider ) {
+		case 'openai':
+			return (
+				strpos( $model, 'gpt-4o' ) !== false      ||
+				strpos( $model, 'gpt-4-turbo' ) !== false ||
+				strpos( $model, 'gpt-4-vision' ) !== false ||
+				strpos( $model, 'chatgpt-4o' ) !== false  ||
+				preg_match( '/^o[1-9][-_]/', $model ) === 1
+			);
+		case 'anthropic':
+			// claude-3 and all claude-4 families expose multimodal input.
+			return preg_match( '/^claude-(3|3-[57]|opus-4|sonnet-4|haiku-4)/', $model ) === 1;
+		case 'google':
+			// Nearly all Gemini models support vision; AQA is text-only.
+			return strpos( $model, 'gemini' ) !== false && strpos( $model, 'aqa' ) === false;
+		default:
+			return false;
+	}
 }
 
 /**
@@ -816,6 +865,9 @@ function wedocs_get_ai_settings_for_frontend() {
 	// Fields that must never be sent to the frontend.
 	$sensitive_fields = [ 'api_key', 'api_secret', 'secret_key', 'access_token' ];
 
+	// Fetch once before the loop so we don't hit the options table on every iteration.
+	$original_config = wedocs_get_option( 'ai', 'wedocs_settings', [] );
+
 	if ( ! empty( $ai_settings['providers'] ) && is_array( $ai_settings['providers'] ) ) {
 		foreach ( $ai_settings['providers'] as $provider => &$config ) {
 			if ( ! is_array( $config ) ) {
@@ -827,9 +879,7 @@ function wedocs_get_ai_settings_for_frontend() {
 			}
 
 			// Let the frontend know whether a key has been configured.
-			$original_config = wedocs_get_option( 'ai', 'wedocs_settings', [] );
-			$has_key         = ! empty( $original_config['providers'][ $provider ]['api_key'] );
-			$config['has_api_key'] = $has_key;
+			$config['has_api_key'] = ! empty( $original_config['providers'][ $provider ]['api_key'] );
 		}
 		unset( $config );
 	}

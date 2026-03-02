@@ -264,7 +264,7 @@ class SettingsApi extends \WP_REST_Controller {
                 $sanitized['image_analysis']['enabled'] = (bool) $ai_settings['image_analysis']['enabled'];
             }
 
-            // Sanitize max image size (in KB, convert to bytes for storage)
+            // Sanitize max image size; stored in KB (conversion to bytes happens at read time).
             if ( isset( $ai_settings['image_analysis']['max_size'] ) ) {
                 $max_size_kb = absint( $ai_settings['image_analysis']['max_size'] );
                 // Limit between 100KB and 5MB
