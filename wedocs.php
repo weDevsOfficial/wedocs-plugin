@@ -106,7 +106,6 @@ final class WeDocs {
         $this->init_actions();
 
         register_activation_hook( __FILE__, [ $this, 'activate' ] );
-        register_deactivation_hook( __FILE__, [ $this, 'deactivate' ] );
 
         add_action( 'after_setup_theme', [ $this, 'init_classes' ] );
 
@@ -199,22 +198,6 @@ final class WeDocs {
 
         // Set the redirect option to true when the plugin is activated.
         update_option( 'wedocs_activation_redirect', true );
-
-        // Schedule the daily cleanup of temporary AI image attachments.
-        if ( ! wp_next_scheduled( 'wedocs_cleanup_ai_temp_images' ) ) {
-            wp_schedule_event( time(), 'daily', 'wedocs_cleanup_ai_temp_images' );
-        }
-    }
-
-    /**
-     * The plugin deactivation function.
-     *
-     * @since 2.2.1
-     *
-     * @return void
-     */
-    public function deactivate() {
-        wp_clear_scheduled_hook( 'wedocs_cleanup_ai_temp_images' );
     }
 
     /**
