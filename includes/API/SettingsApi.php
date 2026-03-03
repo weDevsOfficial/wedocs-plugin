@@ -267,12 +267,18 @@ class SettingsApi extends \WP_REST_Controller {
                         'enabled' => ! empty( $ai_settings['features'][ $feature ]['enabled'] ),
                     ];
 
+                    // ai_summaries is a PRO-only feature; enforce server-side.
                     if ( $feature === 'ai_summaries' ) {
-                        $allowed_modes = [ 'summary', 'highlights' ];
-                        $mode = isset( $ai_settings['features'][ $feature ]['display_mode'] )
-                            ? sanitize_text_field( $ai_settings['features'][ $feature ]['display_mode'] )
-                            : 'summary';
-                        $sanitized['features'][ $feature ]['display_mode'] = in_array( $mode, $allowed_modes, true ) ? $mode : 'summary';
+                        if ( ! wedocs_is_pro_active() ) {
+                            $sanitized['features'][ $feature ]['enabled']      = false;
+                            $sanitized['features'][ $feature ]['display_mode'] = 'summary';
+                        } else {
+                            $allowed_modes = [ 'summary', 'highlights' ];
+                            $mode = isset( $ai_settings['features'][ $feature ]['display_mode'] )
+                                ? sanitize_text_field( $ai_settings['features'][ $feature ]['display_mode'] )
+                                : 'summary';
+                            $sanitized['features'][ $feature ]['display_mode'] = in_array( $mode, $allowed_modes, true ) ? $mode : 'summary';
+                        }
                     }
                 }
             }
