@@ -25,6 +25,7 @@ class Post_Types {
         add_filter( 'dokan_get_dashboard_nav', [ $this, 'add_docs_vendor_dashboard_menu' ] );
         add_filter( 'dokan_query_var_filter', [ $this, 'register_docs_query_var' ] );
         add_action( 'dokan_load_custom_template', [ $this, 'load_vendor_docs_template' ] );
+        add_action( 'wp_enqueue_scripts', [ $this, 'collapse_dokan_sidebar_on_docs_page' ] );
     }
 
     /**
@@ -230,6 +231,44 @@ class Post_Types {
         }
 
         require WEDOCS_PATH . '/templates/vendor-docs.php';
+    }
+
+    /**
+     * Collapse the Dokan vendor sidebar when the vendor is on the docs dashboard page.
+     *
+     * Writes the Dokan sidebar localStorage key and dispatches a storage event so the
+     * React app collapses immediately without requiring a page reload.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function collapse_dokan_sidebar_on_docs_page() {
+        global $wp;
+
+        if ( ! function_exists( 'dokan_is_seller_dashboard' ) ) {
+            return;
+        }
+
+        if ( ! dokan_is_seller_dashboard() || ! isset( $wp->query_vars['docs'] ) ) {
+            return;
+        }
+
+        wp_add_inline_script(
+            'wedocs-scripts',
+            "( function () {
+                var STORAGE_KEY = 'dokanVendorSidebarCollapsed';
+                var prev = window.localStorage.getItem( STORAGE_KEY );
+                window.localStorage.setItem( STORAGE_KEY, '1' );
+                // Dispatch a storage event so the React app picks up the change immediately.
+                window.dispatchEvent( new StorageEvent( 'storage', {
+                    key:      STORAGE_KEY,
+                    oldValue: prev,
+                    newValue: '1',
+                    storageArea: window.localStorage
+                } ) );
+            } )();"
+        );
     }
 
     /**

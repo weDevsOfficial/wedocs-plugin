@@ -103,16 +103,7 @@ function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $post_type, $cu
                 \WeDevs\WeDocs\Frontend::enqueue_assets();
 
                 $panel_content = apply_filters( 'the_content', $post->post_content );
-                if ( ! empty( trim( $panel_content ) ) ) {
-                    echo '<div class="dokan-panel dokan-panel-default">';
-                    echo '<div class="dokan-panel-body">';
-                    echo $panel_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                    echo '</div>';
-                    echo '</div>';
-                }
-
-                // Display child articles if any.
-                $child_posts = get_posts(
+                $child_posts   = get_posts(
                     [
                         'post_type'      => $post->post_type,
                         'post_parent'    => $post->ID,
@@ -122,21 +113,28 @@ function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $post_type, $cu
                         'posts_per_page' => -1,
                     ]
                 );
-
-                if ( $child_posts ) {
-                    echo '<div class="dokan-panel dokan-panel-default wedocs-child-articles">';
-                    echo '<div class="dokan-panel-heading"><strong>' . esc_html__( 'Articles', 'wedocs' ) . '</strong></div>';
-                    echo '<ul class="dokan-panel-body list-unstyled">';
-                    foreach ( $child_posts as $child ) {
-                        $child_url = esc_url( add_query_arg( 'doc_id', $child->ID, $dashboard_base ) );
-                        echo '<li class="page_item page-item-' . esc_attr( $child->ID ) . '">';
-                        echo '<a href="' . $child_url . '">' . esc_html( $child->post_title ) . '</a>';
-                        echo '</li>';
-                    }
-                    echo '</ul>';
-                    echo '</div>';
-                }
                 ?>
+
+                <?php if ( ! empty( trim( $panel_content ) ) ) : ?>
+                <div class="dokan-panel dokan-panel-default">
+                    <div class="dokan-panel-body">
+                        <?php echo $panel_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <?php if ( $child_posts ) : ?>
+                <div class="dokan-panel dokan-panel-default wedocs-child-articles">
+                    <div class="dokan-panel-heading"><strong><?php esc_html_e( 'Articles', 'wedocs' ); ?></strong></div>
+                    <ul class="dokan-panel-body list-unstyled">
+                        <?php foreach ( $child_posts as $child ) : ?>
+                        <li class="page_item page-item-<?php echo esc_attr( $child->ID ); ?>">
+                            <a href="<?php echo esc_url( add_query_arg( 'doc_id', $child->ID, $dashboard_base ) ); ?>"><?php echo esc_html( $child->post_title ); ?></a>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php endif; ?>
             </div>
 
         </article>
