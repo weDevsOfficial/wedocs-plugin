@@ -200,7 +200,7 @@ class SettingsApi extends \WP_REST_Controller {
 
         // Preserve integrate_ai (AI connection state) when saving general settings.
         $existing_settings = get_option( 'wedocs_settings', [] );
-        if ( ! empty( $existing_settings['integrate_ai'] ) && empty( $settings_data_filtered['integrate_ai'] ) ) {
+        if ( array_key_exists( 'integrate_ai', $existing_settings ) && ! array_key_exists( 'integrate_ai', $settings_data_filtered ) ) {
             $settings_data_filtered['integrate_ai'] = $existing_settings['integrate_ai'];
         }
 
