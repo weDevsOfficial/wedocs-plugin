@@ -4,7 +4,66 @@
 
 do_action( 'dokan_dashboard_wrap_start' );
 
-$docs_url = function_exists( 'dokan_get_navigation_url' ) ? dokan_get_navigation_url( 'docs' ) : '';
+$docs_url       = function_exists( 'dokan_get_navigation_url' ) ? dokan_get_navigation_url( 'docs' ) : '';
+$dashboard_base = trailingslashit( $docs_url );
+
+// Resolve the root ancestor to use as the sidebar parent, mirroring docs-sidebar.php logic.
+// Use get_posts() for child links so we can build dashboard-scoped URLs (?doc_id=)
+// rather than raw WordPress permalinks which break out of the vendor dashboard.
+$ancestors      = [];
+$sidebar_parent = false;
+
+if ( ! empty( $post->post_parent ) ) {
+    $ancestors      = get_post_ancestors( $post->ID );
+    $root           = count( $ancestors ) - 1;
+    $sidebar_parent = $ancestors[ $root ];
+} else {
+    $sidebar_parent = ! empty( $post->ID ) ? $post->ID : false;
+}
+
+/**
+ * Recursively build a nested sidebar nav list with dashboard-scoped URLs.
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @param int    $parent_id      ID of the parent post whose children to list.
+ * @param string $dashboard_base Base URL of the vendor docs dashboard page.
+ * @param string $post_type      Post type to query.
+ * @param int    $current_id     ID of the currently viewed post (for active highlight).
+ *
+ * @return string HTML <ul> list, or empty string if no children exist.
+ */
+function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $post_type, $current_id ) {
+    $children = get_posts(
+        [
+            'post_type'      => $post_type,
+            'post_parent'    => $parent_id,
+            'post_status'    => 'publish',
+            'orderby'        => 'menu_order',
+            'order'          => 'ASC',
+            'posts_per_page' => -1,
+        ]
+    );
+
+    if ( ! $children ) {
+        return '';
+    }
+
+    $html = '<ul class="doc-nav-list">';
+    foreach ( $children as $child ) {
+        $url        = esc_url( add_query_arg( 'doc_id', $child->ID, $dashboard_base ) );
+        $is_current = ( (int) $child->ID === (int) $current_id );
+        $class      = 'page_item page-item-' . (int) $child->ID . ( $is_current ? ' current_page_item' : '' );
+
+        $html .= '<li class="' . esc_attr( $class ) . '">';
+        $html .= '<a href="' . $url . '">' . esc_html( $child->post_title ) . '</a>';
+        $html .= wedocs_vendor_sidebar_nav( $child->ID, $dashboard_base, $post_type, $current_id );
+        $html .= '</li>';
+    }
+    $html .= '</ul>';
+
+    return $html;
+}
 ?>
 
 <div class="dokan-dashboard-wrap">
@@ -15,7 +74,22 @@ $docs_url = function_exists( 'dokan_get_navigation_url' ) ? dokan_get_navigation
 
     <div class="dokan-dashboard-content dokan-wedocs-content">
 
-        <article class="dokan-wedocs-area">
+        <div class="wedocs-single-wrap text-sm">
+
+        <?php if ( $sidebar_parent ) : ?>
+            <aside class="wedocs-sidebar wedocs-vendor-sidebar">
+                <h3 class="widget-title"><?php echo esc_html( get_post_field( 'post_title', $sidebar_parent, 'display' ) ); ?></h3>
+
+                <?php
+                $sidebar_nav = wedocs_vendor_sidebar_nav( $sidebar_parent, $dashboard_base, $post->post_type, $post->ID );
+                if ( $sidebar_nav ) {
+                    echo $sidebar_nav; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                }
+                ?>
+            </aside>
+        <?php endif; ?>
+
+        <article class="dokan-wedocs-area wedocs-single-content">
 
             <header class="dokan-dashboard-header">
                 <?php if ( $docs_url ) : ?>
@@ -28,16 +102,16 @@ $docs_url = function_exists( 'dokan_get_navigation_url' ) ? dokan_get_navigation
                 <?php
                 \WeDevs\WeDocs\Frontend::enqueue_assets();
 
-                echo '<div class="dokan-panel dokan-panel-default">';
-                echo '<div class="dokan-panel-body">';
-                echo apply_filters( 'the_content', $post->post_content );
-                echo '</div>';
-                echo '</div>';
+                $panel_content = apply_filters( 'the_content', $post->post_content );
+                if ( ! empty( trim( $panel_content ) ) ) {
+                    echo '<div class="dokan-panel dokan-panel-default">';
+                    echo '<div class="dokan-panel-body">';
+                    echo $panel_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo '</div>';
+                    echo '</div>';
+                }
 
                 // Display child articles if any.
-                // Use get_posts() instead of wp_list_pages() so we can build dashboard-scoped
-                // URLs (?doc_id=) rather than raw WordPress permalinks which break out of the
-                // vendor dashboard.
                 $child_posts = get_posts(
                     [
                         'post_type'      => $post->post_type,
@@ -50,7 +124,6 @@ $docs_url = function_exists( 'dokan_get_navigation_url' ) ? dokan_get_navigation
                 );
 
                 if ( $child_posts ) {
-                    $dashboard_base = trailingslashit( $docs_url );
                     echo '<div class="dokan-panel dokan-panel-default wedocs-child-articles">';
                     echo '<div class="dokan-panel-heading"><strong>' . esc_html__( 'Articles', 'wedocs' ) . '</strong></div>';
                     echo '<ul class="dokan-panel-body list-unstyled">';
@@ -67,6 +140,8 @@ $docs_url = function_exists( 'dokan_get_navigation_url' ) ? dokan_get_navigation
             </div>
 
         </article>
+
+        </div><!-- .wedocs-single-wrap -->
 
     </div><!-- .dokan-dashboard-content -->
 
