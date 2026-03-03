@@ -1,6 +1,6 @@
 +( function ( $ ) {
   let pending_ajax = false;
-  const anchestorItem = document.querySelector( 'ul.doc-nav-list > li.page_item.current_page_ancestor' );
+  const anchestorItem = document.querySelector( 'ul.doc-nav-list > li.page_item.current_page_ancestor' ) || null;
 
   const weDocs = {
     initialize() {
@@ -156,9 +156,10 @@
     },
 
     loadSingleDocSearchModal( e ) {
-      if ( !weDocs_Vars.isSingleDoc ) {
-        return;
-      }
+      // Always load the search modal functionality, not just on single doc pages
+      // if ( !weDocs_Vars.isSingleDoc ) {
+      //   return;
+      // }
 
       const data = {
         action   : 'wedocs_get_docs',
@@ -178,10 +179,12 @@
       });
 
       // Mount doc single page search modal.
-      const mountDiv = document.createElement( 'div' );
-      mountDiv.setAttribute( 'id', 'wedocs-single-doc-search-modal' );
-      mountDiv.innerHTML = weDocs_Vars.searchModal;
-      document.body.appendChild( mountDiv );
+      if ( weDocs_Vars.searchModal ) {
+        const mountDiv = document.createElement( 'div' );
+        mountDiv.setAttribute( 'id', 'wedocs-single-doc-search-modal' );
+        mountDiv.innerHTML = weDocs_Vars.searchModal;
+        document.body.appendChild( mountDiv );
+      }
 
       document.addEventListener( 'keydown', ( event ) => {
         // Bind single page search modal with (ctrl/command + k).
@@ -295,16 +298,25 @@
           })
         );
 
-        liNode.querySelectorAll( '.doc-search-hit-result' ).forEach(
-          list => {
-            // Update list icon background & color.
-            list.querySelector( '.doc-search-hit-icon' ).style.background = weDocs_Vars?.searchModalColors?.active_shade_color;
-            list.querySelector( '.doc-search-hit-icon path' ).style.stroke = weDocs_Vars?.searchModalColors?.active_primary_color;
+        try {
+          liNode.querySelectorAll( '.doc-search-hit-result' ).forEach(
+            list => {
+              // Update list icon background & color.
+              const hitIcon = list?.querySelector( '.doc-search-hit-icon' );
+              const hitIconPath = hitIcon?.querySelector( 'path' );
+              
+              if ( hitIcon ) {
+                hitIcon.style.background = weDocs_Vars?.searchModalColors?.active_shade_color;
+              }
+              
+              if ( hitIconPath ) {
+                hitIconPath.style.stroke = weDocs_Vars?.searchModalColors?.active_primary_color;
+              }
 
-            const parentDocNav = list.querySelector( '.parent-doc-nav' ),
-              sectionDocNav = list.querySelector( '.section-doc-nav' ),
-              parentNavSearchHitPath = list.querySelector( '.parent-doc-nav .doc-search-hit-path' ),
-              sectionNavSearchHitPath = list.querySelector( '.section-doc-nav .doc-search-hit-path' );
+              const parentDocNav = list?.querySelector( '.parent-doc-nav' ),
+                sectionDocNav = list?.querySelector( '.section-doc-nav' ),
+                parentNavSearchHitPath = parentDocNav?.querySelector( '.doc-search-hit-path' ),
+                sectionNavSearchHitPath = sectionDocNav?.querySelector( '.doc-search-hit-path' );
 
             if ( parentNavSearchHitPath ) {
               // Update parent nav shade color.
@@ -350,7 +362,10 @@
               this.style.background = '#fff';
             } );
           }
-        );
+          );
+        } catch ( error ) {
+          console.warn( 'Error processing search results:', error );
+        }
 
         ulNode.appendChild(liNode);
       });
@@ -389,12 +404,18 @@
     },
 
     showSinglePageSearchModal ( e ) {
-      $( '#wedocs-single-doc-search-modal' ).addClass( 'active' );
-      $( '#wedocs-single-doc-search-modal #doc-search-input' ).focus();
+      const modal = $( '#wedocs-single-doc-search-modal' );
+      if ( modal.length ) {
+        modal.addClass( 'active' );
+        modal.find( '#doc-search-input' ).focus();
+      }
     },
 
     closeSinglePageSearchModal ( e ) {
-      $( '#wedocs-single-doc-search-modal' ).removeClass( 'active' );
+      const modal = $( '#wedocs-single-doc-search-modal' );
+      if ( modal.length ) {
+        modal.removeClass( 'active' );
+      }
     },
 
     extractedTitle ( title, length = 190 ) {
@@ -417,9 +438,9 @@
     // }
 
     // Handle navigation caret.
-    if ( ! anchestorItem?.classList.contains( 'wd-state-open' ) ) {
-      anchestorItem?.classList.add( 'wd-state-open' );
-      anchestorItem?.classList.remove( 'wd-state-closed' );
+    if ( anchestorItem && ! anchestorItem.classList.contains( 'wd-state-open' ) ) {
+      anchestorItem.classList.add( 'wd-state-open' );
+      anchestorItem.classList.remove( 'wd-state-closed' );
     }
 
     weDocs.initialize();
