@@ -17,7 +17,9 @@ const UpgradePopup = ({ children, className, controlledIsOpen, onControlledClose
 
   const closeModal = () => {
     if ( isControlled ) {
-      onControlledClose();
+      if ( typeof onControlledClose === 'function' ) {
+        onControlledClose();
+      }
     } else {
       setIsOpen( false );
     }

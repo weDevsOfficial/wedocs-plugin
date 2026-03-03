@@ -5,7 +5,7 @@
 do_action( 'dokan_dashboard_wrap_start' );
 
 $docs_url       = function_exists( 'dokan_get_navigation_url' ) ? dokan_get_navigation_url( 'docs' ) : '';
-$dashboard_base = trailingslashit( $docs_url );
+$dashboard_base = ! empty( $docs_url ) ? trailingslashit( $docs_url ) : '';
 
 // Resolve the root ancestor to use as the sidebar parent, mirroring docs-sidebar.php logic.
 // Use get_posts() for child links so we can build dashboard-scoped URLs (?doc_id=)
@@ -15,8 +15,7 @@ $sidebar_parent = false;
 
 if ( ! empty( $post->post_parent ) ) {
     $ancestors      = get_post_ancestors( $post->ID );
-    $root           = count( $ancestors ) - 1;
-    $sidebar_parent = $ancestors[ $root ];
+    $sidebar_parent = ! empty( $ancestors ) ? $ancestors[ count( $ancestors ) - 1 ] : $post->post_parent;
 } else {
     $sidebar_parent = ! empty( $post->ID ) ? $post->ID : false;
 }
@@ -51,7 +50,9 @@ function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $post_type, $cu
 
     $html = '<ul class="doc-nav-list">';
     foreach ( $children as $child ) {
-        $url        = esc_url( add_query_arg( 'doc_id', $child->ID, $dashboard_base ) );
+        $url        = $dashboard_base
+            ? esc_url( add_query_arg( 'doc_id', $child->ID, $dashboard_base ) )
+            : esc_url( get_permalink( $child->ID ) );
         $is_current = ( (int) $child->ID === (int) $current_id );
         $class      = 'page_item page-item-' . (int) $child->ID . ( $is_current ? ' current_page_item' : '' );
 
@@ -74,7 +75,7 @@ function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $post_type, $cu
 
     <div class="dokan-dashboard-content dokan-wedocs-content">
 
-        <div class="wedocs-single-wrap text-sm">
+        <div class="wedocs-single-wrap text-base">
 
         <?php if ( $sidebar_parent ) : ?>
             <aside class="wedocs-sidebar wedocs-vendor-sidebar">
@@ -129,7 +130,7 @@ function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $post_type, $cu
                     <ul class="dokan-panel-body list-unstyled">
                         <?php foreach ( $child_posts as $child ) : ?>
                         <li class="page_item page-item-<?php echo esc_attr( $child->ID ); ?>">
-                            <a href="<?php echo esc_url( add_query_arg( 'doc_id', $child->ID, $dashboard_base ) ); ?>"><?php echo esc_html( $child->post_title ); ?></a>
+                            <a href="<?php echo $dashboard_base ? esc_url( add_query_arg( 'doc_id', $child->ID, $dashboard_base ) ) : esc_url( get_permalink( $child->ID ) ); ?>"><?php echo esc_html( $child->post_title ); ?></a>
                         </li>
                         <?php endforeach; ?>
                     </ul>

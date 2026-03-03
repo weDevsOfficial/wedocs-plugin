@@ -216,6 +216,12 @@ class Post_Types {
             return;
         }
 
+        $show_docs = dokan_get_option( 'show_docs_in_vendor_dashboard', 'dokan_general', 'off' );
+
+        if ( 'on' !== $show_docs ) {
+            return;
+        }
+
         // Check for a single doc view via query parameter.
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $doc_id = ! empty( $_GET['doc_id'] ) ? absint( $_GET['doc_id'] ) : 0;
@@ -224,9 +230,16 @@ class Post_Types {
             $post = get_post( $doc_id );
 
             if ( $post && 'docs' === $post->post_type && 'publish' === $post->post_status ) {
-                require WEDOCS_PATH . '/templates/vendor-single-doc.php';
+                // _is_vendor_doc is set only on the root doc. For sections and articles,
+                // walk up to the root ancestor and check the meta there.
+                $ancestors = $post->post_parent ? get_post_ancestors( $post->ID ) : [];
+                $root_id   = ! empty( $ancestors ) ? end( $ancestors ) : $post->ID;
 
-                return;
+                if ( '1' === get_post_meta( $root_id, '_is_vendor_doc', true ) ) {
+                    require WEDOCS_PATH . '/templates/vendor-single-doc.php';
+
+                    return;
+                }
             }
         }
 

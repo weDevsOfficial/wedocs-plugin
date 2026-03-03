@@ -1,7 +1,7 @@
 <?php
 if ( $docs ) {
     $enable_doc_search = ! empty( $args['enable_search'] ) && $args['enable_search'] === 'on';
-    $target_blank      = ! isset( $open_in_new_tab ) || $open_in_new_tab ? " target='_blank'" : '';
+    $target_blank      = ! isset( $open_in_new_tab ) || $open_in_new_tab ? " target='_blank' rel='noopener noreferrer'" : '';
     $dashboard_base    = ! empty( $base_url ) ? trailingslashit( $base_url ) : '';
 
     ?>
@@ -22,10 +22,10 @@ if ( $docs ) {
                 <h3>
                     <?php
                     $main_doc_link = $dashboard_base
-                        ? esc_url( add_query_arg( 'doc_id', $main_doc['doc']->ID, $dashboard_base ) )
+                        ? add_query_arg( 'doc_id', $main_doc['doc']->ID, $dashboard_base )
                         : get_permalink( $main_doc['doc']->ID );
                     ?>
-                    <a href="<?php echo $main_doc_link; ?>"<?php echo $target_blank; ?>>
+                    <a href="<?php echo esc_url( $main_doc_link ); ?>"<?php echo $target_blank; ?>>
                         <?php echo $main_doc['doc']->post_title; ?>
                     </a>
                 </h3>
@@ -57,10 +57,10 @@ if ( $docs ) {
                                 <li>
                                     <?php
                                     $section_link = $dashboard_base
-                                        ? esc_url( add_query_arg( 'doc_id', $section->ID, $dashboard_base ) )
+                                        ? add_query_arg( 'doc_id', $section->ID, $dashboard_base )
                                         : get_permalink( $section->ID );
                                     ?>
-                                    <a class='icon-view' href="<?php echo $section_link; ?>"<?php echo $target_blank; ?>>
+                                    <a class='icon-view' href="<?php echo esc_url( $section_link ); ?>"<?php echo $target_blank; ?>>
                                         <?php echo esc_html( $post_title ); ?>
                                     </a>
                                     <?php if ( $children_docs ) : ?>
@@ -83,10 +83,10 @@ if ( $docs ) {
                                             <li>
                                                 <?php
                                                 $article_link = $dashboard_base
-                                                    ? esc_url( add_query_arg( 'doc_id', $article->ID, $dashboard_base ) )
+                                                    ? add_query_arg( 'doc_id', $article->ID, $dashboard_base )
                                                     : get_permalink( $article->ID );
                                                 ?>
-                                                <a href="<?php echo $article_link; ?>"<?php echo $target_blank; ?>>
+                                                <a href="<?php echo esc_url( $article_link ); ?>"<?php echo $target_blank; ?>>
                                                     <?php echo esc_html( wedocs_apply_short_content( $article->post_title, $col > 1 ? 60 : 160 ) ); ?>
                                                 </a>
                                             </li>
@@ -114,10 +114,10 @@ if ( $docs ) {
                 <div class="wedocs-doc-link">
                     <?php
                     $view_details_link = $dashboard_base
-                        ? esc_url( add_query_arg( 'doc_id', $main_doc['doc']->ID, $dashboard_base ) )
+                        ? add_query_arg( 'doc_id', $main_doc['doc']->ID, $dashboard_base )
                         : get_permalink( $main_doc['doc']->ID );
                     ?>
-                    <a href="<?php echo $view_details_link; ?>"<?php echo $target_blank; ?>><?php echo $more; ?></a>
+                    <a href="<?php echo esc_url( $view_details_link ); ?>"<?php echo $target_blank; ?>><?php echo $more; ?></a>
                 </div>
             </li>
         <?php } ?>
