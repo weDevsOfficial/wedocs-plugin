@@ -68,6 +68,16 @@ class Shortcode {
         $parent_args = apply_filters( 'wedocs_shortcode_page_parent_args', $parent_args );
         $parent_docs = get_pages( $parent_args );
 
+        // Exclude docs marked as vendor-only docs so they don't appear in the public shortcode.
+        if ( $parent_docs ) {
+            $parent_docs = array_filter(
+                $parent_docs,
+                function ( $doc ) {
+                    return '1' !== get_post_meta( $doc->ID, '_is_vendor_doc', true );
+                }
+            );
+        }
+
         // Arrange the section docs.
         if ( $parent_docs ) {
             foreach ( $parent_docs as $root ) {

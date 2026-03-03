@@ -3,6 +3,7 @@ if ( $docs ) {
     $enable_doc_search = ! empty( $args['enable_search'] ) && $args['enable_search'] === 'on';
     $target_blank      = ! isset( $open_in_new_tab ) || $open_in_new_tab ? " target='_blank'" : '';
     $dashboard_base    = ! empty( $base_url ) ? trailingslashit( $base_url ) : '';
+
     ?>
 
 <div class="wedocs-shortcode-wrap">
@@ -19,7 +20,12 @@ if ( $docs ) {
         <?php foreach ( $docs as $main_doc ) { ?>
             <li class="wedocs-docs-single">
                 <h3>
-                    <a href="<?php echo $dashboard_base ? esc_url( add_query_arg( 'doc_id', $main_doc['doc']->ID, $dashboard_base ) ) : get_permalink( $main_doc['doc']->ID ); ?>"<?php echo $target_blank; ?>>
+                    <?php
+                    $main_doc_link = $dashboard_base
+                        ? esc_url( add_query_arg( 'doc_id', $main_doc['doc']->ID, $dashboard_base ) )
+                        : get_permalink( $main_doc['doc']->ID );
+                    ?>
+                    <a href="<?php echo $main_doc_link; ?>"<?php echo $target_blank; ?>>
                         <?php echo $main_doc['doc']->post_title; ?>
                     </a>
                 </h3>
@@ -49,7 +55,12 @@ if ( $docs ) {
                                 $collapse_section_articles = wedocs_get_general_settings( 'collapse_articles', 'off' );
                                 ?>
                                 <li>
-                                    <a class='icon-view' href="<?php echo $dashboard_base ? esc_url( add_query_arg( 'doc_id', $section->ID, $dashboard_base ) ) : get_permalink( $section->ID ); ?>"<?php echo $target_blank; ?>>
+                                    <?php
+                                    $section_link = $dashboard_base
+                                        ? esc_url( add_query_arg( 'doc_id', $section->ID, $dashboard_base ) )
+                                        : get_permalink( $section->ID );
+                                    ?>
+                                    <a class='icon-view' href="<?php echo $section_link; ?>"<?php echo $target_blank; ?>>
                                         <?php echo esc_html( $post_title ); ?>
                                     </a>
                                     <?php if ( $children_docs ) : ?>
@@ -70,7 +81,12 @@ if ( $docs ) {
                                     >
                                         <?php foreach ( $children_docs as $article ) : ?>
                                             <li>
-                                                <a href="<?php echo $dashboard_base ? esc_url( add_query_arg( 'doc_id', $article->ID, $dashboard_base ) ) : get_permalink( $article->ID ); ?>"<?php echo $target_blank; ?>>
+                                                <?php
+                                                $article_link = $dashboard_base
+                                                    ? esc_url( add_query_arg( 'doc_id', $article->ID, $dashboard_base ) )
+                                                    : get_permalink( $article->ID );
+                                                ?>
+                                                <a href="<?php echo $article_link; ?>"<?php echo $target_blank; ?>>
                                                     <?php echo esc_html( wedocs_apply_short_content( $article->post_title, $col > 1 ? 60 : 160 ) ); ?>
                                                 </a>
                                             </li>
@@ -96,7 +112,12 @@ if ( $docs ) {
                 <hr class='divider' />
 
                 <div class="wedocs-doc-link">
-                    <a href="<?php echo $dashboard_base ? esc_url( add_query_arg( 'doc_id', $main_doc['doc']->ID, $dashboard_base ) ) : get_permalink( $main_doc['doc']->ID ); ?>"<?php echo $target_blank; ?>><?php echo $more; ?></a>
+                    <?php
+                    $view_details_link = $dashboard_base
+                        ? esc_url( add_query_arg( 'doc_id', $main_doc['doc']->ID, $dashboard_base ) )
+                        : get_permalink( $main_doc['doc']->ID );
+                    ?>
+                    <a href="<?php echo $view_details_link; ?>"<?php echo $target_blank; ?>><?php echo $more; ?></a>
                 </div>
             </li>
         <?php } ?>

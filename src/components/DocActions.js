@@ -3,8 +3,9 @@ import { __ } from '@wordpress/i18n';
 import RestictionModal from './RestrictionModal';
 import QuickEditModal from './DocListing/QuickEditModal';
 import { userIsAdmin } from '../utils/helper';
-import { dispatch } from '@wordpress/data';
+import { dispatch, useSelect } from '@wordpress/data';
 import Swal from 'sweetalert2';
+import UpgradePopup from './ProPreviews/common/UpgradePopup';
 
 const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
   const isAdmin = userIsAdmin();
@@ -21,9 +22,23 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
 
   const [ showActions, setShowActions ] = useState( false );
   const [ isVendorDoc, setIsVendorDoc ] = useState( doc?.meta?._is_vendor_doc === '1' );
+  const [ isUpgradeOpen, setIsUpgradeOpen ] = useState( false );
+
+  const isProLoaded = wp.hooks.applyFilters( 'wedocs_pro_loaded', false );
+
+  const vendorDocCount = useSelect( ( select ) => {
+    const docs = select( 'wedocs/docs' ).getDocs();
+    return docs.filter( ( d ) => d.parent === 0 && d.meta?._is_vendor_doc === '1' ).length;
+  } );
 
   // Toggle vendor doc meta.
   const toggleVendorDoc = () => {
+    // When marking (not unmarking), check the pro limit.
+    if ( ! isVendorDoc && ! isProLoaded && vendorDocCount >= 1 ) {
+      setIsUpgradeOpen( true );
+      return;
+    }
+
     const newValue = isVendorDoc ? '0' : '1';
 
     dispatch( 'wedocs/docs' )
@@ -147,6 +162,11 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           </RestictionModal>
         </div>
       </div>
+
+      <UpgradePopup
+        controlledIsOpen={ isUpgradeOpen }
+        onControlledClose={ () => setIsUpgradeOpen( false ) }
+      />
     </Fragment>
   );
 };
