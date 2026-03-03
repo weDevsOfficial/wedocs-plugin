@@ -46,7 +46,7 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
   return (
     <Fragment>
       <div
-        className="documentation-ellipsis-actions relative"
+        className={ `documentation-ellipsis-actions relative ${ showActions ? 'z-50' : '' }` }
         onMouseEnter={ () => setShowActions( true ) }
         onMouseLeave={ () => setShowActions( false ) }
       >
