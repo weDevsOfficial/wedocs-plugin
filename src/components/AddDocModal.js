@@ -1,8 +1,9 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { Fragment, useRef, useState } from '@wordpress/element';
 import { Dialog, Listbox, Transition } from '@headlessui/react';
-import { dispatch, useSelect } from '@wordpress/data';
-import docStore from '../data/docs';
+import { dispatch } from '@wordpress/data';
+import { DOCS_STORE } from '../data/docs';
+import useVendorDocGating from '../hooks/useVendorDocGating';
 import { CheckIcon, ChevronDownIcon, ExclamationCircleIcon } from '@heroicons/react/20/solid';
 import Swal from 'sweetalert2';
 import { handleDocCreationByRef } from '../utils/helper';
@@ -26,15 +27,10 @@ const AddDocModal = ( { className, children } ) => {
   const [ selectedVisibility, setSelectedVisibility ] = useState( visibilityOptions[ 0 ] );
   const [ isUpgradeOpen, setIsUpgradeOpen ] = useState( false );
 
-  const isProLoaded = wp.hooks.applyFilters( 'wedocs_pro_loaded', false );
-
-  const vendorDocCount = useSelect( ( select ) => {
-    const docs = select( docStore ).getDocs();
-    return docs.filter( ( doc ) => doc.parent === 0 && doc.meta?._is_vendor_doc === '1' ).length;
-  } );
+  const { isGated } = useVendorDocGating();
 
   const onVisibilityChange = ( option ) => {
-    if ( option.value === '1' && ! isProLoaded && vendorDocCount >= 1 ) {
+    if ( option.value === '1' && isGated ) {
       setIsUpgradeOpen( true );
       return;
     }
@@ -62,7 +58,7 @@ const AddDocModal = ( { className, children } ) => {
       meta: { _is_vendor_doc: selectedVisibility.value },
     };
 
-    dispatch( docStore )
+    dispatch( DOCS_STORE )
       .createDoc( docData )
       .then( ( result ) => {
         setNewDoc( { ...newDoc, title: { raw: '' } } );

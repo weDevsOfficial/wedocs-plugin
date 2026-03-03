@@ -28,8 +28,12 @@ do_action( 'dokan_dashboard_wrap_start' );
                     'post_status' => 'publish',
                     'parent'      => 0,
                     'sort_column' => 'menu_order',
-                    'meta_key'    => '_is_vendor_doc',
-                    'meta_value'  => '1',
+                    'meta_query'  => [
+                        [
+                            'key'   => '_is_vendor_doc',
+                            'value' => '1',
+                        ],
+                    ],
                 ];
 
                 $parent_docs = get_pages( $parent_args );

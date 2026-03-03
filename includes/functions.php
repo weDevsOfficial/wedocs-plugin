@@ -786,3 +786,34 @@ function wedocs_get_upgrade_popup_content() {
 	 */
 	return apply_filters( 'wedocs_upgrade_popup_content', $default_content );
 }
+
+function use_wedocs_legacy_template(){
+    $general_settings = wedocs_get_option( 'general', 'wedocs_settings', [] );
+
+    // If the setting has been explicitly set, use it directly.
+    if ( isset( $general_settings['use_legacy_template'] ) ) {
+        return $general_settings['use_legacy_template'] === 'on';
+    }
+
+    // current installed version is lower than 2.1.19 and wp_is_block_theme() is false, then set use_legacy_template to on.
+    $current_version = get_option( 'wedocs_version', '2.0.0' );
+    if ( version_compare( $current_version, '2.1.19', '<' ) && ! wp_is_block_theme() ) {
+
+        $settings['general']['use_legacy_template'] = 'on';
+        update_option( 'wedocs_settings', $settings );
+
+        return true;
+    }
+
+    if ( wp_is_block_theme() ) {
+
+        $settings['general']['use_legacy_template'] = 'off';
+        update_option( 'wedocs_settings', $settings );
+
+        return false;
+    }
+
+
+
+    return false;
+}

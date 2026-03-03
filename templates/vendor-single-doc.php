@@ -32,6 +32,7 @@ if ( ! empty( $post->post_parent ) ) {
  *
  * @return string HTML <ul> list, or empty string if no children exist.
  */
+if ( ! function_exists( 'wedocs_vendor_sidebar_nav' ) ) :
 function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $post_type, $current_id ) {
     $children = get_posts(
         [
@@ -65,6 +66,7 @@ function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $post_type, $cu
 
     return $html;
 }
+endif;
 ?>
 
 <div class="dokan-dashboard-wrap">
