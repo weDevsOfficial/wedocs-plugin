@@ -33,8 +33,12 @@ const AiSettings = ({ settingsData, aiSettingsData, setSettings }) => {
     // Generate settings from centralized configs
     Object.keys(configs).forEach((providerKey) => {
       const provider = configs[providerKey];
-      const modelKeys = Object.keys(provider.models);
-      const firstModel = modelKeys[0]; // Use first model as default
+      const safeModels =
+        typeof provider?.models === 'object' && provider.models !== null
+          ? provider.models
+          : {};
+      const modelKeys = Object.keys(safeModels);
+      const firstModel = modelKeys[0] || ''; // Use first model as default
 
       providers[providerKey] = {
         api_key: '',
@@ -99,12 +103,16 @@ const AiSettings = ({ settingsData, aiSettingsData, setSettings }) => {
 
     Object.keys(configs).forEach((providerKey) => {
       const provider = configs[providerKey];
+      const safeModels =
+        typeof provider?.models === 'object' && provider.models !== null
+          ? provider.models
+          : {};
       const models = [];
 
-      Object.keys(provider.models).forEach((modelKey) => {
+      Object.keys(safeModels).forEach((modelKey) => {
         models.push({
           value: modelKey,
-          label: provider.models[modelKey],
+          label: safeModels[modelKey],
         });
       });
 
@@ -687,6 +695,7 @@ const AiSettings = ({ settingsData, aiSettingsData, setSettings }) => {
                         handleFeatureToggle('ai_summaries', val)
                       }
                       disabled={!hasApiKey || !isPro}
+                      aria-label="Toggle AI document summaries"
                       className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer outline-0 items-center justify-center rounded-full"
                     >
                       <span
@@ -783,7 +792,11 @@ const AiSettings = ({ settingsData, aiSettingsData, setSettings }) => {
                             isSelected
                               ? 'text-gray-900 font-medium'
                               : 'text-gray-600'
-                          } ${!isPro ? 'opacity-50 pointer-events-none' : ''}`}
+                          } ${
+                            !isPro || !hasApiKey
+                              ? 'opacity-50 pointer-events-none'
+                              : ''
+                          }`}
                         >
                           <span
                             className={`relative inline-flex items-center justify-center h-4 w-4 rounded-full border-2 flex-shrink-0 transition-colors duration-150 ${
@@ -802,7 +815,7 @@ const AiSettings = ({ settingsData, aiSettingsData, setSettings }) => {
                             value={opt.value}
                             checked={isSelected}
                             onChange={() => handleSummaryModeChange(opt.value)}
-                            disabled={!isPro}
+                            disabled={!isPro || !hasApiKey}
                             className="sr-only"
                           />
                           {opt.label}
