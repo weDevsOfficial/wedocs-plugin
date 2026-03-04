@@ -6,6 +6,8 @@
 .wedocs-single-search-input .search-field {
     padding-right: 50px !important;
     padding-left: 22px !important;
+}
+</style>
 <form role='search' method='get' class='search-form wedocs-search-form wedocs-single-search-input' action='<?php echo esc_url( home_url( '/' ) ) ?>'>
     <div class='wedocs-search-input'>
         <input
