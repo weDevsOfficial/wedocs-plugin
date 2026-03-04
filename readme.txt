@@ -5,7 +5,7 @@ Tags: docs, documentation, knowledge base, wiki, ai powered knowledge base
 Requires at least: 5.6
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.1.18
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -190,6 +190,15 @@ Yes, weDocs supports custom permalinks for documentation pages.
 ---
 
 ## Changelog
+
+**v2.2.0 (4 Mar, 2026)**
+- **Added:** Integrated feature search form with modal support (#239).
+- **Added:** Responsive screen query handling for sidebar layout (#292).
+- **Added:** Optional legacy theme support setting for improved compatibility (#298).
+- **Added:** Pagination support to `wedocs` shortcode (#294).
+- **Fixed:** Resolved action menu overlap issue between article rows (#278).
+- **Fixed:** Preserved AI integration flag correctly when saving settings (#300).
+- **Fixed:** Patched Broken Access Control vulnerability in parents REST API endpoint (#291).
 
 **v2.1.18 (22 Jan, 2026)**
 - **Fixed:** Multibyte character truncation in doc titles.
