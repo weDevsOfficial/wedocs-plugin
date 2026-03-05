@@ -31,6 +31,9 @@ class Frontend {
         // filter the search result
         add_action( 'pre_get_posts', [ $this, 'docs_search_filter' ] );
 
+        // Exclude vendor docs from all public-facing docs queries.
+        add_action( 'pre_get_posts', [ $this, 'exclude_vendor_docs' ] );
+
         // Loads frontend scripts and styles
         add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ], 9 );
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_single_scripts' ], 9 );
@@ -115,6 +118,82 @@ class Frontend {
 
         wp_enqueue_script( 'wedocs-anchorjs' );
         wp_enqueue_script( 'wedocs-scripts' );
+    }
+
+    /**
+     * Exclude vendor docs from public-facing docs queries.
+     *
+     * Vendor docs (meta _is_vendor_doc = '1') should only be visible in the
+     * Dokan vendor dashboard context. This filter adds a meta_query to every
+     * public WP_Query for the docs post type so vendor docs are automatically
+     * excluded from search results, block renders, Elementor widgets, etc.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param WP_Query $query
+     *
+     * @return void
+     */
+    public function exclude_vendor_docs( $query ) {
+        // Only target docs post type queries.
+        $post_type = $query->get( 'post_type' );
+
+        if ( 'docs' !== $post_type ) {
+            return;
+        }
+
+        // Don't filter admin-side queries (list tables, etc.).
+        if ( is_admin() && ! wp_doing_ajax() ) {
+            return;
+        }
+
+        // Don't filter when inside the Dokan vendor dashboard.
+        if ( $this->is_dokan_vendor_dashboard() ) {
+            return;
+        }
+
+        // Allow opting out of vendor doc filtering for specific queries.
+        if ( $query->get( 'wedocs_include_vendor_docs' ) ) {
+            return;
+        }
+
+        $meta_query = $query->get( 'meta_query' );
+
+        if ( ! is_array( $meta_query ) ) {
+            $meta_query = [];
+        }
+
+        $meta_query[] = [
+            'relation' => 'OR',
+            [
+                'key'     => '_is_vendor_doc',
+                'value'   => '1',
+                'compare' => '!=',
+            ],
+            [
+                'key'     => '_is_vendor_doc',
+                'compare' => 'NOT EXISTS',
+            ],
+        ];
+
+        $query->set( 'meta_query', $meta_query );
+    }
+
+    /**
+     * Check if the current request is inside the Dokan vendor dashboard.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return bool
+     */
+    private function is_dokan_vendor_dashboard() {
+        global $wp;
+
+        if ( ! function_exists( 'dokan_is_seller_dashboard' ) ) {
+            return false;
+        }
+
+        return dokan_is_seller_dashboard() && isset( $wp->query_vars['docs'] );
     }
 
     /**

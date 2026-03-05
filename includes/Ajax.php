@@ -58,6 +58,18 @@ class Ajax {
             'posts_per_page' => '-1',
             'orderby'        => 'menu_order',
             'order'          => 'ASC',
+            'meta_query'     => [
+                'relation' => 'OR',
+                [
+                    'key'     => '_is_vendor_doc',
+                    'value'   => '1',
+                    'compare' => '!=',
+                ],
+                [
+                    'key'     => '_is_vendor_doc',
+                    'compare' => 'NOT EXISTS',
+                ],
+            ],
         ]);
 
         // Build a doc tree with separate parents, sections, articles & all docs together.
