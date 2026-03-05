@@ -23,7 +23,17 @@ const scopedRootMatch = () => ( {
         );
 
         if ( rootSelector !== rule.selector ) {
-            rule.selector = rule.selector + ', ' + rootSelector;
+            const existingSelectors = new Set(
+                rule.selector.split( ',' ).map( ( selector ) => selector.trim() )
+            );
+            const selectorsToAdd = rootSelector
+                .split( ',' )
+                .map( ( selector ) => selector.trim() )
+                .filter( ( selector ) => selector.length && ! existingSelectors.has( selector ) );
+
+            if ( selectorsToAdd.length ) {
+                rule.selector = rule.selector + ', ' + selectorsToAdd.join( ', ' );
+            }
         }
     },
 } );
