@@ -1,19 +1,25 @@
 /**
  * AI Settings Component
- * 
+ *
  * Centralized AI Control Settings panel for weDocs that allows admins to configure
  * and manage API integrations with multiple AI providers.
- * 
+ *
  * Available WordPress Filters:
- * 
+ *
  * @filter wedocs_ai_provider_configs
  * Allows customization of AI provider configurations including available models.
  * Used in the settings UI to display provider options and model selections.
- * 
- * @filter wedocs_ai_service_providers  
+ *
+ * @filter wedocs_ai_service_providers
  * Allows customization of AI service provider configurations for the AI service utility.
  * Used for API calls and provider management in the backend.
- * 
+ *
+ * @filter wedocs_ai_settings_fields
+ * Allows injection of additional settings fields into the AI Settings panel.
+ * Receives: (fields, settingsData, aiSettingsData, setSettings)
+ * Return: JSX elements to render additional fields.
+ * @since 2.0.1
+ *
  * @since 2.0.0
  */
 
@@ -558,6 +564,15 @@ const AiSettings = ({
                                 </p>
                             </div>
                         </div>
+
+                        {/* Additional fields injected via hook */}
+                        {wp.hooks.applyFilters(
+                          'wedocs_ai_settings_fields',
+                          null,
+                          settingsData,
+                          aiSettingsData,
+                          setSettings
+                        )}
                     </div>
                 </div>
             </div>

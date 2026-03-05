@@ -1,3 +1,19 @@
+/**
+ * General Settings Component
+ *
+ * Provides the main settings panel for weDocs including documentation home,
+ * email feedback, searchbar, helpful feedback, comments, and printing options.
+ *
+ * Available WordPress Filters:
+ *
+ * @filter wedocs_general_settings_fields
+ * Allows injection of additional settings fields into the General Settings panel.
+ * Receives: (fields, settingsData, generalSettingsData, setSettings)
+ * Return: JSX elements to render additional fields.
+ *
+ * @since 2.0.1
+ */
+
 import { __ } from '@wordpress/i18n';
 import Switcher from '../Switcher';
 import { useEffect, useState } from '@wordpress/element';
@@ -363,6 +379,7 @@ const GeneralSettings = ( {
               </div>
             </div>
 
+            {/* Legacy template toggle */}
             <div className="col-span-4">
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
@@ -408,6 +425,15 @@ const GeneralSettings = ( {
                 </div>
               </div>
             </div>
+
+            {/* Additional fields injected via hook */}
+            {wp.hooks.applyFilters(
+              'wedocs_general_settings_fields',
+              null,
+              settingsData,
+              generalSettingsData,
+              setSettings
+            )}
           </div>
         </div>
       </div>
