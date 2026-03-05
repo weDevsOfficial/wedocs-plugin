@@ -81,7 +81,7 @@ class Frontend {
             'assetsUrl'         => WEDOCS_ASSETS,
             'ajaxurl'           => admin_url( 'admin-ajax.php' ),
             'powered'           => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs plugin for WordPress', 'wedocs' ), home_url() ),
-            'isSingleDoc'       => is_singular( 'docs' ),
+            'isSingleDoc'       => true, // Always enable search modal functionality
             'searchModal'       => $searchModal,
             'docNavLabel'       => __( 'Doc: ', 'wedocs' ),
             'searchBlankMsg'    => __( 'Search field cannot be blank', 'wedocs' ),
