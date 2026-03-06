@@ -52,10 +52,10 @@ class Ajax {
     public function get_docs() {
         check_ajax_referer('wedocs-ajax');
 
-        $docs = get_pages([
+        $docs = get_posts([
             'post_type'      => 'docs',
             'post_status'    => ['publish', 'draft', 'pending'],
-            'posts_per_page' => '-1',
+            'posts_per_page' => -1,
             'orderby'        => 'menu_order',
             'order'          => 'ASC',
             'meta_query'     => [

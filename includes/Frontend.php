@@ -161,6 +161,8 @@ class Frontend {
             return;
         }
 
+        $is_vendor_dashboard = $this->is_dokan_vendor_dashboard();
+
         // Don't filter admin-side queries (list tables, etc.).
         if ( is_admin() && ! wp_doing_ajax() ) {
             return;
@@ -172,7 +174,7 @@ class Frontend {
         }
 
         // Don't filter when inside the Dokan vendor dashboard.
-        if ( $this->is_dokan_vendor_dashboard() ) {
+        if ( $is_vendor_dashboard ) {
             return;
         }
 
@@ -237,6 +239,8 @@ class Frontend {
         }
 
         $param = isset( $_GET['search_in_doc'] ) ? sanitize_text_field( $_GET['search_in_doc'] ) : false;
+
+        error_log( '[weDocs Search Debug] docs_search_filter called, search_in_doc: ' . ( $param ?: 'none' ) . ', search query: ' . $query->get( 's' ) );
 
         if ( $param && 'all' != $param ) {
             $parent_doc_id = intval( $param );
