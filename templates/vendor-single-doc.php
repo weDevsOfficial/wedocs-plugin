@@ -193,6 +193,14 @@ endif;
                 <?php endif; ?>
             </div>
 
+            <?php if ( wedocs_get_general_settings( 'helpful', 'on' ) === 'on' ) { ?>
+                <footer class="entry-footer wedocs-entry-footer">
+                    <div class="feedback-content">
+                        <?php wedocs_get_template_part( 'content', 'feedback' ); ?>
+                    </div>
+                </footer>
+            <?php } ?>
+
         </article>
 
         </div><!-- .wedocs-single-wrap -->
