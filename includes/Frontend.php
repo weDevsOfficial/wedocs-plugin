@@ -38,6 +38,9 @@ class Frontend {
         add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ], 9 );
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_single_scripts' ], 9 );
 
+        // Dequeue pro messaging bubble on the Dokan vendor dashboard.
+        add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_pro_scripts_on_vendor_dashboard' ], 20 );
+
         // override the theme template
         add_filter( 'template_include', [ $this, 'template_loader' ], 20 );
 
@@ -121,6 +124,22 @@ class Frontend {
     }
 
     /**
+     * Dequeue pro messaging bubble scripts on the Dokan vendor dashboard.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function dequeue_pro_scripts_on_vendor_dashboard() {
+        if ( ! $this->is_dokan_vendor_dashboard() ) {
+            return;
+        }
+
+        wp_dequeue_script( 'wedocs-pro-frontend-js' );
+        wp_dequeue_style( 'wedocs-pro-frontend-css' );
+    }
+
+    /**
      * Exclude vendor docs from public-facing docs queries.
      *
      * Vendor docs (meta _is_vendor_doc = '1') should only be visible in the
@@ -144,6 +163,11 @@ class Frontend {
 
         // Don't filter admin-side queries (list tables, etc.).
         if ( is_admin() && ! wp_doing_ajax() ) {
+            return;
+        }
+
+        // Don't filter for users who can manage docs (admins).
+        if ( current_user_can( 'edit_docs' ) ) {
             return;
         }
 

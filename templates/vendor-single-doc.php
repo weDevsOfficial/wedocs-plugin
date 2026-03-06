@@ -23,17 +23,22 @@ if ( ! empty( $post->post_parent ) ) {
 /**
  * Recursively build a nested sidebar nav list with dashboard-scoped URLs.
  *
+ * Produces HTML structure matching docs-sidebar.php so the existing
+ * wedocs frontend CSS and JS (carets, collapse/expand) work correctly.
+ *
  * @since WEDOCS_SINCE
  *
  * @param int    $parent_id      ID of the parent post whose children to list.
  * @param string $dashboard_base Base URL of the vendor docs dashboard page.
  * @param string $post_type      Post type to query.
  * @param int    $current_id     ID of the currently viewed post (for active highlight).
+ * @param array  $ancestor_ids   Ancestor IDs of the current post (for open/closed state).
+ * @param int    $depth          Current nesting depth (0-based).
  *
  * @return string HTML <ul> list, or empty string if no children exist.
  */
 if ( ! function_exists( 'wedocs_vendor_sidebar_nav' ) ) :
-function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $post_type, $current_id ) {
+function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $post_type, $current_id, $ancestor_ids = [], $depth = 0 ) {
     $children = get_posts(
         [
             'post_type'      => $post_type,
@@ -49,19 +54,66 @@ function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $post_type, $cu
         return '';
     }
 
-    $html = '<ul class="doc-nav-list">';
-    foreach ( $children as $child ) {
-        $url        = $dashboard_base
-            ? esc_url( add_query_arg( 'doc_id', $child->ID, $dashboard_base ) )
-            : esc_url( get_permalink( $child->ID ) );
-        $is_current = ( (int) $child->ID === (int) $current_id );
-        $class      = 'page_item page-item-' . (int) $child->ID . ( $is_current ? ' current_page_item' : '' );
+    // Top-level uses doc-nav-list; nested levels use children (matching wp_list_pages output).
+    $ul_class = ( 0 === $depth ) ? 'doc-nav-list' : 'children';
+    $html     = '<ul class="' . esc_attr( $ul_class ) . '">';
 
-        $html .= '<li class="' . esc_attr( $class ) . '">';
-        $html .= '<a href="' . $url . '">' . esc_html( $child->post_title ) . '</a>';
-        $html .= wedocs_vendor_sidebar_nav( $child->ID, $dashboard_base, $post_type, $current_id );
+    foreach ( $children as $child ) {
+        $child_id   = (int) $child->ID;
+        $url        = $dashboard_base
+            ? esc_url( add_query_arg( 'doc_id', $child_id, $dashboard_base ) )
+            : esc_url( get_permalink( $child_id ) );
+        $is_current = ( $child_id === (int) $current_id );
+        $is_ancestor = in_array( $child_id, $ancestor_ids, true );
+
+        // Check if this item has grandchildren.
+        $grandchildren = get_posts(
+            [
+                'post_type'      => $post_type,
+                'post_parent'    => $child_id,
+                'post_status'    => 'publish',
+                'posts_per_page' => 1,
+                'fields'         => 'ids',
+            ]
+        );
+        $has_children = ! empty( $grandchildren );
+
+        // Build CSS classes matching wp_list_pages / wedocs_sidebar_page_status_class output.
+        $classes = [ 'page_item', 'page-item-' . $child_id ];
+
+        if ( $is_current ) {
+            $classes[] = 'current_page_item';
+        }
+
+        if ( $is_ancestor ) {
+            $classes[] = 'current_page_ancestor';
+        }
+
+        if ( $has_children ) {
+            $classes[] = 'page_item_has_children';
+
+            // At depth 0, sections start collapsed unless they are the current or ancestor item.
+            if ( 0 === $depth ) {
+                $classes[] = ( $is_current || $is_ancestor ) ? 'wd-state-open' : 'wd-state-closed';
+            }
+        }
+
+        $html .= '<li class="' . esc_attr( implode( ' ', $classes ) ) . '">';
+        $html .= '<a href="' . $url . '">' . esc_html( $child->post_title );
+
+        if ( $has_children ) {
+            $html .= '<span class="wedocs-caret"></span>';
+        }
+
+        $html .= '</a>';
+
+        if ( $has_children ) {
+            $html .= wedocs_vendor_sidebar_nav( $child_id, $dashboard_base, $post_type, $current_id, $ancestor_ids, $depth + 1 );
+        }
+
         $html .= '</li>';
     }
+
     $html .= '</ul>';
 
     return $html;
@@ -84,7 +136,8 @@ endif;
                 <h3 class="widget-title"><?php echo esc_html( get_post_field( 'post_title', $sidebar_parent, 'display' ) ); ?></h3>
 
                 <?php
-                $sidebar_nav = wedocs_vendor_sidebar_nav( $sidebar_parent, $dashboard_base, $post->post_type, $post->ID );
+                $ancestor_ids = array_map( 'intval', $ancestors );
+                $sidebar_nav  = wedocs_vendor_sidebar_nav( $sidebar_parent, $dashboard_base, $post->post_type, $post->ID, $ancestor_ids );
                 if ( $sidebar_nav ) {
                     echo $sidebar_nav; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 }
