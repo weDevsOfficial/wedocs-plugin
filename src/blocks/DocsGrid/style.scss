@@ -69,7 +69,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
 // Grid container
 .wedocs-docs-grid {
     display: grid;
-    gap: 1.5rem;
+    gap: var(--wp--style--block-gap, 1.5rem);
     width: 100%;
     margin: 0; // Reset ul margin
     padding: 0; // Reset ul padding
@@ -302,9 +302,13 @@ $transition-duration: 0.2s;
             background-color: var(--wedocs-pagination-background-color, #fff);
             color: var(--wedocs-pagination-text-color, #333);
             text-decoration: none;
-            font-family: inherit;
-            font-size: 14px;
-            line-height: 1.4;
+            font-family: var(--wedocs-pagination-font-family, inherit);
+            font-size: var(--wedocs-pagination-font-size, 14px);
+            font-weight: var(--wedocs-pagination-font-weight, inherit);
+            line-height: var(--wedocs-pagination-line-height, 1.4);
+            letter-spacing: var(--wedocs-pagination-letter-spacing, normal);
+            text-decoration: var(--wedocs-pagination-text-decoration, none);
+            text-transform: var(--wedocs-pagination-text-transform, none);
             text-align: center;
             transition: all $transition-duration ease;
             cursor: pointer;

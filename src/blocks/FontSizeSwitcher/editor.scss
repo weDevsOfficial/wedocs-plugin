@@ -1,0 +1,38 @@
+/**
+ * Font Size Switcher Block Editor Styles
+ */
+
+.wp-block-wedocs-font-size-switcher {
+	// Disable pointer events in editor
+	.font-size-option,
+	.font-size-slider,
+	.font-size-dropdown,
+	.font-size-decrease,
+	.font-size-increase {
+		pointer-events: none;
+	}
+
+	// Show visual indicator in editor
+	&::after {
+		content: 'Preview: Interactive on frontend';
+		display: block;
+		text-align: center;
+		font-size: 11px;
+		color: #999;
+		font-style: italic;
+		margin-top: 10px;
+		padding-top: 10px;
+		border-top: 1px dashed rgba(0, 0, 0, 0.1);
+	}
+}
+
+// Block toolbar styles
+.block-editor-block-list__block[data-type="wedocs/font-size-switcher"] {
+	&.is-selected,
+	&.has-child-selected {
+		.wp-block-wedocs-font-size-switcher {
+			outline: 1px dashed #0073aa;
+			outline-offset: 2px;
+		}
+	}
+}
