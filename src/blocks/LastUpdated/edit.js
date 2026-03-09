@@ -144,7 +144,9 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						/>
 					)}
 				</PanelBody>
+			</InspectorControls>
 
+			<InspectorControls group="styles">
 				<ColorSettingsPanel
 					attributes={attributes}
 					setAttributes={setAttributes}
@@ -162,18 +164,6 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					fontWeight={fontWeight}
 					onFontSizeChange={(value) => setAttributes({ fontSize: value })}
 					onFontWeightChange={(value) => setAttributes({ fontWeight: value })}
-				/>
-
-				<SpacingPanel
-					title={__('Padding', 'wedocs-plugin')}
-					values={padding}
-					onChange={(value) => setAttributes({ padding: value })}
-				/>
-
-				<SpacingPanel
-					title={__('Margin', 'wedocs-plugin')}
-					values={margin}
-					onChange={(value) => setAttributes({ margin: value })}
 				/>
 			</InspectorControls>
 
