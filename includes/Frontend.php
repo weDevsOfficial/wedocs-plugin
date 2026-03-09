@@ -193,18 +193,7 @@ class Frontend {
             $meta_query = [];
         }
 
-        $meta_query[] = [
-            'relation' => 'OR',
-            [
-                'key'     => '_is_vendor_doc',
-                'value'   => '1',
-                'compare' => '!=',
-            ],
-            [
-                'key'     => '_is_vendor_doc',
-                'compare' => 'NOT EXISTS',
-            ],
-        ];
+        $meta_query[] = wedocs_exclude_vendor_doc_meta_query();
 
         $query->set( 'meta_query', $meta_query );
     }
@@ -243,8 +232,6 @@ class Frontend {
         }
 
         $param = isset( $_GET['search_in_doc'] ) ? sanitize_text_field( $_GET['search_in_doc'] ) : false;
-
-        error_log( '[weDocs Search Debug] docs_search_filter called, search_in_doc: ' . ( $param ?: 'none' ) . ', search query: ' . $query->get( 's' ) );
 
         if ( $param && 'all' != $param ) {
             $parent_doc_id = intval( $param );

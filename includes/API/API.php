@@ -549,18 +549,7 @@ class API extends WP_REST_Controller {
         $args = array(
             'post_type'      => 'docs',
             'posts_per_page' => -1,
-            'meta_query'     => array(
-                'relation' => 'OR',
-                array(
-                    'key'     => '_is_vendor_doc',
-                    'value'   => '1',
-                    'compare' => '!=',
-                ),
-                array(
-                    'key'     => '_is_vendor_doc',
-                    'compare' => 'NOT EXISTS',
-                ),
-            ),
+            'meta_query'     => wedocs_exclude_vendor_doc_meta_query(),
         );
 
         $docs = get_posts( $args );
@@ -614,18 +603,7 @@ class API extends WP_REST_Controller {
                     'value'   => '',
                     'compare' => '!=',
                 ),
-                array(
-                    'relation' => 'OR',
-                    array(
-                        'key'     => '_is_vendor_doc',
-                        'value'   => '1',
-                        'compare' => '!=',
-                    ),
-                    array(
-                        'key'     => '_is_vendor_doc',
-                        'compare' => 'NOT EXISTS',
-                    ),
-                ),
+                wedocs_exclude_vendor_doc_meta_query(),
             ),
         );
 

@@ -26,7 +26,7 @@ if ( $docs ) {
                         : get_permalink( $main_doc['doc']->ID );
                     ?>
                     <a href="<?php echo esc_url( $main_doc_link ); ?>"<?php echo $target_blank; ?>>
-                        <?php echo $main_doc['doc']->post_title; ?>
+                        <?php echo esc_html( $main_doc['doc']->post_title ); ?>
                     </a>
                 </h3>
 

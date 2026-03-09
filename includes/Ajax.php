@@ -61,18 +61,7 @@ class Ajax {
             'posts_per_page' => -1,
             'orderby'        => 'menu_order',
             'order'          => 'ASC',
-            'meta_query'     => [
-                'relation' => 'OR',
-                [
-                    'key'     => '_is_vendor_doc',
-                    'value'   => '1',
-                    'compare' => '!=',
-                ],
-                [
-                    'key'     => '_is_vendor_doc',
-                    'compare' => 'NOT EXISTS',
-                ],
-            ],
+            'meta_query'     => wedocs_exclude_vendor_doc_meta_query(),
         ]);
 
         // Build a doc tree with separate parents, sections, articles & all docs together.
@@ -113,6 +102,10 @@ class Ajax {
      */
     public function get_vendor_docs() {
         check_ajax_referer('wedocs-ajax');
+
+        if ( ! current_user_can( 'dokandar' ) && ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized access.', 'wedocs' ), 403 );
+        }
 
         $docs = get_posts([
             'post_type'      => 'docs',

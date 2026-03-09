@@ -25,7 +25,7 @@ do_action( 'dokan_dashboard_wrap_start' );
                     readonly
                     type='search'
                     class='search-field'
-                    value='<?php get_search_query(); ?>'
+                    value='<?php echo esc_attr( get_search_query() ); ?>'
                     title='<?php echo esc_attr_x( 'Search for:', 'label', 'wedocs' ); ?>'
                     placeholder='<?php echo esc_attr_x( 'Quick search...', 'placeholder', 'wedocs' ); ?>'
                 />

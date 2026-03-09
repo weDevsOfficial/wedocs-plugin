@@ -672,6 +672,28 @@ function wedocs_is_pro_active() {
 }
 
 /**
+ * Get the meta_query clauses to exclude vendor docs from queries
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @return array
+ */
+function wedocs_exclude_vendor_doc_meta_query() {
+    return array(
+        'relation' => 'OR',
+        array(
+            'key'     => '_is_vendor_doc',
+            'value'   => '1',
+            'compare' => '!=',
+        ),
+        array(
+            'key'     => '_is_vendor_doc',
+            'compare' => 'NOT EXISTS',
+        ),
+    );
+}
+
+/**
  * Get the upgrade popup content for Free to Pro promotion.
  *
  * This function provides the default content for the upgrade popup and allows

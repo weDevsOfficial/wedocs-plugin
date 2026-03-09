@@ -37,46 +37,77 @@ if ( ! empty( $post->post_parent ) ) {
  *
  * @return string HTML <ul> list, or empty string if no children exist.
  */
-if ( ! function_exists( 'wedocs_vendor_sidebar_nav' ) ) :
-function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $post_type, $current_id, $ancestor_ids = [], $depth = 0 ) {
-    $children = get_posts(
+/**
+ * Fetch all descendants of a doc and group them by post_parent.
+ *
+ * A single query replaces the per-node get_posts() calls that
+ * previously caused an N+1 problem in the sidebar nav builder.
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @param int    $root_id   Root doc ID whose descendants to fetch.
+ * @param string $post_type Post type to query.
+ *
+ * @return array Associative array keyed by parent ID, each value is an array of child post objects.
+ */
+if ( ! function_exists( 'wedocs_get_vendor_descendants' ) ) :
+function wedocs_get_vendor_descendants( $root_id, $post_type ) {
+    $all = get_pages(
         [
-            'post_type'      => $post_type,
-            'post_parent'    => $parent_id,
-            'post_status'    => 'publish',
-            'orderby'        => 'menu_order',
-            'order'          => 'ASC',
-            'posts_per_page' => -1,
+            'post_type'   => $post_type,
+            'post_status' => 'publish',
+            'sort_column' => 'menu_order',
+            'sort_order'  => 'ASC',
+            'child_of'    => $root_id,
         ]
     );
 
-    if ( ! $children ) {
+    // Group by post_parent for O(1) child lookups.
+    $by_parent = [];
+    foreach ( $all as $p ) {
+        $by_parent[ $p->post_parent ][] = $p;
+    }
+
+    return $by_parent;
+}
+endif;
+
+/**
+ * Recursively build a nested sidebar nav list with dashboard-scoped URLs.
+ *
+ * Uses a pre-fetched descendants lookup to avoid per-node queries.
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @param int    $parent_id      ID of the parent post whose children to list.
+ * @param string $dashboard_base Base URL of the vendor docs dashboard page.
+ * @param int    $current_id     ID of the currently viewed post (for active highlight).
+ * @param array  $ancestor_ids   Ancestor IDs of the current post (for open/closed state).
+ * @param array  $by_parent      Descendants grouped by parent ID (from wedocs_get_vendor_descendants).
+ * @param int    $depth          Current nesting depth (0-based).
+ *
+ * @return string HTML <ul> list, or empty string if no children exist.
+ */
+if ( ! function_exists( 'wedocs_vendor_sidebar_nav' ) ) :
+function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $current_id, $ancestor_ids, $by_parent, $depth = 0 ) {
+    if ( empty( $by_parent[ $parent_id ] ) ) {
         return '';
     }
+
+    $children = $by_parent[ $parent_id ];
 
     // Top-level uses doc-nav-list; nested levels use children (matching wp_list_pages output).
     $ul_class = ( 0 === $depth ) ? 'doc-nav-list' : 'children';
     $html     = '<ul class="' . esc_attr( $ul_class ) . '">';
 
     foreach ( $children as $child ) {
-        $child_id   = (int) $child->ID;
-        $url        = $dashboard_base
+        $child_id    = (int) $child->ID;
+        $url         = $dashboard_base
             ? esc_url( add_query_arg( 'doc_id', $child_id, $dashboard_base ) )
             : esc_url( get_permalink( $child_id ) );
-        $is_current = ( $child_id === (int) $current_id );
+        $is_current  = ( $child_id === (int) $current_id );
         $is_ancestor = in_array( $child_id, $ancestor_ids, true );
-
-        // Check if this item has grandchildren.
-        $grandchildren = get_posts(
-            [
-                'post_type'      => $post_type,
-                'post_parent'    => $child_id,
-                'post_status'    => 'publish',
-                'posts_per_page' => 1,
-                'fields'         => 'ids',
-            ]
-        );
-        $has_children = ! empty( $grandchildren );
+        $has_children = ! empty( $by_parent[ $child_id ] );
 
         // Build CSS classes matching wp_list_pages / wedocs_sidebar_page_status_class output.
         $classes = [ 'page_item', 'page-item-' . $child_id ];
@@ -108,7 +139,7 @@ function wedocs_vendor_sidebar_nav( $parent_id, $dashboard_base, $post_type, $cu
         $html .= '</a>';
 
         if ( $has_children ) {
-            $html .= wedocs_vendor_sidebar_nav( $child_id, $dashboard_base, $post_type, $current_id, $ancestor_ids, $depth + 1 );
+            $html .= wedocs_vendor_sidebar_nav( $child_id, $dashboard_base, $current_id, $ancestor_ids, $by_parent, $depth + 1 );
         }
 
         $html .= '</li>';
@@ -141,7 +172,7 @@ endif;
                         readonly
                         type='search'
                         class='search-field'
-                        value='<?php get_search_query(); ?>'
+                        value='<?php echo esc_attr( get_search_query() ); ?>'
                         title='<?php echo esc_attr_x( 'Search for:', 'label', 'wedocs' ); ?>'
                         placeholder='<?php echo esc_attr_x( 'Quick search...', 'placeholder', 'wedocs' ); ?>'
                     />
@@ -159,7 +190,8 @@ endif;
 
                 <?php
                 $ancestor_ids = array_map( 'intval', $ancestors );
-                $sidebar_nav  = wedocs_vendor_sidebar_nav( $sidebar_parent, $dashboard_base, $post->post_type, $post->ID, $ancestor_ids );
+                $by_parent    = wedocs_get_vendor_descendants( $sidebar_parent, $post->post_type );
+                $sidebar_nav  = wedocs_vendor_sidebar_nav( $sidebar_parent, $dashboard_base, $post->ID, $ancestor_ids, $by_parent );
                 if ( $sidebar_nav ) {
                     echo $sidebar_nav; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 }
