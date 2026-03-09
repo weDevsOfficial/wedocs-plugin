@@ -71,7 +71,25 @@
     printArticle ( e ) {
       e.preventDefault();
 
-      const article = $( this ).closest( 'article' );
+      // Try multiple selectors to find the article content
+      let article = $( this ).closest( 'article' );
+
+      // If no article found (e.g., in block themes), try common content selectors
+      if ( ! article.length ) {
+        article = $( '.wedocs-single-content article' );
+      }
+      if ( ! article.length ) {
+        article = $( '.entry-content' ).closest( 'article' );
+      }
+      if ( ! article.length ) {
+        article = $( '.entry-content' );
+      }
+
+      // If still no content found, bail out gracefully
+      if ( ! article.length ) {
+        window.print();
+        return;
+      }
 
       const mywindow = window.open( '', 'my div', 'height=600,width=800' );
       mywindow.document.write( '<html><head><title>Print Article</title>' );
