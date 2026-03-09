@@ -24,14 +24,44 @@ import {
  * Renders with a ⋮ menu to add/remove controls — identical to the native
  * Heading / Paragraph typography panel in the FSE editor.
  * Font sizes and families are sourced from theme.json via useSettings.
+ * When the active theme registers no font families the control falls back to
+ * a curated set of system / web-safe fonts so it is always available.
  *
  * Prefix = attribute key prefix, e.g. "title" → titleFontSize, titleFontWeight …
  */
+
+/** Fallback font list shown when the active theme registers no font families. */
+const SYSTEM_FONTS = [
+    { name: __( 'System default', 'wedocs' ), fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif' },
+    { name: 'Arial',          fontFamily: 'Arial, sans-serif' },
+    { name: 'Georgia',        fontFamily: 'Georgia, serif' },
+    { name: 'Helvetica',      fontFamily: '"Helvetica Neue", Helvetica, sans-serif' },
+    { name: 'Inter',          fontFamily: '"Inter", sans-serif' },
+    { name: 'Lato',           fontFamily: '"Lato", sans-serif' },
+    { name: 'Merriweather',   fontFamily: '"Merriweather", serif' },
+    { name: 'Montserrat',     fontFamily: '"Montserrat", sans-serif' },
+    { name: 'Open Sans',      fontFamily: '"Open Sans", sans-serif' },
+    { name: 'Playfair Display', fontFamily: '"Playfair Display", serif' },
+    { name: 'Raleway',        fontFamily: '"Raleway", sans-serif' },
+    { name: 'Roboto',         fontFamily: '"Roboto", sans-serif' },
+    { name: 'Source Sans Pro', fontFamily: '"Source Sans Pro", sans-serif' },
+    { name: 'Times New Roman', fontFamily: '"Times New Roman", Times, serif' },
+    { name: 'Trebuchet MS',   fontFamily: '"Trebuchet MS", sans-serif' },
+    { name: 'Verdana',        fontFamily: 'Verdana, Geneva, sans-serif' },
+    { name: 'Courier New',    fontFamily: '"Courier New", Courier, monospace' },
+];
+
 const TypographyGroup = ( { prefix, label, attributes, setAttributes } ) => {
-    const [ fontSizes, fontFamilies ] = useSettings(
+    const [ fontSizes, themeFontFamilies ] = useSettings(
         'typography.fontSizes',
         'typography.fontFamilies'
     );
+
+    /**
+     * Prefer FSE global fonts from theme.json. When the theme registers none,
+     * fall back to the built-in system font list so the control is always usable.
+     */
+    const fontFamilies = themeFontFamilies?.length > 0 ? themeFontFamilies : SYSTEM_FONTS;
 
     const keys = {
         size:          `${ prefix }FontSize`,
@@ -74,7 +104,7 @@ const TypographyGroup = ( { prefix, label, attributes, setAttributes } ) => {
                     label={ __( 'Font', 'wedocs' ) }
                     hasValue={ has( keys.family ) }
                     onDeselect={ reset( keys.family ) }
-                    isShownByDefault={ false }
+                    isShownByDefault
                 >
                     <FontFamilyControl
                         fontFamilies={ fontFamilies }
