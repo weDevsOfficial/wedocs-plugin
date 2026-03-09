@@ -8,6 +8,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+$layout = $attributes['layout'] ?? 'stacked';
+$trigger_style = $attributes['triggerStyle'] ?? 'link';
+$trigger_button_bg_color = $attributes['triggerButtonBgColor'] ?? '#4F46E5';
+$trigger_button_text_color = $attributes['triggerButtonTextColor'] ?? '#ffffff';
+$trigger_button_border_radius = $attributes['triggerButtonBorderRadius'] ?? '6px';
+$trigger_button_padding = $attributes['triggerButtonPadding'] ?? ['top' => '10px', 'right' => '24px', 'bottom' => '10px', 'left' => '24px'];
+$is_row_layout = $layout === 'row';
+$is_button_trigger = $trigger_style === 'button';
+
 $main_text = $attributes['mainText'] ?? 'Still stuck? How can we help?';
 $button_text = $attributes['buttonText'] ?? 'Get Help';
 $show_last_updated = $attributes['showLastUpdated'] ?? false;
@@ -66,7 +75,7 @@ $analytics_event = $attributes['analyticsEvent'] ?? 'need-help-clicked';
 
 // Build styles
 $container_styles = sprintf(
-    'background-color: %s; padding: %s %s %s %s; margin: %s %s %s %s; border: %s %s %s; border-radius: %s; box-shadow: %s; text-align: %s;',
+    'background-color: %s; padding: %s %s %s %s; margin: %s %s %s %s; border: %s %s %s; border-radius: %s; box-shadow: %s;',
     esc_attr($container_background_color),
     esc_attr($container_padding['top'] ?? '20px'),
     esc_attr($container_padding['right'] ?? '20px'),
@@ -80,23 +89,48 @@ $container_styles = sprintf(
     esc_attr($container_border['style'] ?? 'solid'),
     esc_attr($container_border['color'] ?? '#ddd'),
     esc_attr($container_border_radius),
-    esc_attr($container_box_shadow),
-    esc_attr($text_alignment)
+    esc_attr($container_box_shadow)
 );
+
+if ($is_row_layout) {
+    $container_styles .= ' display: flex; align-items: center; gap: 16px;';
+} else {
+    $container_styles .= sprintf(' text-align: %s;', esc_attr($text_alignment));
+}
 
 $text_styles = sprintf(
-    'color: %s; font-size: %s; font-weight: %s; margin: 0 0 16px 0;',
+    'color: %s; font-size: %s; font-weight: %s; margin: %s;',
     esc_attr($text_color),
     esc_attr($text_typography['fontSize'] ?? '16px'),
-    esc_attr($text_typography['fontWeight'] ?? 'normal')
+    esc_attr($text_typography['fontWeight'] ?? 'normal'),
+    $is_row_layout ? '0' : '0 0 16px 0'
 );
 
-$link_styles = sprintf(
-    'color: %s; font-size: %s; font-weight: %s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;',
-    esc_attr($link_color),
-    esc_attr($link_typography['fontSize'] ?? '16px'),
-    esc_attr($link_typography['fontWeight'] ?? '500')
-);
+if ($is_row_layout) {
+    $text_styles .= ' flex: 1;';
+}
+
+if ($is_button_trigger) {
+    $link_styles = sprintf(
+        'background-color: %s; color: %s; font-size: %s; font-weight: %s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: none; border-radius: %s; padding: %s %s %s %s; white-space: nowrap;',
+        esc_attr($trigger_button_bg_color),
+        esc_attr($trigger_button_text_color),
+        esc_attr($link_typography['fontSize'] ?? '16px'),
+        esc_attr($link_typography['fontWeight'] ?? '500'),
+        esc_attr($trigger_button_border_radius),
+        esc_attr($trigger_button_padding['top'] ?? '10px'),
+        esc_attr($trigger_button_padding['right'] ?? '24px'),
+        esc_attr($trigger_button_padding['bottom'] ?? '10px'),
+        esc_attr($trigger_button_padding['left'] ?? '24px')
+    );
+} else {
+    $link_styles = sprintf(
+        'color: %s; font-size: %s; font-weight: %s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;',
+        esc_attr($link_color),
+        esc_attr($link_typography['fontSize'] ?? '16px'),
+        esc_attr($link_typography['fontWeight'] ?? '500')
+    );
+}
 
 $icon_styles = sprintf(
     'color: %s; width: %s; height: %s;',
@@ -181,22 +215,55 @@ $wrapper_attributes = get_block_wrapper_attributes([
 ?>
 
 <div <?php echo $wrapper_attributes; ?>>
-    <div class="need-more-help-container" style="<?php echo esc_attr($container_styles); ?>">
-        <p style="<?php echo esc_attr($text_styles); ?>"><?php echo esc_html($main_text); ?></p>
-        <a style="<?php echo esc_attr($link_styles); ?>" data-track="<?php echo esc_attr($analytics_event); ?>">
-            <?php echo get_help_icon_svg($icon_type, $icon_styles); ?>
-            <?php echo esc_html($button_text); ?>
-        </a>
-        <?php if ($show_last_updated) : ?>
-            <p style="font-size: 12px; color: #666; margin-top: 8px;">
+    <div class="need-more-help-container <?php echo $is_row_layout ? 'layout-row' : 'layout-stacked'; ?>" style="<?php echo esc_attr($container_styles); ?>">
+        <?php if ($is_row_layout) : ?>
+            <span class="need-more-help-icon-circle" style="<?php echo esc_attr($icon_styles); ?> display: inline-flex; flex-shrink: 0; background-color: <?php echo $icon_color ? 'transparent' : '#f0ecfc'; ?>; border-radius: 50%; padding: 12px; fill: <?php echo esc_attr($icon_color ?: '#6c5ce7'); ?>;">
                 <?php
-                printf(
-                    /* translators: %s: formatted date */
-                    esc_html__('Last updated: %s', 'wedocs'),
-                    esc_html(get_the_modified_date())
-                );
+                // Output raw SVG for the icon circle
+                $icons_raw = [
+                    'email' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 100%; height: 100%;"><path d="M4 20q-.825 0-1.413-.588T2 18V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.588 1.413T20 20H4Zm8-7L4 8v10h16V8l-8 5Zm0-2 8-5H4l8 5ZM4 8V6v12V8Z" fill="currentColor"/></svg>',
+                    'help' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 100%; height: 100%;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" fill="currentColor"/></svg>',
+                    'info' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 100%; height: 100%;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/></svg>'
+                ];
+                echo $icons_raw[$icon_type] ?? $icons_raw['email'];
                 ?>
-            </p>
+            </span>
+            <div style="flex: 1;">
+                <p style="<?php echo esc_attr($text_styles); ?>"><?php echo esc_html($main_text); ?></p>
+                <?php if ($show_last_updated) : ?>
+                    <p style="font-size: 12px; color: #666; margin: 4px 0 0 0;">
+                        <?php
+                        printf(
+                            /* translators: %s: formatted date */
+                            esc_html__('Updated on %s', 'wedocs'),
+                            esc_html(get_the_modified_date('F j, Y'))
+                        );
+                        ?>
+                    </p>
+                <?php endif; ?>
+            </div>
+            <a class="<?php echo $is_button_trigger ? 'trigger-button' : ''; ?>" style="<?php echo esc_attr($link_styles); ?>" data-track="<?php echo esc_attr($analytics_event); ?>">
+                <?php echo esc_html($button_text); ?>
+            </a>
+        <?php else : ?>
+            <p style="<?php echo esc_attr($text_styles); ?>"><?php echo esc_html($main_text); ?></p>
+            <a class="<?php echo $is_button_trigger ? 'trigger-button' : ''; ?>" style="<?php echo esc_attr($link_styles); ?>" data-track="<?php echo esc_attr($analytics_event); ?>">
+                <?php if (!$is_button_trigger) : ?>
+                    <?php echo get_help_icon_svg($icon_type, $icon_styles); ?>
+                <?php endif; ?>
+                <?php echo esc_html($button_text); ?>
+            </a>
+            <?php if ($show_last_updated) : ?>
+                <p style="font-size: 12px; color: #666; margin-top: 8px;">
+                    <?php
+                    printf(
+                        /* translators: %s: formatted date */
+                        esc_html__('Last updated: %s', 'wedocs'),
+                        esc_html(get_the_modified_date())
+                    );
+                    ?>
+                </p>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
 

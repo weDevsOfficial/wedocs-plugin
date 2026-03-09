@@ -27,9 +27,12 @@ import {
 	__experimentalBoxControl as BoxControl,
 	__experimentalBorderControl as BorderControl,
 	__experimentalDivider as Divider,
+	__experimentalToggleGroupControl as ToggleGroupControl,
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 	Button,
 	ToolbarGroup,
-	ToolbarButton
+	ToolbarButton,
+	ColorPalette
 } from '@wordpress/components';
 
 import { useState } from '@wordpress/element';
@@ -53,6 +56,12 @@ import './editor.scss';
  */
 export default function Edit({ attributes, setAttributes }) {
 	const {
+		layout,
+		triggerStyle,
+		triggerButtonBgColor,
+		triggerButtonTextColor,
+		triggerButtonBorderRadius,
+		triggerButtonPadding,
 		mainText,
 		buttonText,
 		showLastUpdated,
@@ -141,6 +150,9 @@ export default function Edit({ attributes, setAttributes }) {
 		}
 	};
 
+	const isRowLayout = layout === 'row';
+	const isButtonTrigger = triggerStyle === 'button';
+
 	// Build inline styles for real-time preview
 	const containerStyles = {
 		backgroundColor: containerBackgroundColor,
@@ -149,17 +161,37 @@ export default function Edit({ attributes, setAttributes }) {
 		border: containerBorder ? `${containerBorder.width} ${containerBorder.style} ${containerBorder.color}` : '1px solid #ddd',
 		borderRadius: containerBorderRadius || '8px',
 		boxShadow: containerBoxShadow || '0 2px 4px rgba(0,0,0,0.1)',
-		textAlign: textAlignment || 'left'
+		textAlign: isRowLayout ? undefined : (textAlignment || 'left'),
+		...(isRowLayout ? {
+			display: 'flex',
+			alignItems: 'center',
+			gap: '16px',
+		} : {})
 	};
 
 	const textStyles = {
 		color: textColor,
 		fontSize: textTypography?.fontSize || '16px',
 		fontWeight: textTypography?.fontWeight || 'normal',
-		margin: '0 0 16px 0'
+		margin: isRowLayout ? '0' : '0 0 16px 0',
+		...(isRowLayout ? { flex: '1' } : {})
 	};
 
-	const linkStyles = {
+	const linkStyles = isButtonTrigger ? {
+		backgroundColor: triggerButtonBgColor || '#4F46E5',
+		color: triggerButtonTextColor || '#ffffff',
+		fontSize: linkTypography?.fontSize || '16px',
+		fontWeight: linkTypography?.fontWeight || '500',
+		textDecoration: 'none',
+		display: 'inline-flex',
+		alignItems: 'center',
+		gap: '8px',
+		cursor: 'pointer',
+		borderRadius: triggerButtonBorderRadius || '6px',
+		padding: triggerButtonPadding ? `${triggerButtonPadding.top} ${triggerButtonPadding.right} ${triggerButtonPadding.bottom} ${triggerButtonPadding.left}` : '10px 24px',
+		border: 'none',
+		whiteSpace: 'nowrap',
+	} : {
 		color: linkColor,
 		fontSize: linkTypography?.fontSize || '16px',
 		fontWeight: linkTypography?.fontWeight || '500',
@@ -240,6 +272,65 @@ export default function Edit({ attributes, setAttributes }) {
 			</BlockControls>
 
 			<InspectorControls>
+				<PanelBody title={__('Layout', 'wedocs')} initialOpen={true}>
+					<ToggleGroupControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
+						isBlock
+						label={__('Container Layout', 'wedocs')}
+						help={__('Choose between stacked (vertical) or row (horizontal) layout.', 'wedocs')}
+						onChange={(value) => setAttributes({ layout: value })}
+						value={layout}
+					>
+						<ToggleGroupControlOption label={__('Stacked', 'wedocs')} value="stacked" />
+						<ToggleGroupControlOption label={__('Row', 'wedocs')} value="row" />
+					</ToggleGroupControl>
+					<ToggleGroupControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
+						isBlock
+						label={__('Trigger Style', 'wedocs')}
+						help={__('Display the trigger as a text link or a button.', 'wedocs')}
+						onChange={(value) => setAttributes({ triggerStyle: value })}
+						value={triggerStyle}
+					>
+						<ToggleGroupControlOption label={__('Link', 'wedocs')} value="link" />
+						<ToggleGroupControlOption label={__('Button', 'wedocs')} value="button" />
+					</ToggleGroupControl>
+					{triggerStyle === 'button' && (
+						<>
+							<div style={{ marginTop: '16px' }}>
+								<p style={{ fontSize: '11px', fontWeight: 500, textTransform: 'uppercase', marginBottom: '8px' }}>
+									{__('Button Background Color', 'wedocs')}
+								</p>
+								<ColorPalette
+									value={triggerButtonBgColor}
+									onChange={(color) => setAttributes({ triggerButtonBgColor: color })}
+								/>
+							</div>
+							<div style={{ marginTop: '16px' }}>
+								<p style={{ fontSize: '11px', fontWeight: 500, textTransform: 'uppercase', marginBottom: '8px' }}>
+									{__('Button Text Color', 'wedocs')}
+								</p>
+								<ColorPalette
+									value={triggerButtonTextColor}
+									onChange={(color) => setAttributes({ triggerButtonTextColor: color })}
+								/>
+							</div>
+							<TextControl
+								label={__('Button Border Radius', 'wedocs')}
+								value={triggerButtonBorderRadius}
+								onChange={(value) => setAttributes({ triggerButtonBorderRadius: value })}
+								help={__('e.g., 6px, 20px, 9999px (pill)', 'wedocs')}
+							/>
+							<BoxControl
+								label={__('Button Padding', 'wedocs')}
+								values={triggerButtonPadding}
+								onChange={(value) => setAttributes({ triggerButtonPadding: value })}
+							/>
+						</>
+					)}
+				</PanelBody>
 				<PanelBody title={__('Content', 'wedocs')} initialOpen={true}>
 					<TextControl
 						label={__('Main Text', 'wedocs')}
@@ -556,29 +647,66 @@ export default function Edit({ attributes, setAttributes }) {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<div className="need-more-help-container" style={containerStyles}>
-					<p style={textStyles}>{mainText}</p>
-					<a
-						style={linkStyles}
-						onClick={() => setShowModal(true)}
-						data-track={analyticsEvent}
-					>
-						<span
-							style={{
-								color: iconColor,
-								width: iconSize,
-								height: iconSize,
-								display: 'inline-flex'
-							}}
-						>
-							{IconComponent}
-						</span>
-						{buttonText}
-					</a>
-					{showLastUpdated && (
-						<p style={{ fontSize: '12px', color: '#666', marginTop: '8px' }}>
-							{__('Last updated: ', 'wedocs')} {new Date().toLocaleDateString()}
-						</p>
+				<div className={`need-more-help-container ${isRowLayout ? 'layout-row' : 'layout-stacked'}`} style={containerStyles}>
+					{isRowLayout ? (
+						<>
+							<span
+								style={{
+									color: iconColor,
+									width: iconSize,
+									height: iconSize,
+									display: 'inline-flex',
+									flexShrink: 0,
+									backgroundColor: iconColor ? undefined : '#f0ecfc',
+									borderRadius: '50%',
+									padding: '12px',
+									fill: iconColor || '#6c5ce7',
+								}}
+							>
+								{IconComponent}
+							</span>
+							<div style={{ flex: 1 }}>
+								<p style={textStyles}>{mainText}</p>
+								{showLastUpdated && (
+									<p style={{ fontSize: '12px', color: '#666', margin: '4px 0 0 0' }}>
+										{__('Updated on ', 'wedocs')} {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+									</p>
+								)}
+							</div>
+							<a
+								style={linkStyles}
+								onClick={() => setShowModal(true)}
+								data-track={analyticsEvent}
+							>
+								{buttonText}
+							</a>
+						</>
+					) : (
+						<>
+							<p style={textStyles}>{mainText}</p>
+							<a
+								style={linkStyles}
+								onClick={() => setShowModal(true)}
+								data-track={analyticsEvent}
+							>
+								<span
+									style={{
+										color: iconColor,
+										width: iconSize,
+										height: iconSize,
+										display: 'inline-flex'
+									}}
+								>
+									{IconComponent}
+								</span>
+								{buttonText}
+							</a>
+							{showLastUpdated && (
+								<p style={{ fontSize: '12px', color: '#666', marginTop: '8px' }}>
+									{__('Last updated: ', 'wedocs')} {new Date().toLocaleDateString()}
+								</p>
+							)}
+						</>
 					)}
 				</div>
 
