@@ -17,6 +17,9 @@ class Ajax {
         add_action('wp_ajax_wedocs_get_docs', [$this, 'get_docs']);
         add_action('wp_ajax_nopriv_wedocs_get_docs', [$this, 'get_docs']);
 
+        // Get vendor-only docs for vendor dashboard search.
+        add_action('wp_ajax_wedocs_get_vendor_docs', [$this, 'get_vendor_docs']);
+
         // Handle weDocs rating stuff.
         add_action('wp_ajax_wedocs_rated', [$this, 'hide_wedocs_rating']);
 
@@ -91,6 +94,56 @@ class Ajax {
             }
 
             // Get articles documentation.
+            $docs_tree['articles'][] = $doc;
+        }
+
+        wp_send_json_success($docs_tree);
+    }
+
+    /**
+     * Get vendor-only docs for vendor dashboard search.
+     *
+     * Returns only docs marked with _is_vendor_doc meta, structured
+     * the same way as get_docs() so the frontend search modal can
+     * reuse the same client-side filtering logic.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function get_vendor_docs() {
+        check_ajax_referer('wedocs-ajax');
+
+        $docs = get_posts([
+            'post_type'      => 'docs',
+            'post_status'    => 'publish',
+            'posts_per_page' => -1,
+            'orderby'        => 'menu_order',
+            'order'          => 'ASC',
+            'meta_query'     => [
+                [
+                    'key'   => '_is_vendor_doc',
+                    'value' => '1',
+                ],
+            ],
+        ]);
+
+        // Build a doc tree with separate parents, sections, articles & all docs together.
+        $docs_tree = ['all_docs' => $docs];
+        foreach ($docs as $doc) {
+            $is_parent      = $this->is_a_parent_doc($doc->ID);
+            $doc->permalink = get_permalink($doc->ID);
+            if ($is_parent) {
+                $docs_tree['parents'][] = $doc;
+                continue;
+            }
+
+            $is_section = $this->is_a_parent_doc($doc->post_parent);
+            if ($is_section) {
+                $docs_tree['sections'][] = $doc;
+                continue;
+            }
+
             $docs_tree['articles'][] = $doc;
         }
 

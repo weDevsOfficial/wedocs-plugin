@@ -82,17 +82,21 @@ class Frontend {
         $searchModal = ob_get_clean();
 
         wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', [
-            'nonce'             => wp_create_nonce( 'wedocs-ajax' ),
-            'style'             => WEDOCS_ASSETS . '/build/print.css?v=10',
-            'ajaxurl'           => admin_url( 'admin-ajax.php' ),
-            'powered'           => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs plugin for WordPress', 'wedocs' ), home_url() ),
-            'isSingleDoc'       => is_singular( 'docs' ),
-            'searchModal'       => $searchModal,
-            'docNavLabel'       => __( 'Doc: ', 'wedocs' ),
-            'searchBlankMsg'    => __( 'Search field cannot be blank', 'wedocs' ),
-            'searchEmptyMsg'    => __( 'Your search didn\'t match any documents', 'wedocs' ),
-            'sectionNavLabel'   => __( 'Section: ', 'wedocs' ),
-            'searchModalColors' => wedocs_get_search_modal_active_colors(),
+            'nonce'              => wp_create_nonce( 'wedocs-ajax' ),
+            'style'              => WEDOCS_ASSETS . '/build/print.css?v=10',
+            'ajaxurl'            => admin_url( 'admin-ajax.php' ),
+            'powered'            => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs plugin for WordPress', 'wedocs' ), home_url() ),
+            'isSingleDoc'        => is_singular( 'docs' ),
+            'isVendorDashboard'  => $this->is_dokan_vendor_dashboard(),
+            'vendorDocsBaseUrl'  => $this->is_dokan_vendor_dashboard() && function_exists( 'dokan_get_navigation_url' )
+                ? trailingslashit( dokan_get_navigation_url( 'docs' ) )
+                : '',
+            'searchModal'        => $searchModal,
+            'docNavLabel'        => __( 'Doc: ', 'wedocs' ),
+            'searchBlankMsg'     => __( 'Search field cannot be blank', 'wedocs' ),
+            'searchEmptyMsg'     => __( 'Your search didn\'t match any documents', 'wedocs' ),
+            'sectionNavLabel'    => __( 'Section: ', 'wedocs' ),
+            'searchModalColors'  => wedocs_get_search_modal_active_colors(),
         ] );
     }
 
