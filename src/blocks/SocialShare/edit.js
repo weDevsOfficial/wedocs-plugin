@@ -488,14 +488,19 @@ const Edit = ({ attributes, setAttributes }) => {
                     >
                         {enabledPlatforms.facebook && (
                             <button
-                                className={`wedocs-social-share-btn wedocs-social-share-facebook ${getButtonSizeClass()} ${getButtonShapeClass()}`}
+                                className={`wedocs-social-share-btn wedocs-social-share-facebook ${getButtonSizeClass()} ${getButtonShapeClass()} ${buttonStyle === 'text-only' ? 'wedocs-social-btn-text-only' : ''}`}
                                 style={{
-                                    backgroundColor: getButtonColor('facebook'),
-                                    color: buttonIconColor
+                                    ...(buttonStyle !== 'text-only' ? {
+                                        backgroundColor: getButtonColor('facebook'),
+                                        color: buttonIconColor
+                                    } : {
+                                        backgroundColor: 'transparent',
+                                        color: getButtonColor('facebook')
+                                    })
                                 }}
                                 disabled
                             >
-                                {socialIcons.facebook}
+                                {buttonStyle !== 'text-only' && socialIcons.facebook}
                                 {buttonStyle === 'icon-text' && <span>Facebook</span>}
                                 {buttonStyle === 'text-only' && <span>Facebook</span>}
                             </button>
@@ -503,14 +508,19 @@ const Edit = ({ attributes, setAttributes }) => {
 
                         {enabledPlatforms.twitter && (
                             <button
-                                className={`wedocs-social-share-btn wedocs-social-share-twitter ${getButtonSizeClass()} ${getButtonShapeClass()}`}
+                                className={`wedocs-social-share-btn wedocs-social-share-twitter ${getButtonSizeClass()} ${getButtonShapeClass()} ${buttonStyle === 'text-only' ? 'wedocs-social-btn-text-only' : ''}`}
                                 style={{
-                                    backgroundColor: getButtonColor('twitter'),
-                                    color: buttonIconColor
+                                    ...(buttonStyle !== 'text-only' ? {
+                                        backgroundColor: getButtonColor('twitter'),
+                                        color: buttonIconColor
+                                    } : {
+                                        backgroundColor: 'transparent',
+                                        color: getButtonColor('twitter')
+                                    })
                                 }}
                                 disabled
                             >
-                                {socialIcons.twitter}
+                                {buttonStyle !== 'text-only' && socialIcons.twitter}
                                 {buttonStyle === 'icon-text' && <span>Twitter</span>}
                                 {buttonStyle === 'text-only' && <span>Twitter</span>}
                             </button>
@@ -518,14 +528,19 @@ const Edit = ({ attributes, setAttributes }) => {
 
                         {enabledPlatforms.linkedin && (
                             <button
-                                className={`wedocs-social-share-btn wedocs-social-share-linkedin ${getButtonSizeClass()} ${getButtonShapeClass()}`}
+                                className={`wedocs-social-share-btn wedocs-social-share-linkedin ${getButtonSizeClass()} ${getButtonShapeClass()} ${buttonStyle === 'text-only' ? 'wedocs-social-btn-text-only' : ''}`}
                                 style={{
-                                    backgroundColor: getButtonColor('linkedin'),
-                                    color: buttonIconColor
+                                    ...(buttonStyle !== 'text-only' ? {
+                                        backgroundColor: getButtonColor('linkedin'),
+                                        color: buttonIconColor
+                                    } : {
+                                        backgroundColor: 'transparent',
+                                        color: getButtonColor('linkedin')
+                                    })
                                 }}
                                 disabled
                             >
-                                {socialIcons.linkedin}
+                                {buttonStyle !== 'text-only' && socialIcons.linkedin}
                                 {buttonStyle === 'icon-text' && <span>LinkedIn</span>}
                                 {buttonStyle === 'text-only' && <span>LinkedIn</span>}
                             </button>
@@ -533,14 +548,19 @@ const Edit = ({ attributes, setAttributes }) => {
 
                         {enabledPlatforms.pinterest && (
                             <button
-                                className={`wedocs-social-share-btn wedocs-social-share-pinterest ${getButtonSizeClass()} ${getButtonShapeClass()}`}
+                                className={`wedocs-social-share-btn wedocs-social-share-pinterest ${getButtonSizeClass()} ${getButtonShapeClass()} ${buttonStyle === 'text-only' ? 'wedocs-social-btn-text-only' : ''}`}
                                 style={{
-                                    backgroundColor: getButtonColor('pinterest'),
-                                    color: buttonIconColor
+                                    ...(buttonStyle !== 'text-only' ? {
+                                        backgroundColor: getButtonColor('pinterest'),
+                                        color: buttonIconColor
+                                    } : {
+                                        backgroundColor: 'transparent',
+                                        color: getButtonColor('pinterest')
+                                    })
                                 }}
                                 disabled
                             >
-                                {socialIcons.pinterest}
+                                {buttonStyle !== 'text-only' && socialIcons.pinterest}
                                 {buttonStyle === 'icon-text' && <span>Pinterest</span>}
                                 {buttonStyle === 'text-only' && <span>Pinterest</span>}
                             </button>

@@ -150,6 +150,21 @@
         }
     }
 
+    /* Text-only style */
+    &.wedocs-social-btn-text-only {
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 4px 8px;
+        font-weight: 500;
+
+        &:hover {
+            text-decoration: underline;
+            transform: none;
+            box-shadow: none !important;
+        }
+    }
+
     /* Hover effects */
     &:hover {
         transform: translateY(-2px);

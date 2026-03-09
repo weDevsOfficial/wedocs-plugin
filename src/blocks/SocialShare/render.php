@@ -155,8 +155,8 @@ $platform_names = [
             <a href="<?php echo esc_url($facebook_url); ?>"
                target="_blank"
                rel="noopener noreferrer"
-               class="wedocs-social-share-btn wedocs-social-share-facebook <?php echo esc_attr($size_class . ' ' . $shape_class); ?>"
-               style="background-color: <?php echo esc_attr($btn_color); ?>; color: <?php echo esc_attr($button_icon_color); ?>;"
+               class="wedocs-social-share-btn wedocs-social-share-facebook <?php echo esc_attr($size_class . ' ' . $shape_class); ?><?php echo $button_style === 'text-only' ? ' wedocs-social-btn-text-only' : ''; ?>"
+               style="<?php echo $button_style === 'text-only' ? 'background-color: transparent; color: ' . esc_attr($btn_color) : 'background-color: ' . esc_attr($btn_color) . '; color: ' . esc_attr($button_icon_color); ?>;"
                title="<?php echo esc_attr(sprintf(__('Share on %s', 'wedocs'), $platform_names['facebook'])); ?>"
                data-platform="facebook"
                data-color="<?php echo esc_attr($btn_color); ?>">
@@ -175,8 +175,8 @@ $platform_names = [
             <a href="<?php echo esc_url($twitter_url); ?>"
                target="_blank"
                rel="noopener noreferrer"
-               class="wedocs-social-share-btn wedocs-social-share-twitter <?php echo esc_attr($size_class . ' ' . $shape_class); ?>"
-               style="background-color: <?php echo esc_attr($btn_color); ?>; color: <?php echo esc_attr($button_icon_color); ?>;"
+               class="wedocs-social-share-btn wedocs-social-share-twitter <?php echo esc_attr($size_class . ' ' . $shape_class); ?><?php echo $button_style === 'text-only' ? ' wedocs-social-btn-text-only' : ''; ?>"
+               style="<?php echo $button_style === 'text-only' ? 'background-color: transparent; color: ' . esc_attr($btn_color) : 'background-color: ' . esc_attr($btn_color) . '; color: ' . esc_attr($button_icon_color); ?>;"
                title="<?php echo esc_attr(sprintf(__('Share on %s', 'wedocs'), $platform_names['twitter'])); ?>"
                data-platform="twitter"
                data-color="<?php echo esc_attr($btn_color); ?>">
@@ -195,8 +195,8 @@ $platform_names = [
             <a href="<?php echo esc_url($linkedin_url); ?>"
                target="_blank"
                rel="noopener noreferrer"
-               class="wedocs-social-share-btn wedocs-social-share-linkedin <?php echo esc_attr($size_class . ' ' . $shape_class); ?>"
-               style="background-color: <?php echo esc_attr($btn_color); ?>; color: <?php echo esc_attr($button_icon_color); ?>;"
+               class="wedocs-social-share-btn wedocs-social-share-linkedin <?php echo esc_attr($size_class . ' ' . $shape_class); ?><?php echo $button_style === 'text-only' ? ' wedocs-social-btn-text-only' : ''; ?>"
+               style="<?php echo $button_style === 'text-only' ? 'background-color: transparent; color: ' . esc_attr($btn_color) : 'background-color: ' . esc_attr($btn_color) . '; color: ' . esc_attr($button_icon_color); ?>;"
                title="<?php echo esc_attr(sprintf(__('Share on %s', 'wedocs'), $platform_names['linkedin'])); ?>"
                data-platform="linkedin"
                data-color="<?php echo esc_attr($btn_color); ?>">
@@ -215,8 +215,8 @@ $platform_names = [
             <a href="<?php echo esc_url($pinterest_url); ?>"
                target="_blank"
                rel="noopener noreferrer"
-               class="wedocs-social-share-btn wedocs-social-share-pinterest <?php echo esc_attr($size_class . ' ' . $shape_class); ?>"
-               style="background-color: <?php echo esc_attr($btn_color); ?>; color: <?php echo esc_attr($button_icon_color); ?>;"
+               class="wedocs-social-share-btn wedocs-social-share-pinterest <?php echo esc_attr($size_class . ' ' . $shape_class); ?><?php echo $button_style === 'text-only' ? ' wedocs-social-btn-text-only' : ''; ?>"
+               style="<?php echo $button_style === 'text-only' ? 'background-color: transparent; color: ' . esc_attr($btn_color) : 'background-color: ' . esc_attr($btn_color) . '; color: ' . esc_attr($button_icon_color); ?>;"
                title="<?php echo esc_attr(sprintf(__('Share on %s', 'wedocs'), $platform_names['pinterest'])); ?>"
                data-platform="pinterest"
                data-color="<?php echo esc_attr($btn_color); ?>">

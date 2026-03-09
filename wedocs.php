@@ -196,7 +196,7 @@ final class WeDocs {
             $block_directories = array_merge($block_directories, [
                 'assets/build/blocks/TableOfContents',
                 'assets/build/blocks/HelpfulModal',
-                'assets/build/blocks/AdvanceContributors',
+                // 'assets/build/blocks/AdvanceContributors',
                 'assets/build/blocks/Contributors',
                 'assets/build/blocks/SocialShare',
                 'assets/build/blocks/AISummary',
