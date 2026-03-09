@@ -1,0 +1,249 @@
+/**
+ * Print Button Block Styles
+ */
+
+// Simple, clean color control styles for Print Button block
+.wedocs-color-control {
+    margin-bottom: 16px;
+    
+    .components-base-control__label {
+        margin-bottom: 8px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #1e1e1e;
+    }
+    
+    .components-color-palette {
+        margin: 0;
+    }
+    
+    // Remove unwanted margin from circular option picker clear wrapper
+    .components-circular-option-picker__custom-clear-wrapper {
+        margin-top: 0 !important;
+    }
+}
+
+.wp-block-wedocs-print-button {
+    display: block !important;
+    // Remove hardcoded margin - let user control it via render.php inline styles
+    // margin: 10px 0;
+
+    .wedocs-print-button-wrapper {
+        width: 100% !important;
+    }
+
+    .wedocs-print-button {
+        // High specificity to override theme styles
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        font-family: inherit !important;
+        line-height: 1.4 !important;
+        text-align: center !important;
+        text-decoration: none !important;
+        outline: none !important;
+        user-select: none !important;
+        white-space: nowrap !important;
+        box-sizing: border-box !important;
+        
+        // Reset link styles aggressively
+        &:link,
+        &:visited,
+        &:hover,
+        &:active,
+        &:focus {
+            color: inherit !important;
+            text-decoration: none !important;
+        }
+        
+        // Ensure inline styles take precedence
+        &[style] {
+            // This selector has higher specificity when style attribute exists
+        }
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            
+            // Use CSS custom properties for hover colors (set via inline styles)
+            background-color: var(--hover-bg-color) !important;
+            color: var(--hover-text-color) !important;
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+
+        // Icon styles
+        i {
+            font-size: 1em;
+            line-height: 1;
+        }
+
+        // Layout variations
+        &.layout-1 {
+            flex-direction: row;
+            gap: 8px;
+        }
+
+        &.layout-2 {
+            flex-direction: row;
+            gap: 8px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        &.layout-3 {
+            flex-direction: column;
+            gap: 4px;
+            // Remove default padding - let user control it
+            // padding: 12px 15px;
+
+            span {
+                line-height: 1.2;
+            }
+        }
+
+        // Size variations - no hardcoded padding, let user control it
+        // Removed size-based padding to let user settings work
+
+        // Style variations
+        // Remove hardcoded colors - let inline styles from render.php handle all colors
+        // This ensures user's custom color settings are not overridden
+    }
+
+    // Alignment styles
+    &[style*="text-align: left"] {
+        text-align: left;
+    }
+
+    &[style*="text-align: center"] {
+        text-align: center;
+    }
+
+    &[style*="text-align: right"] {
+        text-align: right;
+    }
+}
+
+// Editor specific styles
+.block-editor-block-list__layout {
+    .wp-block-wedocs-print-button {
+        .wedocs-print-button {
+            pointer-events: none; // Prevent clicks in editor
+        }
+    }
+}
+
+// Print-specific styles
+@media print {
+    .wp-block-wedocs-print-button {
+        display: none;
+    }
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+    .wp-block-wedocs-print-button {
+        .wedocs-print-button {
+            &.layout-1,
+            &.layout-2 {
+                flex-direction: column;
+                gap: 4px;
+                // Remove hardcoded padding - let user control it via render.php inline styles
+                // padding: 12px 15px;
+            }
+
+            &.large-size {
+                font-size: 16px;
+                // Remove hardcoded padding - let user control it via render.php inline styles  
+                // padding: 12px 16px;
+            }
+        }
+    }
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+    .wp-block-wedocs-print-button {
+        .wedocs-print-button {
+            border-width: 2px;
+            
+            &.ghost {
+                border: 2px solid currentColor;
+            }
+        }
+    }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+    .wp-block-wedocs-print-button {
+        .wedocs-print-button {
+            transition: none;
+            
+            &:hover {
+                transform: none;
+            }
+        }
+    }
+}
+
+// Hide print button completely in print preview and when printing
+@media print {
+    // Maximum specificity selectors to override any theme or plugin styles
+    .wp-block-wedocs-print-button,
+    .wp-block-wedocs-print-button *,
+    .wedocs-print-button-wrapper,
+    .wedocs-print-button-wrapper *,
+    .wedocs-print-button,
+    .wedocs-print-button *,
+    .wedocs-print-article,
+    .wedocs-print-article *,
+    a.wedocs-print-article,
+    a.wedocs-print-article *,
+    // Target layout-specific classes
+    .wp-block-wedocs-print-button .layout-1,
+    .wp-block-wedocs-print-button .layout-2,
+    .wp-block-wedocs-print-button .layout-3,
+    .wp-block-wedocs-print-button a,
+    .wp-block-wedocs-print-button button,
+    // Attribute selectors for broader coverage
+    [class*="wedocs-print"],
+    [class*="wedocs-print"] *,
+    [class*="print-button"],
+    [class*="print-button"] *,
+    [id*="wedocs-print"],
+    [id*="wedocs-print"] *,
+    // Dynamic IDs that might be generated
+    [id^="wedocs-print-btn-"],
+    [id^="wedocs-print-btn-"] * {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
+    }
+    
+    // Also target the block wrapper with higher specificity
+    div.wp-block-wedocs-print-button.wedocs-print-button-wrapper {
+        display: none !important;
+    }
+    
+    // Global fallback - hide any element with print-related text or attributes
+    *[title*="Print"],
+    *[title*="print"],
+    *[aria-label*="Print"],
+    *[aria-label*="print"] {
+        display: none !important;
+    }
+}

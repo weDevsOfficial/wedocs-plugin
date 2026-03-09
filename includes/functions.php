@@ -182,36 +182,84 @@ if ( !function_exists( 'wedocs_get_breadcrumb_item' ) ) {
 }
 
 /**
+ * Get next and previous document posts for navigation.
+ * Improved version that handles menu_order = 0 and non-sequential ordering.
+ *
+ * @param WP_Post $post Current post object
+ * @return array Array with 'next' and 'prev' keys containing post objects or null
+ */
+function wedocs_get_doc_navigation_posts( $post ) {
+    global $wpdb;
+
+    if ( ! $post || $post->post_type !== 'docs' ) {
+        return [ 'next' => null, 'prev' => null ];
+    }
+    // Get all sibling posts ordered by menu_order, then by date
+    $siblings_query = "SELECT ID, post_title, menu_order FROM {$wpdb->posts}
+        WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish'
+        ORDER BY menu_order ASC, post_date ASC";
+    $siblings = $wpdb->get_results( $siblings_query );
+    $next_post     = null;
+    $prev_post     = null;
+    $current_found = false;
+    // Find current post position and determine next/prev
+    foreach ( $siblings as $index => $sibling ) {
+        if ( $sibling->ID == $post->ID ) {
+            $current_found = true;
+            // Get previous post (if exists)
+            if ( $index > 0 ) {
+                $prev_post = $siblings[ $index - 1 ];
+            }
+            // Get next post (if exists)
+            if ( $index < count( $siblings ) - 1 ) {
+                $next_post = $siblings[ $index + 1 ];
+            }
+            break;
+        }
+    }
+    // Fallback to original queries if current post not found in siblings
+    if ( ! $current_found ) {
+        $next_query = "SELECT ID, post_title FROM {$wpdb->posts}
+            WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish' and menu_order > {$post->menu_order}
+            ORDER BY menu_order ASC
+            LIMIT 0, 1";
+        $prev_query = "SELECT ID, post_title FROM {$wpdb->posts}
+            WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish' and menu_order < {$post->menu_order}
+            ORDER BY menu_order DESC
+            LIMIT 0, 1";
+        $next_post = $wpdb->get_row( $next_query );
+        $prev_post = $wpdb->get_row( $prev_query );
+    }
+
+    return [
+        'next' => $next_post,
+        'prev' => $prev_post,
+    ];
+}
+
+/**
  * Next, previous post navigation for a single doc.
  *
  * @return void
  */
 function wedocs_doc_nav() {
-    global $post, $wpdb;
+    global $post;
 
-    $next_query = "SELECT ID FROM {$wpdb->posts}
-        WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish' and menu_order > {$post->menu_order}
-        ORDER BY menu_order ASC
-        LIMIT 0, 1";
+    // Use the improved navigation function
+    $navigation_posts = wedocs_get_doc_navigation_posts($post);
+    $next_post = $navigation_posts['next'];
+    $prev_post = $navigation_posts['prev'];
 
-    $prev_query = "SELECT ID FROM {$wpdb->posts}
-        WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish' and menu_order < {$post->menu_order}
-        ORDER BY menu_order DESC
-        LIMIT 0, 1";
-
-    $next_post_id = (int) $wpdb->get_var( $next_query );
-    $prev_post_id = (int) $wpdb->get_var( $prev_query );
-
-    if ( $next_post_id || $prev_post_id ) {
+    if ( $next_post || $prev_post ) {
         echo '<nav class="wedocs-doc-nav wedocs-hide-print">';
         echo '<h3 class="assistive-text screen-reader-text">' . __( 'Doc navigation', 'wedocs' ) . '</h3>';
 
-        if ( $prev_post_id ) {
-            echo '<span class="nav-prev"><a href="' . get_permalink( $prev_post_id ) . '">&larr; ' . apply_filters( 'wedocs_translate_text', get_post( $prev_post_id )->post_title ) . '</a></span>';
+        if ( $prev_post ) {
+            echo '<span class="nav-prev"><a href="' . get_permalink( $prev_post->ID ) . '">&larr; ' . apply_filters( 'wedocs_translate_text', $prev_post->post_title ) . '</a></span>';
         }
 
-        if ( $next_post_id ) {
-            echo '<span class="nav-next"><a href="' . get_permalink( $next_post_id ) . '">' . apply_filters( 'wedocs_translate_text', get_post( $next_post_id )->post_title ) . ' &rarr;</a></span>';
+        if ( $next_post ) {
+            echo '<span class="nav-next"><a href="' . get_permalink( $next_post->ID ) . '">' . apply_filters( 'wedocs_translate_text', $next_post->post_title ) . ' &rarr;</a></span>';
         }
 
         echo '</nav>';

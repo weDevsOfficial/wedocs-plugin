@@ -1,0 +1,29 @@
+/**
+ * AI-Powered Summary Block Editor Styles
+ */
+
+.wp-block-wedocs-ai-summary {
+	.ai-summary-header {
+		.block-editor-rich-text__editable {
+			&:focus {
+				outline: 1px dashed rgba(255, 255, 255, 0.3);
+				outline-offset: 4px;
+			}
+		}
+	}
+
+	.ai-summary-content {
+		.block-editor-rich-text__editable {
+			min-height: 50px;
+
+			&:focus {
+				outline: 1px dashed rgba(255, 255, 255, 0.3);
+				outline-offset: 4px;
+			}
+
+			&[data-is-placeholder-visible="true"] {
+				opacity: 0.6;
+			}
+		}
+	}
+}

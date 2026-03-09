@@ -1,0 +1,36 @@
+/**
+ * Reading Progress Bar Block Editor Styles
+ */
+
+.wp-block-wedocs-reading-progress {
+	.reading-progress-bar {
+		border: 1px dashed rgba(0, 0, 0, 0.1);
+	}
+
+	.reading-progress-fill {
+		// Animate in editor for preview
+		animation: editorProgressDemo 3s ease-in-out infinite;
+	}
+}
+
+@keyframes editorProgressDemo {
+	0% {
+		width: 0%;
+	}
+	50% {
+		width: 100%;
+	}
+	100% {
+		width: 0%;
+	}
+}
+
+// Block toolbar styles
+.block-editor-block-list__block[data-type="wedocs/reading-progress"] {
+	&.is-selected,
+	&.has-child-selected {
+		.reading-progress-bar {
+			border: 2px solid #0073aa;
+		}
+	}
+}

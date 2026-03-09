@@ -3,111 +3,197 @@ import {
     PanelBody,
     __experimentalBoxControl as BoxControl,
     SelectControl,
-    TextControl
+    TextControl,
+    __experimentalToolsPanel as ToolsPanel,
+    __experimentalToolsPanelItem as ToolsPanelItem,
 } from '@wordpress/components';
-import { PanelColorSettings } from '@wordpress/block-editor';
+import {
+    PanelColorSettings,
+    FontSizePicker,
+    LineHeightControl,
+    __experimentalFontFamilyControl as FontFamilyControl,
+    __experimentalFontAppearanceControl as FontAppearanceControl,
+    __experimentalLetterSpacingControl as LetterSpacingControl,
+    __experimentalTextDecorationControl as TextDecorationControl,
+    __experimentalTextTransformControl as TextTransformControl,
+    useSettings,
+} from '@wordpress/block-editor';
 
-// Add these to your attributes in block.json
-const styleAttributes = {
-    gridPadding: {
-        type: "object",
-        default: {
-            top: "20px",
-            right: "20px",
-            bottom: "20px",
-            left: "20px"
-        }
-    },
-    gridMargin: {
-        type: "object",
-        default: {
-            top: "0px",
-            right: "0px",
-            bottom: "0px",
-            left: "0px"
-        }
-    },
-    docTitleColor: {
-        type: "string",
-        default: "#333333"
-    },
-    docChildrenActiveColor: {
-        type: "string",
-        default: "#0073aa"
-    },
-    borderType: {
-        type: "string",
-        default: "solid"
-    },
-    borderWidth: {
-        type: "string",
-        default: "1px"
-    },
-    borderColor: {
-        type: "string",
-        default: "#dddddd"
-    },
-    borderRadius: {
-        type: "string",
-        default: "4px"
-    },
-    buttonBorderRadius: {
-        type: "string",
-        default: "4px"
-    },
-    buttonPadding: {
-        type: "object",
-        default: {
-            top: "10px",
-            right: "20px",
-            bottom: "10px",
-            left: "20px"
-        }
-    },
-    buttonMargin: {
-        type: "object",
-        default: {
-            top: "10px",
-            right: "0px",
-            bottom: "0px",
-            left: "0px"
-        }
-    },
-    buttonColor: {
-        type: "string",
-        default: "#0073aa"
-    },
-    buttonHoverColor: {
-        type: "string",
-        default: "#005177"
-    },
-    buttonTextColor: {
-        type: "string",
-        default: "#ffffff"
-    },
-    buttonHoverTextColor: {
-        type: "string",
-        default: "#ffffff"
-    },
-    paginationTextColor: {
-        type: "string",
-        default: "#333333"
-    },
-    paginationTextHoverColor: {
-        type: "string",
-        default: "#0073aa"
-    },
-    paginationBackgroundColor: {
-        type: "string",
-        default: "#ffffff"
-    },
-    paginationHoverColor: {
-        type: "string",
-        default: "#f5f5f5"
-    }
+/**
+ * Per-element typography panel using the native WordPress ToolsPanel pattern.
+ * Renders with a ⋮ menu to add/remove controls — identical to the native
+ * Heading / Paragraph typography panel in the FSE editor.
+ * Font sizes and families are sourced from theme.json via useSettings.
+ * When the active theme registers no font families the control falls back to
+ * a curated set of system / web-safe fonts so it is always available.
+ *
+ * Prefix = attribute key prefix, e.g. "title" → titleFontSize, titleFontWeight …
+ */
+
+/** Fallback font list shown when the active theme registers no font families. */
+const SYSTEM_FONTS = [
+    { name: __( 'System default', 'wedocs' ), fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif' },
+    { name: 'Arial',          fontFamily: 'Arial, sans-serif' },
+    { name: 'Georgia',        fontFamily: 'Georgia, serif' },
+    { name: 'Helvetica',      fontFamily: '"Helvetica Neue", Helvetica, sans-serif' },
+    { name: 'Inter',          fontFamily: '"Inter", sans-serif' },
+    { name: 'Lato',           fontFamily: '"Lato", sans-serif' },
+    { name: 'Merriweather',   fontFamily: '"Merriweather", serif' },
+    { name: 'Montserrat',     fontFamily: '"Montserrat", sans-serif' },
+    { name: 'Open Sans',      fontFamily: '"Open Sans", sans-serif' },
+    { name: 'Playfair Display', fontFamily: '"Playfair Display", serif' },
+    { name: 'Raleway',        fontFamily: '"Raleway", sans-serif' },
+    { name: 'Roboto',         fontFamily: '"Roboto", sans-serif' },
+    { name: 'Source Sans Pro', fontFamily: '"Source Sans Pro", sans-serif' },
+    { name: 'Times New Roman', fontFamily: '"Times New Roman", Times, serif' },
+    { name: 'Trebuchet MS',   fontFamily: '"Trebuchet MS", sans-serif' },
+    { name: 'Verdana',        fontFamily: 'Verdana, Geneva, sans-serif' },
+    { name: 'Courier New',    fontFamily: '"Courier New", Courier, monospace' },
+];
+
+const TypographyGroup = ( { prefix, label, attributes, setAttributes } ) => {
+    const [ fontSizes, themeFontFamilies ] = useSettings(
+        'typography.fontSizes',
+        'typography.fontFamilies'
+    );
+
+    /**
+     * Prefer FSE global fonts from theme.json. When the theme registers none,
+     * fall back to the built-in system font list so the control is always usable.
+     */
+    const fontFamilies = themeFontFamilies?.length > 0 ? themeFontFamilies : SYSTEM_FONTS;
+
+    const keys = {
+        size:          `${ prefix }FontSize`,
+        weight:        `${ prefix }FontWeight`,
+        family:        `${ prefix }FontFamily`,
+        lineHeight:    `${ prefix }LineHeight`,
+        letterSpacing: `${ prefix }LetterSpacing`,
+        decoration:    `${ prefix }TextDecoration`,
+        transform:     `${ prefix }TextTransform`,
+    };
+
+    const set   = ( key ) => ( value ) => setAttributes( { [ key ]: value ?? '' } );
+    const has   = ( key ) => () => !! attributes[ key ];
+    const reset = ( key ) => () => setAttributes( { [ key ]: '' } );
+
+    const resetAll = () =>
+        setAttributes(
+            Object.fromEntries( Object.values( keys ).map( ( k ) => [ k, '' ] ) )
+        );
+
+    return (
+        <ToolsPanel label={ label } resetAll={ resetAll }>
+            <ToolsPanelItem
+                label={ __( 'Size', 'wedocs' ) }
+                hasValue={ has( keys.size ) }
+                onDeselect={ reset( keys.size ) }
+                isShownByDefault
+            >
+                <FontSizePicker
+                    fontSizes={ fontSizes || [] }
+                    value={ attributes[ keys.size ] || undefined }
+                    onChange={ set( keys.size ) }
+                    withReset={ false }
+                    __nextHasNoMarginBottom
+                />
+            </ToolsPanelItem>
+
+            { fontFamilies?.length > 0 && (
+                <ToolsPanelItem
+                    label={ __( 'Font', 'wedocs' ) }
+                    hasValue={ has( keys.family ) }
+                    onDeselect={ reset( keys.family ) }
+                    isShownByDefault
+                >
+                    <FontFamilyControl
+                        fontFamilies={ fontFamilies }
+                        value={ attributes[ keys.family ] || '' }
+                        onChange={ ( v ) => setAttributes( { [ keys.family ]: v || '' } ) }
+                        size="__unstable-large"
+                        __nextHasNoMarginBottom
+                    />
+                </ToolsPanelItem>
+            ) }
+
+            <ToolsPanelItem
+                label={ __( 'Appearance', 'wedocs' ) }
+                hasValue={ has( keys.weight ) }
+                onDeselect={ reset( keys.weight ) }
+                isShownByDefault={ false }
+            >
+                <FontAppearanceControl
+                    value={ {
+                        fontStyle: undefined,
+                        fontWeight: attributes[ keys.weight ] || undefined,
+                    } }
+                    onChange={ ( { fontWeight } ) =>
+                        setAttributes( { [ keys.weight ]: fontWeight || '' } )
+                    }
+                    hasFontStyles={ false }
+                    hasFontWeights={ true }
+                    __nextHasNoMarginBottom
+                />
+            </ToolsPanelItem>
+
+            <ToolsPanelItem
+                label={ __( 'Line height', 'wedocs' ) }
+                hasValue={ has( keys.lineHeight ) }
+                onDeselect={ reset( keys.lineHeight ) }
+                isShownByDefault={ false }
+            >
+                <LineHeightControl
+                    value={ attributes[ keys.lineHeight ] || '' }
+                    onChange={ ( v ) =>
+                        setAttributes( { [ keys.lineHeight ]: typeof v === 'number' ? String( v ) : ( v || '' ) } )
+                    }
+                    __nextHasNoMarginBottom
+                />
+            </ToolsPanelItem>
+
+            <ToolsPanelItem
+                label={ __( 'Letter spacing', 'wedocs' ) }
+                hasValue={ has( keys.letterSpacing ) }
+                onDeselect={ reset( keys.letterSpacing ) }
+                isShownByDefault={ false }
+            >
+                <LetterSpacingControl
+                    value={ attributes[ keys.letterSpacing ] || '' }
+                    onChange={ set( keys.letterSpacing ) }
+                    __nextHasNoMarginBottom
+                />
+            </ToolsPanelItem>
+
+            <ToolsPanelItem
+                label={ __( 'Decoration', 'wedocs' ) }
+                hasValue={ has( keys.decoration ) }
+                onDeselect={ reset( keys.decoration ) }
+                isShownByDefault={ false }
+            >
+                <TextDecorationControl
+                    value={ attributes[ keys.decoration ] || '' }
+                    onChange={ set( keys.decoration ) }
+                    __nextHasNoMarginBottom
+                />
+            </ToolsPanelItem>
+
+            <ToolsPanelItem
+                label={ __( 'Letter case', 'wedocs' ) }
+                hasValue={ has( keys.transform ) }
+                onDeselect={ reset( keys.transform ) }
+                isShownByDefault={ false }
+            >
+                <TextTransformControl
+                    value={ attributes[ keys.transform ] || '' }
+                    onChange={ set( keys.transform ) }
+                    __nextHasNoMarginBottom
+                />
+            </ToolsPanelItem>
+        </ToolsPanel>
+    );
 };
 
-const StyleControls = ({ attributes, setAttributes }) => {
+const StyleControls = ( { attributes, setAttributes } ) => {
     const updateAttribute = (attributeName) => (value) => {
         setAttributes({ [attributeName]: value });
     };
@@ -208,6 +294,13 @@ const StyleControls = ({ attributes, setAttributes }) => {
                 />
             </PanelBody>
 
+            <TypographyGroup
+                prefix="title"
+                label={ __( 'Title Typography', 'wedocs' ) }
+                attributes={ attributes }
+                setAttributes={ setAttributes }
+            />
+
             <PanelBody
               title={__('Button Styles', 'wedocs')}
               icon='admin-appearance'
@@ -276,44 +369,52 @@ const StyleControls = ({ attributes, setAttributes }) => {
                 </div>
             </PanelBody>
 
-          {/*<PanelBody*/}
-          {/*    title={__('Pagination Styles', 'wedocs')}*/}
-          {/*    icon="admin-appearance"*/}
-          {/*    initialOpen={false}*/}
-          {/*>*/}
-          {/*    <div className="wedocs-color-control">*/}
-          {/*        <label>{__('Text Color', 'wedocs')}</label>*/}
-          {/*        <ColorPicker*/}
-          {/*            color={attributes.paginationTextColor}*/}
-          {/*            onChange={updateAttribute('paginationTextColor')}*/}
-          {/*            enableAlpha*/}
-          {/*        />*/}
-          {/*    </div>*/}
-          {/*    <div className="wedocs-color-control">*/}
-          {/*        <label>{__('Text Hover Color', 'wedocs')}</label>*/}
-          {/*        <ColorPicker*/}
-          {/*            color={attributes.paginationTextHoverColor}*/}
-          {/*            onChange={updateAttribute('paginationTextHoverColor')}*/}
-          {/*            enableAlpha*/}
-          {/*        />*/}
-          {/*    </div>*/}
-          {/*    <div className="wedocs-color-control">*/}
-          {/*        <label>{__('Background Color', 'wedocs')}</label>*/}
-          {/*        <ColorPicker*/}
-          {/*            color={attributes.paginationBackgroundColor}*/}
-          {/*            onChange={updateAttribute('paginationBackgroundColor')}*/}
-          {/*            enableAlpha*/}
-          {/*        />*/}
-          {/*    </div>*/}
-          {/*    <div className="wedocs-color-control">*/}
-          {/*        <label>{__('Hover Color', 'wedocs')}</label>*/}
-          {/*        <ColorPicker*/}
-            {/*            color={attributes.paginationHoverColor}*/}
-            {/*            onChange={updateAttribute('paginationHoverColor')}*/}
-            {/*            enableAlpha*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*</PanelBody>*/}
+            <TypographyGroup
+                prefix="button"
+                label={ __( 'Button Typography', 'wedocs' ) }
+                attributes={ attributes }
+                setAttributes={ setAttributes }
+            />
+
+            <PanelBody
+                title={__('Pagination Styles', 'wedocs')}
+                icon="admin-appearance"
+                initialOpen={false}
+            >
+                <label>{__('Pagination Colors', 'wedocs')}</label>
+                <PanelColorSettings
+                    colors={colors}
+                    colorSettings={[
+                        {
+                            value: attributes.paginationTextColor,
+                            label: __('Text Color', 'wedocs'),
+                            onChange: (newColor) => updateAttribute('paginationTextColor')(newColor)
+                        },
+                        {
+                            value: attributes.paginationTextHoverColor,
+                            label: __('Text Hover Color', 'wedocs'),
+                            onChange: (newColor) => updateAttribute('paginationTextHoverColor')(newColor)
+                        },
+                        {
+                            value: attributes.paginationBackgroundColor,
+                            label: __('Background Color', 'wedocs'),
+                            onChange: (newColor) => updateAttribute('paginationBackgroundColor')(newColor)
+                        },
+                        {
+                            value: attributes.paginationHoverColor,
+                            label: __('Hover Color', 'wedocs'),
+                            onChange: (newColor) => updateAttribute('paginationHoverColor')(newColor)
+                        }
+                    ]}
+                />
+            </PanelBody>
+
+            <TypographyGroup
+                prefix="pagination"
+                label={ __( 'Pagination Typography', 'wedocs' ) }
+                attributes={ attributes }
+                setAttributes={ setAttributes }
+            />
         </>
     );
 };
