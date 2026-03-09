@@ -13,11 +13,9 @@
 		"anchor": true,
 		"color": {
 			"background": true,
-			"text": true,
 			"link": true,
 			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true
+				"background": true
 			}
 		},
 		"typography": {

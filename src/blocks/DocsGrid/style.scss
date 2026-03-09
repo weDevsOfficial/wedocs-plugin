@@ -69,7 +69,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
 // Grid container
 .wedocs-docs-grid {
     display: grid;
-    gap: 1.5rem;
+    gap: var(--wp--style--block-gap, 1.5rem);
     width: 100%;
     margin: 0; // Reset ul margin
     padding: 0; // Reset ul padding

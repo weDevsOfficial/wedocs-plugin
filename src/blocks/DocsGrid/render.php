@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Render the docs grid block on frontend with optimized pagination and dynamic styles
  *
@@ -11,7 +12,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
- if ( ! function_exists( 'get_pagination_style_tag' ) ) {
+if (! function_exists('get_pagination_style_tag')) {
     function get_pagination_style_tag($attributes) {
         $background_color = $attributes['paginationBackgroundColor'] ?? '#fff';
         $text_color = $attributes['paginationTextColor'] ?? '#333';
@@ -41,7 +42,7 @@ if (!defined('ABSPATH')) {
     }
 }
 
-if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
+if (! function_exists('render_wedocs_docs_grid')) {
     function render_wedocs_docs_grid($attributes) {
         // Extract attributes with defaults
         $doc_style = $attributes['docStyle'] ?? '1x1';
@@ -159,8 +160,8 @@ if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
             esc_attr($button_hover_text_color)
         );
 
-        // Get current page for pagination
-        $current_page = (get_query_var('paged')) ? get_query_var('paged') : 1;
+        // Get current page for pagination (works on front page and regular pages)
+        $current_page = max(1, get_query_var('paged') ?: get_query_var('page', 1));
 
         // Set up the main docs query
         $args = array(
@@ -214,8 +215,8 @@ if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
         echo $toggle_script;
         // Output hover styles
         echo $hover_styles;
-        ?>
-        <div class="wedocs-block-wrapper">
+?>
+        <div <?php echo get_block_wrapper_attributes(['class' => 'wedocs-block-wrapper']); ?>>
             <div class="wedocs-docs-grid wedocs-docs-grid--<?php echo esc_attr($doc_style); ?>">
                 <?php foreach ($docs as $doc) :
                     // Get sections for this doc with limit
@@ -230,7 +231,7 @@ if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
 
                     $sections = get_posts($sections_query_args);
                     $total_articles = 0;
-                    ?>
+                ?>
 
                     <div class="wedocs-docs-grid__item" style="<?php echo esc_attr($grid_item_style); ?>">
                         <h3 class="wedocs-docs-grid__title" style="<?php echo esc_attr($title_style); ?>">
@@ -240,20 +241,20 @@ if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
                         </h3>
 
                         <?php if (!empty($sections)) : ?>
-                        <div class='wedocs-docs-grid__container'>
-                            <?php
-                            foreach ($sections as $section) {
-                                // Get articles for this section with limit
-                                $articles_query_args = array(
-                                    'post_type' => 'docs',
-                                    'post_status' => 'publish',
-                                    'post_parent' => $section->ID,
-                                    'orderby' => 'menu_order',
-                                    'order' => 'ASC',
-                                    'posts_per_page' => $articles_per_section === 'all' ? -1 : intval($articles_per_section)
-                                );
+                            <div class='wedocs-docs-grid__container'>
+                                <?php
+                                foreach ($sections as $section) {
+                                    // Get articles for this section with limit
+                                    $articles_query_args = array(
+                                        'post_type' => 'docs',
+                                        'post_status' => 'publish',
+                                        'post_parent' => $section->ID,
+                                        'orderby' => 'menu_order',
+                                        'order' => 'ASC',
+                                        'posts_per_page' => $articles_per_section === 'all' ? -1 : intval($articles_per_section)
+                                    );
 
-                                $articles = get_posts($articles_query_args);
+                                    $articles = get_posts($articles_query_args);
                                 ?>
                                     <div class="wedocs-docs-grid__sections">
                                         <div class="wedocs-docs-grid__section">
@@ -261,7 +262,7 @@ if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
                                                 style="<?php echo esc_attr($title_style); ?> display: flex; justify-content: space-between; align-items: center;">
                                                 <span>
                                                     <a href="<?php echo esc_url(get_permalink($section->ID)); ?>"
-                                                    style="<?php echo esc_attr($title_style); ?>">
+                                                        style="<?php echo esc_attr($title_style); ?>">
                                                         <?php echo esc_html($section->post_title); ?>
                                                     </a>
                                                 </span>
@@ -274,7 +275,7 @@ if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
                                                         class="<?php echo esc_attr($keep_articles_collapsed ? 'collapsed' : ''); ?>">
                                                         <path stroke-linecap="round"
                                                             stroke-linejoin="round"
-                                                            d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+                                                            d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                                     </svg>
                                                 <?php endif; ?>
                                             </h4>
@@ -284,7 +285,7 @@ if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
                                                         <li class="wedocs-docs-grid__article"
                                                             style="<?php echo esc_attr($children_style); ?>">
                                                             <a href="<?php echo esc_url(get_permalink($article->ID)); ?>"
-                                                            style="<?php echo esc_attr($children_style); ?>">
+                                                                style="<?php echo esc_attr($children_style); ?>">
                                                                 <?php echo esc_html($article->post_title); ?>
                                                             </a>
                                                         </li>
@@ -294,8 +295,8 @@ if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
                                         </div>
                                     </div>
                                 <?php
-                            } ?>
-                        </div>
+                                } ?>
+                            </div>
                         <?php else : ?>
                             <span class='inside'>
                                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24"
@@ -303,8 +304,7 @@ if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                    ></path>
+                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
                                 </svg>
                                 <?php esc_html_e('This document has no sections yet. Check back later or wait for the author to add content.', 'wedocs'); ?>
                             </span>
@@ -312,8 +312,8 @@ if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
                         <?php if ($show_view_details) : ?>
                             <div class="wedocs-docs-grid__details">
                                 <a href="<?php echo esc_url(get_permalink($doc->ID)); ?>"
-                                class="wedocs-docs-grid__details-link"
-                                style="<?php echo esc_attr($button_style); ?>">
+                                    class="wedocs-docs-grid__details-link"
+                                    style="<?php echo esc_attr($button_style); ?>">
                                     <?php echo esc_html($button_text); ?>
                                 </a>
                             </div>
@@ -322,23 +322,24 @@ if ( ! function_exists( 'render_wedocs_docs_grid' ) ) {
                 <?php endforeach; ?>
             </div>
 
-            <?php if ( $docs_per_page !== 'all' && $total_pages > 1 ) :
-                echo get_pagination_style_tag( $attributes );
+            <?php if ($docs_per_page !== 'all' && $total_pages > 1) :
+                echo get_pagination_style_tag($attributes);
             ?>
-                <nav class="wedocs-docs-pagination" aria-label="<?php esc_attr_e( 'Docs pagination', 'wedocs' ); ?>">
+                <nav class="wedocs-docs-pagination" aria-label="<?php esc_attr_e('Docs pagination', 'wedocs'); ?>">
                     <?php
-                    echo paginate_links( array(
+                    echo paginate_links(array(
                         'total'     => $total_pages,
                         'current'   => $current_page,
                         'format'    => '?paged=%#%',
                         'prev_text' => '&larr;',
                         'next_text' => '&rarr;',
-                    ) );
+                        'type'      => 'list',
+                    ));
                     ?>
                 </nav>
             <?php endif; ?>
         </div>
-        <?php
+<?php
         return ob_get_clean();
     }
 }
