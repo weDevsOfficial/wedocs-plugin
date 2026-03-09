@@ -122,6 +122,42 @@
         }
     }
 
+    // Inline layout: Title and buttons in one row
+    &.inline-layout {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 16px;
+
+        .wedocs-feedback-title {
+            margin: 0;
+            padding-bottom: 0 !important;
+            flex-shrink: 0;
+        }
+
+        .wedocs-feedback-buttons {
+            margin-top: 0;
+            flex-shrink: 0;
+        }
+
+        .wedocs-feedback-preview-note {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        &.left {
+            justify-content: flex-start;
+        }
+
+        &.center {
+            justify-content: center;
+        }
+
+        &.right {
+            justify-content: flex-end;
+        }
+    }
+
     // Layout 1: Standard rectangular buttons
     &.layout1 {
         .wedocs-feedback-button {

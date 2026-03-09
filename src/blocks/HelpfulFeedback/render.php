@@ -78,6 +78,7 @@ if (!defined('ABSPATH')) {
         $no_button_text = $attributes['noButtonText'] ?? 'No';
         $thank_you_message = $attributes['thankYouMessage'] ?? 'Thank you for your feedback!';
         $additional_css_class = $attributes['additionalCssClass'] ?? '';
+        $inline_layout = $attributes['inlineLayout'] ?? false;
 
         // Build container styles
         $container_styles = [];
@@ -176,6 +177,10 @@ if (!defined('ABSPATH')) {
         if ($has_voted) {
             $css_classes[] = 'has-voted';
             $css_classes[] = 'voted-' . esc_attr($voted_option);
+        }
+
+        if ($inline_layout) {
+            $css_classes[] = 'inline-layout';
         }
 
         if (!empty($additional_css_class)) {

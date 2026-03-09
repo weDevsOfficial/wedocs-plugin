@@ -26,6 +26,7 @@ const Edit = ({ attributes, setAttributes }) => {
     const {
         questionText,
         layout,
+        inlineLayout,
         alignment,
         showVoteCount,
         allowAnonymous,
@@ -182,6 +183,13 @@ const Edit = ({ attributes, setAttributes }) => {
                     />
 
                     <ToggleControl
+                        label={__('Inline Layout', 'wedocs')}
+                        checked={inlineLayout}
+                        onChange={(value) => setAttributes({ inlineLayout: value })}
+                        help={__('Display question and buttons in a single row', 'wedocs')}
+                    />
+
+                    <ToggleControl
                         label={__('Show Vote Count', 'wedocs')}
                         checked={showVoteCount}
                         onChange={(value) => setAttributes({ showVoteCount: value })}
@@ -322,7 +330,7 @@ const Edit = ({ attributes, setAttributes }) => {
 
             <div {...blockProps}>
                 <div
-                    className={`wedocs-helpful-feedback ${layout} ${additionalCssClass}`}
+                    className={`wedocs-helpful-feedback ${layout}${inlineLayout ? ' inline-layout' : ''} ${additionalCssClass}`}
                     style={containerStyle}
                 >
                     <div className="wedocs-feedback-title" style={titleStyle}>

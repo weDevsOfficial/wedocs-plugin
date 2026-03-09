@@ -62,6 +62,10 @@
 			"type": "string",
 			"default": "layout1"
 		},
+		"inlineLayout": {
+			"type": "boolean",
+			"default": false
+		},
 		"alignment": {
 			"type": "string",
 			"default": "center"
