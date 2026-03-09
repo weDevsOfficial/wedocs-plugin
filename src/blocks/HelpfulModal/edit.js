@@ -490,6 +490,9 @@ export default function Edit({ attributes, setAttributes }) {
 					</ToolsPanelItem>
 				</ToolsPanel>
 
+			</InspectorControls>
+
+			<InspectorControls group="styles">
 				<ToolsPanel
 					label={__("Dimensions", "wedocs")}
 					resetAll={() => {
@@ -629,7 +632,9 @@ export default function Edit({ attributes, setAttributes }) {
 						/>
 					</ToolsPanelItem>
 				</ToolsPanel>
+			</InspectorControls>
 
+			<InspectorControls>
 				<PanelBody title={__('Advanced Settings', 'wedocs')} initialOpen={false}>
 					<TextControl
 						label={__('Additional CSS Class(es)', 'wedocs')}

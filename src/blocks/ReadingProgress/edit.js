@@ -134,7 +134,9 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						onChange={(value) => setAttributes({ animationSpeed: value })}
 					/>
 				</PanelBody>
+			</InspectorControls>
 
+			<InspectorControls group="styles">
 				<ColorSettingsPanel
 					attributes={attributes}
 					setAttributes={setAttributes}
@@ -152,6 +154,9 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					]}
 				/>
 
+			</InspectorControls>
+
+			<InspectorControls>
 				<PanelBody title={__('Display Options', 'wedocs-plugin')}>
 					<ToggleControl
 						label={__('Show Percentage', 'wedocs-plugin')}

@@ -46,7 +46,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 
 	return (
 		<Fragment>
-			<InspectorControls>
+			<InspectorControls group="styles">
 				<PanelBody
 					title={__('Style Settings', 'wedocs')}
 					initialOpen={false}

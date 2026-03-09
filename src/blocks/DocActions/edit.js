@@ -176,7 +176,9 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						onChange={(value) => setAttributes({ fontSize: value })}
 					/>
 				</PanelBody>
+			</InspectorControls>
 
+			<InspectorControls group="styles">
 				<ColorSettingsPanel
 					attributes={attributes}
 					setAttributes={setAttributes}

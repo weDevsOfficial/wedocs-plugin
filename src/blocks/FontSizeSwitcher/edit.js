@@ -193,7 +193,9 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						onChange={(value) => setAttributes({ borderRadius: value })}
 					/>
 				</PanelBody>
+			</InspectorControls>
 
+			<InspectorControls group="styles">
 				<ColorSettingsPanel
 					attributes={attributes}
 					setAttributes={setAttributes}
@@ -228,6 +230,9 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					marginAttribute="margin"
 				/>
 
+			</InspectorControls>
+
+			<InspectorControls>
 				<PanelBody title={__('Advanced Settings', 'wedocs-plugin')} initialOpen={false}>
 					<TextControl
 						label={__('Content Selector', 'wedocs-plugin')}
