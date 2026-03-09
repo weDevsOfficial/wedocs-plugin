@@ -64,9 +64,11 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	const getButtonStyles = () => ({
 		backgroundColor: buttonStyle === 'filled' ? backgroundColor : 'transparent',
 		color: textColor,
-		borderColor,
-		borderWidth,
-		borderRadius,
+		...(buttonStyle !== 'text' ? {
+			borderColor,
+			borderWidth,
+			borderRadius,
+		} : {}),
 		fontSize,
 		gap: spacing
 	});

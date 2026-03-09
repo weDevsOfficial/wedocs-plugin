@@ -72,15 +72,16 @@
 		}
 
 		&.style-text {
-			border: none;
+			border: none !important;
 			background: none !important;
+			box-shadow: none !important;
 			padding-left: 0;
 			padding-right: 0;
 
 			&:hover {
 				text-decoration: underline;
 				transform: none;
-				box-shadow: none;
+				box-shadow: none !important;
 			}
 		}
 

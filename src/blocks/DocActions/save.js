@@ -68,10 +68,12 @@ export default function save({ attributes }) {
 	const btnStyles = {
 		backgroundColor: buttonStyle === 'filled' ? backgroundColor : 'transparent',
 		color: textColor,
-		borderColor,
-		borderWidth,
-		borderStyle: 'solid',
-		borderRadius,
+		...(buttonStyle !== 'text' ? {
+			borderColor,
+			borderWidth,
+			borderStyle: 'solid',
+			borderRadius,
+		} : {}),
 		fontSize
 	};
 

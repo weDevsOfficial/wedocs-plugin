@@ -60,7 +60,7 @@
 		},
 		"textColor": {
 			"type": "string",
-			"default": "#ffffff"
+			"default": "#1e1e1e"
 		},
 		"borderColor": {
 			"type": "string",
