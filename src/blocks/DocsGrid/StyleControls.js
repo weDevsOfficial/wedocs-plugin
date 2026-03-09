@@ -4,7 +4,8 @@ import {
     __experimentalBoxControl as BoxControl,
     SelectControl,
     TextControl,
-    __experimentalVStack as VStack,
+    __experimentalToolsPanel as ToolsPanel,
+    __experimentalToolsPanelItem as ToolsPanelItem,
 } from '@wordpress/components';
 import {
     PanelColorSettings,
@@ -12,13 +13,17 @@ import {
     LineHeightControl,
     __experimentalFontFamilyControl as FontFamilyControl,
     __experimentalFontAppearanceControl as FontAppearanceControl,
+    __experimentalLetterSpacingControl as LetterSpacingControl,
+    __experimentalTextDecorationControl as TextDecorationControl,
+    __experimentalTextTransformControl as TextTransformControl,
     useSettings,
 } from '@wordpress/block-editor';
 
 /**
- * Per-element typography controls using native FSE/Gutenberg components.
- * Font sizes and font families are read from theme.json via useSettings,
- * so they automatically reflect whatever the active theme exposes.
+ * Per-element typography panel using the native WordPress ToolsPanel pattern.
+ * Renders with a ⋮ menu to add/remove controls — identical to the native
+ * Heading / Paragraph typography panel in the FSE editor.
+ * Font sizes and families are sourced from theme.json via useSettings.
  *
  * Prefix = attribute key prefix, e.g. "title" → titleFontSize, titleFontWeight …
  */
@@ -28,50 +33,133 @@ const TypographyGroup = ( { prefix, label, attributes, setAttributes } ) => {
         'typography.fontFamilies'
     );
 
-    const sizeKey   = `${ prefix }FontSize`;
-    const weightKey = `${ prefix }FontWeight`;
-    const familyKey = `${ prefix }FontFamily`;
-    const lhKey     = `${ prefix }LineHeight`;
+    const keys = {
+        size:          `${ prefix }FontSize`,
+        weight:        `${ prefix }FontWeight`,
+        family:        `${ prefix }FontFamily`,
+        lineHeight:    `${ prefix }LineHeight`,
+        letterSpacing: `${ prefix }LetterSpacing`,
+        decoration:    `${ prefix }TextDecoration`,
+        transform:     `${ prefix }TextTransform`,
+    };
+
+    const set   = ( key ) => ( value ) => setAttributes( { [ key ]: value ?? '' } );
+    const has   = ( key ) => () => !! attributes[ key ];
+    const reset = ( key ) => () => setAttributes( { [ key ]: '' } );
+
+    const resetAll = () =>
+        setAttributes(
+            Object.fromEntries( Object.values( keys ).map( ( k ) => [ k, '' ] ) )
+        );
 
     return (
-        <PanelBody title={ label } initialOpen={ false }>
-            <VStack spacing={ 4 }>
-                { fontFamilies?.length > 0 && (
+        <ToolsPanel label={ label } resetAll={ resetAll }>
+            <ToolsPanelItem
+                label={ __( 'Size', 'wedocs' ) }
+                hasValue={ has( keys.size ) }
+                onDeselect={ reset( keys.size ) }
+                isShownByDefault
+            >
+                <FontSizePicker
+                    fontSizes={ fontSizes || [] }
+                    value={ attributes[ keys.size ] || undefined }
+                    onChange={ set( keys.size ) }
+                    withReset={ false }
+                    __nextHasNoMarginBottom
+                />
+            </ToolsPanelItem>
+
+            { fontFamilies?.length > 0 && (
+                <ToolsPanelItem
+                    label={ __( 'Font', 'wedocs' ) }
+                    hasValue={ has( keys.family ) }
+                    onDeselect={ reset( keys.family ) }
+                    isShownByDefault={ false }
+                >
                     <FontFamilyControl
                         fontFamilies={ fontFamilies }
-                        value={ attributes[ familyKey ] || '' }
-                        onChange={ ( v ) => setAttributes( { [ familyKey ]: v || '' } ) }
+                        value={ attributes[ keys.family ] || '' }
+                        onChange={ ( v ) => setAttributes( { [ keys.family ]: v || '' } ) }
                         size="__unstable-large"
                         __nextHasNoMarginBottom
                     />
-                ) }
-                <FontSizePicker
-                    fontSizes={ fontSizes || [] }
-                    value={ attributes[ sizeKey ] || undefined }
-                    onChange={ ( v ) => setAttributes( { [ sizeKey ]: v || '' } ) }
-                    withReset
-                    __nextHasNoMarginBottom
-                />
+                </ToolsPanelItem>
+            ) }
+
+            <ToolsPanelItem
+                label={ __( 'Appearance', 'wedocs' ) }
+                hasValue={ has( keys.weight ) }
+                onDeselect={ reset( keys.weight ) }
+                isShownByDefault={ false }
+            >
                 <FontAppearanceControl
                     value={ {
                         fontStyle: undefined,
-                        fontWeight: attributes[ weightKey ] || undefined,
+                        fontWeight: attributes[ keys.weight ] || undefined,
                     } }
                     onChange={ ( { fontWeight } ) =>
-                        setAttributes( { [ weightKey ]: fontWeight || '' } )
+                        setAttributes( { [ keys.weight ]: fontWeight || '' } )
                     }
                     hasFontStyles={ false }
                     hasFontWeights={ true }
+                    __nextHasNoMarginBottom
                 />
+            </ToolsPanelItem>
+
+            <ToolsPanelItem
+                label={ __( 'Line height', 'wedocs' ) }
+                hasValue={ has( keys.lineHeight ) }
+                onDeselect={ reset( keys.lineHeight ) }
+                isShownByDefault={ false }
+            >
                 <LineHeightControl
-                    value={ attributes[ lhKey ] || '' }
+                    value={ attributes[ keys.lineHeight ] || '' }
                     onChange={ ( v ) =>
-                        setAttributes( { [ lhKey ]: typeof v === 'number' ? String( v ) : ( v || '' ) } )
+                        setAttributes( { [ keys.lineHeight ]: typeof v === 'number' ? String( v ) : ( v || '' ) } )
                     }
                     __nextHasNoMarginBottom
                 />
-            </VStack>
-        </PanelBody>
+            </ToolsPanelItem>
+
+            <ToolsPanelItem
+                label={ __( 'Letter spacing', 'wedocs' ) }
+                hasValue={ has( keys.letterSpacing ) }
+                onDeselect={ reset( keys.letterSpacing ) }
+                isShownByDefault={ false }
+            >
+                <LetterSpacingControl
+                    value={ attributes[ keys.letterSpacing ] || '' }
+                    onChange={ set( keys.letterSpacing ) }
+                    __nextHasNoMarginBottom
+                />
+            </ToolsPanelItem>
+
+            <ToolsPanelItem
+                label={ __( 'Decoration', 'wedocs' ) }
+                hasValue={ has( keys.decoration ) }
+                onDeselect={ reset( keys.decoration ) }
+                isShownByDefault={ false }
+            >
+                <TextDecorationControl
+                    value={ attributes[ keys.decoration ] || '' }
+                    onChange={ set( keys.decoration ) }
+                    __nextHasNoMarginBottom
+                />
+            </ToolsPanelItem>
+
+            <ToolsPanelItem
+                label={ __( 'Letter case', 'wedocs' ) }
+                hasValue={ has( keys.transform ) }
+                onDeselect={ reset( keys.transform ) }
+                isShownByDefault={ false }
+            >
+                <TextTransformControl
+                    value={ attributes[ keys.transform ] || '' }
+                    onChange={ set( keys.transform ) }
+                    __nextHasNoMarginBottom
+                />
+            </ToolsPanelItem>
+        </ToolsPanel>
     );
 };
 

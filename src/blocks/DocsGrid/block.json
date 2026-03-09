@@ -235,6 +235,42 @@
     "paginationLineHeight": {
       "type": "string",
       "default": ""
+    },
+    "titleLetterSpacing": {
+      "type": "string",
+      "default": ""
+    },
+    "titleTextDecoration": {
+      "type": "string",
+      "default": ""
+    },
+    "titleTextTransform": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonLetterSpacing": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonTextDecoration": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonTextTransform": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationLetterSpacing": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationTextDecoration": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationTextTransform": {
+      "type": "string",
+      "default": ""
     }
   }
 }

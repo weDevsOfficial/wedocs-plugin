@@ -24,12 +24,18 @@ if (! function_exists('get_pagination_style_tag')) {
         $font_weight        = $attributes['paginationFontWeight']       ?? '';
         $font_family        = $attributes['paginationFontFamily']       ?? '';
         $line_height        = $attributes['paginationLineHeight']       ?? '';
+        $letter_spacing     = $attributes['paginationLetterSpacing']    ?? '';
+        $text_decoration    = $attributes['paginationTextDecoration']   ?? '';
+        $text_transform     = $attributes['paginationTextTransform']    ?? '';
 
         $typography_vars = '';
-        if ($font_size)   $typography_vars .= sprintf('--wedocs-pagination-font-size: %s;',   esc_attr($font_size));
-        if ($font_weight) $typography_vars .= sprintf('--wedocs-pagination-font-weight: %s;', esc_attr($font_weight));
-        if ($font_family) $typography_vars .= sprintf('--wedocs-pagination-font-family: %s;', esc_attr($font_family));
-        if ($line_height) $typography_vars .= sprintf('--wedocs-pagination-line-height: %s;', esc_attr($line_height));
+        if ($font_size)       $typography_vars .= sprintf('--wedocs-pagination-font-size: %s;',       esc_attr($font_size));
+        if ($font_weight)     $typography_vars .= sprintf('--wedocs-pagination-font-weight: %s;',     esc_attr($font_weight));
+        if ($font_family)     $typography_vars .= sprintf('--wedocs-pagination-font-family: %s;',     esc_attr($font_family));
+        if ($line_height)     $typography_vars .= sprintf('--wedocs-pagination-line-height: %s;',     esc_attr($line_height));
+        if ($letter_spacing)  $typography_vars .= sprintf('--wedocs-pagination-letter-spacing: %s;',  esc_attr($letter_spacing));
+        if ($text_decoration) $typography_vars .= sprintf('--wedocs-pagination-text-decoration: %s;', esc_attr($text_decoration));
+        if ($text_transform)  $typography_vars .= sprintf('--wedocs-pagination-text-transform: %s;',  esc_attr($text_transform));
 
         return sprintf(
             '<style>
@@ -87,14 +93,20 @@ if (! function_exists('render_wedocs_docs_grid')) {
         $button_margin = $attributes['buttonMargin'] ?? null;
 
     // Per-element typography
-    $title_font_size    = $attributes['titleFontSize']    ?? '';
-    $title_font_weight  = $attributes['titleFontWeight']  ?? '';
-    $title_font_family  = $attributes['titleFontFamily']  ?? '';
-    $title_line_height  = $attributes['titleLineHeight']  ?? '';
-    $button_font_size   = $attributes['buttonFontSize']   ?? '';
-    $button_font_weight = $attributes['buttonFontWeight'] ?? '';
-    $button_font_family = $attributes['buttonFontFamily'] ?? '';
-    $button_line_height = $attributes['buttonLineHeight'] ?? '';
+    $title_font_size       = $attributes['titleFontSize']       ?? '';
+    $title_font_weight     = $attributes['titleFontWeight']     ?? '';
+    $title_font_family     = $attributes['titleFontFamily']     ?? '';
+    $title_line_height     = $attributes['titleLineHeight']     ?? '';
+    $title_letter_spacing  = $attributes['titleLetterSpacing']  ?? '';
+    $title_text_decoration = $attributes['titleTextDecoration'] ?? '';
+    $title_text_transform  = $attributes['titleTextTransform']  ?? '';
+    $button_font_size       = $attributes['buttonFontSize']       ?? '';
+    $button_font_weight     = $attributes['buttonFontWeight']     ?? '';
+    $button_font_family     = $attributes['buttonFontFamily']     ?? '';
+    $button_line_height     = $attributes['buttonLineHeight']     ?? '';
+    $button_letter_spacing  = $attributes['buttonLetterSpacing']  ?? '';
+    $button_text_decoration = $attributes['buttonTextDecoration'] ?? '';
+    $button_text_transform  = $attributes['buttonTextTransform']  ?? '';
 
     // Format padding and margin styles
     $padding_style = '';
@@ -154,25 +166,31 @@ if (! function_exists('render_wedocs_docs_grid')) {
         );
 
     $title_style = sprintf(
-        'color: %s;%s%s%s%s',
+            'color: %s;%s%s%s%s%s%s%s',
         esc_attr($doc_title_color),
-        $title_font_size   ? sprintf(' font-size: %s;',   esc_attr($title_font_size))   : '',
-        $title_font_weight ? sprintf(' font-weight: %s;', esc_attr($title_font_weight)) : '',
-        $title_font_family ? sprintf(' font-family: %s;', esc_attr($title_font_family)) : '',
-        $title_line_height ? sprintf(' line-height: %s;', esc_attr($title_line_height)) : ''
+            $title_font_size       ? sprintf(' font-size: %s;',       esc_attr($title_font_size))       : '',
+            $title_font_weight     ? sprintf(' font-weight: %s;',     esc_attr($title_font_weight))     : '',
+            $title_font_family     ? sprintf(' font-family: %s;',     esc_attr($title_font_family))     : '',
+            $title_line_height     ? sprintf(' line-height: %s;',     esc_attr($title_line_height))     : '',
+            $title_letter_spacing  ? sprintf(' letter-spacing: %s;',  esc_attr($title_letter_spacing))  : '',
+            $title_text_decoration ? sprintf(' text-decoration: %s;', esc_attr($title_text_decoration)) : '',
+            $title_text_transform  ? sprintf(' text-transform: %s;',  esc_attr($title_text_transform))  : ''
     );
         $children_style = sprintf('color: %s;', esc_attr($doc_children_active_color));
         $button_style = sprintf(
-            'background-color: %s; color: %s; border-radius: %s; %s %s%s%s%s%s',
+            'background-color: %s; color: %s; border-radius: %s; %s %s%s%s%s%s%s%s%s',
             esc_attr($button_color),
             esc_attr($button_text_color),
             esc_attr($button_radius),
             $button_padding_style,
             $button_margin_style,
-            $button_font_size   ? sprintf(' font-size: %s;',   esc_attr($button_font_size))   : '',
-            $button_font_weight ? sprintf(' font-weight: %s;', esc_attr($button_font_weight)) : '',
-            $button_font_family ? sprintf(' font-family: %s;', esc_attr($button_font_family)) : '',
-            $button_line_height ? sprintf(' line-height: %s;', esc_attr($button_line_height)) : ''
+            $button_font_size       ? sprintf(' font-size: %s;',       esc_attr($button_font_size))       : '',
+            $button_font_weight     ? sprintf(' font-weight: %s;',     esc_attr($button_font_weight))     : '',
+            $button_font_family     ? sprintf(' font-family: %s;',     esc_attr($button_font_family))     : '',
+            $button_line_height     ? sprintf(' line-height: %s;',     esc_attr($button_line_height))     : '',
+            $button_letter_spacing  ? sprintf(' letter-spacing: %s;',  esc_attr($button_letter_spacing))  : '',
+            $button_text_decoration ? sprintf(' text-decoration: %s;', esc_attr($button_text_decoration)) : '',
+            $button_text_transform  ? sprintf(' text-transform: %s;',  esc_attr($button_text_transform))  : ''
         );
 
         // Add dynamic styles for hover states

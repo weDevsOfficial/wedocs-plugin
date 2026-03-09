@@ -50,14 +50,23 @@ const Edit = ({ attributes, setAttributes }) => {
         titleFontWeight,
         titleFontFamily,
         titleLineHeight,
+        titleLetterSpacing,
+        titleTextDecoration,
+        titleTextTransform,
         buttonFontSize,
         buttonFontWeight,
         buttonFontFamily,
         buttonLineHeight,
+        buttonLetterSpacing,
+        buttonTextDecoration,
+        buttonTextTransform,
         paginationFontSize,
         paginationFontWeight,
         paginationFontFamily,
         paginationLineHeight,
+        paginationLetterSpacing,
+        paginationTextDecoration,
+        paginationTextTransform,
     } = attributes;
 
     const applyStyles = () => {
@@ -79,10 +88,13 @@ const Edit = ({ attributes, setAttributes }) => {
             },
             title: {
                 color: docTitleColor || '#1e1e1e',
-                ...(titleFontSize   && { fontSize:   titleFontSize }),
-                ...(titleFontWeight && { fontWeight: titleFontWeight }),
-                ...(titleFontFamily && { fontFamily: titleFontFamily }),
-                ...(titleLineHeight && { lineHeight: titleLineHeight }),
+                ...(titleFontSize      && { fontSize:      titleFontSize }),
+                ...(titleFontWeight    && { fontWeight:    titleFontWeight }),
+                ...(titleFontFamily    && { fontFamily:    titleFontFamily }),
+                ...(titleLineHeight    && { lineHeight:    titleLineHeight }),
+                ...(titleLetterSpacing && { letterSpacing: titleLetterSpacing }),
+                ...(titleTextDecoration && { textDecoration: titleTextDecoration }),
+                ...(titleTextTransform  && { textTransform:  titleTextTransform }),
             },
             children: {
                 color: docChildrenActiveColor || '#0073aa'
@@ -96,10 +108,13 @@ const Edit = ({ attributes, setAttributes }) => {
                 borderRadius: btnradius || '8px',
                 '--hover-bg': buttonHoverColor || '#005177',
                 '--hover-color': buttonHoverTextColor || '#ffffff',
-                ...(buttonFontSize   && { fontSize:   buttonFontSize }),
-                ...(buttonFontWeight && { fontWeight: buttonFontWeight }),
-                ...(buttonFontFamily && { fontFamily: buttonFontFamily }),
-                ...(buttonLineHeight && { lineHeight: buttonLineHeight }),
+                ...(buttonFontSize      && { fontSize:      buttonFontSize }),
+                ...(buttonFontWeight    && { fontWeight:    buttonFontWeight }),
+                ...(buttonFontFamily    && { fontFamily:    buttonFontFamily }),
+                ...(buttonLineHeight    && { lineHeight:    buttonLineHeight }),
+                ...(buttonLetterSpacing && { letterSpacing: buttonLetterSpacing }),
+                ...(buttonTextDecoration && { textDecoration: buttonTextDecoration }),
+                ...(buttonTextTransform  && { textTransform:  buttonTextTransform }),
             }
         };
     };
@@ -342,10 +357,13 @@ const Edit = ({ attributes, setAttributes }) => {
             display: 'inline-block',
             minWidth: '32px',
             textAlign: 'center',
-            fontFamily: paginationFontFamily || 'inherit',
-            fontSize: paginationFontSize || '14px',
-            fontWeight: paginationFontWeight || undefined,
-            lineHeight: paginationLineHeight || '1.4',
+            fontFamily:      paginationFontFamily    || 'inherit',
+            fontSize:        paginationFontSize      || '14px',
+            fontWeight:      paginationFontWeight    || undefined,
+            lineHeight:      paginationLineHeight    || '1.4',
+            letterSpacing:   paginationLetterSpacing || undefined,
+            textDecoration:  paginationTextDecoration || undefined,
+            textTransform:   paginationTextTransform  || undefined,
         };
 
         // Active button style
