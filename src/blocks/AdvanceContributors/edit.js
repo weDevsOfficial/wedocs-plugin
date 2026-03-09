@@ -299,8 +299,7 @@ const Edit = (props) => {
 						const avatarStyles = {
 							width: '32px',
 							height: '32px',
-							borderRadius: attributes.avatarShape === 'circle' ? '50%' :
-								(attributes.avatarShape === 'rounded' ? '8px' : '0'),
+							borderRadius: attributes.avatarShape === 'circle' ? '50%' : '0',
 							marginRight: '8px',
 							objectFit: 'cover'
 						};
@@ -414,6 +413,47 @@ const Edit = (props) => {
 							)}
 						</div>
 					)}
+
+					<SelectControl
+						label={__('Avatar Link Behavior', 'wedocs')}
+						value={attributes.linkBehavior}
+						options={[
+							{ label: __('Link to user profile', 'wedocs'), value: 'user_profile' },
+							{ label: __('No link', 'wedocs'), value: 'no_link' },
+							{ label: __('Custom link', 'wedocs'), value: 'custom_link' }
+						]}
+						onChange={(value) => setAttributes({ linkBehavior: value })}
+					/>
+
+					{attributes.linkBehavior === 'custom_link' && (
+						<TextControl
+							label={__('Custom Link URL', 'wedocs')}
+							value={attributes.customLinkUrl}
+							onChange={(value) => setAttributes({ customLinkUrl: value })}
+							placeholder="https://example.com/author"
+						/>
+					)}
+
+					<TextControl
+						label={__('Contributor Gap', 'wedocs')}
+						value={attributes.contributorGap}
+						onChange={(value) => setAttributes({ contributorGap: value })}
+						help={__('Space between contributors (e.g., 10px)', 'wedocs')}
+					/>
+
+					<ToggleControl
+						label={__('Enable Schema Markup', 'wedocs')}
+						checked={attributes.enableSchema}
+						onChange={(value) => setAttributes({ enableSchema: value })}
+						help={__('Output structured data for author and dateModified', 'wedocs')}
+					/>
+
+					<TextControl
+						label={__('Additional CSS Classes', 'wedocs')}
+						value={attributes.additionalCssClass}
+						onChange={(value) => setAttributes({ additionalCssClass: value })}
+						help={__('Separate multiple classes with spaces', 'wedocs')}
+					/>
 				</PanelBody>
 
 				{/* Avatar Settings */}
@@ -441,7 +481,6 @@ const Edit = (props) => {
 								value={attributes.avatarShape}
 								options={[
 									{ label: __('Circle', 'wedocs'), value: 'circle' },
-									{ label: __('Rounded', 'wedocs'), value: 'rounded' },
 									{ label: __('Square', 'wedocs'), value: 'square' }
 								]}
 								onChange={(value) => setAttributes({ avatarShape: value })}
@@ -492,50 +531,6 @@ const Edit = (props) => {
 							/>
 						</>
 					)}
-				</PanelBody>
-
-				{/* Advanced Settings */}
-				<PanelBody title={__('Advanced', 'wedocs')} initialOpen={false}>
-					<TextControl
-						label={__('Additional CSS Classes', 'wedocs')}
-						value={attributes.additionalCssClass}
-						onChange={(value) => setAttributes({ additionalCssClass: value })}
-						help={__('Separate multiple classes with spaces', 'wedocs')}
-					/>
-
-					<ToggleControl
-						label={__('Enable Schema Markup', 'wedocs')}
-						checked={attributes.enableSchema}
-						onChange={(value) => setAttributes({ enableSchema: value })}
-						help={__('Output structured data for author and dateModified', 'wedocs')}
-					/>
-
-					<SelectControl
-						label={__('Avatar Link Behavior', 'wedocs')}
-						value={attributes.linkBehavior}
-						options={[
-							{ label: __('Link to user profile', 'wedocs'), value: 'user_profile' },
-							{ label: __('No link', 'wedocs'), value: 'no_link' },
-							{ label: __('Custom link', 'wedocs'), value: 'custom_link' }
-						]}
-						onChange={(value) => setAttributes({ linkBehavior: value })}
-					/>
-
-					{attributes.linkBehavior === 'custom_link' && (
-						<TextControl
-							label={__('Custom Link URL', 'wedocs')}
-							value={attributes.customLinkUrl}
-							onChange={(value) => setAttributes({ customLinkUrl: value })}
-							placeholder="https://example.com/author"
-						/>
-					)}
-
-					<TextControl
-						label={__('Contributor Gap', 'wedocs')}
-						value={attributes.contributorGap}
-						onChange={(value) => setAttributes({ contributorGap: value })}
-						help={__('Space between contributors (e.g., 10px)', 'wedocs')}
-					/>
 				</PanelBody>
 
 				{/* Style Controls with Device Tabs */}

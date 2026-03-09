@@ -211,23 +211,48 @@ function render_wedocs_advance_contributors_block($attributes, $content, $block)
             $rules[] = 'flex-direction: ' . esc_attr($controls['direction']);
         }
 
-        // Border
+        // Border - handle both BorderBoxControl format and legacy format
         if (isset($controls['border']) && is_array($controls['border'])) {
             $border = $controls['border'];
+            // Unified format: { width: '1px', style: 'solid', color: '#ddd' }
             if (isset($border['width']) && isset($border['style']) && isset($border['color'])) {
                 $rules[] = 'border: ' . esc_attr($border['width']) . ' ' . esc_attr($border['style']) . ' ' . esc_attr($border['color']);
             }
+            // Split sides format: { top: { width, style, color }, right: {...}, ... }
+            if (isset($border['top']) && is_array($border['top'])) {
+                foreach (['top', 'right', 'bottom', 'left'] as $side) {
+                    if (isset($border[$side]) && is_array($border[$side])) {
+                        $s = $border[$side];
+                        if (isset($s['width'])) {
+                            $rules[] = 'border-' . $side . ': ' . esc_attr($s['width']) . ' ' . esc_attr($s['style'] ?? 'solid') . ' ' . esc_attr($s['color'] ?? 'transparent');
+                        }
+                    }
+                }
+            }
+        }
+        // Legacy format: separate borderStyle, borderWidth, borderColor keys
+        if (!isset($controls['border']) && isset($controls['borderStyle']) && $controls['borderStyle'] && isset($controls['borderColor']) && $controls['borderColor']) {
+            if (isset($controls['borderWidth']) && is_array($controls['borderWidth'])) {
+                $bw = $controls['borderWidth'];
+                $bs = esc_attr($controls['borderStyle']);
+                $bc = esc_attr($controls['borderColor']);
+                $rules[] = 'border: ' . esc_attr($bw['top'] ?? '1px') . ' ' . $bs . ' ' . $bc;
+            }
         }
 
-        // Border Radius
-        if (isset($controls['borderRadius']) && is_array($controls['borderRadius'])) {
+        // Border Radius - handle both object and string formats
+        if (isset($controls['borderRadius'])) {
             $radius = $controls['borderRadius'];
-            $radius_values = [];
-            $radius_values[] = $radius['topLeft'] ?? '0';
-            $radius_values[] = $radius['topRight'] ?? '0';
-            $radius_values[] = $radius['bottomRight'] ?? '0';
-            $radius_values[] = $radius['bottomLeft'] ?? '0';
-            $rules[] = 'border-radius: ' . implode(' ', $radius_values);
+            if (is_array($radius)) {
+                $radius_values = [];
+                $radius_values[] = $radius['topLeft'] ?? '0';
+                $radius_values[] = $radius['topRight'] ?? '0';
+                $radius_values[] = $radius['bottomRight'] ?? '0';
+                $radius_values[] = $radius['bottomLeft'] ?? '0';
+                $rules[] = 'border-radius: ' . implode(' ', $radius_values);
+            } elseif (is_string($radius) && $radius) {
+                $rules[] = 'border-radius: ' . esc_attr($radius);
+            }
         }
 
         // Box Shadow
@@ -396,16 +421,10 @@ function render_wedocs_advance_contributors_block($attributes, $content, $block)
             ];
 
             // Avatar shape
-            switch ($avatar_shape) {
-                case 'circle':
-                    $avatar_styles[] = 'border-radius: 50%';
-                    break;
-                case 'rounded':
-                    $avatar_styles[] = 'border-radius: 8px';
-                    break;
-                case 'square':
-                    $avatar_styles[] = 'border-radius: 0';
-                    break;
+            if ($avatar_shape === 'circle') {
+                $avatar_styles[] = 'border-radius: 50%';
+            } else {
+                $avatar_styles[] = 'border-radius: 0';
             }
 
             $output .= '<div class="' . $avatar_class . '">';

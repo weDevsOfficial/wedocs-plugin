@@ -60,7 +60,7 @@
 		"avatarShape": {
 			"type": "string",
 			"default": "circle",
-			"enum": ["circle", "rounded", "square"]
+			"enum": ["circle", "square"]
 		},
 		"avatarHoverEffect": {
 			"type": "boolean",

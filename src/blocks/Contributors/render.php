@@ -242,12 +242,15 @@ if ( !function_exists('render_wedocs_contributors_block')){
         // Generate unique block ID
         $block_id = wedocs_generate_block_id('wedocs-contributors');
 
+        // Build wrapper attributes using get_block_wrapper_attributes for proper block support integration
+        $css_classes[] = $block_id;
+        $wrapper_attributes = get_block_wrapper_attributes([
+            'class' => implode(' ', $css_classes),
+            'style' => !empty($container_styles) ? wedocs_styles_to_css($container_styles) : '',
+        ]);
+
         // Start building output
-        $output = '<div class="' . implode(' ', $css_classes) . ' ' . $block_id . '"';
-        if (!empty($container_styles)) {
-            $output .= ' style="' . wedocs_styles_to_css($container_styles) . '"';
-        }
-        $output .= '>';
+        $output = '<div ' . $wrapper_attributes . '>';
 
         // Schema markup
         $schema_data = [];

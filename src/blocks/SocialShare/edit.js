@@ -262,6 +262,9 @@ const Edit = ({ attributes, setAttributes }) => {
                     />
                 </PanelBody>
 
+            </InspectorControls>
+
+            <InspectorControls group="styles">
                 {/* Label Style */}
                 {showLabel && (
                     <PanelBody title={__('Label Style', 'wedocs')} initialOpen={false}>
@@ -458,16 +461,6 @@ const Edit = ({ attributes, setAttributes }) => {
                             />
                         </>
                     )}
-                </PanelBody>
-
-                {/* Advanced Settings */}
-                <PanelBody title={__('Advanced', 'wedocs')} initialOpen={false}>
-                    <TextControl
-                        label={__('Additional CSS Class', 'wedocs')}
-                        value={additionalCssClass}
-                        onChange={(value) => setAttributes({ additionalCssClass: value })}
-                        help={__('Add custom CSS classes for additional styling', 'wedocs')}
-                    />
                 </PanelBody>
             </InspectorControls>
 

@@ -337,7 +337,9 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						/>
 					)}
 				</PanelBody>
+			</InspectorControls>
 
+			<InspectorControls group="styles">
 				<ColorSettingsPanel
 					attributes={attributes}
 					setAttributes={setAttributes}
