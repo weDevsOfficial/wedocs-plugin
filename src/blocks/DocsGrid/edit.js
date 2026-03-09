@@ -45,6 +45,19 @@ const Edit = ({ attributes, setAttributes }) => {
         buttonTextColor,
         buttonText,
         buttonHoverTextColor,
+        // per-element typography
+        titleFontSize,
+        titleFontWeight,
+        titleFontFamily,
+        titleLineHeight,
+        buttonFontSize,
+        buttonFontWeight,
+        buttonFontFamily,
+        buttonLineHeight,
+        paginationFontSize,
+        paginationFontWeight,
+        paginationFontFamily,
+        paginationLineHeight,
     } = attributes;
 
     const applyStyles = () => {
@@ -65,7 +78,11 @@ const Edit = ({ attributes, setAttributes }) => {
                 backgroundColor: '#fff'
             },
             title: {
-                color: docTitleColor || '#1e1e1e'
+                color: docTitleColor || '#1e1e1e',
+                ...(titleFontSize   && { fontSize:   titleFontSize }),
+                ...(titleFontWeight && { fontWeight: titleFontWeight }),
+                ...(titleFontFamily && { fontFamily: titleFontFamily }),
+                ...(titleLineHeight && { lineHeight: titleLineHeight }),
             },
             children: {
                 color: docChildrenActiveColor || '#0073aa'
@@ -78,7 +95,11 @@ const Edit = ({ attributes, setAttributes }) => {
                 text: buttonText || __('View Details', 'wedocs'),
                 borderRadius: btnradius || '8px',
                 '--hover-bg': buttonHoverColor || '#005177',
-                '--hover-color': buttonHoverTextColor || '#ffffff'
+                '--hover-color': buttonHoverTextColor || '#ffffff',
+                ...(buttonFontSize   && { fontSize:   buttonFontSize }),
+                ...(buttonFontWeight && { fontWeight: buttonFontWeight }),
+                ...(buttonFontFamily && { fontFamily: buttonFontFamily }),
+                ...(buttonLineHeight && { lineHeight: buttonLineHeight }),
             }
         };
     };
@@ -321,9 +342,10 @@ const Edit = ({ attributes, setAttributes }) => {
             display: 'inline-block',
             minWidth: '32px',
             textAlign: 'center',
-            fontFamily: 'inherit',
-            fontSize: '14px',
-            lineHeight: '1.4'
+            fontFamily: paginationFontFamily || 'inherit',
+            fontSize: paginationFontSize || '14px',
+            fontWeight: paginationFontWeight || undefined,
+            lineHeight: paginationLineHeight || '1.4',
         };
 
         // Active button style

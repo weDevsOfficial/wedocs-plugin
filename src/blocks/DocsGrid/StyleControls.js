@@ -3,111 +3,79 @@ import {
     PanelBody,
     __experimentalBoxControl as BoxControl,
     SelectControl,
-    TextControl
+    TextControl,
+    __experimentalVStack as VStack,
 } from '@wordpress/components';
-import { PanelColorSettings } from '@wordpress/block-editor';
+import {
+    PanelColorSettings,
+    FontSizePicker,
+    LineHeightControl,
+    __experimentalFontFamilyControl as FontFamilyControl,
+    __experimentalFontAppearanceControl as FontAppearanceControl,
+    useSettings,
+} from '@wordpress/block-editor';
 
-// Add these to your attributes in block.json
-const styleAttributes = {
-    gridPadding: {
-        type: "object",
-        default: {
-            top: "20px",
-            right: "20px",
-            bottom: "20px",
-            left: "20px"
-        }
-    },
-    gridMargin: {
-        type: "object",
-        default: {
-            top: "0px",
-            right: "0px",
-            bottom: "0px",
-            left: "0px"
-        }
-    },
-    docTitleColor: {
-        type: "string",
-        default: "#333333"
-    },
-    docChildrenActiveColor: {
-        type: "string",
-        default: "#0073aa"
-    },
-    borderType: {
-        type: "string",
-        default: "solid"
-    },
-    borderWidth: {
-        type: "string",
-        default: "1px"
-    },
-    borderColor: {
-        type: "string",
-        default: "#dddddd"
-    },
-    borderRadius: {
-        type: "string",
-        default: "4px"
-    },
-    buttonBorderRadius: {
-        type: "string",
-        default: "4px"
-    },
-    buttonPadding: {
-        type: "object",
-        default: {
-            top: "10px",
-            right: "20px",
-            bottom: "10px",
-            left: "20px"
-        }
-    },
-    buttonMargin: {
-        type: "object",
-        default: {
-            top: "10px",
-            right: "0px",
-            bottom: "0px",
-            left: "0px"
-        }
-    },
-    buttonColor: {
-        type: "string",
-        default: "#0073aa"
-    },
-    buttonHoverColor: {
-        type: "string",
-        default: "#005177"
-    },
-    buttonTextColor: {
-        type: "string",
-        default: "#ffffff"
-    },
-    buttonHoverTextColor: {
-        type: "string",
-        default: "#ffffff"
-    },
-    paginationTextColor: {
-        type: "string",
-        default: "#333333"
-    },
-    paginationTextHoverColor: {
-        type: "string",
-        default: "#0073aa"
-    },
-    paginationBackgroundColor: {
-        type: "string",
-        default: "#ffffff"
-    },
-    paginationHoverColor: {
-        type: "string",
-        default: "#f5f5f5"
-    }
+/**
+ * Per-element typography controls using native FSE/Gutenberg components.
+ * Font sizes and font families are read from theme.json via useSettings,
+ * so they automatically reflect whatever the active theme exposes.
+ *
+ * Prefix = attribute key prefix, e.g. "title" → titleFontSize, titleFontWeight …
+ */
+const TypographyGroup = ( { prefix, label, attributes, setAttributes } ) => {
+    const [ fontSizes, fontFamilies ] = useSettings(
+        'typography.fontSizes',
+        'typography.fontFamilies'
+    );
+
+    const sizeKey   = `${ prefix }FontSize`;
+    const weightKey = `${ prefix }FontWeight`;
+    const familyKey = `${ prefix }FontFamily`;
+    const lhKey     = `${ prefix }LineHeight`;
+
+    return (
+        <PanelBody title={ label } initialOpen={ false }>
+            <VStack spacing={ 4 }>
+                { fontFamilies?.length > 0 && (
+                    <FontFamilyControl
+                        fontFamilies={ fontFamilies }
+                        value={ attributes[ familyKey ] || '' }
+                        onChange={ ( v ) => setAttributes( { [ familyKey ]: v || '' } ) }
+                        size="__unstable-large"
+                        __nextHasNoMarginBottom
+                    />
+                ) }
+                <FontSizePicker
+                    fontSizes={ fontSizes || [] }
+                    value={ attributes[ sizeKey ] || undefined }
+                    onChange={ ( v ) => setAttributes( { [ sizeKey ]: v || '' } ) }
+                    withReset
+                    __nextHasNoMarginBottom
+                />
+                <FontAppearanceControl
+                    value={ {
+                        fontStyle: undefined,
+                        fontWeight: attributes[ weightKey ] || undefined,
+                    } }
+                    onChange={ ( { fontWeight } ) =>
+                        setAttributes( { [ weightKey ]: fontWeight || '' } )
+                    }
+                    hasFontStyles={ false }
+                    hasFontWeights={ true }
+                />
+                <LineHeightControl
+                    value={ attributes[ lhKey ] || '' }
+                    onChange={ ( v ) =>
+                        setAttributes( { [ lhKey ]: typeof v === 'number' ? String( v ) : ( v || '' ) } )
+                    }
+                    __nextHasNoMarginBottom
+                />
+            </VStack>
+        </PanelBody>
+    );
 };
 
-const StyleControls = ({ attributes, setAttributes }) => {
+const StyleControls = ( { attributes, setAttributes } ) => {
     const updateAttribute = (attributeName) => (value) => {
         setAttributes({ [attributeName]: value });
     };
@@ -208,6 +176,13 @@ const StyleControls = ({ attributes, setAttributes }) => {
                 />
             </PanelBody>
 
+            <TypographyGroup
+                prefix="title"
+                label={ __( 'Title Typography', 'wedocs' ) }
+                attributes={ attributes }
+                setAttributes={ setAttributes }
+            />
+
             <PanelBody
               title={__('Button Styles', 'wedocs')}
               icon='admin-appearance'
@@ -276,6 +251,13 @@ const StyleControls = ({ attributes, setAttributes }) => {
                 </div>
             </PanelBody>
 
+            <TypographyGroup
+                prefix="button"
+                label={ __( 'Button Typography', 'wedocs' ) }
+                attributes={ attributes }
+                setAttributes={ setAttributes }
+            />
+
             <PanelBody
                 title={__('Pagination Styles', 'wedocs')}
                 icon="admin-appearance"
@@ -308,6 +290,13 @@ const StyleControls = ({ attributes, setAttributes }) => {
                     ]}
                 />
             </PanelBody>
+
+            <TypographyGroup
+                prefix="pagination"
+                label={ __( 'Pagination Typography', 'wedocs' ) }
+                attributes={ attributes }
+                setAttributes={ setAttributes }
+            />
         </>
     );
 };

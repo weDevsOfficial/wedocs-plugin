@@ -18,15 +18,7 @@
 				"background": true
 			}
 		},
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true,
-			"__experimentalFontFamily": true,
-			"__experimentalFontWeight": true,
-			"__experimentalDefaultControls": {
-				"fontSize": true
-			}
-		},
+
 		"spacing": {
 			"margin": true,
 			"padding": true,
@@ -195,6 +187,54 @@
     "paginationBorderColor": {
       "type": "string",
       "default": "#dddddd"
+    },
+    "titleFontSize": {
+      "type": "string",
+      "default": ""
+    },
+    "titleFontWeight": {
+      "type": "string",
+      "default": ""
+    },
+    "titleFontFamily": {
+      "type": "string",
+      "default": ""
+    },
+    "titleLineHeight": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonFontSize": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonFontWeight": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonFontFamily": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonLineHeight": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationFontSize": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationFontWeight": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationFontFamily": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationLineHeight": {
+      "type": "string",
+      "default": ""
     }
   }
 }
