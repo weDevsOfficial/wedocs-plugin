@@ -428,7 +428,7 @@ class Ajax {
     /**
      * QuickSearch AJAX handler
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.0
      *
      * @return void
      */
