@@ -25,6 +25,22 @@
 			"default": {
 				"color": ""
 			}
+		},
+		"truncateTitle": {
+			"type": "boolean",
+			"default": true
+		},
+		"maxTitleLength": {
+			"type": "number",
+			"default": 20
+		},
+		"collapseBreadcrumbs": {
+			"type": "boolean",
+			"default": true
+		},
+		"maxVisibleItems": {
+			"type": "number",
+			"default": 3
 		}
 	},
 	"example": {

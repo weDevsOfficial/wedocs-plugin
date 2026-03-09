@@ -5,6 +5,7 @@ import {
 import {
 	PanelBody,
 	ToggleControl,
+	RangeControl,
 	__experimentalDropdownContentWrapper as DropdownContentWrapper,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
@@ -23,6 +24,10 @@ export default function Inspector({ attributes, setAttributes }) {
 		hideHomeIcon,
 		alignment,
 		breadcrumbSeparator,
+		truncateTitle,
+		maxTitleLength,
+		collapseBreadcrumbs,
+		maxVisibleItems,
 	} = attributes;
 
 	// Fetch theme colors and gradients
@@ -84,6 +89,58 @@ export default function Inspector({ attributes, setAttributes }) {
 						<ToggleGroupControlOption label={__("Center", "wedocs-blocks")} value="center" />
 						<ToggleGroupControlOption label={__("Right", "wedocs-blocks")} value="right" />
 					</ToggleGroupControl>
+					<ToggleControl
+						label={__("Truncate Long Titles", "wedocs-blocks")}
+						help={__(
+							"Shorten breadcrumb titles that exceed the character limit.",
+							"wedocs-blocks",
+						)}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
+						checked={truncateTitle}
+						onChange={() => setAttributes({ truncateTitle: !truncateTitle })}
+					/>
+					{truncateTitle && (
+						<RangeControl
+							label={__("Max Title Length", "wedocs-blocks")}
+							help={__(
+								"Maximum number of characters before truncating with ellipsis.",
+								"wedocs-blocks",
+							)}
+							value={maxTitleLength}
+							onChange={(value) => setAttributes({ maxTitleLength: value })}
+							min={5}
+							max={50}
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
+						/>
+					)}
+					<ToggleControl
+						label={__("Collapse Deep Nesting", "wedocs-blocks")}
+						help={__(
+							"Collapse middle breadcrumb items into \"...\" when there are too many levels.",
+							"wedocs-blocks",
+						)}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
+						checked={collapseBreadcrumbs}
+						onChange={() => setAttributes({ collapseBreadcrumbs: !collapseBreadcrumbs })}
+					/>
+					{collapseBreadcrumbs && (
+						<RangeControl
+							label={__("Max Visible Items", "wedocs-blocks")}
+							help={__(
+								"Number of breadcrumb items to show before collapsing middle items.",
+								"wedocs-blocks",
+							)}
+							value={maxVisibleItems}
+							onChange={(value) => setAttributes({ maxVisibleItems: value })}
+							min={2}
+							max={10}
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
+						/>
+					)}
 				</PanelBody>
 			</InspectorControls>
 			<InspectorControls group="styles">

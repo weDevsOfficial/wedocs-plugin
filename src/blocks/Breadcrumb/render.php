@@ -53,6 +53,10 @@ $link_hover_color = $elements['link'][':hover']['color']['text'] ?? '';
 $link_hover_background = $elements['link'][':hover']['color']['background'] ?? '';
 $breadcrumb_separator = $attributes['breadcrumbSeparator'] ?? [];
 $separator_color = $breadcrumb_separator['color'] ?? '';
+$truncate_title = $attributes['truncateTitle'] ?? true;
+$max_title_length = $attributes['maxTitleLength'] ?? 20;
+$collapse_breadcrumbs = $attributes['collapseBreadcrumbs'] ?? true;
+$max_visible_items = $attributes['maxVisibleItems'] ?? 3;
 
 
 // Extract shadow attributes
@@ -373,8 +377,43 @@ if (!function_exists('get_doc_ancestors')) {
     }
 }
 
+// Helper function to truncate breadcrumb title
+if (!function_exists('wedocs_truncate_breadcrumb_title')) {
+    function wedocs_truncate_breadcrumb_title($title, $max_length, $should_truncate) {
+        if (!$should_truncate || !$max_length || mb_strlen($title) <= $max_length) {
+            return $title;
+        }
+        return mb_substr($title, 0, $max_length) . '…';
+    }
+}
+
+// Helper function to collapse breadcrumbs when too many levels
+if (!function_exists('wedocs_collapse_breadcrumbs')) {
+    function wedocs_collapse_breadcrumbs($breadcrumbs, $should_collapse, $max_visible) {
+        if (!$should_collapse || count($breadcrumbs) <= $max_visible) {
+            return $breadcrumbs;
+        }
+
+        // Keep first item + last (max_visible - 1) items, insert ellipsis in between
+        $first_items = array_slice($breadcrumbs, 0, 1);
+        $last_items = array_slice($breadcrumbs, -($max_visible - 1));
+        $collapsed_count = count($breadcrumbs) - $max_visible;
+
+        $collapsed_item = [
+            'title' => '…',
+            'url' => null,
+            'is_collapsed' => true,
+            'collapsed_count' => $collapsed_count,
+            'collapsed_items' => array_slice($breadcrumbs, 1, $collapsed_count),
+        ];
+
+        return array_merge($first_items, [$collapsed_item], $last_items);
+    }
+}
+
 $separator_icon = get_separator_icon($separator);
 $breadcrumbs = get_breadcrumb_items();
+$breadcrumbs = wedocs_collapse_breadcrumbs($breadcrumbs, $collapse_breadcrumbs, $max_visible_items);
 
 
         ob_start();
@@ -444,7 +483,12 @@ $breadcrumbs = get_breadcrumb_items();
                             </span>
                         <?php endif; ?>
 
-                        <?php if ($breadcrumb['url']): ?>
+                        <?php if (!empty($breadcrumb['is_collapsed'])): ?>
+                            <!-- Collapsed items indicator -->
+                            <span class="wedocs-breadcrumb-collapsed" title="<?php echo esc_attr(sprintf(__('%d more items', 'wedocs'), $breadcrumb['collapsed_count'])); ?>" style="cursor: default; padding: 2px 4px; <?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?>">
+                                …
+                            </span>
+                        <?php elseif ($breadcrumb['url']): ?>
                             <?php $breadcrumb_position++; ?>
                             <!-- Link with home icon for first item -->
                             <?php if (!$hide_home_icon && $index === 0): ?>
@@ -468,16 +512,18 @@ $breadcrumbs = get_breadcrumb_items();
                                 if ($index > 0) {
                                     $link_classes[] = '';
                                 }
+                                $display_title = wedocs_truncate_breadcrumb_title($breadcrumb['title'], $max_title_length, $truncate_title);
                                 ?>
-                                <a itemprop="item" href="<?php echo esc_url($breadcrumb['url']); ?>" class="<?php echo esc_attr(implode(' ', $link_classes)); ?>" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?><?php if ($link_color): ?>color: <?php echo esc_attr(get_color_value($link_color)); ?>;<?php endif; ?><?php if ($link_hover_color): ?> --hover-color: <?php echo esc_attr(get_color_value($link_hover_color)); ?>;<?php endif; ?><?php if ($link_hover_background): ?> --hover-background: <?php echo esc_attr(get_color_value($link_hover_background)); ?>;<?php endif; ?>">
-                                    <span itemprop="name"><?php echo esc_html($breadcrumb['title']); ?></span>
+                                <a itemprop="item" href="<?php echo esc_url($breadcrumb['url']); ?>" class="<?php echo esc_attr(implode(' ', $link_classes)); ?>" title="<?php echo esc_attr($breadcrumb['title']); ?>" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?><?php if ($link_color): ?>color: <?php echo esc_attr(get_color_value($link_color)); ?>;<?php endif; ?><?php if ($link_hover_color): ?> --hover-color: <?php echo esc_attr(get_color_value($link_hover_color)); ?>;<?php endif; ?><?php if ($link_hover_background): ?> --hover-background: <?php echo esc_attr(get_color_value($link_hover_background)); ?>;<?php endif; ?>">
+                                    <span itemprop="name"><?php echo esc_html($display_title); ?></span>
                                 </a>
                             <?php endif; ?>
                             <meta itemprop="position" content="<?php echo esc_attr($breadcrumb_position); ?>" />
                         <?php else: ?>
                             <!-- Current page (no link) -->
-                            <span aria-current="page" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?>">
-                                <span itemprop="name"><?php echo esc_html($breadcrumb['title']); ?></span>
+                            <?php $display_title = wedocs_truncate_breadcrumb_title($breadcrumb['title'], $max_title_length, $truncate_title); ?>
+                            <span aria-current="page" title="<?php echo esc_attr($breadcrumb['title']); ?>" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?>">
+                                <span itemprop="name"><?php echo esc_html($display_title); ?></span>
                             </span>
                         <?php endif; ?>
                     </div>

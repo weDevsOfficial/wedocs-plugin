@@ -1,5 +1,5 @@
 import { useBlockProps } from "@wordpress/block-editor";
-import { useEffect } from "@wordpress/element";
+import { useState, useEffect } from "@wordpress/element";
 import Inspector from "./Inspector";
 import "./style.scss";
 
@@ -39,7 +39,8 @@ export default function Edit({ attributes, setAttributes }) {
 	}, []); // Empty dependency array means this runs once on mount
 
 	const blockProps = useBlockProps();
-	const { separator, hideHomeIcon, alignment, breadcrumbSeparator } = attributes;
+	const { separator, hideHomeIcon, alignment, breadcrumbSeparator, truncateTitle, maxTitleLength, collapseBreadcrumbs, maxVisibleItems } = attributes;
+	const [isCollapsedExpanded, setIsCollapsedExpanded] = useState(false);
 
 
 	// Helper function to convert WordPress color format to CSS variable
@@ -194,25 +195,38 @@ export default function Edit({ attributes, setAttributes }) {
 		}
 	};
 
-	// Mock breadcrumb data for preview
-	const breadcrumbs = [
-		{
-			title: "Home",
-			url: "#"
-		},
-		{
-			title: "Docs",
-			url: "#"
-		},
-		{
-			title: "Documentation",
-			url: "#"
-		},
-		{
-			title: "Getting Started",
-			url: null
-		}
+	// Helper to truncate title
+	const truncateText = (text, maxLength) => {
+		if (!truncateTitle || !maxLength || text.length <= maxLength) return text;
+		return text.substring(0, maxLength) + '…';
+	};
+
+	// Mock breadcrumb data for preview (enough items to demo collapsing)
+	const allBreadcrumbs = [
+		{ title: "Home", url: "#" },
+		{ title: "Docs", url: "#" },
+		{ title: "Trends to Watch Next", url: "#" },
+		{ title: "Reliable vs Innovation", url: "#" },
+		{ title: "How to Multiply Design in 4 Days", url: null }
 	];
+
+	// Apply collapsing logic
+	const getVisibleBreadcrumbs = () => {
+		if (!collapseBreadcrumbs || isCollapsedExpanded || allBreadcrumbs.length <= maxVisibleItems) {
+			return allBreadcrumbs;
+		}
+
+		// Show first item, ellipsis, then last (maxVisibleItems - 1) items
+		const firstItems = allBreadcrumbs.slice(0, 1);
+		const lastItems = allBreadcrumbs.slice(-(maxVisibleItems - 1));
+		return [
+			...firstItems,
+			{ title: '…', url: null, isCollapsed: true, collapsedCount: allBreadcrumbs.length - maxVisibleItems },
+			...lastItems
+		];
+	};
+
+	const breadcrumbs = getVisibleBreadcrumbs();
 
 	return (
 		<>
@@ -255,7 +269,23 @@ export default function Edit({ attributes, setAttributes }) {
 										</span>
 									)}
 
-									{breadcrumb.url ? (
+									{breadcrumb.isCollapsed ? (
+										<button
+											className="wedocs-breadcrumb-collapsed"
+											onClick={() => setIsCollapsedExpanded(true)}
+											title={`Show ${breadcrumb.collapsedCount} hidden items`}
+											style={{
+												background: 'none',
+												border: 'none',
+												cursor: 'pointer',
+												padding: '2px 4px',
+												fontSize: fontSize ? getTypographyValue(fontSize) : (attributes.fontSize ? getTypographyValue(attributes.fontSize) : undefined),
+												color: getColorValue(linkColor) || (textColor ? `var(--wp--preset--color--${textColor})` : undefined),
+											}}
+										>
+											…
+										</button>
+									) : breadcrumb.url ? (
 										!hideHomeIcon && index === 0 ? (
 											<a
 												href={breadcrumb.url}
@@ -282,25 +312,27 @@ export default function Edit({ attributes, setAttributes }) {
 										) : (
 											<a
 												href={breadcrumb.url}
-												className={`${index === 0 ? '' : 'ml-4'} text-sm font-medium hover:opacity-80`}
+												className={`${index === 0 ? '' : ''} text-sm font-medium hover:opacity-80`}
+												title={breadcrumb.title}
 												style={{
 													color: getColorValue(linkColor) || (textColor ? `var(--wp--preset--color--${textColor})` : undefined),
 													fontSize: fontSize ? getTypographyValue(fontSize) : (attributes.fontSize ? getTypographyValue(attributes.fontSize) : undefined)
 												}}
 											>
-												{breadcrumb.title}
+												{truncateText(breadcrumb.title, maxTitleLength)}
 											</a>
 										)
 									) : (
 										<span
-											className={`${index === 0 ? '' : 'ml-4'} text-sm font-medium`}
+											className={`${index === 0 ? '' : ''} text-sm font-medium`}
 											aria-current="page"
+											title={breadcrumb.title}
 											style={{
 												color: textColor ? `var(--wp--preset--color--${textColor})` : undefined,
 												fontSize: fontSize ? getTypographyValue(fontSize) : (attributes.fontSize ? getTypographyValue(attributes.fontSize) : undefined)
 											}}
 										>
-											{breadcrumb.title}
+											{truncateText(breadcrumb.title, maxTitleLength)}
 										</span>
 									)}
 								</div>
