@@ -256,39 +256,172 @@ class API extends WP_REST_Controller {
                 'callback'            => [ $this, 'generate_ai_content' ],
                 'permission_callback' => [ $this, 'ai_generate_permissions_check' ],
                 'args'                => [
-                    'prompt' => [
+                    'prompt'       => [
                         'required'          => true,
                         'type'              => 'string',
                         'sanitize_callback' => 'sanitize_textarea_field',
                     ],
-                    'provider' => [
-                        'required' => false,
-                        'type'     => 'string',
+                    'provider'     => [
+                        'required'          => false,
+                        'type'              => 'string',
                         'sanitize_callback' => 'sanitize_text_field',
                     ],
-                    'model' => [
-                        'required' => false,
-                        'type'     => 'string',
+                    'model'        => [
+                        'required'          => false,
+                        'type'              => 'string',
                         'sanitize_callback' => 'sanitize_text_field',
                     ],
-                    'maxTokens' => [
+                    'maxTokens'    => [
                         'required' => false,
                         'type'     => 'integer',
                         'default'  => 2000,
                     ],
-                    'temperature' => [
+                    'temperature'  => [
                         'required' => false,
                         'type'     => 'number',
                         'default'  => 0.7,
                     ],
                     'systemPrompt' => [
-                        'required' => false,
-                        'type'     => 'string',
+                        'required'          => false,
+                        'type'              => 'string',
                         'sanitize_callback' => 'sanitize_textarea_field',
+                    ],
+                    'images'       => [
+                        'required'          => false,
+                        'type'              => 'array',
+                        'default'           => [],
+                        'description'       => __( 'Array of attachment IDs for vision analysis.', 'wedocs' ),
+                        'sanitize_callback' => function( $images ) {
+                            if ( ! is_array( $images ) ) {
+                                return [];
+                            }
+
+                            $sanitized = [];
+
+                            foreach ( $images as $item ) {
+                                $attachment_id = null;
+
+                                // Support both formats: [759] or [{"id": 759}]
+                                if ( is_array( $item ) && isset( $item['id'] ) ) {
+                                    // Object format from JSON: {"id": 759}
+                                    $attachment_id = absint( $item['id'] );
+                                } elseif ( is_object( $item ) && isset( $item->id ) ) {
+                                    // Object format: stdClass with id property
+                                    $attachment_id = absint( $item->id );
+                                } elseif ( is_numeric( $item ) ) {
+                                    // Direct integer format: 759
+                                    $attachment_id = absint( $item );
+                                }
+
+                                // Only add valid attachment IDs
+                                if ( $attachment_id > 0 ) {
+                                    $sanitized[] = $attachment_id;
+                                }
+                            }
+
+                            // Remove duplicates and reindex array
+                            return array_values( array_unique( $sanitized ) );
+                        },
+                        'validate_callback' => function( $images ) {
+                            if ( ! is_array( $images ) ) {
+                                return new WP_Error(
+                                    'wedocs_invalid_images_type',
+                                    __( 'Images parameter must be an array.', 'wedocs' ),
+                                    [ 'status' => 400 ]
+                                );
+                            }
+
+                            if ( empty( $images ) ) {
+                                // Empty array is valid
+                                return true;
+                            }
+
+                            foreach ( $images as $index => $item ) {
+                                $attachment_id = null;
+
+                                // Support both formats
+                                if ( is_array( $item ) && isset( $item['id'] ) ) {
+                                    $attachment_id = absint( $item['id'] );
+                                } elseif ( is_object( $item ) && isset( $item->id ) ) {
+                                    $attachment_id = absint( $item->id );
+                                } elseif ( is_numeric( $item ) ) {
+                                    $attachment_id = absint( $item );
+                                } else {
+                                    return new WP_Error(
+                                        'wedocs_invalid_image_format',
+                                        sprintf(
+                                            /* translators: %d: array index */
+                                            __( 'Image at index %d must be an integer ID or object with id property. Example: [759] or [{"id": 759}]', 'wedocs' ),
+                                            $index
+                                        ),
+                                        [ 'status' => 400 ]
+                                    );
+                                }
+
+                                // Validate attachment ID is positive
+                                if ( $attachment_id <= 0 ) {
+                                    return new WP_Error(
+                                        'wedocs_invalid_attachment_id',
+                                        sprintf(
+                                            /* translators: %d: array index */
+                                            __( 'Invalid attachment ID at index %d.', 'wedocs' ),
+                                            $index
+                                        ),
+                                        [ 'status' => 400 ]
+                                    );
+                                }
+
+                                // Validate attachment exists and is an image
+                                if ( ! wp_attachment_is_image( $attachment_id ) ) {
+                                    return new WP_Error(
+                                        'wedocs_invalid_attachment',
+                                        sprintf(
+                                            /* translators: %d: attachment ID */
+                                            __( 'Attachment ID %d is not a valid image or does not exist.', 'wedocs' ),
+                                            $attachment_id
+                                        ),
+                                        [ 'status' => 400 ]
+                                    );
+                                }
+                            }
+
+                            return true;
+                        },
                     ],
                 ],
             ],
         ] );
+
+        // Dynamic model list endpoint — proxies the provider's models API.
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/ai/models/(?P<provider>[a-z0-9_-]+)', [
+            [
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => [ $this, 'get_ai_models' ],
+                'permission_callback' => [ $this, 'ai_generate_permissions_check' ],
+                'args'                => [
+                    'provider' => [
+                        'required'          => true,
+                        'type'              => 'string',
+                        'sanitize_callback' => 'sanitize_key',
+                    ],
+                    'refresh'  => [
+                        'required' => false,
+                        'type'     => 'boolean',
+                        'default'  => false,
+                    ],
+                ],
+            ],
+        ] );
+
+        // Image upload endpoint for AI Doc Writer.
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/ai/upload-image', [
+            [
+                'methods'             => WP_REST_Server::CREATABLE,
+                'callback'            => [ $this, 'upload_temp_image' ],
+                'permission_callback' => [ $this, 'ai_upload_permissions_check' ],
+            ],
+        ] );
+
     }
 
     /**
@@ -1052,7 +1185,7 @@ class API extends WP_REST_Controller {
     }
 
     /**
-     * Check permissions for AI content generation
+     * Check permissions for AI content generation.
      *
      * @since 2.0.0
      *
@@ -1073,23 +1206,360 @@ class API extends WP_REST_Controller {
     }
 
     /**
-     * Generate AI content
+     * Check permissions for AI image upload.
+     *
+     * @since 2.2.0
+     *
+     * @param WP_REST_Request $request Current request.
+     *
+     * @return bool|WP_Error
+     */
+    public function ai_upload_permissions_check( $request ) {
+        // Image analysis is a PRO feature only.
+        if ( ! wedocs_is_pro_active() ) {
+            return new WP_Error(
+                'wedocs_pro_feature',
+                __( 'AI image analysis is a pro feature. Please upgrade to weDocs Pro to use this feature.', 'wedocs' ),
+                [ 'status' => 403 ]
+            );
+        }
+
+        if ( ! current_user_can( 'edit_docs' ) ) {
+            return new WP_Error(
+                'wedocs_permission_failure',
+                __( 'You do not have permission to upload images.', 'wedocs' ),
+                [ 'status' => 403 ]
+            );
+        }
+
+        if ( ! current_user_can( 'upload_files' ) ) {
+            return new WP_Error(
+                'wedocs_upload_permission_failure',
+                __( 'You do not have permission to upload files.', 'wedocs' ),
+                [ 'status' => 403 ]
+            );
+        }
+
+        return true;
+    }
+
+    /**
+     * Upload an image to WordPress media library for AI analysis.
+     *
+     * @since 2.2.0
+     *
+     * @param WP_REST_Request $request Current request.
+     *
+     * @return WP_Error|WP_REST_Response
+     */
+    public function upload_temp_image( $request ) {
+        require_once ABSPATH . 'wp-admin/includes/image.php';
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+        require_once ABSPATH . 'wp-admin/includes/media.php';
+
+        $files = $request->get_file_params();
+
+        if ( empty( $files['image'] ) ) {
+            return new WP_Error(
+                'wedocs_no_image',
+                __( 'No image file provided.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        $file = $files['image'];
+
+        // Validate file type - Check actual file contents, not just extension.
+        $allowed_types = [ 'image/png', 'image/jpeg', 'image/webp' ];
+
+        // MIME type normalization map - handles variations across different systems.
+        $mime_normalization = [
+            'image/jpg'     => 'image/jpeg',
+            'image/pjpeg'   => 'image/jpeg', // Progressive JPEG
+            'image/x-png'   => 'image/png',
+            'image/x-webp'  => 'image/webp',
+        ];
+
+        /**
+         * Normalize MIME type to standard format.
+         *
+         * @param string $mime The MIME type to normalize.
+         * @return string Normalized MIME type.
+         */
+        $normalize_mime = function( $mime ) use ( $mime_normalization ) {
+            $mime = strtolower( trim( $mime ) );
+            return isset( $mime_normalization[ $mime ] ) ? $mime_normalization[ $mime ] : $mime;
+        };
+
+        // First check: WordPress file type validation (checks both name and content).
+        $file_type_check = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );
+        $mime_type       = $normalize_mime( $file_type_check['type'] );
+
+        // Second check: Use finfo to verify actual file content.
+        $real_mime = null;
+        if ( class_exists( 'finfo' ) ) {
+            $finfo    = new \finfo( FILEINFO_MIME_TYPE );
+            $detected = $finfo->file( $file['tmp_name'] );
+
+            if ( $detected ) {
+                $real_mime = $normalize_mime( $detected );
+            }
+        }
+
+        // SECURITY: Cross-validate MIME types - both must be in allowed list.
+        // This prevents attacks while allowing legitimate MIME variations.
+        if ( $real_mime ) {
+            $mime_in_allowed = in_array( $mime_type, $allowed_types, true );
+            $real_in_allowed = in_array( $real_mime, $allowed_types, true );
+
+            // If either is not allowed, it's potentially malicious.
+            if ( ! $mime_in_allowed || ! $real_in_allowed ) {
+                return new WP_Error(
+                    'wedocs_file_type_mismatch',
+                    __( 'File type validation failed. The file may be corrupted or malicious.', 'wedocs' ),
+                    [ 'status' => 400 ]
+                );
+            }
+
+            // Use the more specific type from finfo.
+            $mime_type = $real_mime;
+        }
+
+        // Verify file type detection succeeded.
+        if ( empty( $mime_type ) ) {
+            return new WP_Error(
+                'wedocs_invalid_file_type',
+                __( 'Could not determine file type.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        // Verify MIME type is in allowed list.
+        if ( ! in_array( $mime_type, $allowed_types, true ) ) {
+            return new WP_Error(
+                'wedocs_invalid_file_type',
+                __( 'Only PNG, JPG, and WEBP images are allowed.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        // Third check: Verify it's actually a valid image by attempting to read it.
+        $image_info = @getimagesize( $file['tmp_name'] );
+        if ( ! $image_info ) {
+            return new WP_Error(
+                'wedocs_invalid_image',
+                __( 'File is not a valid image.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        // Verify image dimensions are reasonable (prevent decompression bombs).
+        if ( $image_info[0] > 10000 || $image_info[1] > 10000 ) {
+            return new WP_Error(
+                'wedocs_image_too_large',
+                __( 'Image dimensions are too large. Maximum 10000x10000 pixels.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        // Get max file size from settings (default 1MB).
+        $ai_settings = wedocs_get_option( 'ai', 'wedocs_settings', [] );
+        $max_size_kb = isset( $ai_settings['image_analysis']['max_size'] )
+            ? absint( $ai_settings['image_analysis']['max_size'] )
+            : 1024; // Default 1MB in KB
+
+        // Ensure max_size_kb is within safe bounds to prevent integer overflow.
+        $max_size_kb = max( 100, min( 5120, $max_size_kb ) );
+        $max_size = $max_size_kb * 1024; // Convert KB to bytes
+
+        if ( $file['size'] > $max_size ) {
+            return new WP_Error(
+                'wedocs_file_too_large',
+                sprintf(
+                    /* translators: %s: Maximum file size in MB or KB */
+                    __( 'Image must be under %s.', 'wedocs' ),
+                    $max_size_kb >= 1024
+                        ? number_format( $max_size_kb / 1024, 1 ) . 'MB'
+                        : $max_size_kb . 'KB'
+                ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        // Add unique prefix to uploaded filename to prevent conflicts.
+        $unique_id = uniqid( 'wedocs-ai-', true );
+        $upload_filter = function( $file ) use ( $unique_id ) {
+            $file['name'] = $unique_id . '-' . sanitize_file_name( basename( $file['name'] ) );
+            return $file;
+        };
+
+        add_filter( 'wp_handle_upload_prefilter', $upload_filter, 10, 1 );
+
+        // Upload to WordPress media library.
+        $attachment_id = media_handle_upload( 'image', 0, [], [
+            'test_form'   => false,
+            'test_size'   => true,
+            'test_upload' => true,
+        ] );
+
+        // Always remove the filter, even on error.
+        remove_filter( 'wp_handle_upload_prefilter', $upload_filter, 10 );
+
+        if ( is_wp_error( $attachment_id ) ) {
+            return new WP_Error(
+                'wedocs_upload_failed',
+                $attachment_id->get_error_message(),
+                [ 'status' => 400 ]
+            );
+        }
+
+        // Get attachment metadata.
+        $attachment_url  = wp_get_attachment_url( $attachment_id );
+        $attachment_meta = wp_get_attachment_metadata( $attachment_id );
+        $width           = \is_array( $attachment_meta ) ? ( $attachment_meta['width']  ?? 0 ) : 0;
+        $height          = \is_array( $attachment_meta ) ? ( $attachment_meta['height'] ?? 0 ) : 0;
+
+        // Check for low resolution warning.
+        $low_resolution = ( $width < 600 || $height < 600 );
+
+        return rest_ensure_response( [
+            'id'             => $attachment_id,
+            'attachment_id'  => $attachment_id,
+            'url'            => $attachment_url,
+            'width'          => $width,
+            'height'         => $height,
+            'low_resolution' => $low_resolution,
+        ] );
+    }
+
+
+
+    /**
+     * Get image as base64 encoded string from attachment ID.
+     *
+     * @since 2.2.0
+     *
+     * @param int $attachment_id The attachment ID.
+     *
+     * @return string Base64 encoded image data.
+     */
+    private function get_image_base64( $attachment_id ) {
+        $attachment_id = absint( $attachment_id );
+
+        // Validate attachment exists and is an image.
+        if ( ! wp_attachment_is_image( $attachment_id ) ) {
+            return '';
+        }
+
+        // Get the file path from attachment.
+        $filepath = get_attached_file( $attachment_id );
+
+        if ( ! $filepath || ! file_exists( $filepath ) ) {
+            return '';
+        }
+
+        // Validate the file is within WordPress uploads directory.
+        $upload_dir      = wp_upload_dir();
+        $real_path       = realpath( $filepath );
+        $real_upload_dir = realpath( $upload_dir['basedir'] );
+
+        // Validate all paths resolved successfully and upload dir is not empty.
+        if ( ! $real_path || ! $real_upload_dir || empty( $real_upload_dir ) ) {
+            return '';
+        }
+
+        // Ensure file is within uploads directory (prevent path traversal).
+        // Add DIRECTORY_SEPARATOR to prevent partial path matches.
+        if ( strpos( $real_path, $real_upload_dir . DIRECTORY_SEPARATOR ) !== 0 &&
+             $real_path !== $real_upload_dir ) {
+            return '';
+        }
+
+        // Re-validate file is actually an image before reading.
+        if ( ! @getimagesize( $filepath ) ) {
+            return '';
+        }
+
+        return base64_encode( file_get_contents( $filepath ) );
+    }
+
+    /**
+     * Get image media type from attachment ID.
+     *
+     * @since 2.2.0
+     *
+     * @param int $attachment_id The attachment ID.
+     *
+     * @return string The media type.
+     */
+    private function get_image_media_type( $attachment_id ) {
+        $attachment_id = absint( $attachment_id );
+
+        // Re-validate file content instead of trusting database.
+        $filepath = get_attached_file( $attachment_id );
+
+        if ( ! $filepath || ! file_exists( $filepath ) ) {
+            return 'image/jpeg';
+        }
+
+        // Use finfo to check actual file content.
+        $real_mime = 'image/jpeg'; // Default fallback
+
+        if ( class_exists( 'finfo' ) ) {
+            $finfo         = new \finfo( FILEINFO_MIME_TYPE );
+            $detected_mime = $finfo->file( $filepath );
+
+            if ( $detected_mime ) {
+                $real_mime = $detected_mime;
+            }
+        }
+
+        // Strict whitelist - only allow exact matches and normalize.
+        $allowed_types = [
+            'image/png'  => 'image/png',
+            'image/jpeg' => 'image/jpeg',
+            'image/webp' => 'image/webp',
+            'image/jpg'  => 'image/jpeg', // Normalize jpg to jpeg
+        ];
+
+        if ( isset( $allowed_types[ $real_mime ] ) ) {
+            return $allowed_types[ $real_mime ];
+        }
+
+        // Log unexpected MIME type for security monitoring.
+        if ( $real_mime !== 'image/jpeg' ) {
+            error_log( sprintf(
+                'WeDocs Unexpected MIME type "%s" for attachment %d at %s',
+                $real_mime,
+                $attachment_id,
+                $filepath
+            ) );
+        }
+
+        return 'image/jpeg';
+    }
+
+
+    /**
+     * Generate AI content.
      *
      * @since 2.0.0
+     * @since 2.2.0 Added support for image analysis.
      *
      * @param WP_REST_Request $request Current request.
      *
      * @return WP_Error|WP_REST_Response
      */
     public function generate_ai_content( $request ) {
-        $prompt = $request->get_param( 'prompt' );
-        $provider = $request->get_param( 'provider' );
-        $model = $request->get_param( 'model' );
-        $max_tokens = $request->get_param( 'maxTokens' );
-        $temperature = $request->get_param( 'temperature' );
+        $prompt        = $request->get_param( 'prompt' );
+        $provider      = $request->get_param( 'provider' );
+        $model         = $request->get_param( 'model' );
+        $max_tokens    = $request->get_param( 'maxTokens' );
+        $temperature   = $request->get_param( 'temperature' );
         $system_prompt = $request->get_param( 'systemPrompt' );
+        $images        = $request->get_param( 'images' ) ?: [];
 
-        // Validate numeric parameters
+        // Validate numeric parameters.
         if ( $max_tokens && ( $max_tokens < 1 || $max_tokens > 8000 ) ) {
             return new WP_Error(
                 'wedocs_ai_invalid_max_tokens',
@@ -1106,9 +1576,61 @@ class API extends WP_REST_Controller {
             );
         }
 
-        // Get AI settings
+        // Validate images array.
+        if ( ! empty( $images ) && count( $images ) > 5 ) {
+            return new WP_Error(
+                'wedocs_ai_too_many_images',
+                __( 'Maximum 5 images allowed.', 'wedocs' ),
+                [ 'status' => 400 ]
+            );
+        }
+
+        // Image analysis is a PRO feature only.
+        if ( ! empty( $images ) && ! wedocs_is_pro_active() ) {
+            return new WP_Error(
+                'wedocs_pro_feature',
+                __( 'AI image analysis is a pro feature. Please upgrade to weDocs Pro to use this feature.', 'wedocs' ),
+                [ 'status' => 403 ]
+            );
+        }
+
+        // Verify user has permission to access the attachments.
+        if ( ! empty( $images ) ) {
+            $current_user_id = get_current_user_id();
+
+            foreach ( $images as $attachment_id ) {
+                $attachment = get_post( $attachment_id );
+
+                if ( ! $attachment ) {
+                    return new WP_Error(
+                        'wedocs_attachment_not_found',
+                        sprintf(
+                            /* translators: %d: attachment ID */
+                            __( 'Attachment ID %d not found.', 'wedocs' ),
+                            $attachment_id
+                        ),
+                        [ 'status' => 404 ]
+                    );
+                }
+
+                // Check if user owns the attachment OR has manage_options capability.
+                if ( (int) $attachment->post_author !== $current_user_id && ! current_user_can( 'manage_options' ) ) {
+                    return new WP_Error(
+                        'wedocs_attachment_permission_denied',
+                        sprintf(
+                            /* translators: %d: attachment ID */
+                            __( 'You do not have permission to analyze attachment ID %d.', 'wedocs' ),
+                            $attachment_id
+                        ),
+                        [ 'status' => 403 ]
+                    );
+                }
+            }
+        }
+
+        // Get AI settings.
         $ai_settings = wedocs_get_option( 'ai', 'wedocs_settings', '' );
-        
+
         if ( empty( $ai_settings ) || empty( $ai_settings['providers'] ) ) {
             return new WP_Error(
                 'wedocs_ai_not_configured',
@@ -1117,12 +1639,12 @@ class API extends WP_REST_Controller {
             );
         }
 
-        // Use provided provider or default
+        // Use provided provider or default.
         $selected_provider = $provider ?: ( $ai_settings['default_provider'] ?? 'openai' );
-        
-        // Get provider config
+
+        // Get provider config.
         $provider_config = $ai_settings['providers'][ $selected_provider ] ?? null;
-        
+
         if ( ! $provider_config || empty( $provider_config['api_key'] ) ) {
             return new WP_Error(
                 'wedocs_ai_provider_not_configured',
@@ -1131,10 +1653,10 @@ class API extends WP_REST_Controller {
             );
         }
 
-        // Get provider endpoint and config
-        $provider_configs = wedocs_get_ai_provider_configs();
+        // Get provider endpoint and config.
+        $provider_configs         = wedocs_get_ai_provider_configs();
         $provider_endpoint_config = $provider_configs[ $selected_provider ] ?? null;
-        
+
         if ( ! $provider_endpoint_config ) {
             return new WP_Error(
                 'wedocs_ai_invalid_provider',
@@ -1144,7 +1666,7 @@ class API extends WP_REST_Controller {
         }
 
         $selected_model = $model ?: ( $provider_config['selected_model'] ?? null );
-        
+
         if ( ! $selected_model ) {
             return new WP_Error(
                 'wedocs_ai_model_not_specified',
@@ -1153,7 +1675,20 @@ class API extends WP_REST_Controller {
             );
         }
 
-        // Make API call
+        // Check if model supports vision when images provided.
+        if ( ! empty( $images ) ) {
+            $supports_vision = wedocs_model_supports_vision( $selected_provider, $selected_model );
+
+            if ( ! $supports_vision ) {
+                return new WP_Error(
+                    'wedocs_ai_vision_not_supported',
+                    __( 'Selected model does not support image analysis. Please select a vision-capable model.', 'wedocs' ),
+                    [ 'status' => 400 ]
+                );
+            }
+        }
+
+        // Make API call.
         try {
             $response = $this->make_ai_api_call(
                 $selected_provider,
@@ -1161,15 +1696,68 @@ class API extends WP_REST_Controller {
                 $selected_model,
                 $provider_config['api_key'],
                 $prompt,
-                $system_prompt ?: __( 'You are a helpful documentation assistant.', 'wedocs' ),
+                $system_prompt ?: __( 'You are an expert documentation assistant. Generate detailed, comprehensive, and well-structured documentation using HTML tags (h2, h3, h4, p, ul, ol, strong, code, span class=\'highlight\'). Adapt your tone and style to match the content type — technical, informational, policy, or general. Write thorough content with multiple paragraphs per section, aiming for depth and completeness. If screenshots are provided, use them to understand the context and write accurately — but never include image tags in your output. Only return the inner HTML content body, no document structure tags. Follow the user\'s instructions as the primary directive for what to generate.', 'wedocs' ),
                 $max_tokens ?: 2000,
-                $temperature ?: 0.7
+                $temperature ?: 0.7,
+                $images
             );
+
+            // Sanitize AI-generated HTML to prevent XSS attacks.
+            if ( isset( $response['content'] ) && ! empty( $response['content'] ) ) {
+                // Define allowed HTML tags and attributes for documentation content.
+                $allowed_html = [
+                    'p'      => [],
+                    'h1'     => [],
+                    'h2'     => [],
+                    'h3'     => [],
+                    'h4'     => [],
+                    'h5'     => [],
+                    'h6'     => [],
+                    'span'   => [
+                        'class' => true,
+                    ],
+                    'strong' => [],
+                    'em'     => [],
+                    'b'      => [],
+                    'i'      => [],
+                    'u'      => [],
+                    'ul'     => [],
+                    'ol'     => [],
+                    'li'     => [],
+                    'br'     => [],
+                    'code'   => [],
+                    'pre'    => [],
+                    'a'      => [
+                        'href'   => true,
+                        'title'  => true,
+                        'target' => true,
+                        'rel'    => true,
+                    ],
+                    'img'    => [
+                        'src'    => true,
+                        'alt'    => true,
+                        'title'  => true,
+                        'width'  => true,
+                        'height' => true,
+                    ],
+                    'table'  => [],
+                    'thead'  => [],
+                    'tbody'  => [],
+                    'tr'     => [],
+                    'th'     => [],
+                    'td'     => [],
+                    'blockquote' => [],
+                ];
+
+                // Apply wp_kses to strip dangerous HTML/JS.
+                $response['content'] = wp_kses( $response['content'], $allowed_html );
+            }
 
             return rest_ensure_response( $response );
         } catch ( \Exception $e ) {
-            // Check if it's a timeout or fatal error
+            // Check if it's a timeout or fatal error.
             $error_message = $e->getMessage();
+
             if ( strpos( $error_message, 'Maximum execution time' ) !== false || strpos( $error_message, 'Fatal error' ) !== false ) {
                 $error_message = __( 'The request took too long to complete. Please try again with a shorter prompt.', 'wedocs' );
             }
@@ -1183,102 +1771,154 @@ class API extends WP_REST_Controller {
     }
 
     /**
-     * Make AI API call based on provider
+     * Make AI API call based on provider.
      *
      * @since 2.0.0
+     * @since 2.2.0 Added images parameter for vision support.
      *
-     * @param string $provider Provider name
-     * @param array $provider_config Provider configuration
-     * @param string $model Model to use
-     * @param string $api_key API key
-     * @param string $prompt User prompt
-     * @param string $system_prompt System prompt
-     * @param int $max_tokens Max tokens
-     * @param float $temperature Temperature
+     * @param string $provider        Provider name.
+     * @param array  $provider_config Provider configuration.
+     * @param string $model           Model to use.
+     * @param string $api_key         API key.
+     * @param string $prompt          User prompt.
+     * @param string $system_prompt   System prompt.
+     * @param int    $max_tokens      Max tokens.
+     * @param float  $temperature     Temperature.
+     * @param array  $images          Optional array of images for vision analysis.
      *
-     * @return array Response with content and usage
-     * @throws \Exception
+     * @return array Response with content and usage.
+     * @throws \Exception When API call fails.
      */
-    private function make_ai_api_call( $provider, $provider_config, $model, $api_key, $prompt, $system_prompt, $max_tokens, $temperature ) {
+    private function make_ai_api_call( $provider, $provider_config, $model, $api_key, $prompt, $system_prompt, $max_tokens, $temperature, $images = [] ) {
         $endpoint = $provider_config['endpoint'];
+
+        // Increase timeout for vision requests.
+        $timeout = ! empty( $images ) ? 120 : 60;
 
         switch ( $provider ) {
             case 'openai':
-                return $this->call_openai_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature );
+                return $this->call_openai_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature, $images, $timeout );
             case 'anthropic':
-                return $this->call_anthropic_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature );
+                return $this->call_anthropic_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature, $images, $timeout );
             case 'google':
-                return $this->call_google_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature );
+                return $this->call_google_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature, $images, $timeout );
             default:
                 throw new \Exception( __( 'Unsupported AI provider', 'wedocs' ) );
         }
     }
 
     /**
-     * Call OpenAI API
+     * Call OpenAI API.
      *
      * @since 2.0.0
+     * @since 2.2.0 Added vision support with images parameter.
      *
-     * @param string $endpoint API endpoint
-     * @param string $api_key API key
-     * @param string $model Model to use
-     * @param string $prompt User prompt
-     * @param string $system_prompt System prompt
-     * @param int $max_tokens Max tokens
-     * @param float $temperature Temperature
+     * @param string $endpoint      API endpoint.
+     * @param string $api_key       API key.
+     * @param string $model         Model to use.
+     * @param string $prompt        User prompt.
+     * @param string $system_prompt System prompt.
+     * @param int    $max_tokens    Max tokens.
+     * @param float  $temperature   Temperature.
+     * @param array  $images        Optional array of images for vision.
+     * @param int    $timeout       Request timeout in seconds.
      *
-     * @return array Response with content and usage
-     * @throws \Exception
+     * @return array Response with content and usage.
+     * @throws \Exception When API call fails.
      */
-    private function call_openai_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature ) {
-        // Validate API key
+    private function call_openai_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature, $images = [], $timeout = 60 ) {
+        // Validate API key.
         if ( empty( $api_key ) || ! is_string( $api_key ) ) {
             throw new \Exception( __( 'OpenAI API key is missing or invalid', 'wedocs' ) );
         }
 
         $headers = [
             'Authorization' => 'Bearer ' . $api_key,
-            'Content-Type' => 'application/json',
+            'Content-Type'  => 'application/json',
         ];
 
-        $data = [
-            'model' => $model,
-            'messages' => [
-                [
-                    'role' => 'system',
-                    'content' => $system_prompt
-                ],
-                [
-                    'role' => 'user',
-                    'content' => $prompt
-                ]
+        $messages = [
+            [
+                'role'    => 'system',
+                'content' => $system_prompt,
             ],
-            'max_tokens' => $max_tokens,
-            'temperature' => $temperature
+        ];
+
+        // Build user message with or without images.
+        if ( ! empty( $images ) ) {
+            $content = [];
+
+            // Add text prompt first.
+            $content[] = [
+                'type' => 'text',
+                'text' => $prompt,
+            ];
+
+            // Add images.
+            foreach ( $images as $attachment_id ) {
+                $attachment_id = absint( $attachment_id );
+
+                if ( ! $attachment_id ) {
+                    continue;
+                }
+
+                $image_data = $this->get_image_base64( $attachment_id );
+
+                if ( empty( $image_data ) ) {
+                    continue;
+                }
+
+                $media_type = $this->get_image_media_type( $attachment_id );
+
+                $content[] = [
+                    'type'      => 'image_url',
+                    'image_url' => [
+                        'url'    => 'data:' . $media_type . ';base64,' . $image_data,
+                        'detail' => 'high',
+                    ],
+                ];
+            }
+
+            $messages[] = [
+                'role'    => 'user',
+                'content' => $content,
+            ];
+        } else {
+            $messages[] = [
+                'role'    => 'user',
+                'content' => $prompt,
+            ];
+        }
+
+        $data = [
+            'model'       => $model,
+            'messages'    => $messages,
+            'max_tokens'  => $max_tokens,
+            'temperature' => $temperature,
         ];
 
         $response = wp_remote_post( $endpoint, [
             'headers' => $headers,
-            'body' => json_encode( $data ),
-            'timeout' => 60 // Increased timeout for AI generation
-        ]);
+            'body'    => wp_json_encode( $data ),
+            'timeout' => $timeout,
+        ] );
 
         if ( is_wp_error( $response ) ) {
             $error_message = $response->get_error_message();
-            
-            // Handle timeout errors
+
+            // Handle timeout errors.
             if ( strpos( $error_message, 'timeout' ) !== false || strpos( $error_message, 'timed out' ) !== false ) {
                 throw new \Exception( __( 'The request took too long. Please try again with a shorter prompt or check your connection.', 'wedocs' ) );
             }
-            
+
             throw new \Exception( sprintf( __( 'OpenAI API error: %s', 'wedocs' ), $error_message ) );
         }
 
         $response_code = wp_remote_retrieve_response_code( $response );
-        $body = wp_remote_retrieve_body( $response );
-        $decoded = json_decode( $body, true );
+        $body          = wp_remote_retrieve_body( $response );
+        $decoded       = json_decode( $body, true );
 
-        // Check for HTTP errors
+        // Check for HTTP errors.
         if ( $response_code >= 400 ) {
             $this->handle_api_error( $response_code, $decoded, 'OpenAI' );
         }
@@ -1286,7 +1926,7 @@ class API extends WP_REST_Controller {
         if ( isset( $decoded['choices'][0]['message']['content'] ) ) {
             return [
                 'content' => $decoded['choices'][0]['message']['content'],
-                'usage' => $decoded['usage'] ?? null
+                'usage'   => $decoded['usage'] ?? null,
             ];
         }
 
@@ -1295,66 +1935,111 @@ class API extends WP_REST_Controller {
     }
 
     /**
-     * Call Anthropic API
+     * Call Anthropic API.
      *
      * @since 2.0.0
+     * @since 2.2.0 Added vision support with images parameter.
      *
-     * @param string $endpoint API endpoint
-     * @param string $api_key API key
-     * @param string $model Model to use
-     * @param string $prompt User prompt
-     * @param string $system_prompt System prompt
-     * @param int $max_tokens Max tokens
-     * @param float $temperature Temperature
+     * @param string $endpoint      API endpoint.
+     * @param string $api_key       API key.
+     * @param string $model         Model to use.
+     * @param string $prompt        User prompt.
+     * @param string $system_prompt System prompt.
+     * @param int    $max_tokens    Max tokens.
+     * @param float  $temperature   Temperature.
+     * @param array  $images        Optional array of images for vision.
+     * @param int    $timeout       Request timeout in seconds.
      *
-     * @return array Response with content and usage
-     * @throws \Exception
+     * @return array Response with content and usage.
+     * @throws \Exception When API call fails.
      */
-    private function call_anthropic_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature ) {
-        // Validate API key
+    private function call_anthropic_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature, $images = [], $timeout = 60 ) {
+        // Validate API key.
         if ( empty( $api_key ) || ! is_string( $api_key ) ) {
             throw new \Exception( __( 'Anthropic API key is missing or invalid', 'wedocs' ) );
         }
 
         $headers = [
-            'x-api-key' => $api_key,
-            'Content-Type' => 'application/json',
-            'anthropic-version' => '2023-06-01'
+            'x-api-key'         => $api_key,
+            'Content-Type'      => 'application/json',
+            'anthropic-version' => '2023-06-01',
         ];
 
+        // Build message content with or without images.
+        if ( ! empty( $images ) ) {
+            $content = [];
+
+            // Add images first for Anthropic.
+            foreach ( $images as $attachment_id ) {
+                $attachment_id = absint( $attachment_id );
+
+                if ( ! $attachment_id ) {
+                    continue;
+                }
+
+                $image_data = $this->get_image_base64( $attachment_id );
+
+                if ( empty( $image_data ) ) {
+                    continue;
+                }
+
+                $media_type = $this->get_image_media_type( $attachment_id );
+
+                $content[] = [
+                    'type'   => 'image',
+                    'source' => [
+                        'type'       => 'base64',
+                        'media_type' => $media_type,
+                        'data'       => $image_data,
+                    ],
+                ];
+            }
+
+            // Add text prompt.
+            $content[] = [
+                'type' => 'text',
+                'text' => $system_prompt . "\n\n" . $prompt,
+            ];
+
+            $message_content = $content;
+        } else {
+            $message_content = $system_prompt . "\n\n" . $prompt;
+        }
+
         $data = [
-            'model' => $model,
-            'max_tokens' => $max_tokens,
-            'messages' => [
+            'model'       => $model,
+            'max_tokens'  => $max_tokens,
+            'temperature' => (float) $temperature,
+            'messages'    => [
                 [
-                    'role' => 'user',
-                    'content' => $system_prompt . "\n\n" . $prompt
-                ]
-            ]
+                    'role'    => 'user',
+                    'content' => $message_content,
+                ],
+            ],
         ];
 
         $response = wp_remote_post( $endpoint, [
             'headers' => $headers,
-            'body' => json_encode( $data ),
-            'timeout' => 60 // Increased timeout for AI generation
-        ]);
+            'body'    => wp_json_encode( $data ),
+            'timeout' => $timeout,
+        ] );
 
         if ( is_wp_error( $response ) ) {
             $error_message = $response->get_error_message();
-            
-            // Handle timeout errors
+
+            // Handle timeout errors.
             if ( strpos( $error_message, 'timeout' ) !== false || strpos( $error_message, 'timed out' ) !== false ) {
                 throw new \Exception( __( 'The request took too long. Please try again with a shorter prompt or check your connection.', 'wedocs' ) );
             }
-            
+
             throw new \Exception( sprintf( __( 'Anthropic API error: %s', 'wedocs' ), $error_message ) );
         }
 
         $response_code = wp_remote_retrieve_response_code( $response );
-        $body = wp_remote_retrieve_body( $response );
-        $decoded = json_decode( $body, true );
+        $body          = wp_remote_retrieve_body( $response );
+        $decoded       = json_decode( $body, true );
 
-        // Check for HTTP errors
+        // Check for HTTP errors.
         if ( $response_code >= 400 ) {
             $this->handle_api_error( $response_code, $decoded, 'Anthropic' );
         }
@@ -1362,7 +2047,7 @@ class API extends WP_REST_Controller {
         if ( isset( $decoded['content'][0]['text'] ) ) {
             return [
                 'content' => $decoded['content'][0]['text'],
-                'usage' => $decoded['usage'] ?? null
+                'usage'   => $decoded['usage'] ?? null,
             ];
         }
 
@@ -1371,23 +2056,26 @@ class API extends WP_REST_Controller {
     }
 
     /**
-     * Call Google API
+     * Call Google API.
      *
      * @since 2.0.0
+     * @since 2.2.0 Added vision support with images parameter.
      *
-     * @param string $endpoint API endpoint
-     * @param string $api_key API key
-     * @param string $model Model to use
-     * @param string $prompt User prompt
-     * @param string $system_prompt System prompt
-     * @param int $max_tokens Max tokens
-     * @param float $temperature Temperature
+     * @param string $endpoint      API endpoint.
+     * @param string $api_key       API key.
+     * @param string $model         Model to use.
+     * @param string $prompt        User prompt.
+     * @param string $system_prompt System prompt.
+     * @param int    $max_tokens    Max tokens.
+     * @param float  $temperature   Temperature.
+     * @param array  $images        Optional array of images for vision.
+     * @param int    $timeout       Request timeout in seconds.
      *
-     * @return array Response with content and usage
-     * @throws \Exception
+     * @return array Response with content and usage.
+     * @throws \Exception When API call fails.
      */
-    private function call_google_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature ) {
-        // Validate API key
+    private function call_google_api( $endpoint, $api_key, $model, $prompt, $system_prompt, $max_tokens, $temperature, $images = [], $timeout = 60 ) {
+        // Validate API key.
         if ( empty( $api_key ) || ! is_string( $api_key ) ) {
             throw new \Exception( __( 'Google API key is missing or invalid', 'wedocs' ) );
         }
@@ -1395,46 +2083,76 @@ class API extends WP_REST_Controller {
         $endpoint = str_replace( '{model}', $model, $endpoint );
         $endpoint = add_query_arg( 'key', $api_key, $endpoint );
 
+        // Build parts array with or without images.
+        $parts = [];
+
+        // Add images first.
+        if ( ! empty( $images ) ) {
+            foreach ( $images as $attachment_id ) {
+                $attachment_id = absint( $attachment_id );
+
+                if ( ! $attachment_id ) {
+                    continue;
+                }
+
+                $image_data = $this->get_image_base64( $attachment_id );
+
+                if ( empty( $image_data ) ) {
+                    continue;
+                }
+
+                $media_type = $this->get_image_media_type( $attachment_id );
+
+                $parts[] = [
+                    'inline_data' => [
+                        'mime_type' => $media_type,
+                        'data'      => $image_data,
+                    ],
+                ];
+            }
+        }
+
+        // Add text prompt.
+        $parts[] = [
+            'text' => $system_prompt . "\n\n" . $prompt,
+        ];
+
         $data = [
-            'contents' => [
+            'contents'         => [
                 [
-                    'parts' => [
-                        [
-                            'text' => $system_prompt . "\n\n" . $prompt
-                        ]
-                    ]
-                ]
+                    'parts' => $parts,
+                ],
             ],
             'generationConfig' => [
                 'maxOutputTokens' => $max_tokens,
-                'temperature' => $temperature
-            ]
+                'temperature'     => $temperature,
+            ],
         ];
 
         $response = wp_remote_post( $endpoint, [
             'headers' => [
                 'Content-Type' => 'application/json',
             ],
-            'body' => json_encode( $data ),
-            'timeout' => 60 // Increased timeout for AI generation
-        ]);
+            'body'    => wp_json_encode( $data ),
+            'timeout' => $timeout,
+        ] );
 
         if ( is_wp_error( $response ) ) {
             $error_message = $response->get_error_message();
-            
-            // Handle timeout errors
+
+            // Handle timeout errors.
             if ( strpos( $error_message, 'timeout' ) !== false || strpos( $error_message, 'timed out' ) !== false ) {
                 throw new \Exception( __( 'The request took too long. Please try again with a shorter prompt or check your connection.', 'wedocs' ) );
             }
-            
+
             throw new \Exception( sprintf( __( 'Google API error: %s', 'wedocs' ), $error_message ) );
         }
 
         $response_code = wp_remote_retrieve_response_code( $response );
-        $body = wp_remote_retrieve_body( $response );
-        $decoded = json_decode( $body, true );
+        $body          = wp_remote_retrieve_body( $response );
+        $decoded       = json_decode( $body, true );
 
-        // Check for HTTP errors
+        // Check for HTTP errors.
         if ( $response_code >= 400 ) {
             $error_message = $decoded['error']['message'] ?? $decoded['error']['status'] ?? __( 'Google API request failed', 'wedocs' );
             $this->handle_api_error( $response_code, [ 'error' => [ 'message' => $error_message ] ], 'Google' );
@@ -1443,7 +2161,7 @@ class API extends WP_REST_Controller {
         if ( isset( $decoded['candidates'][0]['content']['parts'][0]['text'] ) ) {
             return [
                 'content' => $decoded['candidates'][0]['content']['parts'][0]['text'],
-                'usage' => $decoded['usageMetadata'] ?? null
+                'usage'   => $decoded['usageMetadata'] ?? null,
             ];
         }
 
@@ -1484,5 +2202,334 @@ class API extends WP_REST_Controller {
         
         // Generic error
         throw new \Exception( sprintf( __( '%s API error: %s', 'wedocs' ), $provider_name, $error_message ) );
+    }
+
+    // -------------------------------------------------------------------------
+    // Dynamic model listing
+    // -------------------------------------------------------------------------
+
+    /**
+     * Return the available models for an AI provider.
+     *
+     * Proxies the provider's model-list API using the saved API key, caches the
+     * result for one hour, and falls back to the static list when no key is
+     * configured or the remote request fails.
+     *
+     * @since 2.2.1
+     *
+     * @param \WP_REST_Request $request Accepts `provider` (path) and `refresh` (query).
+     *
+     * @return \WP_Error|\WP_REST_Response
+     */
+    public function get_ai_models( $request ) {
+        $provider         = $request->get_param( 'provider' );
+        $refresh          = (bool) $request->get_param( 'refresh' );
+        $provider_configs = wedocs_get_ai_provider_configs();
+
+        if ( ! isset( $provider_configs[ $provider ] ) ) {
+            return new WP_Error(
+                'wedocs_ai_invalid_provider',
+                __( 'Invalid AI provider.', 'wedocs' ),
+                [ 'status' => 404 ]
+            );
+        }
+
+        $static_models = $this->normalize_static_models( $provider_configs[ $provider ]['models'] );
+
+        $all_settings = get_option( 'wedocs_settings', [] );
+        $ai_settings  = \is_array( $all_settings['ai'] ?? null ) ? $all_settings['ai'] : [];
+        $api_key      = $ai_settings['providers'][ $provider ]['api_key'] ?? '';
+
+        if ( empty( $api_key ) ) {
+            return rest_ensure_response( [
+                'models'  => $static_models,
+                'dynamic' => false,
+                'source'  => 'static',
+            ] );
+        }
+
+        // The cache key encodes the first 8 hex chars of the key's MD5 so a new
+        // key automatically bypasses the old entry without explicit purging.
+        $cache_key = 'wedocs_ai_models_' . $provider . '_' . substr( md5( $api_key ), 0, 8 );
+
+        if ( ! $refresh ) {
+            $cached = get_transient( $cache_key );
+            if ( $cached !== false ) {
+                return rest_ensure_response( [
+                    'models'  => $cached,
+                    'dynamic' => true,
+                    'source'  => 'cache',
+                ] );
+            }
+        }
+
+        $live_models = $this->fetch_provider_models( $provider, $api_key );
+
+        if ( \is_wp_error( $live_models ) || empty( $live_models ) ) {
+            return rest_ensure_response( [
+                'models'  => $static_models,
+                'dynamic' => false,
+                'source'  => 'static_fallback',
+            ] );
+        }
+
+        set_transient( $cache_key, $live_models, HOUR_IN_SECONDS );
+
+        return rest_ensure_response( [
+            'models'  => $live_models,
+            'dynamic' => true,
+            'source'  => 'live',
+        ] );
+    }
+
+    /**
+     * Convert the static model map `['model-id' => ['name'=>…,'vision'=>…]]`
+     * to a flat array `[['id'=>…,'name'=>…,'vision'=>…]]`.
+     *
+     * @since 2.2.1
+     *
+     * @param array $models_map Associative map from model ID to config.
+     *
+     * @return array[]
+     */
+    private function normalize_static_models( array $models_map ) {
+        $out = [];
+        foreach ( $models_map as $id => $config ) {
+            $out[] = [
+                'id'     => $id,
+                'name'   => \is_array( $config ) ? ( $config['name'] ?? $id ) : $config,
+                'vision' => \is_array( $config ) ? ! empty( $config['vision'] ) : false,
+            ];
+        }
+        return $out;
+    }
+
+    /**
+     * Dispatch a live model-list request to the correct provider.
+     *
+     * @since 2.2.1
+     *
+     * @param string $provider Provider key (openai | anthropic | google).
+     * @param string $api_key  Saved API key.
+     *
+     * @return array[]|\WP_Error Normalized `[['id','name','vision']]` list or error.
+     */
+    private function fetch_provider_models( $provider, $api_key ) {
+        switch ( $provider ) {
+            case 'openai':
+                return $this->fetch_openai_models( $api_key );
+            case 'anthropic':
+                return $this->fetch_anthropic_models( $api_key );
+            case 'google':
+                return $this->fetch_google_models( $api_key );
+            default:
+                return new WP_Error(
+                    'wedocs_ai_unsupported_provider',
+                    __( 'Dynamic model listing is not supported for this provider.', 'wedocs' )
+                );
+        }
+    }
+
+    /**
+     * Fetch chat-completion capable models from the OpenAI API.
+     *
+     * Only models whose IDs begin with a known chat prefix (gpt-4, gpt-3.5-turbo,
+     * o1, o3, o4, chatgpt-4o) are included.  Vision capability is detected by
+     * matching well-known sub-strings in the model ID.
+     *
+     * @since 2.2.1
+     *
+     * @param string $api_key OpenAI API key.
+     *
+     * @return array[]|\WP_Error
+     */
+    private function fetch_openai_models( $api_key ) {
+        $response = wp_remote_get( 'https://api.openai.com/v1/models', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $api_key,
+                'Content-Type'  => 'application/json',
+            ],
+            'timeout' => 15,
+        ] );
+
+        if ( \is_wp_error( $response ) ) {
+            return $response;
+        }
+
+        $code = wp_remote_retrieve_response_code( $response );
+        if ( 200 !== $code ) {
+            return new WP_Error(
+                'wedocs_openai_models_error',
+                /* translators: %d: HTTP status code */
+                \sprintf( __( 'OpenAI API returned HTTP %d.', 'wedocs' ), $code )
+            );
+        }
+
+        $body = json_decode( wp_remote_retrieve_body( $response ), true );
+        $data = $body['data'] ?? [];
+
+        $chat_prefixes = [ 'gpt-4', 'gpt-3.5-turbo', 'o1', 'o3', 'o4', 'chatgpt-4o' ];
+        $models        = [];
+
+        foreach ( $data as $item ) {
+            $id = $item['id'] ?? '';
+            if ( ! $id ) {
+                continue;
+            }
+
+            $is_chat = false;
+            foreach ( $chat_prefixes as $prefix ) {
+                if ( strpos( $id, $prefix ) === 0 ) {
+                    $is_chat = true;
+                    break;
+                }
+            }
+
+            if ( ! $is_chat ) {
+                continue;
+            }
+
+            $vision =
+                strpos( $id, 'gpt-4o' ) !== false       ||
+                strpos( $id, 'gpt-4-turbo' ) !== false  ||
+                strpos( $id, 'gpt-4-vision' ) !== false ||
+                strpos( $id, 'chatgpt-4o' ) !== false   ||
+                preg_match( '/^o[1-9][-_]/', $id ) === 1;
+
+            $models[] = [
+                'id'     => $id,
+                'name'   => $id,
+                'vision' => $vision,
+            ];
+        }
+
+        // Vision-capable first, then alphabetical within each group.
+        usort( $models, static function ( $a, $b ) {
+            if ( $a['vision'] !== $b['vision'] ) {
+                return $a['vision'] ? -1 : 1;
+            }
+            return strcmp( $a['id'], $b['id'] );
+        } );
+
+        return $models;
+    }
+
+    /**
+     * Fetch models from the Anthropic API.
+     *
+     * All Claude 3 and later models support vision.
+     *
+     * @since 2.2.1
+     *
+     * @param string $api_key Anthropic API key.
+     *
+     * @return array[]|\WP_Error
+     */
+    private function fetch_anthropic_models( $api_key ) {
+        $response = wp_remote_get( 'https://api.anthropic.com/v1/models', [
+            'headers' => [
+                'x-api-key'         => $api_key,
+                'anthropic-version' => '2023-06-01',
+                'Content-Type'      => 'application/json',
+            ],
+            'timeout' => 15,
+        ] );
+
+        if ( \is_wp_error( $response ) ) {
+            return $response;
+        }
+
+        $code = wp_remote_retrieve_response_code( $response );
+        if ( 200 !== $code ) {
+            return new WP_Error(
+                'wedocs_anthropic_models_error',
+                /* translators: %d: HTTP status code */
+                \sprintf( __( 'Anthropic API returned HTTP %d.', 'wedocs' ), $code )
+            );
+        }
+
+        $body   = json_decode( wp_remote_retrieve_body( $response ), true );
+        $data   = $body['data'] ?? [];
+        $models = [];
+
+        foreach ( $data as $item ) {
+            $id   = $item['id'] ?? '';
+            $name = $item['display_name'] ?? $id;
+
+            if ( ! $id || strpos( $id, 'claude' ) !== 0 ) {
+                continue;
+            }
+
+            // claude-3 and all claude-4 families support multimodal input.
+            $vision = (bool) preg_match( '/^claude-(3|3-[57]|opus-4|sonnet-4|haiku-4)/', $id );
+
+            $models[] = [
+                'id'     => $id,
+                'name'   => $name,
+                'vision' => $vision,
+            ];
+        }
+
+        return $models;
+    }
+
+    /**
+     * Fetch generateContent-capable models from the Google Gemini API.
+     *
+     * Models that only support `countTokens` or `embedContent` are excluded.
+     *
+     * @since 2.2.1
+     *
+     * @param string $api_key Google AI API key.
+     *
+     * @return array[]|\WP_Error
+     */
+    private function fetch_google_models( $api_key ) {
+        $url      = add_query_arg( 'key', $api_key, 'https://generativelanguage.googleapis.com/v1beta/models' );
+        $response = wp_remote_get( $url, [ 'timeout' => 15 ] );
+
+        if ( \is_wp_error( $response ) ) {
+            return $response;
+        }
+
+        $code = wp_remote_retrieve_response_code( $response );
+        if ( 200 !== $code ) {
+            return new WP_Error(
+                'wedocs_google_models_error',
+                /* translators: %d: HTTP status code */
+                \sprintf( __( 'Google API returned HTTP %d.', 'wedocs' ), $code )
+            );
+        }
+
+        $body   = json_decode( wp_remote_retrieve_body( $response ), true );
+        $data   = $body['models'] ?? [];
+        $models = [];
+
+        foreach ( $data as $item ) {
+            // Raw name is "models/gemini-…"; strip the prefix for the ID.
+            $raw  = $item['name'] ?? '';
+            $id   = str_replace( 'models/', '', $raw );
+            $name = $item['displayName'] ?? $id;
+
+            if ( ! $id || strpos( $id, 'gemini' ) === false ) {
+                continue;
+            }
+
+            $methods = $item['supportedGenerationMethods'] ?? [];
+            if ( ! \in_array( 'generateContent', $methods, true ) ) {
+                continue;
+            }
+
+            // Most Gemini models support vision; exclude the AQA (text-only) variant.
+            $vision = strpos( $id, 'aqa' ) === false;
+
+            $models[] = [
+                'id'     => $id,
+                'name'   => $name,
+                'vision' => $vision,
+            ];
+        }
+
+        return $models;
     }
 }

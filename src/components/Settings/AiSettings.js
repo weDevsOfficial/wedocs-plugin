@@ -18,9 +18,11 @@
  */
 
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect, Fragment } from '@wordpress/element';
+import { useState, useEffect, useCallback, Fragment } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
 import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
+import { CheckIcon, ChevronDownIcon, ArrowPathIcon } from '@heroicons/react/20/solid';
+import AiImageAnalysisPreview from '../ProPreviews/AiImageAnalysisPreview';
 
 const AiSettings = ({
     settingsData,
@@ -92,32 +94,113 @@ const AiSettings = ({
                 model: defaultModel
             }
         },
+        image_analysis: {
+            enabled: false,
+            max_size: 1024 // Default 1MB in KB
+        },
         ...aiSettingsData
     });
 
-    // Get provider configurations from centralized configs
+    // { [providerKey]: [{ value, label, vision }] } — populated by live API fetch.
+    const [dynamicModels, setDynamicModels] = useState({});
+    // { [providerKey]: boolean } — true while the fetch is in flight.
+    const [modelsLoading, setModelsLoading] = useState({});
+
+    /**
+     * Fetch the live model list for a provider from the REST endpoint.
+     * On success the dynamic list replaces the static one in the dropdown.
+     * On failure the static list is kept — no change needed.
+     *
+     * Pass `forceRefresh = true` to bust the server-side transient cache.
+     */
+    const fetchModelsForProvider = useCallback( async ( provider, forceRefresh = false ) => {
+        setModelsLoading( prev => ({ ...prev, [provider]: true }) );
+        try {
+            const path = `/wp/v2/docs/ai/models/${provider}` + ( forceRefresh ? '?refresh=true' : '' );
+            const result = await apiFetch({ path, method: 'GET' });
+            if ( Array.isArray( result?.models ) && result.models.length ) {
+                setDynamicModels( prev => ({
+                    ...prev,
+                    [provider]: result.models.map( m => ({
+                        value: m.id,
+                        label: m.name,
+                        vision: m.vision,
+                    }) ),
+                }) );
+            }
+        } catch ( _err ) {
+            // Network / auth failure — keep the static fallback, nothing to update.
+        } finally {
+            setModelsLoading( prev => ({ ...prev, [provider]: false }) );
+        }
+    }, [] );
+
+    // On mount, fetch models for every provider that already has an API key saved.
+    useEffect( () => {
+        const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
+        Object.keys( configs ).forEach( providerKey => {
+            const hasKey = aiSettings.providers?.[ providerKey ]?.has_api_key;
+            if ( hasKey ) {
+                fetchModelsForProvider( providerKey );
+            }
+        } );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [] );
+
+    // Re-fetch when the user switches the active provider (and a key is saved).
+    useEffect( () => {
+        const provider = aiSettings.default_provider;
+        const hasKey   = aiSettings.providers?.[ provider ]?.has_api_key;
+        if ( hasKey ) {
+            fetchModelsForProvider( provider );
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ aiSettings.default_provider ] );
+
+    // Get provider configurations from centralized configs.
+    // Dynamic models (from the live API) override the static list when available.
     const getProviderConfigsForUI = () => {
         const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
         const providerConfigs = {};
-        
+
         Object.keys(configs).forEach(providerKey => {
             const provider = configs[providerKey];
-            const models = [];
-            
-            Object.keys(provider.models).forEach(modelKey => {
-                models.push({
-                    value: modelKey,
-                    label: provider.models[modelKey]
-                });
+
+            // Prefer the live-fetched list; fall back to the static config.
+            const models = dynamicModels[providerKey] ?? Object.keys(provider.models).map(modelKey => {
+                const modelConfig = provider.models[modelKey];
+
+                // Handle both old string format and new object format.
+                const modelName = typeof modelConfig === 'object' ? modelConfig.name : modelConfig;
+                const hasVision = typeof modelConfig === 'object' ? modelConfig.vision : false;
+
+                return { value: modelKey, label: modelName, vision: hasVision };
             });
-            
+
             providerConfigs[providerKey] = {
                 name: provider.name,
-                models: models
+                models,
             };
         });
-        
+
         return providerConfigs;
+    };
+
+    // Handler for image analysis setting changes.
+    const handleImageAnalysisChange = (field, value) => {
+        const updatedSettings = {
+            ...aiSettings,
+            image_analysis: {
+                ...aiSettings.image_analysis,
+                [field]: value,
+            },
+        };
+
+        setAiSettings(updatedSettings);
+        setSettings({
+            ...settingsData,
+            ai: updatedSettings,
+        });
     };
 
     let providerConfigs = getProviderConfigsForUI();
@@ -302,7 +385,7 @@ const AiSettings = ({
     };
 
     // Custom AI Model Select Component
-    const AiModelSelect = ({ value, onChange, options }) => {
+    const AiModelSelect = ({ value, onChange, options, isLoading = false }) => {
         const [selectedModel, setSelectedModel] = useState(
             options.find(option => option.value === value) || options[0]
         );
@@ -319,15 +402,16 @@ const AiSettings = ({
         return (
             <Fragment>
                 {selectedModel && Object.keys(selectedModel).length > 0 ? (
-                    <Listbox value={selectedModel} onChange={handleChange}>
+                    <Listbox value={selectedModel} onChange={handleChange} disabled={isLoading}>
                         <div className="relative mt-1">
-                            <Listbox.Button className="relative w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-                                <span className="block truncate">{selectedModel?.label}</span>
+                            <Listbox.Button className="relative w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm disabled:opacity-60 disabled:cursor-not-allowed">
+                                <span className="block truncate">{isLoading ? __('Loading models…', 'wedocs') : selectedModel?.label}</span>
                                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                    <ChevronDownIcon
-                                        className="h-5 w-5 text-gray-400"
-                                        aria-hidden="true"
-                                    />
+                                    {isLoading ? (
+                                        <ArrowPathIcon className="h-4 w-4 text-gray-400 animate-spin" aria-hidden="true" />
+                                    ) : (
+                                        <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                    )}
                                 </span>
                             </Listbox.Button>
                             <Transition
@@ -543,21 +627,135 @@ const AiSettings = ({
                                     </div>
                                 </div>
                                 <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
-                                    <div className="relative">
-                                        <AiModelSelect
-                                            value={aiSettings.providers[aiSettings.default_provider]?.selected_model || providerConfigs[aiSettings.default_provider]?.models[0]?.value}
-                                            onChange={(value) => handleProviderChange(aiSettings.default_provider, 'selected_model', value)}
-                                            options={providerConfigs[aiSettings.default_provider]?.models || []}
-                                        />
+                                    <div className="relative flex items-center gap-2">
+                                        <div className="flex-1">
+                                            <AiModelSelect
+                                                value={aiSettings.providers[aiSettings.default_provider]?.selected_model || providerConfigs[aiSettings.default_provider]?.models[0]?.value}
+                                                onChange={(value) => handleProviderChange(aiSettings.default_provider, 'selected_model', value)}
+                                                options={providerConfigs[aiSettings.default_provider]?.models || []}
+                                                isLoading={modelsLoading[aiSettings.default_provider] || false}
+                                            />
+                                        </div>
+                                        <button
+                                            type="button"
+                                            title={__('Refresh model list', 'wedocs')}
+                                            disabled={modelsLoading[aiSettings.default_provider]}
+                                            onClick={() => fetchModelsForProvider(aiSettings.default_provider, true)}
+                                            className="flex-shrink-0 p-1.5 rounded-md text-gray-400 hover:text-indigo-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                                        >
+                                            <ArrowPathIcon
+                                                className={`h-4 w-4 ${modelsLoading[aiSettings.default_provider] ? 'animate-spin' : ''}`}
+                                            />
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                             <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
                                 <p className="text-sm text-[#6B7280]">
-                                    {__('Select the model for this provider', 'wedocs')}
+                                    {modelsLoading[aiSettings.default_provider]
+                                        ? __('Fetching available models…', 'wedocs')
+                                        : __('Select the model for this provider', 'wedocs')
+                                    }
                                 </p>
                             </div>
                         </div>
+
+                        {/**
+                         * Filter: wedocs_ai_settings_after_model
+                         *
+                         * Allows Pro and other extensions to add settings after the AI model selector.
+                         * Used for adding image analysis toggle and other Pro-specific settings.
+                         *
+                         * @since 2.2.0
+                         *
+                         * @param {null}     content                 Default content (null).
+                         * @param {Object}   aiSettings              Current AI settings state.
+                         * @param {Function} handleImageAnalysisChange Handler for image analysis setting changes.
+                         * @param {Object}   providerConfigs         Provider configurations with model info.
+                         */}
+                        {wp.hooks.applyFilters(
+                            'wedocs_ai_settings_after_model',
+                            null,
+                            aiSettings,
+                            handleImageAnalysisChange,
+                            providerConfigs
+                        )}
+
+                        {/* Image Analysis Settings - Shows when Pro is loaded */}
+                        {wp.hooks.applyFilters('wedocs_pro_loaded', false) && aiSettings?.image_analysis?.enabled && (
+                            <div className="col-span-4">
+                                <div className="settings-content flex items-center justify-between">
+                                    <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+                                        <label
+                                            className="block text-sm font-medium text-gray-600"
+                                            htmlFor="image-max-size"
+                                        >
+                                            {__('Maximum Image Size', 'wedocs')}
+                                        </label>
+                                        <div
+                                            className="tooltip cursor-pointer ml-2 z-[9999]"
+                                            data-tip={__(
+                                                'Maximum file size for AI image analysis uploads',
+                                                'wedocs'
+                                            )}
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="18"
+                                                height="18"
+                                                fill="none"
+                                            >
+                                                <path
+                                                    d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                                                    stroke="#6b7280"
+                                                    strokeWidth="2"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+                                        <div className="relative flex items-center gap-2">
+                                            <input
+                                                type="number"
+                                                id="image-max-size"
+                                                name="image_max_size"
+                                                min="100"
+                                                max="5120"
+                                                step="100"
+                                                placeholder="1024"
+                                                className="w-32 !rounded-md !border-gray-300 bg-white !py-1 !pl-3 !pr-3 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                                                value={aiSettings.image_analysis?.max_size || 1024}
+                                                onChange={(e) => {
+                                                    const value = parseInt(e.target.value) || 1024;
+                                                    const boundedValue = Math.max(100, Math.min(5120, value));
+                                                    handleImageAnalysisChange('max_size', boundedValue);
+                                                }}
+                                            />
+                                            <span className="text-sm text-gray-600">KB</span>
+                                            <div className="ml-3 px-3 py-1 bg-gray-100 rounded-md">
+                                                <span className="text-sm font-medium text-gray-700">
+                                                    {aiSettings.image_analysis?.max_size >= 1024
+                                                        ? `${(aiSettings.image_analysis.max_size / 1024).toFixed(1)} MB`
+                                                        : `${aiSettings.image_analysis?.max_size || 1024} KB`}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
+                                    <p className="text-sm text-[#6B7280]">
+                                        {__('Set the maximum file size for image uploads. Minimum: 100KB, Maximum: 5MB (5120KB). Default: 1MB (1024KB).', 'wedocs')}
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Show Pro preview when Pro is not loaded */}
+                        {!wp.hooks.applyFilters('wedocs_pro_loaded', false) && (
+                            <AiImageAnalysisPreview />
+                        )}
                     </div>
                 </div>
             </div>

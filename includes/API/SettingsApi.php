@@ -262,6 +262,22 @@ class SettingsApi extends \WP_REST_Controller {
             }
         }
 
+        // Sanitize image analysis settings (Pro feature)
+        if ( isset( $ai_settings['image_analysis'] ) && is_array( $ai_settings['image_analysis'] ) ) {
+            $sanitized['image_analysis'] = array();
+
+            if ( isset( $ai_settings['image_analysis']['enabled'] ) ) {
+                $sanitized['image_analysis']['enabled'] = (bool) $ai_settings['image_analysis']['enabled'];
+            }
+
+            // Sanitize max image size; stored in KB (conversion to bytes happens at read time).
+            if ( isset( $ai_settings['image_analysis']['max_size'] ) ) {
+                $max_size_kb = absint( $ai_settings['image_analysis']['max_size'] );
+                // Limit between 100KB and 5MB
+                $max_size_kb = max( 100, min( 5120, $max_size_kb ) );
+                $sanitized['image_analysis']['max_size'] = $max_size_kb;
+            }
+        }
 
         return $sanitized;
     }
