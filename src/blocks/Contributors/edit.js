@@ -487,7 +487,10 @@ const Edit = (props) => {
 								{ label: __('Rounded', 'wedocs'), value: 'rounded' },
 								{ label: __('Square', 'wedocs'), value: 'square' }
 							]}
-							onChange={(value) => setAttributes({ avatarShape: value })}
+							onChange={(value) => {
+								const shapeDefaults = { circle: '50%', rounded: '8px', square: '0' };
+								setAttributes({ avatarShape: value, avatarBorderRadius: shapeDefaults[value] });
+							}}
 						/>
 
 						<ToggleControl
