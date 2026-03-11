@@ -210,8 +210,7 @@ const Edit = (props) => {
 		const avatarStyle = {
 			width: attributes.avatarSize,
 			height: attributes.avatarSize,
-			borderRadius: attributes.avatarShape === 'circle' ? '50%' :
-				(attributes.avatarShape === 'rounded' ? attributes.avatarBorderRadius : '0'),
+			borderRadius: attributes.avatarBorderRadius,
 			borderStyle: attributes.avatarBorderStyle !== 'none' ? attributes.avatarBorderStyle : undefined,
 			borderColor: attributes.avatarBorderStyle !== 'none' ? attributes.avatarBorderColor : undefined,
 			borderWidth: attributes.avatarBorderStyle !== 'none' ?
@@ -481,16 +480,13 @@ const Edit = (props) => {
 
 						<SelectControl
 							label={__('Avatar Shape', 'wedocs')}
-							value={attributes.avatarShape}
+							value={attributes.avatarBorderRadius}
 							options={[
-								{ label: __('Circle', 'wedocs'), value: 'circle' },
-								{ label: __('Rounded', 'wedocs'), value: 'rounded' },
-								{ label: __('Square', 'wedocs'), value: 'square' }
+								{ label: __('Circle', 'wedocs'), value: '50%' },
+								{ label: __('Rounded', 'wedocs'), value: '8px' },
+								{ label: __('Square', 'wedocs'), value: '0' }
 							]}
-							onChange={(value) => {
-								const shapeDefaults = { circle: '50%', rounded: '8px', square: '0' };
-								setAttributes({ avatarShape: value, avatarBorderRadius: shapeDefaults[value] });
-							}}
+							onChange={(value) => setAttributes({ avatarBorderRadius: value })}
 						/>
 
 						<ToggleControl
@@ -644,11 +640,9 @@ const Edit = (props) => {
 						borderStyle={attributes.avatarBorderStyle}
 						borderWidth={attributes.avatarBorderWidth}
 						borderColor={attributes.avatarBorderColor}
-						borderRadius={attributes.avatarBorderRadius}
 						onStyleChange={(value) => setAttributes({ avatarBorderStyle: value })}
 						onWidthChange={(value) => setAttributes({ avatarBorderWidth: value })}
 						onColorChange={(value) => setAttributes({ avatarBorderColor: value })}
-						onRadiusChange={(value) => setAttributes({ avatarBorderRadius: value })}
 					/>
 				</>
 			)}
