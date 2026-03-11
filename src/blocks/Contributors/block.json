@@ -183,7 +183,7 @@
 		},
 		"avatarBorderRadius": {
 			"type": "string",
-			"default": "50%"
+			"default": "8px"
 		},
 		"avatarHoverEffect": {
 			"type": "boolean",
