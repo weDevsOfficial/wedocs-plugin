@@ -32,7 +32,6 @@ if ( !function_exists('render_wedocs_contributors_block')){
         $show_avatar = $attributes['showAvatar'] ?? true;
         $avatar_type = $attributes['avatarType'] ?? 'user_avatar';
         $avatar_size = $attributes['avatarSize'] ?? '32px';
-        $avatar_shape = $attributes['avatarShape'] ?? 'circle';
         $avatar_border_style = $attributes['avatarBorderStyle'] ?? 'none';
         $avatar_border_color = $attributes['avatarBorderColor'] ?? '#dddddd';
         $avatar_hover_effect = $attributes['avatarHoverEffect'] ?? false;
@@ -176,17 +175,7 @@ if ( !function_exists('render_wedocs_contributors_block')){
         ];
 
         // Avatar shape
-        switch ($avatar_shape) {
-            case 'circle':
-                $avatar_base_styles[] = 'border-radius: 50%';
-                break;
-            case 'rounded':
-                $avatar_base_styles[] = 'border-radius: ' . esc_attr($attributes['avatarBorderRadius'] ?? '8px');
-                break;
-            case 'square':
-                $avatar_base_styles[] = 'border-radius: 0';
-                break;
-        }
+        $avatar_base_styles[] = 'border-radius: ' . esc_attr($attributes['avatarBorderRadius'] ?? '50%');
 
         // Avatar border and spacing
         $avatar_styles = array_merge($avatar_base_styles, wedocs_build_border_styles(
