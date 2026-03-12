@@ -193,10 +193,9 @@ Yes, weDocs supports custom permalinks for documentation pages.
 
 **v2.2.1 (12 Mar, 2026)**
 - **Added:** New article page template for Full Site Editor with AI Summary, Table of Contents, Social Share, Print, and Doc Navigation blocks (#295).
-- **Added:** AI image analysis in AI Doc Writer — upload screenshots and let the AI analyze them (Pro) (#287).
 - **Fixed:** Tailwind CSS utility classes with arbitrary values not applying correctly (#302).
-- **Fixed:** Broken layout on doc search form due to missing closing style tag (#304).
-- **Fixed:** Contributors block avatar shape now syncs correctly with border radius; default changed to rounded corners (8px) (#305).
+- **Fixed:** Broken layout on doc search form (#304).
+- **Fixed:** Contributors block avatar shape now syncs correctly (#305).
 
 **v2.2.0 (4 Mar, 2026)**
 - **Added:** Integrated feature search form with modal support (#239).
