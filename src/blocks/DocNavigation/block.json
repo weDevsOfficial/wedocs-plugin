@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "wedocs/doc-navigation",
 	"version": "1.0.0",
-	"title": "Doc Navigation",
+	"title": "weDocs Doc Navigation",
 	"icon": "arrow-left-alt2",
 	"category": "wedocs",
 	"description": "Display previous and next document navigation links",
@@ -23,6 +23,8 @@
 			"background": true
 		}
 	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
 	"render": "file:./render.php",
 	"attributes": {
 		"seoLinks": {

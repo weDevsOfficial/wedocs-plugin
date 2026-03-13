@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "wedocs/ai-summary",
 	"version": "1.0.0",
-	"title": "AI-Powered Summary",
+	"title": "weDocs AI-Powered Summary",
 	"category": "wedocs",
 	"icon": "lightbulb",
 	"description": "Display an AI-generated summary of documentation content with collapsible functionality.",
@@ -13,22 +13,10 @@
 		"anchor": true,
 		"align": ["wide", "full"],
 		"color": {
-			"background": true,
-			"text": true,
-			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true
-			}
+			"background": false,
+			"text": false
 		},
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true,
-			"__experimentalFontFamily": true,
-			"__experimentalFontWeight": true,
-			"__experimentalDefaultControls": {
-				"fontSize": true
-			}
-		},
+		"typography": false,
 		"spacing": {
 			"margin": true,
 			"padding": true,

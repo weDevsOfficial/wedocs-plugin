@@ -77,6 +77,10 @@ const updatedConfig = {
           from: 'src/blocks/helpers',
           to: 'blocks/helpers',
         },
+        {
+          from: 'src/blocks/QuickSearch/templates',
+          to: 'blocks/QuickSearch/templates',
+        },
       ],
     } ),
     new MiniCSSExtractPlugin( {

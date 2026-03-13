@@ -11,6 +11,7 @@ import {
     PanelBody,
     ToggleControl,
     TextControl,
+    SelectControl,
 } from '@wordpress/components';
 import {
     ColorSettingsPanel,
@@ -49,6 +50,7 @@ const Edit = ({ attributes, setAttributes }) => {
         titleLetterSpacing,
         titlePadding,
         titleMargin,
+        titleAlignment,
         yesButtonColor,
         yesButtonHoverColor,
         yesButtonActiveColor,
@@ -102,6 +104,7 @@ const Edit = ({ attributes, setAttributes }) => {
         fontWeight: titleFontWeight,
         lineHeight: titleLineHeight,
         letterSpacing: titleLetterSpacing,
+        textAlign: titleAlignment,
         padding: `${titlePadding.top} ${titlePadding.right} ${titlePadding.bottom} ${titlePadding.left}`,
         margin: `${titleMargin.top} ${titleMargin.right} ${titleMargin.bottom} ${titleMargin.left}`
     };
@@ -274,6 +277,17 @@ const Edit = ({ attributes, setAttributes }) => {
                     onLetterSpacingChange={(value) => setAttributes({ titleLetterSpacing: value })}
                     showLineHeight={true}
                     showLetterSpacing={true}
+                />
+
+                <SelectControl
+                    label={__('Title Alignment', 'wedocs')}
+                    value={titleAlignment}
+                    options={[
+                        { label: __('Left', 'wedocs'), value: 'left' },
+                        { label: __('Center', 'wedocs'), value: 'center' },
+                        { label: __('Right', 'wedocs'), value: 'right' },
+                    ]}
+                    onChange={(value) => setAttributes({ titleAlignment: value })}
                 />
 
                 <SpacingPanel

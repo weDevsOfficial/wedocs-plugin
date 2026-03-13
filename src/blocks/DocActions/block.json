@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "wedocs/doc-actions",
 	"version": "1.0.0",
-	"title": "Documentation Actions",
+	"title": "weDocs Documentation Actions",
 	"category": "wedocs",
 	"icon": "share",
 	"description": "Action buttons for documentation - Copy Markdown, Open in ChatGPT, Open in Claude, and more.",

@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "wedocs/contributors",
 	"version": "1.0.0",
-	"title": "Doc Contributors",
+	"title": "weDocs Doc Contributors",
 	"icon": "groups",
 	"category": "wedocs",
 	"description": "Display the author(s)/contributors of a doc along with the last updated date.",
@@ -13,23 +13,15 @@
 		"anchor": true,
 		"align": ["wide", "full"],
 		"color": {
-			"background": true,
-			"text": true,
+			"background": false,
+			"text": false,
 			"link": true,
 			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true
+				"background": false,
+				"text": false
 			}
 		},
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true,
-			"__experimentalFontFamily": true,
-			"__experimentalFontWeight": true,
-			"__experimentalDefaultControls": {
-				"fontSize": true
-			}
-		},
+		"typography": false,
 		"spacing": {
 			"margin": true,
 			"padding": true,

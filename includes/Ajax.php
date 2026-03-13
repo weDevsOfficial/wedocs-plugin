@@ -496,7 +496,7 @@ class Ajax {
             ];
 
             // Load the template
-            $template_path = plugin_dir_path( __FILE__ ) . '../src/blocks/QuickSearch/templates/search-results.php';
+            $template_path = plugin_dir_path( __FILE__ ) . '../assets/build/blocks/QuickSearch/templates/search-results.php';
             if ( file_exists( $template_path ) ) {
                 extract( $template_args );
                 ob_start();

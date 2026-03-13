@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "wedocs/print-button",
 	"version": "1.0.0",
-	"title": "Print Button",
+	"title": "weDocs Print Button",
 	"icon": "printer",
 	"category": "wedocs",
 	"description": "Add a print button to allow users to print the current page",

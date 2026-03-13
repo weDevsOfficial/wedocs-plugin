@@ -187,6 +187,42 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		}
 	});
 
+	const isPro = window.weDocsAdminScriptVars?.isPro || false;
+	if ( ! isPro ) {
+		return (
+			<>
+				<InspectorControls>
+					<PanelBody title={ __( 'AI-Powered Summary - PRO Feature', 'wedocs-plugin' ) } initialOpen={ true }>
+						<div style={ { padding: '16px', textAlign: 'center' } }>
+							<p style={ { margin: '0 0 12px 0', color: '#666', fontSize: '14px' } }>
+								{ __( 'The AI-Powered Summary block requires weDocs Pro to be active.', 'wedocs-plugin' ) }
+							</p>
+							<a href="https://wedocs.co/pricing/" target="_blank" rel="noopener noreferrer" style={ { display: 'inline-block', padding: '8px 16px', backgroundColor: '#4f47e6', color: '#fff', textDecoration: 'none', borderRadius: '4px', fontWeight: '600', fontSize: '13px' } }>
+								{ __( 'Purchase weDocs Pro', 'wedocs-plugin' ) }
+							</a>
+						</div>
+					</PanelBody>
+				</InspectorControls>
+				<div { ...blockProps }>
+					<div style={ { border: '2px dashed #ccd0d4', borderRadius: '4px', padding: '40px 20px', textAlign: 'center', backgroundColor: '#f8f9fa' } }>
+						<div style={ { marginBottom: '12px', color: '#4f47e6' } }>
+							<svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 1Z"/></svg>
+						</div>
+						<p style={ { margin: '0 0 4px 0', fontWeight: '600', fontSize: '14px', color: '#1e1e1e' } }>
+							{ __( 'AI-Powered Summary', 'wedocs-plugin' ) }
+						</p>
+						<p style={ { margin: '0 0 16px 0', color: '#757575', fontSize: '13px' } }>
+							{ __( 'This block requires weDocs Pro to be active.', 'wedocs-plugin' ) }
+						</p>
+						<a href="https://wedocs.co/pricing/" target="_blank" rel="noopener noreferrer" style={ { display: 'inline-block', padding: '8px 16px', backgroundColor: '#4f47e6', color: '#fff', textDecoration: 'none', borderRadius: '4px', fontWeight: '600', fontSize: '13px' } }>
+							{ __( 'Purchase weDocs Pro', 'wedocs-plugin' ) }
+						</a>
+					</div>
+				</div>
+			</>
+		);
+	}
+
 	const getIconSVG = (type) => {
 		const icons = {
 			sparkles: (

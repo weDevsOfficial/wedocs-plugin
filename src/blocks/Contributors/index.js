@@ -2,43 +2,23 @@ import { registerBlockType } from "@wordpress/blocks";
 import Edit from "./edit";
 import metadata from "./block.json";
 import "./style.scss";
-import { Icon } from '@wordpress/components';
-import { starFilled } from '@wordpress/icons';
+
+const isPro = window.weDocsAdminScriptVars?.isPro || false;
 
 registerBlockType(metadata.name, {
-	/**
-	 * @see ./edit.js
-	 */
 	edit: Edit,
-
-	/**
-	 * @see ./save.js
-	 */
 	save: () => null,
-
-    icon: {
-        src:() => (
-            <span style={{ position: 'relative', display: 'inline-block' }}>
-                <Icon icon={ starFilled } />
-                <span
-                    style={{
-                        position: 'absolute',
-                        top: '22px',
-                        right: '-2px',
-                        background: '#4f47e6',
-                        color: 'white',
-                        fontSize: '9px',
-                        padding: '2px 3px',
-                        borderRadius: '3px',
-                        fontWeight: 'bold',
-                        lineHeight: 1
-                    }}
-                >
-                    PRO
-                </span>
-            </span>
-        ),
-    }
+	icon: (
+	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<defs>
+			<linearGradient id="gradContribs" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stopColor="#6366F1"/>
+				<stop offset="100%" stopColor="#A855F7"/>
+			</linearGradient>
+		</defs>
+		<path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="url(#gradContribs)"/>
+	</svg>
+	),
 });
 
 

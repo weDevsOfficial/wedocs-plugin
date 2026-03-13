@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "wedocs/sidebar",
 	"version": "1.0.0",
-	"title": "Sidebar",
+	"title": "weDocs Sidebar",
 	"icon": "layout",
 	"category": "wedocs",
 	"description": "Display a sidebar for documentation navigation",

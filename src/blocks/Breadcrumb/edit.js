@@ -23,14 +23,7 @@ export default function Edit({ attributes, setAttributes }) {
 			needsUpdate = true;
 		}
 
-		// Set default border radius if not set
-		if (!attributes.style?.border?.radius) {
-			newStyle.border = {
-				...newStyle.border,
-				radius: "var:preset|spacing|20"
-			};
-			needsUpdate = true;
-		}
+		// Border radius has no forced default — let the user set it via the WP border panel.
 
 		// Only update if we actually need to
 		if (needsUpdate) {
@@ -38,7 +31,9 @@ export default function Edit({ attributes, setAttributes }) {
 		}
 	}, []); // Empty dependency array means this runs once on mount
 
-	const blockProps = useBlockProps();
+	const rawBlockProps = useBlockProps({ className: 'wedocs-document' });
+	// Strip WP-injected styles from the wrapper to avoid duplicating styles already applied to the <ol>
+	const { style: _wpInjectedStyle, ...blockProps } = rawBlockProps;
 	const { separator, hideHomeIcon, alignment, breadcrumbSeparator, truncateTitle, maxTitleLength, collapseBreadcrumbs, maxVisibleItems } = attributes;
 	const [isCollapsedExpanded, setIsCollapsedExpanded] = useState(false);
 
@@ -231,7 +226,7 @@ export default function Edit({ attributes, setAttributes }) {
 	return (
 		<>
 			<Inspector attributes={attributes} setAttributes={setAttributes} />
-			<div className="wedocs-document">
+			<div {...blockProps}>
 				<nav aria-label="Breadcrumb">
 					<ol
 						role="list"

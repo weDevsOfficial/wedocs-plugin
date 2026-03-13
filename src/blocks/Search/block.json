@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "wedocs/wedocs-search",
 	"version": "1.0.0",
-	"title": "Searchbar",
+	"title": "weDocs Searchbar",
 	"icon": "search",
 	"category": "wedocs",
 	"description": "Simple search forms for easy user guidance for your documentation",

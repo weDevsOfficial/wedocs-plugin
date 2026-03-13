@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "wedocs/social-share",
 	"version": "1.0.0",
-	"title": "weDocs - Social Share",
+	"title": "weDocs Social Share",
 	"icon": "share",
 	"category": "wedocs",
 	"description": "Add social share buttons to allow users to share documentation on social media platforms",
