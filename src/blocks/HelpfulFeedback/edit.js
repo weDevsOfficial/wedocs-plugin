@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n';
-import { thumbsUp, thumbsDown } from '@wordpress/icons';
 import { Fragment } from '@wordpress/element';
 import {
     useBlockProps,
@@ -59,12 +58,6 @@ const Edit = ({ attributes, setAttributes }) => {
         noButtonActiveColor,
         buttonTextColor,
         buttonTextHoverColor,
-        iconWidth,
-        iconHeight,
-        iconColor,
-        iconHoverColor,
-        innerIconColor,
-        innerIconHoverColor,
         buttonBorderStyle,
         buttonBorderColor,
         buttonBorderHoverColor,
@@ -114,12 +107,9 @@ const Edit = ({ attributes, setAttributes }) => {
         borderRadius: buttonBorderRadius,
         boxShadow: buttonBoxShadow,
         color: buttonTextColor,
-        padding: '12px 24px',
-        margin: '0 8px',
+        padding: '10px 24px',
+        margin: '0 4px',
         cursor: 'pointer',
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '8px',
         transition: 'all 0.3s ease'
     };
 
@@ -131,12 +121,6 @@ const Edit = ({ attributes, setAttributes }) => {
     const noButtonStyle = {
         ...buttonBaseStyle,
         backgroundColor: noButtonColor
-    };
-
-    const iconStyle = {
-        width: iconWidth,
-        height: iconHeight,
-        color: iconColor
     };
 
     return (
@@ -357,9 +341,6 @@ const Edit = ({ attributes, setAttributes }) => {
                             style={yesButtonStyle}
                             disabled
                         >
-                            <span className="wedocs-feedback-icon" style={iconStyle}>
-                                {thumbsUp}
-                            </span>
                             {yesButtonText}
                             {showVoteCount && <span className="vote-count"> (0)</span>}
                         </button>
@@ -369,9 +350,6 @@ const Edit = ({ attributes, setAttributes }) => {
                             style={noButtonStyle}
                             disabled
                         >
-                            <span className="wedocs-feedback-icon" style={iconStyle}>
-                                {thumbsDown}
-                            </span>
                             {noButtonText}
                             {showVoteCount && <span className="vote-count"> (0)</span>}
                         </button>

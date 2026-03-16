@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-13T09:58:21+00:00\n"
+"POT-Creation-Date: 2026-03-16T06:09:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wedocs\n"
@@ -102,49 +102,9 @@ msgstr ""
 msgid "Docs pagination"
 msgstr ""
 
-#: assets/build/blocks/HelpfulFeedback/render.php:310
-#: src/blocks/HelpfulFeedback/render.php:310
-msgid "You found this helpful"
-msgstr ""
-
-#: assets/build/blocks/HelpfulFeedback/render.php:317
-#: src/blocks/HelpfulFeedback/render.php:317
-msgid "You found this not helpful"
-msgstr ""
-
-#: assets/build/blocks/HelpfulFeedback/render.php:323
-#: includes/Elementor/Widgets/DocsGrid.php:195
-#: includes/Elementor/Widgets/DocsGrid.php:245
-#: includes/Elementor/Widgets/DocsGrid.php:328
-#: includes/Elementor/Widgets/DocsGrid.php:353
-#: includes/Elementor/Widgets/DocsGrid.php:366
-#: includes/Elementor/Widgets/DocsGrid.php:431
-#: includes/Elementor/Widgets/DocsGrid.php:621
-#: includes/Elementor/Widgets/DocsGrid.php:1143
-#: includes/Elementor/Widgets/Search.php:70
-#: src/blocks/HelpfulFeedback/render.php:323
-#: templates/content-feedback.php:22
-msgid "Yes"
-msgstr ""
-
-#: assets/build/blocks/HelpfulFeedback/render.php:325
-#: includes/Elementor/Widgets/DocsGrid.php:196
-#: includes/Elementor/Widgets/DocsGrid.php:246
-#: includes/Elementor/Widgets/DocsGrid.php:329
-#: includes/Elementor/Widgets/DocsGrid.php:354
-#: includes/Elementor/Widgets/DocsGrid.php:367
-#: includes/Elementor/Widgets/DocsGrid.php:432
-#: includes/Elementor/Widgets/DocsGrid.php:622
-#: includes/Elementor/Widgets/DocsGrid.php:1144
-#: includes/Elementor/Widgets/Search.php:71
-#: src/blocks/HelpfulFeedback/render.php:325
-#: templates/content-feedback.php:16
-msgid "No"
-msgstr ""
-
 #. translators: %s: formatted date
-#: assets/build/blocks/HelpfulModal/render.php:238
-#: src/blocks/HelpfulModal/render.php:238
+#: assets/build/blocks/HelpfulModal/render.php:252
+#: src/blocks/HelpfulModal/render.php:252
 #: templates/single-docs.php:165
 #: assets/build/index.js:1
 #: src/components/DocListing/ArticleChildrens.js:236
@@ -153,8 +113,8 @@ msgid "Updated on %s"
 msgstr ""
 
 #. translators: %s: formatted date
-#: assets/build/blocks/HelpfulModal/render.php:261
-#: src/blocks/HelpfulModal/render.php:261
+#: assets/build/blocks/HelpfulModal/render.php:282
+#: src/blocks/HelpfulModal/render.php:282
 msgid "Last updated: %s"
 msgstr ""
 
@@ -243,7 +203,7 @@ msgid "Search failed. Please try again."
 msgstr ""
 
 #: assets/build/blocks/QuickSearch/templates/search-results.php:17
-#: includes/Ajax.php:494
+#: includes/Ajax.php:495
 #: src/blocks/QuickSearch/templates/search-results.php:17
 msgid "No results found. Try different keywords."
 msgstr ""
@@ -379,6 +339,7 @@ msgid "Unauthorized operation"
 msgstr ""
 
 #: includes/Ajax.php:123
+#: includes/Ajax.php:391
 #: includes/API/API.php:990
 msgid "Sorry, we have already recorded your feedback!"
 msgstr ""
@@ -419,19 +380,15 @@ msgstr ""
 msgid "You must be logged in to vote."
 msgstr ""
 
-#: includes/Ajax.php:390
-msgid "You have already voted on this article."
-msgstr ""
-
-#: includes/Ajax.php:424
+#: includes/Ajax.php:425
 msgid "Thank you for your feedback!"
 msgstr ""
 
-#: includes/Ajax.php:461
+#: includes/Ajax.php:462
 msgid "Query must be at least 2 characters long."
 msgstr ""
 
-#: includes/Ajax.php:511
+#: includes/Ajax.php:512
 msgid "Template not found."
 msgstr ""
 
@@ -801,7 +758,7 @@ msgstr ""
 #: includes/Elementor/Widgets/Search.php:60
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:334
+#: src/blocks/HelpfulModal/edit.js:335
 msgid "Content"
 msgstr ""
 
@@ -925,6 +882,32 @@ msgstr ""
 msgid "Keep Articles Collapsed"
 msgstr ""
 
+#: includes/Elementor/Widgets/DocsGrid.php:195
+#: includes/Elementor/Widgets/DocsGrid.php:245
+#: includes/Elementor/Widgets/DocsGrid.php:328
+#: includes/Elementor/Widgets/DocsGrid.php:353
+#: includes/Elementor/Widgets/DocsGrid.php:366
+#: includes/Elementor/Widgets/DocsGrid.php:431
+#: includes/Elementor/Widgets/DocsGrid.php:621
+#: includes/Elementor/Widgets/DocsGrid.php:1143
+#: includes/Elementor/Widgets/Search.php:70
+#: templates/content-feedback.php:22
+msgid "Yes"
+msgstr ""
+
+#: includes/Elementor/Widgets/DocsGrid.php:196
+#: includes/Elementor/Widgets/DocsGrid.php:246
+#: includes/Elementor/Widgets/DocsGrid.php:329
+#: includes/Elementor/Widgets/DocsGrid.php:354
+#: includes/Elementor/Widgets/DocsGrid.php:367
+#: includes/Elementor/Widgets/DocsGrid.php:432
+#: includes/Elementor/Widgets/DocsGrid.php:622
+#: includes/Elementor/Widgets/DocsGrid.php:1144
+#: includes/Elementor/Widgets/Search.php:71
+#: templates/content-feedback.php:16
+msgid "No"
+msgstr ""
+
 #: includes/Elementor/Widgets/DocsGrid.php:208
 #: assets/build/block.js:1
 #: assets/build/blocks/DocsGrid/index.js:1
@@ -939,7 +922,7 @@ msgstr ""
 #: assets/build/blocks/PrintButton/index.js:1
 #: assets/build/blocks/Search/index.js:1
 #: src/blocks/DocsGrid/StyleControls.js:364
-#: src/blocks/HelpfulModal/edit.js:341
+#: src/blocks/HelpfulModal/edit.js:342
 #: src/blocks/PrintButton/edit.js:121
 #: src/blocks/Search/edit.js:160
 msgid "Button Text"
@@ -1183,7 +1166,7 @@ msgstr ""
 #: src/blocks/Contributors/edit-old.js:274
 #: src/blocks/Contributors/edit.js:592
 #: src/blocks/DocsGrid/StyleControls.js:400
-#: src/blocks/HelpfulFeedback/edit.js:226
+#: src/blocks/HelpfulFeedback/edit.js:210
 #: src/blocks/PrintButton/Inspector.js:67
 #: src/blocks/QuickSearch/edit.js:191
 #: src/blocks/QuickSearch/edit.js:288
@@ -1432,7 +1415,7 @@ msgstr ""
 #: assets/build/blocks/SocialShare/index.js:1
 #: src/blocks/commonControls/AlignmentControls.js:177
 #: src/blocks/commonControls/CommonControls.js:248
-#: src/blocks/HelpfulFeedback/edit.js:286
+#: src/blocks/HelpfulFeedback/edit.js:270
 #: src/blocks/Search/edit.js:139
 #: src/blocks/SocialShare/edit.js:286
 msgid "Left"
@@ -1451,7 +1434,7 @@ msgstr ""
 #: assets/build/blocks/SocialShare/index.js:1
 #: src/blocks/commonControls/AlignmentControls.js:182
 #: src/blocks/commonControls/CommonControls.js:249
-#: src/blocks/HelpfulFeedback/edit.js:287
+#: src/blocks/HelpfulFeedback/edit.js:271
 #: src/blocks/Search/edit.js:140
 #: src/blocks/SocialShare/edit.js:287
 msgid "Center"
@@ -1471,7 +1454,7 @@ msgstr ""
 #: assets/build/blocks/SocialShare/index.js:1
 #: src/blocks/commonControls/AlignmentControls.js:187
 #: src/blocks/commonControls/CommonControls.js:250
-#: src/blocks/HelpfulFeedback/edit.js:288
+#: src/blocks/HelpfulFeedback/edit.js:272
 #: src/blocks/Search/edit.js:141
 #: src/blocks/SocialShare/edit.js:288
 msgid "Right"
@@ -1499,7 +1482,7 @@ msgstr ""
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: assets/build/blocks/Search/index.js:1
-#: src/blocks/HelpfulModal/edit.js:430
+#: src/blocks/HelpfulModal/edit.js:432
 #: src/blocks/Search/edit.js:176
 msgid "Icon Size"
 msgstr ""
@@ -1509,7 +1492,10 @@ msgstr ""
 #: includes/Elementor/Widgets/Search.php:639
 #: includes/Elementor/Widgets/Search.php:699
 #: assets/build/block.js:1
+#: assets/build/blocks/HelpfulModal/index.js:1
 #: assets/build/blocks/SocialShare/index.js:1
+#: src/blocks/HelpfulModal/edit.js:445
+#: src/blocks/HelpfulModal/edit.js:448
 #: src/blocks/SocialShare/edit.js:376
 msgid "Icon Color"
 msgstr ""
@@ -1523,6 +1509,10 @@ msgid "Icon Rotation"
 msgstr ""
 
 #: includes/Elementor/Widgets/DocsGrid.php:1094
+#: assets/build/block.js:1
+#: assets/build/blocks/HelpfulModal/index.js:1
+#: src/blocks/HelpfulModal/edit.js:456
+#: src/blocks/HelpfulModal/edit.js:459
 msgid "Icon Background Color"
 msgstr ""
 
@@ -1762,7 +1752,7 @@ msgstr ""
 #: src/blocks/Contributors/edit-old.js:453
 #: src/blocks/Contributors/edit-old.js:469
 #: src/blocks/DocsGrid/StyleControls.js:390
-#: src/blocks/HelpfulFeedback/edit.js:327
+#: src/blocks/HelpfulFeedback/edit.js:311
 #: src/blocks/PrintButton/Inspector.js:62
 #: src/blocks/Search/edit.js:216
 #: src/blocks/SocialShare/edit.js:310
@@ -2062,7 +2052,7 @@ msgstr ""
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: assets/build/blocks/PrintButton/index.js:1
 #: src/blocks/commonControls/CommonControls.js:37
-#: src/blocks/HelpfulModal/edit.js:558
+#: src/blocks/HelpfulModal/edit.js:582
 #: src/blocks/PrintButton/Inspector.js:89
 msgid "Spacing"
 msgstr ""
@@ -2544,7 +2534,7 @@ msgstr ""
 #: assets/build/blocks/Search/index.js:1
 #: src/blocks/AdvanceContributors/edit.js:363
 #: src/blocks/Contributors/edit.js:394
-#: src/blocks/HelpfulFeedback/edit.js:152
+#: src/blocks/HelpfulFeedback/edit.js:136
 #: src/blocks/PrintButton/edit.js:108
 #: src/blocks/Search/edit.js:107
 msgid "General Settings"
@@ -2726,7 +2716,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit.js:501
 #: src/blocks/Contributors/edit-old.js:225
 #: src/blocks/Contributors/edit.js:492
-#: src/blocks/HelpfulModal/edit.js:346
+#: src/blocks/HelpfulModal/edit.js:347
 msgid "Show Last Updated Date"
 msgstr ""
 
@@ -2796,7 +2786,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:522
 #: src/blocks/Contributors/edit-old.js:522
 #: src/blocks/Contributors/edit.js:528
-#: src/blocks/HelpfulFeedback/edit.js:209
+#: src/blocks/HelpfulFeedback/edit.js:193
 msgid "Advanced"
 msgstr ""
 
@@ -2818,7 +2808,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit.js:455
 #: src/blocks/Contributors/edit-old.js:527
 #: src/blocks/Contributors/edit.js:533
-#: src/blocks/HelpfulFeedback/edit.js:214
+#: src/blocks/HelpfulFeedback/edit.js:198
 msgid "Separate multiple classes with spaces"
 msgstr ""
 
@@ -2896,7 +2886,7 @@ msgstr ""
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
 #: src/blocks/Contributors/edit.js:567
-#: src/blocks/HelpfulFeedback/edit.js:238
+#: src/blocks/HelpfulFeedback/edit.js:222
 msgid "Container Spacing"
 msgstr ""
 
@@ -2905,9 +2895,9 @@ msgstr ""
 #: assets/build/blocks/HelpfulFeedback/index.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/Contributors/edit.js:575
-#: src/blocks/HelpfulFeedback/edit.js:246
-#: src/blocks/HelpfulModal/edit.js:613
-#: src/blocks/HelpfulModal/edit.js:617
+#: src/blocks/HelpfulFeedback/edit.js:230
+#: src/blocks/HelpfulModal/edit.js:637
+#: src/blocks/HelpfulModal/edit.js:641
 msgid "Container Border"
 msgstr ""
 
@@ -2921,7 +2911,7 @@ msgstr ""
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
 #: src/blocks/Contributors/edit.js:600
-#: src/blocks/HelpfulFeedback/edit.js:258
+#: src/blocks/HelpfulFeedback/edit.js:242
 msgid "Title Colors"
 msgstr ""
 
@@ -2929,7 +2919,7 @@ msgstr ""
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
 #: src/blocks/Contributors/edit.js:605
-#: src/blocks/HelpfulFeedback/edit.js:263
+#: src/blocks/HelpfulFeedback/edit.js:247
 msgid "Title Color"
 msgstr ""
 
@@ -2943,7 +2933,7 @@ msgstr ""
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
 #: src/blocks/Contributors/edit.js:616
-#: src/blocks/HelpfulFeedback/edit.js:294
+#: src/blocks/HelpfulFeedback/edit.js:278
 msgid "Title Spacing"
 msgstr ""
 
@@ -3604,7 +3594,7 @@ msgstr ""
 #: assets/build/blocks/DocsGrid/index.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
 #: src/blocks/DocsGrid/StyleControls.js:299
-#: src/blocks/HelpfulFeedback/edit.js:269
+#: src/blocks/HelpfulFeedback/edit.js:253
 msgid "Title Typography"
 msgstr ""
 
@@ -3622,7 +3612,7 @@ msgstr ""
 #: assets/build/blocks/Search/index.js:1
 #: assets/build/blocks/SocialShare/index.js:1
 #: src/blocks/DocsGrid/StyleControls.js:309
-#: src/blocks/HelpfulFeedback/edit.js:302
+#: src/blocks/HelpfulFeedback/edit.js:286
 #: src/blocks/Search/edit.js:206
 #: src/blocks/SocialShare/edit.js:342
 #: src/blocks/SocialShare/edit.js:351
@@ -3645,7 +3635,7 @@ msgstr ""
 #: assets/build/blocks/DocsGrid/index.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/DocsGrid/StyleControls.js:327
-#: src/blocks/HelpfulModal/edit.js:313
+#: src/blocks/HelpfulModal/edit.js:314
 msgid "Button Text Color"
 msgstr ""
 
@@ -3660,9 +3650,9 @@ msgstr ""
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: assets/build/blocks/Search/index.js:1
 #: src/blocks/DocsGrid/StyleControls.js:340
-#: src/blocks/HelpfulModal/edit.js:327
-#: src/blocks/HelpfulModal/edit.js:591
-#: src/blocks/HelpfulModal/edit.js:595
+#: src/blocks/HelpfulModal/edit.js:328
+#: src/blocks/HelpfulModal/edit.js:615
+#: src/blocks/HelpfulModal/edit.js:619
 #: src/blocks/Search/edit.js:182
 msgid "Button Padding"
 msgstr ""
@@ -3678,7 +3668,7 @@ msgstr ""
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: assets/build/blocks/Search/index.js:1
 #: src/blocks/DocsGrid/StyleControls.js:350
-#: src/blocks/HelpfulModal/edit.js:321
+#: src/blocks/HelpfulModal/edit.js:322
 #: src/blocks/Search/edit.js:232
 msgid "Button Border Radius"
 msgstr ""
@@ -3791,49 +3781,49 @@ msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:79
+#: src/blocks/HelpfulFeedback/edit.js:72
 msgid "Layout 1"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:84
+#: src/blocks/HelpfulFeedback/edit.js:77
 msgid "Layout 2"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:154
+#: src/blocks/HelpfulFeedback/edit.js:138
 msgid "Question Text"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:157
+#: src/blocks/HelpfulFeedback/edit.js:141
 msgid "The question to ask users about the article"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:161
+#: src/blocks/HelpfulFeedback/edit.js:145
 msgid "Yes Button Text"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:167
+#: src/blocks/HelpfulFeedback/edit.js:151
 msgid "No Button Text"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:173
+#: src/blocks/HelpfulFeedback/edit.js:157
 msgid "Thank You Message"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:176
+#: src/blocks/HelpfulFeedback/edit.js:160
 msgid "Message shown after voting"
 msgstr ""
 
@@ -3841,113 +3831,113 @@ msgstr ""
 #: assets/build/blocks/AdvanceContributors/index.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
 #: src/blocks/commonControls/DisplayControls.js:90
-#: src/blocks/HelpfulFeedback/edit.js:180
+#: src/blocks/HelpfulFeedback/edit.js:164
 msgid "Display Options"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:181
+#: src/blocks/HelpfulFeedback/edit.js:165
 msgid "Layout Style"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:189
+#: src/blocks/HelpfulFeedback/edit.js:173
 msgid "Inline Layout"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:192
+#: src/blocks/HelpfulFeedback/edit.js:176
 msgid "Display question and buttons in a single row"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:196
+#: src/blocks/HelpfulFeedback/edit.js:180
 msgid "Show Vote Count"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:202
+#: src/blocks/HelpfulFeedback/edit.js:186
 msgid "Allow Anonymous Voting"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:205
+#: src/blocks/HelpfulFeedback/edit.js:189
 msgid "Allow guests to vote without logging in"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:211
-#: src/blocks/HelpfulModal/edit.js:640
+#: src/blocks/HelpfulFeedback/edit.js:195
+#: src/blocks/HelpfulModal/edit.js:664
 msgid "Additional CSS Class(es)"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
 #: assets/build/blocks/SocialShare/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:221
+#: src/blocks/HelpfulFeedback/edit.js:205
 #: src/blocks/SocialShare/edit.js:438
 msgid "Container Colors"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:231
+#: src/blocks/HelpfulFeedback/edit.js:215
 msgid "Background Hover Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:283
+#: src/blocks/HelpfulFeedback/edit.js:267
 msgid "Title Alignment"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:307
+#: src/blocks/HelpfulFeedback/edit.js:291
 msgid "Yes Button"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:312
+#: src/blocks/HelpfulFeedback/edit.js:296
 msgid "Yes Hover"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:317
+#: src/blocks/HelpfulFeedback/edit.js:301
 msgid "No Button"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:322
+#: src/blocks/HelpfulFeedback/edit.js:306
 msgid "No Hover"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:333
+#: src/blocks/HelpfulFeedback/edit.js:317
 msgid "Button Border"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:381
+#: src/blocks/HelpfulFeedback/edit.js:359
 msgid "Preview mode - voting disabled in editor"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:267
+#: src/blocks/HelpfulModal/edit.js:268
 msgid "Preview Modal"
 msgstr ""
 
@@ -3955,7 +3945,7 @@ msgstr ""
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: assets/build/blocks/PrintButton/index.js:1
 #: assets/build/blocks/SocialShare/index.js:1
-#: src/blocks/HelpfulModal/edit.js:275
+#: src/blocks/HelpfulModal/edit.js:276
 #: src/blocks/PrintButton/edit.js:110
 #: src/blocks/SocialShare/edit.js:274
 msgid "Layout"
@@ -3963,19 +3953,19 @@ msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:280
+#: src/blocks/HelpfulModal/edit.js:281
 msgid "Container Layout"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:281
+#: src/blocks/HelpfulModal/edit.js:282
 msgid "Choose between stacked (vertical) or row (horizontal) layout."
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:285
+#: src/blocks/HelpfulModal/edit.js:286
 msgid "Stacked"
 msgstr ""
 
@@ -3983,19 +3973,19 @@ msgstr ""
 #: assets/build/blocks/AdvanceContributors/index.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/commonControls/AlignmentControls.js:90
-#: src/blocks/HelpfulModal/edit.js:286
+#: src/blocks/HelpfulModal/edit.js:287
 msgid "Row"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:292
+#: src/blocks/HelpfulModal/edit.js:293
 msgid "Trigger Style"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:293
+#: src/blocks/HelpfulModal/edit.js:294
 msgid "Display the trigger as a text link or a button."
 msgstr ""
 
@@ -4003,138 +3993,138 @@ msgstr ""
 #: assets/build/blocks/AdvanceContributors/index.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/commonControls/ColorsControls.js:229
-#: src/blocks/HelpfulModal/edit.js:297
+#: src/blocks/HelpfulModal/edit.js:298
 #: src/blocks/TableOfContents/ColorsControls.js:229
 msgid "Link"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:298
+#: src/blocks/HelpfulModal/edit.js:299
 msgid "Button"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:304
+#: src/blocks/HelpfulModal/edit.js:305
 msgid "Button Background Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:324
+#: src/blocks/HelpfulModal/edit.js:325
 msgid "e.g., 6px, 20px, 9999px (pill)"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:336
+#: src/blocks/HelpfulModal/edit.js:337
 msgid "Main Text"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:352
+#: src/blocks/HelpfulModal/edit.js:353
 msgid "Modal Title"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:357
+#: src/blocks/HelpfulModal/edit.js:358
 msgid "Name Label"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:362
+#: src/blocks/HelpfulModal/edit.js:363
 msgid "Email Label"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:367
+#: src/blocks/HelpfulModal/edit.js:368
 msgid "Email Placeholder"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:372
+#: src/blocks/HelpfulModal/edit.js:373
 msgid "Show Subject Field"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:378
+#: src/blocks/HelpfulModal/edit.js:379
 msgid "Subject Label"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:384
+#: src/blocks/HelpfulModal/edit.js:385
 msgid "Message Label"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:389
+#: src/blocks/HelpfulModal/edit.js:390
 msgid "Submit Button Text"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:395
+#: src/blocks/HelpfulModal/edit.js:396
 msgid "Success Message"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:400
+#: src/blocks/HelpfulModal/edit.js:401
 msgid "Error Message"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:407
+#: src/blocks/HelpfulModal/edit.js:408
 msgid "Icon Settings"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:418
-#: src/blocks/HelpfulModal/edit.js:422
+#: src/blocks/HelpfulModal/edit.js:420
+#: src/blocks/HelpfulModal/edit.js:424
 msgid "Icon Type"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:434
+#: src/blocks/HelpfulModal/edit.js:436
 msgid "Icon Size (px)"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:444
+#: src/blocks/HelpfulModal/edit.js:468
 msgid "Layout & Alignment"
-msgstr ""
-
-#: assets/build/block.js:1
-#: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:457
-#: src/blocks/HelpfulModal/edit.js:461
-msgid "Text Alignment"
-msgstr ""
-
-#: assets/build/block.js:1
-#: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:469
-#: src/blocks/HelpfulModal/edit.js:473
-msgid "Modal Heading Alignment"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/HelpfulModal/edit.js:481
 #: src/blocks/HelpfulModal/edit.js:485
+msgid "Text Alignment"
+msgstr ""
+
+#: assets/build/block.js:1
+#: assets/build/blocks/HelpfulModal/index.js:1
+#: src/blocks/HelpfulModal/edit.js:493
+#: src/blocks/HelpfulModal/edit.js:497
+msgid "Modal Heading Alignment"
+msgstr ""
+
+#: assets/build/block.js:1
+#: assets/build/blocks/HelpfulModal/index.js:1
+#: src/blocks/HelpfulModal/edit.js:505
+#: src/blocks/HelpfulModal/edit.js:509
 msgid "Button Alignment"
 msgstr ""
 
@@ -4142,73 +4132,73 @@ msgstr ""
 #: assets/build/blocks/AdvanceContributors/index.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/AdvanceContributors/edit.js:564
-#: src/blocks/HelpfulModal/edit.js:497
-msgid "Dimensions"
-msgstr ""
-
-#: assets/build/block.js:1
-#: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:509
-#: src/blocks/HelpfulModal/edit.js:513
-msgid "Modal Width"
-msgstr ""
-
-#: assets/build/block.js:1
-#: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:516
-msgid "e.g., 500px, 80%, auto"
-msgstr ""
-
-#: assets/build/block.js:1
-#: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/HelpfulModal/edit.js:521
-#: src/blocks/HelpfulModal/edit.js:525
-msgid "Modal Height"
-msgstr ""
-
-#: assets/build/block.js:1
-#: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:528
-msgid "e.g., 400px, 80vh, auto"
+msgid "Dimensions"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/HelpfulModal/edit.js:533
 #: src/blocks/HelpfulModal/edit.js:537
-msgid "Button Width"
+msgid "Modal Width"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/HelpfulModal/edit.js:540
-msgid "e.g., 100%, 200px, auto"
+msgid "e.g., 500px, 80%, auto"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/HelpfulModal/edit.js:545
 #: src/blocks/HelpfulModal/edit.js:549
-msgid "Container Border Radius"
+msgid "Modal Height"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/HelpfulModal/edit.js:552
-msgid "e.g., 8px, 1rem"
+msgid "e.g., 400px, 80vh, auto"
+msgstr ""
+
+#: assets/build/block.js:1
+#: assets/build/blocks/HelpfulModal/index.js:1
+#: src/blocks/HelpfulModal/edit.js:557
+#: src/blocks/HelpfulModal/edit.js:561
+msgid "Button Width"
+msgstr ""
+
+#: assets/build/block.js:1
+#: assets/build/blocks/HelpfulModal/index.js:1
+#: src/blocks/HelpfulModal/edit.js:564
+msgid "e.g., 100%, 200px, auto"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/HelpfulModal/edit.js:569
 #: src/blocks/HelpfulModal/edit.js:573
+msgid "Container Border Radius"
+msgstr ""
+
+#: assets/build/block.js:1
+#: assets/build/blocks/HelpfulModal/index.js:1
+#: src/blocks/HelpfulModal/edit.js:576
+msgid "e.g., 8px, 1rem"
+msgstr ""
+
+#: assets/build/block.js:1
+#: assets/build/blocks/HelpfulModal/index.js:1
+#: src/blocks/HelpfulModal/edit.js:593
+#: src/blocks/HelpfulModal/edit.js:597
 msgid "Container Padding"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:580
-#: src/blocks/HelpfulModal/edit.js:584
+#: src/blocks/HelpfulModal/edit.js:604
+#: src/blocks/HelpfulModal/edit.js:608
 msgid "Container Margin"
 msgstr ""
 
@@ -4216,56 +4206,56 @@ msgstr ""
 #: assets/build/blocks/AdvanceContributors/index.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/AdvanceContributors/edit.js:567
-#: src/blocks/HelpfulModal/edit.js:603
+#: src/blocks/HelpfulModal/edit.js:627
 msgid "Border & Shadow"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:624
-#: src/blocks/HelpfulModal/edit.js:628
+#: src/blocks/HelpfulModal/edit.js:648
+#: src/blocks/HelpfulModal/edit.js:652
 msgid "Container Box Shadow"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:631
+#: src/blocks/HelpfulModal/edit.js:655
 msgid "CSS box-shadow value, e.g., 0 2px 4px rgba(0,0,0,0.1)"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:638
+#: src/blocks/HelpfulModal/edit.js:662
 msgid "Advanced Settings"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:643
+#: src/blocks/HelpfulModal/edit.js:667
 msgid "Space-separated CSS classes"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:646
+#: src/blocks/HelpfulModal/edit.js:670
 msgid "Analytics Event"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:649
+#: src/blocks/HelpfulModal/edit.js:673
 msgid "Used for data-track attribute"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:677
+#: src/blocks/HelpfulModal/edit.js:700
 msgid "Updated on "
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/HelpfulModal/edit.js:711
+#: src/blocks/HelpfulModal/edit.js:739
 msgid "Last updated: "
 msgstr ""
 

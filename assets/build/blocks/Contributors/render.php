@@ -235,16 +235,14 @@ if ( !function_exists('render_wedocs_contributors_block')){
 
         // Generate unique block ID
         $block_id = wedocs_generate_block_id('wedocs-contributors');
-
-        // Build wrapper attributes using get_block_wrapper_attributes for proper block support integration
         $css_classes[] = $block_id;
-        $wrapper_attributes = get_block_wrapper_attributes([
-            'class' => implode(' ', $css_classes),
-            'style' => !empty($container_styles) ? wedocs_styles_to_css($container_styles) : '',
-        ]);
+
+        // Output styles directly — same pattern as HelpfulFeedback block
+        // (routing through get_block_wrapper_attributes can alter/strip custom style values)
+        $inline_style = !empty($container_styles) ? ' style="' . esc_attr( wedocs_styles_to_css( $container_styles ) ) . '"' : '';
 
         // Start building output
-        $output = '<div ' . $wrapper_attributes . '>';
+        $output = '<div class="' . esc_attr( implode( ' ', $css_classes ) ) . '"' . $inline_style . '>';
 
         // Schema markup
         $schema_data = [];

@@ -387,7 +387,8 @@ class Ajax {
 
         if ( $has_voted ) {
             wp_send_json_error( [
-                'message' => __( 'You have already voted on this article.', 'wedocs' )
+                'already_voted' => true,
+                'message'       => __( 'Sorry, we have already recorded your feedback!', 'wedocs' ),
             ] );
         }
 

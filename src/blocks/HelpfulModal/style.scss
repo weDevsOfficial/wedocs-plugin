@@ -5,9 +5,13 @@
 
 .wp-block-wedocs-block-need-more-help-contact-modal {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 
 	.need-more-help-container {
-		position: relative;
+		flex: 1;
+		box-sizing: border-box;
 
 		p {
 			margin: 0 0 16px 0;
@@ -40,7 +44,7 @@
 			}
 		}
 
-		// Row layout
+		// Row layout — items vertically centered within full card height
 		&.layout-row {
 			display: flex;
 			align-items: center;
@@ -48,12 +52,18 @@
 
 			p {
 				margin: 0;
-				flex: 1;
 			}
 
 			.need-more-help-icon-circle {
 				flex-shrink: 0;
 			}
+		}
+
+		// Stacked layout — content vertically centered within full card height
+		&.layout-stacked {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
 		}
 	}
 

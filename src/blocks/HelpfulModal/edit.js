@@ -83,6 +83,7 @@ export default function Edit({ attributes, setAttributes }) {
 		containerBoxShadow,
 		iconType,
 		iconColor,
+		iconBgColor,
 		iconSize,
 		textColor,
 		textTypography,
@@ -143,8 +144,8 @@ export default function Edit({ attributes, setAttributes }) {
 			case 'email':
 			default:
 				return (
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-						<path d="M4 20q-.825 0-1.413-.588T2 18V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.588 1.413T20 20H4Zm8-7L4 8v10h16V8l-8 5Zm0-2 8-5H4l8 5ZM4 8V6v12V8Z"/>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 25" fill="none" style={{ width: '100%', height: '100%' }}>
+						<path d="M1.429 21.292V9.924c0-.851.425-1.646 1.134-2.118l8.911-5.941c.855-.57 1.969-.57 2.825 0l8.911 5.941c.708.472 1.134 1.267 1.134 2.118v11.367m-22.914 0c0 1.406 1.14 2.546 2.546 2.546h17.822c1.406 0 2.546-1.14 2.546-2.546m-22.914 0l8.593-5.728m14.321 5.728l-8.593-5.728M1.429 9.835l8.593 5.728m14.321-5.728l-8.593 5.728m0 0l-1.452.968c-.855.57-1.969.57-2.825 0l-1.452-.968" stroke="currentColor" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
 					</svg>
 				);
 		}
@@ -408,7 +409,8 @@ export default function Edit({ attributes, setAttributes }) {
 					resetAll={() => {
 						setAttributes({
 							iconType: 'email',
-							iconColor: undefined,
+							iconColor: '#6c5ce7',
+							iconBgColor: '#f0ecfc',
 							iconSize: '24px'
 						});
 					}}
@@ -436,6 +438,28 @@ export default function Edit({ attributes, setAttributes }) {
 							onChange={(value) => setAttributes({ iconSize: value + 'px' })}
 							min={12}
 							max={48}
+						/>
+					</ToolsPanelItem>
+					<ToolsPanelItem
+						hasValue={() => !!iconColor && iconColor !== '#6c5ce7'}
+						label={__('Icon Color', 'wedocs')}
+						onDeselect={() => setAttributes({ iconColor: '#6c5ce7' })}
+					>
+						<p style={{ marginBottom: '8px', fontWeight: 500 }}>{__('Icon Color', 'wedocs')}</p>
+						<ColorPalette
+							value={iconColor || '#6c5ce7'}
+							onChange={(value) => setAttributes({ iconColor: value || '#6c5ce7' })}
+						/>
+					</ToolsPanelItem>
+					<ToolsPanelItem
+						hasValue={() => !!iconBgColor && iconBgColor !== '#f0ecfc'}
+						label={__('Icon Background Color', 'wedocs')}
+						onDeselect={() => setAttributes({ iconBgColor: '#f0ecfc' })}
+					>
+						<p style={{ marginBottom: '8px', fontWeight: 500 }}>{__('Icon Background Color', 'wedocs')}</p>
+						<ColorPalette
+							value={iconBgColor || '#f0ecfc'}
+							onChange={(value) => setAttributes({ iconBgColor: value || '#f0ecfc' })}
 						/>
 					</ToolsPanelItem>
 				</ToolsPanel>
@@ -657,15 +681,14 @@ export default function Edit({ attributes, setAttributes }) {
 						<>
 							<span
 								style={{
-									color: iconColor,
+									color: iconColor || '#6c5ce7',
 									width: iconSize,
 									height: iconSize,
 									display: 'inline-flex',
 									flexShrink: 0,
-									backgroundColor: iconColor ? undefined : '#f0ecfc',
+									backgroundColor: iconBgColor || '#f0ecfc',
 									borderRadius: '50%',
 									padding: '12px',
-									fill: iconColor || '#6c5ce7',
 								}}
 							>
 								{IconComponent}
@@ -688,22 +711,27 @@ export default function Edit({ attributes, setAttributes }) {
 						</>
 					) : (
 						<>
+							<span
+								style={{
+									color: iconColor || '#6c5ce7',
+									width: iconSize,
+									height: iconSize,
+									display: 'inline-flex',
+									flexShrink: 0,
+									backgroundColor: iconBgColor || '#f0ecfc',
+									borderRadius: '50%',
+									padding: '12px',
+									marginBottom: '12px',
+								}}
+							>
+								{IconComponent}
+							</span>
 							<p style={textStyles}>{mainText}</p>
 							<a
 								style={linkStyles}
 								onClick={() => setShowModal(true)}
 								data-track={analyticsEvent}
 							>
-								<span
-									style={{
-										color: iconColor,
-										width: iconSize,
-										height: iconSize,
-										display: 'inline-flex'
-									}}
-								>
-									{IconComponent}
-								</span>
 								{buttonText}
 							</a>
 							{showLastUpdated && (

@@ -238,13 +238,6 @@
         }
     }
 
-    // Voted state
-    &.has-voted {
-        .wedocs-feedback-buttons {
-            display: none;
-        }
-    }
-
     // Animation for feedback transitions
     .wedocs-feedback-thank-you,
     .wedocs-feedback-buttons {
