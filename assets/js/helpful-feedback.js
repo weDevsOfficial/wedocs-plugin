@@ -72,11 +72,11 @@
 
         handleVoteSuccess(response, $container, vote, thankYouMessage) {
             if (response.success) {
-                // Show thank you message
-                this.showThankYou($container, thankYouMessage);
-
                 // Mark as voted
                 $container.addClass('has-voted voted-' + vote);
+
+                // Show thank you message (hides content, full-width centered)
+                this.showThankYou($container, thankYouMessage);
 
                 // Fire custom event
                 $(document).trigger('wedocs:feedback:voted', {
@@ -85,8 +85,8 @@
                     data: response.data
                 });
             } else if (response.data && response.data.already_voted) {
-                // User already voted — keep buttons visible, show info message
-                this.showError($container, response.data.message);
+                // User already voted — hide content, show full-width centered message
+                this.showFullMessage($container, response.data.message, 'already-voted');
             } else {
                 this.showError($container, response.data.message || 'Voting failed');
             }
@@ -116,23 +116,21 @@
         }
 
         showThankYou($container, thankYouMessage) {
-            const $title = $container.find('.wedocs-feedback-title');
-            const $buttons = $container.find('.wedocs-feedback-buttons');
+            this.showFullMessage($container, thankYouMessage, 'thank-you');
+        }
 
-            const thankYouContent = `
-                <div class="wedocs-feedback-thank-you">
-                    <div class="wedocs-feedback-title">
-                        ${thankYouMessage}
-                    </div>
-                </div>
-            `;
+        showFullMessage($container, message, type) {
+            const $children = $container.children(':not(.wedocs-feedback-full-message)');
 
-            // Fade out buttons and title, fade in thank you message
-            $buttons.fadeOut(300, function() {
-                $title.fadeOut(200, function() {
-                    $container.append(thankYouContent);
-                    $container.find('.wedocs-feedback-thank-you').hide().fadeIn(400);
-                });
+            $children.fadeOut(250, () => {
+                $container.find('.wedocs-feedback-full-message').remove();
+
+                const color = type === 'already-voted' ? '#dc3545' : 'inherit';
+                const $msg = $(`<div class="wedocs-feedback-full-message wedocs-feedback-full-message--${type}" style="width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 40px; color: ${color};"></div>`);
+                $msg.text(message);
+
+                $container.append($msg);
+                $msg.hide().fadeIn(300);
             });
         }
 
@@ -140,11 +138,9 @@
             // Remove any existing error messages
             $container.find('.wedocs-feedback-error').remove();
 
-            // Create error message element
             const $error = $('<div class="wedocs-feedback-error" style="color: #dc3545; margin-top: 10px; padding: 8px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; font-size: 14px;"></div>');
             $error.text(message);
 
-            // Append error message
             $container.append($error);
 
             // Auto-hide error after 5 seconds
