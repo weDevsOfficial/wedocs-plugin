@@ -126,7 +126,7 @@
                 $container.find('.wedocs-feedback-full-message').remove();
 
                 const color = type === 'already-voted' ? '#dc3545' : 'inherit';
-                const $msg = $(`<div class="wedocs-feedback-full-message wedocs-feedback-full-message--${type}" style="width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 40px; color: ${color};"></div>`);
+                const $msg = $(`<div class="wedocs-feedback-full-message wedocs-feedback-full-message--${type}" style="width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 40px; font-size: 14px; color: ${color};"></div>`);
                 $msg.text(message);
 
                 $container.append($msg);
