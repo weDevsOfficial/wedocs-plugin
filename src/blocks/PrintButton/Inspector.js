@@ -3,12 +3,12 @@ import {
 	PanelBody,
 	SelectControl,
 	RangeControl,
+	ColorPalette,
 	__experimentalUnitControl as UnitControl,
 	__experimentalBoxControl as BoxControl,
 } from '@wordpress/components';
 import {
 	InspectorControls,
-	PanelColorSettings,
 } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 
@@ -48,41 +48,41 @@ const Inspector = ({ attributes, setAttributes }) => {
 		<Fragment>
 			<InspectorControls group="styles">
 				<PanelBody
-					title={__('Style Settings', 'wedocs')}
+					title={__('Color Settings', 'wedocs')}
 					initialOpen={false}
 				>
-
-					<PanelColorSettings
-						title={__('Color Settings', 'wedocs')}
-						initialOpen={false}
-						colorSettings={[
-							{
-								value: textColor,
-								onChange: updateAttribute('textColor'),
-								label: __('Text Color', 'wedocs'),
-							},
-							{
-								value: backgroundColor,
-								onChange: updateAttribute('backgroundColor'),
-								label: __('Background Color', 'wedocs'),
-							},
-						]}
+					<p style={{ marginBottom: '8px', fontWeight: '500' }}>
+						{__('Text Color', 'wedocs')}
+					</p>
+					<ColorPalette
+						value={textColor}
+						onChange={updateAttribute('textColor')}
 					/>
-					<PanelColorSettings
-						title={__('Hover Color Settings', 'wedocs')}
-						initialOpen={false}
-						colorSettings={[
-							{
-								value: hoverTextColor,
-								onChange: updateAttribute('hoverTextColor'),
-								label: __('Hover Text Color', 'wedocs'),
-							},
-							{
-								value: hoverBackgroundColor,
-								onChange: updateAttribute('hoverBackgroundColor'),
-								label: __('Hover Background Color', 'wedocs'),
-							},
-						]}
+					<p style={{ marginBottom: '8px', fontWeight: '500' }}>
+						{__('Background Color', 'wedocs')}
+					</p>
+					<ColorPalette
+						value={backgroundColor}
+						onChange={updateAttribute('backgroundColor')}
+					/>
+				</PanelBody>
+				<PanelBody
+					title={__('Hover Color Settings', 'wedocs')}
+					initialOpen={false}
+				>
+					<p style={{ marginBottom: '8px', fontWeight: '500' }}>
+						{__('Hover Text Color', 'wedocs')}
+					</p>
+					<ColorPalette
+						value={hoverTextColor}
+						onChange={updateAttribute('hoverTextColor')}
+					/>
+					<p style={{ marginBottom: '8px', fontWeight: '500' }}>
+						{__('Hover Background Color', 'wedocs')}
+					</p>
+					<ColorPalette
+						value={hoverBackgroundColor}
+						onChange={updateAttribute('hoverBackgroundColor')}
 					/>
 				</PanelBody>
 
@@ -218,16 +218,12 @@ const Inspector = ({ attributes, setAttributes }) => {
 						onChange={updateAttribute('borderStyle')}
 					/>
 
-					<PanelColorSettings
-						title={__('Border Color', 'wedocs')}
-						initialOpen={false}
-						colorSettings={[
-							{
-								value: borderColor,
-								onChange: updateAttribute('borderColor'),
-								label: __('Border Color', 'wedocs'),
-							},
-						]}
+					<p style={{ marginBottom: '8px', fontWeight: '500' }}>
+						{__('Border Color', 'wedocs')}
+					</p>
+					<ColorPalette
+						value={borderColor}
+						onChange={updateAttribute('borderColor')}
 					/>
 
 					<SelectControl
