@@ -170,7 +170,7 @@ final class WeDocs {
         add_action( 'init', [ $this, 'localization_setup' ] );
         add_action( 'init', [ $this, 'register_blocks' ] );
         // add_action('init', [$this, 'register_blocks']);
-        add_action('block_categories_all', [$this, 'register_block_category']);
+        add_filter('block_categories_all', [$this, 'register_block_category']);
         add_filter( 'render_block', [ $this, 'gate_pro_blocks' ], 10, 2 );
 
         // registeer our widget
@@ -425,14 +425,3 @@ function dequeue_wedocs_pro_frontend_css() {
 add_action( 'wp_enqueue_scripts', 'dequeue_wedocs_pro_frontend_css', 20 );
 
 
-// Add custom category for your blocks
-add_filter( 'block_categories_all', function( $categories, $post ) {
-    // Add "wedocs" category if not already there
-    $categories[] = array(
-        'slug'  => 'wedocs',
-        'title' => __( 'weDocs Blocks', 'wedocs' ),
-        'icon'  => null, // optional, doesn't show everywhere
-    );
-
-    return $categories;
-}, 10, 2 );
