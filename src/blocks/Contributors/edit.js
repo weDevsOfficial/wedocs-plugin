@@ -42,8 +42,14 @@ const Edit = (props) => {
 			backgroundColor: attributes.backgroundType === 'classic' ? attributes.backgroundColor : undefined,
 			backgroundImage: attributes.backgroundType === 'gradient' ? attributes.backgroundGradient :
 				(attributes.backgroundImage?.url ? `url(${attributes.backgroundImage.url})` : undefined),
-			padding: `${attributes.padding.top} ${attributes.padding.right} ${attributes.padding.bottom} ${attributes.padding.left}`,
-			margin: `${attributes.margin.top} ${attributes.margin.right} ${attributes.margin.bottom} ${attributes.margin.left}`,
+			paddingTop: attributes.padding.top,
+			paddingRight: attributes.padding.right,
+			paddingBottom: attributes.padding.bottom,
+			paddingLeft: attributes.padding.left,
+			marginTop: attributes.margin.top,
+			marginRight: attributes.margin.right,
+			marginBottom: attributes.margin.bottom,
+			marginLeft: attributes.margin.left,
 			borderStyle: attributes.borderStyle !== 'none' ? attributes.borderStyle : undefined,
 			borderWidth: attributes.borderStyle !== 'none' ?
 				`${attributes.borderWidth.top} ${attributes.borderWidth.right} ${attributes.borderWidth.bottom} ${attributes.borderWidth.left}` : undefined,
