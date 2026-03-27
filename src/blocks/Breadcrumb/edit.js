@@ -247,7 +247,8 @@ export default function Edit({ attributes, setAttributes }) {
 							fontStyle: fontStyle ? fontStyle : undefined,
 							textTransform: textTransform ? textTransform : undefined,
 							textDecoration: textDecoration ? textDecoration : undefined,
-							letterSpacing: letterSpacing ? letterSpacing : undefined
+							letterSpacing: letterSpacing ? letterSpacing : undefined,
+							fontSize: fontSize ? getTypographyValue(fontSize) : (attributes.fontSize ? getTypographyValue(attributes.fontSize) : undefined)
 						}}
 					>
 						{breadcrumbs.map((breadcrumb, index) => (

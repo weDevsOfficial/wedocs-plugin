@@ -354,10 +354,6 @@ const Edit = ({ attributes, setAttributes }) => {
                             {showVoteCount && <span className="vote-count"> (0)</span>}
                         </button>
                     </div>
-
-                    <div className="wedocs-feedback-preview-note" style={{ marginTop: '10px', fontSize: '12px', opacity: '0.7' }}>
-                        {__('Preview mode - voting disabled in editor', 'wedocs')}
-                    </div>
                 </div>
             </div>
         </Fragment>

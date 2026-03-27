@@ -40,6 +40,16 @@
 		},
 		"__experimentalBorder": false
 	},
+	"example": {
+		"attributes": {
+			"questionText": "Was this article helpful to you?",
+			"layout": "layout1",
+			"alignment": "center",
+			"showVoteCount": true,
+			"yesButtonText": "Yes",
+			"noButtonText": "No"
+		}
+	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",

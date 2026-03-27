@@ -13,6 +13,11 @@
 	"editorScript": "file:./index.js",
 	"style": "file:./style-index.css",
 	"render": "file:./render.php",
+	"example": {
+		"attributes": {
+			"searchBoxPlaceholder": "Quick search..."
+		}
+	},
 	"attributes": {
 		"searchBoxPlaceholder": {
 			"type": "string",

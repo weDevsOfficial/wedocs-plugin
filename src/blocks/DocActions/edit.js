@@ -32,6 +32,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		borderWidth,
 		borderRadius,
 		hoverBackgroundColor,
+		hoverTextColor,
 		fontSize,
 		padding,
 		margin,
@@ -238,6 +239,11 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 							label: __('Hover Background', 'wedocs-plugin'),
 							value: hoverBackgroundColor,
 							onChange: (value) => setAttributes({ hoverBackgroundColor: value })
+						},
+						{
+							label: __('Hover Text Color', 'wedocs-plugin'),
+							value: hoverTextColor,
+							onChange: (value) => setAttributes({ hoverTextColor: value })
 						}
 					]}
 				/>

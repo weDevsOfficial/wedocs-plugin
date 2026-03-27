@@ -6,8 +6,7 @@ import {
 	SelectControl,
 	Button,
 	Spinner,
-	Notice,
-	__experimentalBoxControl as BoxControl
+	Notice
 } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
@@ -36,6 +35,9 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		titleFontWeight,
 		contentFontSize,
 		borderRadius,
+		borderStyle,
+		borderWidth,
+		borderColor,
 		padding,
 		margin
 	} = attributes;
@@ -182,6 +184,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 			backgroundColor,
 			color: textColor,
 			borderRadius,
+			border: borderStyle !== 'none' ? `${borderWidth} ${borderStyle} ${borderColor}` : undefined,
 			padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
 			margin: `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
 		}
@@ -424,13 +427,17 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					onChange={(value) => setAttributes({ margin: value })}
 				/>
 
-				<PanelBody title={__('Border Settings', 'wedocs-plugin')}>
-					<BoxControl
-						label={__('Border Radius', 'wedocs-plugin')}
-						values={{ top: borderRadius, right: borderRadius, bottom: borderRadius, left: borderRadius }}
-						onChange={(value) => setAttributes({ borderRadius: value.top })}
-					/>
-				</PanelBody>
+				<BorderPanel
+					title={__('Border Settings', 'wedocs-plugin')}
+					borderStyle={borderStyle}
+					borderWidth={borderWidth}
+					borderColor={borderColor}
+					borderRadius={borderRadius}
+					onStyleChange={(value) => setAttributes({ borderStyle: value })}
+					onWidthChange={(value) => setAttributes({ borderWidth: value })}
+					onColorChange={(value) => setAttributes({ borderColor: value })}
+					onRadiusChange={(value) => setAttributes({ borderRadius: value })}
+				/>
 			</InspectorControls>
 
 			<div {...blockProps}>

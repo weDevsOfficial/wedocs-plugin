@@ -17,6 +17,9 @@ export default function save({ attributes }) {
 		titleFontWeight,
 		contentFontSize,
 		borderRadius,
+		borderStyle,
+		borderWidth,
+		borderColor,
 		padding,
 		margin
 	} = attributes;
@@ -63,6 +66,7 @@ export default function save({ attributes }) {
 			backgroundColor,
 			color: textColor,
 			borderRadius,
+			border: borderStyle !== 'none' ? `${borderWidth} ${borderStyle} ${borderColor}` : undefined,
 			padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
 			margin: `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
 		}

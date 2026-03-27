@@ -8,6 +8,13 @@
 	"category": "wedocs",
 	"description": "Add a print button to allow users to print the current page",
 	"keywords": ["print", "button", "wedocs", "documentation"],
+	"example": {
+		"attributes": {
+			"layout": "layout1",
+			"buttonText": "Print",
+			"showIcon": true
+		}
+	},
 	"supports": {
 		"html": false
 	},

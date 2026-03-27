@@ -7,6 +7,22 @@
 	"icon": "share",
 	"category": "wedocs",
 	"description": "Add social share buttons to allow users to share documentation on social media platforms",
+	"example": {
+		"attributes": {
+			"labelText": "Share This Article:",
+			"showLabel": true,
+			"enabledPlatforms": {
+				"facebook": true,
+				"twitter": true,
+				"linkedin": true,
+				"pinterest": true
+			},
+			"buttonStyle": "icon-only",
+			"buttonSize": "medium",
+			"buttonShape": "rounded",
+			"layout": "horizontal"
+		}
+	},
 	"supports": {
 		"html": false,
 		"anchor": true

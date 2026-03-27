@@ -7,6 +7,13 @@
 	"icon": "layout",
 	"category": "wedocs",
 	"description": "Display a sidebar for documentation navigation",
+	"example": {
+		"attributes": {
+			"enableNestedArticles": true,
+			"sectionTitleTag": "h3",
+			"articleTitleTag": "h4"
+		}
+	},
 	"supports": {
 		"html": true,
 		"spacing": {

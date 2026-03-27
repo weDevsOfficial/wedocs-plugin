@@ -3,13 +3,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: weDocs 2.2.1\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wedocs-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-16T07:15:25+00:00\n"
+"POT-Creation-Date: 2026-03-27T05:10:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wedocs\n"
@@ -7087,6 +7087,21 @@ msgid "Image analysis increases API token usage significantly."
 msgstr ""
 
 #: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:378
+msgid "No providers available"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:408
+msgid "Loading models…"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/Settings/AiSettings.js:464
+msgid "No models available"
+msgstr ""
+
+#: assets/build/index.js:1
 #: src/components/Settings/AiSettings.js:479
 msgid "AI Control Settings"
 msgstr ""
@@ -7099,11 +7114,6 @@ msgstr ""
 #: assets/build/index.js:1
 #: src/components/Settings/AiSettings.js:497
 msgid "This provider will be used as the default for all AI features unless overridden"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/Settings/AiSettings.js:378
-msgid "No providers available"
 msgstr ""
 
 #: assets/build/index.js:1
@@ -7139,16 +7149,6 @@ msgstr ""
 #: assets/build/index.js:1
 #: src/components/Settings/AiSettings.js:608
 msgid "Select the model for this AI provider"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/Settings/AiSettings.js:408
-msgid "Loading models…"
-msgstr ""
-
-#: assets/build/index.js:1
-#: src/components/Settings/AiSettings.js:464
-msgid "No models available"
 msgstr ""
 
 #: assets/build/index.js:1
