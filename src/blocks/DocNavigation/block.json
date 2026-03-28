@@ -26,7 +26,8 @@
 			"width": true
 		},
 		"color": {
-			"background": true
+			"background": true,
+			"text": true
 		}
 	},
 	"editorScript": "file:./index.js",
