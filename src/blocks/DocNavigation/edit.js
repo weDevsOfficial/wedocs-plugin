@@ -70,7 +70,8 @@ const Edit = ({ attributes, setAttributes }) => {
             color: navigationTextColor || '#333333',
             fontSize: navigationFontSize || '16px',
             fontWeight: navigationFontWeight || '400',
-            fontStyle: navigationFontStyle || 'normal'
+            fontStyle: navigationFontStyle || 'normal',
+            textDecoration: 'none'
         };
 
         const arrowStyle = {
@@ -82,13 +83,9 @@ const Edit = ({ attributes, setAttributes }) => {
         };
 
         return (
-            <div 
-                {...blockProps} 
-                className="wedocs-document wedocs-doc-navigation-preview"
-                onClick={(e) => {
-                    e.stopPropagation();
-                    selectBlock(clientId);
-                }}
+            <div
+                {...blockProps}
+                className={`${blockProps.className || ''} wedocs-document wedocs-doc-navigation-preview`}
             >
                 <div className="wedocs-doc-navigation flex justify-between">
                     <div className="wedocs-doc-nav-prev" style={navItemStyle}>

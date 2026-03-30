@@ -3,14 +3,21 @@
 	"apiVersion": 3,
 	"name": "wedocs/quick-search",
 	"version": "1.0.0",
-	"title": "Quick Search",
+	"title": "weDocs Quick Search",
 	"icon": "search",
 	"category": "wedocs",
 	"description": "Add a quick search block that opens a modal with documentation search",
 	"supports": {
 		"html": false
 	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
 	"render": "file:./render.php",
+	"example": {
+		"attributes": {
+			"searchBoxPlaceholder": "Quick search..."
+		}
+	},
 	"attributes": {
 		"searchBoxPlaceholder": {
 			"type": "string",

@@ -16,6 +16,7 @@ export default function save({ attributes }) {
 		borderWidth,
 		borderRadius,
 		hoverBackgroundColor,
+		hoverTextColor,
 		fontSize,
 		padding,
 		margin,
@@ -51,6 +52,7 @@ export default function save({ attributes }) {
 		'data-button-style': buttonStyle,
 		'data-bg-color': backgroundColor,
 		'data-hover-bg': hoverBackgroundColor,
+		'data-hover-text': hoverTextColor,
 		'data-prompt-template': promptTemplate,
 		style: {
 			padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,

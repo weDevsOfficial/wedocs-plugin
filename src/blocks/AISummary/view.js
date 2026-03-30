@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							credentials: 'same-origin',
 							headers: {
 								'Content-Type': 'application/json',
-								'X-WP-Nonce': window.wpApiSettings?.nonce || ''
+								...(window.wpApiSettings?.nonce ? { 'X-WP-Nonce': window.wpApiSettings.nonce } : {})
 							}
 						});
 

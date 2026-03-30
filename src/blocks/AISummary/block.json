@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "wedocs/ai-summary",
 	"version": "1.0.0",
-	"title": "AI-Powered Summary",
+	"title": "weDocs AI-Powered Summary",
 	"category": "wedocs",
 	"icon": "lightbulb",
 	"description": "Display an AI-generated summary of documentation content with collapsible functionality.",
@@ -13,22 +13,10 @@
 		"anchor": true,
 		"align": ["wide", "full"],
 		"color": {
-			"background": true,
-			"text": true,
-			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true
-			}
+			"background": false,
+			"text": false
 		},
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true,
-			"__experimentalFontFamily": true,
-			"__experimentalFontWeight": true,
-			"__experimentalDefaultControls": {
-				"fontSize": true
-			}
-		},
+		"typography": false,
 		"spacing": {
 			"margin": true,
 			"padding": true,
@@ -73,15 +61,15 @@
 		},
 		"backgroundColor": {
 			"type": "string",
-			"default": "#1a1a1a"
+			"default": "#ffffff"
 		},
 		"textColor": {
 			"type": "string",
-			"default": "#ffffff"
+			"default": "#000000"
 		},
 		"titleColor": {
 			"type": "string",
-			"default": "#ffffff"
+			"default": "#000000"
 		},
 		"titleFontSize": {
 			"type": "string",
@@ -98,6 +86,18 @@
 		"borderRadius": {
 			"type": "string",
 			"default": "8px"
+		},
+		"borderStyle": {
+			"type": "string",
+			"default": "solid"
+		},
+		"borderWidth": {
+			"type": "string",
+			"default": "1px"
+		},
+		"borderColor": {
+			"type": "string",
+			"default": "#000000"
 		},
 		"padding": {
 			"type": "object",

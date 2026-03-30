@@ -135,21 +135,24 @@ export const BorderPanel = ({
                             },
                         ]}
                     />
-
-                    {typeof borderRadius === 'object' ? (
-                        <BoxControl
-                            label={__('Border Radius', 'wedocs')}
-                            values={borderRadius}
-                            onChange={onRadiusChange}
-                        />
-                    ) : (
-                        <UnitControl
-                            label={__('Border Radius', 'wedocs')}
-                            value={borderRadius}
-                            onChange={onRadiusChange}
-                        />
-                    )}
                 </>
+            )}
+
+            {/* Border radius is always available — rounded corners work without a visible border */}
+            {onRadiusChange && (
+                typeof borderRadius === 'object' ? (
+                    <BoxControl
+                        label={__('Border Radius', 'wedocs')}
+                        values={borderRadius}
+                        onChange={onRadiusChange}
+                    />
+                ) : (
+                    <UnitControl
+                        label={__('Border Radius', 'wedocs')}
+                        value={borderRadius}
+                        onChange={onRadiusChange}
+                    />
+                )
             )}
         </PanelBody>
     );

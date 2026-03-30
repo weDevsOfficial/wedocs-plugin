@@ -8,20 +8,28 @@ document.addEventListener('DOMContentLoaded', function() {
 	actionBlocks.forEach(block => {
 		const buttons = block.querySelectorAll('.doc-action-button');
 		const hoverBgColor = block.getAttribute('data-hover-bg');
+		const hoverTextColor = block.getAttribute('data-hover-text');
 		const promptTemplate = block.getAttribute('data-prompt-template') || 'Need more information on "{title}"\n\nSource: {url}';
 
 		buttons.forEach(button => {
 			const action = button.getAttribute('data-action');
+			const originalTextColor = button.style.color;
 
-			// Add hover background color
-			if (hoverBgColor) {
+			// Add hover colors
+			if (hoverBgColor || hoverTextColor) {
 				button.addEventListener('mouseenter', () => {
-					button.style.backgroundColor = hoverBgColor;
+					if (hoverBgColor) {
+						button.style.backgroundColor = hoverBgColor;
+					}
+					if (hoverTextColor) {
+						button.style.color = hoverTextColor;
+					}
 				});
 				button.addEventListener('mouseleave', () => {
 					const blockStyle = block.getAttribute('data-button-style');
 					const bgColor = block.getAttribute('data-bg-color');
 					button.style.backgroundColor = blockStyle === 'filled' ? bgColor : 'transparent';
+					button.style.color = originalTextColor;
 				});
 			}
 

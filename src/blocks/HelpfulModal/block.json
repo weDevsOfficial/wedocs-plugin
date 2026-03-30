@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "wedocs/block-need-more-help-contact-modal",
 	"version": "0.1.0",
-	"title": "Need More Help - Contact Modal",
+	"title": "weDocs Need More Help - Contact Modal",
 	"category": "wedocs",
 	"icon": "sos",
 	"description": "A customizable contact modal block for documentation sites with extensive styling options and WordPress core integration.",
@@ -155,7 +155,7 @@
 			"default": {
 				"top": "0px",
 				"right": "0px",
-				"bottom": "20px",
+				"bottom": "0px",
 				"left": "0px"
 			}
 		},
@@ -181,6 +181,10 @@
 		},
 		"iconColor": {
 			"type": "string"
+		},
+		"iconBgColor": {
+			"type": "string",
+			"default": "#f0ecfc"
 		},
 		"iconSize": {
 			"type": "string",

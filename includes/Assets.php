@@ -43,7 +43,7 @@ class Assets {
                 'ajaxurl'   => admin_url( 'admin-ajax.php' ),
                 'nonce'     => wp_create_nonce( 'wedocs-ajax' ),
                 'assetsUrl' => WEDOCS_ASSETS,
-                'isPro'     => wedocs_pro_exists(),
+                'isPro'     => wedocs_is_pro_active(),
             ),
         );
 

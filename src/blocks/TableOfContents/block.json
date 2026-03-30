@@ -3,7 +3,7 @@
   "apiVersion": 3,
   "name": "wedocs/table-of-contents",
   "version": "0.1.0",
-  "title": "Dynamic Table of Contents",
+  "title": "weDocs Dynamic Table of Contents",
   "category": "wedocs",
   "icon": "list-view",
   "description": "Auto-generates a dynamic Table of Contents from selected heading levels with collapsible, numbered, and hierarchical list options.",

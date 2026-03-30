@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 
 const UpgradeButton = ( { classes, showPopup, children, className, customUrl, customText } ) => {
   const buttonUrl = customUrl || '//wedocs.co/pricing/?utm_source=wp-admin&utm_medium=freemium&utm_campaign=upgrade-popup';
-  const buttonText = customText || __( 'Go Pro – Up to 20% OFF! 🔥', 'wedocs' );
+  const buttonText = customText || __( 'Go Pro – Up to 35% OFF! 🔥', 'wedocs' );
 
   return (
     <>
