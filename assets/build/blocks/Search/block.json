@@ -63,6 +63,15 @@
       }
     }
   },
+  "example": {
+    "attributes": {
+      "hideSearch": false,
+      "placeholder": "Search for a topic or question",
+      "showButton": true,
+      "buttonPosition": "inside",
+      "buttonText": "Search"
+    }
+  },
   "attributes": {
     "hideSearch": {
       "type": "boolean",

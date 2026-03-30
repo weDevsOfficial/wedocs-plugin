@@ -7,6 +7,12 @@
   "icon": "arrow-left-alt2",
   "category": "wedocs",
   "description": "Display previous and next document navigation links",
+  "example": {
+    "attributes": {
+      "navigationTextColor": "#333333",
+      "arrowColor": "#333333"
+    }
+  },
   "supports": {
     "html": false,
     "spacing": {
@@ -20,7 +26,8 @@
       "width": true
     },
     "color": {
-      "background": true
+      "background": true,
+      "text": true
     }
   },
   "editorScript": "file:./index.js",

@@ -7,6 +7,14 @@
   "icon": "grid-view",
   "category": "wedocs",
   "description": "Display all the docs in a grid view",
+  "example": {
+    "attributes": {
+      "docStyle": "1x1",
+      "showDocArticle": true,
+      "showViewDetails": true,
+      "buttonText": "View Details"
+    }
+  },
   "supports": {
     "html": false,
     "align": [
