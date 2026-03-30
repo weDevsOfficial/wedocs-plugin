@@ -191,11 +191,10 @@ Yes, weDocs supports custom permalinks for documentation pages.
 
 ## Changelog
 
-**v2.2.1 (12 Mar, 2026)**
-- **Added:** New article page template for Full Site Editor with AI Summary, Table of Contents, Social Share, Print, and Doc Navigation blocks (#295).
+**v2.2.1 (30 Mar, 2026)**
+- **Added:** New single page doc template for Full Site Editor with AI Summary, Table of Contents, Social Share, Print, and Doc Navigation blocks (#295).
 - **Fixed:** Tailwind CSS utility classes with arbitrary values not applying correctly (#302).
 - **Fixed:** Broken layout on doc search form (#304).
-- **Fixed:** Contributors block avatar shape now syncs correctly (#305).
 
 **v2.2.0 (4 Mar, 2026)**
 - **Added:** Integrated feature search form with modal support (#239).
