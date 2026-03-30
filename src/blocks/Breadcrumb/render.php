@@ -428,7 +428,7 @@ $breadcrumbs = wedocs_collapse_breadcrumbs($breadcrumbs, $collapse_breadcrumbs, 
             <?php if ($link_hover_background): ?>background-color: var(--hover-background) !important;<?php endif; ?>
         }
         </style>
-        <div class="wedocs-document">
+        <div <?php echo get_block_wrapper_attributes(['class' => 'wedocs-document']); ?>>
     <nav aria-label="Breadcrumb" class="wedocs-breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <?php
         // Build CSS classes for WordPress style system
@@ -472,6 +472,7 @@ $breadcrumbs = wedocs_collapse_breadcrumbs($breadcrumbs, $collapse_breadcrumbs, 
             <?php if ($text_transform): ?>text-transform: <?php echo esc_attr($text_transform); ?>;<?php endif; ?>
             <?php if ($text_decoration): ?>text-decoration: <?php echo esc_attr($text_decoration); ?>;<?php endif; ?>
             <?php if ($letter_spacing): ?>letter-spacing: <?php echo esc_attr($letter_spacing); ?>;<?php endif; ?>
+            <?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?>
         ">
             <?php $breadcrumb_position = 0; foreach ($breadcrumbs as $index => $breadcrumb): ?>
                 <li class="flex" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">

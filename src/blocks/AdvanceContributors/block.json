@@ -7,6 +7,16 @@
 	"icon": "groups",
 	"category": "wedocs",
 	"description": "Display the author(s)/contributors of a doc along with the last updated date.",
+	"example": {
+		"attributes": {
+			"showTitle": true,
+			"title": "Contributors",
+			"contributorDisplayMode": "all",
+			"showLastUpdated": true,
+			"showAvatar": true,
+			"avatarShape": "circle"
+		}
+	},
 	"supports": {
 		"html": false
 	},

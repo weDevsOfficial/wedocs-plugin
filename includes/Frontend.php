@@ -75,6 +75,13 @@ class Frontend {
         wedocs_get_template_part( 'modals/search', 'modal' );
         $searchModal = ob_get_clean();
 
+        // Inject REST nonce for AISummary block view script (handle: wedocs-ai-summary-view-script)
+        wp_add_inline_script(
+            'wedocs-ai-summary-view-script',
+            'window.wpApiSettings = window.wpApiSettings || {}; window.wpApiSettings.nonce = ' . wp_json_encode( wp_create_nonce( 'wp_rest' ) ) . ';',
+            'before'
+        );
+
         wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', [
             'nonce'             => wp_create_nonce( 'wedocs-ajax' ),
             'style'             => WEDOCS_ASSETS . '/build/print.css?v=10',

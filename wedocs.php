@@ -3,7 +3,7 @@
 Plugin Name: weDocs
 Plugin URI: https://wedocs.co/
 Description: A documentation plugin for WordPress
-Version: 2.2.0
+Version: 2.2.1
 Author: weDevs
 Author URI: https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri
 License: GPL2
@@ -60,7 +60,7 @@ final class WeDocs {
      *
      * @var string
      */
-    const VERSION = '2.2.0';
+    const VERSION = '2.2.1';
 
     /**
      * The plugin url.
@@ -170,7 +170,8 @@ final class WeDocs {
         add_action( 'init', [ $this, 'localization_setup' ] );
         add_action( 'init', [ $this, 'register_blocks' ] );
         // add_action('init', [$this, 'register_blocks']);
-        add_action('block_categories_all', [$this, 'register_block_category']);
+        add_filter('block_categories_all', [$this, 'register_block_category']);
+        add_filter( 'render_block', [ $this, 'gate_pro_blocks' ], 10, 2 );
 
         // registeer our widget
         add_action( 'widgets_init', [ $this, 'register_widget' ] );
@@ -182,6 +183,7 @@ final class WeDocs {
 
         // Modern WordPress block registration using block.json files
         $block_directories = [
+            // Free blocks
             'assets/build/blocks/DocsGrid',
             'assets/build/blocks/Breadcrumb',
             'assets/build/blocks/HelpfulFeedback',
@@ -189,24 +191,20 @@ final class WeDocs {
             'assets/build/blocks/PrintButton',
             'assets/build/blocks/DocNavigation',
             'assets/build/blocks/Sidebar',
-
+            'assets/build/blocks/Search',
+            'assets/build/blocks/HelpfulModal',
+            'assets/build/blocks/LastUpdated',
+            // Pro blocks — always registered so they appear in the inserter;
+            // JS handles the pro gate and shows the PRO badge when pro is inactive.
+            'assets/build/blocks/TableOfContents',
+            // 'assets/build/blocks/AdvanceContributors',
+            'assets/build/blocks/Contributors',
+            'assets/build/blocks/SocialShare',
+            'assets/build/blocks/AISummary',
+            'assets/build/blocks/DocActions',
+            'assets/build/blocks/ReadingProgress',
+            'assets/build/blocks/FontSizeSwitcher',
         ];
-
-         if(wedocs_pro_exists()) {
-            $block_directories = array_merge($block_directories, [
-                'assets/build/blocks/TableOfContents',
-                'assets/build/blocks/HelpfulModal',
-                // 'assets/build/blocks/AdvanceContributors',
-                'assets/build/blocks/Contributors',
-                'assets/build/blocks/SocialShare',
-                'assets/build/blocks/AISummary',
-                'assets/build/blocks/DocActions',
-                'assets/build/blocks/LastUpdated',
-                'assets/build/blocks/ReadingProgress',
-                'assets/build/blocks/FontSizeSwitcher',
-            ]);
-
-        }
 
 
         foreach ( $block_directories as $block_dir ) {
@@ -218,6 +216,38 @@ final class WeDocs {
                 register_block_type( $block_path );
             }
         }
+    }
+
+    /**
+     * Prevent pro-only blocks from rendering on the frontend when weDocs Pro is inactive.
+     * Covers blocks that use a save() function (static HTML stored in DB).
+     *
+     * @param string $block_content Rendered block HTML.
+     * @param array  $block         Block data.
+     * @return string
+     */
+    public function gate_pro_blocks( $block_content, $block ) {
+        static $pro_active = null;
+        if ( $pro_active === null ) {
+            $pro_active = function_exists( 'wedocs_is_pro_active' ) && wedocs_is_pro_active();
+        }
+
+        if ( $pro_active ) {
+            return $block_content;
+        }
+
+        $pro_blocks = [
+            'wedocs/reading-progress',
+            'wedocs/ai-summary',
+            'wedocs/doc-actions',
+            'wedocs/font-size-switcher',
+        ];
+
+        if ( isset( $block['blockName'] ) && in_array( $block['blockName'], $pro_blocks, true ) ) {
+            return '';
+        }
+
+        return $block_content;
     }
 
     /**
@@ -395,14 +425,3 @@ function dequeue_wedocs_pro_frontend_css() {
 add_action( 'wp_enqueue_scripts', 'dequeue_wedocs_pro_frontend_css', 20 );
 
 
-// Add custom category for your blocks
-add_filter( 'block_categories_all', function( $categories, $post ) {
-    // Add "wedocs" category if not already there
-    $categories[] = array(
-        'slug'  => 'wedocs',
-        'title' => __( 'weDocs Blocks', 'wedocs' ),
-        'icon'  => null, // optional, doesn't show everywhere
-    );
-
-    return $categories;
-}, 10, 2 );

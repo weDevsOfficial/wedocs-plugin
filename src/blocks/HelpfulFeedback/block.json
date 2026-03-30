@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "wedocs/helpful-feedback",
 	"version": "1.0.0",
-	"title": "Helpful Feedback",
+	"title": "weDocs Helpful Feedback",
 	"icon": "thumbs-up",
 	"category": "wedocs",
 	"description": "Add a feedback voting system for articles with Yes/No buttons",
@@ -38,15 +38,16 @@
 				"margin": true
 			}
 		},
-		"__experimentalBorder": {
-			"color": true,
-			"radius": true,
-			"style": true,
-			"width": true,
-			"__experimentalDefaultControls": {
-				"color": true,
-				"radius": true
-			}
+		"__experimentalBorder": false
+	},
+	"example": {
+		"attributes": {
+			"questionText": "Was this article helpful to you?",
+			"layout": "layout1",
+			"alignment": "center",
+			"showVoteCount": true,
+			"yesButtonText": "Yes",
+			"noButtonText": "No"
 		}
 	},
 	"editorScript": "file:./index.js",
@@ -110,9 +111,9 @@
 		"containerMargin": {
 			"type": "object",
 			"default": {
-				"top": "20px",
+				"top": "0px",
 				"right": "0px",
-				"bottom": "20px",
+				"bottom": "0px",
 				"left": "0px"
 			}
 		},
@@ -183,6 +184,10 @@
 				"bottom": "0px",
 				"left": "0px"
 			}
+		},
+		"titleAlignment": {
+			"type": "string",
+			"default": "center"
 		},
 		"yesButtonColor": {
 			"type": "string",
