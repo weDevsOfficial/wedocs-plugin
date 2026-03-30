@@ -1,0 +1,163 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "wedocs/wedocs-docs-grid",
+  "version": "1.0.0",
+  "title": "weDocs - Docs Grid",
+  "icon": "grid-view",
+  "category": "widgets",
+  "description": "Display all the docs in a grid view",
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "docStyle": {
+      "type": "string",
+      "default": "1x1"
+    },
+    "docsPerPage": {
+      "type": "string",
+      "default": "all"
+    },
+    "excludeDocs": {
+      "type": "array",
+      "default": []
+    },
+    "order": {
+      "type": "string",
+      "default": "asc"
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "menu_order"
+    },
+    "sectionsPerDoc": {
+      "type": "string",
+      "default": "all"
+    },
+    "articlesPerSection": {
+      "type": "string",
+      "default": "all"
+    },
+    "showDocArticle": {
+      "type": "boolean",
+      "default": true
+    },
+    "keepArticlesCollapsed": {
+      "type": "boolean",
+      "default": false
+    },
+    "showViewDetails": {
+      "type": "boolean",
+      "default": true
+    },
+    "gridPadding": {
+      "type": "object",
+      "default": {
+        "top": "20px",
+        "right": "20px",
+        "bottom": "20px",
+        "left": "20px"
+      }
+    },
+    "gridMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "docTitleColor": {
+      "type": "string",
+      "default": "#333333"
+    },
+    "docChildrenActiveColor": {
+      "type": "string",
+      "default": "#0073aa"
+    },
+    "borderWidth": {
+      "type": "string",
+      "default": "1px"
+    },
+    "borderColor": {
+      "type": "string",
+      "default": "rgba(0, 0, 0, 0.1)"
+    },
+    "borderType": {
+      "type": "string",
+      "default": "solid"
+    },
+    "borderRadius": {
+      "type": "string",
+      "default": "4px"
+    },
+    "buttonBorderRadius": {
+      "type": "string",
+      "default": "4px"
+    },
+    "buttonPadding": {
+      "type": "object",
+      "default": {
+        "top": "10px",
+        "right": "20px",
+        "bottom": "10px",
+        "left": "20px"
+      }
+    },
+    "buttonMargin": {
+      "type": "object",
+      "default": {
+        "top": "10px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "buttonColor": {
+      "type": "string",
+      "default": "#0073aa"
+    },
+    "buttonHoverColor": {
+      "type": "string",
+      "default": "#005177"
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "View Details"
+    },
+    "buttonTextColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "buttonHoverTextColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "paginationTextColor": {
+      "type": "string",
+      "default": "#333333"
+    },
+    "paginationTextHoverColor": {
+      "type": "string",
+      "default": "#0073aa"
+    },
+    "paginationBackgroundColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "paginationHoverColor": {
+      "type": "string",
+      "default": "#f5f5f5"
+    },
+    "paginationBorderColor": {
+      "type": "string",
+      "default": "#dddddd"
+    }
+  }
+}
