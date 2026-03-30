@@ -88,6 +88,7 @@ class Frontend {
             'searchEmptyMsg'    => __( 'Your search didn\'t match any documents', 'wedocs' ),
             'sectionNavLabel'   => __( 'Section: ', 'wedocs' ),
             'searchModalColors' => wedocs_get_search_modal_active_colors(),
+            'gdprConsentError'  => __( 'You must accept the privacy policy to submit this form.', 'wedocs' ),
         ] );
     }
 

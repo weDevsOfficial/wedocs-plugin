@@ -1118,13 +1118,53 @@ function wedocs_create_messages_table() {
         ip_address varchar(45) NOT NULL DEFAULT '',
         attachment_url text NOT NULL,
         submitted_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+        delete_after datetime DEFAULT NULL,
         PRIMARY KEY  (id),
         KEY doc_id (doc_id),
-        KEY submitted_at (submitted_at)
+        KEY submitted_at (submitted_at),
+        KEY delete_after (delete_after)
     ) $charset_collate;";
 
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
     dbDelta( $sql );
+}
+
+/**
+ * Add the delete_after column to the wedocs_messages table if it doesn't exist.
+ * Used for GDPR data retention auto-deletion.
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @return void
+ */
+function wedocs_add_messages_delete_after_column() {
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . 'wedocs_messages';
+
+    // Check if table exists first.
+    $table_exists = $wpdb->get_var(
+        $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name )
+    );
+
+    if ( ! $table_exists ) {
+        return;
+    }
+
+    // Check if column already exists.
+    $column_exists = $wpdb->get_results(
+        $wpdb->prepare(
+            "SHOW COLUMNS FROM $table_name LIKE %s",
+            'delete_after'
+        )
+    );
+
+    if ( ! empty( $column_exists ) ) {
+        return;
+    }
+
+    $wpdb->query( "ALTER TABLE $table_name ADD COLUMN delete_after datetime DEFAULT NULL" );
+    $wpdb->query( "ALTER TABLE $table_name ADD INDEX delete_after (delete_after)" );
 }
 
 /**
@@ -1155,22 +1195,38 @@ function wedocs_store_message( $data ) {
         $recipients = implode( ', ', $recipients );
     }
 
-    $inserted = $wpdb->insert(
-        $table_name,
-        [
-            'name'           => isset( $data['name'] ) ? $data['name'] : '',
-            'email'          => isset( $data['email'] ) ? $data['email'] : '',
-            'subject'        => isset( $data['subject'] ) ? $data['subject'] : '',
-            'message'        => isset( $data['message'] ) ? $data['message'] : '',
-            'doc_id'         => isset( $data['doc_id'] ) ? intval( $data['doc_id'] ) : 0,
-            'recipients'     => $recipients,
-            'source'         => isset( $data['source'] ) ? $data['source'] : 'modal',
-            'ip_address'     => wedocs_get_ip_address(),
-            'attachment_url' => isset( $data['attachment_url'] ) ? $data['attachment_url'] : '',
-            'submitted_at'   => current_time( 'mysql' ),
-        ],
-        [ '%s', '%s', '%s', '%s', '%d', '%s', '%s', '%s', '%s', '%s' ]
-    );
+    // Calculate delete_after based on GDPR retention settings.
+    $delete_after = null;
+    $gdpr_settings = wedocs_get_option( 'gdpr', 'wedocs_settings', [] );
+
+    if ( ! empty( $gdpr_settings['enabled'] ) && $gdpr_settings['enabled'] === 'on'
+        && ! empty( $gdpr_settings['retention'] ) && $gdpr_settings['retention'] !== 'manual'
+    ) {
+        $retention_days = intval( $gdpr_settings['retention'] );
+        $delete_after   = gmdate( 'Y-m-d H:i:s', strtotime( current_time( 'mysql' ) . " +{$retention_days} days" ) );
+    }
+
+    $insert_data = [
+        'name'           => isset( $data['name'] ) ? $data['name'] : '',
+        'email'          => isset( $data['email'] ) ? $data['email'] : '',
+        'subject'        => isset( $data['subject'] ) ? $data['subject'] : '',
+        'message'        => isset( $data['message'] ) ? $data['message'] : '',
+        'doc_id'         => isset( $data['doc_id'] ) ? intval( $data['doc_id'] ) : 0,
+        'recipients'     => $recipients,
+        'source'         => isset( $data['source'] ) ? $data['source'] : 'modal',
+        'ip_address'     => wedocs_get_ip_address(),
+        'attachment_url' => isset( $data['attachment_url'] ) ? $data['attachment_url'] : '',
+        'submitted_at'   => current_time( 'mysql' ),
+    ];
+
+    $format = [ '%s', '%s', '%s', '%s', '%d', '%s', '%s', '%s', '%s', '%s' ];
+
+    if ( $delete_after ) {
+        $insert_data['delete_after'] = $delete_after;
+        $format[] = '%s';
+    }
+
+    $inserted = $wpdb->insert( $table_name, $insert_data, $format );
 
     if ( $inserted ) {
         return $wpdb->insert_id;
@@ -1180,3 +1236,52 @@ function wedocs_store_message( $data ) {
 }
 
 add_action( 'wedocs_before_send_contact_email', 'wedocs_store_message' );
+
+/**
+ * Delete messages that have passed their retention period.
+ * Runs via WP-Cron daily.
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @return void
+ */
+function wedocs_cleanup_expired_messages() {
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . 'wedocs_messages';
+
+    // Check if table exists first.
+    $table_exists = $wpdb->get_var(
+        $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name )
+    );
+
+    if ( ! $table_exists ) {
+        return;
+    }
+
+    $wpdb->query(
+        $wpdb->prepare(
+            "DELETE FROM $table_name WHERE delete_after IS NOT NULL AND delete_after < %s LIMIT 1000",
+            current_time( 'mysql' )
+        )
+    );
+}
+
+/**
+ * Get GDPR settings with resolved page URLs for frontend use.
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @return array
+ */
+function wedocs_get_gdpr_frontend_settings() {
+    $gdpr = wedocs_get_option( 'gdpr', 'wedocs_settings', [] );
+
+    $privacy_page_id = ! empty( $gdpr['privacy_policy_page'] ) ? intval( $gdpr['privacy_policy_page'] ) : 0;
+    $request_page_id = ! empty( $gdpr['data_request_page'] ) ? intval( $gdpr['data_request_page'] ) : 0;
+
+    $gdpr['privacy_policy_url'] = $privacy_page_id ? get_permalink( $privacy_page_id ) : '';
+    $gdpr['data_request_url']   = $request_page_id ? get_permalink( $request_page_id ) : '';
+
+    return $gdpr;
+}

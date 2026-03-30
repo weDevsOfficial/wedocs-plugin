@@ -77,6 +77,7 @@ class Assets {
                     'weDocsUrl'     => admin_url( 'admin.php?page=wedocs#/' ),
                     'pro_active'    => wedocs_is_pro_active(),
                     'upgradePopupContent' => wedocs_get_upgrade_popup_content(),
+                    'gdpr'          => wedocs_get_gdpr_frontend_settings(),
                 ),
             );
         }

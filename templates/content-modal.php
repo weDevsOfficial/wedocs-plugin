@@ -50,6 +50,35 @@ if ( is_user_logged_in() ) {
                 </div>
             </div>
 
+            <?php
+            $gdpr_settings = wedocs_get_option( 'gdpr', 'wedocs_settings', [] );
+            $gdpr_enabled  = ! empty( $gdpr_settings['enabled'] ) && $gdpr_settings['enabled'] === 'on';
+            $modal_enabled = ! empty( $gdpr_settings['modal_enabled'] ) && $gdpr_settings['modal_enabled'] === 'on';
+
+            if ( $gdpr_enabled && $modal_enabled ) :
+                $consent_text      = ! empty( $gdpr_settings['consent_text'] ) ? $gdpr_settings['consent_text'] : '';
+                $privacy_page_id   = ! empty( $gdpr_settings['privacy_policy_page'] ) ? intval( $gdpr_settings['privacy_policy_page'] ) : 0;
+                $request_page_id   = ! empty( $gdpr_settings['data_request_page'] ) ? intval( $gdpr_settings['data_request_page'] ) : 0;
+                $privacy_url       = $privacy_page_id ? get_permalink( $privacy_page_id ) : '#';
+                $request_url       = $request_page_id ? get_permalink( $request_page_id ) : '#';
+
+                $consent_text = str_replace(
+                    [ '{privacy_policy}', '{request_data}' ],
+                    [
+                        '<a href="' . esc_url( $privacy_url ) . '" target="_blank" rel="noopener noreferrer">' . __( 'Privacy Policy', 'wedocs' ) . '</a>',
+                        '<a href="' . esc_url( $request_url ) . '" target="_blank" rel="noopener noreferrer">' . __( 'request your data', 'wedocs' ) . '</a>',
+                    ],
+                    $consent_text
+                );
+            ?>
+            <div class="wedocs-form-row wedocs-gdpr-consent">
+                <label class="wedocs-gdpr-consent-label">
+                    <input type="checkbox" name="gdpr_consent" id="wedocs-gdpr-consent" value="1" />
+                    <span class="wedocs-gdpr-consent-text"><?php echo wp_kses_post( $consent_text ); ?></span>
+                </label>
+            </div>
+            <?php endif; ?>
+
             <div class="wedocs-form-action">
                 <input type="submit" name="submit" value="<?php esc_attr_e( 'Send', 'wedocs' ); ?>">
                 <input type="hidden" name="doc_id" value="<?php the_ID(); ?>">

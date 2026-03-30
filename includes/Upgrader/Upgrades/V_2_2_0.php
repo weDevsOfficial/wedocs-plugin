@@ -31,5 +31,6 @@ class V_2_2_0 extends UpgradeHandler {
      */
     public function handle_upgrade() {
         wedocs_create_messages_table();
+        wedocs_add_messages_delete_after_column();
     }
 }

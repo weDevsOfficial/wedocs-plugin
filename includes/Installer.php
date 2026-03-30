@@ -20,6 +20,7 @@ class Installer {
         $this->timestamps();
         wedocs_user_documentation_handling_capabilities();
         wedocs_create_messages_table();
+        wedocs_add_messages_delete_after_column();
     }
 
     /**

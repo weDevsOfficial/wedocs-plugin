@@ -105,8 +105,10 @@ final class WeDocs {
         $this->init_actions();
 
         register_activation_hook( __FILE__, [ $this, 'activate' ] );
+        register_deactivation_hook( __FILE__, [ $this, 'deactivate' ] );
 
         add_action( 'after_setup_theme', [ $this, 'init_classes' ] );
+        add_action( 'wedocs_daily_message_cleanup', 'wedocs_cleanup_expired_messages' );
 
         $this->init_action_scheduler();
     }
@@ -260,6 +262,22 @@ final class WeDocs {
 
         // Set the redirect option to true when the plugin is activated.
         update_option( 'wedocs_activation_redirect', true );
+
+        // Schedule daily message cleanup cron.
+        if ( ! wp_next_scheduled( 'wedocs_daily_message_cleanup' ) ) {
+            wp_schedule_event( strtotime( 'tomorrow 02:00:00' ), 'daily', 'wedocs_daily_message_cleanup' );
+        }
+    }
+
+    /**
+     * The plugin deactivation function.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function deactivate() {
+        wp_clear_scheduled_hook( 'wedocs_daily_message_cleanup' );
     }
 
     /**
@@ -288,6 +306,7 @@ final class WeDocs {
         $this->container['upgrader']   = new WeDevs\WeDocs\Upgrader\Upgrader();
         $this->container['capability'] = new Capability();
         $this->container['templates']  = new WeDevs\WeDocs\Templates\TemplateManager();
+        $this->container['privacy']    = new WeDevs\WeDocs\Privacy();
 
         // Initialize Elementor integration if Elementor is active
         if ( did_action( 'elementor/loaded' ) ) {
