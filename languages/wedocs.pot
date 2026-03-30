@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-27T05:10:53+00:00\n"
+"POT-Creation-Date: 2026-03-30T10:27:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wedocs\n"
@@ -71,8 +71,8 @@ msgstr ""
 msgid "Blog"
 msgstr ""
 
-#: assets/build/blocks/Breadcrumb/render.php:488
-#: src/blocks/Breadcrumb/render.php:488
+#: assets/build/blocks/Breadcrumb/render.php:489
+#: src/blocks/Breadcrumb/render.php:489
 msgid "%d more items"
 msgstr ""
 
@@ -835,7 +835,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:179
 #: src/blocks/AdvanceContributors/edit.js:372
 #: src/blocks/Contributors/edit-old.js:179
-#: src/blocks/Contributors/edit.js:403
+#: src/blocks/Contributors/edit.js:409
 msgid "Title"
 msgstr ""
 
@@ -1032,6 +1032,7 @@ msgstr ""
 #: includes/Elementor/Widgets/Search.php:669
 #: assets/build/block.js:1
 #: assets/build/blocks/AdvanceContributors/index.js:1
+#: assets/build/blocks/AISummary/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/DocActions/index.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
@@ -1051,9 +1052,9 @@ msgstr ""
 #: src/blocks/components/TypographyControl.js:163
 #: src/blocks/Contributors/edit-old.js:338
 #: src/blocks/Contributors/edit-old.js:415
-#: src/blocks/DocNavigation/edit.js:123
-#: src/blocks/DocNavigation/edit.js:128
-#: src/blocks/DocNavigation/edit.js:248
+#: src/blocks/DocNavigation/edit.js:120
+#: src/blocks/DocNavigation/edit.js:125
+#: src/blocks/DocNavigation/edit.js:245
 #: src/blocks/DocsGrid/StyleControls.js:205
 #: src/blocks/DocsGrid/StyleControls.js:264
 #: src/blocks/PrintButton/Inspector.js:216
@@ -1164,10 +1165,10 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:274
 #: src/blocks/components/BackgroundControl.js:46
 #: src/blocks/Contributors/edit-old.js:274
-#: src/blocks/Contributors/edit.js:592
+#: src/blocks/Contributors/edit.js:598
 #: src/blocks/DocsGrid/StyleControls.js:400
 #: src/blocks/HelpfulFeedback/edit.js:210
-#: src/blocks/PrintButton/Inspector.js:67
+#: src/blocks/PrintButton/Inspector.js:62
 #: src/blocks/QuickSearch/edit.js:191
 #: src/blocks/QuickSearch/edit.js:288
 #: src/blocks/Search/edit.js:211
@@ -1206,7 +1207,7 @@ msgstr ""
 #: src/blocks/commonControls/DimensionsControls.js:65
 #: src/blocks/components/SpacingControl.js:27
 #: src/blocks/Contributors/edit-old.js:323
-#: src/blocks/DocNavigation/edit.js:182
+#: src/blocks/DocNavigation/edit.js:179
 #: src/blocks/PrintButton/Inspector.js:93
 #: src/blocks/PrintButton/Inspector.js:129
 #: src/blocks/QuickSearch/edit.js:220
@@ -1243,7 +1244,7 @@ msgstr ""
 #: src/blocks/commonControls/DimensionsControls.js:72
 #: src/blocks/components/SpacingControl.js:52
 #: src/blocks/Contributors/edit-old.js:329
-#: src/blocks/DocNavigation/edit.js:204
+#: src/blocks/DocNavigation/edit.js:201
 #: src/blocks/PrintButton/Inspector.js:104
 #: src/blocks/PrintButton/Inspector.js:132
 #: src/blocks/QuickSearch/edit.js:226
@@ -1266,6 +1267,7 @@ msgstr ""
 #: includes/Elementor/Widgets/Search.php:879
 #: assets/build/block.js:1
 #: assets/build/blocks/AdvanceContributors/index.js:1
+#: assets/build/blocks/AISummary/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/DocActions/index.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
@@ -1288,6 +1290,7 @@ msgstr ""
 #: includes/Elementor/Widgets/Search.php:887
 #: assets/build/block.js:1
 #: assets/build/blocks/AdvanceContributors/index.js:1
+#: assets/build/blocks/AISummary/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/DocActions/index.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
@@ -1304,7 +1307,7 @@ msgstr ""
 #: src/blocks/commonControls/CommonControls.js:151
 #: src/blocks/components/BorderControl.js:104
 #: src/blocks/Contributors/edit-old.js:368
-#: src/blocks/DocNavigation/edit.js:231
+#: src/blocks/DocNavigation/edit.js:228
 #: src/blocks/DocsGrid/StyleControls.js:283
 #: src/blocks/PrintButton/Inspector.js:145
 #: src/blocks/QuickSearch/edit.js:214
@@ -1355,7 +1358,7 @@ msgstr ""
 #: includes/Elementor/Widgets/DocsGrid.php:2159
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:316
+#: src/blocks/DocNavigation/edit.js:313
 msgid "Opacity"
 msgstr ""
 
@@ -1371,7 +1374,7 @@ msgstr ""
 #: assets/build/blocks/PrintButton/index.js:1
 #: assets/build/blocks/Search/index.js:1
 #: assets/build/blocks/SocialShare/index.js:1
-#: src/blocks/PrintButton/Inspector.js:83
+#: src/blocks/PrintButton/Inspector.js:81
 #: src/blocks/Search/edit.js:221
 #: src/blocks/SocialShare/edit.js:365
 msgid "Hover Background Color"
@@ -1753,7 +1756,7 @@ msgstr ""
 #: src/blocks/Contributors/edit-old.js:469
 #: src/blocks/DocsGrid/StyleControls.js:390
 #: src/blocks/HelpfulFeedback/edit.js:311
-#: src/blocks/PrintButton/Inspector.js:62
+#: src/blocks/PrintButton/Inspector.js:55
 #: src/blocks/Search/edit.js:216
 #: src/blocks/SocialShare/edit.js:310
 msgid "Text Color"
@@ -1764,7 +1767,7 @@ msgstr ""
 #: assets/build/block.js:1
 #: assets/build/blocks/PrintButton/index.js:1
 #: assets/build/blocks/Search/index.js:1
-#: src/blocks/PrintButton/Inspector.js:78
+#: src/blocks/PrintButton/Inspector.js:74
 #: src/blocks/Search/edit.js:226
 msgid "Hover Text Color"
 msgstr ""
@@ -1794,7 +1797,7 @@ msgstr ""
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
 #: assets/build/index.js:7
-#: src/blocks/DocNavigation/edit.js:254
+#: src/blocks/DocNavigation/edit.js:251
 #: src/components/PermissionSettingsDemo/RoleManagementSettings.js:49
 msgid "Custom"
 msgstr ""
@@ -1840,6 +1843,7 @@ msgstr ""
 #: includes/Elementor/Widgets/Search.php:320
 #: includes/Elementor/Widgets/Search.php:372
 #: assets/build/block.js:1
+#: assets/build/blocks/AISummary/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/DocActions/index.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
@@ -1856,10 +1860,9 @@ msgstr ""
 #: src/blocks/components/BorderControl.js:88
 #: src/blocks/Contributors/edit-old.js:355
 #: src/blocks/Contributors/edit-old.js:424
-#: src/blocks/DocNavigation/edit.js:197
+#: src/blocks/DocNavigation/edit.js:194
 #: src/blocks/DocsGrid/StyleControls.js:241
 #: src/blocks/PrintButton/Inspector.js:222
-#: src/blocks/PrintButton/Inspector.js:228
 #: src/blocks/QuickSearch/edit.js:196
 #: src/blocks/SocialShare/edit.js:452
 #: src/blocks/TableOfContents/Inspector.js:183
@@ -1868,6 +1871,7 @@ msgstr ""
 
 #: includes/Elementor/Widgets/DocsGrid.php:2494
 #: assets/build/block.js:1
+#: assets/build/blocks/AISummary/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/DocActions/index.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
@@ -1883,7 +1887,7 @@ msgstr ""
 #: src/blocks/components/BorderControl.js:50
 #: src/blocks/components/BorderControl.js:68
 #: src/blocks/Contributors/edit-old.js:349
-#: src/blocks/DocNavigation/edit.js:217
+#: src/blocks/DocNavigation/edit.js:214
 #: src/blocks/DocsGrid/StyleControls.js:270
 #: src/blocks/PrintButton/Inspector.js:156
 #: src/blocks/QuickSearch/edit.js:206
@@ -2020,9 +2024,9 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:491
 #: src/blocks/components/TypographyControl.js:108
 #: src/blocks/Contributors/edit-old.js:491
-#: src/blocks/DocNavigation/edit.js:135
-#: src/blocks/DocNavigation/edit.js:141
-#: src/blocks/PrintButton/Inspector.js:237
+#: src/blocks/DocNavigation/edit.js:132
+#: src/blocks/DocNavigation/edit.js:138
+#: src/blocks/PrintButton/Inspector.js:233
 #: src/blocks/SocialShare/edit.js:331
 #: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:6
 msgid "Normal"
@@ -2522,10 +2526,6 @@ msgstr ""
 msgid "Still stuck? "
 msgstr ""
 
-#: wedocs.php:433
-msgid "weDocs Blocks"
-msgstr ""
-
 #: assets/build/block.js:1
 #: assets/build/blocks/AdvanceContributors/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
@@ -2533,7 +2533,7 @@ msgstr ""
 #: assets/build/blocks/PrintButton/index.js:1
 #: assets/build/blocks/Search/index.js:1
 #: src/blocks/AdvanceContributors/edit.js:363
-#: src/blocks/Contributors/edit.js:394
+#: src/blocks/Contributors/edit.js:400
 #: src/blocks/HelpfulFeedback/edit.js:136
 #: src/blocks/PrintButton/edit.js:108
 #: src/blocks/Search/edit.js:107
@@ -2546,7 +2546,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:172
 #: src/blocks/AdvanceContributors/edit.js:365
 #: src/blocks/Contributors/edit-old.js:172
-#: src/blocks/Contributors/edit.js:396
+#: src/blocks/Contributors/edit.js:402
 msgid "Show Title"
 msgstr ""
 
@@ -2556,7 +2556,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:186
 #: src/blocks/AdvanceContributors/edit.js:379
 #: src/blocks/Contributors/edit-old.js:186
-#: src/blocks/Contributors/edit.js:410
+#: src/blocks/Contributors/edit.js:416
 msgid "Contributor Display"
 msgstr ""
 
@@ -2566,7 +2566,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:189
 #: src/blocks/AdvanceContributors/edit.js:382
 #: src/blocks/Contributors/edit-old.js:189
-#: src/blocks/Contributors/edit.js:413
+#: src/blocks/Contributors/edit.js:419
 msgid "Show all contributors"
 msgstr ""
 
@@ -2576,7 +2576,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:190
 #: src/blocks/AdvanceContributors/edit.js:383
 #: src/blocks/Contributors/edit-old.js:190
-#: src/blocks/Contributors/edit.js:414
+#: src/blocks/Contributors/edit.js:420
 msgid "Manually select contributors"
 msgstr ""
 
@@ -2586,7 +2586,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:191
 #: src/blocks/AdvanceContributors/edit.js:384
 #: src/blocks/Contributors/edit-old.js:191
-#: src/blocks/Contributors/edit.js:415
+#: src/blocks/Contributors/edit.js:421
 msgid "Show only main author"
 msgstr ""
 
@@ -2596,7 +2596,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:198
 #: src/blocks/AdvanceContributors/edit.js:391
 #: src/blocks/Contributors/edit-old.js:198
-#: src/blocks/Contributors/edit.js:422
+#: src/blocks/Contributors/edit.js:428
 msgid "Select Contributors"
 msgstr ""
 
@@ -2604,7 +2604,7 @@ msgstr ""
 #: assets/build/blocks/AdvanceContributors/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: src/blocks/AdvanceContributors/edit.js:460
-#: src/blocks/Contributors/edit.js:450
+#: src/blocks/Contributors/edit.js:456
 msgid "Avatar Settings"
 msgstr ""
 
@@ -2614,7 +2614,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:377
 #: src/blocks/AdvanceContributors/edit.js:462
 #: src/blocks/Contributors/edit-old.js:377
-#: src/blocks/Contributors/edit.js:452
+#: src/blocks/Contributors/edit.js:458
 msgid "Show Avatar"
 msgstr ""
 
@@ -2624,7 +2624,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:385
 #: src/blocks/AdvanceContributors/edit.js:470
 #: src/blocks/Contributors/edit-old.js:385
-#: src/blocks/Contributors/edit.js:460
+#: src/blocks/Contributors/edit.js:466
 msgid "Avatar Type"
 msgstr ""
 
@@ -2634,7 +2634,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:388
 #: src/blocks/AdvanceContributors/edit.js:473
 #: src/blocks/Contributors/edit-old.js:388
-#: src/blocks/Contributors/edit.js:463
+#: src/blocks/Contributors/edit.js:469
 msgid "User Avatar"
 msgstr ""
 
@@ -2644,7 +2644,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:389
 #: src/blocks/AdvanceContributors/edit.js:474
 #: src/blocks/Contributors/edit-old.js:389
-#: src/blocks/Contributors/edit.js:464
+#: src/blocks/Contributors/edit.js:470
 msgid "Common Icon"
 msgstr ""
 
@@ -2652,7 +2652,7 @@ msgstr ""
 #: assets/build/blocks/AdvanceContributors/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: src/blocks/AdvanceContributors/edit.js:480
-#: src/blocks/Contributors/edit.js:470
+#: src/blocks/Contributors/edit.js:476
 msgid "Avatar Shape"
 msgstr ""
 
@@ -2663,7 +2663,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:404
 #: src/blocks/AdvanceContributors/edit.js:483
 #: src/blocks/Contributors/edit-old.js:404
-#: src/blocks/Contributors/edit.js:473
+#: src/blocks/Contributors/edit.js:479
 #: src/blocks/SocialShare/edit.js:269
 msgid "Circle"
 msgstr ""
@@ -2673,7 +2673,7 @@ msgstr ""
 #: assets/build/blocks/SocialShare/index.js:1
 #: src/blocks/AdvanceContributors/edit-old.js:405
 #: src/blocks/Contributors/edit-old.js:405
-#: src/blocks/Contributors/edit.js:474
+#: src/blocks/Contributors/edit.js:480
 #: src/blocks/SocialShare/edit.js:267
 msgid "Rounded"
 msgstr ""
@@ -2685,7 +2685,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:406
 #: src/blocks/AdvanceContributors/edit.js:484
 #: src/blocks/Contributors/edit-old.js:406
-#: src/blocks/Contributors/edit.js:475
+#: src/blocks/Contributors/edit.js:481
 #: src/blocks/SocialShare/edit.js:268
 msgid "Square"
 msgstr ""
@@ -2696,7 +2696,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:436
 #: src/blocks/AdvanceContributors/edit.js:490
 #: src/blocks/Contributors/edit-old.js:436
-#: src/blocks/Contributors/edit.js:481
+#: src/blocks/Contributors/edit.js:487
 msgid "Hover Effect"
 msgstr ""
 
@@ -2704,7 +2704,7 @@ msgstr ""
 #: assets/build/blocks/AdvanceContributors/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: src/blocks/AdvanceContributors/edit.js:499
-#: src/blocks/Contributors/edit.js:490
+#: src/blocks/Contributors/edit.js:496
 msgid "Date Settings"
 msgstr ""
 
@@ -2715,7 +2715,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:225
 #: src/blocks/AdvanceContributors/edit.js:501
 #: src/blocks/Contributors/edit-old.js:225
-#: src/blocks/Contributors/edit.js:492
+#: src/blocks/Contributors/edit.js:498
 #: src/blocks/HelpfulModal/edit.js:347
 msgid "Show Last Updated Date"
 msgstr ""
@@ -2726,7 +2726,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:233
 #: src/blocks/AdvanceContributors/edit.js:509
 #: src/blocks/Contributors/edit-old.js:233
-#: src/blocks/Contributors/edit.js:500
+#: src/blocks/Contributors/edit.js:506
 msgid "Date Format"
 msgstr ""
 
@@ -2736,7 +2736,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:236
 #: src/blocks/AdvanceContributors/edit.js:512
 #: src/blocks/Contributors/edit-old.js:236
-#: src/blocks/Contributors/edit.js:503
+#: src/blocks/Contributors/edit.js:509
 msgid "WordPress Default"
 msgstr ""
 
@@ -2746,7 +2746,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:237
 #: src/blocks/AdvanceContributors/edit.js:513
 #: src/blocks/Contributors/edit-old.js:237
-#: src/blocks/Contributors/edit.js:504
+#: src/blocks/Contributors/edit.js:510
 msgid "Custom Format"
 msgstr ""
 
@@ -2756,7 +2756,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:244
 #: src/blocks/AdvanceContributors/edit.js:520
 #: src/blocks/Contributors/edit-old.js:244
-#: src/blocks/Contributors/edit.js:511
+#: src/blocks/Contributors/edit.js:517
 msgid "Custom Date Format"
 msgstr ""
 
@@ -2766,7 +2766,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:247
 #: src/blocks/AdvanceContributors/edit.js:523
 #: src/blocks/Contributors/edit-old.js:247
-#: src/blocks/Contributors/edit.js:514
+#: src/blocks/Contributors/edit.js:520
 msgid "Use PHP date format. E.g., F j, Y for \"January 1, 2023\""
 msgstr ""
 
@@ -2776,7 +2776,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:252
 #: src/blocks/AdvanceContributors/edit.js:528
 #: src/blocks/Contributors/edit-old.js:252
-#: src/blocks/Contributors/edit.js:519
+#: src/blocks/Contributors/edit.js:525
 msgid "Date Prefix Text"
 msgstr ""
 
@@ -2785,7 +2785,7 @@ msgstr ""
 #: assets/build/blocks/HelpfulFeedback/index.js:1
 #: src/blocks/AdvanceContributors/edit-old.js:522
 #: src/blocks/Contributors/edit-old.js:522
-#: src/blocks/Contributors/edit.js:528
+#: src/blocks/Contributors/edit.js:534
 #: src/blocks/HelpfulFeedback/edit.js:193
 msgid "Advanced"
 msgstr ""
@@ -2796,7 +2796,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:524
 #: src/blocks/AdvanceContributors/edit.js:452
 #: src/blocks/Contributors/edit-old.js:524
-#: src/blocks/Contributors/edit.js:530
+#: src/blocks/Contributors/edit.js:536
 msgid "Additional CSS Classes"
 msgstr ""
 
@@ -2807,7 +2807,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:527
 #: src/blocks/AdvanceContributors/edit.js:455
 #: src/blocks/Contributors/edit-old.js:527
-#: src/blocks/Contributors/edit.js:533
+#: src/blocks/Contributors/edit.js:539
 #: src/blocks/HelpfulFeedback/edit.js:198
 msgid "Separate multiple classes with spaces"
 msgstr ""
@@ -2818,7 +2818,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:531
 #: src/blocks/AdvanceContributors/edit.js:445
 #: src/blocks/Contributors/edit-old.js:531
-#: src/blocks/Contributors/edit.js:537
+#: src/blocks/Contributors/edit.js:543
 msgid "Enable Schema Markup"
 msgstr ""
 
@@ -2828,7 +2828,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:534
 #: src/blocks/AdvanceContributors/edit.js:448
 #: src/blocks/Contributors/edit-old.js:534
-#: src/blocks/Contributors/edit.js:540
+#: src/blocks/Contributors/edit.js:546
 msgid "Output structured data for author and dateModified"
 msgstr ""
 
@@ -2838,7 +2838,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:538
 #: src/blocks/AdvanceContributors/edit.js:418
 #: src/blocks/Contributors/edit-old.js:538
-#: src/blocks/Contributors/edit.js:544
+#: src/blocks/Contributors/edit.js:550
 msgid "Avatar Link Behavior"
 msgstr ""
 
@@ -2848,7 +2848,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:541
 #: src/blocks/AdvanceContributors/edit.js:421
 #: src/blocks/Contributors/edit-old.js:541
-#: src/blocks/Contributors/edit.js:547
+#: src/blocks/Contributors/edit.js:553
 msgid "Link to user profile"
 msgstr ""
 
@@ -2858,7 +2858,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:542
 #: src/blocks/AdvanceContributors/edit.js:422
 #: src/blocks/Contributors/edit-old.js:542
-#: src/blocks/Contributors/edit.js:548
+#: src/blocks/Contributors/edit.js:554
 msgid "No link"
 msgstr ""
 
@@ -2868,7 +2868,7 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:543
 #: src/blocks/AdvanceContributors/edit.js:423
 #: src/blocks/Contributors/edit-old.js:543
-#: src/blocks/Contributors/edit.js:549
+#: src/blocks/Contributors/edit.js:555
 msgid "Custom link"
 msgstr ""
 
@@ -2878,14 +2878,14 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:550
 #: src/blocks/AdvanceContributors/edit.js:430
 #: src/blocks/Contributors/edit-old.js:550
-#: src/blocks/Contributors/edit.js:556
+#: src/blocks/Contributors/edit.js:562
 msgid "Custom Link URL"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/Contributors/edit.js:567
+#: src/blocks/Contributors/edit.js:573
 #: src/blocks/HelpfulFeedback/edit.js:222
 msgid "Container Spacing"
 msgstr ""
@@ -2894,7 +2894,7 @@ msgstr ""
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
-#: src/blocks/Contributors/edit.js:575
+#: src/blocks/Contributors/edit.js:581
 #: src/blocks/HelpfulFeedback/edit.js:230
 #: src/blocks/HelpfulModal/edit.js:637
 #: src/blocks/HelpfulModal/edit.js:641
@@ -2903,14 +2903,14 @@ msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
-#: src/blocks/Contributors/edit.js:587
+#: src/blocks/Contributors/edit.js:593
 msgid "Container Background"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/Contributors/edit.js:600
+#: src/blocks/Contributors/edit.js:606
 #: src/blocks/HelpfulFeedback/edit.js:242
 msgid "Title Colors"
 msgstr ""
@@ -2918,34 +2918,34 @@ msgstr ""
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/Contributors/edit.js:605
+#: src/blocks/Contributors/edit.js:611
 #: src/blocks/HelpfulFeedback/edit.js:247
 msgid "Title Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
-#: src/blocks/Contributors/edit.js:610
+#: src/blocks/Contributors/edit.js:616
 msgid "Title Hover Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/Contributors/edit.js:616
+#: src/blocks/Contributors/edit.js:622
 #: src/blocks/HelpfulFeedback/edit.js:278
 msgid "Title Spacing"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
-#: src/blocks/Contributors/edit.js:629
+#: src/blocks/Contributors/edit.js:635
 msgid "Avatar Spacing"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
-#: src/blocks/Contributors/edit.js:637
+#: src/blocks/Contributors/edit.js:643
 msgid "Avatar Border"
 msgstr ""
 
@@ -2953,31 +2953,31 @@ msgstr ""
 #: assets/build/blocks/Contributors/index.js:1
 #: src/blocks/AdvanceContributors/edit-old.js:464
 #: src/blocks/Contributors/edit-old.js:464
-#: src/blocks/Contributors/edit.js:650
+#: src/blocks/Contributors/edit.js:656
 msgid "Name Colors"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
-#: src/blocks/Contributors/edit.js:655
+#: src/blocks/Contributors/edit.js:661
 msgid "Name Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
-#: src/blocks/Contributors/edit.js:660
+#: src/blocks/Contributors/edit.js:666
 msgid "Name Hover Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
-#: src/blocks/Contributors/edit.js:666
+#: src/blocks/Contributors/edit.js:672
 msgid "Name Spacing"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
-#: src/blocks/Contributors/edit.js:677
+#: src/blocks/Contributors/edit.js:683
 msgid "Date Colors"
 msgstr ""
 
@@ -2985,13 +2985,13 @@ msgstr ""
 #: assets/build/blocks/Contributors/index.js:1
 #: src/blocks/AdvanceContributors/edit-old.js:502
 #: src/blocks/Contributors/edit-old.js:502
-#: src/blocks/Contributors/edit.js:682
+#: src/blocks/Contributors/edit.js:688
 msgid "Date Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
-#: src/blocks/Contributors/edit.js:688
+#: src/blocks/Contributors/edit.js:694
 msgid "Date Spacing"
 msgstr ""
 
@@ -3002,9 +3002,9 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit.js:241
 #: src/blocks/AdvanceContributors/edit.js:253
 #: src/blocks/Contributors/edit-old.js:78
-#: src/blocks/Contributors/edit.js:178
-#: src/blocks/Contributors/edit.js:190
-#: src/blocks/Contributors/edit.js:377
+#: src/blocks/Contributors/edit.js:184
+#: src/blocks/Contributors/edit.js:196
+#: src/blocks/Contributors/edit.js:383
 msgid "Doc Contributors"
 msgstr ""
 
@@ -3012,7 +3012,7 @@ msgstr ""
 #: assets/build/blocks/AdvanceContributors/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: src/blocks/AdvanceContributors/edit.js:244
-#: src/blocks/Contributors/edit.js:181
+#: src/blocks/Contributors/edit.js:187
 msgid "Loading contributors..."
 msgstr ""
 
@@ -3022,25 +3022,25 @@ msgstr ""
 #: src/blocks/AdvanceContributors/edit-old.js:79
 #: src/blocks/AdvanceContributors/edit.js:254
 #: src/blocks/Contributors/edit-old.js:79
-#: src/blocks/Contributors/edit.js:191
+#: src/blocks/Contributors/edit.js:197
 msgid "Select contributors from the settings panel."
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
-#: src/blocks/Contributors/edit.js:335
+#: src/blocks/Contributors/edit.js:341
 msgid "Doc Contributors - PRO Feature"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
-#: src/blocks/Contributors/edit.js:343
+#: src/blocks/Contributors/edit.js:349
 msgid "This is a PRO Feature"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/Contributors/index.js:1
-#: src/blocks/Contributors/edit.js:346
+#: src/blocks/Contributors/edit.js:352
 msgid "The Contributors block requires weDocs Pro to be active."
 msgstr ""
 
@@ -3051,10 +3051,10 @@ msgstr ""
 #: assets/build/blocks/ReadingProgress/index.js:1
 #: assets/build/blocks/SocialShare/index.js:1
 #: assets/build/blocks/TableOfContents/index.js:1
-#: src/blocks/Contributors/edit.js:363
-#: src/blocks/Contributors/edit.js:383
-#: src/blocks/DocActions/edit.js:68
-#: src/blocks/DocActions/edit.js:85
+#: src/blocks/Contributors/edit.js:369
+#: src/blocks/Contributors/edit.js:389
+#: src/blocks/DocActions/edit.js:69
+#: src/blocks/DocActions/edit.js:86
 #: src/blocks/FontSizeSwitcher/edit.js:62
 #: src/blocks/FontSizeSwitcher/edit.js:79
 #: src/blocks/ReadingProgress/edit.js:78
@@ -3073,9 +3073,9 @@ msgstr ""
 #: assets/build/blocks/ReadingProgress/index.js:1
 #: assets/build/blocks/SocialShare/index.js:1
 #: assets/build/blocks/TableOfContents/index.js:1
-#: src/blocks/Contributors/edit.js:380
-#: src/blocks/DocActions/edit.js:65
-#: src/blocks/DocActions/edit.js:82
+#: src/blocks/Contributors/edit.js:386
+#: src/blocks/DocActions/edit.js:66
+#: src/blocks/DocActions/edit.js:83
 #: src/blocks/FontSizeSwitcher/edit.js:59
 #: src/blocks/FontSizeSwitcher/edit.js:76
 #: src/blocks/ReadingProgress/edit.js:75
@@ -3089,23 +3089,24 @@ msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocActions/index.js:1
-#: src/blocks/DocActions/edit.js:62
+#: src/blocks/DocActions/edit.js:63
 msgid "weDocs Documentation Actions - PRO Feature"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocActions/index.js:1
-#: src/blocks/DocActions/edit.js:79
+#: src/blocks/DocActions/edit.js:80
 msgid "weDocs Documentation Actions"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:124
+#: src/blocks/DocNavigation/edit.js:121
 msgid "Add rel"
 msgstr ""
 
 #: assets/build/block.js:1
+#: assets/build/blocks/AISummary/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/DocActions/index.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
@@ -3120,7 +3121,7 @@ msgstr ""
 #: src/blocks/components/BorderControl.js:31
 #: src/blocks/Contributors/edit-old.js:339
 #: src/blocks/Contributors/edit-old.js:416
-#: src/blocks/DocNavigation/edit.js:129
+#: src/blocks/DocNavigation/edit.js:126
 #: src/blocks/DocsGrid/StyleControls.js:202
 #: src/blocks/DocsGrid/StyleControls.js:261
 #: src/blocks/PrintButton/Inspector.js:213
@@ -3130,6 +3131,7 @@ msgid "Solid"
 msgstr ""
 
 #: assets/build/block.js:1
+#: assets/build/blocks/AISummary/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/DocActions/index.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
@@ -3144,7 +3146,7 @@ msgstr ""
 #: src/blocks/components/BorderControl.js:32
 #: src/blocks/Contributors/edit-old.js:340
 #: src/blocks/Contributors/edit-old.js:417
-#: src/blocks/DocNavigation/edit.js:130
+#: src/blocks/DocNavigation/edit.js:127
 #: src/blocks/DocsGrid/StyleControls.js:203
 #: src/blocks/DocsGrid/StyleControls.js:262
 #: src/blocks/PrintButton/Inspector.js:214
@@ -3154,6 +3156,7 @@ msgid "Dashed"
 msgstr ""
 
 #: assets/build/block.js:1
+#: assets/build/blocks/AISummary/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/DocActions/index.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
@@ -3166,7 +3169,7 @@ msgstr ""
 #: src/blocks/commonControls/CommonControls.js:99
 #: src/blocks/components/BorderControl.js:33
 #: src/blocks/Contributors/edit-old.js:341
-#: src/blocks/DocNavigation/edit.js:131
+#: src/blocks/DocNavigation/edit.js:128
 #: src/blocks/DocsGrid/StyleControls.js:204
 #: src/blocks/DocsGrid/StyleControls.js:263
 #: src/blocks/PrintButton/Inspector.js:215
@@ -3182,8 +3185,8 @@ msgstr ""
 #: assets/build/index.js:1
 #: src/blocks/AdvanceContributors/edit-old.js:492
 #: src/blocks/Contributors/edit-old.js:492
-#: src/blocks/DocNavigation/edit.js:136
-#: src/blocks/PrintButton/Inspector.js:238
+#: src/blocks/DocNavigation/edit.js:133
+#: src/blocks/PrintButton/Inspector.js:234
 #: src/blocks/SocialShare/edit.js:334
 #: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:9
 msgid "Bold"
@@ -3192,39 +3195,39 @@ msgstr ""
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
 #: assets/build/blocks/PrintButton/index.js:1
-#: src/blocks/DocNavigation/edit.js:137
-#: src/blocks/PrintButton/Inspector.js:239
+#: src/blocks/DocNavigation/edit.js:134
+#: src/blocks/PrintButton/Inspector.js:235
 msgid "Light"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
 #: src/blocks/components/TypographyControl.js:109
-#: src/blocks/DocNavigation/edit.js:142
+#: src/blocks/DocNavigation/edit.js:139
 msgid "Italic"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:163
+#: src/blocks/DocNavigation/edit.js:160
 msgid "SEO Settings"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:169
+#: src/blocks/DocNavigation/edit.js:166
 msgid "SEO Links"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:170
+#: src/blocks/DocNavigation/edit.js:167
 msgid "Add rel=\"prev\" and rel=\"next\" to previous and next document links"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:178
+#: src/blocks/DocNavigation/edit.js:175
 msgid "Navigation Item Styles"
 msgstr ""
 
@@ -3238,8 +3241,8 @@ msgstr ""
 #: src/blocks/commonControls/ColorsControls.js:172
 #: src/blocks/commonControls/ColorsControls.js:256
 #: src/blocks/commonControls/ColorsControls.js:291
-#: src/blocks/DocNavigation/edit.js:191
-#: src/blocks/DocNavigation/edit.js:303
+#: src/blocks/DocNavigation/edit.js:188
+#: src/blocks/DocNavigation/edit.js:300
 #: src/blocks/QuickSearch/edit.js:175
 #: src/blocks/QuickSearch/edit.js:272
 #: src/blocks/TableOfContents/ColorsControls.js:68
@@ -3251,6 +3254,7 @@ msgid "Theme"
 msgstr ""
 
 #: assets/build/block.js:1
+#: assets/build/blocks/AISummary/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/DocActions/index.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
@@ -3264,7 +3268,7 @@ msgstr ""
 #: src/blocks/components/BorderControl.js:27
 #: src/blocks/Contributors/edit-old.js:335
 #: src/blocks/Contributors/edit-old.js:412
-#: src/blocks/DocNavigation/edit.js:210
+#: src/blocks/DocNavigation/edit.js:207
 #: src/blocks/PrintButton/Inspector.js:210
 #: src/blocks/SocialShare/edit.js:475
 #: src/blocks/TableOfContents/Inspector.js:163
@@ -3273,108 +3277,108 @@ msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:245
+#: src/blocks/DocNavigation/edit.js:242
 msgid "Shadow"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:249
+#: src/blocks/DocNavigation/edit.js:246
 msgid "Natural"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:250
+#: src/blocks/DocNavigation/edit.js:247
 msgid "Deep"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:251
+#: src/blocks/DocNavigation/edit.js:248
 msgid "Sharp"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:252
+#: src/blocks/DocNavigation/edit.js:249
 msgid "Outlined"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:253
+#: src/blocks/DocNavigation/edit.js:250
 msgid "Crisp"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
 #: src/blocks/components/ShadowControl.js:42
-#: src/blocks/DocNavigation/edit.js:264
+#: src/blocks/DocNavigation/edit.js:261
 msgid "Horizontal Offset"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
 #: src/blocks/components/ShadowControl.js:56
-#: src/blocks/DocNavigation/edit.js:273
+#: src/blocks/DocNavigation/edit.js:270
 msgid "Vertical Offset"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
 #: src/blocks/components/ShadowControl.js:70
-#: src/blocks/DocNavigation/edit.js:282
+#: src/blocks/DocNavigation/edit.js:279
 msgid "Blur Radius"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
 #: src/blocks/components/ShadowControl.js:84
-#: src/blocks/DocNavigation/edit.js:291
+#: src/blocks/DocNavigation/edit.js:288
 msgid "Spread Radius"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
 #: src/blocks/components/ShadowControl.js:98
-#: src/blocks/DocNavigation/edit.js:309
+#: src/blocks/DocNavigation/edit.js:306
 msgid "Shadow Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:325
+#: src/blocks/DocNavigation/edit.js:322
 msgid "Inset Shadow"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:328
+#: src/blocks/DocNavigation/edit.js:325
 msgid "Create an inner shadow instead of an outer shadow"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:339
+#: src/blocks/DocNavigation/edit.js:336
 msgid "Preview:"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:348
+#: src/blocks/DocNavigation/edit.js:345
 msgid "Navigation Styles"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:356
+#: src/blocks/DocNavigation/edit.js:353
 msgid "Navigation Text Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:361
+#: src/blocks/DocNavigation/edit.js:358
 msgid "Navigation Text Hover Color"
 msgstr ""
 
@@ -3393,7 +3397,7 @@ msgstr ""
 #: src/blocks/components/TypographyControl.js:74
 #: src/blocks/Contributors/edit-old.js:480
 #: src/blocks/Contributors/edit-old.js:513
-#: src/blocks/DocNavigation/edit.js:368
+#: src/blocks/DocNavigation/edit.js:365
 #: src/blocks/PrintButton/Inspector.js:165
 #: src/blocks/QuickSearch/edit.js:234
 #: src/blocks/SocialShare/edit.js:321
@@ -3415,8 +3419,8 @@ msgstr ""
 #: src/blocks/commonControls/CommonControls.js:207
 #: src/blocks/components/TypographyControl.js:87
 #: src/blocks/Contributors/edit-old.js:488
-#: src/blocks/DocNavigation/edit.js:382
-#: src/blocks/PrintButton/Inspector.js:234
+#: src/blocks/DocNavigation/edit.js:379
+#: src/blocks/PrintButton/Inspector.js:230
 #: src/blocks/QuickSearch/edit.js:243
 #: src/blocks/SocialShare/edit.js:328
 #: src/blocks/TableOfContents/Inspector.js:217
@@ -3426,49 +3430,49 @@ msgstr ""
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
 #: src/blocks/components/TypographyControl.js:105
-#: src/blocks/DocNavigation/edit.js:389
+#: src/blocks/DocNavigation/edit.js:386
 msgid "Font Style"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:396
+#: src/blocks/DocNavigation/edit.js:393
 msgid "Arrow Size"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:414
+#: src/blocks/DocNavigation/edit.js:411
 msgid "Arrow Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:419
+#: src/blocks/DocNavigation/edit.js:416
 msgid "Arrow Background Color"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:426
+#: src/blocks/DocNavigation/edit.js:423
 msgid "Arrow Padding"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:432
+#: src/blocks/DocNavigation/edit.js:429
 msgid "Arrow Margin"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:97
+#: src/blocks/DocNavigation/edit.js:94
 msgid "Previous Document"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/DocNavigation/index.js:1
-#: src/blocks/DocNavigation/edit.js:103
+#: src/blocks/DocNavigation/edit.js:100
 msgid "Next Document"
 msgstr ""
 
@@ -3930,12 +3934,6 @@ msgid "Button Border"
 msgstr ""
 
 #: assets/build/block.js:1
-#: assets/build/blocks/HelpfulFeedback/index.js:1
-#: src/blocks/HelpfulFeedback/edit.js:359
-msgid "Preview mode - voting disabled in editor"
-msgstr ""
-
-#: assets/build/block.js:1
 #: assets/build/blocks/HelpfulModal/index.js:1
 #: src/blocks/HelpfulModal/edit.js:268
 msgid "Preview Modal"
@@ -4260,12 +4258,6 @@ msgid "Last updated: "
 msgstr ""
 
 #: assets/build/block.js:1
-#: assets/build/blocks/PrintButton/index.js:1
-#: src/blocks/PrintButton/Inspector.js:51
-msgid "Style Settings"
-msgstr ""
-
-#: assets/build/block.js:1
 #: assets/build/blocks/AISummary/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/DocActions/index.js:1
@@ -4275,13 +4267,13 @@ msgstr ""
 #: assets/build/blocks/PrintButton/index.js:1
 #: assets/build/blocks/ReadingProgress/index.js:1
 #: src/blocks/commonControls/CommonControls.js:23
-#: src/blocks/PrintButton/Inspector.js:56
+#: src/blocks/PrintButton/Inspector.js:51
 msgid "Color Settings"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/PrintButton/index.js:1
-#: src/blocks/PrintButton/Inspector.js:72
+#: src/blocks/PrintButton/Inspector.js:70
 msgid "Hover Color Settings"
 msgstr ""
 
@@ -4319,7 +4311,7 @@ msgstr ""
 #: assets/build/blocks/PrintButton/index.js:1
 #: assets/build/blocks/SocialShare/index.js:1
 #: assets/build/index.js:1
-#: src/blocks/PrintButton/Inspector.js:240
+#: src/blocks/PrintButton/Inspector.js:236
 #: src/blocks/SocialShare/edit.js:258
 #: src/blocks/SocialShare/edit.js:332
 #: src/components/ProPreviews/AssistantWidgetPanels/FontSettings.js:7
@@ -4328,13 +4320,13 @@ msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/PrintButton/index.js:1
-#: src/blocks/PrintButton/Inspector.js:242
+#: src/blocks/PrintButton/Inspector.js:238
 msgid "Semi Bold"
 msgstr ""
 
 #: assets/build/block.js:1
 #: assets/build/blocks/PrintButton/index.js:1
-#: src/blocks/PrintButton/Inspector.js:246
+#: src/blocks/PrintButton/Inspector.js:242
 msgid "Extra Bold"
 msgstr ""
 
@@ -5091,6 +5083,7 @@ msgid "weDocs Dynamic Table of Contents"
 msgstr ""
 
 #: assets/build/block.js:1
+#: assets/build/blocks/AISummary/index.js:1
 #: assets/build/blocks/Contributors/index.js:1
 #: assets/build/blocks/DocActions/index.js:1
 #: assets/build/blocks/HelpfulFeedback/index.js:1
@@ -5804,9 +5797,7 @@ msgid "Unlock and Enjoy Pro Feature-"
 msgstr ""
 
 #: assets/build/editor.js:1
-#: assets/build/index.js:1
 #: src/components/ProPreviews/AiDocWriterImageUploadPreview.js:125
-#: src/components/ProPreviews/common/UpgradeButton.js:5
 msgid "Go Pro – Up to 20% OFF! 🔥"
 msgstr ""
 
@@ -5823,6 +5814,11 @@ msgstr ""
 #: assets/build/editor.js:1
 #: src/components/ProPreviews/AiDocWriterImageUploadPreview.js:183
 msgid "Supports JPG, PNG, GIF up to 10MB"
+msgstr ""
+
+#: assets/build/index.js:1
+#: src/components/ProPreviews/common/UpgradeButton.js:5
+msgid "Go Pro – Up to 35% OFF! 🔥"
 msgstr ""
 
 #: assets/build/index.js:1
