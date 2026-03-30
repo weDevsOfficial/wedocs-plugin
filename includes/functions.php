@@ -1092,3 +1092,91 @@ function use_wedocs_legacy_template(){
 
     return false;
 }
+
+/**
+ * Create the wedocs_messages database table.
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @return void
+ */
+function wedocs_create_messages_table() {
+    global $wpdb;
+
+    $table_name      = $wpdb->prefix . 'wedocs_messages';
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+        name varchar(255) NOT NULL DEFAULT '',
+        email varchar(255) NOT NULL DEFAULT '',
+        subject varchar(255) NOT NULL DEFAULT '',
+        message longtext NOT NULL,
+        doc_id bigint(20) unsigned NOT NULL DEFAULT 0,
+        recipients text NOT NULL,
+        source varchar(20) NOT NULL DEFAULT 'modal',
+        ip_address varchar(45) NOT NULL DEFAULT '',
+        attachment_url text NOT NULL,
+        submitted_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+        PRIMARY KEY  (id),
+        KEY doc_id (doc_id),
+        KEY submitted_at (submitted_at)
+    ) $charset_collate;";
+
+    require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+    dbDelta( $sql );
+}
+
+/**
+ * Store a submitted message in the database.
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @param array $data Message data with keys: name, email, subject, message, doc_id, recipients, source, attachment_url.
+ *
+ * @return int|false The inserted row ID on success, false on failure.
+ */
+function wedocs_store_message( $data ) {
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . 'wedocs_messages';
+
+    // Skip storage if the messages table hasn't been created yet.
+    $table_exists = $wpdb->get_var(
+        $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name )
+    );
+
+    if ( ! $table_exists ) {
+        return false;
+    }
+
+    $recipients = isset( $data['recipients'] ) ? $data['recipients'] : '';
+    if ( is_array( $recipients ) ) {
+        $recipients = implode( ', ', $recipients );
+    }
+
+    $inserted = $wpdb->insert(
+        $table_name,
+        [
+            'name'           => isset( $data['name'] ) ? $data['name'] : '',
+            'email'          => isset( $data['email'] ) ? $data['email'] : '',
+            'subject'        => isset( $data['subject'] ) ? $data['subject'] : '',
+            'message'        => isset( $data['message'] ) ? $data['message'] : '',
+            'doc_id'         => isset( $data['doc_id'] ) ? intval( $data['doc_id'] ) : 0,
+            'recipients'     => $recipients,
+            'source'         => isset( $data['source'] ) ? $data['source'] : 'modal',
+            'ip_address'     => wedocs_get_ip_address(),
+            'attachment_url' => isset( $data['attachment_url'] ) ? $data['attachment_url'] : '',
+            'submitted_at'   => current_time( 'mysql' ),
+        ],
+        [ '%s', '%s', '%s', '%s', '%d', '%s', '%s', '%s', '%s', '%s' ]
+    );
+
+    if ( $inserted ) {
+        return $wpdb->insert_id;
+    }
+
+    return false;
+}
+
+add_action( 'wedocs_before_send_contact_email', 'wedocs_store_message' );

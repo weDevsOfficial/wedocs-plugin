@@ -19,6 +19,7 @@ class Installer {
         $this->add_post_types();
         $this->timestamps();
         wedocs_user_documentation_handling_capabilities();
+        wedocs_create_messages_table();
     }
 
     /**

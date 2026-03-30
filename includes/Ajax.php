@@ -170,6 +170,18 @@ class Ajax {
             wp_send_json_error(__('Please provide the message details.', 'wedocs'));
         }
 
+        $email_to = wedocs_get_general_settings( 'email_to', get_option( 'admin_email' ) );
+
+        do_action( 'wedocs_before_send_contact_email', [
+            'name'       => $name,
+            'email'      => $email,
+            'subject'    => $subject,
+            'message'    => $message,
+            'doc_id'     => $doc_id,
+            'recipients' => $email_to,
+            'source'     => 'modal',
+        ] );
+
         wedocs_doc_feedback_email($doc_id, $name, $email, $subject, $message);
 
         wp_send_json_success(__('Thanks for your feedback.', 'wedocs'));
