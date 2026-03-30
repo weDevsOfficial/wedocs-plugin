@@ -107,11 +107,13 @@ if ( !function_exists('render_wedocs_contributors_block')){
 
         switch ($contributor_display_mode) {
             case 'main_author':
-                $author_id = get_post_field('wedocs_contributors', $post->ID);
+                $author_id = get_post_field('post_author', $post->ID);
                 if ($author_id) {
-                    $contributors[] = get_userdata($author_id);
+                    $author_user = get_userdata($author_id);
+                    if ($author_user) {
+                        $contributors[] = $author_user;
+                    }
                 }
-
                 break;
 
             case 'manual':
@@ -127,26 +129,38 @@ if ( !function_exists('render_wedocs_contributors_block')){
 
             case 'all':
             default:
-                // Get all contributors who have edited the post
-                $author_id = get_post_field('wedocs_contributors', $post->ID);
-                $authors = array_values( array_filter( (array) $author_id ) ); // return author ids.
-                foreach($authors as $author){
-                    $contributors[]= get_userdata($author);
+                $contributor_ids = [];
+
+                // Get contributors from wedocs_contributors meta
+                $wedocs_contributors = get_post_field('wedocs_contributors', $post->ID);
+                $wedocs_contributor_ids = array_values(array_filter((array) $wedocs_contributors));
+                foreach ($wedocs_contributor_ids as $cid) {
+                    if (!in_array($cid, $contributor_ids)) {
+                        $contributor_ids[] = $cid;
+                        $user = get_userdata($cid);
+                        if ($user) {
+                            $contributors[] = $user;
+                        }
+                    }
                 }
 
-
-                if ($author_id && ($author_user = get_userdata($author_id))) {
-                    $contributors[] = $author_user;
+                // Get post author
+                $post_author_id = get_post_field('post_author', $post->ID);
+                if ($post_author_id && !in_array($post_author_id, $contributor_ids)) {
+                    $contributor_ids[] = $post_author_id;
+                    $author_user = get_userdata($post_author_id);
+                    if ($author_user) {
+                        $contributors[] = $author_user;
+                    }
                 }
 
-                // Get additional contributors from post meta or revisions
+                // Get additional contributors from revisions
                 if ($post) {
                     $revisions = wp_get_post_revisions($post->ID);
-                    $contributor_ids = [$author_id];
 
                     foreach ($revisions as $revision) {
                         $revision_author = get_post_field('post_author', $revision->ID);
-                        if (!in_array($revision_author, $contributor_ids)) {
+                        if ($revision_author && !in_array($revision_author, $contributor_ids)) {
                             $contributor_ids[] = $revision_author;
                             $user = get_userdata($revision_author);
                             if ($user) {

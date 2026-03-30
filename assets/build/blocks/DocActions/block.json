@@ -62,15 +62,15 @@
     },
     "backgroundColor": {
       "type": "string",
-      "default": ""
+      "default": "#ffffff"
     },
     "textColor": {
       "type": "string",
-      "default": "#1e1e1e"
+      "default": "#000000"
     },
     "borderColor": {
       "type": "string",
-      "default": "#444444"
+      "default": "#000000"
     },
     "borderWidth": {
       "type": "string",
@@ -82,7 +82,11 @@
     },
     "hoverBackgroundColor": {
       "type": "string",
-      "default": "#333333"
+      "default": "#000000"
+    },
+    "hoverTextColor": {
+      "type": "string",
+      "default": "#ffffff"
     },
     "fontSize": {
       "type": "string",

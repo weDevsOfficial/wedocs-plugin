@@ -13,6 +13,13 @@
     "wedocs",
     "documentation"
   ],
+  "example": {
+    "attributes": {
+      "layout": "layout1",
+      "buttonText": "Print",
+      "showIcon": true
+    }
+  },
   "supports": {
     "html": false
   },

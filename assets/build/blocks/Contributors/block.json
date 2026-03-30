@@ -11,6 +11,15 @@
     "pro",
     "doc contributor"
   ],
+  "example": {
+    "attributes": {
+      "showTitle": true,
+      "title": "Contributors",
+      "contributorDisplayMode": "all",
+      "showLastUpdated": true,
+      "showAvatar": true
+    }
+  },
   "supports": {
     "html": false,
     "anchor": true,

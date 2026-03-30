@@ -64,15 +64,15 @@
     },
     "backgroundColor": {
       "type": "string",
-      "default": "#1a1a1a"
+      "default": "#ffffff"
     },
     "textColor": {
       "type": "string",
-      "default": "#ffffff"
+      "default": "#000000"
     },
     "titleColor": {
       "type": "string",
-      "default": "#ffffff"
+      "default": "#000000"
     },
     "titleFontSize": {
       "type": "string",
@@ -89,6 +89,18 @@
     "borderRadius": {
       "type": "string",
       "default": "8px"
+    },
+    "borderStyle": {
+      "type": "string",
+      "default": "solid"
+    },
+    "borderWidth": {
+      "type": "string",
+      "default": "1px"
+    },
+    "borderColor": {
+      "type": "string",
+      "default": "#000000"
     },
     "padding": {
       "type": "object",

@@ -202,9 +202,13 @@ if (!function_exists('render_wedocs_doc_navigation')) {
     $nav_item_style = implode(' ', $custom_nav_styles);
     
     // Build navigation text styles
+    // WP style system text color takes priority over custom attribute
+    $effective_text_color = $wp_text_color
+        ? sprintf('var(--wp--preset--color--%s)', esc_attr($wp_text_color))
+        : esc_attr($navigation_text_color);
     $navigation_style = sprintf(
-        'color: %s; font-size: %s; font-weight: %s; font-style: %s;',
-        esc_attr($navigation_text_color),
+        'color: %s !important; font-size: %s; font-weight: %s; font-style: %s;',
+        $effective_text_color,
         esc_attr($navigation_font_size),
         esc_attr($navigation_font_weight),
         esc_attr($navigation_font_style)
@@ -214,7 +218,7 @@ if (!function_exists('render_wedocs_doc_navigation')) {
     $hover_css = '';
     if ($navigation_text_hover_color && $navigation_text_hover_color !== $navigation_text_color) {
         $hover_css = sprintf(
-            '<style>.wedocs-doc-navigation a:hover .wedocs-doc-nav-title { color: %s !important; }</style>',
+            '<style>.wedocs-doc-navigation a:hover { color: %s !important; }</style>',
             esc_attr($navigation_text_hover_color)
         );
     }
@@ -222,7 +226,7 @@ if (!function_exists('render_wedocs_doc_navigation')) {
     // Build arrow styles
     $arrow_styles = [];
     $arrow_styles[] = sprintf('font-size: %s;', esc_attr($arrow_size));
-    $arrow_styles[] = sprintf('color: %s;', esc_attr($arrow_color));
+    $arrow_styles[] = sprintf('color: %s !important;', esc_attr($arrow_color));
     $arrow_styles[] = sprintf('background-color: %s;', esc_attr($arrow_background_color));
     
     if ($arrow_padding) {
@@ -255,10 +259,11 @@ if (!function_exists('render_wedocs_doc_navigation')) {
         <div class="wedocs-doc-navigation flex justify-between"<?php echo $wp_style_string ? ' style="' . esc_attr($wp_style_string) . '"' : ''; ?>>
             <?php if ($prev_post) : ?>
                 <div class="wedocs-doc-nav-prev"<?php echo $nav_item_style ? ' style="' . esc_attr($nav_item_style) . '"' : ''; ?>>
-                    <a href="<?php echo esc_url(get_permalink($prev_post->ID)); ?>" 
-                       <?php echo ($seo_links === 'prev_next') ? 'rel="prev"' : ''; ?>>
+                    <a href="<?php echo esc_url(get_permalink($prev_post->ID)); ?>"
+                       <?php echo ($seo_links === 'prev_next') ? 'rel="prev"' : ''; ?>
+                       style="<?php echo esc_attr($navigation_style); ?>">
                         <span class="wedocs-doc-nav-arrow" style="<?php echo esc_attr($arrow_style); ?>">←</span>
-                        <span class="wedocs-doc-nav-title" style="<?php echo esc_attr($navigation_style); ?>">
+                        <span class="wedocs-doc-nav-title">
                             <?php echo esc_html(apply_filters('wedocs_translate_text', $prev_post->post_title)); ?>
                         </span>
                     </a>
@@ -267,9 +272,10 @@ if (!function_exists('render_wedocs_doc_navigation')) {
             
             <?php if ($next_post) : ?>
                 <div class="wedocs-doc-nav-next"<?php echo $nav_item_style ? ' style="' . esc_attr($nav_item_style) . '"' : ''; ?>>
-                    <a href="<?php echo esc_url(get_permalink($next_post->ID)); ?>" 
-                       <?php echo ($seo_links === 'prev_next') ? 'rel="next"' : ''; ?>>
-                        <span class="wedocs-doc-nav-title" style="<?php echo esc_attr($navigation_style); ?>">
+                    <a href="<?php echo esc_url(get_permalink($next_post->ID)); ?>"
+                       <?php echo ($seo_links === 'prev_next') ? 'rel="next"' : ''; ?>
+                       style="<?php echo esc_attr($navigation_style); ?>">
+                        <span class="wedocs-doc-nav-title">
                             <?php echo esc_html(apply_filters('wedocs_translate_text', $next_post->post_title)); ?>
                         </span>
                         <span class="wedocs-doc-nav-arrow" style="<?php echo esc_attr($arrow_style); ?>">→</span>
