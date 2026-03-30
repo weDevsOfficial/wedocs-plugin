@@ -33,13 +33,14 @@ $error_message = $attributes['errorMessage'] ?? 'Sorry, there was an error sendi
 
 $container_background_color = $attributes['containerBackgroundColor'] ?? '';
 $container_padding = $attributes['containerPadding'] ?? ['top' => '20px', 'right' => '20px', 'bottom' => '20px', 'left' => '20px'];
-$container_margin = $attributes['containerMargin'] ?? ['top' => '0px', 'right' => '0px', 'bottom' => '20px', 'left' => '0px'];
+$container_margin = $attributes['containerMargin'] ?? ['top' => '0px', 'right' => '0px', 'bottom' => '0px', 'left' => '0px'];
 $container_border = $attributes['containerBorder'] ?? ['width' => '1px', 'style' => 'solid', 'color' => '#ddd'];
 $container_border_radius = $attributes['containerBorderRadius'] ?? '8px';
 $container_box_shadow = $attributes['containerBoxShadow'] ?? '0 2px 4px rgba(0,0,0,0.1)';
 
 $icon_type = $attributes['iconType'] ?? 'email';
-$icon_color = $attributes['iconColor'] ?? '';
+$icon_color = $attributes['iconColor'] ?? '#6c5ce7';
+$icon_bg_color = $attributes['iconBgColor'] ?? '#f0ecfc';
 $icon_size = $attributes['iconSize'] ?? '24px';
 
 $text_color = $attributes['textColor'] ?? '';
@@ -125,8 +126,8 @@ if ($is_button_trigger) {
     );
 } else {
     $link_styles = sprintf(
-        'color: %s; font-size: %s; font-weight: %s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;',
-        esc_attr($link_color),
+        'color: %s; font-size: %s; font-weight: %s; text-decoration: underline; display: inline; cursor: pointer;',
+        esc_attr($link_color ?: '#0073aa'),
         esc_attr($link_typography['fontSize'] ?? '16px'),
         esc_attr($link_typography['fontWeight'] ?? '500')
     );
@@ -134,6 +135,22 @@ if ($is_button_trigger) {
 
 $icon_styles = sprintf(
     'color: %s; width: %s; height: %s;',
+    esc_attr($icon_color),
+    esc_attr($icon_size),
+    esc_attr($icon_size)
+);
+
+// Shared icon SVG array
+$icons_raw = [
+    'email' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 25" fill="none" style="width: 100%; height: 100%;"><path d="M1.429 21.292V9.924c0-.851.425-1.646 1.134-2.118l8.911-5.941c.855-.57 1.969-.57 2.825 0l8.911 5.941c.708.472 1.134 1.267 1.134 2.118v11.367m-22.914 0c0 1.406 1.14 2.546 2.546 2.546h17.822c1.406 0 2.546-1.14 2.546-2.546m-22.914 0l8.593-5.728m14.321 5.728l-8.593-5.728M1.429 9.835l8.593 5.728m14.321-5.728l-8.593 5.728m0 0l-1.452.968c-.855.57-1.969.57-2.825 0l-1.452-.968" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    'help'  => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 100%; height: 100%;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>',
+    'info'  => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 100%; height: 100%;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>',
+];
+
+// Shared icon circle style
+$icon_circle_style = sprintf(
+    'display: inline-flex; flex-shrink: 0; background-color: %s; border-radius: 50%%; padding: 12px; color: %s; width: %s; height: %s;',
+    esc_attr($icon_bg_color),
     esc_attr($icon_color),
     esc_attr($icon_size),
     esc_attr($icon_size)
@@ -217,19 +234,16 @@ $wrapper_attributes = get_block_wrapper_attributes([
 <div <?php echo $wrapper_attributes; ?>>
     <div class="need-more-help-container <?php echo $is_row_layout ? 'layout-row' : 'layout-stacked'; ?>" style="<?php echo esc_attr($container_styles); ?>">
         <?php if ($is_row_layout) : ?>
-            <span class="need-more-help-icon-circle" style="<?php echo esc_attr($icon_styles); ?> display: inline-flex; flex-shrink: 0; background-color: <?php echo $icon_color ? 'transparent' : '#f0ecfc'; ?>; border-radius: 50%; padding: 12px; fill: <?php echo esc_attr($icon_color ?: '#6c5ce7'); ?>;">
-                <?php
-                // Output raw SVG for the icon circle
-                $icons_raw = [
-                    'email' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 100%; height: 100%;"><path d="M4 20q-.825 0-1.413-.588T2 18V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.588 1.413T20 20H4Zm8-7L4 8v10h16V8l-8 5Zm0-2 8-5H4l8 5ZM4 8V6v12V8Z" fill="currentColor"/></svg>',
-                    'help' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 100%; height: 100%;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" fill="currentColor"/></svg>',
-                    'info' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 100%; height: 100%;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/></svg>'
-                ];
-                echo $icons_raw[$icon_type] ?? $icons_raw['email'];
-                ?>
+            <span class="need-more-help-icon-circle" style="<?php echo esc_attr($icon_circle_style); ?>">
+                <?php echo $icons_raw[$icon_type] ?? $icons_raw['email']; ?>
             </span>
             <div style="flex: 1;">
-                <p style="<?php echo esc_attr($text_styles); ?>"><?php echo esc_html($main_text); ?></p>
+                <p style="<?php echo esc_attr($text_styles); ?>">
+                    <?php echo esc_html($main_text); ?>
+                    <?php if (!$is_button_trigger) : ?>
+                        <a style="<?php echo esc_attr($link_styles); ?>" data-track="<?php echo esc_attr($analytics_event); ?>"><?php echo esc_html($button_text); ?></a>
+                    <?php endif; ?>
+                </p>
                 <?php if ($show_last_updated) : ?>
                     <p style="font-size: 12px; color: #666; margin: 4px 0 0 0;">
                         <?php
@@ -242,17 +256,24 @@ $wrapper_attributes = get_block_wrapper_attributes([
                     </p>
                 <?php endif; ?>
             </div>
-            <a class="<?php echo $is_button_trigger ? 'trigger-button' : ''; ?>" style="<?php echo esc_attr($link_styles); ?>" data-track="<?php echo esc_attr($analytics_event); ?>">
-                <?php echo esc_html($button_text); ?>
-            </a>
+            <?php if ($is_button_trigger) : ?>
+                <a class="trigger-button" style="<?php echo esc_attr($link_styles); ?>" data-track="<?php echo esc_attr($analytics_event); ?>">
+                    <?php echo esc_html($button_text); ?>
+                </a>
+            <?php endif; ?>
         <?php else : ?>
-            <p style="<?php echo esc_attr($text_styles); ?>"><?php echo esc_html($main_text); ?></p>
-            <a class="<?php echo $is_button_trigger ? 'trigger-button' : ''; ?>" style="<?php echo esc_attr($link_styles); ?>" data-track="<?php echo esc_attr($analytics_event); ?>">
+            <span class="need-more-help-icon-circle" style="<?php echo esc_attr($icon_circle_style); ?> margin-bottom: 12px;"><?php echo $icons_raw[$icon_type] ?? $icons_raw['email']; ?></span>
+            <p style="<?php echo esc_attr($text_styles); ?>">
+                <?php echo esc_html($main_text); ?>
                 <?php if (!$is_button_trigger) : ?>
-                    <?php echo get_help_icon_svg($icon_type, $icon_styles); ?>
+                    <a style="<?php echo esc_attr($link_styles); ?>" data-track="<?php echo esc_attr($analytics_event); ?>"><?php echo esc_html($button_text); ?></a>
                 <?php endif; ?>
-                <?php echo esc_html($button_text); ?>
-            </a>
+            </p>
+            <?php if ($is_button_trigger) : ?>
+                <a class="trigger-button" style="<?php echo esc_attr($link_styles); ?>" data-track="<?php echo esc_attr($analytics_event); ?>">
+                    <?php echo esc_html($button_text); ?>
+                </a>
+            <?php endif; ?>
             <?php if ($show_last_updated) : ?>
                 <p style="font-size: 12px; color: #666; margin-top: 8px;">
                     <?php

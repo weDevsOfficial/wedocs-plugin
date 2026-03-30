@@ -116,14 +116,14 @@ const Edit = ({ attributes, setAttributes }) => {
                         ]}
                         onChange={(value) => setAttributes({ layout: value })}
                     />
-                    
+
                     <TextControl
                         label={__('Button Text', 'wedocs')}
                         value={buttonText}
                         onChange={(value) => setAttributes({ buttonText: value })}
                         placeholder={__('Print', 'wedocs')}
                     />
-                    
+
                     <PanelRow>
                         <ToggleControl
                             label={__('Show Print Icon', 'wedocs')}
@@ -132,10 +132,9 @@ const Edit = ({ attributes, setAttributes }) => {
                         />
                     </PanelRow>
                 </PanelBody>
-                
-                <Inspector attributes={attributes} setAttributes={setAttributes} />
-
             </InspectorControls>
+
+            <Inspector attributes={attributes} setAttributes={setAttributes} />
 
             <div {...blockProps}>
                 <div className="wedocs-print-button-wrapper">

@@ -9,6 +9,11 @@
 if (! defined('ABSPATH')) {
     exit;
 }
+// Return empty if weDocs Pro is not active
+if ( ! function_exists( 'wedocs_is_pro_active' ) || ! wedocs_is_pro_active() ) {
+    return;
+}
+
 
 /**
  * Generate TOC content from post headings

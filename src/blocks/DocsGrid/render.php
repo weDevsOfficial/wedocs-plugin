@@ -211,8 +211,17 @@ if (! function_exists('render_wedocs_docs_grid')) {
             esc_attr($button_hover_text_color)
         );
 
-        // Get current page for pagination (works on front page and regular pages)
-        $current_page = max(1, get_query_var('paged') ?: get_query_var('page', 1));
+        // Get current page for pagination.
+        // We use a custom 'wedocs_paged' GET param instead of 'paged' to avoid
+        // WordPress's redirect_canonical converting ?paged=2 to /page/2/ (which
+        // returns 404 on regular pages that have no matching rewrite rule).
+        // On true archive pages get_query_var('paged') still works as a fallback.
+        $current_page = max(
+            1,
+            (int) ( isset( $_GET['wedocs_paged'] ) ? absint( $_GET['wedocs_paged'] ) : 0 )
+                ?: (int) get_query_var( 'paged' )
+                ?: (int) get_query_var( 'page' )
+        );
 
         // Set up the main docs query
         $args = array(
@@ -378,10 +387,17 @@ if (! function_exists('render_wedocs_docs_grid')) {
             ?>
                 <nav class="wedocs-docs-pagination" aria-label="<?php esc_attr_e('Docs pagination', 'wedocs'); ?>">
                     <?php
+                    // Use 'wedocs_paged' (not 'paged') so WordPress redirect_canonical
+                    // does NOT redirect ?wedocs_paged=2 to /page/2/ (which gives 404
+                    // on regular pages). Use a safe placeholder then str_replace to
+                    // avoid add_query_arg() URL-encoding the %#% placeholder.
+                    $_paged_base = add_query_arg( 'wedocs_paged', 'WEDOCS_PAGE_NUM', get_permalink() );
+                    $_paged_base = str_replace( 'WEDOCS_PAGE_NUM', '%#%', $_paged_base );
                     echo paginate_links(array(
+                        'base'      => $_paged_base,
+                        'format'    => '',
                         'total'     => $total_pages,
                         'current'   => $current_page,
-                        'format'    => '?paged=%#%',
                         'prev_text' => '&larr;',
                         'next_text' => '&rarr;',
                         'type'      => 'list',

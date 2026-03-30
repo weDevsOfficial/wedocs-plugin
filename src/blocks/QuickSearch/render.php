@@ -598,7 +598,7 @@ if ( ! function_exists( 'render_wedocs_quick_search' ) ) {
 
         const performSearch = async (query) => {
             if (!query || query.length < 2) {
-                resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template( "empty-state", [ "message" => __( "Type at least 2 characters to search...", "wedocs" ) ] ); ?>';
+                resultsContainer.innerHTML = <?php echo wp_json_encode( wedocs_block_quick_search_get_template( "empty-state", [ "message" => __( "Type at least 2 characters to search...", "wedocs" ) ] ) ); ?>;
                 return;
             }
 
@@ -673,7 +673,7 @@ if ( ! function_exists( 'render_wedocs_quick_search' ) ) {
 
             } catch (error) {
                 console.error('Search error:', error);
-                resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template( "empty-state", [ "message" => __( "Search failed. Please try again.", "wedocs" ) ] ); ?>';
+                resultsContainer.innerHTML = <?php echo wp_json_encode( wedocs_block_quick_search_get_template( "empty-state", [ "message" => __( "Search failed. Please try again.", "wedocs" ) ] ) ); ?>;
             } finally {
                 // Remove loading state
                 searchInput.classList.remove('opacity-75', 'cursor-wait');
@@ -772,7 +772,7 @@ if ( ! function_exists( 'render_wedocs_quick_search' ) ) {
         if (clearButton) {
             clearButton.addEventListener('click', () => {
                 searchInput.value = '';
-                resultsContainer.innerHTML = '<?php echo wedocs_block_quick_search_get_template( "empty-state", [ "message" => __( "Type at least 2 characters to search...", "wedocs" ) ] ); ?>';
+                resultsContainer.innerHTML = <?php echo wp_json_encode( wedocs_block_quick_search_get_template( "empty-state", [ "message" => __( "Type at least 2 characters to search...", "wedocs" ) ] ) ); ?>;
             });
         }
 

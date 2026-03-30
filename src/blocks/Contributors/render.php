@@ -11,6 +11,11 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+// Return empty if weDocs Pro is not active
+if ( ! function_exists( 'wedocs_is_pro_active' ) || ! wedocs_is_pro_active() ) {
+    return;
+}
+
 
 if ( !function_exists('render_wedocs_contributors_block')){
     function render_wedocs_contributors_block($attributes, $content, $block) {
@@ -64,10 +69,10 @@ if ( !function_exists('render_wedocs_contributors_block')){
         // Build container styles using helper functions
         $container_styles = [];
 
-        // Background styles
+        // Background styles — defaults match block.json so fresh (unsaved) blocks look correct
         $background_args = [
             'type' => $attributes['backgroundType'] ?? 'classic',
-            'color' => $attributes['backgroundColor'] ?? '',
+            'color' => $attributes['backgroundColor'] ?? '#f9f9f9',
             'gradient' => $attributes['backgroundGradient'] ?? '',
             'image' => $attributes['backgroundImage'] ?? []
         ];
@@ -78,18 +83,18 @@ if ( !function_exists('render_wedocs_contributors_block')){
             $background_args['image']
         ));
 
-        // Container spacing
+        // Container spacing — defaults match block.json
         $container_styles = array_merge($container_styles, wedocs_build_spacing_styles(
-            $attributes['padding'] ?? [],
-            $attributes['margin'] ?? []
+            $attributes['padding'] ?? [ 'top' => '15px', 'right' => '15px', 'bottom' => '15px', 'left' => '15px' ],
+            $attributes['margin'] ?? [ 'top' => '10px', 'right' => '0px', 'bottom' => '10px', 'left' => '0px' ]
         ));
 
-        // Container border
+        // Container border — defaults match block.json
         $container_styles = array_merge($container_styles, wedocs_build_border_styles(
-            $attributes['borderStyle'] ?? 'none',
-            $attributes['borderWidth'] ?? [],
-            $attributes['borderColor'] ?? '',
-            $attributes['borderRadius'] ?? ''
+            $attributes['borderStyle'] ?? 'solid',
+            $attributes['borderWidth'] ?? [ 'top' => '1px', 'right' => '1px', 'bottom' => '1px', 'left' => '1px' ],
+            $attributes['borderColor'] ?? '#dddddd',
+            $attributes['borderRadius'] ?? '4px'
         ));
 
         // Container shadow
@@ -102,11 +107,13 @@ if ( !function_exists('render_wedocs_contributors_block')){
 
         switch ($contributor_display_mode) {
             case 'main_author':
-                $author_id = get_post_field('wedocs_contributors', $post->ID);
+                $author_id = get_post_field('post_author', $post->ID);
                 if ($author_id) {
-                    $contributors[] = get_userdata($author_id);
+                    $author_user = get_userdata($author_id);
+                    if ($author_user) {
+                        $contributors[] = $author_user;
+                    }
                 }
-
                 break;
 
             case 'manual':
@@ -122,26 +129,38 @@ if ( !function_exists('render_wedocs_contributors_block')){
 
             case 'all':
             default:
-                // Get all contributors who have edited the post
-                $author_id = get_post_field('wedocs_contributors', $post->ID);
-                $authors = array_values($author_id); // return auhtors id.
-                foreach($authors as $author){
-                    $contributors[]= get_userdata($author);
+                $contributor_ids = [];
+
+                // Get contributors from wedocs_contributors meta
+                $wedocs_contributors = get_post_field('wedocs_contributors', $post->ID);
+                $wedocs_contributor_ids = array_values(array_filter((array) $wedocs_contributors));
+                foreach ($wedocs_contributor_ids as $cid) {
+                    if (!in_array($cid, $contributor_ids)) {
+                        $contributor_ids[] = $cid;
+                        $user = get_userdata($cid);
+                        if ($user) {
+                            $contributors[] = $user;
+                        }
+                    }
                 }
 
-
-                if ($author_id && ($author_user = get_userdata($author_id))) {
-                    $contributors[] = $author_user;
+                // Get post author
+                $post_author_id = get_post_field('post_author', $post->ID);
+                if ($post_author_id && !in_array($post_author_id, $contributor_ids)) {
+                    $contributor_ids[] = $post_author_id;
+                    $author_user = get_userdata($post_author_id);
+                    if ($author_user) {
+                        $contributors[] = $author_user;
+                    }
                 }
 
-                // Get additional contributors from post meta or revisions
+                // Get additional contributors from revisions
                 if ($post) {
                     $revisions = wp_get_post_revisions($post->ID);
-                    $contributor_ids = [$author_id];
 
                     foreach ($revisions as $revision) {
                         $revision_author = get_post_field('post_author', $revision->ID);
-                        if (!in_array($revision_author, $contributor_ids)) {
+                        if ($revision_author && !in_array($revision_author, $contributor_ids)) {
                             $contributor_ids[] = $revision_author;
                             $user = get_userdata($revision_author);
                             if ($user) {
@@ -175,7 +194,7 @@ if ( !function_exists('render_wedocs_contributors_block')){
         ];
 
         // Avatar shape
-        $avatar_base_styles[] = 'border-radius: ' . esc_attr($attributes['avatarBorderRadius'] ?? '50%');
+        $avatar_base_styles[] = 'border-radius: ' . esc_attr($attributes['avatarBorderRadius'] ?? '8px');
 
         // Avatar border and spacing
         $avatar_styles = array_merge($avatar_base_styles, wedocs_build_border_styles(
@@ -230,16 +249,14 @@ if ( !function_exists('render_wedocs_contributors_block')){
 
         // Generate unique block ID
         $block_id = wedocs_generate_block_id('wedocs-contributors');
-
-        // Build wrapper attributes using get_block_wrapper_attributes for proper block support integration
         $css_classes[] = $block_id;
-        $wrapper_attributes = get_block_wrapper_attributes([
-            'class' => implode(' ', $css_classes),
-            'style' => !empty($container_styles) ? wedocs_styles_to_css($container_styles) : '',
-        ]);
+
+        // Output styles directly — same pattern as HelpfulFeedback block
+        // (routing through get_block_wrapper_attributes can alter/strip custom style values)
+        $inline_style = !empty($container_styles) ? ' style="' . esc_attr( wedocs_styles_to_css( $container_styles ) ) . '"' : '';
 
         // Start building output
-        $output = '<div ' . $wrapper_attributes . '>';
+        $output = '<div class="' . esc_attr( implode( ' ', $css_classes ) ) . '"' . $inline_style . '>';
 
         // Schema markup
         $schema_data = [];

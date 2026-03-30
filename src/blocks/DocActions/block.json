@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "wedocs/doc-actions",
 	"version": "1.0.0",
-	"title": "Documentation Actions",
+	"title": "weDocs Documentation Actions",
 	"category": "wedocs",
 	"icon": "share",
 	"description": "Action buttons for documentation - Copy Markdown, Open in ChatGPT, Open in Claude, and more.",
@@ -56,15 +56,15 @@
 		},
 		"backgroundColor": {
 			"type": "string",
-			"default": ""
+			"default": "#ffffff"
 		},
 		"textColor": {
 			"type": "string",
-			"default": "#1e1e1e"
+			"default": "#000000"
 		},
 		"borderColor": {
 			"type": "string",
-			"default": "#444444"
+			"default": "#000000"
 		},
 		"borderWidth": {
 			"type": "string",
@@ -76,7 +76,11 @@
 		},
 		"hoverBackgroundColor": {
 			"type": "string",
-			"default": "#333333"
+			"default": "#000000"
+		},
+		"hoverTextColor": {
+			"type": "string",
+			"default": "#ffffff"
 		},
 		"fontSize": {
 			"type": "string",

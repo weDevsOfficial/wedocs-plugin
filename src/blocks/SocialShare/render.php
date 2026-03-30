@@ -9,6 +9,11 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+// Return empty if weDocs Pro is not active
+if ( ! function_exists( 'wedocs_is_pro_active' ) || ! wedocs_is_pro_active() ) {
+    return '';
+}
+
 
 // Check if this is a docs post type
 if (get_post_type() !== 'docs') {

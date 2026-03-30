@@ -3,10 +3,18 @@
 	"apiVersion": 3,
 	"name": "wedocs/wedocs-docs-grid",
 	"version": "1.0.0",
-	"title": "Docs Grid",
+	"title": "weDocs Docs Grid",
 	"icon": "grid-view",
 	"category": "wedocs",
 	"description": "Display all the docs in a grid view",
+	"example": {
+		"attributes": {
+			"docStyle": "1x1",
+			"showDocArticle": true,
+			"showViewDetails": true,
+			"buttonText": "View Details"
+		}
+	},
 	"supports": {
 		"html": false,
 		"align": ["wide", "full"],
@@ -28,16 +36,7 @@
 				"margin": true
 			}
 		},
-		"__experimentalBorder": {
-			"color": true,
-			"radius": true,
-			"style": true,
-			"width": true,
-			"__experimentalDefaultControls": {
-				"color": true,
-				"radius": true
-			}
-		}
+		"__experimentalBorder": false
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",

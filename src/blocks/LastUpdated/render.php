@@ -32,15 +32,22 @@ if (!function_exists('wedocs_format_last_updated_date')) {
         $date = new DateTime();
         $date->setTimestamp($timestamp);
 
-        return match ($format) {
-            'MM/DD/YYYY' => $date->format('m/d/Y'),
-            'DD/MM/YYYY' => $date->format('d/m/Y'),
-            'YYYY-MM-DD' => $date->format('Y-m-d'),
-            'Month DD, YYYY' => $date->format('F j, Y'),
-            'DD Month YYYY' => $date->format('j F Y'),
-            'relative' => human_time_diff($timestamp, current_time('timestamp')) . ' ago',
-            default => $date->format('m/d/Y'),
-        };
+        switch ($format) {
+            case 'MM/DD/YYYY':
+                return $date->format('m/d/Y');
+            case 'DD/MM/YYYY':
+                return $date->format('d/m/Y');
+            case 'YYYY-MM-DD':
+                return $date->format('Y-m-d');
+            case 'Month DD, YYYY':
+                return $date->format('F j, Y');
+            case 'DD Month YYYY':
+                return $date->format('j F Y');
+            case 'relative':
+                return human_time_diff($timestamp, current_time('timestamp')) . ' ago';
+            default:
+                return $date->format('m/d/Y');
+        }
     }
 }
 
