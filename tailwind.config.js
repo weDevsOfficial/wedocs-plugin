@@ -1,5 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 import {
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+
   scopedPreflightStyles,
   isolateInsideOfContainer,
 } from 'tailwindcss-scoped-preflight';
