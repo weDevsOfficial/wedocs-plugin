@@ -54,6 +54,9 @@ Create beautiful docs, structure them neatly, and boost engagement, all from one
 
 The free version of weDocs provides a solid foundation for building a professional knowledge base. It includes:
 
+– **[Full Gutenberg Support](https://wedocs.co/docs/wedocs/full-site-editing/
+)**: Design and customize your documentation using Gutenberg blocks with complete flexibility.
+
 – **User-friendly Interface:** Clean and intuitive dashboard for creating and managing documentation without technical complexity.
 
 – **Unlimited Document Creation:** Create unlimited documents and knowledge bases for any product, service, or business.
@@ -80,7 +83,7 @@ The free version of weDocs provides a solid foundation for building a profession
 
 – **[Quick Search on Documentation](https://wedocs.co/docs/wedocs/how-to/quick-search-option/)**: AJAX-powered in-document search for fast navigation.
 
-– **[AI Doc Writer](https://wedocs.co/docs/wedocs/how-to/ai-doc-writer/)**: Automatically generates helpful documentation from your prompts or product details.
+– **[AI Doc Writer with Image Analysis](https://wedocs.co/docs/wedocs/how-to/ai-doc-writer/)**: Generate documentation from prompts, product details, or even screenshots. Turn visuals into structured docs instantly.
 
 ---
 
