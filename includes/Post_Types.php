@@ -20,6 +20,9 @@ class Post_Types {
     public function __construct() {
         add_action( 'init', [ $this, 'register_post_type' ] );
         add_action( 'init', [ $this, 'register_taxonomy' ] );
+        add_action( 'init', [ $this, 'register_faq_post_type' ] );
+        add_action( 'init', [ $this, 'register_faq_taxonomy' ] );
+        add_action( 'init', [ $this, 'register_faq_meta' ] );
     }
 
     /**
@@ -124,5 +127,129 @@ class Post_Types {
         ];
 
         register_taxonomy( 'doc_tag', [ 'docs' ], $args );
+    }
+
+    /**
+     * Register the FAQ post type.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function register_faq_post_type() {
+        $labels = [
+            'name'               => _x( 'FAQs', 'Post Type General Name', 'wedocs' ),
+            'singular_name'      => _x( 'FAQ', 'Post Type Singular Name', 'wedocs' ),
+            'menu_name'          => __( 'FAQs', 'wedocs' ),
+            'all_items'          => __( 'All FAQs', 'wedocs' ),
+            'view_item'          => __( 'View FAQ', 'wedocs' ),
+            'add_new_item'       => __( 'Add FAQ', 'wedocs' ),
+            'add_new'            => __( 'Add New', 'wedocs' ),
+            'edit_item'          => __( 'Edit FAQ', 'wedocs' ),
+            'update_item'        => __( 'Update FAQ', 'wedocs' ),
+            'search_items'       => __( 'Search FAQs', 'wedocs' ),
+            'not_found'          => __( 'No FAQs found', 'wedocs' ),
+            'not_found_in_trash' => __( 'Not found in Trash', 'wedocs' ),
+        ];
+
+        $args = [
+            'labels'              => $labels,
+            'supports'            => [ 'title', 'editor', 'page-attributes', 'custom-fields' ],
+            'hierarchical'        => false,
+            'public'              => false,
+            'show_ui'             => false,
+            'show_in_menu'        => false,
+            'show_in_rest'        => true,
+            'rest_base'           => 'wedocs-faqs',
+            'has_archive'         => false,
+            'exclude_from_search' => true,
+            'publicly_queryable'  => false,
+            'map_meta_cap'        => true,
+            'capability_type'     => [ 'doc', 'docs' ],
+        ];
+
+        register_post_type( 'wedocs_faq', apply_filters( 'wedocs_faq_post_type', $args ) );
+    }
+
+    /**
+     * Register the FAQ group taxonomy.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function register_faq_taxonomy() {
+        $labels = [
+            'name'              => _x( 'FAQ Groups', 'Taxonomy General Name', 'wedocs' ),
+            'singular_name'     => _x( 'FAQ Group', 'Taxonomy Singular Name', 'wedocs' ),
+            'menu_name'         => __( 'FAQ Groups', 'wedocs' ),
+            'all_items'         => __( 'All FAQ Groups', 'wedocs' ),
+            'new_item_name'     => __( 'New FAQ Group', 'wedocs' ),
+            'add_new_item'      => __( 'Add New FAQ Group', 'wedocs' ),
+            'edit_item'         => __( 'Edit FAQ Group', 'wedocs' ),
+            'update_item'       => __( 'Update FAQ Group', 'wedocs' ),
+            'search_items'      => __( 'Search FAQ Groups', 'wedocs' ),
+            'not_found'         => __( 'Not Found', 'wedocs' ),
+        ];
+
+        $args = [
+            'labels'            => $labels,
+            'hierarchical'      => true,
+            'public'            => false,
+            'show_ui'           => false,
+            'show_in_rest'      => true,
+            'rest_base'         => 'wedocs-faq-groups',
+            'show_admin_column' => false,
+            'capabilities'      => [
+                'manage_terms' => 'manage_doc_terms',
+                'edit_terms'   => 'edit_doc_terms',
+                'delete_terms' => 'delete_doc_terms',
+                'assign_terms' => 'edit_docs',
+            ],
+        ];
+
+        register_taxonomy( 'wedocs_faq_group', [ 'wedocs_faq' ], $args );
+    }
+
+    /**
+     * Register FAQ post meta fields for REST API exposure.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function register_faq_meta() {
+        register_post_meta( 'wedocs_faq', '_faq_open_by_default', [
+            'type'          => 'boolean',
+            'single'        => true,
+            'default'       => false,
+            'show_in_rest'  => true,
+            'auth_callback' => function () {
+                return current_user_can( 'edit_docs' );
+            },
+        ] );
+
+        register_term_meta( 'wedocs_faq_group', 'icon', [
+            'type'          => 'integer',
+            'single'        => true,
+            'default'       => 0,
+            'show_in_rest'  => true,
+            'sanitize_callback' => 'absint',
+        ] );
+
+        register_term_meta( 'wedocs_faq_group', 'order', [
+            'type'          => 'integer',
+            'single'        => true,
+            'default'       => 0,
+            'show_in_rest'  => true,
+            'sanitize_callback' => 'absint',
+        ] );
+
+        register_term_meta( 'wedocs_faq_group', 'status', [
+            'type'          => 'boolean',
+            'single'        => true,
+            'default'       => true,
+            'show_in_rest'  => true,
+        ] );
     }
 }
