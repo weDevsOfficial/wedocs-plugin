@@ -12,6 +12,7 @@ class Shortcode {
      */
     public function __construct() {
         add_shortcode( 'wedocs', [ $this, 'shortcode' ] );
+        add_shortcode( 'wedocs_faq', [ $this, 'faq_shortcode' ] );
     }
 
     /**
@@ -138,12 +139,149 @@ class Shortcode {
                 'more'          => $args['more'],
                 'col'           => (int) ( $docs_length === 1 ? $docs_length : $args['col'] ),
                 'enable_search' => wedocs_get_general_settings( 'enable_search', 'on' ),
+                'show_faq'      => wedocs_get_general_settings( 'show_faq', 'off' ),
                 'current_page'  => $current_page,
                 'total_pages'   => $total_pages,
             )
         );
 
         // Render single documentation template.
+        wedocs_get_template( $template_dir, $template_args );
+    }
+
+    /**
+     * FAQ shortcode handler.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param array  $atts    Shortcode attributes.
+     * @param string $content Shortcode content.
+     *
+     * @return string
+     */
+    public function faq_shortcode( $atts, $content = '' ) {
+        Frontend::enqueue_assets();
+
+        ob_start();
+        self::wedocs_faq( $atts );
+        $content .= ob_get_clean();
+
+        return $content;
+    }
+
+    /**
+     * Query and render FAQ groups and items.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param array $args Shortcode attributes.
+     *
+     * @return void
+     */
+    public static function wedocs_faq( $args = [] ) {
+        wp_enqueue_style( 'wedocs-faq' );
+        wp_enqueue_script( 'wedocs-faq' );
+
+        $defaults = [
+            'group'   => '',
+            'limit'   => -1,
+            'orderby' => 'menu_order',
+            'order'   => 'ASC',
+        ];
+
+        $args = wp_parse_args( $args, $defaults );
+
+        $group_query_args = [
+            'taxonomy'   => 'wedocs_faq_group',
+            'hide_empty' => true,
+        ];
+
+        // Filter by specific group slug(s).
+        if ( ! empty( $args['group'] ) ) {
+            $group_query_args['slug'] = array_map( 'trim', explode( ',', $args['group'] ) );
+        }
+
+        $faq_groups = get_terms( $group_query_args );
+
+        if ( empty( $faq_groups ) || is_wp_error( $faq_groups ) ) {
+            return;
+        }
+
+        // Build FAQ data keyed by group.
+        $faq_data = [];
+
+        foreach ( $faq_groups as $group ) {
+            $status = get_term_meta( $group->term_id, 'status', true );
+
+            // Skip disabled groups.
+            if ( false === $status || '0' === $status ) {
+                continue;
+            }
+
+            $faq_query_args = [
+                'post_type'      => 'wedocs_faq',
+                'posts_per_page' => (int) $args['limit'],
+                'orderby'        => $args['orderby'],
+                'order'          => $args['order'],
+                'tax_query'      => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+                    [
+                        'taxonomy' => 'wedocs_faq_group',
+                        'field'    => 'term_id',
+                        'terms'    => $group->term_id,
+                    ],
+                ],
+            ];
+
+            /**
+             * Filter the FAQ query arguments for a specific group.
+             *
+             * @since WEDOCS_SINCE
+             *
+             * @param array    $faq_query_args WP_Query arguments.
+             * @param \WP_Term $group          The FAQ group term.
+             * @param array    $args           Shortcode attributes.
+             */
+            $faq_query_args = apply_filters( 'wedocs_faq_shortcode_query_args', $faq_query_args, $group, $args );
+
+            $faqs = get_posts( $faq_query_args );
+
+            if ( empty( $faqs ) ) {
+                continue;
+            }
+
+            $faq_data[] = [
+                'group' => $group,
+                'faqs'  => $faqs,
+            ];
+        }
+
+        if ( empty( $faq_data ) ) {
+            return;
+        }
+
+        /**
+         * Filter the FAQ shortcode template path.
+         *
+         * @since WEDOCS_SINCE
+         *
+         * @param string $template_dir Template file name.
+         */
+        $template_dir = apply_filters( 'wedocs_get_faq_listing_template_dir', 'shortcode-faq.php' );
+
+        /**
+         * Filter the FAQ shortcode template arguments.
+         *
+         * @since WEDOCS_SINCE
+         *
+         * @param array $template_args Template arguments.
+         */
+        $template_args = apply_filters(
+            'wedocs_get_faq_listing_template_args',
+            [
+                'faq_data' => $faq_data,
+            ]
+        );
+
         wedocs_get_template( $template_dir, $template_args );
     }
 }
