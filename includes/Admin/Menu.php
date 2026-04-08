@@ -110,6 +110,12 @@ class Menu {
                 'edit-tags.php?taxonomy=doc_tag&post_type=docs',
             ),
             array(
+                __( 'FAQ', 'wedocs' ),
+                $this->capability,
+                'wedocs-faq',
+                __( 'FAQ', 'wedocs' ),
+            ),
+            array(
                 __( 'Settings', 'wedocs' ),
                 apply_filters( 'wedocs_settings_management_capabilities', $this->capability ),
                 $base . '#/settings',
@@ -122,9 +128,10 @@ class Menu {
         );
 
         $all_submenus = apply_filters( 'wedocs_submenu', $all_submenus );
-        if ( empty( $submenu['wedocs'] ) ) {
-            $submenu['wedocs'] = array(); // phpcs:ignore.
-        }
+
+        // Reset submenu to remove the auto-generated parent duplicate
+        // that WordPress creates when add_submenu_page() is used.
+        $submenu['wedocs'] = array(); // phpcs:ignore.
 
         array_push(
             $submenu['wedocs'],

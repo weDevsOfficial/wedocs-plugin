@@ -19,6 +19,23 @@ if ( empty( $faq_data ) ) {
 
         <div class="wedocs-faq-group">
             <h3 class="wedocs-faq-group__title">
+                <?php
+                $icon_id = get_term_meta( $group->term_id, 'icon', true );
+
+                if ( $icon_id ) :
+                    $icon_url = wp_get_attachment_image_url( $icon_id, 'thumbnail' );
+
+                    if ( $icon_url ) :
+                        ?>
+                        <img
+                            class="wedocs-faq-group__icon"
+                            src="<?php echo esc_url( $icon_url ); ?>"
+                            alt="<?php echo esc_attr( $group->name ); ?>"
+                        />
+                        <?php
+                    endif;
+                endif;
+                ?>
                 <?php echo esc_html( $group->name ); ?>
             </h3>
 

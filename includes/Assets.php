@@ -212,6 +212,7 @@ class Assets {
      * @return void
      */
     public function enqueue_faq_assets() {
+        wp_enqueue_media();
         wp_enqueue_style( 'wedocs-faq-style' );
         wp_enqueue_script( 'wedocs-faq-script' );
     }

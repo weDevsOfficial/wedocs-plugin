@@ -21,6 +21,16 @@
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wedocs-faq-group__icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
 .wedocs-faq-item {
