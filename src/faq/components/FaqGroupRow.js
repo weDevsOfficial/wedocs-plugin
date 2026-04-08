@@ -18,7 +18,6 @@ import {
     useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import Swal from 'sweetalert2';
 import FaqConfirmDialog from './FaqConfirmDialog';
 import AddFaqForm from './AddFaqForm';
 import FaqItem from './FaqItem';
@@ -32,6 +31,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
     const [ isDeleting, setIsDeleting ] = useState( false );
     const [ showDuplicateConfirm, setShowDuplicateConfirm ] = useState( false );
     const [ showDeleteConfirm, setShowDeleteConfirm ] = useState( false );
+    const [ duplicateError, setDuplicateError ] = useState( '' );
     const [ showAddForm, setShowAddForm ] = useState( false );
     const [ showEditModal, setShowEditModal ] = useState( false );
     const [ faqs, setFaqs ] = useState( [] );
@@ -66,6 +66,8 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                     path: `/wp/v2/wedocs-faqs/${ faq.id }`,
                     method: 'POST',
                     data: { menu_order: index },
+                } ).catch( () => {
+                    // Order persist failed — will correct on next page load.
                 } );
             } );
 
@@ -227,20 +229,10 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
 
             setShowDuplicateConfirm( false );
         } catch ( error ) {
-            const errorMessage = error?.message || __( 'Something went wrong while duplicating the FAQ group.', 'wedocs' );
-
-            Swal.fire( {
-                title: __( 'Duplication failed', 'wedocs' ),
-                text: errorMessage,
-                icon: 'error',
-                toast: true,
-                position: 'bottom-end',
-                showConfirmButton: false,
-                timer: 4000,
-                customClass: {
-                    container: '!z-[9999]',
-                },
-            } );
+            setDuplicateError(
+                error?.message || __( 'Something went wrong while duplicating the FAQ group.', 'wedocs' )
+            );
+            setShowDuplicateConfirm( false );
         } finally {
             setIsDuplicating( false );
         }
@@ -250,6 +242,18 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
         setIsDeleting( true );
 
         try {
+            // Delete all FAQs in this group before deleting the group itself.
+            const groupFaqs = await apiFetch( {
+                path: `/wp/v2/wedocs-faqs?wedocs-faq-groups=${ group.id }&per_page=100`,
+            } );
+
+            for ( const faq of groupFaqs ) {
+                await apiFetch( {
+                    path: `/wp/v2/wedocs-faqs/${ faq.id }?force=true`,
+                    method: 'DELETE',
+                } );
+            }
+
             await apiFetch( {
                 path: `/wp/v2/wedocs-faq-groups/${ group.id }?force=true`,
                 method: 'DELETE',
@@ -345,17 +349,22 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                         </svg>
                     </button>
 
-                    { /* Toggle switch */ }
-                    <button
-                        onClick={ handleToggle }
-                        disabled={ isToggling }
-                        className={ `relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${ isActive ? 'bg-indigo-600' : 'bg-gray-300' } ${ isToggling ? 'opacity-50 cursor-not-allowed' : '' }` }
-                        aria-label={ __( 'Toggle FAQ group', 'wedocs' ) }
-                    >
-                        <span
-                            className={ `inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${ isActive ? 'translate-x-6' : 'translate-x-1' }` }
-                        />
-                    </button>
+                    { /* Visibility toggle */ }
+                    <div className="flex items-center gap-1.5">
+                        <span className="text-xs text-gray-500">
+                            { isActive ? __( 'Active', 'wedocs' ) : __( 'Inactive', 'wedocs' ) }
+                        </span>
+                        <button
+                            onClick={ handleToggle }
+                            disabled={ isToggling }
+                            className={ `relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${ isActive ? 'bg-indigo-600' : 'bg-gray-300' } ${ isToggling ? 'opacity-50 cursor-not-allowed' : '' }` }
+                            aria-label={ isActive ? __( 'Deactivate FAQ group', 'wedocs' ) : __( 'Activate FAQ group', 'wedocs' ) }
+                        >
+                            <span
+                                className={ `inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${ isActive ? 'translate-x-6' : 'translate-x-1' }` }
+                            />
+                        </button>
+                    </div>
 
                     { /* Expand/collapse chevron */ }
                     <button
@@ -468,6 +477,25 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <polyline points="3 6 5 6 21 6" />
                             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                        </svg>
+                    </div>
+                }
+            />
+
+            { /* Duplicate error dialog */ }
+            <FaqConfirmDialog
+                isOpen={ !! duplicateError }
+                onClose={ () => setDuplicateError( '' ) }
+                onConfirm={ () => setDuplicateError( '' ) }
+                title={ __( 'Duplication Failed', 'wedocs' ) }
+                message={ duplicateError }
+                confirmText={ __( 'OK', 'wedocs' ) }
+                icon={
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
                         </svg>
                     </div>
                 }

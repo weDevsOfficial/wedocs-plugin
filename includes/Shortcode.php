@@ -211,10 +211,14 @@ class Shortcode {
         $faq_data = [];
 
         foreach ( $faq_groups as $group ) {
-            $status = get_term_meta( $group->term_id, 'status', true );
+            // WP deletes the meta row when storing boolean false, so an empty
+            // get_term_meta result can mean either "never set" (treat as active)
+            // or "explicitly disabled". Use metadata_exists() to tell them apart.
+            $has_status = metadata_exists( 'term', $group->term_id, 'status' );
+            $status     = get_term_meta( $group->term_id, 'status', true );
 
-            // Skip disabled groups.
-            if ( false === $status || '0' === $status ) {
+            // Skip groups that were explicitly disabled.
+            if ( $has_status && ! $status ) {
                 continue;
             }
 

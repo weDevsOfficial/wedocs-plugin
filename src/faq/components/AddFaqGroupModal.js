@@ -21,7 +21,8 @@ const AddFaqGroupModal = ( {
 
     const [ title, setTitle ] = useState( '' );
     const [ icon, setIcon ] = useState( null );
-    const [ formError, setFormError ] = useState( false );
+    const [ titleError, setTitleError ] = useState( false );
+    const [ apiError, setApiError ] = useState( '' );
     const [ isSubmitting, setIsSubmitting ] = useState( false );
 
     const isEditMode = !! editGroup;
@@ -58,7 +59,8 @@ const AddFaqGroupModal = ( {
         }
         setTitle( '' );
         setIcon( null );
-        setFormError( false );
+        setTitleError( false );
+        setApiError( '' );
     };
 
     const openModal = () => {
@@ -69,7 +71,8 @@ const AddFaqGroupModal = ( {
 
     const onTitleChange = ( e ) => {
         setTitle( e.target.value );
-        setFormError( e.target.value.length === 0 );
+        setTitleError( e.target.value.length === 0 );
+        setApiError( '' );
     };
 
     const openMediaUploader = () => {
@@ -98,7 +101,7 @@ const AddFaqGroupModal = ( {
 
     const handleSubmit = async () => {
         if ( title.trim() === '' ) {
-            setFormError( true );
+            setTitleError( true );
             return;
         }
 
@@ -139,7 +142,9 @@ const AddFaqGroupModal = ( {
 
             closeModal();
         } catch ( error ) {
-            setFormError( true );
+            setApiError(
+                error?.message || __( 'Failed to save FAQ group. Please try again.', 'wedocs' )
+            );
         } finally {
             setIsSubmitting( false );
         }
@@ -210,16 +215,21 @@ const AddFaqGroupModal = ( {
                                                 placeholder={ __( 'FAQ Group Title...', 'wedocs' ) }
                                                 required
                                                 className={ `${
-                                                    formError
+                                                    titleError
                                                         ? '!border-red-500 focus:ring-red-500 focus:border-red-500'
                                                         : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500'
                                                 } h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3` }
                                                 value={ title }
                                                 onChange={ onTitleChange }
                                             />
-                                            { formError && (
+                                            { titleError && (
                                                 <p className="mt-1 text-sm text-red-500">
                                                     { __( 'Title is required.', 'wedocs' ) }
+                                                </p>
+                                            ) }
+                                            { apiError && (
+                                                <p className="mt-1 text-sm text-red-500">
+                                                    { apiError }
                                                 </p>
                                             ) }
                                         </div>

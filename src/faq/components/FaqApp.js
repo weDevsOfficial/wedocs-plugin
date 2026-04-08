@@ -50,30 +50,17 @@ const FaqApp = () => {
         fetchGroups();
     }, [] );
 
-    const handleGroupCreated = ( group ) => {
+    const handleGroupAdded = ( group ) => {
         setGroups( ( prev ) => {
             const newOrder = prev.length;
 
-            // Set the order meta so the new group appears at the end.
+            // Persist the order meta so the group appears at the end.
             apiFetch( {
                 path: `/wp/v2/wedocs-faq-groups/${ group.id }`,
                 method: 'POST',
                 data: { meta: { order: newOrder } },
-            } );
-
-            return [ ...prev, { ...group, meta: { ...group.meta, order: newOrder } } ];
-        } );
-    };
-
-    const handleGroupDuplicated = ( group ) => {
-        setGroups( ( prev ) => {
-            const newOrder = prev.length;
-
-            // Set the order meta so the duplicated group appears at the end.
-            apiFetch( {
-                path: `/wp/v2/wedocs-faq-groups/${ group.id }`,
-                method: 'POST',
-                data: { meta: { order: newOrder } },
+            } ).catch( () => {
+                // Order update failed — the group still exists, just may not sort correctly on reload.
             } );
 
             return [ ...prev, { ...group, meta: { ...group.meta, order: newOrder } } ];
@@ -108,6 +95,8 @@ const FaqApp = () => {
                     path: `/wp/v2/wedocs-faq-groups/${ group.id }`,
                     method: 'POST',
                     data: { meta: { order: index } },
+                } ).catch( () => {
+                    // Order persist failed — will correct on next page load.
                 } );
             } );
 
@@ -121,7 +110,7 @@ const FaqApp = () => {
                 <h1 className="w-full !flex items-center justify-between">
                     { __( 'All FAQs', 'wedocs' ) }
                     <AddFaqGroupModal
-                        onGroupCreated={ handleGroupCreated }
+                        onGroupCreated={ handleGroupAdded }
                         className="ml-5 mr-auto py-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 ease-in-out duration-200 px-4 text-sm text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                         <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-2 text-base flex items-center"></span>
@@ -130,7 +119,7 @@ const FaqApp = () => {
                 </h1>
             </div>
 
-            { ! isLoading && groups.length === 0 && <EmptyFaq onGroupCreated={ handleGroupCreated } /> }
+            { ! isLoading && groups.length === 0 && <EmptyFaq onGroupCreated={ handleGroupAdded } /> }
 
             { ! isLoading && groups.length > 0 && (
                 <DndContext
@@ -147,7 +136,7 @@ const FaqApp = () => {
                                 <FaqGroupRow
                                 key={ group.id }
                                 group={ group }
-                                onGroupDuplicated={ handleGroupDuplicated }
+                                onGroupDuplicated={ handleGroupAdded }
                                 onGroupDeleted={ handleGroupDeleted }
                                 onGroupUpdated={ handleGroupUpdated }
                             />

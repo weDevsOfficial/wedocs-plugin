@@ -221,11 +221,12 @@ class Post_Types {
      */
     public function register_faq_meta() {
         register_post_meta( 'wedocs_faq', '_faq_open_by_default', [
-            'type'          => 'boolean',
-            'single'        => true,
-            'default'       => false,
-            'show_in_rest'  => true,
-            'auth_callback' => function () {
+            'type'              => 'boolean',
+            'single'            => true,
+            'default'           => false,
+            'show_in_rest'      => true,
+            'sanitize_callback' => 'rest_sanitize_boolean',
+            'auth_callback'     => function () {
                 return current_user_can( 'edit_docs' );
             },
         ] );
@@ -247,10 +248,11 @@ class Post_Types {
         ] );
 
         register_term_meta( 'wedocs_faq_group', 'status', [
-            'type'          => 'boolean',
-            'single'        => true,
-            'default'       => true,
-            'show_in_rest'  => true,
+            'type'              => 'boolean',
+            'single'            => true,
+            'default'           => true,
+            'show_in_rest'      => true,
+            'sanitize_callback' => 'rest_sanitize_boolean',
         ] );
     }
 
@@ -270,11 +272,12 @@ class Post_Types {
      * @return array
      */
     public function sort_faq_groups_by_order( $terms, $taxonomies, $args, $term_query ) {
-        if ( empty( $terms ) || is_wp_error( $terms ) ) {
+        // Bail early for non-FAQ taxonomy queries to avoid overhead on every get_terms call.
+        if ( ! is_array( $taxonomies ) || ! in_array( 'wedocs_faq_group', $taxonomies, true ) ) {
             return $terms;
         }
 
-        if ( ! is_array( $taxonomies ) || ! in_array( 'wedocs_faq_group', $taxonomies, true ) ) {
+        if ( empty( $terms ) || is_wp_error( $terms ) ) {
             return $terms;
         }
 

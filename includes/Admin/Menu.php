@@ -57,6 +57,13 @@ class Menu {
         add_action( 'load-' . $faq, [ $this, 'faq_menu_action' ] );
     }
 
+    /**
+     * Fire the FAQ page load hook.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
     public function faq_menu_action() {
         /**
          * Backdoor for calling the menu hook.
@@ -75,7 +82,6 @@ class Menu {
     public function display_faq() {
         wedocs_get_template_part( 'admin/faq' );
     }
-
 
     /**
      * Add submenu to Admin Dashboard.

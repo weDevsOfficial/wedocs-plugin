@@ -68,8 +68,13 @@ class Frontend {
         wp_register_script( 'wedocs-anchorjs', WEDOCS_ASSETS . '/js/anchor.min.js', [ 'jquery' ], WEDOCS_VERSION, true );
         wp_register_script( 'wedocs-scripts', WEDOCS_ASSETS . '/js/frontend.js', [ 'jquery', 'wedocs-anchorjs' ], filemtime( WEDOCS_PATH . '/assets/js/frontend.js' ), true );
 
-        wp_register_style( 'wedocs-faq', WEDOCS_ASSETS . '/css/faq.css', [], filemtime( WEDOCS_PATH . '/assets/css/faq.css' ) );
-        wp_register_script( 'wedocs-faq', WEDOCS_ASSETS . '/js/faq.js', [], filemtime( WEDOCS_PATH . '/assets/js/faq.js' ), true );
+        if ( file_exists( WEDOCS_PATH . '/assets/css/faq.css' ) ) {
+            wp_register_style( 'wedocs-faq', WEDOCS_ASSETS . '/css/faq.css', [], filemtime( WEDOCS_PATH . '/assets/css/faq.css' ) );
+        }
+
+        if ( file_exists( WEDOCS_PATH . '/assets/js/faq.js' ) ) {
+            wp_register_script( 'wedocs-faq', WEDOCS_ASSETS . '/js/faq.js', [], filemtime( WEDOCS_PATH . '/assets/js/faq.js' ), true );
+        }
 
         $store_dependencies = require WEDOCS_PATH . '/assets/build/store.asset.php';
         wp_register_script( 'wedocs-store-js', WEDOCS_ASSETS . '/build/store.js', $store_dependencies['dependencies'], $store_dependencies['version'], true );
