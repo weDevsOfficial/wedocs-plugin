@@ -2,10 +2,23 @@
 // Renders a draggable row with group title, actions, and expandable FAQ list.
 
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { useSortable } from '@dnd-kit/sortable';
+import {
+    DndContext,
+    closestCenter,
+    PointerSensor,
+    useSensor,
+    useSensors,
+} from '@dnd-kit/core';
+import {
+    SortableContext,
+    verticalListSortingStrategy,
+    arrayMove,
+    useSortable,
+} from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import Swal from 'sweetalert2';
 import FaqConfirmDialog from './FaqConfirmDialog';
 import AddFaqForm from './AddFaqForm';
 import FaqItem from './FaqItem';
@@ -23,6 +36,42 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
     const [ showEditModal, setShowEditModal ] = useState( false );
     const [ faqs, setFaqs ] = useState( [] );
     const [ faqsLoaded, setFaqsLoaded ] = useState( false );
+    const [ expandHeight, setExpandHeight ] = useState( '0px' );
+    const expandRef = useRef( null );
+
+    const faqSensors = useSensors(
+        useSensor( PointerSensor, {
+            activationConstraint: {
+                delay: 150,
+                tolerance: 5,
+            },
+        } )
+    );
+
+    const handleFaqDragEnd = ( event ) => {
+        const { active, over } = event;
+
+        if ( ! over || active.id === over.id ) {
+            return;
+        }
+
+        setFaqs( ( prev ) => {
+            const oldIndex = prev.findIndex( ( f ) => f.id === active.id );
+            const newIndex = prev.findIndex( ( f ) => f.id === over.id );
+            const reordered = arrayMove( prev, oldIndex, newIndex );
+
+            // Persist the new order to the backend.
+            reordered.forEach( ( faq, index ) => {
+                apiFetch( {
+                    path: `/wp/v2/wedocs-faqs/${ faq.id }`,
+                    method: 'POST',
+                    data: { menu_order: index },
+                } );
+            } );
+
+            return reordered;
+        } );
+    };
 
     useEffect( () => {
         if ( isExpanded && ! faqsLoaded ) {
@@ -36,6 +85,35 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             } );
         }
     }, [ isExpanded, faqsLoaded, group.id ] );
+
+    // Animate expand/collapse by transitioning max-height, then
+    // switching to 'none' so child content can grow freely.
+    useEffect( () => {
+        const el = expandRef.current;
+        if ( ! el ) {
+            return;
+        }
+
+        if ( isExpanded ) {
+            // Set a measured max-height to kick off the CSS transition.
+            setExpandHeight( `${ el.scrollHeight }px` );
+
+            const onEnd = () => {
+                setExpandHeight( 'none' );
+                el.removeEventListener( 'transitionend', onEnd );
+            };
+            el.addEventListener( 'transitionend', onEnd );
+
+            return () => el.removeEventListener( 'transitionend', onEnd );
+        }
+
+        // Collapsing: first pin max-height to current value so
+        // the transition has a start point, then collapse to 0.
+        setExpandHeight( `${ el.scrollHeight }px` );
+        // Force a reflow so the browser registers the starting value.
+        void el.offsetHeight;
+        setExpandHeight( '0px' );
+    }, [ isExpanded ] );
 
     const {
         attributes,
@@ -89,25 +167,44 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
         setIsDuplicating( true );
 
         try {
-            // Create the new group.
-            const duplicated = await apiFetch( {
-                path: '/wp/v2/wedocs-faq-groups',
-                method: 'POST',
-                data: {
-                    name: group.name + ' ' + __( '(Copy)', 'wedocs' ),
-                    meta: {
-                        icon: group.meta?.icon || 0,
-                        status: isActive,
-                    },
-                },
-            } );
+            // Try creating the group with (Copy) suffix, incrementing if the name already exists.
+            let duplicated = null;
+            const baseName = group.name + ' ' + __( '(Copy)', 'wedocs' );
+            const maxAttempts = 10;
+
+            for ( let attempt = 0; attempt < maxAttempts; attempt++ ) {
+                const candidateName = attempt === 0 ? baseName : baseName + ' ' + ( attempt + 1 );
+
+                try {
+                    duplicated = await apiFetch( {
+                        path: '/wp/v2/wedocs-faq-groups',
+                        method: 'POST',
+                        data: {
+                            name: candidateName,
+                            meta: {
+                                icon: group.meta?.icon || 0,
+                                status: isActive,
+                            },
+                        },
+                    } );
+                    break;
+                } catch ( createError ) {
+                    if ( createError?.code !== 'term_exists' || attempt === maxAttempts - 1 ) {
+                        throw createError;
+                    }
+                }
+            }
+
+            if ( ! duplicated ) {
+                throw new Error( __( 'Could not create a unique group name.', 'wedocs' ) );
+            }
 
             // Fetch all FAQs in the original group and clone them into the new group.
-            const faqs = await apiFetch( {
-                path: `/wp/v2/wedocs-faqs?wedocs-faq-groups=${ group.id }&per_page=100&orderby=menu_order&order=asc`,
+            const originalFaqs = await apiFetch( {
+                path: `/wp/v2/wedocs-faqs?wedocs-faq-groups=${ group.id }&per_page=100&orderby=menu_order&order=asc&context=edit`,
             } );
 
-            for ( const faq of faqs ) {
+            for ( const faq of originalFaqs ) {
                 await apiFetch( {
                     path: '/wp/v2/wedocs-faqs',
                     method: 'POST',
@@ -129,8 +226,21 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             }
 
             setShowDuplicateConfirm( false );
-        } catch {
-            // Silently fail — group list stays unchanged.
+        } catch ( error ) {
+            const errorMessage = error?.message || __( 'Something went wrong while duplicating the FAQ group.', 'wedocs' );
+
+            Swal.fire( {
+                title: __( 'Duplication failed', 'wedocs' ),
+                text: errorMessage,
+                icon: 'error',
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 4000,
+                customClass: {
+                    container: '!z-[9999]',
+                },
+            } );
         } finally {
             setIsDuplicating( false );
         }
@@ -161,16 +271,12 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             { ...attributes }
             className={ `bg-white border border-gray-200 rounded-md ${ isDragging ? 'shadow-lg opacity-90' : '' }` }
         >
-            <div className="flex items-center justify-between px-5 py-4">
-                <div
-                    onClick={ toggleExpand }
-                    className="flex items-center flex-1 min-w-0 cursor-pointer"
-                >
+            <div className="flex items-center justify-between">
                     { /* Drag handle */ }
                     <button
                         { ...listeners }
                         onClick={ ( e ) => e.stopPropagation() }
-                        className="cursor-grab mr-3 text-gray-400 hover:text-gray-600 flex-shrink-0"
+                        className="cursor-grab text-gray-400 hover:text-gray-600 flex-shrink-0 px-4"
                         aria-label={ __( 'Drag to reorder', 'wedocs' ) }
                     >
                         <svg width="10" height="16" viewBox="0 0 10 16" fill="currentColor">
@@ -182,7 +288,10 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                             <circle cx="8" cy="14" r="1.5" />
                         </svg>
                     </button>
-
+                <div
+                    onClick={ toggleExpand }
+                    className="flex items-center flex-1 min-w-0 cursor-pointer py-5"
+                >
                     <span className="font-medium text-gray-800 truncate">
                         { group.name }
                     </span>
@@ -251,7 +360,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                     { /* Expand/collapse chevron */ }
                     <button
                         onClick={ toggleExpand }
-                        className="text-gray-400 hover:text-gray-600 transition-colors"
+                        className="text-gray-400 hover:text-gray-600 transition-colors  p-4"
                         aria-label={ __( 'Expand FAQ group', 'wedocs' ) }
                     >
                         <svg
@@ -271,8 +380,12 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                 </div>
             </div>
 
-            { /* Expanded FAQ list area */ }
-            { isExpanded && (
+            { /* Expanded FAQ list area with smooth transition */ }
+            <div
+                ref={ expandRef }
+                className="overflow-hidden transition-[max-height] duration-300 ease-in-out"
+                style={ { maxHeight: isExpanded ? expandHeight : '0px' } }
+            >
                 <div className="border-t border-gray-200 px-5 py-4 space-y-3">
                     { faqs.length === 0 && ! showAddForm && (
                         <p className="text-sm text-gray-500 italic">
@@ -280,20 +393,31 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                         </p>
                     ) }
 
-                    { faqs.map( ( faq ) => (
-                        <FaqItem
-                            key={ faq.id }
-                            faq={ faq }
-                            onFaqUpdated={ ( updated ) => {
-                                setFaqs( ( prev ) =>
-                                    prev.map( ( f ) => ( f.id === updated.id ? updated : f ) )
-                                );
-                            } }
-                            onFaqDeleted={ ( id ) => {
-                                setFaqs( ( prev ) => prev.filter( ( f ) => f.id !== id ) );
-                            } }
-                        />
-                    ) ) }
+                    <DndContext
+                        sensors={ faqSensors }
+                        collisionDetection={ closestCenter }
+                        onDragEnd={ handleFaqDragEnd }
+                    >
+                        <SortableContext
+                            items={ faqs.map( ( f ) => f.id ) }
+                            strategy={ verticalListSortingStrategy }
+                        >
+                            { faqs.map( ( faq ) => (
+                                <FaqItem
+                                    key={ faq.id }
+                                    faq={ faq }
+                                    onFaqUpdated={ ( updated ) => {
+                                        setFaqs( ( prev ) =>
+                                            prev.map( ( f ) => ( f.id === updated.id ? updated : f ) )
+                                        );
+                                    } }
+                                    onFaqDeleted={ ( id ) => {
+                                        setFaqs( ( prev ) => prev.filter( ( f ) => f.id !== id ) );
+                                    } }
+                                />
+                            ) ) }
+                        </SortableContext>
+                    </DndContext>
 
                     { showAddForm && (
                         <AddFaqForm
@@ -306,7 +430,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                         />
                     ) }
                 </div>
-            ) }
+            </div>
 
             { /* Duplicate confirmation dialog */ }
             <FaqConfirmDialog

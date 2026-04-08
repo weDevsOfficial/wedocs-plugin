@@ -51,11 +51,33 @@ const FaqApp = () => {
     }, [] );
 
     const handleGroupCreated = ( group ) => {
-        setGroups( ( prev ) => [ ...prev, group ] );
+        setGroups( ( prev ) => {
+            const newOrder = prev.length;
+
+            // Set the order meta so the new group appears at the end.
+            apiFetch( {
+                path: `/wp/v2/wedocs-faq-groups/${ group.id }`,
+                method: 'POST',
+                data: { meta: { order: newOrder } },
+            } );
+
+            return [ ...prev, { ...group, meta: { ...group.meta, order: newOrder } } ];
+        } );
     };
 
     const handleGroupDuplicated = ( group ) => {
-        setGroups( ( prev ) => [ ...prev, group ] );
+        setGroups( ( prev ) => {
+            const newOrder = prev.length;
+
+            // Set the order meta so the duplicated group appears at the end.
+            apiFetch( {
+                path: `/wp/v2/wedocs-faq-groups/${ group.id }`,
+                method: 'POST',
+                data: { meta: { order: newOrder } },
+            } );
+
+            return [ ...prev, { ...group, meta: { ...group.meta, order: newOrder } } ];
+        } );
     };
 
     const handleGroupDeleted = ( groupId ) => {
@@ -78,8 +100,18 @@ const FaqApp = () => {
         setGroups( ( prev ) => {
             const oldIndex = prev.findIndex( ( g ) => g.id === active.id );
             const newIndex = prev.findIndex( ( g ) => g.id === over.id );
+            const reordered = arrayMove( prev, oldIndex, newIndex );
 
-            return arrayMove( prev, oldIndex, newIndex );
+            // Persist the new order to the backend.
+            reordered.forEach( ( group, index ) => {
+                apiFetch( {
+                    path: `/wp/v2/wedocs-faq-groups/${ group.id }`,
+                    method: 'POST',
+                    data: { meta: { order: index } },
+                } );
+            } );
+
+            return reordered;
         } );
     };
 

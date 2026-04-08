@@ -9,6 +9,7 @@ import TiptapEditor from './TiptapEditor';
 const AddFaqForm = ( { groupId, onFaqCreated, onCancel } ) => {
     const [ question, setQuestion ] = useState( '' );
     const [ answer, setAnswer ] = useState( '' );
+    const [ openByDefault, setOpenByDefault ] = useState( false );
     const [ isSubmitting, setIsSubmitting ] = useState( false );
     const [ errors, setErrors ] = useState( {} );
 
@@ -43,6 +44,9 @@ const AddFaqForm = ( { groupId, onFaqCreated, onCancel } ) => {
                     content: answer.trim(),
                     status: 'publish',
                     'wedocs-faq-groups': [ groupId ],
+                    meta: {
+                        _faq_open_by_default: openByDefault,
+                    },
                 },
             } );
 
@@ -52,6 +56,7 @@ const AddFaqForm = ( { groupId, onFaqCreated, onCancel } ) => {
 
             setQuestion( '' );
             setAnswer( '' );
+            setOpenByDefault( false );
             setErrors( {} );
         } catch {
             setErrors( { submit: __( 'Failed to create FAQ. Please try again.', 'wedocs' ) } );
@@ -116,24 +121,40 @@ const AddFaqForm = ( { groupId, onFaqCreated, onCancel } ) => {
                 <p className="mb-4 text-sm text-red-500">{ errors.submit }</p>
             ) }
 
-            <div className="flex items-center space-x-3">
-                <button
-                    onClick={ onCancel }
-                    disabled={ isSubmitting }
-                    className="bg-white hover:bg-gray-50 text-red-500 font-medium text-sm py-2 px-5 border border-red-300 rounded-md transition-colors"
-                >
-                    { __( 'Cancel', 'wedocs' ) }
-                </button>
-                <button
-                    onClick={ handleSubmit }
-                    disabled={ isSubmitting }
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm py-2 px-5 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    { isSubmitting
-                        ? __( 'Creating...', 'wedocs' )
-                        : __( 'Create', 'wedocs' )
-                    }
-                </button>
+            <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                    <button
+                        onClick={ onCancel }
+                        disabled={ isSubmitting }
+                        className="bg-white hover:bg-gray-50 text-red-500 font-medium text-sm py-2 px-5 border border-red-300 rounded-md transition-colors"
+                    >
+                        { __( 'Cancel', 'wedocs' ) }
+                    </button>
+                    <button
+                        onClick={ handleSubmit }
+                        disabled={ isSubmitting }
+                        className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm py-2 px-5 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        { isSubmitting
+                            ? __( 'Creating...', 'wedocs' )
+                            : __( 'Create', 'wedocs' )
+                        }
+                    </button>
+                </div>
+                <div className="flex items-center gap-2">
+                    <span className="text-sm text-gray-600">
+                        { __( 'Keep It Open By Default', 'wedocs' ) }
+                    </span>
+                    <button
+                        onClick={ () => setOpenByDefault( ( prev ) => ! prev ) }
+                        className={ `relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${ openByDefault ? 'bg-indigo-600' : 'bg-gray-300' }` }
+                        aria-label={ __( 'Toggle open by default', 'wedocs' ) }
+                    >
+                        <span
+                            className={ `inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${ openByDefault ? 'translate-x-[18px]' : 'translate-x-0.5' }` }
+                        />
+                    </button>
+                </div>
             </div>
         </div>
     );

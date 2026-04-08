@@ -23,6 +23,7 @@ class Post_Types {
         add_action( 'init', [ $this, 'register_faq_post_type' ] );
         add_action( 'init', [ $this, 'register_faq_taxonomy' ] );
         add_action( 'init', [ $this, 'register_faq_meta' ] );
+        add_filter( 'get_terms', [ $this, 'sort_faq_groups_by_order' ], 10, 4 );
     }
 
     /**
@@ -251,5 +252,44 @@ class Post_Types {
             'default'       => true,
             'show_in_rest'  => true,
         ] );
+    }
+
+    /**
+     * Sort FAQ group terms by their order term meta after retrieval.
+     *
+     * Uses the get_terms filter instead of meta_key query arg because
+     * terms without an explicit order meta row would be excluded by WP_Term_Query.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param array          $terms      Array of found terms.
+     * @param array|null     $taxonomies Array of taxonomies.
+     * @param array          $args       Term query arguments.
+     * @param \WP_Term_Query $term_query The WP_Term_Query instance.
+     *
+     * @return array
+     */
+    public function sort_faq_groups_by_order( $terms, $taxonomies, $args, $term_query ) {
+        if ( empty( $terms ) || is_wp_error( $terms ) ) {
+            return $terms;
+        }
+
+        if ( ! is_array( $taxonomies ) || ! in_array( 'wedocs_faq_group', $taxonomies, true ) ) {
+            return $terms;
+        }
+
+        // Only sort when terms are returned as objects (not counts, ids, etc.).
+        if ( ! isset( $terms[0] ) || ! is_object( $terms[0] ) ) {
+            return $terms;
+        }
+
+        usort( $terms, function ( $a, $b ) {
+            $order_a = (int) get_term_meta( $a->term_id, 'order', true );
+            $order_b = (int) get_term_meta( $b->term_id, 'order', true );
+
+            return $order_a - $order_b;
+        } );
+
+        return $terms;
     }
 }
