@@ -65,22 +65,25 @@ const DEFAULT_SETTINGS_STATE = {
         // Generate default providers from centralized configs
         const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
         const providers = {};
-        
+
         Object.keys(configs).forEach(providerKey => {
           const provider = configs[providerKey];
           const modelKeys = Object.keys(provider.models);
           const firstModel = modelKeys[0]; // Use first model as default
-          
+
           providers[providerKey] = {
             api_key: '',
             models: modelKeys,
             selected_model: firstModel
           };
-          
+
         });
 
         return providers;
       })(),
+      image_analysis: {
+        enabled: false,
+      },
     }
   },
   loading: false,

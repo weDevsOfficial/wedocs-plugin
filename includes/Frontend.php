@@ -81,6 +81,13 @@ class Frontend {
         wedocs_get_template_part( 'modals/search', 'modal' );
         $searchModal = ob_get_clean();
 
+        // Inject REST nonce for AISummary block view script (handle: wedocs-ai-summary-view-script)
+        wp_add_inline_script(
+            'wedocs-ai-summary-view-script',
+            'window.wpApiSettings = window.wpApiSettings || {}; window.wpApiSettings.nonce = ' . wp_json_encode( wp_create_nonce( 'wp_rest' ) ) . ';',
+            'before'
+        );
+
         wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', [
             'nonce'              => wp_create_nonce( 'wedocs-ajax' ),
             'style'              => WEDOCS_ASSETS . '/build/print.css?v=10',
@@ -97,6 +104,18 @@ class Frontend {
             'searchEmptyMsg'     => __( 'Your search didn\'t match any documents', 'wedocs' ),
             'sectionNavLabel'    => __( 'Section: ', 'wedocs' ),
             'searchModalColors'  => wedocs_get_search_modal_active_colors(),
+            'nonce'             => wp_create_nonce( 'wedocs-ajax' ),
+            'style'             => WEDOCS_ASSETS . '/build/print.css?v=10',
+            'assetsUrl'         => WEDOCS_ASSETS,
+            'ajaxurl'           => admin_url( 'admin-ajax.php' ),
+            'powered'           => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs plugin for WordPress', 'wedocs' ), home_url() ),
+            'isSingleDoc'       => true, // Always enable search modal functionality
+            'searchModal'       => $searchModal,
+            'docNavLabel'       => __( 'Doc: ', 'wedocs' ),
+            'searchBlankMsg'    => __( 'Search field cannot be blank', 'wedocs' ),
+            'searchEmptyMsg'    => __( 'Your search didn\'t match any documents', 'wedocs' ),
+            'sectionNavLabel'   => __( 'Section: ', 'wedocs' ),
+            'searchModalColors' => wedocs_get_search_modal_active_colors(),
         ] );
     }
 
