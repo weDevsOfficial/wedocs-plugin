@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tiptap editor styles */
+.wedocs-tiptap-content .tiptap {
+    outline: none;
+    min-height: 120px;
+}
+
+.wedocs-tiptap-content .tiptap p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    color: #9ca3af;
+    pointer-events: none;
+    height: 0;
+}
+
+.wedocs-tiptap-content .tiptap h2 {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 0.75em 0 0.25em;
+}
+
+.wedocs-tiptap-content .tiptap h3 {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0.75em 0 0.25em;
+}
+
+.wedocs-tiptap-content .tiptap h4 {
+    font-size: 1em;
+    font-weight: 600;
+    margin: 0.75em 0 0.25em;
+}
+
+.wedocs-tiptap-content .tiptap p {
+    margin: 0.25em 0;
+}
+
+.wedocs-tiptap-content .tiptap ul,
+.wedocs-tiptap-content .tiptap ol {
+    padding-left: 1.5em;
+    margin: 0.5em 0;
+}
+
+.wedocs-tiptap-content .tiptap ul {
+    list-style-type: disc;
+}
+
+.wedocs-tiptap-content .tiptap ol {
+    list-style-type: decimal;
+}
+
+.wedocs-tiptap-content .tiptap li {
+    margin: 0.15em 0;
+}
+
+.wedocs-tiptap-content .tiptap blockquote {
+    border-left: 3px solid #d1d5db;
+    padding-left: 1em;
+    margin: 0.5em 0;
+    color: #6b7280;
+}
+
+.wedocs-tiptap-content .tiptap pre {
+    background: #f3f4f6;
+    border-radius: 0.375rem;
+    padding: 0.75em 1em;
+    margin: 0.5em 0;
+    font-family: monospace;
+    font-size: 0.9em;
+    overflow-x: auto;
+}
+
+.wedocs-tiptap-content .tiptap code {
+    background: #f3f4f6;
+    border-radius: 0.25rem;
+    padding: 0.15em 0.3em;
+    font-size: 0.9em;
+}
+
+.wedocs-tiptap-content .tiptap a {
+    color: #4f46e5;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.wedocs-tiptap-content .tiptap mark {
+    background-color: #fef08a;
+    border-radius: 0.15em;
+    padding: 0.05em 0.1em;
+}
