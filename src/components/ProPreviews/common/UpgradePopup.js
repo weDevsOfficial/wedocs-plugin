@@ -10,17 +10,27 @@ import SliderImgThreeSrc from '../../../assets/img/popup-slider/slider-4.jpg';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
-const UpgradePopup = ({ children, className }) => {
+const UpgradePopup = ({ children, className, controlledIsOpen, onControlledClose }) => {
+  const isControlled = controlledIsOpen !== undefined;
+
   let [ isOpen, setIsOpen ] = useState( false );
 
   const closeModal = () => {
-    setIsOpen( false );
+    if ( isControlled ) {
+      if ( typeof onControlledClose === 'function' ) {
+        onControlledClose();
+      }
+    } else {
+      setIsOpen( false );
+    }
   }
 
   const openModal = ( event ) => {
     event.preventDefault();
     setIsOpen( true );
   }
+
+  const resolvedIsOpen = isControlled ? controlledIsOpen : isOpen;
 
   const images = [
     { src: SliderImgOneSrc, text: __( 'Pop-up slider first image', 'wedocs' ) },
@@ -44,13 +54,15 @@ const UpgradePopup = ({ children, className }) => {
 
   return (
     <>
-      {/* Pro upgrade button. */}
-      <UpgradeButton showPopup={ openModal } className={ className }>
-        { children }
-      </UpgradeButton>
+      {/* Pro upgrade button — only rendered in uncontrolled mode. */}
+      { ! isControlled && (
+        <UpgradeButton showPopup={ openModal } className={ className }>
+          { children }
+        </UpgradeButton>
+      ) }
 
       {/* Show premium features content via pop-up. */}
-      <Transition appear show={ isOpen } as={ Fragment }>
+      <Transition appear show={ resolvedIsOpen } as={ Fragment }>
         <Dialog as='div' className='wedocs-document relative z-[99999]' onClose={ closeModal }>
           <Transition.Child
             as={ Fragment }
