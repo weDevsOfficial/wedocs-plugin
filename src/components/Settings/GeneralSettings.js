@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n';
 import Switcher from '../Switcher';
 import { useEffect, useState } from '@wordpress/element';
 import SelectBox from '../SelectBox';
+import DocsUrlStructureSelect from '../DocsUrlStructureSelect';
 
 const GeneralSettings = ( {
   settingsData,
@@ -73,6 +74,70 @@ const GeneralSettings = ( {
                     {__('shortcode', 'wedocs')}
                   </a>
                     {__(' is used.', 'wedocs')}
+                </p>
+              </div>
+            </div>
+
+            <div className="col-span-4">
+              <div className="settings-content flex items-center justify-between">
+                <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+                  <label
+                      className="block text-sm font-medium text-gray-600"
+                  >
+                    {__('Docs URL Structure', 'wedocs')}
+                  </label>
+                  <div
+                      className="tooltip cursor-pointer ml-2 z-[9999]"
+                      data-tip={__(
+                          'Controls the URL and breadcrumb hierarchy for docs. Existing URLs from the other format will be automatically redirected (301) to the new format, so bookmarks and search results keep working.',
+                          'wedocs'
+                      )}
+                  >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        fill="none"
+                    >
+                      <path
+                          d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                          stroke="#6b7280"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+                  <div className="relative">
+                    <DocsUrlStructureSelect
+                        setSettings={setSettings}
+                        settingsData={settingsData}
+                        settingsPanel={generalSettings}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
+                <p className="text-sm text-[#6B7280]">
+                  <span className="block">
+                    {__('Example URL: ', 'wedocs')}
+                    <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+                      {(() => {
+                        const siteUrl = (window.weDocsAdminVars?.siteUrl || '/').replace(/\/$/, '');
+                        return (generalSettings?.docs_url_structure || 'before_doc') === 'after_doc'
+                          ? `${siteUrl}/{doc}/docs/{section}/{article}/`
+                          : `${siteUrl}/docs/{doc}/{section}/{article}/`;
+                      })()}
+                    </code>
+                  </span>
+                  <span className="block mt-2">
+                    {__(
+                        'Changing this setting will update URLs and breadcrumbs for all docs. Existing URLs in the previous format will be automatically redirected (301) to the new format.',
+                        'wedocs'
+                    )}
+                  </span>
                 </p>
               </div>
             </div>
