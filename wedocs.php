@@ -300,7 +300,8 @@ final class WeDocs {
      * @return void
      */
     public function init_classes() {
-        $this->container['post_type'] = new WeDevs\WeDocs\Post_Types();
+        $this->container['post_type']         = new WeDevs\WeDocs\Post_Types();
+        $this->container['docs_url_structure'] = new WeDevs\WeDocs\Docs_URL_Structure();
 
         if ( is_admin() ) {
             $this->container['admin'] = new WeDevs\WeDocs\Admin();

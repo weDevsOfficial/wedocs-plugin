@@ -93,6 +93,98 @@ function wedocs_apply_short_content( $content, $max_content_number ) {
     return ( mb_strlen( $content ) > $max_content_number ) ? mb_substr( $content, 0, $max_content_number ) . '...' : $content;
 }
 
+if ( ! function_exists( 'wedocs_get_doc_breadcrumb_trail' ) ) {
+
+    /**
+     * Build the ordered breadcrumb trail for a single doc post.
+     *
+     * Single source of truth for breadcrumb ordering: honors the
+     * `docs_url_structure` setting (before_doc / after_doc), handles the
+     * `docs_home` hub crumb, and walks the parent chain defensively.
+     *
+     * Each returned item is an array:
+     *   - type:  'doc_ancestor' | 'docs_home' | 'current'
+     *   - title: string (short-trimmed for ancestors)
+     *   - url:   string permalink, or null for the current crumb
+     *   - post:  WP_Post for doc-ancestor and current items, null for docs_home
+     *
+     * Does NOT include the "Home" crumb — callers render that themselves so
+     * they can keep their own home icon/link wrapping conventions.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param WP_Post|null $post Current doc post. Falls back to global $post.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    function wedocs_get_doc_breadcrumb_trail( $post = null ) {
+        if ( ! $post ) {
+            $post = get_post();
+        }
+
+        if ( ! $post || 'docs' !== $post->post_type ) {
+            return [];
+        }
+
+        $url_structure = wedocs_get_general_settings( 'docs_url_structure', 'before_doc' );
+        $docs_home     = wedocs_get_general_settings( 'docs_home' );
+
+        // Walk the ancestor chain bottom-up, then reverse to root-first order.
+        $ancestors = [];
+        $parent_id = (int) $post->post_parent;
+
+        while ( $parent_id ) {
+            $parent = get_post( $parent_id );
+            if ( ! $parent ) {
+                break;
+            }
+            $ancestors[] = $parent;
+            $parent_id   = (int) $parent->post_parent;
+        }
+
+        $ancestors = array_reverse( $ancestors );
+        $trail     = [];
+
+        // In "after_doc" mode the top-level doc precedes the Docs hub crumb.
+        if ( 'after_doc' === $url_structure && ! empty( $ancestors ) ) {
+            $top_level = array_shift( $ancestors );
+            $trail[]   = [
+                'type'  => 'doc_ancestor',
+                'title' => wedocs_apply_short_content( $top_level->post_title, 25 ),
+                'url'   => get_permalink( $top_level->ID ),
+                'post'  => $top_level,
+            ];
+        }
+
+        if ( $docs_home ) {
+            $trail[] = [
+                'type'  => 'docs_home',
+                'title' => __( 'Docs', 'wedocs' ),
+                'url'   => get_permalink( $docs_home ),
+                'post'  => null,
+            ];
+        }
+
+        foreach ( $ancestors as $ancestor ) {
+            $trail[] = [
+                'type'  => 'doc_ancestor',
+                'title' => wedocs_apply_short_content( $ancestor->post_title, 25 ),
+                'url'   => get_permalink( $ancestor->ID ),
+                'post'  => $ancestor,
+            ];
+        }
+
+        $trail[] = [
+            'type'  => 'current',
+            'title' => $post->post_title,
+            'url'   => null,
+            'post'  => $post,
+        ];
+
+        return apply_filters( 'wedocs_doc_breadcrumb_trail', $trail, $post, $url_structure );
+    }
+}
+
 if ( !function_exists( 'wedocs_breadcrumbs' ) ) {
 
     /**
@@ -112,43 +204,31 @@ if ( !function_exists( 'wedocs_breadcrumbs' ) ) {
         ] );
 
         $breadcrumb_position = 1;
+        $trail               = wedocs_get_doc_breadcrumb_trail( $post );
 
         $html .= '<ol class="wedocs-breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">';
         $html .= '<li><i class="wedocs-icon wedocs-icon-home"></i></li>';
         $html .= wedocs_get_breadcrumb_item( $args['home'], home_url( '/' ), $breadcrumb_position );
         $html .= $args['delimiter'];
 
-        // Collect documentation home page settings.
-        $docs_home = wedocs_get_general_settings( 'docs_home' );
+        $last_index = count( $trail ) - 1;
 
-        if ( $docs_home ) {
+        foreach ( $trail as $index => $crumb ) {
+            if ( 'current' === $crumb['type'] ) {
+                $html .= ' ' . $args['before'] . $crumb['title'] . $args['after'];
+                continue;
+            }
+
             ++$breadcrumb_position;
+            $html .= wedocs_get_breadcrumb_item( $crumb['title'], $crumb['url'], $breadcrumb_position );
 
-            $html .= wedocs_get_breadcrumb_item( __( 'Docs', 'wedocs' ), get_permalink( $docs_home ), $breadcrumb_position );
-            $html .= $args['delimiter'];
-        }
+            // Preserve the existing whitespace quirk for ancestor delimiters (not the hub).
+            $delimiter = 'doc_ancestor' === $crumb['type'] ? ' ' . $args['delimiter'] . ' ' : $args['delimiter'];
 
-        if ( 'docs' == $post->post_type && $post->post_parent ) {
-            $parent_id   = $post->post_parent;
-            $breadcrumbs = [];
-
-            while ( $parent_id ) {
-                ++$breadcrumb_position;
-
-                $page          = get_post( $parent_id );
-                $breadcrumbs[] = wedocs_get_breadcrumb_item( get_the_title( $page->ID ), get_permalink( $page->ID ), $breadcrumb_position );
-                $parent_id     = $page->post_parent;
-            }
-
-            $breadcrumbs = array_reverse( $breadcrumbs );
-
-            for ( $i = 0; $i < count( $breadcrumbs ); ++$i ) {
-                $html .= $breadcrumbs[$i];
-                $html .= ' ' . $args['delimiter'] . ' ';
+            if ( $index !== $last_index ) {
+                $html .= $delimiter;
             }
         }
-
-        $html .= ' ' . $args['before'] . get_the_title() . $args['after'];
 
         $html .= '</ol>';
 
