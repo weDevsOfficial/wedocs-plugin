@@ -1,8 +1,9 @@
 import { __ } from '@wordpress/i18n';
 import Switcher from '../Switcher';
+import Badge from '../ProPreviews/common/Badge';
 import { useEffect, useState } from '@wordpress/element';
 import SelectBox from '../SelectBox';
-import DocsUrlStructureSelect from '../DocsUrlStructureSelect';
+import PreviewDropdown from '../ProPreviews/common/PreviewDropdown';
 
 const GeneralSettings = ( {
   settingsData,
@@ -81,15 +82,20 @@ const GeneralSettings = ( {
             <div className="col-span-4">
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
-                  <label
-                      className="block text-sm font-medium text-gray-600"
-                  >
+                  <label className="block text-sm font-medium text-gray-600">
                     {__('Docs URL Structure', 'wedocs')}
                   </label>
+                  {!wp.hooks.applyFilters('wedocs_pro_loaded', false) && (
+                    <Badge
+                      classes="opacity-100"
+                      heading={__('Pro Feature', 'wedocs')}
+                      description={__('Upload screenshots for AI to analyze when generating documentation', 'wedocs')}
+                    />
+                  )}
                   <div
                       className="tooltip cursor-pointer ml-2 z-[9999]"
                       data-tip={__(
-                          'Controls the URL and breadcrumb hierarchy for docs. Existing URLs from the other format will be automatically redirected (301) to the new format, so bookmarks and search results keep working.',
+                          'Control how documentation URLs and breadcrumbs will be structured',
                           'wedocs'
                       )}
                   >
@@ -110,31 +116,75 @@ const GeneralSettings = ( {
                   </div>
                 </div>
                 <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
-                  <div className="relative">
-                    <DocsUrlStructureSelect
-                        setSettings={setSettings}
-                        settingsData={settingsData}
-                        settingsPanel={generalSettings}
-                    />
-                  </div>
+                  {wp.hooks.applyFilters(
+                      'wedocs_general_settings_docs_url_structure_field',
+                      (
+                          <PreviewDropdown
+                              ariaLabel={__('Docs URL structure', 'wedocs')}
+                              options={[
+                                {
+                                  id: 'before_doc',
+                                  name: __('Before Doc', 'wedocs'),
+                                  selected: true,
+                                },
+                                {
+                                  id: 'after_doc',
+                                  name: __('After Doc', 'wedocs'),
+                                  locked: true,
+                                },
+                              ]}
+                          />
+                      ),
+                      {
+                        settingsData,
+                        settingsPanel: generalSettings,
+                        setSettings,
+                      }
+                  )}
                 </div>
               </div>
               <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
                 <p className="text-sm text-[#6B7280]">
-                  <span className="block">
-                    {__('Example URL: ', 'wedocs')}
-                    <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
-                      {(() => {
-                        const siteUrl = (window.weDocsAdminVars?.siteUrl || '/').replace(/\/$/, '');
-                        return (generalSettings?.docs_url_structure || 'before_doc') === 'after_doc'
-                          ? `${siteUrl}/{doc}/docs/{section}/{article}/`
-                          : `${siteUrl}/docs/{doc}/{section}/{article}/`;
-                      })()}
-                    </code>
-                  </span>
+                  {(() => {
+                    const siteUrl = (window.weDocsAdminVars?.siteUrl || '/').replace(/\/$/, '');
+                    const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
+                    const activeStructure = generalSettings?.docs_url_structure === 'after_doc' ? 'after_doc' : 'before_doc';
+                    const beforeDocUrl = `${siteUrl}/docs/{doc}/{section}/{article}/`;
+                    const afterDocUrl = `${siteUrl}/{doc}/docs/{section}/{article}/`;
+
+                    if (isProLoaded) {
+                      return (
+                        <span className="block">
+                          {activeStructure === 'after_doc'
+                            ? __('After Doc: ', 'wedocs')
+                            : __('Before Doc: ', 'wedocs')}
+                          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+                            {activeStructure === 'after_doc' ? afterDocUrl : beforeDocUrl}
+                          </code>
+                        </span>
+                      );
+                    }
+
+                    return (
+                      <>
+                        <span className="block">
+                          {__('Before Doc: ', 'wedocs')}
+                          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+                            {beforeDocUrl}
+                          </code>
+                        </span>
+                        <span className="block mt-2">
+                          {__('After Doc: ', 'wedocs')}
+                          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+                            {afterDocUrl}
+                          </code>
+                        </span>
+                      </>
+                    );
+                  })()}
                   <span className="block mt-2">
                     {__(
-                        'Changing this setting will update URLs and breadcrumbs for all docs. Existing URLs in the previous format will be automatically redirected (301) to the new format.',
+                        'Changing this structure updates URLs and breadcrumbs for all docs. Previous URLs will automatically redirect (301).',
                         'wedocs'
                     )}
                   </span>
