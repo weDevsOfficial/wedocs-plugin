@@ -98,9 +98,12 @@ if ( ! function_exists( 'wedocs_get_doc_breadcrumb_trail' ) ) {
     /**
      * Build the ordered breadcrumb trail for a single doc post.
      *
-     * Single source of truth for breadcrumb ordering: honors the
-     * `docs_url_structure` setting (before_doc / after_doc), handles the
-     * `docs_home` hub crumb, and walks the parent chain defensively.
+     * Produces the default ("before_doc") trail: Docs hub crumb (if set),
+     * then the full ancestor chain root-first, then the current doc.
+     *
+     * Pro (or any third-party) can reorder the trail via the
+     * `wedocs_doc_breadcrumb_trail` filter — that's how the "after_doc"
+     * ordering is applied when the Pro URL structure feature is active.
      *
      * Each returned item is an array:
      *   - type:  'doc_ancestor' | 'docs_home' | 'current'
@@ -126,8 +129,7 @@ if ( ! function_exists( 'wedocs_get_doc_breadcrumb_trail' ) ) {
             return [];
         }
 
-        $url_structure = wedocs_get_general_settings( 'docs_url_structure', 'before_doc' );
-        $docs_home     = wedocs_get_general_settings( 'docs_home' );
+        $docs_home = wedocs_get_general_settings( 'docs_home' );
 
         // Walk the ancestor chain bottom-up, then reverse to root-first order.
         $ancestors = [];
@@ -144,17 +146,6 @@ if ( ! function_exists( 'wedocs_get_doc_breadcrumb_trail' ) ) {
 
         $ancestors = array_reverse( $ancestors );
         $trail     = [];
-
-        // In "after_doc" mode the top-level doc precedes the Docs hub crumb.
-        if ( 'after_doc' === $url_structure && ! empty( $ancestors ) ) {
-            $top_level = array_shift( $ancestors );
-            $trail[]   = [
-                'type'  => 'doc_ancestor',
-                'title' => wedocs_apply_short_content( $top_level->post_title, 25 ),
-                'url'   => get_permalink( $top_level->ID ),
-                'post'  => $top_level,
-            ];
-        }
 
         if ( $docs_home ) {
             $trail[] = [
@@ -181,7 +172,7 @@ if ( ! function_exists( 'wedocs_get_doc_breadcrumb_trail' ) ) {
             'post'  => $post,
         ];
 
-        return apply_filters( 'wedocs_doc_breadcrumb_trail', $trail, $post, $url_structure );
+        return apply_filters( 'wedocs_doc_breadcrumb_trail', $trail, $post );
     }
 }
 
