@@ -1,0 +1,29 @@
+/**
+ * Last Updated Date Block Styles
+ */
+
+.wp-block-wedocs-last-updated {
+	max-width: 100%;
+	box-sizing: border-box;
+
+	.last-updated-content {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.last-updated-icon {
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+
+		svg {
+			width: 16px;
+			height: 16px;
+		}
+	}
+
+	time {
+		font-variant-numeric: tabular-nums;
+	}
+}

@@ -3,12 +3,42 @@
   "apiVersion": 3,
   "name": "wedocs/wedocs-docs-grid",
   "version": "1.0.0",
-  "title": "weDocs - Docs Grid",
+  "title": "weDocs Docs Grid",
   "icon": "grid-view",
-  "category": "widgets",
+  "category": "wedocs",
   "description": "Display all the docs in a grid view",
+  "example": {
+    "attributes": {
+      "docStyle": "1x1",
+      "showDocArticle": true,
+      "showViewDetails": true,
+      "buttonText": "View Details"
+    }
+  },
   "supports": {
-    "html": false
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true,
+    "color": {
+      "background": true,
+      "link": true,
+      "__experimentalDefaultControls": {
+        "background": true
+      }
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true,
+      "__experimentalDefaultControls": {
+        "padding": true,
+        "margin": true
+      }
+    },
+    "__experimentalBorder": false
   },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
@@ -158,6 +188,90 @@
     "paginationBorderColor": {
       "type": "string",
       "default": "#dddddd"
+    },
+    "titleFontSize": {
+      "type": "string",
+      "default": ""
+    },
+    "titleFontWeight": {
+      "type": "string",
+      "default": ""
+    },
+    "titleFontFamily": {
+      "type": "string",
+      "default": ""
+    },
+    "titleLineHeight": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonFontSize": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonFontWeight": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonFontFamily": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonLineHeight": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationFontSize": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationFontWeight": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationFontFamily": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationLineHeight": {
+      "type": "string",
+      "default": ""
+    },
+    "titleLetterSpacing": {
+      "type": "string",
+      "default": ""
+    },
+    "titleTextDecoration": {
+      "type": "string",
+      "default": ""
+    },
+    "titleTextTransform": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonLetterSpacing": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonTextDecoration": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonTextTransform": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationLetterSpacing": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationTextDecoration": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationTextTransform": {
+      "type": "string",
+      "default": ""
     }
   }
 }

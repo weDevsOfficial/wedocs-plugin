@@ -40,8 +40,10 @@ class Assets {
             'wedocs-admin-script',
             'weDocsAdminScriptVars',
             array(
-                'ajaxurl' => admin_url( 'admin-ajax.php' ),
-                'nonce'   => wp_create_nonce( 'wedocs-ajax' ),
+                'ajaxurl'   => admin_url( 'admin-ajax.php' ),
+                'nonce'     => wp_create_nonce( 'wedocs-ajax' ),
+                'assetsUrl' => WEDOCS_ASSETS,
+                'isPro'     => wedocs_is_pro_active(),
             ),
         );
 
@@ -81,11 +83,11 @@ class Assets {
 
         if ( file_exists( WEDOCS_PATH . '/assets/build/block.asset.php' ) ) {
             $block_dependencies = require WEDOCS_PATH . '/assets/build/block.asset.php';
-            wp_register_style(
-                'wedocs-block-style',
-                $assets_url . '/build/style-block.css',
-                $block_dependencies['version']
-            );
+            // wp_register_style(
+            //     'wedocs-block-style',
+            //     $assets_url . '/build/style-block.css',
+            //     $block_dependencies['version']
+            // );
 
             wp_register_script(
                 'wedocs-block-script',
@@ -121,6 +123,7 @@ class Assets {
                     'ajaxurl'           => admin_url( 'admin-ajax.php' ),
                     'nonce'             => wp_create_nonce( 'wp_rest' ),
                     'aiProviderConfigs' => wedocs_get_ai_provider_configs(),
+                    'aiSettings'        => wedocs_get_ai_settings_for_frontend(),
                 ),
             );
         }

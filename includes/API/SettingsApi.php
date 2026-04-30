@@ -198,6 +198,12 @@ class SettingsApi extends \WP_REST_Controller {
         
         $settings_data_filtered = apply_filters( 'wedocs_settings_data', $settings_data );
 
+        // Preserve integrate_ai (AI connection state) when saving general settings.
+        $existing_settings = get_option( 'wedocs_settings', [] );
+        if ( array_key_exists( 'integrate_ai', $existing_settings ) && ! array_key_exists( 'integrate_ai', $settings_data_filtered ) ) {
+            $settings_data_filtered['integrate_ai'] = $existing_settings['integrate_ai'];
+        }
+
         // Update wedocs_settings via docs store.
         update_option( 'wedocs_settings', $settings_data_filtered );
         $response = apply_filters( 'wedocs_settings_data_rest_response', $settings_data_filtered, $settings_data );
@@ -281,6 +287,23 @@ class SettingsApi extends \WP_REST_Controller {
                         }
                     }
                 }
+            }
+        }
+
+        // Sanitize image analysis settings (Pro feature)
+        if ( isset( $ai_settings['image_analysis'] ) && is_array( $ai_settings['image_analysis'] ) ) {
+            $sanitized['image_analysis'] = array();
+
+            if ( isset( $ai_settings['image_analysis']['enabled'] ) ) {
+                $sanitized['image_analysis']['enabled'] = (bool) $ai_settings['image_analysis']['enabled'];
+            }
+
+            // Sanitize max image size; stored in KB (conversion to bytes happens at read time).
+            if ( isset( $ai_settings['image_analysis']['max_size'] ) ) {
+                $max_size_kb = absint( $ai_settings['image_analysis']['max_size'] );
+                // Limit between 100KB and 5MB
+                $max_size_kb = max( 100, min( 5120, $max_size_kb ) );
+                $sanitized['image_analysis']['max_size'] = $max_size_kb;
             }
         }
 

@@ -1,6 +1,6 @@
 +( function ( $ ) {
   let pending_ajax = false;
-  const anchestorItem = document.querySelector( 'ul.doc-nav-list > li.page_item.current_page_ancestor' );
+  const anchestorItem = document.querySelector( 'ul.doc-nav-list > li.page_item.current_page_ancestor' ) || null;
 
   const weDocs = {
     initialize() {
@@ -13,6 +13,9 @@
 
       // Load single doc page search modal.
       this.loadSingleDocSearchModal();
+
+      // Initialize Quick Search blocks
+      this.initializeQuickSearch();
 
       // Handle modal actions.
       $( 'a#wedocs-stuck-modal' ).on( 'click', this.showModal );
@@ -68,7 +71,25 @@
     printArticle ( e ) {
       e.preventDefault();
 
-      const article = $( this ).closest( 'article' );
+      // Try multiple selectors to find the article content
+      let article = $( this ).closest( 'article' );
+
+      // If no article found (e.g., in block themes), try common content selectors
+      if ( ! article.length ) {
+        article = $( '.wedocs-single-content article' );
+      }
+      if ( ! article.length ) {
+        article = $( '.entry-content' ).closest( 'article' );
+      }
+      if ( ! article.length ) {
+        article = $( '.entry-content' );
+      }
+
+      // If still no content found, bail out gracefully
+      if ( ! article.length ) {
+        window.print();
+        return;
+      }
 
       const mywindow = window.open( '', 'my div', 'height=600,width=800' );
       mywindow.document.write( '<html><head><title>Print Article</title>' );
@@ -87,10 +108,64 @@
       mywindow.document.close(); // necessary for IE >= 10
       mywindow.focus(); // necessary for IE >= 10
 
-      // setTimeout( function () {
-      //   mywindow.print();
-      //   mywindow.close();
-      // }, 2000 );
+      // Event-driven print handling
+      let printCompleted = false;
+      let fallbackTimeout = null;
+      
+      // Function to handle print completion and cleanup
+      const handlePrintComplete = function() {
+        if (printCompleted) return; // Prevent multiple calls
+        printCompleted = true;
+        
+        // Clear fallback timeout if it exists
+        if (fallbackTimeout) {
+          clearTimeout(fallbackTimeout);
+          fallbackTimeout = null;
+        }
+        
+        // Remove event listeners to prevent memory leaks
+        if (mywindow.removeEventListener) {
+          mywindow.removeEventListener('afterprint', handlePrintComplete);
+        } else if (mywindow.detachEvent) {
+          mywindow.detachEvent('onafterprint', handlePrintComplete);
+        }
+        
+        // Close the window
+        mywindow.close();
+      };
+      
+      // Function to initiate printing
+      const initiatePrint = function() {
+        // Attach afterprint event listener before printing
+        if (mywindow.addEventListener) {
+          mywindow.addEventListener('afterprint', handlePrintComplete, false);
+        } else if (mywindow.attachEvent) {
+          // IE8 and older support
+          mywindow.attachEvent('onafterprint', handlePrintComplete);
+        }
+        
+        // Set up fallback timeout as last resort (for browsers that don't support afterprint)
+        fallbackTimeout = setTimeout(function() {
+          if (!printCompleted) {
+            console.warn('Print afterprint event not fired, using fallback cleanup');
+            handlePrintComplete();
+          }
+        }, 30000); // 30 second fallback timeout
+        
+        // Initiate print
+        mywindow.print();
+      };
+      
+      // Wait for window to load before printing
+      if (mywindow.addEventListener) {
+        mywindow.addEventListener('load', initiatePrint, false);
+      } else if (mywindow.attachEvent) {
+        // IE8 and older support
+        mywindow.attachEvent('onload', initiatePrint);
+      } else {
+        // Fallback for very old browsers
+        mywindow.onload = initiatePrint;
+      }
 
       return true;
     },
@@ -156,9 +231,10 @@
     },
 
     loadSingleDocSearchModal( e ) {
-      if ( !weDocs_Vars.isSingleDoc ) {
-        return;
-      }
+      // Always load the search modal functionality, not just on single doc pages
+      // if ( !weDocs_Vars.isSingleDoc ) {
+      //   return;
+      // }
 
       const data = {
         action   : 'wedocs_get_docs',
@@ -178,10 +254,12 @@
       });
 
       // Mount doc single page search modal.
-      const mountDiv = document.createElement( 'div' );
-      mountDiv.setAttribute( 'id', 'wedocs-single-doc-search-modal' );
-      mountDiv.innerHTML = weDocs_Vars.searchModal;
-      document.body.appendChild( mountDiv );
+      if ( weDocs_Vars.searchModal ) {
+        const mountDiv = document.createElement( 'div' );
+        mountDiv.setAttribute( 'id', 'wedocs-single-doc-search-modal' );
+        mountDiv.innerHTML = weDocs_Vars.searchModal;
+        document.body.appendChild( mountDiv );
+      }
 
       document.addEventListener( 'keydown', ( event ) => {
         // Bind single page search modal with (ctrl/command + k).
@@ -295,16 +373,25 @@
           })
         );
 
-        liNode.querySelectorAll( '.doc-search-hit-result' ).forEach(
-          list => {
-            // Update list icon background & color.
-            list.querySelector( '.doc-search-hit-icon' ).style.background = weDocs_Vars?.searchModalColors?.active_shade_color;
-            list.querySelector( '.doc-search-hit-icon path' ).style.stroke = weDocs_Vars?.searchModalColors?.active_primary_color;
+        try {
+          liNode.querySelectorAll( '.doc-search-hit-result' ).forEach(
+            list => {
+              // Update list icon background & color.
+              const hitIcon = list?.querySelector( '.doc-search-hit-icon' );
+              const hitIconPath = hitIcon?.querySelector( 'path' );
+              
+              if ( hitIcon ) {
+                hitIcon.style.background = weDocs_Vars?.searchModalColors?.active_shade_color;
+              }
+              
+              if ( hitIconPath ) {
+                hitIconPath.style.stroke = weDocs_Vars?.searchModalColors?.active_primary_color;
+              }
 
-            const parentDocNav = list.querySelector( '.parent-doc-nav' ),
-              sectionDocNav = list.querySelector( '.section-doc-nav' ),
-              parentNavSearchHitPath = list.querySelector( '.parent-doc-nav .doc-search-hit-path' ),
-              sectionNavSearchHitPath = list.querySelector( '.section-doc-nav .doc-search-hit-path' );
+              const parentDocNav = list?.querySelector( '.parent-doc-nav' ),
+                sectionDocNav = list?.querySelector( '.section-doc-nav' ),
+                parentNavSearchHitPath = parentDocNav?.querySelector( '.doc-search-hit-path' ),
+                sectionNavSearchHitPath = sectionDocNav?.querySelector( '.doc-search-hit-path' );
 
             if ( parentNavSearchHitPath ) {
               // Update parent nav shade color.
@@ -350,7 +437,10 @@
               this.style.background = '#fff';
             } );
           }
-        );
+          );
+        } catch ( error ) {
+          console.warn( 'Error processing search results:', error );
+        }
 
         ulNode.appendChild(liNode);
       });
@@ -389,12 +479,18 @@
     },
 
     showSinglePageSearchModal ( e ) {
-      $( '#wedocs-single-doc-search-modal' ).addClass( 'active' );
-      $( '#wedocs-single-doc-search-modal #doc-search-input' ).focus();
+      const modal = $( '#wedocs-single-doc-search-modal' );
+      if ( modal.length ) {
+        modal.addClass( 'active' );
+        modal.find( '#doc-search-input' ).focus();
+      }
     },
 
     closeSinglePageSearchModal ( e ) {
-      $( '#wedocs-single-doc-search-modal' ).removeClass( 'active' );
+      const modal = $( '#wedocs-single-doc-search-modal' );
+      if ( modal.length ) {
+        modal.removeClass( 'active' );
+      }
     },
 
     extractedTitle ( title, length = 190 ) {
@@ -407,6 +503,22 @@
         $( this ).removeClass( 'active' );
       }
     },
+
+    initializeQuickSearch() {
+      // Initialize Quick Search blocks functionality
+      // The Quick Search blocks have their own JavaScript built into their render.php
+      // This method is called to ensure compatibility but the actual functionality
+      // is handled by the individual Quick Search block instances
+      
+      // Check if there are any Quick Search blocks on the page
+      const quickSearchBlocks = document.querySelectorAll('.wedocs-quick-search-block');
+      
+      if (quickSearchBlocks.length > 0) {
+        // The Quick Search blocks are self-contained with their own JavaScript
+        // No additional initialization is needed here as each block handles its own functionality
+        // Both search systems can coexist without conflicts
+      }
+    },
   };
 
   $( function () {
@@ -417,9 +529,9 @@
     // }
 
     // Handle navigation caret.
-    if ( ! anchestorItem?.classList.contains( 'wd-state-open' ) ) {
-      anchestorItem?.classList.add( 'wd-state-open' );
-      anchestorItem?.classList.remove( 'wd-state-closed' );
+    if ( anchestorItem && ! anchestorItem.classList.contains( 'wd-state-open' ) ) {
+      anchestorItem.classList.add( 'wd-state-open' );
+      anchestorItem.classList.remove( 'wd-state-closed' );
     }
 
     weDocs.initialize();

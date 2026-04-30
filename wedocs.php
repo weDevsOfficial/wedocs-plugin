@@ -3,7 +3,7 @@
 Plugin Name: weDocs
 Plugin URI: https://wedocs.co/
 Description: A documentation plugin for WordPress
-Version: 2.1.18
+Version: 2.2.1
 Author: weDevs
 Author URI: https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri
 License: GPL2
@@ -46,7 +46,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
-require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid/render.php';
+require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/helpers/block-styles.php';
+// require_once __DIR__ . '/includes/captcha-config.php'; // todo add later
 
 /**
  * WeDocs class.
@@ -54,14 +55,12 @@ require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid/render.ph
  * @class WeDocs The class that holds the entire WeDocs plugin
  */
 final class WeDocs {
-
-
     /**
      * Plugin version.
      *
      * @var string
      */
-    const VERSION = '2.1.18';
+    const VERSION = '2.2.1';
 
     /**
      * The plugin url.
@@ -169,19 +168,112 @@ final class WeDocs {
 
         // Localize our plugin
         add_action( 'init', [ $this, 'localization_setup' ] );
-        add_action('init', [$this, 'register_blocks']);
+        add_action( 'init', [ $this, 'register_blocks' ] );
+        // add_action('init', [$this, 'register_blocks']);
+        add_filter('block_categories_all', [$this, 'register_block_category']);
+        add_filter( 'render_block', [ $this, 'gate_pro_blocks' ], 10, 2 );
 
         // registeer our widget
         add_action( 'widgets_init', [ $this, 'register_widget' ] );
     }
 
     public function register_blocks() {
-        // Register the DocsGrid block
-        register_block_type(
-            plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid',
-            array(
-                'render_callback' => 'render_wedocs_docs_grid'
-            )
+        // Enqueue admin script early to make weDocsAdminScriptVars available for blocks
+        wp_enqueue_script( 'wedocs-admin-script' );
+
+        // Modern WordPress block registration using block.json files
+        $block_directories = [
+            // Free blocks
+            'assets/build/blocks/DocsGrid',
+            'assets/build/blocks/Breadcrumb',
+            'assets/build/blocks/HelpfulFeedback',
+            'assets/build/blocks/QuickSearch',
+            'assets/build/blocks/PrintButton',
+            'assets/build/blocks/DocNavigation',
+            'assets/build/blocks/Sidebar',
+            'assets/build/blocks/Search',
+            'assets/build/blocks/HelpfulModal',
+            'assets/build/blocks/LastUpdated',
+            // Pro blocks — always registered so they appear in the inserter;
+            // JS handles the pro gate and shows the PRO badge when pro is inactive.
+            'assets/build/blocks/TableOfContents',
+            // 'assets/build/blocks/AdvanceContributors',
+            'assets/build/blocks/Contributors',
+            'assets/build/blocks/SocialShare',
+            'assets/build/blocks/AISummary',
+            'assets/build/blocks/DocActions',
+            'assets/build/blocks/ReadingProgress',
+            'assets/build/blocks/FontSizeSwitcher',
+        ];
+
+
+        foreach ( $block_directories as $block_dir ) {
+            $block_path = plugin_dir_path(__FILE__) . $block_dir;
+
+            if ( file_exists( $block_path . '/block.json' ) ) {
+
+                // Register block using block.json (modern approach - render callback is handled by block.json)
+                register_block_type( $block_path );
+            }
+        }
+    }
+
+    /**
+     * Prevent pro-only blocks from rendering on the frontend when weDocs Pro is inactive.
+     * Covers blocks that use a save() function (static HTML stored in DB).
+     *
+     * @param string $block_content Rendered block HTML.
+     * @param array  $block         Block data.
+     * @return string
+     */
+    public function gate_pro_blocks( $block_content, $block ) {
+        static $pro_active = null;
+        if ( $pro_active === null ) {
+            $pro_active = function_exists( 'wedocs_is_pro_active' ) && wedocs_is_pro_active();
+        }
+
+        if ( $pro_active ) {
+            return $block_content;
+        }
+
+        $pro_blocks = [
+            'wedocs/reading-progress',
+            'wedocs/ai-summary',
+            'wedocs/doc-actions',
+            'wedocs/font-size-switcher',
+        ];
+
+        if ( isset( $block['blockName'] ) && in_array( $block['blockName'], $pro_blocks, true ) ) {
+            return '';
+        }
+
+        return $block_content;
+    }
+
+    /**
+     * Register the weDocs block category.
+     *
+     * @param array $categories Existing block categories.
+     * @return array Modified block categories.
+     */
+    public function register_block_category($categories) {
+        // Check if weDocs category already exists
+        foreach ($categories as $category) {
+            if ($category['slug'] === 'wedocs') {
+                return $categories;
+            }
+        }
+
+        // Add weDocs category at the beginning
+        return array_merge(
+            [
+                [
+                    'slug'  => 'wedocs',
+                    'title' => __('weDocs', 'wedocs'),
+                    'icon'  => null
+                ]
+            ],
+            $categories
         );
     }
 
@@ -220,11 +312,12 @@ final class WeDocs {
             $this->container['ajax'] = new WeDevs\WeDocs\Ajax();
         }
 
-        $this->container['api']      = new WeDevs\WeDocs\API();
-        $this->container['assets']   = new WeDevs\WeDocs\Assets();
-        $this->container['migrate']  = new WeDevs\WeDocs\Admin\Migrate();
-        $this->container['upgrader'] = new WeDevs\WeDocs\Upgrader\Upgrader();
+        $this->container['api']        = new WeDevs\WeDocs\API();
+        $this->container['assets']     = new WeDevs\WeDocs\Assets();
+        $this->container['migrate']    = new WeDevs\WeDocs\Admin\Migrate();
+        $this->container['upgrader']   = new WeDevs\WeDocs\Upgrader\Upgrader();
         $this->container['capability'] = new Capability();
+        $this->container['templates']  = new WeDevs\WeDocs\Templates\TemplateManager();
 
         // Initialize Elementor integration if Elementor is active
         if ( did_action( 'elementor/loaded' ) ) {
@@ -317,3 +410,18 @@ function wedocs() {
 
 // kick it off
 wedocs();
+
+
+/**
+ * Dequeue wedocs-pro-frontend-css on non-docs post types
+ */
+function dequeue_wedocs_pro_frontend_css() {
+    // Check if we're not on a docs post type
+    if ( ! is_singular( 'docs' ) && ! is_post_type_archive( 'docs' ) && ! is_tax( array( 'doc_category', 'doc_tag' ) ) ) {
+        wp_dequeue_style( 'wedocs-pro-frontend-css' );
+        wp_deregister_style( 'wedocs-pro-frontend-css' );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'dequeue_wedocs_pro_frontend_css', 20 );
+
+

@@ -1,0 +1,167 @@
+/**
+ * Font Size Switcher Block Styles
+ */
+
+.wp-block-wedocs-font-size-switcher {
+	box-sizing: border-box;
+
+	.font-size-switcher-container {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		user-select: none;
+	}
+
+	.font-size-label {
+		font-weight: 500;
+		white-space: nowrap;
+	}
+
+	.font-size-option {
+		cursor: pointer;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+		font-family: inherit;
+
+		&:hover {
+			opacity: 0.8;
+			transform: translateY(-1px);
+		}
+
+		&:active {
+			transform: translateY(0);
+		}
+
+		&.active {
+			font-weight: 600;
+		}
+	}
+
+	.font-size-slider-controls {
+		display: flex;
+		align-items: center;
+
+		button {
+			cursor: pointer;
+			font-family: inherit;
+			white-space: nowrap;
+			transition: all 0.2s ease;
+
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+
+		.font-size-slider {
+			flex: 1;
+			cursor: pointer;
+			height: 6px;
+			border-radius: 3px;
+			outline: none;
+			appearance: none;
+			background: #e0e0e0;
+
+			&::-webkit-slider-thumb {
+				appearance: none;
+				width: 18px;
+				height: 18px;
+				border-radius: 50%;
+				background: currentColor;
+				cursor: pointer;
+				transition: all 0.2s ease;
+
+				&:hover {
+					transform: scale(1.2);
+				}
+			}
+
+			&::-moz-range-thumb {
+				width: 18px;
+				height: 18px;
+				border-radius: 50%;
+				background: currentColor;
+				cursor: pointer;
+				border: none;
+				transition: all 0.2s ease;
+
+				&:hover {
+					transform: scale(1.2);
+				}
+			}
+		}
+	}
+
+	.font-size-dropdown {
+		cursor: pointer;
+		font-family: inherit;
+
+		&:hover {
+			opacity: 0.9;
+		}
+
+		&:focus {
+			outline: 2px solid currentColor;
+			outline-offset: 2px;
+		}
+	}
+
+	.current-size-display {
+		white-space: nowrap;
+		font-style: italic;
+	}
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+	.wp-block-wedocs-font-size-switcher {
+		.font-size-switcher-container {
+			gap: 6px !important;
+		}
+
+		.font-size-option {
+			padding: 6px 10px !important;
+			font-size: 13px !important;
+		}
+
+		.font-size-slider-controls {
+			max-width: 250px !important;
+
+			button {
+				padding: 5px 8px !important;
+			}
+		}
+
+		.current-size-display {
+			width: 100%;
+			margin-left: 0 !important;
+			margin-top: 5px;
+		}
+	}
+}
+
+// Accessibility improvements
+.wp-block-wedocs-font-size-switcher {
+	button:focus-visible,
+	select:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 2px;
+	}
+
+	// High contrast mode support
+	@media (prefers-contrast: high) {
+		button,
+		select {
+			border-width: 2px !important;
+		}
+	}
+
+	// Reduced motion support
+	@media (prefers-reduced-motion: reduce) {
+		*,
+		*::before,
+		*::after {
+			transition: none !important;
+			animation: none !important;
+		}
+	}
+}

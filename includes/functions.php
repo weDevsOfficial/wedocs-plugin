@@ -182,36 +182,84 @@ if ( !function_exists( 'wedocs_get_breadcrumb_item' ) ) {
 }
 
 /**
+ * Get next and previous document posts for navigation.
+ * Improved version that handles menu_order = 0 and non-sequential ordering.
+ *
+ * @param WP_Post $post Current post object
+ * @return array Array with 'next' and 'prev' keys containing post objects or null
+ */
+function wedocs_get_doc_navigation_posts( $post ) {
+    global $wpdb;
+
+    if ( ! $post || $post->post_type !== 'docs' ) {
+        return [ 'next' => null, 'prev' => null ];
+    }
+    // Get all sibling posts ordered by menu_order, then by date
+    $siblings_query = "SELECT ID, post_title, menu_order FROM {$wpdb->posts}
+        WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish'
+        ORDER BY menu_order ASC, post_date ASC";
+    $siblings = $wpdb->get_results( $siblings_query );
+    $next_post     = null;
+    $prev_post     = null;
+    $current_found = false;
+    // Find current post position and determine next/prev
+    foreach ( $siblings as $index => $sibling ) {
+        if ( $sibling->ID == $post->ID ) {
+            $current_found = true;
+            // Get previous post (if exists)
+            if ( $index > 0 ) {
+                $prev_post = $siblings[ $index - 1 ];
+            }
+            // Get next post (if exists)
+            if ( $index < count( $siblings ) - 1 ) {
+                $next_post = $siblings[ $index + 1 ];
+            }
+            break;
+        }
+    }
+    // Fallback to original queries if current post not found in siblings
+    if ( ! $current_found ) {
+        $next_query = "SELECT ID, post_title FROM {$wpdb->posts}
+            WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish' and menu_order > {$post->menu_order}
+            ORDER BY menu_order ASC
+            LIMIT 0, 1";
+        $prev_query = "SELECT ID, post_title FROM {$wpdb->posts}
+            WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish' and menu_order < {$post->menu_order}
+            ORDER BY menu_order DESC
+            LIMIT 0, 1";
+        $next_post = $wpdb->get_row( $next_query );
+        $prev_post = $wpdb->get_row( $prev_query );
+    }
+
+    return [
+        'next' => $next_post,
+        'prev' => $prev_post,
+    ];
+}
+
+/**
  * Next, previous post navigation for a single doc.
  *
  * @return void
  */
 function wedocs_doc_nav() {
-    global $post, $wpdb;
+    global $post;
 
-    $next_query = "SELECT ID FROM {$wpdb->posts}
-        WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish' and menu_order > {$post->menu_order}
-        ORDER BY menu_order ASC
-        LIMIT 0, 1";
+    // Use the improved navigation function
+    $navigation_posts = wedocs_get_doc_navigation_posts($post);
+    $next_post = $navigation_posts['next'];
+    $prev_post = $navigation_posts['prev'];
 
-    $prev_query = "SELECT ID FROM {$wpdb->posts}
-        WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish' and menu_order < {$post->menu_order}
-        ORDER BY menu_order DESC
-        LIMIT 0, 1";
-
-    $next_post_id = (int) $wpdb->get_var( $next_query );
-    $prev_post_id = (int) $wpdb->get_var( $prev_query );
-
-    if ( $next_post_id || $prev_post_id ) {
+    if ( $next_post || $prev_post ) {
         echo '<nav class="wedocs-doc-nav wedocs-hide-print">';
         echo '<h3 class="assistive-text screen-reader-text">' . __( 'Doc navigation', 'wedocs' ) . '</h3>';
 
-        if ( $prev_post_id ) {
-            echo '<span class="nav-prev"><a href="' . get_permalink( $prev_post_id ) . '">&larr; ' . apply_filters( 'wedocs_translate_text', get_post( $prev_post_id )->post_title ) . '</a></span>';
+        if ( $prev_post ) {
+            echo '<span class="nav-prev"><a href="' . get_permalink( $prev_post->ID ) . '">&larr; ' . apply_filters( 'wedocs_translate_text', $prev_post->post_title ) . '</a></span>';
         }
 
-        if ( $next_post_id ) {
-            echo '<span class="nav-next"><a href="' . get_permalink( $next_post_id ) . '">' . apply_filters( 'wedocs_translate_text', get_post( $next_post_id )->post_title ) . ' &rarr;</a></span>';
+        if ( $next_post ) {
+            echo '<span class="nav-next"><a href="' . get_permalink( $next_post->ID ) . '">' . apply_filters( 'wedocs_translate_text', $next_post->post_title ) . ' &rarr;</a></span>';
         }
 
         echo '</nav>';
@@ -608,67 +656,294 @@ function wedocs_convert_utc_to_est() {
 }
 
 /**
- * Get AI provider configurations
+ * Get AI provider configurations.
+ *
+ * Returns configuration for all supported AI providers including their models
+ * and vision capabilities for image analysis support.
  *
  * @since 2.1.15
+ * @since 2.2.0 Added vision capability metadata for image analysis support.
  *
- * @return array
+ * @return array Provider configurations with models and capabilities.
  */
 function wedocs_get_ai_provider_configs() {
 	$provider_configs = [
-		'openai' => [
-			'name' => 'OpenAI',
-			'endpoint' => 'https://api.openai.com/v1/chat/completions',
-			'models' => [
-				'gpt-4o' => 'GPT-4o - Most Capable Multimodal',
-				'gpt-4o-mini' => 'GPT-4o Mini - Efficient & Fast',
-				'gpt-4-turbo' => 'GPT-4 Turbo - High Performance',
-				'gpt-4' => 'GPT-4 - Advanced Reasoning',
-				'gpt-3.5-turbo' => 'GPT-3.5 Turbo - Fast & Affordable'
+		'openai'    => [
+			'name'         => 'OpenAI',
+			'endpoint'     => 'https://api.openai.com/v1/chat/completions',
+			'models'       => [
+				'gpt-4o'        => [
+					'name'   => 'GPT-4o - Most Capable Multimodal',
+					'vision' => true,
+				],
+				'gpt-4o-mini'   => [
+					'name'   => 'GPT-4o Mini - Efficient & Fast',
+					'vision' => true,
+				],
+				'gpt-4-turbo'   => [
+					'name'   => 'GPT-4 Turbo - High Performance',
+					'vision' => true,
+				],
+				'gpt-4'         => [
+					'name'   => 'GPT-4 - Advanced Reasoning',
+					'vision' => false,
+				],
+				'gpt-3.5-turbo' => [
+					'name'   => 'GPT-3.5 Turbo - Fast & Affordable',
+					'vision' => false,
+				],
 			],
-			'requires_key' => true
+			'requires_key' => true,
 		],
 		'anthropic' => [
-			'name' => 'Anthropic Claude',
-			'endpoint' => 'https://api.anthropic.com/v1/messages',
-			'models' => [
-				'claude-4.1-opus' => 'Claude 4.1 Opus - Most Capable',
-				'claude-4-opus' => 'Claude 4 Opus - Best Coding Model',
-				'claude-4-sonnet' => 'Claude 4 Sonnet - Advanced Reasoning',
-				'claude-3.7-sonnet' => 'Claude 3.7 Sonnet - Hybrid Reasoning',
-				'claude-3-5-sonnet-20241022' => 'Claude 3.5 Sonnet Latest',
-				'claude-3-5-sonnet-20240620' => 'Claude 3.5 Sonnet',
-				'claude-3-5-haiku-20241022' => 'Claude 3.5 Haiku',
-				'claude-3-opus-20240229' => 'Claude 3 Opus',
-				'claude-3-sonnet-20240229' => 'Claude 3 Sonnet',
-				'claude-3-haiku-20240307' => 'Claude 3 Haiku'
+			'name'         => 'Anthropic Claude',
+			'endpoint'     => 'https://api.anthropic.com/v1/messages',
+			'models'       => [
+				'claude-opus-4-5-20251101'   => [
+					'name'   => 'Claude Opus 4.5 - Most Capable',
+					'vision' => true,
+				],
+				'claude-opus-4-20250514'     => [
+					'name'   => 'Claude Opus 4 - Best Coding Model',
+					'vision' => true,
+				],
+				'claude-sonnet-4-20250514'   => [
+					'name'   => 'Claude Sonnet 4 - Advanced Reasoning',
+					'vision' => true,
+				],
+				'claude-3-7-sonnet-20250219' => [
+					'name'   => 'Claude 3.7 Sonnet - Hybrid Reasoning',
+					'vision' => true,
+				],
+				'claude-3-5-sonnet-20241022' => [
+					'name'   => 'Claude 3.5 Sonnet Latest',
+					'vision' => true,
+				],
+				'claude-3-5-sonnet-20240620' => [
+					'name'   => 'Claude 3.5 Sonnet',
+					'vision' => true,
+				],
+				'claude-3-5-haiku-20241022'  => [
+					'name'   => 'Claude 3.5 Haiku',
+					'vision' => true,
+				],
+				'claude-3-opus-20240229'     => [
+					'name'   => 'Claude 3 Opus',
+					'vision' => true,
+				],
+				'claude-3-haiku-20240307'    => [
+					'name'   => 'Claude 3 Haiku',
+					'vision' => true,
+				],
 			],
-			'requires_key' => true
+			'requires_key' => true,
 		],
-		'google' => [
-			'name' => 'Google Gemini',
-			'endpoint' => 'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent',
-			'models' => [
-				'gemini-2.0-flash-exp' => 'Gemini 2.0 Flash Experimental - Latest',
-				'gemini-2.0-flash' => 'Gemini 2.0 Flash - Stable',
-				'gemini-2.0-flash-001' => 'Gemini 2.0 Flash 001 - Stable Version',
-				'gemini-2.0-flash-lite-001' => 'Gemini 2.0 Flash-Lite 001 - Lightweight',
-				'gemini-2.0-flash-lite' => 'Gemini 2.0 Flash-Lite - Lightweight',
-				'gemini-2.5-flash' => 'Gemini 2.5 Flash - Latest Stable',
-				'gemini-2.5-pro' => 'Gemini 2.5 Pro - Most Capable',
-				'gemini-2.5-flash-lite' => 'Gemini 2.5 Flash-Lite - Efficient',
-				'gemini-flash-latest' => 'Gemini Flash Latest - Auto-Updated',
-				'gemini-pro-latest' => 'Gemini Pro Latest - Auto-Updated'
+		'google'    => [
+			'name'         => 'Google Gemini',
+			'endpoint'     => 'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent',
+			'models'       => [
+				'gemini-2.0-flash-exp'      => [
+					'name'   => 'Gemini 2.0 Flash Experimental - Latest',
+					'vision' => true,
+				],
+				'gemini-2.0-flash'          => [
+					'name'   => 'Gemini 2.0 Flash - Stable',
+					'vision' => true,
+				],
+				'gemini-2.0-flash-001'      => [
+					'name'   => 'Gemini 2.0 Flash 001 - Stable Version',
+					'vision' => true,
+				],
+				'gemini-2.0-flash-lite-001' => [
+					'name'   => 'Gemini 2.0 Flash-Lite 001 - Lightweight',
+					'vision' => true,
+				],
+				'gemini-2.0-flash-lite'     => [
+					'name'   => 'Gemini 2.0 Flash-Lite - Lightweight',
+					'vision' => true,
+				],
+				'gemini-2.5-flash'          => [
+					'name'   => 'Gemini 2.5 Flash - Latest Stable',
+					'vision' => true,
+				],
+				'gemini-2.5-pro'            => [
+					'name'   => 'Gemini 2.5 Pro - Most Capable',
+					'vision' => true,
+				],
+				'gemini-2.5-flash-lite'     => [
+					'name'   => 'Gemini 2.5 Flash-Lite - Efficient',
+					'vision' => true,
+				],
+				'gemini-flash-latest'       => [
+					'name'   => 'Gemini Flash Latest - Auto-Updated',
+					'vision' => true,
+				],
+				'gemini-pro-latest'         => [
+					'name'   => 'Gemini Pro Latest - Auto-Updated',
+					'vision' => true,
+				],
 			],
-			'requires_key' => true
-		]
+			'requires_key' => true,
+		],
 	];
 
 	return apply_filters( 'wedocs_ai_provider_configs', $provider_configs );
 }
 
+/**
+ * Check if a specific AI model supports vision/image analysis.
+ *
+ * @since 2.2.0
+ *
+ * @param string $provider The provider key (openai, anthropic, google).
+ * @param string $model    The model identifier.
+ *
+ * @return bool True if the model supports vision, false otherwise.
+ */
+function wedocs_model_supports_vision( $provider, $model ) {
+	$configs = wedocs_get_ai_provider_configs();
+
+	// 1. Check the static config first — cheapest path.
+	if ( isset( $configs[ $provider ]['models'][ $model ] ) ) {
+		$model_config = $configs[ $provider ]['models'][ $model ];
+		if ( is_array( $model_config ) ) {
+			return ! empty( $model_config['vision'] );
+		}
+		return false;
+	}
+
+	// 2. Model not in the static list — check the transient cached by the dynamic
+	//    model endpoint (wedocs_ai_models_{provider}_{key_hash}).
+	$all_settings = get_option( 'wedocs_settings', [] );
+	$ai_settings  = is_array( $all_settings['ai'] ?? null ) ? $all_settings['ai'] : [];
+	$api_key      = $ai_settings['providers'][ $provider ]['api_key'] ?? '';
+
+	if ( $api_key ) {
+		$cache_key     = 'wedocs_ai_models_' . $provider . '_' . substr( md5( $api_key ), 0, 8 );
+		$cached_models = get_transient( $cache_key );
+
+		if ( is_array( $cached_models ) ) {
+			foreach ( $cached_models as $m ) {
+				if ( ( $m['id'] ?? '' ) === $model ) {
+					return ! empty( $m['vision'] );
+				}
+			}
+		}
+	}
+
+	// 3. Pattern-based fallback for models unknown to both sources.
+	return wedocs_model_has_vision_by_pattern( $provider, $model );
+}
+
+/**
+ * Detect vision support by matching well-known model ID patterns.
+ *
+ * Used as a last resort when a model is absent from both the static config and
+ * the cached dynamic model list (e.g. a brand-new model released after the
+ * cache was last populated).
+ *
+ * @since 2.2.1
+ *
+ * @param string $provider Provider key (openai | anthropic | google).
+ * @param string $model    Model identifier.
+ *
+ * @return bool
+ */
+function wedocs_model_has_vision_by_pattern( $provider, $model ) {
+	switch ( $provider ) {
+		case 'openai':
+			return (
+				strpos( $model, 'gpt-4o' ) !== false      ||
+				strpos( $model, 'gpt-4-turbo' ) !== false ||
+				strpos( $model, 'gpt-4-vision' ) !== false ||
+				strpos( $model, 'chatgpt-4o' ) !== false  ||
+				preg_match( '/^o[1-9][-_]/', $model ) === 1
+			);
+		case 'anthropic':
+			// claude-3 and all claude-4 families expose multimodal input.
+			return preg_match( '/^claude-(3|3-[57]|opus-4|sonnet-4|haiku-4)/', $model ) === 1;
+		case 'google':
+			// Nearly all Gemini models support vision; AQA is text-only.
+			return strpos( $model, 'gemini' ) !== false && strpos( $model, 'aqa' ) === false;
+		default:
+			return false;
+	}
+}
+
+/**
+ * Get the display name of an AI model.
+ *
+ * @since 2.2.0
+ *
+ * @param string $provider The provider key (openai, anthropic, google).
+ * @param string $model    The model identifier.
+ *
+ * @return string The model display name.
+ */
+function wedocs_get_model_name( $provider, $model ) {
+	$configs = wedocs_get_ai_provider_configs();
+
+	if ( ! isset( $configs[ $provider ]['models'][ $model ] ) ) {
+		return $model;
+	}
+
+	$model_config = $configs[ $provider ]['models'][ $model ];
+
+	// Handle both old string format and new array format for backward compatibility.
+	if ( is_array( $model_config ) ) {
+		return $model_config['name'] ?? $model;
+	}
+
+	return $model_config;
+}
+
+/**
+ * Get AI settings safe for frontend localization.
+ *
+ * Strips sensitive fields such as API keys and secrets from the AI
+ * settings array so they are never exposed via wp_localize_script.
+ *
+ * @since 2.2.1
+ *
+ * @return array Sanitized AI settings without sensitive data.
+ */
+function wedocs_get_ai_settings_for_frontend() {
+	$ai_settings = wedocs_get_option( 'ai', 'wedocs_settings', [] );
+
+	// Fields that must never be sent to the frontend.
+	$sensitive_fields = [ 'api_key', 'api_secret', 'secret_key', 'access_token' ];
+
+	// Fetch once before the loop so we don't hit the options table on every iteration.
+	$original_config = wedocs_get_option( 'ai', 'wedocs_settings', [] );
+
+	if ( ! empty( $ai_settings['providers'] ) && is_array( $ai_settings['providers'] ) ) {
+		foreach ( $ai_settings['providers'] as $provider => &$config ) {
+			if ( ! is_array( $config ) ) {
+				continue;
+			}
+
+			foreach ( $sensitive_fields as $field ) {
+				unset( $config[ $field ] );
+			}
+
+			// Let the frontend know whether a key has been configured.
+			$config['has_api_key'] = ! empty( $original_config['providers'][ $provider ]['api_key'] );
+		}
+		unset( $config );
+	}
+
+	return $ai_settings;
+}
+
+/**
+ * Check if weDocs Pro is active.
+ *
+ * @since 2.1.15
+ *
+ * @return bool True if Pro is active, false otherwise.
+ */
 function wedocs_is_pro_active() {
-    return defined( 'WEDOCS_PRO_VERSION' );
+	return defined( 'WEDOCS_PRO_VERSION' );
 }
 
 /**

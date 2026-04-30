@@ -25,7 +25,7 @@ class Capability {
 	 * @return array
 	 */
     public function grant_delete_capability_to_specific_roles( $all_caps, $caps, $args, $user ) {
-        if ( ! isset( $_GET['post'] ) || 'docs' !== get_post_type( absint( $_GET['post'] ) ) ) {
+        if ( ! isset( $_GET['post'] ) || ! is_numeric( $_GET['post'] ) || 'docs' !== get_post_type( absint( $_GET['post'] ) ) ) {
 			return $all_caps;
 		}
 
