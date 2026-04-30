@@ -1,4 +1,5 @@
 import { __ } from '@wordpress/i18n';
+import { applyFilters } from '@wordpress/hooks';
 import Switcher from '../Switcher';
 import Badge from '../ProPreviews/common/Badge';
 import { useEffect, useState } from '@wordpress/element';
@@ -26,6 +27,44 @@ const GeneralSettings = ( {
       ...generalSettingsData,
     } );
   }, [ generalSettingsData ] );
+
+  const renderUrlStructureDescription = () => {
+    const siteUrl = (window.weDocsAdminVars?.siteUrl || '/').replace(/\/$/, '');
+    const isProLoaded = applyFilters('wedocs_pro_loaded', false);
+    const activeStructure = generalSettings?.docs_url_structure === 'after_doc' ? 'after_doc' : 'before_doc';
+    const beforeDocUrl = `${siteUrl}/docs/{doc}/{section}/{article}/`;
+    const afterDocUrl = `${siteUrl}/{doc}/docs/{section}/{article}/`;
+
+    if (isProLoaded) {
+      return (
+        <span className="block">
+          {activeStructure === 'after_doc'
+            ? __('After Doc: ', 'wedocs')
+            : __('Before Doc: ', 'wedocs')}
+          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+            {activeStructure === 'after_doc' ? afterDocUrl : beforeDocUrl}
+          </code>
+        </span>
+      );
+    }
+
+    return (
+      <>
+        <span className="block">
+          {__('Before Doc: ', 'wedocs')}
+          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+            {beforeDocUrl}
+          </code>
+        </span>
+        <span className="block mt-2">
+          {__('After Doc: ', 'wedocs')}
+          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+            {afterDocUrl}
+          </code>
+        </span>
+      </>
+    );
+  };
 
   return (
       <section>
@@ -85,11 +124,11 @@ const GeneralSettings = ( {
                   <label className="block text-sm font-medium text-gray-600">
                     {__('Docs URL Structure', 'wedocs')}
                   </label>
-                  {!wp.hooks.applyFilters('wedocs_pro_loaded', false) && (
+                  {!applyFilters('wedocs_pro_loaded', false) && (
                     <Badge
                       classes="opacity-100"
                       heading={__('Pro Feature', 'wedocs')}
-                      description={__('Upload screenshots for AI to analyze when generating documentation', 'wedocs')}
+                      description={__('Control how documentation URLs and breadcrumbs will be structured', 'wedocs')}
                     />
                   )}
                   <div
@@ -116,7 +155,7 @@ const GeneralSettings = ( {
                   </div>
                 </div>
                 <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
-                  {wp.hooks.applyFilters(
+                  {applyFilters(
                       'wedocs_general_settings_docs_url_structure_field',
                       (
                           <PreviewDropdown
@@ -145,43 +184,7 @@ const GeneralSettings = ( {
               </div>
               <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
                 <p className="text-sm text-[#6B7280]">
-                  {(() => {
-                    const siteUrl = (window.weDocsAdminVars?.siteUrl || '/').replace(/\/$/, '');
-                    const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
-                    const activeStructure = generalSettings?.docs_url_structure === 'after_doc' ? 'after_doc' : 'before_doc';
-                    const beforeDocUrl = `${siteUrl}/docs/{doc}/{section}/{article}/`;
-                    const afterDocUrl = `${siteUrl}/{doc}/docs/{section}/{article}/`;
-
-                    if (isProLoaded) {
-                      return (
-                        <span className="block">
-                          {activeStructure === 'after_doc'
-                            ? __('After Doc: ', 'wedocs')
-                            : __('Before Doc: ', 'wedocs')}
-                          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
-                            {activeStructure === 'after_doc' ? afterDocUrl : beforeDocUrl}
-                          </code>
-                        </span>
-                      );
-                    }
-
-                    return (
-                      <>
-                        <span className="block">
-                          {__('Before Doc: ', 'wedocs')}
-                          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
-                            {beforeDocUrl}
-                          </code>
-                        </span>
-                        <span className="block mt-2">
-                          {__('After Doc: ', 'wedocs')}
-                          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
-                            {afterDocUrl}
-                          </code>
-                        </span>
-                      </>
-                    );
-                  })()}
+                  {renderUrlStructureDescription()}
                   <span className="block mt-2">
                     {__(
                         'Changing this structure updates URLs and breadcrumbs for all docs. Previous URLs will automatically redirect (301).',

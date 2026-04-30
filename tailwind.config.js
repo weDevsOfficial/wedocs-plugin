@@ -1,12 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-import {
-import { createRequire } from 'module';
-
-const require = createRequire(import.meta.url);
-
+const {
   scopedPreflightStyles,
   isolateInsideOfContainer,
-} from 'tailwindcss-scoped-preflight';
+} = require('tailwindcss-scoped-preflight');
 
 const rootClass = '.wedocs-document'; //We will use this class to scope the styles.
 
