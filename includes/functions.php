@@ -202,9 +202,7 @@ if ( !function_exists( 'wedocs_breadcrumbs' ) ) {
         $html .= wedocs_get_breadcrumb_item( $args['home'], home_url( '/' ), $breadcrumb_position );
         $html .= $args['delimiter'];
 
-        $last_index = count( $trail ) - 1;
-
-        foreach ( $trail as $index => $crumb ) {
+        foreach ( $trail as $crumb ) {
             if ( 'current' === $crumb['type'] ) {
                 $html .= ' ' . $args['before'] . $crumb['title'] . $args['after'];
                 continue;
@@ -215,10 +213,7 @@ if ( !function_exists( 'wedocs_breadcrumbs' ) ) {
 
             // Preserve the existing whitespace quirk for ancestor delimiters (not the hub).
             $delimiter = 'doc_ancestor' === $crumb['type'] ? ' ' . $args['delimiter'] . ' ' : $args['delimiter'];
-
-            if ( $index !== $last_index ) {
-                $html .= $delimiter;
-            }
+            $html .= $delimiter;
         }
 
         $html .= '</ol>';
