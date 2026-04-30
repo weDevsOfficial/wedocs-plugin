@@ -242,29 +242,12 @@ if (!function_exists('get_breadcrumb_items')) {
     if (is_singular('docs')) {
         global $post;
 
-        // Add Docs home page link if configured.
-        $docs_home = wedocs_get_general_settings( 'docs_home' );
-        if ( $docs_home ) {
+        foreach ( wedocs_get_doc_breadcrumb_trail( $post ) as $crumb ) {
             $breadcrumbs[] = [
-                'title' => __('Docs', 'wedocs'),
-                'url' => get_permalink( $docs_home )
+                'title' => $crumb['title'],
+                'url'   => $crumb['url'],
             ];
         }
-
-        // Add parent docs
-        $parent_docs = get_doc_ancestors($post);
-        foreach ($parent_docs as $parent) {
-            $breadcrumbs[] = [
-                'title' => wedocs_apply_short_content( $parent->post_title, 25 ),
-                'url' => get_permalink($parent->ID)
-            ];
-        }
-
-        // Add current doc (no URL for current page)
-        $breadcrumbs[] = [
-            'title' => $post->post_title,
-            'url' => null
-        ];
     } elseif (is_post_type_archive('docs')) {
         $breadcrumbs[] = [
             'title' => __('Documentation', 'wedocs'),
