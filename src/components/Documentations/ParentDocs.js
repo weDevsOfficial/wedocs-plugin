@@ -75,7 +75,7 @@ const ParentDocs = ( { doc } ) => {
           <div className="inline-flex items-center space-x-3">
             <div className="flex items-center space-x-3 flex-1 group">
               <div
-                className="tooltip cursor-pointer before:max-w-xl z-[0]"
+                className="cursor-pointer before:max-w-xl z-[0]"
                 data-tip={ he.decode( __( doc?.title?.rendered, 'wedocs' ) ) }
               >
                 <Link to={ `/section/${ doc.id }` }>
@@ -85,6 +85,11 @@ const ParentDocs = ( { doc } ) => {
                       __html: extractedTitle( doc?.title?.rendered, doc.status !== 'publish' ? 12 : 20 ),
                     } }
                   ></h3>
+                { doc?.meta?._is_vendor_doc === '1' && (
+                  <div className="docs-vendor-status text-xs text-indigo-700 leading-5 bg-indigo-100 rounded-[42px] py-0.5 px-2.5 mr-1.5">
+                    { __( 'Vendor Doc', 'wedocs' ) }
+                  </div>
+                ) }
                 </Link>
               </div>
             </div>
