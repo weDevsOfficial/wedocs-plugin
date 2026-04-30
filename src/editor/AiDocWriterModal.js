@@ -35,6 +35,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
     const [generatedContent, setGeneratedContent] = useState('');
     const [showPreview, setShowPreview] = useState(false);
     const [error, setError] = useState('');
+    const [images, setImages] = useState([]);
 
     // WordPress editor dispatch hooks
     const { insertBlocks, replaceBlocks, insertDefaultBlock } = useDispatch(blockEditorStore);
@@ -234,7 +235,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
 
             // Use AI service to generate content
             let systemPrompt = __(
-                'You are a professional documentation writer. Generate comprehensive, well-structured documentation content using HTML tags. Use proper heading hierarchy (h2, h3, etc.) and wrap all content in paragraph tags. Highlight important terms with <span class="highlight"> tags. IMPORTANT: Only return the content body without HTML document structure (no <!DOCTYPE>, <html>, <head>, <style>, or <body> tags). Return only the content that should be inserted into the document.',
+                'You are an expert documentation writer capable of producing professional content across various documentation types — including technical docs, user guides, knowledge bases, policy documents, onboarding guides, changelogs, FAQs, marketing content, and general informational articles.\n\nCONTENT GUIDELINES:\nWrite comprehensive, in-depth documentation. Each section should have multiple detailed paragraphs with explanations, context, and practical guidance.\nAdapt your writing style, tone, and depth to match the type of documentation the user is creating. Infer the documentation type from the title, keywords, and user instructions provided.\nFor technical documentation: use precise technical language, include step-by-step instructions, reference UI elements accurately, cover configuration options, and include troubleshooting or FAQ sections where appropriate.\nFor non-technical documentation: use a clear, accessible tone appropriate to the audience. Focus on readability, logical flow, and practical value. Avoid unnecessary jargon unless the subject requires it.\nUse real-world examples, practical guidance, and detailed explanations — never write surface-level or placeholder content.\nAim for a minimum of 800-1200 words depending on topic complexity. Prioritize depth and completeness.\n\nFORMATTING RULES:\nUse HTML tags only. Use proper heading hierarchy starting from h2 (h2 for main sections, h3 for subsections, h4 for sub-subsections).\nWrap all body text in <p> tags.\nUse <span class="highlight"> to emphasize important terms, key concepts, and action words.\nUse <ul> or <ol> lists where appropriate for steps, features, or options.\nUse <strong> for important labels, names, or terms that need emphasis.\nUse <code> tags for any technical values, shortcodes, file names, or code references when the content is technical in nature. Do not use <code> tags in non-technical content.\nIMPORTANT: Only return the inner content body. Do NOT include <!DOCTYPE>, <html>, <head>, <style>, or <body> tags. Return only the content meant to be inserted into the document.\nIMPORTANT: Do NOT return any image tags (<img>), image placeholders, or image references. Your output is text and HTML markup only.\n\nSCREENSHOT ANALYSIS (when provided):\nIf the user attaches screenshots, analyze them carefully to understand the visual context — this could be UI states, layouts, workflows, diagrams, charts, designs, or any other visual reference.\nUse this visual context to write accurate content that reflects what is shown. For UI screenshots, reference specific field names, button labels, section titles, and layout details. For non-UI screenshots, describe and incorporate the relevant visual information as appropriate.\nDo NOT attempt to embed or reference the screenshots in your output. Use them solely as context to improve content accuracy.\n\nUSER INSTRUCTIONS:\nThe user will provide specific instructions on what to generate. Always follow the user\'s instructions as the primary directive for what content to produce, what tone to use, and what scope to cover. The user\'s instructions override any default assumptions about content type or style.',
                 'wedocs'
             );
 
@@ -249,21 +250,28 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
                 enhancedPrompt = `${existingContentContext}\n\n${prompt}`;
                 
                 systemPrompt += ' ' + __(
-                    'Consider the existing document content provided above to maintain consistency and avoid duplication.',
+                    'EXISTING CONTENT CONTEXT: The existing document content is provided above. Use it as reference context to understand what has already been documented, the writing style, tone, terminology, and structure in use. Match the content type and style of the existing document — whether it is technical, informational, policy-based, or any other format. Follow the user\'s instructions to determine what action to take — whether that is rewriting, adding, updating, correcting, or expanding the content. If screenshots are attached, use them to understand the current context and apply that visual information according to the user\'s instructions. Do not make assumptions about what to add, remove, or change beyond what the user has instructed.',
                     'wedocs'
                 );
             }
 
             const selectedModel = aiSettings.providers[aiSettings.default_provider].selected_model;
 
-                const result = await aiService.generateContent(enhancedPrompt, {
-                    provider: aiSettings.default_provider,
-                    model: selectedModel,
-                    feature: 'ai_doc_writer',
-                    systemPrompt: systemPrompt,
-                    maxTokens: 2000,
-                    temperature: 0.7
-                });
+            // Prepare images for the API (only send filename and id).
+            const imagePayload = images.map(img => ({
+                filename: img.filename,
+                id: img.id,
+            }));
+
+            const result = await aiService.generateContent(enhancedPrompt, {
+                provider: aiSettings.default_provider,
+                model: selectedModel,
+                feature: 'ai_doc_writer',
+                systemPrompt: systemPrompt,
+                maxTokens: 2000,
+                temperature: 0.7,
+                images: imagePayload,
+            });
 
 
                 if (!result.content) {
@@ -418,6 +426,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
         setShowPreview(false);
         setGeneratedContent('');
         setError('');
+        setImages([]);
         onClose();
     };
 
@@ -462,6 +471,27 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
                                     help={__('Instructions are automatically generated from your title and keywords. You can edit them manually if needed.', 'wedocs')}
                                     __nextHasNoMarginBottom
                                 />
+
+                                {/**
+                                 * Filter: wedocs_ai_doc_writer_modal_fields
+                                 *
+                                 * Allows Pro and other extensions to add fields to the AI Doc Writer modal.
+                                 * Used for adding image upload functionality in Pro version.
+                                 *
+                                 * @since 2.2.0
+                                 *
+                                 * @param {null}     content      Default content (null).
+                                 * @param {Object}   modalState   Current modal state including title, keywords, prompt, images.
+                                 * @param {Object}   stateSetters Object containing state setter functions.
+                                 * @param {Object}   aiSettings   AI settings from weDocsEditorVars.
+                                 */}
+                                {wp.hooks.applyFilters(
+                                    'wedocs_ai_doc_writer_modal_fields',
+                                    null,
+                                    { title, keywords, prompt, images },
+                                    { setImages },
+                                    window.weDocsEditorVars?.aiSettings || {}
+                                )}
 
                                 <ToggleControl
                                     label={__('Use existing post content', 'wedocs')}
