@@ -1,64 +1,60 @@
 /**
  * AI Settings Component
- * 
+ *
  * Centralized AI Control Settings panel for weDocs that allows admins to configure
  * and manage API integrations with multiple AI providers.
- * 
+ *
  * Available WordPress Filters:
- * 
+ *
  * @filter wedocs_ai_provider_configs
  * Allows customization of AI provider configurations including available models.
  * Used in the settings UI to display provider options and model selections.
- * 
- * @filter wedocs_ai_service_providers  
+ *
+ * @filter wedocs_ai_service_providers
  * Allows customization of AI service provider configurations for the AI service utility.
  * Used for API calls and provider management in the backend.
- * 
+ *
  * @since 2.0.0
  */
 
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect, useCallback, Fragment } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { Listbox, Transition } from '@headlessui/react';
+import { Listbox, Transition, Switch } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon, ArrowPathIcon } from '@heroicons/react/20/solid';
 import AiImageAnalysisPreview from '../ProPreviews/AiImageAnalysisPreview';
+import Overlay from '../ProPreviews/common/Overlay';
 
-const AiSettings = ({
-    settingsData,
-    aiSettingsData,
-    setSettings,
-}) => {
-    // Get centralized provider configs from wedocs_get_ai_provider_configs() PHP function
-    // This ensures consistency across all AI features and settings
+const AiSettings = ({ settingsData, aiSettingsData, setSettings }) => {
     const getProviderConfigs = () => {
         const configs = window.weDocsAdminVars?.aiProviderConfigs || {};
         const providers = {};
-        
-        // Generate settings from centralized configs
-        Object.keys(configs).forEach(providerKey => {
+
+        Object.keys(configs).forEach((providerKey) => {
             const provider = configs[providerKey];
-            const modelKeys = Object.keys(provider.models);
-            const firstModel = modelKeys[0]; // Use first model as default
-            
+            const safeModels =
+                typeof provider?.models === 'object' && provider.models !== null
+                    ? provider.models
+                    : {};
+            const modelKeys = Object.keys(safeModels);
+            const firstModel = modelKeys[0] || '';
+
             providers[providerKey] = {
                 api_key: '',
                 models: modelKeys,
-                selected_model: firstModel
+                selected_model: firstModel,
             };
-            
         });
 
         return providers;
     };
 
-    // Get default provider and model from centralized config
     const getDefaultProviderAndModel = () => {
         const providers = getProviderConfigs();
         const providerKeys = Object.keys(providers);
         const defaultProvider = providerKeys[0] || 'openai';
         const defaultModel = providers[defaultProvider]?.selected_model || 'gpt-4o-mini';
-        
+
         return { defaultProvider, defaultModel };
     };
 
@@ -186,72 +182,6 @@ const AiSettings = ({
         return providerConfigs;
     };
 
-    // Handler for image analysis setting changes.
-    const handleImageAnalysisChange = (field, value) => {
-        const updatedSettings = {
-            ...aiSettings,
-            image_analysis: {
-                ...aiSettings.image_analysis,
-                [field]: value,
-            },
-        };
-
-        setAiSettings(updatedSettings);
-        setSettings({
-            ...settingsData,
-            ai: updatedSettings,
-        });
-    };
-
-    let providerConfigs = getProviderConfigsForUI();
-
-    /**
-     * Filter: wedocs_ai_provider_configs
-     * 
-     * Allows customization of AI provider configurations including available models.
-     * 
-     * @param {Object} providerConfigs - The provider configurations object
-     * @param {Object} providerConfigs.openai - OpenAI configuration
-     * @param {string} providerConfigs.openai.name - Provider display name
-     * @param {Array} providerConfigs.openai.models - Available models array
-     * @param {Object} providerConfigs.anthropic - Anthropic configuration
-     * @param {Object} providerConfigs.google - Google Gemini configuration
-     * 
-     * @example
-     * // Add a new model to OpenAI
-     * wp.hooks.addFilter('wedocs_ai_provider_configs', 'my-plugin', function(configs) {
-     *     configs.openai.models.push({
-     *         value: 'gpt-4-turbo',
-     *         label: 'GPT-4 Turbo'
-     *     });
-     *     return configs;
-     * });
-     * 
-     * @example
-     * // Add a completely new provider
-     * wp.hooks.addFilter('wedocs_ai_provider_configs', 'my-plugin', function(configs) {
-     *     configs.custom_provider = {
-     *         name: 'Custom AI Provider',
-     *         models: [
-     *             { value: 'custom-model-1', label: 'Custom Model 1' },
-     *             { value: 'custom-model-2', label: 'Custom Model 2' }
-     *         ]
-     *     };
-     *     return configs;
-     * });
-     * 
-     * @since 2.0.0
-     */
-    providerConfigs = wp.hooks.applyFilters('wedocs_ai_provider_configs', providerConfigs);
-
-
-    useEffect(() => {
-        setAiSettings({
-            ...aiSettings,
-            ...aiSettingsData
-        });
-    }, [aiSettingsData]);
-
     const handleProviderChange = (providerKey, field, value) => {
         const updatedSettings = {
             ...aiSettings,
@@ -284,20 +214,93 @@ const AiSettings = ({
         });
     };
 
+    const handleFeatureToggle = (feature, value) => {
+        const updatedSettings = {
+            ...aiSettings,
+            features: {
+                ...aiSettings.features,
+                [feature]: {
+                    ...aiSettings.features?.[feature],
+                    enabled: value,
+                },
+            },
+        };
+
+        setAiSettings(updatedSettings);
+        setSettings({
+            ...settingsData,
+            ai: updatedSettings,
+        });
+    };
+
+    const handleSummaryModeChange = (mode) => {
+        const updatedSettings = {
+            ...aiSettings,
+            features: {
+                ...aiSettings.features,
+                ai_summaries: {
+                    ...aiSettings.features?.ai_summaries,
+                    display_mode: mode,
+                },
+            },
+        };
+        setAiSettings(updatedSettings);
+        setSettings({ ...settingsData, ai: updatedSettings });
+    };
+
+    // Handler for image analysis setting changes.
+    const handleImageAnalysisChange = (field, value) => {
+        const updatedSettings = {
+            ...aiSettings,
+            image_analysis: {
+                ...aiSettings.image_analysis,
+                [field]: value,
+            },
+        };
+
+        setAiSettings(updatedSettings);
+        setSettings({
+            ...settingsData,
+            ai: updatedSettings,
+        });
+    };
 
     const maskApiKey = (key) => {
         if (!key) return '';
         if (key.length <= 8) return key;
-        
-        // Show first 4 and last 4 characters, fill middle with asterisks
-        // Maximum 15 characters total: 4 + 17 asterisks + 4 = 25
+
         const firstPart = key.substring(0, 4);
         const lastPart = key.substring(key.length - 4);
-        const middleAsterisks = '*'.repeat(17); // Always 7 asterisks for consistent length
-        
+        const middleAsterisks = '*'.repeat(17);
+
         return firstPart + middleAsterisks + lastPart;
     };
 
+    let providerConfigs = getProviderConfigsForUI();
+
+    /**
+     * Filter: wedocs_ai_provider_configs
+     *
+     * Allows customization of AI provider configurations including available models.
+     *
+     * @param {Object} providerConfigs - The provider configurations object
+     * @since 2.0.0
+     */
+    providerConfigs = wp.hooks.applyFilters(
+        'wedocs_ai_provider_configs',
+        providerConfigs
+    );
+
+    useEffect(() => {
+        setAiSettings({
+            ...aiSettings,
+            ...aiSettingsData,
+        });
+    }, [aiSettingsData]);
+
+    const isPro = !!window.weDocsAdminVars?.pro_active;
+    const [showSummaryOverlay, setShowSummaryOverlay] = useState(false);
+    const hasApiKey = !!aiSettings.providers[aiSettings.default_provider]?.api_key;
 
     // Custom AI Provider Select Component
     const AiProviderSelect = ({ value, onChange, options }) => {
@@ -322,10 +325,7 @@ const AiSettings = ({
                             <Listbox.Button className="relative w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
                                 <span className="block truncate">{selectedProvider?.label}</span>
                                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                    <ChevronDownIcon
-                                        className="h-5 w-5 text-gray-400"
-                                        aria-hidden="true"
-                                    />
+                                    <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                                 </span>
                             </Listbox.Button>
                             <Transition
@@ -347,19 +347,11 @@ const AiSettings = ({
                                         >
                                             {({ selected, active }) => (
                                                 <>
-                                                    <span
-                                                        className={`block truncate ${
-                                                            selected ? 'font-semibold' : 'font-normal'
-                                                        }`}
-                                                    >
+                                                    <span className={`block truncate ${selected ? 'font-semibold' : 'font-normal'}`}>
                                                         {option?.label}
                                                     </span>
                                                     {selected && (
-                                                        <span
-                                                            className={`absolute inset-y-0 right-0 flex items-center pr-4 ${
-                                                                active ? 'text-white' : 'text-indigo-600'
-                                                            }`}
-                                                        >
+                                                        <span className={`absolute inset-y-0 right-0 flex items-center pr-4 ${active ? 'text-white' : 'text-indigo-600'}`}>
                                                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                                         </span>
                                                     )}
@@ -433,19 +425,11 @@ const AiSettings = ({
                                         >
                                             {({ selected, active }) => (
                                                 <>
-                                                    <span
-                                                        className={`block truncate ${
-                                                            selected ? 'font-semibold' : 'font-normal'
-                                                        }`}
-                                                    >
+                                                    <span className={`block truncate ${selected ? 'font-semibold' : 'font-normal'}`}>
                                                         {option?.label}
                                                     </span>
                                                     {selected && (
-                                                        <span
-                                                            className={`absolute inset-y-0 right-0 flex items-center pr-4 ${
-                                                                active ? 'text-white' : 'text-indigo-600'
-                                                            }`}
-                                                        >
+                                                        <span className={`absolute inset-y-0 right-0 flex items-center pr-4 ${active ? 'text-white' : 'text-indigo-600'}`}>
                                                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                                         </span>
                                                     )}
@@ -499,12 +483,7 @@ const AiSettings = ({
                                             'wedocs'
                                         )}
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="18"
-                                            height="18"
-                                            fill="none"
-                                        >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none">
                                             <path
                                                 d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
                                                 stroke="#6b7280"
@@ -553,12 +532,7 @@ const AiSettings = ({
                                             'wedocs'
                                         )}
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="18"
-                                            height="18"
-                                            fill="none"
-                                        >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none">
                                             <path
                                                 d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
                                                 stroke="#6b7280"
@@ -610,12 +584,7 @@ const AiSettings = ({
                                             'wedocs'
                                         )}
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="18"
-                                            height="18"
-                                            fill="none"
-                                        >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none">
                                             <path
                                                 d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
                                                 stroke="#6b7280"
@@ -668,10 +637,10 @@ const AiSettings = ({
                          *
                          * @since 2.2.0
                          *
-                         * @param {null}     content                 Default content (null).
-                         * @param {Object}   aiSettings              Current AI settings state.
+                         * @param {null}     content                  Default content (null).
+                         * @param {Object}   aiSettings               Current AI settings state.
                          * @param {Function} handleImageAnalysisChange Handler for image analysis setting changes.
-                         * @param {Object}   providerConfigs         Provider configurations with model info.
+                         * @param {Object}   providerConfigs          Provider configurations with model info.
                          */}
                         {wp.hooks.applyFilters(
                             'wedocs_ai_settings_after_model',
@@ -699,12 +668,7 @@ const AiSettings = ({
                                                 'wedocs'
                                             )}
                                         >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="18"
-                                                height="18"
-                                                fill="none"
-                                            >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none">
                                                 <path
                                                     d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
                                                     stroke="#6b7280"
@@ -751,6 +715,145 @@ const AiSettings = ({
                                 </div>
                             </div>
                         )}
+
+                        {/* AI Doc Summary — PRO feature */}
+                        <div
+                            className="col-span-4 relative"
+                            onMouseEnter={() => !isPro && setShowSummaryOverlay(true)}
+                            onMouseLeave={() => setShowSummaryOverlay(false)}
+                        >
+                            <hr className="h-px !bg-gray-200 border-0 dark:!bg-gray-200 mb-5" />
+                            <div className="settings-content flex items-center justify-between">
+                                <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+                                    <label className="block text-sm font-medium text-gray-600">
+                                        {__('Enable AI Doc Summary', 'wedocs')}
+                                    </label>
+                                    <div
+                                        className="tooltip cursor-pointer ml-2 z-[9999]"
+                                        data-tip={__(
+                                            'Show a collapsible AI-generated summary on each doc page. Requires an API key.',
+                                            'wedocs'
+                                        )}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none">
+                                            <path
+                                                d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                                                stroke="#6b7280"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+                                    <div className={`flex items-center ${!hasApiKey ? 'opacity-50 pointer-events-none' : ''}`}>
+                                        <Switch
+                                            checked={!!aiSettings.features?.ai_summaries?.enabled}
+                                            onChange={(val) => handleFeatureToggle('ai_summaries', val)}
+                                            disabled={!hasApiKey || !isPro}
+                                            aria-label="Toggle AI document summaries"
+                                            className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer outline-0 items-center justify-center rounded-full"
+                                        >
+                                            <span aria-hidden="true" className="pointer-events-none absolute h-full w-full rounded-md bg-white" />
+                                            <span
+                                                aria-hidden="true"
+                                                className={`pointer-events-none absolute mx-auto h-4 w-9 rounded-full transition-colors duration-200 ease-in-out ${
+                                                    !!aiSettings.features?.ai_summaries?.enabled ? 'bg-indigo-600' : 'bg-gray-200'
+                                                }`}
+                                            />
+                                            <span
+                                                aria-hidden="true"
+                                                className={`pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out ${
+                                                    !!aiSettings.features?.ai_summaries?.enabled ? 'translate-x-5' : 'translate-x-0'
+                                                }`}
+                                            />
+                                        </Switch>
+                                        <span className="ml-3 text-sm text-gray-900">
+                                            {!!aiSettings.features?.ai_summaries?.enabled
+                                                ? __('Enable', 'wedocs')
+                                                : __('Disable', 'wedocs')}
+                                        </span>
+                                    </div>
+                                    {!hasApiKey && isPro && (
+                                        <p className="text-xs text-amber-600 mt-1">
+                                            {__('Add an API key above to enable AI Doc Summary.', 'wedocs')}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
+                                <p className="text-sm text-[#6B7280]">
+                                    {__('When enabled, readers can expand a collapsible AI summary on any doc page.', 'wedocs')}
+                                </p>
+                            </div>
+
+                            {/* Default Display Mode */}
+                            <div className="settings-content flex items-center justify-between mt-5">
+                                <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+                                    <label className="block text-sm font-medium text-gray-600">
+                                        {__('Default Display Mode', 'wedocs')}
+                                    </label>
+                                    <div
+                                        className="tooltip cursor-pointer ml-2 z-[9999]"
+                                        data-tip={__('Force all docs to use a specific presentation mode.', 'wedocs')}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none">
+                                            <path
+                                                d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                                                stroke="#6b7280"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+                                    <div className="flex items-center gap-4">
+                                        {[
+                                            { value: 'summary', label: __('Summary only', 'wedocs') },
+                                            { value: 'highlights', label: __('Highlights only', 'wedocs') },
+                                        ].map((opt) => {
+                                            const isSelected = (aiSettings.features?.ai_summaries?.display_mode || 'summary') === opt.value;
+                                            return (
+                                                <label
+                                                    key={opt.value}
+                                                    className={`flex items-center gap-2 cursor-pointer text-sm ${
+                                                        isSelected ? 'text-gray-900 font-medium' : 'text-gray-600'
+                                                    } ${!isPro || !hasApiKey ? 'opacity-50 pointer-events-none' : ''}`}
+                                                >
+                                                    <span
+                                                        className={`relative inline-flex items-center justify-center h-4 w-4 rounded-full border-2 flex-shrink-0 transition-colors duration-150 ${
+                                                            isSelected ? 'border-indigo-600' : 'border-gray-300'
+                                                        }`}
+                                                    >
+                                                        {isSelected && <span className="h-2 w-2 rounded-full bg-indigo-600" />}
+                                                    </span>
+                                                    <input
+                                                        type="radio"
+                                                        name="ai_summaries_display_mode"
+                                                        value={opt.value}
+                                                        checked={isSelected}
+                                                        onChange={() => handleSummaryModeChange(opt.value)}
+                                                        disabled={!isPro || !hasApiKey}
+                                                        className="sr-only"
+                                                    />
+                                                    {opt.label}
+                                                </label>
+                                            );
+                                        })}
+                                    </div>
+                                    <p className="text-xs text-[#6B7280] mt-1">
+                                        {__('Force all docs to use a specific mode if needed.', 'wedocs')}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <Overlay
+                                classes={`${showSummaryOverlay ? 'flex items-center justify-center' : 'hidden'}`}
+                            />
+                        </div>
 
                         {/* Show Pro preview when Pro is not loaded */}
                         {!wp.hooks.applyFilters('wedocs_pro_loaded', false) && (
