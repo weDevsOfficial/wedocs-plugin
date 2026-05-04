@@ -947,6 +947,28 @@ function wedocs_is_pro_active() {
 }
 
 /**
+ * Get the meta_query clauses to exclude vendor docs from queries
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @return array
+ */
+function wedocs_exclude_vendor_doc_meta_query() {
+    return array(
+        'relation' => 'OR',
+        array(
+            'key'     => '_is_vendor_doc',
+            'value'   => '1',
+            'compare' => '!=',
+        ),
+        array(
+            'key'     => '_is_vendor_doc',
+            'compare' => 'NOT EXISTS',
+        ),
+    );
+}
+
+/**
  * Get the upgrade popup content for Free to Pro promotion.
  *
  * This function provides the default content for the upgrade popup and allows
@@ -984,7 +1006,7 @@ function wedocs_get_upgrade_popup_content() {
 			),
 			array(
 				'title'       => '',
-				'description' => sprintf(
+				'description' => sprintf( 
 					/* translators: Full sentence combining: Customize with design widgets, colors, and pre-built options for an appealing interface. */
 					__( '%1$s %2$s %3$s', 'wedocs' ),
 					__( 'Customize with', 'wedocs' ),
@@ -1031,7 +1053,7 @@ function wedocs_get_upgrade_popup_content() {
 	 *     $content['subtitle'] = 'Get 30% OFF weDocs Pro - Limited Time!';
 	 *     $content['button_text'] = 'Claim Your Discount Now';
 	 *     $content['button_url'] = 'https://wedocs.co/pricing/?discount=CAMPAIGN30';
-	 *
+	 *     
 	 *     // Update features
 	 *     $content['features'] = array(
 	 *         array(
@@ -1055,7 +1077,7 @@ function wedocs_get_upgrade_popup_content() {
 	 *             'description' => '',
 	 *         ),
 	 *     );
-	 *
+	 *     
 	 *     return $content;
 	 * } );
 	 */

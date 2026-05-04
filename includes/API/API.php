@@ -738,10 +738,11 @@ class API extends WP_REST_Controller {
      * @return mixed
      */
     public function get_helpful_docs() {
-        // Get all docs.
+        // Get all docs, excluding vendor-only docs.
         $args = array(
             'post_type'      => 'docs',
-            'posts_per_page' => -1 // Retrieve all docs.
+            'posts_per_page' => -1,
+            'meta_query'     => wedocs_exclude_vendor_doc_meta_query(),
         );
 
         $docs = get_posts( $args );
@@ -787,10 +788,16 @@ class API extends WP_REST_Controller {
         $args = array(
             'post_type'      => 'docs',
             'post_status'    => 'publish',
-            'meta_key'       => 'wedocs_contributors',
-            'meta_value'     => '',
-            'meta_compare'   => '!=',
             'posts_per_page' => -1,
+            'meta_query'     => array(
+                'relation' => 'AND',
+                array(
+                    'key'     => 'wedocs_contributors',
+                    'value'   => '',
+                    'compare' => '!=',
+                ),
+                wedocs_exclude_vendor_doc_meta_query(),
+            ),
         );
 
         $docs         = get_posts( $args );

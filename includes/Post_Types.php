@@ -20,6 +20,11 @@ class Post_Types {
     public function __construct() {
         add_action( 'init', [ $this, 'register_post_type' ] );
         add_action( 'init', [ $this, 'register_taxonomy' ] );
+        add_action( 'init', [ $this, 'register_post_meta' ] );
+
+        // Propagate _is_vendor_doc meta to descendants.
+        add_action( 'rest_after_insert_docs', [ $this, 'inherit_vendor_doc_meta' ], 10, 2 );
+        add_action( 'updated_postmeta', [ $this, 'propagate_vendor_doc_meta' ], 10, 4 );
     }
 
     /**
@@ -53,7 +58,7 @@ class Post_Types {
 
         $args = array(
             'labels'              => $labels,
-            'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'comments', 'elementor'),
+            'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'comments', 'elementor', 'custom-fields'),
             'hierarchical'        => true,
             'public'              => true,
             'show_ui'             => true,
@@ -124,5 +129,91 @@ class Post_Types {
         ];
 
         register_taxonomy( 'doc_tag', [ 'docs' ], $args );
+    }
+
+    /**
+     * Register post meta fields for the docs post type.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function register_post_meta() {
+        register_post_meta( $this->post_type, '_is_vendor_doc', [
+            'show_in_rest'  => true,
+            'single'        => true,
+            'type'          => 'string',
+            'default'       => '0',
+            'auth_callback' => function () {
+                return current_user_can( 'edit_docs' );
+            },
+        ] );
+    }
+
+    /**
+     * Inherit _is_vendor_doc meta from root ancestor when a doc is created via REST.
+     *
+     * When a section or article is created under a vendor doc tree, it should
+     * automatically inherit the vendor doc flag from its root ancestor.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param \WP_Post         $post    Inserted or updated post object.
+     * @param \WP_REST_Request $request Request object.
+     *
+     * @return void
+     */
+    public function inherit_vendor_doc_meta( $post, $request ) {
+        if ( empty( $post->post_parent ) ) {
+            return;
+        }
+
+        $ancestors = get_post_ancestors( $post->ID );
+        $root_id   = ! empty( $ancestors ) ? end( $ancestors ) : $post->post_parent;
+        $is_vendor = get_post_meta( $root_id, '_is_vendor_doc', true );
+
+        if ( '1' === $is_vendor ) {
+            update_post_meta( $post->ID, '_is_vendor_doc', '1' );
+        }
+    }
+
+    /**
+     * Propagate _is_vendor_doc meta changes to all descendants.
+     *
+     * When a root doc is marked or unmarked as a vendor doc, all its
+     * sections and articles should receive the same meta value.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param int    $meta_id    ID of the metadata entry.
+     * @param int    $post_id    Post ID.
+     * @param string $meta_key   Metadata key.
+     * @param mixed  $meta_value Metadata value.
+     *
+     * @return void
+     */
+    public function propagate_vendor_doc_meta( $meta_id, $post_id, $meta_key, $meta_value ) {
+        if ( '_is_vendor_doc' !== $meta_key ) {
+            return;
+        }
+
+        if ( 'docs' !== get_post_type( $post_id ) ) {
+            return;
+        }
+
+        $descendants = wedocs_get_posts_children( $post_id, 'docs' );
+
+        if ( empty( $descendants ) ) {
+            return;
+        }
+
+        // Temporarily unhook to prevent recursive triggers.
+        remove_action( 'updated_postmeta', [ $this, 'propagate_vendor_doc_meta' ], 10 );
+
+        foreach ( $descendants as $descendant ) {
+            update_post_meta( $descendant->ID, '_is_vendor_doc', $meta_value );
+        }
+
+        add_action( 'updated_postmeta', [ $this, 'propagate_vendor_doc_meta' ], 10, 4 );
     }
 }
