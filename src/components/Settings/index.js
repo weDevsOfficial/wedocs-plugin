@@ -5,6 +5,7 @@ import { useEffect, useState } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
 import settingsStore from '../../data/settings';
 import GeneralSettings from './GeneralSettings';
+import GdprSettings from './GdprSettings';
 import AiSettings from './AiSettings';
 import Swal from 'sweetalert2';
 import { __ } from '@wordpress/i18n';
@@ -68,6 +69,12 @@ const SettingsPage = () => {
       index={ selectedIndex }
       settingsData={ docSettings }
       generalSettingsData={ docSettings?.general }
+      setSettings={ setDocSettings }
+    />,
+    <GdprSettings
+      index={ selectedIndex }
+      settingsData={ docSettings }
+      gdprSettingsData={ docSettings?.gdpr }
       setSettings={ setDocSettings }
     />,
     <AiSettings
