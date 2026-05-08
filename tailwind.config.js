@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-const { createRequire } = require( 'module' );
 const {
     scopedPreflightStyles,
     isolateInsideOfContainer,
