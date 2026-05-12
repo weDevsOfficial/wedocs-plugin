@@ -151,6 +151,11 @@ class AbilitiesPolicy {
         $can_edit   = current_user_can( 'edit_post', $doc_id );
         $can_delete = current_user_can( 'delete_post', $doc_id );
 
+        // Summary write operations require both being able to edit this specific
+        // post AND having the global edit_docs capability (e.g. an editor who
+        // lost the role mid-session is denied at both levels).
+        $can_edit_summaries = $can_edit && current_user_can( 'edit_docs' );
+
         $abilities = [
             'read'             => $can_read,
             'edit'             => $can_edit,
@@ -159,8 +164,8 @@ class AbilitiesPolicy {
 
             // AI summary abilities for this specific doc.
             'summary.read'     => $can_read,
-            'summary.save'     => $can_edit && current_user_can( 'edit_docs' ),
-            'summary.delete'   => $can_edit && current_user_can( 'edit_docs' ),
+            'summary.save'     => $can_edit_summaries,
+            'summary.delete'   => $can_edit_summaries,
             // Summary generation shares public access (same as the /generate endpoint).
             'summary.generate' => $can_read,
         ];
@@ -211,7 +216,7 @@ class AbilitiesPolicy {
         }
 
         if ( 'private' === $status ) {
-            return (bool) current_user_can( 'read_private_docs' );
+            return current_user_can( 'read_private_docs' );
         }
 
         // draft, pending, future – editors or the post author.
