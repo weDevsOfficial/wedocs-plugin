@@ -100,6 +100,13 @@ if ( $docs ) {
         <?php } ?>
     </ul>
 
+    <?php
+    // Render FAQ section if enabled.
+    if ( ! empty( $args['show_faq'] ) && $args['show_faq'] === 'on' ) {
+        \WeDevs\WeDocs\Shortcode::wedocs_faq();
+    }
+    ?>
+
     <?php if ( ! empty( $total_pages ) && $total_pages > 1 ) : ?>
         <nav class="wedocs-pagination">
             <?php if ( $current_page > 1 ) : ?>

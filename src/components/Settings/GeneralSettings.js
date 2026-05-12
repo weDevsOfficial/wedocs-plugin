@@ -371,6 +371,52 @@ const GeneralSettings = ( {
                       id="headlessui-listbox-label-15"
                       data-headlessui-state="open"
                   >
+                    {__('Show FAQ on Docs Home', 'wedocs')}
+                  </label>
+                  <div
+                      className="tooltip cursor-pointer ml-2 z-[9999]"
+                      data-tip={__(
+                          'Display the FAQ section on the documentation home page where the [wedocs] shortcode is used',
+                          'wedocs'
+                      )}
+                  >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        fill="none"
+                    >
+                      <path
+                          d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                          stroke="#6b7280"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                  <Switcher
+                      name="show_faq"
+                      settingsPanel={generalSettings}
+                      settingsData={settingsData}
+                      setSettings={setSettings}
+                      panelName={`general`}
+                      isEnabled={generalSettings?.show_faq === 'on'}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="col-span-4">
+              <div className="settings-content flex items-center justify-between">
+                <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
+                  <label
+                      className="block text-sm font-medium text-gray-600"
+                      id="headlessui-listbox-label-15"
+                      data-headlessui-state="open"
+                  >
                     {__('Use Legacy Template', 'wedocs')}
                   </label>
                   <div
