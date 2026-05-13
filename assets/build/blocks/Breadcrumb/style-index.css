@@ -5010,3 +5010,81 @@ video:where(.wedocs-document,.wedocs-document *)
     color: rgb(156 163 175 / var(--tw-placeholder-opacity, 1));
   }
 }
+
+/* Breadcrumb Block Specific Styles */
+.wp-block-wedocs-breadcrumbs {
+  display: block;
+}
+
+/* Block Editor Specific Styles */
+.block-editor-block-list__layout .wp-block-wedocs-breadcrumbs {
+  margin: 0px;
+}
+
+/* Responsive Design Support */
+.wedocs-responsive-wrapper {
+  display: block;
+}
+
+.wedocs-responsive-tabs-group {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.wedocs-active-res-tab {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity, 1));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+/* Breadcrumb Layout Styles */
+.wp-block-wedocs-breadcrumbs.layout-1,
+.wp-block-wedocs-breadcrumbs.layout-2 {
+  display: block;
+}
+
+.wp-block-wedocs-breadcrumbs nav {
+  display: block;
+}
+
+.wp-block-wedocs-breadcrumbs ol,
+.wp-block-wedocs-breadcrumbs li {
+  display: flex;
+  align-items: center;
+}
+
+/* Separator styling */
+.wp-block-wedocs-breadcrumbs .separator {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+/* Home icon styling */
+.wp-block-wedocs-breadcrumbs .home-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* Link styling */
+.wp-block-wedocs-breadcrumbs a {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.wp-block-wedocs-breadcrumbs a:hover {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+}
+
+.wp-block-wedocs-breadcrumbs a[aria-current="page"] {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+  font-weight: 500;
+}
