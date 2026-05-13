@@ -1,26 +1,38 @@
-/** @type {import('tailwindcss').Config} */
-import {
-import { createRequire } from 'module';
+const rootClass = '.wedocs-document';
+const escapedRoot = rootClass.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' );
+const rootDescendantPattern = new RegExp(
+    escapedRoot + '\\s+:is\\(', 'g'
+);
 
-const require = createRequire(import.meta.url);
+/**
+ * PostCSS plugin: For each Tailwind rule scoped as `.wedocs-document :is(.utility)`,
+ * add a matching selector `:is(.wedocs-document.utility)` so utilities also apply
+ * when the element itself is the root `.wedocs-document` container.
+ */
+const scopedRootMatch = () => ( {
+    postcssPlugin: 'wedocs-important-root-match',
+    Rule( rule ) {
+        if ( ! rootDescendantPattern.test( rule.selector ) ) {
+            return;
+        }
+        rootDescendantPattern.lastIndex = 0;
 
-  scopedPreflightStyles,
-  isolateInsideOfContainer,
-} from 'tailwindcss-scoped-preflight';
+        const rootSelector = rule.selector.replace(
+            rootDescendantPattern,
+            ':is(' + rootClass
+        );
 
-const rootClass = '.wedocs-document'; //We will use this class to scope the styles.
+        if ( rootSelector !== rule.selector ) {
+            rule.selector = rule.selector + ', ' + rootSelector;
+        }
+    },
+} );
+scopedRootMatch.postcss = true;
 
 module.exports = {
-  important: rootClass,
-  content: [ './templates/*.php', './templates/**/*.php', './src/**/*' ],
-  theme: {
-    extend: {},
-  },
-  plugins: [
-    scopedPreflightStyles( {
-      isolationStrategy: isolateInsideOfContainer( rootClass, {} ),
-    } ),
-    require( 'daisyui' ),
-    require( '@tailwindcss/forms' )
-  ],
-};
+    plugins: [
+        require( 'tailwindcss' ),
+        require( 'autoprefixer' ),
+        scopedRootMatch,
+    ]
+}
