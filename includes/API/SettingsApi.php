@@ -262,6 +262,34 @@ class SettingsApi extends \WP_REST_Controller {
             }
         }
 
+        // Sanitize feature toggles
+        if ( isset( $ai_settings['features'] ) && is_array( $ai_settings['features'] ) ) {
+            $sanitized['features'] = array();
+            $allowed_features = [ 'ai_summaries', 'ai_search', 'ai_qa', 'ai_recommendations', 'ai_acknowledgements' ];
+
+            foreach ( $allowed_features as $feature ) {
+                if ( isset( $ai_settings['features'][ $feature ] ) ) {
+                    $sanitized['features'][ $feature ] = [
+                        'enabled' => ! empty( $ai_settings['features'][ $feature ]['enabled'] ),
+                    ];
+
+                    // ai_summaries is a PRO-only feature; enforce server-side.
+                    if ( $feature === 'ai_summaries' ) {
+                        if ( ! wedocs_is_pro_active() ) {
+                            $sanitized['features'][ $feature ]['enabled']      = false;
+                            $sanitized['features'][ $feature ]['display_mode'] = 'summary';
+                        } else {
+                            $allowed_modes = [ 'summary', 'highlights' ];
+                            $mode = isset( $ai_settings['features'][ $feature ]['display_mode'] )
+                                ? sanitize_text_field( $ai_settings['features'][ $feature ]['display_mode'] )
+                                : 'summary';
+                            $sanitized['features'][ $feature ]['display_mode'] = in_array( $mode, $allowed_modes, true ) ? $mode : 'summary';
+                        }
+                    }
+                }
+            }
+        }
+
         // Sanitize image analysis settings (Pro feature)
         if ( isset( $ai_settings['image_analysis'] ) && is_array( $ai_settings['image_analysis'] ) ) {
             $sanitized['image_analysis'] = array();
