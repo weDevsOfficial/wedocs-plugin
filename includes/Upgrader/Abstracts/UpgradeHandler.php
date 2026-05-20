@@ -44,8 +44,11 @@ abstract class UpgradeHandler {
         if ( $need_upgrade ) {
             $this->handle_upgrade();
             update_option( 'wedocs_version', $this->version );
-            $this->next();
         }
+
+        // Always call next() to continue the upgrade chain,
+        // even if this upgrade didn't need to run
+        $this->next();
     }
 
     /**

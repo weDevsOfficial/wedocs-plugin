@@ -1,9 +1,26 @@
 /** @type {import('tailwindcss').Config} */
+import {
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+
+  scopedPreflightStyles,
+  isolateInsideOfContainer,
+} from 'tailwindcss-scoped-preflight';
+
+const rootClass = '.wedocs-document'; //We will use this class to scope the styles.
+
 module.exports = {
-  important: '.wedocs-document',
+  important: rootClass,
   content: [ './templates/*.php', './templates/**/*.php', './src/**/*' ],
   theme: {
     extend: {},
   },
-  plugins: [ require( 'daisyui' ), require( '@tailwindcss/forms' ) ],
+  plugins: [
+    scopedPreflightStyles( {
+      isolationStrategy: isolateInsideOfContainer( rootClass, {} ),
+    } ),
+    require( 'daisyui' ),
+    require( '@tailwindcss/forms' )
+  ],
 };

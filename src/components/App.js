@@ -10,16 +10,16 @@ import SettingsPage from './Settings';
 import Documentations from './Documentations';
 import Migrate from './Migrations';
 import NotFound from './NotFound';
-import '../components/ProPreviews';
 import PermissionSettingsDemo from './PermissionSettingsDemo';
 
 const App = () => {
   let routes = [
     { path: '/', component: Documentations },
     { path: 'settings', component: SettingsPage },
+    { path: 'settings/permission', component: PermissionSettingsDemo },
+    { path: 'settings/:panel', component: SettingsPage },
     { path: 'section/:id', component: ListingPage },
     { path: 'migrate', component: Migrate },
-    // permission_settings route removed - Pro handles this via manager/:id
   ];
 
   routes = wp.hooks.applyFilters('wedocs_register_menu_routes', routes);

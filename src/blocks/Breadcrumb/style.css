@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Breadcrumb Block Specific Styles */
+.wp-block-wedocs-breadcrumbs {
+  /* Ensure TailwindCSS classes work in block editor */
+  @apply block;
+}
+
+/* Block Editor Specific Styles */
+.block-editor-block-list__layout .wp-block-wedocs-breadcrumbs {
+  @apply m-0;
+}
+
+/* Responsive Design Support */
+.wedocs-responsive-wrapper {
+  @apply block;
+}
+
+.wedocs-responsive-tabs-group {
+  @apply flex gap-1;
+}
+
+.wedocs-active-res-tab {
+  @apply bg-blue-500 text-white;
+}
+
+/* Breadcrumb Layout Styles */
+.wp-block-wedocs-breadcrumbs.layout-1 {
+  @apply block;
+}
+
+.wp-block-wedocs-breadcrumbs.layout-2 {
+  @apply block;
+}
+
+/* Ensure proper spacing and alignment */
+.wp-block-wedocs-breadcrumbs nav {
+  @apply block;
+}
+
+.wp-block-wedocs-breadcrumbs ol {
+  @apply flex items-center;
+}
+
+.wp-block-wedocs-breadcrumbs li {
+  @apply flex items-center;
+}
+
+/* Separator styling */
+.wp-block-wedocs-breadcrumbs .separator {
+  @apply text-gray-400 mx-2;
+}
+
+/* Home icon styling */
+.wp-block-wedocs-breadcrumbs .home-icon {
+  @apply w-5 h-5 shrink-0;
+}
+
+/* Link styling */
+.wp-block-wedocs-breadcrumbs a {
+  @apply text-gray-500 hover:text-gray-700 transition-colors;
+}
+
+.wp-block-wedocs-breadcrumbs a[aria-current="page"] {
+  @apply text-gray-900 font-medium;
+}

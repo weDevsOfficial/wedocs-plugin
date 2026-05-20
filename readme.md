@@ -20,3 +20,20 @@ You can host docs inside your WordPress, create/add new docs, organize with orde
 This plugin is extremely handy for delivering long and detailed documentation of your WordPress product / plugin by bundling this with it.
 
 weDocs makes browsing and creating documentation a fresh and streamlined experience within the familiarity of your WP environment.
+
+
+
+// {
+//   "extra": {
+//     "mozart": {
+//       "dep_namespace": "WPMUDEV\\PluginTest\\Vendor\\",
+//       "dep_directory": "/vendor-prefixed/",
+//       "classmap_directory": "/classes/",
+//       "classmap_prefix": "WPMUDEV_PluginTest_",
+//       "packages": [
+//         "google/apiclient"
+//       ],
+//       "delete_vendor_directories": false
+//     }
+//   }
+// }

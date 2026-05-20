@@ -75,12 +75,20 @@ class Frontend {
         wedocs_get_template_part( 'modals/search', 'modal' );
         $searchModal = ob_get_clean();
 
+        // Inject REST nonce for AISummary block view script (handle: wedocs-ai-summary-view-script)
+        wp_add_inline_script(
+            'wedocs-ai-summary-view-script',
+            'window.wpApiSettings = window.wpApiSettings || {}; window.wpApiSettings.nonce = ' . wp_json_encode( wp_create_nonce( 'wp_rest' ) ) . ';',
+            'before'
+        );
+
         wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', [
             'nonce'             => wp_create_nonce( 'wedocs-ajax' ),
             'style'             => WEDOCS_ASSETS . '/build/print.css?v=10',
+            'assetsUrl'         => WEDOCS_ASSETS,
             'ajaxurl'           => admin_url( 'admin-ajax.php' ),
             'powered'           => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs plugin for WordPress', 'wedocs' ), home_url() ),
-            'isSingleDoc'       => is_singular( 'docs' ),
+            'isSingleDoc'       => true, // Always enable search modal functionality
             'searchModal'       => $searchModal,
             'docNavLabel'       => __( 'Doc: ', 'wedocs' ),
             'searchBlankMsg'    => __( 'Search field cannot be blank', 'wedocs' ),
@@ -157,6 +165,11 @@ class Frontend {
      * @return string
      */
     public function template_loader( $template ) {
+        // override if builder use_wedocs_builder_template is set to true
+        if ( ! use_wedocs_legacy_template() ) {
+            return $template;
+        }
+
         $find = [ 'docs.php' ];
         $file = '';
 

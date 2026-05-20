@@ -1,5 +1,10 @@
 import apiFetch from '@wordpress/api-fetch';
 
+// Set up REST API nonce for authentication
+if ( typeof window.weDocsAdminVars !== 'undefined' && window.weDocsAdminVars.restNonce ) {
+  apiFetch.use( apiFetch.createNonceMiddleware( window.weDocsAdminVars.restNonce ) );
+}
+
 const isProLoaded = wp.hooks.applyFilters(
   'wedocs_pro_loaded',
   false

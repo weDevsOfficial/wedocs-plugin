@@ -234,7 +234,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                   { /* translators: %s: Formatted datetime string */ }
                   { sprintf(
                     __( 'Updated on %s', 'wedocs' ),
-                    formattedDateString
+                    formattedDateString()
                   ) }
                 </div>
               </div>

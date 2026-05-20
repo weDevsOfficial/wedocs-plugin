@@ -1,6 +1,38 @@
+const rootClass = '.wedocs-document';
+const escapedRoot = rootClass.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' );
+const rootDescendantPattern = new RegExp(
+    escapedRoot + '\\s+:is\\(', 'g'
+);
+
+/**
+ * PostCSS plugin: For each Tailwind rule scoped as `.wedocs-document :is(.utility)`,
+ * add a matching selector `:is(.wedocs-document.utility)` so utilities also apply
+ * when the element itself is the root `.wedocs-document` container.
+ */
+const scopedRootMatch = () => ( {
+    postcssPlugin: 'wedocs-important-root-match',
+    Rule( rule ) {
+        if ( ! rootDescendantPattern.test( rule.selector ) ) {
+            return;
+        }
+        rootDescendantPattern.lastIndex = 0;
+
+        const rootSelector = rule.selector.replace(
+            rootDescendantPattern,
+            ':is(' + rootClass
+        );
+
+        if ( rootSelector !== rule.selector ) {
+            rule.selector = rule.selector + ', ' + rootSelector;
+        }
+    },
+} );
+scopedRootMatch.postcss = true;
+
 module.exports = {
-    plugins: {
-        tailwindcss: {},
-        autoprefixer: {},
-    }
+    plugins: [
+        require( 'tailwindcss' ),
+        require( 'autoprefixer' ),
+        scopedRootMatch,
+    ]
 }

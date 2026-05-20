@@ -1,7 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import PermissionSettings from './PermissionSettings';
 import { userIsAdmin } from '../../utils/helper';
-import Contributors from './common/Contributors';
 import UpgradePopup from './common/UpgradePopup';
 import LayoutSettings from './LayoutSettings';
 import AiChatBotSettings from './AssistantWidgetPanels/AiChatPanel';
@@ -221,12 +220,12 @@ wp.hooks.addFilter(
                     { userIsAdmin() && (
                         <>
                             { type === 'doc' && (
-                <UpgradePopup>
-                  <span className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none cursor-pointer">
-                    <span>{ __( 'Permission Management', 'wedocs' ) }</span>
-                    <Badge classes="opacity-0 group-hover:opacity-100 transition-opacity ml-2"/>
-                  </span>
-                </UpgradePopup>
+                <a
+                  href={ `${ window.location.origin }/wp-admin/admin.php${ window.location.search }#/settings/permission` }
+                  className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
+                >
+                  <span>{ __( 'Permission Management', 'wedocs' ) }</span>
+                </a>
                             ) }
                             { type === 'article' && (
 
@@ -255,53 +254,3 @@ wp.hooks.addFilter(
         5
     );
 
-wp.hooks.addFilter(
-    'wedocs_documentation_contributors',
-    'wedocs_free_documentation_contributors_preview',
-    function () {
-        // Check if Pro is loaded dynamically
-        const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
-        if (isProLoaded) return;
-        if ( !userIsAdmin() ) return;
-
-        return <Contributors />;
-    },
-    5
-);
-
-wp.hooks.addFilter(
-    'wedocs_article_contributors',
-    'wedocs_free_article_contributors_preview',
-    function () {
-        // Check if Pro is loaded dynamically
-        const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
-        if (isProLoaded) return;
-        if ( !userIsAdmin() ) return;
-
-        return <Contributors />;
-    },
-    5
-);
-
-wp.hooks.addFilter(
-	'wedocs_article_restriction_menu',
-	'wedocs_free_article_restriction_menu_preview',
-	function ( menu ) {
-		// Check if Pro is loaded dynamically
-		const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
-		if (isProLoaded) return menu;
-
-		// Return PRO preview menu when Pro is not loaded
-		return (
-			<UpgradePopup>
-				<a
-					href="#"
-					className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
-				>
-					<span>{ __( 'Permission Management', 'wedocs' ) }</span>
-				</a>
-			</UpgradePopup>
-		);
-	},
-	5
-);

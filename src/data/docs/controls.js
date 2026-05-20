@@ -1,5 +1,10 @@
 import apiFetch from '@wordpress/api-fetch';
 
+// Set up REST API nonce for authentication
+if ( typeof window.weDocsAdminVars !== 'undefined' && window.weDocsAdminVars.restNonce ) {
+  apiFetch.use( apiFetch.createNonceMiddleware( window.weDocsAdminVars.restNonce ) );
+}
+
 const controls = {
   FETCH_FROM_API( action ) {
     return apiFetch( { path: action.path } );
