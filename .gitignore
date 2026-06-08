@@ -26,3 +26,6 @@ wedocs*.zip
 
 # NOTE: assets/build/ IS tracked — the wp.org SVN deploy ships only git-tracked
 # files, so the built blocks/JS must be committed or activation fatals.
+
+# Built assets — gitignored; CI builds + ships them via BUILD_DIR (not committed)
+assets/build/
