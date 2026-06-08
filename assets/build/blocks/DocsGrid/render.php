@@ -411,4 +411,8 @@ if (! function_exists('render_wedocs_docs_grid')) {
     }
 }
 
-echo render_wedocs_docs_grid($attributes);
+// Only render when included as a block template (WP sets $attributes in scope).
+// Skip when this file is required for its function definitions at plugin load.
+if ( isset( $attributes ) ) {
+    echo render_wedocs_docs_grid($attributes);
+}

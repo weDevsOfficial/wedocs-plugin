@@ -28,7 +28,10 @@ const resolvers = {
   },
 
   *getPages() {
-    const response = yield actions.fetchFromAPI( '/wp/v2/pages' );
+    // Pull all pages (REST defaults to 10) so every page is selectable as the weDocs Home.
+    const response = yield actions.fetchFromAPI(
+      '/wp/v2/pages?per_page=100&orderby=title&order=asc&_fields=id,title'
+    );
     return actions.setPages( response );
   },
 
