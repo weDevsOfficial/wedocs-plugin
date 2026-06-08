@@ -159,7 +159,7 @@ if ( ! function_exists( 'wedocs_get_doc_breadcrumb_trail' ) ) {
         foreach ( $ancestors as $ancestor ) {
             $trail[] = [
                 'type'  => 'doc_ancestor',
-                'title' => wedocs_apply_short_content( $ancestor->post_title, 25 ),
+                'title' => $ancestor->post_title,
                 'url'   => get_permalink( $ancestor->ID ),
                 'post'  => $ancestor,
             ];
@@ -202,18 +202,20 @@ if ( !function_exists( 'wedocs_breadcrumbs' ) ) {
         $html .= wedocs_get_breadcrumb_item( $args['home'], home_url( '/' ), $breadcrumb_position );
         $html .= $args['delimiter'];
 
-        foreach ( $trail as $crumb ) {
+        $last_index = count( $trail ) - 1;
+        foreach ( $trail as $index => $crumb ) {
             if ( 'current' === $crumb['type'] ) {
-                $html .= ' ' . $args['before'] . $crumb['title'] . $args['after'];
-                continue;
+                $html .= ' ' . $args['before'] . esc_html( $crumb['title'] ) . $args['after'];
+            } else {
+                ++$breadcrumb_position;
+                $html .= wedocs_get_breadcrumb_item( $crumb['title'], $crumb['url'], $breadcrumb_position );
             }
 
-            ++$breadcrumb_position;
-            $html .= wedocs_get_breadcrumb_item( $crumb['title'], $crumb['url'], $breadcrumb_position );
-
-            // Preserve the existing whitespace quirk for ancestor delimiters (not the hub).
-            $delimiter = 'doc_ancestor' === $crumb['type'] ? ' ' . $args['delimiter'] . ' ' : $args['delimiter'];
-            $html .= $delimiter;
+            // Append a delimiter after every crumb except the last, regardless of order.
+            if ( $index !== $last_index ) {
+                // Preserve the existing whitespace quirk for ancestor delimiters (not the hub).
+                $html .= 'doc_ancestor' === $crumb['type'] ? ' ' . $args['delimiter'] . ' ' : $args['delimiter'];
+            }
         }
 
         $html .= '</ol>';
