@@ -48,15 +48,16 @@ jobs:
       # Pull this version's changelog block out of readme.txt for the release notes.
       - name: Extract changelog
         run: |
-          awk '/^\*\*v[0-9]/{n++; if(n>1) exit} n>=1{print}' readme.txt > RELEASE_NOTES.md
+          { echo "## Changelog"; echo ""; \
+            awk '/^\*\*v[0-9]/{n++; if(n>1) exit} n>=1{print}' readme.txt; } > RELEASE_NOTES.md
           echo "---- release notes ----"; cat RELEASE_NOTES.md
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          name: ${{ github.ref_name }}
           files: wedocs.v*.zip
           body_path: RELEASE_NOTES.md
-          generate_release_notes: true
 
       # wp.org SVN deploy last — artifacts above are already published if this needs a retry.
       - name: WordPress Plugin Deploy
