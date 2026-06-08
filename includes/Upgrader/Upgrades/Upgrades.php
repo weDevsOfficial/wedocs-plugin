@@ -14,6 +14,7 @@ class Upgrades {
     public $class_list = array(
         '2.0.2'  => V_2_0_2::class,
         '2.1.17' => V_2_1_17::class,
+        '2.2.0'  => V_2_2_0::class,
     );
 
     /**

@@ -192,7 +192,21 @@
       const self = $( this ),
         submit = self.find( 'input[type=submit]' ),
         body = self.closest( '.wedocs-modal-body' ),
-        data = self.serialize() + '&_wpnonce=' + weDocs_Vars.nonce;
+        consentCheckbox = self.find( '#wedocs-gdpr-consent' );
+
+      // Validate GDPR consent if checkbox exists.
+      if ( consentCheckbox.length && ! consentCheckbox.is( ':checked' ) ) {
+        $( '#wedocs-modal-errors', body )
+          .empty()
+          .append(
+            '<div class="wedocs-alert wedocs-alert-danger">' +
+              weDocs_Vars.gdprConsentError +
+              '</div>'
+          );
+        return;
+      }
+
+      const data = self.serialize() + '&_wpnonce=' + weDocs_Vars.nonce;
 
       submit.prop( 'disabled', true );
 

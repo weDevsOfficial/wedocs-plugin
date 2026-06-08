@@ -78,6 +78,7 @@ class Assets {
                     'pro_active'    => wedocs_is_pro_active(),
                     'upgradePopupContent' => wedocs_get_upgrade_popup_content(),
                     'siteUrl'       => home_url( '/' ),
+                    'gdpr'          => wedocs_get_gdpr_frontend_settings(),
                 ),
             );
         }
