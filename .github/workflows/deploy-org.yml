@@ -1,0 +1,55 @@
+name: Deploy to WordPress.org
+on:
+  push:
+    tags:
+      - "*"
+permissions:
+  contents: write
+jobs:
+  tag:
+    name: Deploy plugin for new Tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Use desired version of PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: wp-cli
+
+      - name: Install and build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Generate POT
+        run: npm run make-pot:local
+
+      - name: Composer install (no dev)
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: WordPress Plugin Deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        with:
+          dry-run: false
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SLUG: wedocs
+
+      # Build the distributable zip via weDocs' own flow (bin/zip.js -> wedocs.vX.Y.Z.zip)
+      - name: Generate weDocs zip
+        run: npm run zip:create
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: wedocs.v*.zip
+          generate_release_notes: true

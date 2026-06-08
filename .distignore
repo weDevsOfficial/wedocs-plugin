@@ -1,13 +1,48 @@
+# Directories
+.git
+.github
+.claude
+.wordpress-org
+node_modules
+src
+bin
+tests
+
+# Dotfiles / dev config
+.babelrc
+.babelrc.js
 .bablerc.js
+.editorconfig
 .eslintrc
-.github/
+.eslintrc.js
+.eslintrc.json
 .prettierrc
-.wordpress-org/
+.gitignore
+.gitattributes
+.distignore
+.svnignore
+.nvmrc
+.travis.yml
+.travis.ci
+.php_cs.dist
+phpcs.xml
+phpcs.xml.dist
+phpunit.xml
+phpunit.xml.dist
+
+# Build / tooling config
 tailwind.config.js
 postcss.config.js
 webpack.config.js
-.eslintrc.js
-.eslintrc.json
-.travis.ci
-tests/
-.wordpress-org
+package.json
+package-lock.json
+composer.json
+composer.lock
+
+# Docs / misc
+readme.md
+README.md
+CHANGELOG.md
+CLAUDE.md
+*.zip
+*.log
