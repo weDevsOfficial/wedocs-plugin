@@ -39,6 +39,10 @@ class API extends WP_REST_Controller {
         // Register upgrader api.
         $upgrader_api = new UpgraderApi( $api );
         $upgrader_api->register_api();
+
+        // Register messages api.
+        $messages_api = new MessagesApi( $api );
+        $messages_api->register_api();
     }
 
     /**
@@ -641,6 +645,18 @@ class API extends WP_REST_Controller {
             $name  = $user->display_name;
             $email = $user->user_email;
         }
+
+        $email_to = wedocs_get_general_settings( 'email_to', get_option( 'admin_email' ) );
+
+        do_action( 'wedocs_before_send_contact_email', [
+            'name'       => $name,
+            'email'      => $email,
+            'subject'    => $request['subject'],
+            'message'    => $request['message'],
+            'doc_id'     => $id,
+            'recipients' => $email_to,
+            'source'     => 'modal',
+        ] );
 
         wedocs_doc_feedback_email( $id, $name, $email, $request['subject'], $request['message'] );
 
