@@ -1,7 +1,10 @@
 import { __ } from '@wordpress/i18n';
+import { applyFilters } from '@wordpress/hooks';
 import Switcher from '../Switcher';
+import Badge from '../ProPreviews/common/Badge';
 import { useEffect, useState } from '@wordpress/element';
 import SelectBox from '../SelectBox';
+import PreviewDropdown from '../ProPreviews/common/PreviewDropdown';
 
 const GeneralSettings = ( {
   settingsData,
@@ -24,6 +27,44 @@ const GeneralSettings = ( {
       ...generalSettingsData,
     } );
   }, [ generalSettingsData ] );
+
+  const renderUrlStructureDescription = () => {
+    const siteUrl = (window.weDocsAdminVars?.siteUrl || '/').replace(/\/$/, '');
+    const isProLoaded = applyFilters('wedocs_pro_loaded', false);
+    const activeStructure = generalSettings?.docs_url_structure === 'after_doc' ? 'after_doc' : 'before_doc';
+    const beforeDocUrl = `${siteUrl}/docs/{doc}/{section}/{article}/`;
+    const afterDocUrl = `${siteUrl}/{doc}/docs/{section}/{article}/`;
+
+    if (isProLoaded) {
+      return (
+        <span className="block">
+          {activeStructure === 'after_doc'
+            ? __('After Doc: ', 'wedocs')
+            : __('Before Doc: ', 'wedocs')}
+          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+            {activeStructure === 'after_doc' ? afterDocUrl : beforeDocUrl}
+          </code>
+        </span>
+      );
+    }
+
+    return (
+      <>
+        <span className="block">
+          {__('Before Doc: ', 'wedocs')}
+          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+            {beforeDocUrl}
+          </code>
+        </span>
+        <span className="block mt-2">
+          {__('After Doc: ', 'wedocs')}
+          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+            {afterDocUrl}
+          </code>
+        </span>
+      </>
+    );
+  };
 
   return (
       <section>
@@ -73,6 +114,83 @@ const GeneralSettings = ( {
                     {__('shortcode', 'wedocs')}
                   </a>
                     {__(' is used.', 'wedocs')}
+                </p>
+              </div>
+            </div>
+
+            <div className="col-span-4">
+              <div className="settings-content flex items-center justify-between">
+                <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
+                  <label className="block text-sm font-medium text-gray-600">
+                    {__('Docs URL Structure', 'wedocs')}
+                  </label>
+                  {!applyFilters('wedocs_pro_loaded', false) && (
+                    <Badge
+                      classes="opacity-100"
+                      heading={__('Pro Feature', 'wedocs')}
+                      description={__('Control how documentation URLs and breadcrumbs will be structured', 'wedocs')}
+                    />
+                  )}
+                  <div
+                      className="tooltip cursor-pointer ml-2 z-[9999]"
+                      data-tip={__(
+                          'Control how documentation URLs and breadcrumbs will be structured',
+                          'wedocs'
+                      )}
+                  >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        fill="none"
+                    >
+                      <path
+                          d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                          stroke="#6b7280"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+                  {applyFilters(
+                      'wedocs_general_settings_docs_url_structure_field',
+                      (
+                          <PreviewDropdown
+                              ariaLabel={__('Docs URL structure', 'wedocs')}
+                              options={[
+                                {
+                                  id: 'before_doc',
+                                  name: __('Before Doc', 'wedocs'),
+                                  selected: true,
+                                },
+                                {
+                                  id: 'after_doc',
+                                  name: __('After Doc', 'wedocs'),
+                                  locked: true,
+                                },
+                              ]}
+                          />
+                      ),
+                      {
+                        settingsData,
+                        settingsPanel: generalSettings,
+                        setSettings,
+                      }
+                  )}
+                </div>
+              </div>
+              <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
+                <p className="text-sm text-[#6B7280]">
+                  {renderUrlStructureDescription()}
+                  <span className="block mt-2">
+                    {__(
+                        'Changing this structure updates URLs and breadcrumbs for all docs. Previous URLs will automatically redirect (301).',
+                        'wedocs'
+                    )}
+                  </span>
                 </p>
               </div>
             </div>
