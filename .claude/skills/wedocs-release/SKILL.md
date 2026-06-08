@@ -7,6 +7,41 @@ description: Release weDocs (free) to wp.org. Bump version + changelog, dry-run 
 
 Orchestrator: `~/wedocs-release.sh`. Pushing tag `vX.Y.Z` triggers `.github/workflows/deploy-org.yml` (Node 18 + npm + Composer + PHP 7.4): build → POT → composer → **zip + GitHub Release** → **wp.org SVN deploy** (10up). SVN secrets `SVN_USERNAME`/`SVN_PASSWORD` are set on the upstream repo.
 
+## 🚨 MANDATORY pre-release verification (do BEFORE bumping — learned from the 2.2.2→2.2.4 triple-release)
+
+On 8 Jun 2026 weDocs needed **three** releases in a row because each shipped before verifying the package actually worked:
+- **2.2.2** — `assets/build/` was untracked → 10up SVN ships only git-tracked files → the package had NO built blocks → `require_once .../DocsGrid/render.php` **fataled on activation**.
+- **2.2.3** — fixed the fatal, but a *prior* security-cleanup commit (`9110f3d` "remove: obfuscated code") had silently **gutted `register_blocks()`** to DocsGrid-only and mangled `tailwind.config.js`. Every other block (Breadcrumb, QuickSearch, Sidebar, AISummary…) was unregistered → "Your site doesn't include support for the … block" → broken doc layouts. Still shipped.
+- **2.2.4** — restored `register_blocks()` + `tailwind.config.js` from v2.2.1. Finally correct.
+
+To avoid this, run ALL of these in the tmp release clone and STOP if any fails:
+
+```bash
+LAST=$(git ls-remote --tags origin | awk -F/ '{print $NF}' | grep -E '^v[0-9]' | grep -v '\^' | sort -V | tail -1)
+PREV=${LAST#v}                                 # last released version, e.g. 2.2.4
+# 1. assets/build MUST be tracked (else wp.org ships no blocks → activation fatal)
+git ls-files assets/build | grep -q . || echo "FAIL: assets/build untracked"
+# 2. register_blocks() must still have the full block list (security cleanups love to delete it)
+grep -q 'block_directories' wedocs.php || echo "FAIL: register_blocks gutted"
+grep -c 'assets/build/blocks/' wedocs.php   # expect ~17 entries, not 1
+# 3. the block-styles helper require must be intact (NOT replaced by a single block render)
+grep -q "blocks/helpers/block-styles.php" wedocs.php || echo "FAIL: block-styles require missing"
+# 4. diff the two files security-cleanups have damaged before, against the last good tag
+git --no-pager diff "v$PREV" -- wedocs.php tailwind.config.js
+# 5. tailwind.config.js must be the clean ESM import form (a mangled import = corrupted CSS build)
+head -6 tailwind.config.js | grep -q "^import {" || echo "WARN: tailwind not ESM-import form"
+```
+
+And AFTER the upstream deploy, verify wp.org actually got a working package (don't trust the run being green):
+
+```bash
+curl -s  "https://plugins.svn.wordpress.org/wedocs/trunk/readme.txt" | grep 'Stable tag'        # == new version
+curl -sI "https://plugins.svn.wordpress.org/wedocs/trunk/assets/build/index.js" | head -1        # 200, not 404
+curl -s  "https://plugins.svn.wordpress.org/wedocs/trunk/wedocs.php" | grep -c block_directories  # 2 (full register_blocks)
+```
+
+Bottom line: **the workflow being green only proves it built + uploaded — not that the plugin activates or registers its blocks.** A security/"remove obfuscated code" commit on develop can quietly delete real code; always diff `wedocs.php` + `tailwind.config.js` against the last good tag, and confirm `assets/build` is tracked, before tagging.
+
 ## ⭐ Golden path (always dry-run on the fork first)
 
 ```bash
