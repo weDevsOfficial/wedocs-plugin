@@ -114,7 +114,7 @@ if ( ! function_exists( 'wedocs_get_doc_breadcrumb_trail' ) ) {
      * Does NOT include the "Home" crumb — callers render that themselves so
      * they can keep their own home icon/link wrapping conventions.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.2
      *
      * @param WP_Post|null $post Current doc post. Falls back to global $post.
      *
