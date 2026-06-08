@@ -26,7 +26,7 @@ body.single.single-docs .content-area {
     .clearfix();
 
     .wedocs-sidebar {
-        width: 25%;
+        width: 20%;
 
         h3.widget-title {
             font-weight: bold;
@@ -312,6 +312,27 @@ body.single.single-docs .content-area {
             .divider {
                 margin-top: 20px;
                 margin-bottom: 38px;
+            }
+
+            .wedocs-doc-link {
+                .wedocs-view-details-btn {
+                    display: inline-block;
+                    padding: 10px 24px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    line-height: 1.5;
+                    color: #3B82F6;
+                    background: transparent;
+                    border: 1px solid #3B82F6;
+                    border-radius: 6px;
+                    text-decoration: none;
+                    transition: background 0.2s, color 0.2s;
+
+                    &:hover {
+                        color: #fff;
+                        background: #3B82F6;
+                    }
+                }
             }
         }
 
@@ -793,6 +814,97 @@ footer.entry-footer.wedocs-entry-footer {
     100% {
         -webkit-transform: rotate(359deg);
         transform: rotate(359deg);
+    }
+}
+
+// Prose typography for vendor dashboard doc content panels.
+.dokan-wedocs-content .dokan-panel-body {
+    line-height: 1.7;
+    color: #374151;
+
+    p {
+        margin: 0 0 1em;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 600;
+        line-height: 1.3;
+        margin: 1.5em 0 0.5em;
+        color: #111827;
+    }
+
+    h1 { font-size: 1.75em; }
+    h2 { font-size: 1.4em; }
+    h3 { font-size: 1.2em; }
+    h4 { font-size: 1.05em; }
+    h5, h6 { font-size: 1em; }
+
+    ul, ol {
+        margin: 0 0 1em 1.5em;
+        padding: 0;
+
+        li {
+            margin-bottom: 0.25em;
+        }
+    }
+
+    ul {
+        list-style: disc;
+    }
+
+    ol {
+        list-style: decimal;
+    }
+
+    blockquote {
+        border-left: 4px solid @borderColor;
+        margin: 1em 0;
+        padding: 0.5em 1em;
+        color: #6b7280;
+        font-style: italic;
+    }
+
+    a {
+        color: @mainColor;
+        text-decoration: underline;
+    }
+
+    strong, b {
+        font-weight: 600;
+        color: #111827;
+    }
+
+    code {
+        font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+        font-size: 0.875em;
+        background: #f3f4f6;
+        border: 1px solid #e5e7eb;
+        border-radius: 3px;
+        padding: 0.1em 0.35em;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid @borderColor;
+        margin: 1.5em 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1em;
+        font-size: 0.9em;
+
+        th, td {
+            border: 1px solid @borderColor;
+            padding: 0.5em 0.75em;
+            text-align: left;
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+        }
     }
 }
 

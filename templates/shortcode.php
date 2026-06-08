@@ -1,6 +1,9 @@
 <?php
 if ( $docs ) {
     $enable_doc_search = ! empty( $args['enable_search'] ) && $args['enable_search'] === 'on';
+    $target_blank      = ! isset( $open_in_new_tab ) || $open_in_new_tab ? " target='_blank' rel='noopener noreferrer'" : '';
+    $dashboard_base    = ! empty( $base_url ) ? trailingslashit( $base_url ) : '';
+
     ?>
 
 <div class="wedocs-shortcode-wrap">
@@ -17,8 +20,13 @@ if ( $docs ) {
         <?php foreach ( $docs as $main_doc ) { ?>
             <li class="wedocs-docs-single">
                 <h3>
-                    <a href="<?php echo get_permalink( $main_doc['doc']->ID ); ?>" target='_blank'>
-                        <?php echo $main_doc['doc']->post_title; ?>
+                    <?php
+                    $main_doc_link = $dashboard_base
+                        ? add_query_arg( 'doc_id', $main_doc['doc']->ID, $dashboard_base )
+                        : get_permalink( $main_doc['doc']->ID );
+                    ?>
+                    <a href="<?php echo esc_url( $main_doc_link ); ?>"<?php echo $target_blank; ?>>
+                        <?php echo esc_html( $main_doc['doc']->post_title ); ?>
                     </a>
                 </h3>
 
@@ -47,7 +55,12 @@ if ( $docs ) {
                                 $collapse_section_articles = wedocs_get_general_settings( 'collapse_articles', 'off' );
                                 ?>
                                 <li>
-                                    <a class='icon-view' href="<?php echo get_permalink( $section->ID ); ?>" target='_blank'>
+                                    <?php
+                                    $section_link = $dashboard_base
+                                        ? add_query_arg( 'doc_id', $section->ID, $dashboard_base )
+                                        : get_permalink( $section->ID );
+                                    ?>
+                                    <a class='icon-view' href="<?php echo esc_url( $section_link ); ?>"<?php echo $target_blank; ?>>
                                         <?php echo esc_html( $post_title ); ?>
                                     </a>
                                     <?php if ( $children_docs ) : ?>
@@ -68,7 +81,12 @@ if ( $docs ) {
                                     >
                                         <?php foreach ( $children_docs as $article ) : ?>
                                             <li>
-                                                <a href="<?php echo get_permalink( $article->ID ); ?>" target='_blank'>
+                                                <?php
+                                                $article_link = $dashboard_base
+                                                    ? add_query_arg( 'doc_id', $article->ID, $dashboard_base )
+                                                    : get_permalink( $article->ID );
+                                                ?>
+                                                <a href="<?php echo esc_url( $article_link ); ?>"<?php echo $target_blank; ?>>
                                                     <?php echo esc_html( wedocs_apply_short_content( $article->post_title, $col > 1 ? 60 : 160 ) ); ?>
                                                 </a>
                                             </li>
@@ -94,78 +112,16 @@ if ( $docs ) {
                 <hr class='divider' />
 
                 <div class="wedocs-doc-link">
-                    <a href="<?php echo get_permalink( $main_doc['doc']->ID ); ?>" target='_blank'><?php echo $more; ?></a>
+                    <?php
+                    $view_details_link = $dashboard_base
+                        ? add_query_arg( 'doc_id', $main_doc['doc']->ID, $dashboard_base )
+                        : get_permalink( $main_doc['doc']->ID );
+                    ?>
+                    <a class="wedocs-view-details-btn" href="<?php echo esc_url( $view_details_link ); ?>"<?php echo $target_blank; ?>><?php echo $more; ?></a>
                 </div>
             </li>
         <?php } ?>
     </ul>
-
-    <?php if ( ! empty( $total_pages ) && $total_pages > 1 ) : ?>
-        <nav class="wedocs-pagination">
-            <?php if ( $current_page > 1 ) : ?>
-                <a href="<?php echo esc_url( add_query_arg( 'wedocs_page', $current_page - 1 ) ); ?>" class="wedocs-pagination__prev">
-                    &larr; <?php esc_html_e( 'Previous', 'wedocs' ); ?>
-                </a>
-            <?php else : ?>
-                <span class="wedocs-pagination__prev wedocs-pagination__disabled">
-                    &larr; <?php esc_html_e( 'Previous', 'wedocs' ); ?>
-                </span>
-            <?php endif; ?>
-
-            <span class="wedocs-pagination__info">
-                <?php printf( esc_html__( 'Page %1$d of %2$d', 'wedocs' ), $current_page, $total_pages ); ?>
-            </span>
-
-            <?php if ( $current_page < $total_pages ) : ?>
-                <a href="<?php echo esc_url( add_query_arg( 'wedocs_page', $current_page + 1 ) ); ?>" class="wedocs-pagination__next">
-                    <?php esc_html_e( 'Next', 'wedocs' ); ?> &rarr;
-                </a>
-            <?php else : ?>
-                <span class="wedocs-pagination__next wedocs-pagination__disabled">
-                    <?php esc_html_e( 'Next', 'wedocs' ); ?> &rarr;
-                </span>
-            <?php endif; ?>
-        </nav>
-
-        <style>
-            .wedocs-pagination {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 16px;
-                margin-top: 30px;
-                padding: 12px 0;
-            }
-            .wedocs-pagination__prev,
-            .wedocs-pagination__next {
-                display: inline-flex;
-                align-items: center;
-                padding: 8px 18px;
-                border-radius: 6px;
-                text-decoration: none;
-                font-size: 14px;
-                font-weight: 500;
-                border: 1px solid currentColor;
-                color: inherit;
-                transition: opacity 0.2s ease;
-            }
-            .wedocs-pagination__prev:hover,
-            .wedocs-pagination__next:hover {
-                opacity: 0.75;
-            }
-            .wedocs-pagination__disabled {
-                opacity: 0.4;
-                pointer-events: none;
-                cursor: default;
-            }
-            .wedocs-pagination__info {
-                font-size: 14px;
-                color: inherit;
-                opacity: 0.7;
-            }
-        </style>
-    <?php endif; ?>
-
 </div>
 
 <?php }

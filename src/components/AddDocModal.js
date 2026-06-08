@@ -1,11 +1,13 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { Fragment, useRef, useState } from '@wordpress/element';
-import { Dialog, Transition } from '@headlessui/react';
-import { dispatch, useSelect } from '@wordpress/data';
-import docStore from '../data/docs';
-import { ChevronDownIcon, ExclamationCircleIcon } from '@heroicons/react/20/solid';
+import { Dialog, Listbox, Transition } from '@headlessui/react';
+import { dispatch } from '@wordpress/data';
+import { DOCS_STORE } from '../data/docs';
+import useVendorDocGating from '../hooks/useVendorDocGating';
+import { CheckIcon, ChevronDownIcon, ExclamationCircleIcon } from '@heroicons/react/20/solid';
 import Swal from 'sweetalert2';
 import { handleDocCreationByRef } from '../utils/helper';
+import UpgradePopup from './ProPreviews/common/UpgradePopup';
 
 const AddDocModal = ( { className, children } ) => {
   const docCreateBtnRef = useRef( null );
@@ -16,7 +18,24 @@ const AddDocModal = ( { className, children } ) => {
     status: 'publish',
   } );
 
+  const visibilityOptions = [
+    { value: '0', label: __( 'Regular Doc', 'wedocs' ) },
+    { value: '1', label: __( 'Dokan vendor doc', 'wedocs' ) },
+  ];
+
   const [ formError, setFormError ] = useState( false );
+  const [ selectedVisibility, setSelectedVisibility ] = useState( visibilityOptions[ 0 ] );
+  const [ isUpgradeOpen, setIsUpgradeOpen ] = useState( false );
+
+  const { isGated } = useVendorDocGating();
+
+  const onVisibilityChange = ( option ) => {
+    if ( option.value === '1' && isGated ) {
+      setIsUpgradeOpen( true );
+      return;
+    }
+    setSelectedVisibility( option );
+  };
 
   const onTitleChange = ( e ) => {
     setNewDoc( { ...newDoc, title: { raw: e.target.value } } );
@@ -34,10 +53,16 @@ const AddDocModal = ( { className, children } ) => {
     // Make it disabled for creating a doc.
     setDisabled( true );
 
-    dispatch( docStore )
-      .createDoc( newDoc )
+    const docData = {
+      ...newDoc,
+      meta: { _is_vendor_doc: selectedVisibility.value },
+    };
+
+    dispatch( DOCS_STORE )
+      .createDoc( docData )
       .then( ( result ) => {
         setNewDoc( { ...newDoc, title: { raw: '' } } );
+        setSelectedVisibility( visibilityOptions[ 0 ] );
         Swal.fire( {
           title: __( 'New doc added!', 'wedocs' ),
           text: __( 'New doc has been added successfully', 'wedocs' ),
@@ -162,6 +187,53 @@ const AddDocModal = ( { className, children } ) => {
                     ) }
                   </div>
 
+                  <div className="mt-4 text-left">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      { __( 'Visibility', 'wedocs' ) }
+                    </label>
+                    <Listbox value={ selectedVisibility } onChange={ onVisibilityChange }>
+                      <div className="relative">
+                        <Listbox.Button className="relative w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+                          <span className="block truncate">{ selectedVisibility.label }</span>
+                          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                            <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                          </span>
+                        </Listbox.Button>
+                        <Transition
+                          as={ Fragment }
+                          leave="transition ease-in duration-100"
+                          leaveFrom="opacity-100"
+                          leaveTo="opacity-0"
+                        >
+                          <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                            { visibilityOptions.map( ( option ) => (
+                              <Listbox.Option
+                                key={ option.value }
+                                value={ option }
+                                className={ ( { active } ) =>
+                                  `cursor-pointer relative select-none py-2 pl-3 pr-9 ${ active ? 'bg-indigo-600 text-white' : 'text-gray-900' }`
+                                }
+                              >
+                                { ( { selected, active } ) => (
+                                  <>
+                                    <span className={ `block truncate ${ selected ? 'font-semibold' : 'font-normal' }` }>
+                                      { option.label }
+                                    </span>
+                                    { selected && (
+                                      <span className={ `absolute inset-y-0 right-0 flex items-center pr-4 ${ active ? 'text-white' : 'text-indigo-600' }` }>
+                                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                      </span>
+                                    ) }
+                                  </>
+                                ) }
+                              </Listbox.Option>
+                            ) ) }
+                          </Listbox.Options>
+                        </Transition>
+                      </div>
+                    </Listbox>
+                  </div>
+
                   <div className="mt-6 flex items-center justify-center space-x-3.5">
                     <button
                       className="bg-white hover:bg-gray-200 text-gray-700 font-medium text-base py-2 px-5 border border-gray-300 rounded-md"
@@ -204,6 +276,11 @@ const AddDocModal = ( { className, children } ) => {
           </div>
         </Dialog>
       </Transition>
+
+      <UpgradePopup
+        controlledIsOpen={ isUpgradeOpen }
+        onControlledClose={ () => setIsUpgradeOpen( false ) }
+      />
     </Fragment>
   );
 };

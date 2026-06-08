@@ -5,6 +5,9 @@ import QuickEditModal from './DocListing/QuickEditModal';
 import { userIsAdmin } from '../utils/helper';
 import { dispatch } from '@wordpress/data';
 import Swal from 'sweetalert2';
+import useVendorDocGating from '../hooks/useVendorDocGating';
+import { DOCS_STORE } from '../data/docs';
+import UpgradePopup from './ProPreviews/common/UpgradePopup';
 
 const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
   const isAdmin = userIsAdmin();
@@ -20,10 +23,42 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
   );
 
   const [ showActions, setShowActions ] = useState( false );
+  const [ isVendorDoc, setIsVendorDoc ] = useState( doc?.meta?._is_vendor_doc === '1' );
+  const [ isUpgradeOpen, setIsUpgradeOpen ] = useState( false );
+
+  const { isGated } = useVendorDocGating();
+
+  // Toggle vendor doc meta.
+  const toggleVendorDoc = () => {
+    // When marking (not unmarking), check the pro limit.
+    if ( ! isVendorDoc && isGated ) {
+      setIsUpgradeOpen( true );
+      return;
+    }
+
+    const newValue = isVendorDoc ? '0' : '1';
+
+    dispatch( DOCS_STORE )
+      .updateDoc( doc?.id, { meta: { _is_vendor_doc: newValue } } )
+      .then( () => {
+        setIsVendorDoc( ! isVendorDoc );
+        Swal.fire( {
+          icon: 'success',
+          toast: true,
+          title: isVendorDoc
+            ? __( 'Removed from vendor docs', 'wedocs' )
+            : __( 'Marked as vendor doc', 'wedocs' ),
+          timer: 2000,
+          position: 'bottom-end',
+          showConfirmButton: false,
+        } );
+      } )
+      .catch( ( err ) => console.log( err ) );
+  };
 
   // Update documentation data.
   const updateDocStatus = () => {
-    dispatch( 'wedocs/docs' )
+    dispatch( DOCS_STORE )
       .updateDoc( doc?.id, { status: doc?.status === 'draft' ? 'publish' : 'draft' } )
       .then( ( { docs } ) => {
         Swal.fire( {
@@ -90,6 +125,15 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
             { __( 'View', 'wedocs' ) }
           </a>
 
+          { type === 'doc' && (
+            <span
+              onClick={ toggleVendorDoc }
+              className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none cursor-pointer"
+            >
+              { isVendorDoc ? __( 'Unmark as vendor doc', 'wedocs' ) : __( 'Mark as vendor doc', 'wedocs' ) }
+            </span>
+          ) }
+
           <span
             onClick={ updateDocStatus }
             className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none"
@@ -115,6 +159,11 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           </RestictionModal>
         </div>
       </div>
+
+      <UpgradePopup
+        controlledIsOpen={ isUpgradeOpen }
+        onControlledClose={ () => setIsUpgradeOpen( false ) }
+      />
     </Fragment>
   );
 };
