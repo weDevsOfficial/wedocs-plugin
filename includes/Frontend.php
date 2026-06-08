@@ -31,9 +31,15 @@ class Frontend {
         // filter the search result
         add_action( 'pre_get_posts', [ $this, 'docs_search_filter' ] );
 
+        // Exclude vendor docs from all public-facing docs queries.
+        add_action( 'pre_get_posts', [ $this, 'exclude_vendor_docs' ] );
+
         // Loads frontend scripts and styles
         add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ], 9 );
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_single_scripts' ], 9 );
+
+        // Dequeue pro messaging bubble on the Dokan vendor dashboard.
+        add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_pro_scripts_on_vendor_dashboard' ], 20 );
 
         // override the theme template
         add_filter( 'template_include', [ $this, 'template_loader' ], 20 );
@@ -83,6 +89,21 @@ class Frontend {
         );
 
         wp_localize_script( 'wedocs-scripts', 'weDocs_Vars', [
+            'nonce'              => wp_create_nonce( 'wedocs-ajax' ),
+            'style'              => WEDOCS_ASSETS . '/build/print.css?v=10',
+            'ajaxurl'            => admin_url( 'admin-ajax.php' ),
+            'powered'            => sprintf( '&copy; %s, %d. %s<br>%s', get_bloginfo( 'name' ), date( 'Y' ), __( 'Powered by weDocs plugin for WordPress', 'wedocs' ), home_url() ),
+            'isSingleDoc'        => is_singular( 'docs' ),
+            'isVendorDashboard'  => $this->is_dokan_vendor_dashboard(),
+            'vendorDocsBaseUrl'  => $this->is_dokan_vendor_dashboard() && function_exists( 'dokan_get_navigation_url' )
+                ? trailingslashit( dokan_get_navigation_url( 'docs' ) )
+                : '',
+            'searchModal'        => $searchModal,
+            'docNavLabel'        => __( 'Doc: ', 'wedocs' ),
+            'searchBlankMsg'     => __( 'Search field cannot be blank', 'wedocs' ),
+            'searchEmptyMsg'     => __( 'Your search didn\'t match any documents', 'wedocs' ),
+            'sectionNavLabel'    => __( 'Section: ', 'wedocs' ),
+            'searchModalColors'  => wedocs_get_search_modal_active_colors(),
             'nonce'             => wp_create_nonce( 'wedocs-ajax' ),
             'style'             => WEDOCS_ASSETS . '/build/print.css?v=10',
             'assetsUrl'         => WEDOCS_ASSETS,
@@ -123,6 +144,94 @@ class Frontend {
 
         wp_enqueue_script( 'wedocs-anchorjs' );
         wp_enqueue_script( 'wedocs-scripts' );
+    }
+
+    /**
+     * Dequeue pro messaging bubble scripts on the Dokan vendor dashboard.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function dequeue_pro_scripts_on_vendor_dashboard() {
+        if ( ! $this->is_dokan_vendor_dashboard() ) {
+            return;
+        }
+
+        wp_dequeue_script( 'wedocs-pro-frontend-js' );
+        wp_dequeue_style( 'wedocs-pro-frontend-css' );
+    }
+
+    /**
+     * Exclude vendor docs from public-facing docs queries.
+     *
+     * Vendor docs (meta _is_vendor_doc = '1') should only be visible in the
+     * Dokan vendor dashboard context. This filter adds a meta_query to every
+     * public WP_Query for the docs post type so vendor docs are automatically
+     * excluded from search results, block renders, Elementor widgets, etc.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param WP_Query $query
+     *
+     * @return void
+     */
+    public function exclude_vendor_docs( $query ) {
+        // Only target docs post type queries.
+        $post_type = $query->get( 'post_type' );
+
+        if ( 'docs' !== $post_type ) {
+            return;
+        }
+
+        $is_vendor_dashboard = $this->is_dokan_vendor_dashboard();
+
+        // Don't filter admin-side queries (list tables, etc.).
+        if ( is_admin() && ! wp_doing_ajax() ) {
+            return;
+        }
+
+        // Don't filter for users who can manage docs (admins).
+        if ( current_user_can( 'edit_docs' ) ) {
+            return;
+        }
+
+        // Don't filter when inside the Dokan vendor dashboard.
+        if ( $is_vendor_dashboard ) {
+            return;
+        }
+
+        // Allow opting out of vendor doc filtering for specific queries.
+        if ( $query->get( 'wedocs_include_vendor_docs' ) ) {
+            return;
+        }
+
+        $meta_query = $query->get( 'meta_query' );
+
+        if ( ! is_array( $meta_query ) ) {
+            $meta_query = [];
+        }
+
+        $meta_query[] = wedocs_exclude_vendor_doc_meta_query();
+
+        $query->set( 'meta_query', $meta_query );
+    }
+
+    /**
+     * Check if the current request is inside the Dokan vendor dashboard.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return bool
+     */
+    private function is_dokan_vendor_dashboard() {
+        global $wp;
+
+        if ( ! function_exists( 'dokan_is_seller_dashboard' ) ) {
+            return false;
+        }
+
+        return dokan_is_seller_dashboard() && isset( $wp->query_vars['docs'] );
     }
 
     /**
