@@ -79,6 +79,11 @@ class Menu {
                 'edit-tags.php?taxonomy=doc_tag&post_type=docs',
             ),
             array(
+                __( 'Messages', 'wedocs' ),
+                $this->capability,
+                $base . '#/messages',
+            ),
+            array(
                 __( 'Settings', 'wedocs' ),
                 apply_filters( 'wedocs_settings_management_capabilities', $this->capability ),
                 $base . '#/settings',

@@ -23,6 +23,25 @@ const Menu = () => {
         </svg>
       ),
     },
+    gdpr: {
+      text: __( 'GDPR Compliance', 'wedocs' ),
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="#6b7280"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="-ml-1 mr-4"
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+      ),
+    },
     ai: {
       text: __( 'AI Control', 'wedocs' ),
       icon: (

@@ -11,6 +11,7 @@ import Documentations from './Documentations';
 import Migrate from './Migrations';
 import NotFound from './NotFound';
 import PermissionSettingsDemo from './PermissionSettingsDemo';
+import Messages from './Messages';
 
 const App = () => {
   let routes = [
@@ -20,6 +21,7 @@ const App = () => {
     { path: 'settings/:panel', component: SettingsPage },
     { path: 'section/:id', component: ListingPage },
     { path: 'migrate', component: Migrate },
+    { path: 'messages', component: Messages },
   ];
 
   routes = wp.hooks.applyFilters('wedocs_register_menu_routes', routes);
