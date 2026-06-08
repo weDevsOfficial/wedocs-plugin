@@ -46,7 +46,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
-require_once plugin_dir_path(__FILE__) . 'assets/build/blocks/DocsGrid/render.php';
+
+$wedocs_docs_grid_render = plugin_dir_path( __FILE__ ) . 'assets/build/blocks/DocsGrid/render.php';
+if ( file_exists( $wedocs_docs_grid_render ) ) {
+    require_once $wedocs_docs_grid_render;
+}
 
 /**
  * WeDocs class.
