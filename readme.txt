@@ -5,7 +5,7 @@ Tags: docs, documentation, knowledge base, wiki, ai powered knowledge base
 Requires at least: 5.6
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.2.3
+Stable tag: 2.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -193,6 +193,9 @@ Yes, weDocs supports custom permalinks for documentation pages.
 ---
 
 ## Changelog
+
+**v2.2.4 (8 Jun, 2026)**
+- **Fixed:** Restored the weDocs blocks (Breadcrumb, Quick Search, Sidebar, Print, Table of Contents, AI Summary and more) that were missing from the block editor and broke documentation layouts.
 
 **v2.2.3 (8 Jun, 2026)**
 - **Fixed:** Resolved a fatal error that could prevent the plugin from activating, caused by missing build files in the wordpress.org package.
