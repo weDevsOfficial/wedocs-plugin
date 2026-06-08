@@ -1,1 +1,176 @@
-{"content":[{"id":"66627e54","settings":{"flex_direction":"row","flex_gap":{"unit":"px","size":0,"column":"0","row":"0"},"content_width":"full","width":{"unit":"%","size":83,"sizes":[]}},"elements":[{"id":"751203","settings":{"flex_direction":"column","content_width":"full","width":{"unit":"%","size":"25"}},"elements":[{"id":"5494ee5","settings":{"search_placeholder":"Quick search...","mobile_toggle_text":"Navigation"},"elements":[],"isInner":false,"widgetType":"wedocs-docs-sidebar","elType":"widget"}],"isInner":true,"elType":"container"},{"id":"3f1364d7","settings":{"flex_direction":"column","content_width":"full","width":{"unit":"%","size":"50"}},"elements":[{"id":"11b33a2e","settings":{"content_width":"full"},"elements":[{"id":"56992cab","settings":{"__dynamic__":{"title":"[elementor-tag id=\"\" name=\"post-title\" settings=\"%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D\"]"},"title":"Add Your Heading Text Here","title_color":"#142932"},"elements":[],"isInner":false,"widgetType":"theme-post-title","elType":"widget"},{"id":"62e424ef","settings":{"home_text":"Home"},"elements":[],"isInner":false,"widgetType":"wedocs-breadcrumb","elType":"widget"},{"id":"429504be","settings":[],"elements":[],"isInner":false,"widgetType":"theme-post-content","elType":"widget"},{"id":"736e93eb","settings":{"question_text":"Was this article helpful?","yes_text":"Yes","no_text":"No","show_count":"yes","thank_you_message":"Thank you for your feedback!","follow_up_placeholder":"How can we improve this article?"},"elements":[],"isInner":false,"widgetType":"wedocs-was-helpful","elType":"widget"},{"id":"360e1b81","settings":{"trigger_heading":"Need More Help?","trigger_description":"Can't find what you're looking for? Reach out to our support team.","button_text":"Contact Support","layout":"inline","modal_title":"Contact Support","modal_description":"Fill out the form below and our team will get back to you as soon as possible.","submit_text":"Send Message","success_message":"Thank you! Your message has been sent successfully.","recipient_email":"dev-email@wpengine.local","icon_color":"#364248","btn_bg_color":"#202527","btn_hover_bg_color":"#000000"},"elements":[],"isInner":false,"widgetType":"wedocs-need-help","elType":"widget"}],"isInner":true,"elType":"container"}],"isInner":true,"elType":"container"},{"id":"42bb9ff6","settings":{"flex_direction":"column","content_width":"full","width":{"unit":"%","size":"25"}},"elements":[{"id":"417d6e7f","settings":{"title":"On This Page"},"elements":[],"isInner":false,"widgetType":"wedocs-toc","elType":"widget"}],"isInner":true,"elType":"container"}],"isInner":false,"elType":"container"}],"page_settings":{"page_template":"elementor_header_footer"},"version":"0.4","title":"WeDocs Single Page","type":"single-post"}
+{
+  "content": [
+    {
+      "id": "66627e54",
+      "settings": {
+        "flex_direction": "row",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0"
+        },
+        "content_width": "full",
+        "width": {
+          "unit": "%",
+          "size": 83,
+          "sizes": []
+        }
+      },
+      "elements": [
+        {
+          "id": "751203",
+          "settings": {
+            "flex_direction": "column",
+            "content_width": "full",
+            "width": {
+              "unit": "%",
+              "size": "25"
+            }
+          },
+          "elements": [
+            {
+              "id": "5494ee5",
+              "settings": {
+                "search_placeholder": "Quick search...",
+                "mobile_toggle_text": "Navigation"
+              },
+              "elements": [],
+              "isInner": false,
+              "widgetType": "wedocs-docs-sidebar",
+              "elType": "widget"
+            }
+          ],
+          "isInner": true,
+          "elType": "container"
+        },
+        {
+          "id": "3f1364d7",
+          "settings": {
+            "flex_direction": "column",
+            "content_width": "full",
+            "width": {
+              "unit": "%",
+              "size": "50"
+            }
+          },
+          "elements": [
+            {
+              "id": "11b33a2e",
+              "settings": {
+                "content_width": "full"
+              },
+              "elements": [
+                {
+                  "id": "56992cab",
+                  "settings": {
+                    "__dynamic__": {
+                      "title": "[elementor-tag id=\"\" name=\"post-title\" settings=\"%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D\"]"
+                    },
+                    "title": "Add Your Heading Text Here",
+                    "title_color": "#142932"
+                  },
+                  "elements": [],
+                  "isInner": false,
+                  "widgetType": "theme-post-title",
+                  "elType": "widget"
+                },
+                {
+                  "id": "62e424ef",
+                  "settings": {
+                    "home_text": "Home"
+                  },
+                  "elements": [],
+                  "isInner": false,
+                  "widgetType": "wedocs-breadcrumb",
+                  "elType": "widget"
+                },
+                {
+                  "id": "429504be",
+                  "settings": [],
+                  "elements": [],
+                  "isInner": false,
+                  "widgetType": "theme-post-content",
+                  "elType": "widget"
+                },
+                {
+                  "id": "736e93eb",
+                  "settings": {
+                    "question_text": "Was this article helpful?",
+                    "yes_text": "Yes",
+                    "no_text": "No",
+                    "show_count": "yes",
+                    "thank_you_message": "Thank you for your feedback!",
+                    "follow_up_placeholder": "How can we improve this article?"
+                  },
+                  "elements": [],
+                  "isInner": false,
+                  "widgetType": "wedocs-was-helpful",
+                  "elType": "widget"
+                },
+                {
+                  "id": "360e1b81",
+                  "settings": {
+                    "trigger_heading": "Need More Help?",
+                    "trigger_description": "Can't find what you're looking for? Reach out to our support team.",
+                    "button_text": "Contact Support",
+                    "layout": "inline",
+                    "modal_title": "Contact Support",
+                    "modal_description": "Fill out the form below and our team will get back to you as soon as possible.",
+                    "submit_text": "Send Message",
+                    "success_message": "Thank you! Your message has been sent successfully.",
+                    "recipient_email": "dev-email@wpengine.local",
+                    "icon_color": "#364248",
+                    "btn_bg_color": "#202527",
+                    "btn_hover_bg_color": "#000000"
+                  },
+                  "elements": [],
+                  "isInner": false,
+                  "widgetType": "wedocs-need-help",
+                  "elType": "widget"
+                }
+              ],
+              "isInner": true,
+              "elType": "container"
+            }
+          ],
+          "isInner": true,
+          "elType": "container"
+        },
+        {
+          "id": "42bb9ff6",
+          "settings": {
+            "flex_direction": "column",
+            "content_width": "full",
+            "width": {
+              "unit": "%",
+              "size": "25"
+            }
+          },
+          "elements": [
+            {
+              "id": "417d6e7f",
+              "settings": {
+                "title": "On This Page"
+              },
+              "elements": [],
+              "isInner": false,
+              "widgetType": "wedocs-toc",
+              "elType": "widget"
+            }
+          ],
+          "isInner": true,
+          "elType": "container"
+        }
+      ],
+      "isInner": false,
+      "elType": "container"
+    }
+  ],
+  "page_settings": {
+    "page_template": "elementor_header_footer"
+  },
+  "version": "0.4",
+  "title": "WeDocs Single Page",
+  "type": "single-post"
+}
