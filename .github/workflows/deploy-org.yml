@@ -35,15 +35,6 @@ jobs:
       - name: Composer install (no dev)
         run: composer install --no-dev --optimize-autoloader
 
-      - name: WordPress Plugin Deploy
-        uses: 10up/action-wordpress-plugin-deploy@stable
-        with:
-          dry-run: false
-        env:
-          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-          SLUG: wedocs
-
       # Build the distributable zip via weDocs' own flow (bin/zip.js -> wedocs.vX.Y.Z.zip)
       - name: Generate weDocs zip
         run: npm run zip:create
@@ -53,3 +44,13 @@ jobs:
         with:
           files: wedocs.v*.zip
           generate_release_notes: true
+
+      # wp.org SVN deploy last — artifacts above are already published if this needs a retry.
+      - name: WordPress Plugin Deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        with:
+          dry-run: false
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SLUG: wedocs
