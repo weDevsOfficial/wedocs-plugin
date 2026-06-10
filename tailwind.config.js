@@ -12,6 +12,12 @@ module.exports = {
   theme: {
     extend: {},
   },
+  // Stop daisyui injecting its GLOBAL base ([data-theme]{background-color;color},
+  // html, :root resets) into every block stylesheet — that base leaks out of the
+  // blocks and paints the block editor canvas dark. Theme vars + components stay.
+  daisyui: {
+    base: false,
+  },
   plugins: [
     scopedPreflightStyles( {
       isolationStrategy: isolateInsideOfContainer( rootClass, {} ),
