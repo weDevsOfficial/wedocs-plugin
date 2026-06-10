@@ -39,6 +39,10 @@ class API extends WP_REST_Controller {
         // Register upgrader api.
         $upgrader_api = new UpgraderApi( $api );
         $upgrader_api->register_api();
+
+        // Register abilities api.
+        $abilities_api = new AbilitiesApi();
+        $abilities_api->register_routes();
     }
 
     /**
@@ -613,7 +617,7 @@ class API extends WP_REST_Controller {
      * @return \WP_Error|bool
      */
     public function sortable_item_permissions_check() {
-        if ( ! current_user_can( 'edit_docs' ) ) {
+        if ( ! AbilitiesPolicy::can( 'docs.sort' ) ) {
             return new WP_Error(
                 'wedocs_permission_failure',
                 __( 'Unauthorized permission error', 'wedocs' )
@@ -1096,7 +1100,7 @@ class API extends WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function delete_item_permissions_check( $request ) {
-        if ( ! current_user_can( 'edit_docs' ) ) {
+        if ( ! AbilitiesPolicy::can( 'docs.delete' ) ) {
             return new WP_Error(
                 'wedocs_permission_failure',
                 __( 'You cannot delete the documentation resource.', 'wedocs' )
@@ -1161,7 +1165,7 @@ class API extends WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function get_promotional_notice_check( $request ) {
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! AbilitiesPolicy::can( 'notices.manage' ) ) {
             return new WP_Error(
                 'wedocs_permission_failure',
                 __( 'You cannot see promotion notices.', 'wedocs' )
@@ -1179,7 +1183,7 @@ class API extends WP_REST_Controller {
      * @return bool|WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
      */
     public function get_promotional_notice() {
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! AbilitiesPolicy::can( 'notices.manage' ) ) {
             return false;
         }
 
@@ -1254,7 +1258,7 @@ class API extends WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function ai_generate_permissions_check( $request ) {
-        if ( ! current_user_can( 'edit_docs' ) ) {
+        if ( ! AbilitiesPolicy::can( 'ai.generate' ) ) {
             return new WP_Error(
                 'wedocs_permission_failure',
                 __( 'You do not have permission to generate AI content.', 'wedocs' ),
@@ -1284,7 +1288,7 @@ class API extends WP_REST_Controller {
             );
         }
 
-        if ( ! current_user_can( 'edit_docs' ) ) {
+        if ( ! AbilitiesPolicy::can( 'ai.generate' ) ) {
             return new WP_Error(
                 'wedocs_permission_failure',
                 __( 'You do not have permission to upload images.', 'wedocs' ),
