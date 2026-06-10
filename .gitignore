@@ -24,7 +24,8 @@ wedocs*.zip
 /build/
 /dist/
 
-# Built assets — gitignored, NOT committed. CI runs `npm run build` and the 10up
-# deploy ships the on-disk working tree to wp.org (like wedevs-project-manager
-# ships its gitignored /views/assets/dist). Do NOT use BUILD_DIR — it strips this.
-assets/build/
+# NOTE: assets/build/ MUST stay TRACKED. The wp.org release is published by
+# Appsero (see appsero.json), which ships only git-tracked files. If assets/build
+# is untracked the package ships with NO built blocks and the plugin breaks on
+# activation (this caused the broken 2.2.5 + 2.2.6 releases). After any block/JS
+# change: `npm run build` and commit assets/build/ with the source.
