@@ -41,32 +41,24 @@ jobs:
       - name: Composer install (no dev)
         run: composer install --no-dev --optimize-autoloader
 
-      # assets/build is NOT tracked in git — it is built here and shipped via
-      # BUILD_DIR below. Stage a clean copy of exactly what wp.org should get.
-      - name: Stage plugin (build dir)
+      # assets/build is gitignored (NOT committed). It is built in CI above and the
+      # 10up deploy ships the on-disk working tree (minus .distignore) to wp.org —
+      # exactly like wedevs-project-manager ships its gitignored /views/assets/dist.
+      # Hard gate: if the build didn't land on disk, the package would ship without
+      # the blocks and fatal on activation. Fail fast.
+      - name: Verify built assets exist on disk
         run: |
-          mkdir -p dist
-          rsync -rc ./ dist/ \
-            --exclude-from=.distignore \
-            --exclude='.git/' \
-            --exclude='.github/' \
-            --exclude='dist/' \
-            --exclude='node_modules/' \
-            --exclude='wp-cli.phar' \
-            --exclude='RELEASE_NOTES.md' \
-            --exclude='wedocs.v*.zip'
-          echo "---- staged tree (top) ----"; ls dist
-          # Hard gate: the built blocks MUST be in the package or activation fatals.
-          test -f dist/assets/build/index.js \
-            || { echo "::error::dist/assets/build/index.js missing — build/stage failed"; exit 1; }
-          test -f dist/assets/build/blocks/DocsGrid/render.php \
-            || { echo "::error::dist/assets/build/blocks/DocsGrid/render.php missing"; exit 1; }
-          echo "OK: built assets present in BUILD_DIR ($(find dist/assets/build -type f | wc -l) files)"
+          test -f assets/build/index.js \
+            || { echo "::error::assets/build/index.js missing — build failed"; exit 1; }
+          test -f assets/build/blocks/DocsGrid/render.php \
+            || { echo "::error::assets/build/blocks/DocsGrid/render.php missing"; exit 1; }
+          echo "OK: built assets present on disk ($(find assets/build -type f | wc -l) files)"
 
       # Distributable zip via weDocs' own flow (bin/zip.js -> wedocs.vX.Y.Z.zip)
       - name: Generate weDocs zip
         run: npm run zip:create
 
+      # Pull this version's changelog block out of readme.txt for the release notes.
       - name: Extract changelog
         run: |
           { echo "## Changelog"; echo ""; \
@@ -80,15 +72,15 @@ jobs:
           files: wedocs.v*.zip
           body_path: RELEASE_NOTES.md
 
-      # Deploy the staged BUILD_DIR (includes the freshly built assets/build).
-      # BUILD_DIR deploys its contents verbatim — .distignore was already applied
-      # during staging above.
+      # wp.org SVN deploy last — the zip/Release above survive a deploy retry.
+      # NO BUILD_DIR: the default 10up flow rsyncs the working tree (with the
+      # freshly built, gitignored assets/build) minus .distignore. BUILD_DIR was
+      # what stripped assets/build in 2.2.5 — do not reintroduce it.
       - name: WordPress Plugin Deploy
         uses: 10up/action-wordpress-plugin-deploy@stable
         with:
           dry-run: false
         env:
-          BUILD_DIR: ./dist
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SLUG: wedocs

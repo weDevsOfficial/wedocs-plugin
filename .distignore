@@ -44,5 +44,13 @@ readme.md
 README.md
 CHANGELOG.md
 CLAUDE.md
+FILTERS.md
 *.zip
 *.log
+
+# Agent skills — keep the release-automation skill out of the wp.org package
+# (it is tracked in git for the team, but must never ship). The 2.2.5 deploy
+# leaked .claude because BUILD_DIR bypassed .distignore; the default 10up flow
+# applies this file, so .claude/ + the skill stay out of the package.
+.claude
+.claude/skills/wedocs-release/SKILL.md
