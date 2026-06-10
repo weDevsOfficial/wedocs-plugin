@@ -12,17 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Safety net: the wp.org SVN deploy ships only git-tracked files. If
-      # assets/build/ is ever untracked, the package ships without the built
-      # blocks and the plugin fatals on activation. Fail fast if that happens.
-      - name: Verify built assets are tracked
-        run: |
-          git ls-files assets/build | grep -q . \
-            || { echo "::error::assets/build is not tracked — wp.org would ship without built blocks. Commit assets/build/."; exit 1; }
-          test -f assets/build/blocks/DocsGrid/render.php \
-            || { echo "::error::assets/build/blocks/DocsGrid/render.php missing"; exit 1; }
-          echo "OK: assets/build is tracked"
-
       - name: Use Node.js 18
         uses: actions/setup-node@v4
         with:
@@ -34,6 +23,7 @@ jobs:
         with:
           php-version: '7.4'
 
+      # setup-php's `tools: wp-cli` is flaky (wp: not found -> POT step 127); install the phar.
       - name: Install WP-CLI
         run: |
           curl -sSL -o wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
@@ -52,7 +42,21 @@ jobs:
       - name: Composer install (no dev)
         run: composer install --no-dev --optimize-autoloader
 
-      # Build the distributable zip via weDocs' own flow (bin/zip.js -> wedocs.vX.Y.Z.zip)
+      # assets/build is gitignored (NOT committed) — built in CI above. Appsero's
+      # automatic wp.org release is OFF, so this 10up deploy is the sole publisher.
+      # The default 10up flow rsyncs the working tree (with the freshly built
+      # assets/build) to SVN, applying .distignore — exactly like
+      # wedevs-project-manager ships its gitignored /views/assets/dist. Hard gate:
+      # if the build didn't land on disk the package would ship with no blocks.
+      - name: Verify built assets exist on disk
+        run: |
+          test -f assets/build/index.js \
+            || { echo "::error::assets/build/index.js missing — build failed"; exit 1; }
+          test -f assets/build/blocks/DocsGrid/render.php \
+            || { echo "::error::assets/build/blocks/DocsGrid/render.php missing"; exit 1; }
+          echo "OK: built assets present on disk ($(find assets/build -type f | wc -l) files)"
+
+      # Distributable zip via weDocs' own flow (bin/zip.js -> wedocs.vX.Y.Z.zip)
       - name: Generate weDocs zip
         run: npm run zip:create
 
@@ -70,7 +74,9 @@ jobs:
           files: wedocs.v*.zip
           body_path: RELEASE_NOTES.md
 
-      # wp.org SVN deploy last — artifacts above are already published if this needs a retry.
+      # wp.org SVN deploy last — the zip/Release above survive a deploy retry.
+      # NO BUILD_DIR: it makes 10up sync the git-tracked set instead of the working
+      # tree, which strips the gitignored assets/build. Do not reintroduce it.
       - name: WordPress Plugin Deploy
         uses: 10up/action-wordpress-plugin-deploy@stable
         with:
