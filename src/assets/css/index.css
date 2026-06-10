@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Force a light color-scheme for all weDocs UI (modals, blocks, settings all
+ * carry the .wedocs-document wrapper). daisyui's base used to set this globally,
+ * but we disabled that base to stop it bleeding into the editor canvas — so on a
+ * dark-mode OS native form controls (inputs/selects) would otherwise render dark.
+ * Scoped to .wedocs-document, so no global bleed.
+ */
+.wedocs-document {
+    color-scheme: light;
+}
+
 /* wp-generator */
 /* write or paste your code here */
 html.wp-toolbar {
