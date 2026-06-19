@@ -33,7 +33,7 @@ class VendorDashboard {
         $settings_fields['show_docs_in_vendor_dashboard'] = [
             'name'    => 'show_docs_in_vendor_dashboard',
             'label'   => __( 'Show Docs in Vendor Dashboard', 'wedocs' ),
-            'desc'    => __( 'Allow vendors to view from their dashboard', 'wedocs' ),
+            'desc'    => __( 'Allow vendors to view from their dashboard using weDocs', 'wedocs' ),
             'type'    => 'switcher',
             'default' => 'off',
         ];
