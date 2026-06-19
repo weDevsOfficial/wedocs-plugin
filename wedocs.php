@@ -323,6 +323,11 @@ final class WeDocs {
         if ( did_action( 'elementor/loaded' ) ) {
             $this->container['elementor'] = new WeDevs\WeDocs\Elementor();
         }
+
+        // Initialize Dokan vendor dashboard integration if Dokan is active
+        if ( function_exists( 'dokan' ) ) {
+            $this->container['dokan_vendor_dashboard'] = new WeDevs\WeDocs\Dokan\VendorDashboard();
+        }
     }
 
     /**

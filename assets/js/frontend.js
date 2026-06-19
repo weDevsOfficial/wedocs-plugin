@@ -231,13 +231,12 @@
     },
 
     loadSingleDocSearchModal( e ) {
-      // Always load the search modal functionality, not just on single doc pages
-      // if ( !weDocs_Vars.isSingleDoc ) {
-      //   return;
-      // }
+      if ( !weDocs_Vars.isSingleDoc && !weDocs_Vars.isVendorDashboard ) {
+        return;
+      }
 
       const data = {
-        action   : 'wedocs_get_docs',
+        action   : weDocs_Vars.isVendorDashboard ? 'wedocs_get_vendor_docs' : 'wedocs_get_docs',
         _wpnonce : weDocs_Vars.nonce,
       };
 
@@ -307,22 +306,32 @@
       const ulNode = document.createElement( 'ul' );
       ulNode.setAttribute( 'id', 'doc-search-list' );
 
+      // Build a URL for a doc, using dashboard-scoped links when on the vendor dashboard.
+      const buildDocUrl = ( doc ) => {
+        if ( ! doc ) {
+          return '#';
+        }
+        if ( weDocs_Vars.isVendorDashboard && weDocs_Vars.vendorDocsBaseUrl ) {
+          return weDocs_Vars.vendorDocsBaseUrl + '?doc_id=' + doc.ID;
+        }
+        return doc?.permalink || doc?.guid;
+      };
+
       searchDocs.forEach( ( data, index ) => {
-        let url = data?.article ? data?.article?.permalink :
-          ( data?.section ? data?.section?.permalink : data?.parent?.permalink ),
-          title = data?.article ? data?.article?.post_title :
-            ( data?.section ? data?.section?.post_title : data?.parent?.post_title ),
+        const docItem = data?.article || data?.section || data?.parent;
+        let url = buildDocUrl( docItem ),
+          title = docItem?.post_title,
           parentNavigation = data?.section ?
             `<div class='parent-doc-nav'>
               ${ weDocs_Vars.docNavLabel }
-              <span data-url="${ data?.parent?.guid }" class="doc-search-hit-path">
+              <span data-url="${ buildDocUrl( data?.parent ) }" class="doc-search-hit-path">
                 ${ this.extractedTitle( data?.parent?.post_title, 35 ) }
               </span>
             </div>` : '',
           sectionNavigation = data?.article ?
             `<div class='section-doc-nav'>
               ${ weDocs_Vars.sectionNavLabel }
-              <span data-url="${ data?.section?.guid }" class="doc-search-hit-path">
+              <span data-url="${ buildDocUrl( data?.section ) }" class="doc-search-hit-path">
                 ${ this.extractedTitle( data?.section?.post_title, 35 ) }
               </span>
             </div>` : '';
@@ -337,10 +346,11 @@
         liNode.setAttribute( 'id', `doc-search-item-${index}` );
         liNode.setAttribute( 'role', 'option' );
         liNode.setAttribute( 'aria-selected', 'false' );
+        const linkTarget = weDocs_Vars.isVendorDashboard ? '_self' : '_blank';
         liNode.innerHTML = `
           <a
             href="${ url }"
-            target="_blank"
+            target="${ linkTarget }"
             class="${ bootstrapTemplate + tailwindTemplate }doc-search-hit-result"
           >
             <div class="doc-search-hit-container">
