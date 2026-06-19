@@ -191,7 +191,7 @@ const AddDocModal = ( { className, children } ) => {
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       { __( 'Visibility', 'wedocs' ) }
                     </label>
-                    <Listbox value={ selectedVisibility } onChange={ onVisibilityChange }>
+                    <Listbox value={ selectedVisibility } by="value" onChange={ onVisibilityChange }>
                       <div className="relative">
                         <Listbox.Button className="relative w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
                           <span className="block truncate">{ selectedVisibility.label }</span>

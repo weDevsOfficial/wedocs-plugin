@@ -16,7 +16,7 @@ const useVendorDocGating = () => {
   const isProLoaded = wp.hooks.applyFilters( 'wedocs_pro_loaded', false );
 
   const vendorDocCount = useSelect( ( select ) => {
-    const docs = select( DOCS_STORE ).getDocs();
+    const docs = select( DOCS_STORE ).getDocs() || [];
     return docs.filter( ( doc ) => doc.parent === 0 && doc.meta?._is_vendor_doc === '1' ).length;
   } );
 

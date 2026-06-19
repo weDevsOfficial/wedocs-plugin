@@ -126,12 +126,13 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
           </a>
 
           { type === 'doc' && (
-            <span
+            <button
+              type="button"
               onClick={ toggleVendorDoc }
               className="group flex items-center py-2 px-4 text-sm font-medium text-gray-700 hover:bg-indigo-700 hover:text-white !shadow-none cursor-pointer"
             >
               { isVendorDoc ? __( 'Unmark as vendor doc', 'wedocs' ) : __( 'Mark as vendor doc', 'wedocs' ) }
-            </span>
+            </button>
           ) }
 
           <span
