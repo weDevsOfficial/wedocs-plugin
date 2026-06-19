@@ -486,15 +486,14 @@ const GeneralSettings = ( {
                 <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
                   <label
                       className="block text-sm font-medium text-gray-600"
-                      id="headlessui-listbox-label-15"
-                      data-headlessui-state="open"
+                      htmlFor="wedocs-single-doc-template"
                   >
-                    {__('Use Legacy Template', 'wedocs')}
+                    {__('Single Doc Template', 'wedocs')}
                   </label>
                   <div
                       className="tooltip cursor-pointer ml-2 z-[9999]"
                       data-tip={__(
-                          'Enable legacy PHP template system for single doc pages. Disable to use the new builder template.',
+                          'Choose which renderer builds your single doc pages: Classic (PHP template), Block (block theme template), or Elementor (Elementor template).',
                           'wedocs'
                       )}
                   >
@@ -514,16 +513,41 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
-                  <Switcher
-                      name="use_legacy_template"
-                      settingsPanel={generalSettings}
-                      settingsData={settingsData}
-                      setSettings={setSettings}
-                      panelName={`general`}
-                      isEnabled={generalSettings?.use_legacy_template === 'on'}
-                  />
+                <div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+                  <select
+                      id="wedocs-single-doc-template"
+                      name="single_doc_template"
+                      className="w-full !rounded-md !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                      value={
+                          generalSettings?.single_doc_template
+                          || ( generalSettings?.use_legacy_template === 'on' ? 'legacy' : 'block' )
+                      }
+                      onChange={( e ) =>
+                          setSettings( {
+                              ...settingsData,
+                              general: {
+                                  ...generalSettingsData,
+                                  single_doc_template: e.target.value,
+                                  // Keep the legacy flag in sync for back-compat.
+                                  use_legacy_template:
+                                      e.target.value === 'legacy' ? 'on' : 'off',
+                              },
+                          } )
+                      }
+                  >
+                    <option value="legacy">{__('Classic (PHP Template)', 'wedocs')}</option>
+                    <option value="block">{__('Block (Block Theme Template)', 'wedocs')}</option>
+                    <option value="elementor">{__('Elementor', 'wedocs')}</option>
+                  </select>
                 </div>
+              </div>
+              <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
+                <p className="text-sm text-[#6B7280]">
+                  {__(
+                      'Only the selected renderer will build single doc pages. Elementor requires the Elementor plugin (and Elementor Pro Theme Builder for full template conditions).',
+                      'wedocs'
+                  )}
+                </p>
               </div>
             </div>
           </div>

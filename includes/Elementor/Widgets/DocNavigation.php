@@ -392,26 +392,12 @@ class DocNavigation extends Widget_Base {
             return;
         }
 
-        global $wpdb;
+        // Use the shared tree-aware navigation helper so next/prev cross
+        // section boundaries (same behavior as classic and block renderers).
+        $navigation = wedocs_get_doc_navigation_posts($current_post);
 
-        $next_post_id = 0;
-        $prev_post_id = 0;
-
-        if ($show_next) {
-            $next_query = "SELECT ID FROM {$wpdb->posts}
-                WHERE post_parent = {$current_post->post_parent} AND post_type = 'docs' AND post_status = 'publish' AND menu_order > {$current_post->menu_order}
-                ORDER BY menu_order ASC
-                LIMIT 0, 1";
-            $next_post_id = (int) $wpdb->get_var($next_query);
-        }
-
-        if ($show_prev) {
-            $prev_query = "SELECT ID FROM {$wpdb->posts}
-                WHERE post_parent = {$current_post->post_parent} AND post_type = 'docs' AND post_status = 'publish' AND menu_order < {$current_post->menu_order}
-                ORDER BY menu_order DESC
-                LIMIT 0, 1";
-            $prev_post_id = (int) $wpdb->get_var($prev_query);
-        }
+        $next_post_id = ($show_next && ! empty($navigation['next'])) ? (int) $navigation['next']->ID : 0;
+        $prev_post_id = ($show_prev && ! empty($navigation['prev'])) ? (int) $navigation['prev']->ID : 0;
 
         if (!$next_post_id && !$prev_post_id) {
             if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
