@@ -25,6 +25,8 @@
     ".wordpress-org",
     ".github",
     ".distignore",
-    ".eslintrc"
+    ".eslintrc",
+    ".claude",
+    "FILTERS.md"
   ]
 }

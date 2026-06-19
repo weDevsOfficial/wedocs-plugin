@@ -24,8 +24,10 @@ wedocs*.zip
 /build/
 /dist/
 
-# NOTE: assets/build/ IS tracked — the wp.org SVN deploy ships only git-tracked
-# files, so the built blocks/JS must be committed or activation fatals.
-
-# Built assets — gitignored; CI builds + ships them via BUILD_DIR (not committed)
+# Built assets — gitignored, NOT committed. Appsero's automatic wp.org release is
+# OFF, so the deploy-org.yml workflow is the sole publisher: it runs `npm run
+# build` in CI and the default 10up deploy ships the on-disk working tree (this
+# untracked assets/build) to SVN, applying .distignore — like wedevs-project-
+# manager ships its gitignored /views/assets/dist. NOTE: do NOT use 10up BUILD_DIR
+# (it syncs the git-tracked set and would strip this untracked build).
 assets/build/

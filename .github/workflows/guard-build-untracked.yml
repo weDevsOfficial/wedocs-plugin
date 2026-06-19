@@ -1,0 +1,24 @@
+name: Guard — built assets must stay untracked
+# assets/build/ is built in CI and shipped by the deploy workflow; it must NEVER
+# be committed to git (re-tracking it bloats every PR and was the recurring pain
+# point). Fail any PR/push that tracks files under assets/build/.
+on:
+  pull_request:
+  push:
+    branches:
+      - develop
+      - master
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail if assets/build is tracked
+        run: |
+          if git ls-files assets/build | grep -q .; then
+            echo "::error::assets/build/ is tracked in git. It must stay untracked — CI builds it."
+            echo "Run:  git rm -r --cached assets/build && git commit -m 'untrack built assets'"
+            git ls-files assets/build | head
+            exit 1
+          fi
+          echo "OK: assets/build is not tracked"
