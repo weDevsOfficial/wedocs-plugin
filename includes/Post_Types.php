@@ -24,6 +24,9 @@ class Post_Types {
 
         // Propagate _is_vendor_doc meta to descendants.
         add_action( 'rest_after_insert_docs', [ $this, 'inherit_vendor_doc_meta' ], 10, 2 );
+        // added_postmeta fires the first time the flag is written (new row);
+        // updated_postmeta fires on subsequent changes. Listen to both.
+        add_action( 'added_postmeta', [ $this, 'propagate_vendor_doc_meta' ], 10, 4 );
         add_action( 'updated_postmeta', [ $this, 'propagate_vendor_doc_meta' ], 10, 4 );
     }
 
@@ -174,6 +177,10 @@ class Post_Types {
 
         if ( '1' === $is_vendor ) {
             update_post_meta( $post->ID, '_is_vendor_doc', '1' );
+        } else {
+            // Root is not a vendor doc: clear any stale flag left from a
+            // previous parent so reparented docs don't keep vendor visibility.
+            update_post_meta( $post->ID, '_is_vendor_doc', '0' );
         }
     }
 
