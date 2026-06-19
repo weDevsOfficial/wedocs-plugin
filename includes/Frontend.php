@@ -149,7 +149,7 @@ class Frontend {
     /**
      * Dequeue pro messaging bubble scripts on the Dokan vendor dashboard.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.7
      *
      * @return void
      */
@@ -170,7 +170,7 @@ class Frontend {
      * public WP_Query for the docs post type so vendor docs are automatically
      * excluded from search results, block renders, Elementor widgets, etc.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.7
      *
      * @param WP_Query $query
      *
@@ -227,7 +227,7 @@ class Frontend {
     /**
      * Check if the current request is inside the Dokan vendor dashboard.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.7
      *
      * @return bool
      */

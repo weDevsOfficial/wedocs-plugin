@@ -23,7 +23,7 @@ class VendorDashboard {
     /**
      * Add vendor docs toggle to Dokan general site settings.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.7
      *
      * @param array $settings_fields Existing settings fields.
      *
@@ -44,7 +44,7 @@ class VendorDashboard {
     /**
      * Add Docs menu item to the Dokan vendor dashboard sidebar.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.7
      *
      * @param array $menus Existing dashboard nav menus.
      *
@@ -75,7 +75,7 @@ class VendorDashboard {
     /**
      * Register docs query var for the Dokan vendor dashboard.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.7
      *
      * @param array $query_vars Existing query vars.
      *
@@ -93,7 +93,7 @@ class VendorDashboard {
      * If the query var has a numeric value, load a single doc view
      * inside the dashboard. Otherwise, load the doc listing.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.7
      *
      * @param array $query_vars Current query vars.
      *
@@ -149,7 +149,7 @@ class VendorDashboard {
      * Writes the Dokan sidebar localStorage key and dispatches a storage event so the
      * React app collapses immediately without requiring a page reload.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.7
      *
      * @return void
      */

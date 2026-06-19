@@ -26,7 +26,7 @@ if ( ! empty( $post->post_parent ) ) {
  * Produces HTML structure matching docs-sidebar.php so the existing
  * wedocs frontend CSS and JS (carets, collapse/expand) work correctly.
  *
- * @since WEDOCS_SINCE
+ * @since 2.2.7
  *
  * @param int    $parent_id      ID of the parent post whose children to list.
  * @param string $dashboard_base Base URL of the vendor docs dashboard page.
@@ -43,7 +43,7 @@ if ( ! empty( $post->post_parent ) ) {
  * A single query replaces the per-node get_posts() calls that
  * previously caused an N+1 problem in the sidebar nav builder.
  *
- * @since WEDOCS_SINCE
+ * @since 2.2.7
  *
  * @param int    $root_id   Root doc ID whose descendants to fetch.
  * @param string $post_type Post type to query.
@@ -77,7 +77,7 @@ endif;
  *
  * Uses a pre-fetched descendants lookup to avoid per-node queries.
  *
- * @since WEDOCS_SINCE
+ * @since 2.2.7
  *
  * @param int    $parent_id      ID of the parent post whose children to list.
  * @param string $dashboard_base Base URL of the vendor docs dashboard page.

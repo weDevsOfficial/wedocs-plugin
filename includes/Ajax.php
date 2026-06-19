@@ -104,7 +104,7 @@ class Ajax {
      * the same way as get_docs() so the frontend search modal can
      * reuse the same client-side filtering logic.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.7
      *
      * @return void
      */

@@ -137,7 +137,7 @@ class Post_Types {
     /**
      * Register post meta fields for the docs post type.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.7
      *
      * @return void
      */
@@ -159,7 +159,7 @@ class Post_Types {
      * When a section or article is created under a vendor doc tree, it should
      * automatically inherit the vendor doc flag from its root ancestor.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.7
      *
      * @param \WP_Post         $post    Inserted or updated post object.
      * @param \WP_REST_Request $request Request object.
@@ -190,7 +190,7 @@ class Post_Types {
      * When a root doc is marked or unmarked as a vendor doc, all its
      * sections and articles should receive the same meta value.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.2.7
      *
      * @param int    $meta_id    ID of the metadata entry.
      * @param int    $post_id    Post ID.

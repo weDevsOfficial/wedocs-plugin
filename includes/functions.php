@@ -1017,7 +1017,7 @@ function wedocs_is_pro_active() {
 /**
  * Get the meta_query clauses to exclude vendor docs from queries
  *
- * @since WEDOCS_SINCE
+ * @since 2.2.7
  *
  * @return array
  */
