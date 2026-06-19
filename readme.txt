@@ -13,11 +13,9 @@ Build a powerful documentation hub with an AI-powered knowledge base, docs, wiki
 
 ### The Ultimate AI-Powered Knowledge Base & Documentation Solution for WordPress
 
-[weDocs](https://wedocs.co/) is the best AI-powered knowledge base plugin for WordPress that helps you create, organize, and manage your documentation effortlessly.
+[weDocs](https://wedocs.co/) is a free knowledge base and documentation plugin for WordPress. Build a help center, product docs, an FAQ, a wiki, or an internal knowledge base in minutes, with a drag-and-drop editor, AI doc writer, live search, and an optional AI chatbot that answers your users automatically.
 
-It’s the perfect solution for product owners, agencies, and businesses who want to offer clear, structured, and professional documentation, all inside WordPress.
-
-With weDocs, you can create unlimited documentation, structure content in sections and articles, enable live search, add an AI chatbot for instant answers, and even include a floating contact form to collect feedback. Everything is built to make your documents more helpful, engaging, and easy to navigate.
+If you document WordPress plugins, themes, SaaS apps, or internal team processes, weDocs makes it fast and simple. No page builder required, no code, and a generous free version you can launch with today.
 
 ## Useful Links
 [Docs](https://wedocs.co/docs/) | [Videos](https://www.youtube.com/watch?v=9E7ZJetD2WU&list=PLJorZsV2RVv8LVL6E6OkFWcP_9B4EHWu4&index=7) | [Support](https://wedocs.co/get-support/) | [Get Pro](https://wedocs.co/pricing/)
@@ -27,26 +25,18 @@ With weDocs, you can create unlimited documentation, structure content in sectio
 
 ---
 
-## 🎉 Introducing the Next Gen of weDocs — The Ultimate Documentation Plugin for WordPress
-
-weDocs is the best documentation tool for WordPress that lets you manage your product’s knowledge base, guides, and wiki in just minutes.
-
-Whether you’re documenting WordPress plugins, themes, SaaS apps, or internal processes, weDocs makes the entire experience fast, modern, and effortless.
-Create beautiful docs, structure them neatly, and boost engagement, all from one place.
-
----
 
 ## Key Benefits
 
-– Organize all your documentation in one place
-– Easy-to-use drag-and-drop interface
-– Supports unlimited documents and knowledge bases
-– Seamless integration with WordPress & Gutenberg
-– AI Chatbot (Pro) for instant automated user support
-– Floating contact form for quick user feedback (Pro)
-– Pre-built layouts and advanced styling options (Pro)
-– Role-based permissions and privacy control (Pro)
-– Multilingual support via Weglot
+* Organize all your documentation in one place
+* Easy-to-use drag-and-drop interface
+* Supports unlimited documents and knowledge bases
+* Seamless integration with WordPress & Gutenberg
+* AI Chatbot (Pro) for instant automated user support
+* Floating contact form for quick user feedback (Pro)
+* Pre-built layouts and advanced styling options (Pro)
+* Role-based permissions and privacy control (Pro)
+* Multilingual support via Weglot
 
 ---
 
@@ -111,6 +101,14 @@ weDocs Pro unlocks advanced tools for businesses that need deeper customization,
 
 – **[Social Sharing Options](https://wedocs.co/docs/permission-management/social-share/):** Allow users to share docs across popular social platforms.
 
+## Perfect For
+ 
+* SaaS product documentation and help centers
+* WordPress plugin and theme docs
+* Internal team wikis and private knowledge bases
+* FAQ and self-service support pages
+* Customer onboarding and how-to guides
+
 ---
 
 ## How It Works
@@ -172,23 +170,35 @@ weDocs uses the Appsero SDK to collect telemetry data (only with user permission
 
 ## Frequently Asked Questions
 
-= How can I create new documentation? =
-Go to **Docs → + New Doc**, give it a title, and start writing.
+= Is weDocs free? =
+Yes. The free version includes unlimited docs, a drag-and-drop editor, live search, the AI Doc Writer, 18 blocks, BetterDocs migration, and more. You can build and publish a complete knowledge base without paying. Pro adds the AI Chatbot, permissions, privacy controls, and advanced styling.
 
-= Can I customize the appearance of my documentation? =
-Yes. weDocs includes styling options and templates, with more customization in Pro.
+= Does weDocs slow down my site? =
+No. weDocs 2.x loads its scripts and styles only on documentation pages where they are needed, so the rest of your site stays fast. If you ever see a performance issue, contact support and the team will help.
 
-= Can I export my documentation? =
-Yes, you can export documentation as PDF or HTML.
-
-= How can I enable user feedback? =
-Enable comments in WordPress or use the built-in feedback system.
-
+= Can I build a help center or FAQ page with weDocs? =
+ 
+Yes. weDocs is built for help centers, FAQ pages, product docs, and self-service support. Use sections, live search, and feedback voting to help readers find answers on their own.
+ 
 = Is the AI Chatbot free? =
-No, it’s a premium feature in weDocs Pro.
-
-= Can I customize the URL structure? =
-Yes, weDocs supports custom permalinks for documentation pages.
+ 
+The AI Chatbot is a Pro feature. The free version still includes the AI Doc Writer, which generates documentation from prompts, product details, or screenshots.
+ 
+= Can I create private or internal documentation? =
+ 
+Yes. With weDocs Pro you can restrict docs to selected users or roles, which is ideal for internal team wikis and private knowledge bases.
+ 
+= Can I migrate from BetterDocs? =
+ 
+Yes. weDocs includes a one-click migration tool that moves your existing BetterDocs documentation into weDocs.
+ 
+= Can I customize how my documentation looks? =
+ 
+Yes. The free version supports full Gutenberg styling and 18 blocks. Pro adds pre-built layouts and templates you can apply without code.
+ 
+= Can I export my documentation? =
+ 
+Yes. You can export documentation as PDF or HTML.
 
 ---
 
