@@ -3,7 +3,7 @@
 Plugin Name: weDocs
 Plugin URI: https://wedocs.co/
 Description: A documentation plugin for WordPress
-Version: 2.2.7
+Version: 2.3.0
 Author: weDevs
 Author URI: https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri
 License: GPL2
@@ -60,7 +60,7 @@ final class WeDocs {
      *
      * @var string
      */
-    const VERSION = '2.2.7';
+    const VERSION = '2.3.0';
 
     /**
      * The plugin url.
