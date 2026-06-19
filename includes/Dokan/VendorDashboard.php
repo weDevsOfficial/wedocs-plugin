@@ -115,16 +115,25 @@ class VendorDashboard {
         $doc_id = ! empty( $_GET['doc_id'] ) ? absint( $_GET['doc_id'] ) : 0;
 
         if ( $doc_id > 0 ) {
-            $post = get_post( $doc_id );
+            $doc = get_post( $doc_id );
 
-            if ( $post && 'docs' === $post->post_type && 'publish' === $post->post_status ) {
+            if ( $doc && 'docs' === $doc->post_type && 'publish' === $doc->post_status ) {
                 // _is_vendor_doc is set only on the root doc. For sections and articles,
                 // walk up to the root ancestor and check the meta there.
-                $ancestors = $post->post_parent ? get_post_ancestors( $post->ID ) : [];
-                $root_id   = ! empty( $ancestors ) ? end( $ancestors ) : $post->ID;
+                $ancestors = $doc->post_parent ? get_post_ancestors( $doc->ID ) : [];
+                $root_id   = ! empty( $ancestors ) ? end( $ancestors ) : $doc->ID;
 
                 if ( '1' === get_post_meta( $root_id, '_is_vendor_doc', true ) ) {
+                    // Set up the global post so template tags and the_content
+                    // filters run in the correct context inside the template.
+                    global $post;
+                    // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+                    $post = $doc;
+                    setup_postdata( $post );
+
                     require WEDOCS_PATH . '/templates/vendor-single-doc.php';
+
+                    wp_reset_postdata();
 
                     return;
                 }

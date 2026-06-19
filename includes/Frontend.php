@@ -177,10 +177,10 @@ class Frontend {
      * @return void
      */
     public function exclude_vendor_docs( $query ) {
-        // Only target docs post type queries.
+        // Only target docs post type queries. post_type may be a string or an array.
         $post_type = $query->get( 'post_type' );
 
-        if ( 'docs' !== $post_type ) {
+        if ( ! in_array( 'docs', (array) $post_type, true ) ) {
             return;
         }
 
@@ -208,11 +208,18 @@ class Frontend {
 
         $meta_query = $query->get( 'meta_query' );
 
-        if ( ! is_array( $meta_query ) ) {
-            $meta_query = [];
+        if ( ! is_array( $meta_query ) || empty( $meta_query ) ) {
+            // No existing clauses: the exclusion can stand on its own.
+            $meta_query = [ wedocs_exclude_vendor_doc_meta_query() ];
+        } else {
+            // Wrap existing clauses and the exclusion under an explicit AND so a
+            // pre-existing 'OR' relation can't let vendor docs slip through.
+            $meta_query = [
+                'relation' => 'AND',
+                $meta_query,
+                wedocs_exclude_vendor_doc_meta_query(),
+            ];
         }
-
-        $meta_query[] = wedocs_exclude_vendor_doc_meta_query();
 
         $query->set( 'meta_query', $meta_query );
     }
