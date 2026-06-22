@@ -77,6 +77,18 @@ The free version of weDocs provides a solid foundation for building a profession
 
 ---
 
+## Vendor Documentation for Dokan Multivendor Marketplaces 
+
+weDocs now integrates with Dokan, the most popular multivendor marketplace plugin for WooCommerce. Mark any document as Vendor Documentation and display it right inside the Dokan vendor dashboard, so your sellers get a dedicated knowledge base built just for them.
+
+Instead of answering the same questions over and over, give your marketplace vendors self-service docs for onboarding, store setup, marketplace policies, shipping, and payout information. Vendor documentation stays separate from your customer-facing help center, so each audience finds exactly what it needs.
+
+* Mark any doc as vendor-only with a single click
+* Show vendor docs inside the Dokan vendor dashboard
+* Organize vendor onboarding guides, store guides, policies, and payout info
+* Reduce repetitive vendor support requests with self-service documentation
+* Works with the free version of weDocs and Dokan (mark one vendor doc free, unlimited with Pro)
+
 ## weDocs Pro Allows You to Create a Professional & Advanced Knowledge Base
 
 weDocs Pro unlocks advanced tools for businesses that need deeper customization, team collaboration, and AI-driven support.
@@ -171,7 +183,7 @@ weDocs uses the Appsero SDK to collect telemetry data (only with user permission
 ## Frequently Asked Questions
 
 = Is weDocs free? =
-Yes. The free version includes unlimited docs, a drag-and-drop editor, live search, the AI Doc Writer, 18 blocks, BetterDocs migration, and more. You can build and publish a complete knowledge base without paying. Pro adds the AI Chatbot, permissions, privacy controls, and advanced styling.
+Yes. The free version includes unlimited docs, a drag-and-drop editor, live search, the AI Doc Writer, BetterDocs migration, and more. You can build and publish a complete knowledge base without paying. Pro adds the AI Chatbot, permissions, privacy controls, and advanced styling.
 
 = Does weDocs slow down my site? =
 No. weDocs 2.x loads its scripts and styles only on documentation pages where they are needed, so the rest of your site stays fast. If you ever see a performance issue, contact support and the team will help.
@@ -196,9 +208,6 @@ Yes. weDocs includes a one-click migration tool that moves your existing BetterD
  
 Yes. The free version supports full Gutenberg styling and 18 blocks. Pro adds pre-built layouts and templates you can apply without code.
  
-= Can I export my documentation? =
- 
-Yes. You can export documentation as PDF or HTML.
 
 ---
 
