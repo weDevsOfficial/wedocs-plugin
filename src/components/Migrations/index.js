@@ -23,7 +23,10 @@ const Migrate = () => {
         jQuery.ajax( {
             url      : ajaxurl,
             type     : 'POST',
-            data     : { action : 'wedocs_check_need_betterdocs_migration' },
+            data     : {
+                action : 'wedocs_check_need_betterdocs_migration',
+                nonce  : weDocsAdminVars?.migrationNonce,
+            },
             dataType : 'json',
             success  : ( response ) => {
                 setNeedMigrate( response?.data?.success );
@@ -53,6 +56,7 @@ const Migrate = () => {
         const data = {
             action            : 'wedocs_migrate_betterdocs_to_wedocs',
             migratedDocLength : migrated_length,
+            nonce             : weDocsAdminVars?.migrationNonce,
         };
 
         // Add parent title for migration.
