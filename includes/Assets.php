@@ -76,7 +76,7 @@ class Assets {
                     'hasManageCap'  => current_user_can( 'manage_options' ),
                     'weDocsUrl'     => admin_url( 'admin.php?page=wedocs#/' ),
                     'pro_active'    => wedocs_is_pro_active(),
-                    'dokan_active'  => function_exists( 'dokan' ),
+                    'dokan_active'  => is_plugin_active( 'dokan-lite/dokan.php' ),
                     'upgradePopupContent' => wedocs_get_upgrade_popup_content(),
                     'siteUrl'       => home_url( '/' ),
                 ),
