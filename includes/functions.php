@@ -1182,3 +1182,113 @@ function use_wedocs_legacy_template(){
 
     return false;
 }
+
+/**
+ * Run a keyword search across docs.
+ *
+ * Matches doc titles/content (WP core search) plus `doc_tag` taxonomy terms,
+ * ordering title/content relevance hits first. Extensible by weDocs Pro via the
+ * `wedocs_search_terms`, `wedocs_search_query_args` and `wedocs_search_results` filters.
+ *
+ * @since 2.3.0
+ *
+ * @param string $term      Search term.
+ * @param array  $overrides Extra WP_Query args (e.g. posts_per_page, paged).
+ *
+ * @return \WP_Query
+ */
+function wedocs_search_docs_query( $term, $overrides = [] ) {
+    $term = trim( wp_strip_all_tags( (string) $term ) );
+
+    /**
+     * Filter the effective search term before querying.
+     *
+     * Pro uses this to expand synonyms (e.g. append related words).
+     *
+     * @since 2.3.0
+     *
+     * @param string $term
+     */
+    $term = apply_filters( 'wedocs_search_terms', $term );
+
+    // Widen recall: collect docs whose doc_tag terms match the query.
+    $tag_post_ids = [];
+
+    if ( strlen( $term ) >= 2 ) {
+        $matching_terms = get_terms( [
+            'taxonomy'   => 'doc_tag',
+            'name__like' => $term,
+            'hide_empty' => true,
+            'fields'     => 'ids',
+        ] );
+
+        if ( ! is_wp_error( $matching_terms ) && ! empty( $matching_terms ) ) {
+            $tag_query = new WP_Query( [
+                'post_type'      => 'docs',
+                'post_status'    => 'publish',
+                'posts_per_page' => 50,
+                'fields'         => 'ids',
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+                'tax_query'      => [
+                    [
+                        'taxonomy' => 'doc_tag',
+                        'field'    => 'term_id',
+                        'terms'    => $matching_terms,
+                    ],
+                ],
+            ] );
+
+            $tag_post_ids = array_map( 'intval', $tag_query->posts );
+        }
+    }
+
+    $args = array_merge( [
+        'post_type'      => 'docs',
+        'post_status'    => 'publish',
+        'posts_per_page' => 10,
+        's'              => $term,
+        'orderby'        => 'relevance',
+    ], $overrides );
+
+    // Stash tag matches so a posts_where/posts_search filter can OR them in.
+    if ( ! empty( $tag_post_ids ) ) {
+        $where_cb = function ( $where ) use ( $tag_post_ids ) {
+            global $wpdb;
+            $ids = implode( ',', array_map( 'absint', $tag_post_ids ) );
+
+            // OR the tag-matched IDs into whatever search WHERE WP built.
+            return $where . " OR ( {$wpdb->posts}.ID IN ({$ids}) AND {$wpdb->posts}.post_type = 'docs' AND {$wpdb->posts}.post_status = 'publish' )";
+        };
+
+        add_filter( 'posts_search', $where_cb, 10, 1 );
+    }
+
+    /**
+     * Filter the WP_Query args for a doc search.
+     *
+     * @since 2.3.0
+     *
+     * @param array  $args
+     * @param string $term
+     */
+    $args = apply_filters( 'wedocs_search_query_args', $args, $term );
+
+    $query = new WP_Query( $args );
+
+    if ( ! empty( $tag_post_ids ) ) {
+        remove_filter( 'posts_search', $where_cb, 10 );
+    }
+
+    /**
+     * Filter the resolved search result post IDs (read-only hook for analytics/insights).
+     *
+     * @since 2.3.0
+     *
+     * @param array     $post_ids
+     * @param string    $term
+     * @param \WP_Query $query
+     */
+    do_action( 'wedocs_search_results', wp_list_pluck( $query->posts, 'ID' ), $term, $query );
+
+    return $query;
+}

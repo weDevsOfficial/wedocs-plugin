@@ -39,6 +39,10 @@ class API extends WP_REST_Controller {
         // Register upgrader api.
         $upgrader_api = new UpgraderApi( $api );
         $upgrader_api->register_api();
+
+        // Register analytics api.
+        $analytics_api = new AnalyticsApi( $api );
+        $analytics_api->register_api();
     }
 
     /**
@@ -827,11 +831,9 @@ class API extends WP_REST_Controller {
      * @return \WP_REST_Response
      */
     public function search_docs( $request ) {
-        $args = [
-            'post_type'      => 'docs',
+        $overrides = [
             'posts_per_page' => $request['per_page'],
             'paged'          => $request['page'],
-            's'              => $request['query'],
         ];
 
         if ( $request['in'] ) {
@@ -841,12 +843,19 @@ class API extends WP_REST_Controller {
             if ( $children_docs ) {
                 $post__in = array_merge( $post__in, wp_list_pluck( $children_docs, 'ID' ) );
 
-                $args['post__in'] = $post__in;
+                $overrides['post__in'] = $post__in;
             }
         }
 
-        $query  = new WP_Query( $args );
-        $docs   = $query->get_posts();
+        // Keyword search: title/content + doc_tag taxonomy matching, with relevance ordering.
+        $query = wedocs_search_docs_query( $request['query'], $overrides );
+        $args  = $query->query_vars;
+        $docs  = $query->get_posts();
+
+        // Log the search (skips bots/short queries internally). Only on first page to avoid double counts.
+        if ( (int) $request['page'] === 1 ) {
+            wedocs()->analytics->log_search( $request['query'], (int) $query->found_posts );
+        }
         $result = [];
 
         foreach ( $docs as $doc ) {

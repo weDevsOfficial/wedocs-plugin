@@ -204,3 +204,69 @@ add_filter( 'wedocs_upgrade_popup_content', function( $content ) {
 - The popup content is cached in the JavaScript layer, so changes will take effect on the next page load.
 - Make sure to test your custom content in the popup to ensure it displays correctly.
 - Keep feature descriptions concise to maintain a good user experience.
+
+---
+
+# Analytics & Search Filters
+
+_Added in 2.3.0 with the Analytics, Reports & Keyword Search feature set._
+
+## `wedocs_track_views`
+
+Enable/disable doc view tracking entirely.
+
+- **$track** (bool) — default `true`.
+- **$doc_id** (int) — the doc being viewed.
+
+```php
+add_filter( 'wedocs_track_views', '__return_false' ); // disable all view tracking
+```
+
+## `wedocs_track_view_for_user`
+
+Whether to count a view for the current user. Defaults to skipping users who can `edit_docs` (so authors don't inflate counts).
+
+- **$track** (bool)
+- **$user_id** (int)
+- **$doc_id** (int)
+
+## `wedocs_is_bot`
+
+Override bot detection used to exclude crawlers from views/search logs.
+
+- **$is_bot** (bool)
+- **$ua** (string) — lowercased user agent.
+
+## `wedocs_log_search`
+
+Enable/disable logging of a search term.
+
+- **$log** (bool) — default `true`.
+- **$term** (string)
+
+## `wedocs_search_terms`
+
+Transform the effective search term before querying. weDocs Pro uses this to expand synonyms.
+
+- **$term** (string) — return the (possibly expanded) term.
+
+```php
+add_filter( 'wedocs_search_terms', function ( $term ) {
+    return $term === 'login' ? 'login sign-in signin' : $term;
+} );
+```
+
+## `wedocs_search_query_args`
+
+Filter the `WP_Query` args used for a doc search.
+
+- **$args** (array)
+- **$term** (string)
+
+## `wedocs_search_results` (action)
+
+Fires after a search resolves. Read-only hook for analytics/insights.
+
+- **$post_ids** (int[])
+- **$term** (string)
+- **$query** (WP_Query)

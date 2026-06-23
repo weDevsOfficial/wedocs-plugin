@@ -134,6 +134,7 @@ final class WeDocs {
      */
     public function define_constants() {
         define( 'WEDOCS_VERSION', self::VERSION );
+        define( 'WEDOCS_DB_VERSION', '1.0.0' );
         define( 'WEDOCS_FILE', __FILE__ );
         define( 'WEDOCS_PATH', __DIR__ );
         define( 'WEDOCS_URL', plugins_url( '', WEDOCS_FILE ) );
@@ -165,6 +166,9 @@ final class WeDocs {
      */
     public function init_actions() {
         $this->theme_dir_path = apply_filters( 'wedocs_theme_dir_path', 'wedocs/' );
+
+        // Ensure analytics tables exist on existing installs (gated by db version option).
+        add_action( 'admin_init', [ 'WeDevs\WeDocs\Analytics', 'maybe_create_tables' ] );
 
         // Localize our plugin
         add_action( 'init', [ $this, 'localization_setup' ] );
@@ -313,6 +317,7 @@ final class WeDocs {
         }
 
         $this->container['api']        = new WeDevs\WeDocs\API();
+        $this->container['analytics']  = new WeDevs\WeDocs\Analytics();
         $this->container['assets']     = new WeDevs\WeDocs\Assets();
         $this->container['migrate']    = new WeDevs\WeDocs\Admin\Migrate();
         $this->container['upgrader']   = new WeDevs\WeDocs\Upgrader\Upgrader();

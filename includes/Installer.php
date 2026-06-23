@@ -18,6 +18,8 @@ class Installer {
         $this->maybe_create_docs_page();
         $this->add_post_types();
         $this->timestamps();
+        Analytics::create_tables();
+        update_option( 'wedocs_db_version', WEDOCS_DB_VERSION );
         wedocs_user_documentation_handling_capabilities();
     }
 

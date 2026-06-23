@@ -520,17 +520,13 @@ class Ajax {
             wp_send_json_error( __( 'Query must be at least 2 characters long.', 'wedocs' ) );
         }
 
-        // Use existing search logic from API
-        $args = [
-            'post_type'      => 'docs',
-            'posts_per_page' => $per_page,
-            's'              => $query,
-            'post_status'    => 'publish',
-        ];
+        // Keyword search: title/content + doc_tag taxonomy matching, with relevance ordering.
+        $query_obj = wedocs_search_docs_query( $query, [ 'posts_per_page' => $per_page ] );
+        $docs      = $query_obj->get_posts();
+        $results   = [];
 
-        $query_obj = new \WP_Query( $args );
-        $docs = $query_obj->get_posts();
-        $results = [];
+        // Log the search (skips bots/short queries internally).
+        wedocs()->analytics->log_search( $query, (int) $query_obj->found_posts );
 
         foreach ( $docs as $doc ) {
             $results[] = [

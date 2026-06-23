@@ -75,6 +75,8 @@ class Assets {
                     'adminUrl'      => admin_url(),
                     'hasManageCap'  => current_user_can( 'manage_options' ),
                     'migrationNonce' => wp_create_nonce( 'wedocs-migration' ),
+                    'restNonce'     => wp_create_nonce( 'wp_rest' ),
+                    'restUrl'       => esc_url_raw( rest_url() ),
                     'weDocsUrl'     => admin_url( 'admin.php?page=wedocs#/' ),
                     'pro_active'    => wedocs_is_pro_active(),
                     'dokan_active'  => is_plugin_active( 'dokan-lite/dokan.php' ),

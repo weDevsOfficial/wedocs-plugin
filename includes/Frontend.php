@@ -44,6 +44,9 @@ class Frontend {
         // override the theme template
         add_filter( 'template_include', [ $this, 'template_loader' ], 20 );
 
+        // Record a doc view (server-side, privacy-safe). Works for classic and block themes.
+        add_action( 'template_redirect', [ $this, 'track_doc_view' ] );
+
         $this->init_classes();
     }
 
@@ -55,6 +58,28 @@ class Frontend {
     public function init_classes() {
         $this->shortcode = new Shortcode();
         $this->theme     = new Theme_Support();
+    }
+
+    /**
+     * Record a view when a single doc is rendered.
+     *
+     * Bot/editor filtering and de-duplication are handled inside Analytics.
+     *
+     * @since 2.3.0
+     *
+     * @return void
+     */
+    public function track_doc_view() {
+        if ( is_admin() || ! is_singular( 'docs' ) ) {
+            return;
+        }
+
+        // Skip feed, embed and REST contexts.
+        if ( is_feed() || is_embed() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+            return;
+        }
+
+        wedocs()->analytics->record_view( get_queried_object_id() );
     }
 
     /**

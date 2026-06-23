@@ -135,6 +135,7 @@ const Documentations = () => {
               { __( `New doc`, 'wedocs' ) }
             </AddDocModal>
           ) }
+          { wp.hooks.applyFilters( 'wedocs_documentation_header_actions', null, { isAdmin } ) }
           { parentDocs && parentDocs.length > 0 && (
             <SearchFilter
               handleChange={ handleChange }
