@@ -26,6 +26,8 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
   const [ isVendorDoc, setIsVendorDoc ] = useState( doc?.meta?._is_vendor_doc === '1' );
   const [ isUpgradeOpen, setIsUpgradeOpen ] = useState( false );
 
+  // Vendor docs are a Dokan integration: only expose the action when Dokan is active.
+  const isDokanActive = !! weDocsAdminVars?.dokan_active;
   const { isGated } = useVendorDocGating();
 
   // Toggle vendor doc meta.
@@ -125,7 +127,7 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
             { __( 'View', 'wedocs' ) }
           </a>
 
-          { type === 'doc' && (
+          { isDokanActive && type === 'doc' && (
             <button
               type="button"
               onClick={ toggleVendorDoc }
