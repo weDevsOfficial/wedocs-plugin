@@ -76,6 +76,61 @@ if ( ! function_exists( 'wedocs_get_color_value' ) ) {
 }
 
 /**
+ * Validate a CSS length value (e.g. "1px", "0.5rem", "10%").
+ *
+ * Block attributes are stored unsanitized, so any string reaching a
+ * style attribute must be validated before output. Anything that is not
+ * a plain CSS length falls back to a safe default to prevent attribute
+ * breakouts / stored XSS.
+ *
+ * @since 2.3.1
+ *
+ * @param mixed  $value    The raw value to validate.
+ * @param string $fallback Fallback length when validation fails.
+ *
+ * @return string A safe CSS length value.
+ */
+if ( ! function_exists( 'wedocs_sanitize_css_length' ) ) {
+    function wedocs_sanitize_css_length( $value, $fallback = '1px' ) {
+        if ( ! is_string( $value ) && ! is_numeric( $value ) ) {
+            return $fallback;
+        }
+
+        $value = trim( (string) $value );
+
+        // Allow a bare number (treated as px-less) or number + unit.
+        if ( preg_match( '/^\d+(\.\d+)?(px|em|rem|%|vh|vw|pt)?$/', $value ) ) {
+            return $value;
+        }
+
+        return $fallback;
+    }
+}
+
+/**
+ * Validate an HTML heading/inline tag name against a whitelist.
+ *
+ * esc_attr() is NOT a safe escaper for tag names — a value like
+ * "h3 onclick=alert(1)" survives it and breaks out into attributes.
+ * Only a strict whitelist is safe here.
+ *
+ * @since 2.3.1
+ *
+ * @param mixed  $tag      The raw tag name.
+ * @param string $fallback Fallback tag when not whitelisted.
+ *
+ * @return string A safe, whitelisted tag name.
+ */
+if ( ! function_exists( 'wedocs_sanitize_tag_name' ) ) {
+    function wedocs_sanitize_tag_name( $tag, $fallback = 'h3' ) {
+        $allowed = [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span', 'p' ];
+        $tag     = is_string( $tag ) ? strtolower( trim( $tag ) ) : '';
+
+        return in_array( $tag, $allowed, true ) ? $tag : $fallback;
+    }
+}
+
+/**
  * Process WordPress color class and add to appropriate output
  *
  * @param string $parsed_color The parsed color value
@@ -134,8 +189,9 @@ if ( ! function_exists( 'wedocs_generate_connector_line' ) ) {
 
         $connector_width = intval( str_replace( 'px', '', $tree_styles['indentation'] ?? '20' ) ) / 2;
         $connector_color = wedocs_get_color_value( $tree_styles['connectorColor'] ?? '', '#e5e7eb' );
+        $line_width      = wedocs_sanitize_css_length( $tree_styles['connectorWidth'] ?? '1px', '1px' );
 
-        return '<div class="wedocs-connector-line" style="position: absolute; left: -' . $connector_width . 'px; top: 0; bottom: 0; width: ' . ( $tree_styles['connectorWidth'] ?? '1px' ) . '; background-color: ' . esc_attr( $connector_color ) . ';"></div>';
+        return '<div class="wedocs-connector-line" style="position: absolute; left: -' . esc_attr( $connector_width ) . 'px; top: 0; bottom: 0; width: ' . esc_attr( $line_width ) . '; background-color: ' . esc_attr( $connector_color ) . ';"></div>';
     }
 }
 if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
@@ -151,8 +207,8 @@ if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
     if ($enable_nested_articles === '') {
         $enable_nested_articles = true;
     }
-        $section_title_tag      = $attributes['sectionTitleTag'] ?? 'h3';
-        $article_title_tag      = $attributes['articleTitleTag'] ?? 'h4';
+        $section_title_tag      = wedocs_sanitize_tag_name( $attributes['sectionTitleTag'] ?? 'h3', 'h3' );
+        $article_title_tag      = wedocs_sanitize_tag_name( $attributes['articleTitleTag'] ?? 'h4', 'h4' );
         // Styling attributes
         $container_styles   = $attributes['containerStyles'] ?? [];
         $section_styles     = $attributes['sectionStyles'] ?? [];
@@ -443,7 +499,7 @@ if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
         if ( $level > 0 ) {
             $section_style .= 'margin-left: ' . $indentation . 'px;';
         }
-        $section_style .= 'margin-bottom: ' . ( $tree_styles['itemSpacing'] ?? '4px' ) . ';';
+        $section_style .= 'margin-bottom: ' . wedocs_sanitize_css_length( $tree_styles['itemSpacing'] ?? '4px', '4px' ) . ';';
         $section_style .= 'position: relative;';
         $header_style = '';
         if ( $level === 0 ) {
@@ -551,7 +607,7 @@ if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
                         str_replace( 'px', '', $tree_styles['indentation'] ?? '20' )
                     ) . 'px;';
                 if ( ! empty( $tree_styles['connectorColor'] ) ) {
-                    $children_style .= 'border-left: ' . ( $tree_styles['connectorWidth'] ?? '1px' ) . ' solid ' . esc_attr(
+                    $children_style .= 'border-left: ' . wedocs_sanitize_css_length( $tree_styles['connectorWidth'] ?? '1px', '1px' ) . ' solid ' . esc_attr(
                             $tree_styles['connectorColor']
                         ) . ';';
                 }
@@ -607,7 +663,7 @@ if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
         if ( $level > 0 ) {
             $article_style .= 'margin-left: ' . $indentation . 'px;';
         }
-        $article_style .= 'margin-bottom: ' . ( $tree_styles['itemSpacing'] ?? '4px' ) . ';';
+        $article_style .= 'margin-bottom: ' . wedocs_sanitize_css_length( $tree_styles['itemSpacing'] ?? '4px', '4px' ) . ';';
         $article_style .= 'position: relative;';
         $icon_style = '';
         $icon_color = wedocs_get_color_value( $doc_list_styles['textColor'] ?? '', '#6c757d' );
@@ -649,7 +705,7 @@ if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
                         str_replace( 'px', '', $tree_styles['indentation'] ?? '20' )
                     ) . 'px;';
                 if ( ! empty( $tree_styles['connectorColor'] ) ) {
-                    $children_style .= 'border-left: ' . ( $tree_styles['connectorWidth'] ?? '1px' ) . ' solid ' . esc_attr(
+                    $children_style .= 'border-left: ' . wedocs_sanitize_css_length( $tree_styles['connectorWidth'] ?? '1px', '1px' ) . ' solid ' . esc_attr(
                             $tree_styles['connectorColor']
                         ) . ';';
                 }

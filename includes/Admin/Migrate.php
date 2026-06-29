@@ -47,6 +47,34 @@ class Migrate {
     }
 
     /**
+     * Verify a migration AJAX request is authorized.
+     *
+     * The BetterDocs->weDocs migration creates/updates posts, updates
+     * options and deactivates plugins, so it must be gated behind both a
+     * nonce check and an administrator capability check. Without these,
+     * any logged-in user (subscriber+) could trigger it.
+     *
+     * @since 2.3.1
+     *
+     * @return void Sends a JSON error and dies when unauthorized.
+     */
+    private static function verify_migration_request() {
+        if ( ! check_ajax_referer( 'wedocs-migration', 'nonce', false ) ) {
+            wp_send_json_error( [
+                'success' => false,
+                'message' => __( 'Security verification failed.', 'wedocs' ),
+            ], 403 );
+        }
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( [
+                'success' => false,
+                'message' => __( 'You are not allowed to perform this action.', 'wedocs' ),
+            ], 403 );
+        }
+    }
+
+    /**
      * Check migration availability.
      *
      * @since 2.0.0
@@ -54,6 +82,8 @@ class Migrate {
      * @return void
      */
     public static function need_migration() {
+        self::verify_migration_request();
+
         // Check is betterdocs available.
         if ( ! self::is_betterdocs_exists() ) {
             wp_send_json_error( [
@@ -204,6 +234,8 @@ class Migrate {
      * @return void
      */
     public static function do_migration() {
+        self::verify_migration_request();
+
         $migratable_docs      = self::betterdocs_migratable_docs();
         $migrated_docs_length = ! empty( $_POST[ 'migratedDocLength' ] ) ? $_POST[ 'migratedDocLength' ] : 0;
 
