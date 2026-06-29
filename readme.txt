@@ -5,7 +5,7 @@ Tags: docs, documentation, knowledge base, wiki, ai powered knowledge base
 Requires at least: 5.6
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.3.0
+Stable tag: 2.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -212,6 +212,11 @@ Yes. The free version supports full Gutenberg styling and 18 blocks. Pro adds pr
 ---
 
 ## Changelog
+
+**v2.3.1 (29 Jun, 2026)**
+- **Security:** Fixed a stored XSS vulnerability in the Sidebar block where crafted connector-width and heading-tag attributes could inject scripts into rendered pages.
+- **Security:** Added administrator capability and nonce verification to the BetterDocs migration so it can no longer be triggered by lower-privileged users.
+- **Fixed:** The vendor documentation action now appears only when Dokan is active.
 
 **v2.3.0 (19 Jun, 2026)**
 - **Added:** Show documentation inside the Dokan vendor dashboard so vendors can read and manage their own docs.
