@@ -59,6 +59,15 @@ const DEFAULT_SETTINGS_STATE = {
       active_nav_bg: { r: 59, g: 130, b: 246, a: 1 },
       active_nav_text: { r: 255, g: 255, b: 255, a: 1 },
     },
+    gdpr: {
+      enabled: 'off',
+      retention: 'manual',
+      consent_text: 'I agree that my data will be processed and stored only for as long as necessary for the stated purpose. I can request access to or deletion of my data at any time. Read our {privacy_policy}.',
+      privacy_policy_page: '',
+      data_request_page: '',
+      modal_enabled: 'off',
+      messaging_enabled: 'off',
+    },
     ai: {
       default_provider: 'openai',
       providers: (() => {

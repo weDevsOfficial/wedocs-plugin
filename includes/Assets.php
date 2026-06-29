@@ -80,6 +80,7 @@ class Assets {
                     'dokan_active'  => is_plugin_active( 'dokan-lite/dokan.php' ),
                     'upgradePopupContent' => wedocs_get_upgrade_popup_content(),
                     'siteUrl'       => home_url( '/' ),
+                    'gdpr'          => wedocs_get_gdpr_frontend_settings(),
                 ),
             );
         }
