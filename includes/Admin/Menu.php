@@ -69,6 +69,11 @@ class Menu {
         $base         = admin_url( 'admin.php?page=wedocs' );
         $all_submenus = array(
             array(
+                __( 'Dashboard', 'wedocs' ),
+                $this->capability,
+                $base . '#/dashboard',
+            ),
+            array(
                 __( 'Docs', 'wedocs' ),
                 $this->capability,
                 $base . '#/',
