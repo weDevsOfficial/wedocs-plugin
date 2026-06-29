@@ -31,7 +31,7 @@ const Card = ( { title, icon: Icon, children, action } ) => (
   <div className="bg-white shadow sm:rounded-md">
     <div className="section-heading flex items-center justify-between px-8 py-4">
       <h2 className="flex items-center gap-2 text-lg font-medium text-gray-900">
-        { Icon && <Icon className="h-5 w-5 text-gray-400" aria-hidden="true" /> }
+        { Icon && <Icon className="h-5 w-5 text-indigo-600" aria-hidden="true" /> }
         { title }
       </h2>
       { action }
