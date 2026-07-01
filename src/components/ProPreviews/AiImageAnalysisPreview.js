@@ -17,17 +17,11 @@ const AiImageAnalysisPreview = () => {
 			<div className="settings-content flex items-center justify-between">
 				<div className="settings-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
 					<label
-						className="block text-sm font-medium text-gray-700"
+						className="block text-sm font-medium text-gray-400"
 						id="headlessui-listbox-label-image-analysis"
 					>
 						{__('Enable image analysis', 'wedocs')}
-					</label>
-					<Badge 
-						classes="opacity-100" 
-						heading={__('Pro Feature', 'wedocs')}
-						description={__('Upload screenshots for AI to analyze when generating documentation', 'wedocs')}
-					/>
-					<div
+					</label>					<div
 						className="tooltip cursor-pointer ml-2"
 						data-tip={__(
 							'Allow AI to analyze uploaded screenshots when generating documentation',
@@ -76,20 +70,20 @@ const AiImageAnalysisPreview = () => {
 						/>
 					</button>
 					<span className="ml-3">
-						<span className="text-sm text-gray-900">
+						<span className="text-sm text-gray-400">
 							{__('Disable', 'wedocs')}
 						</span>
 					</span>
 				</div>
 			</div>
 			<div className="settings-description w-full max-w-[490px] ml-auto mt-1">
-				<p className="text-sm text-[#6B7280]">
+				<p className="text-sm text-gray-400">
 					{__(
 						'Allow AI to analyze uploaded screenshots when generating documentation. Useful for documenting UI flows, onboarding steps, and feature screenshots.',
 						'wedocs'
 					)}
 				</p>
-				<p className="text-sm text-amber-600 mt-2 flex items-center">
+				<p className="text-sm text-gray-400 mt-2 flex items-center">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"

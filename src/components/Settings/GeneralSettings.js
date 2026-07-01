@@ -52,13 +52,13 @@ const GeneralSettings = ( {
       <>
         <span className="block">
           {__('Before Doc: ', 'wedocs')}
-          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+          <code className="text-gray-400 bg-gray-50 px-1 py-0.5 rounded break-all">
             {beforeDocUrl}
           </code>
         </span>
         <span className="block mt-2">
           {__('After Doc: ', 'wedocs')}
-          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+          <code className="text-gray-400 bg-gray-50 px-1 py-0.5 rounded break-all">
             {afterDocUrl}
           </code>
         </span>
@@ -121,7 +121,7 @@ const GeneralSettings = ( {
             <div className="col-span-4">
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
-                  <label className="block text-sm font-medium text-gray-600">
+                  <label className={`block text-sm font-medium ${ applyFilters('wedocs_pro_loaded', false) ? 'text-gray-600' : 'text-gray-400' }`}>
                     {__('Docs URL Structure', 'wedocs')}
                   </label>
                   {!applyFilters('wedocs_pro_loaded', false) && (
@@ -183,14 +183,20 @@ const GeneralSettings = ( {
                 </div>
               </div>
               <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
-                <p className="text-sm text-[#6B7280]">
-                  {renderUrlStructureDescription()}
-                  <span className="block mt-2">
-                    {__(
-                        'Changing this structure updates URLs and breadcrumbs for all docs. Previous URLs will automatically redirect (301).',
-                        'wedocs'
-                    )}
-                  </span>
+                <p className={`text-sm ${ applyFilters('wedocs_pro_loaded', false) ? 'text-[#6B7280]' : 'text-gray-400' }`}>
+                  {applyFilters('wedocs_pro_loaded', false) ? (
+                    <>
+                      {renderUrlStructureDescription()}
+                      <span className="block mt-2">
+                        {__(
+                            'Changing this structure updates URLs and breadcrumbs for all docs. Previous URLs will automatically redirect (301).',
+                            'wedocs'
+                        )}
+                      </span>
+                    </>
+                  ) : (
+                    __('Choose how doc URLs and breadcrumbs are structured — changing it updates all docs with automatic 301 redirects.', 'wedocs')
+                  )}
                 </p>
               </div>
             </div>
