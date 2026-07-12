@@ -472,7 +472,7 @@ class API extends WP_REST_Controller {
             [
                 'methods'             => WP_REST_Server::CREATABLE,
                 'callback'            => [ $this, 'generate_ai_summary' ],
-                'permission_callback' => '__return_true', // Allow public access for frontend generation
+                'permission_callback' => [ $this, 'generate_summary_permissions_check' ],
                 'args'                => [
                     'id' => [
                         'validate_callback' => function( $param, $request, $key ) {
@@ -808,7 +808,7 @@ class API extends WP_REST_Controller {
             foreach ( $doc_contributors as $contributor_id ) {
                 $user_data               = get_userdata( $contributor_id );
                 $data[ $contributor_id ] = array(
-                    'name' => $user_data->user_login,
+                    'name' => $user_data->display_name,
                     'src' => get_avatar_url( $contributor_id )
                 );
             }
@@ -2689,6 +2689,44 @@ class API extends WP_REST_Controller {
     }
 
     /**
+     * Permission check for AI summary generation.
+     *
+     * Keeps the public "Generate AI Summary" button working for published docs
+     * while preventing anonymous callers from summarising unpublished content
+     * and rate-limiting anonymous requests to curb paid-API cost abuse.
+     *
+     * @since 2.3.2
+     *
+     * @param WP_REST_Request $request full data about the request
+     *
+     * @return bool|WP_Error
+     */
+    public function generate_summary_permissions_check( $request ) {
+        $doc = get_post( (int) $request->get_param( 'id' ) );
+
+        if ( ! $doc || 'docs' !== $doc->post_type ) {
+            return new WP_Error( 'wedocs_invalid_doc', __( 'Invalid documentation post.', 'wedocs' ), [ 'status' => 404 ] );
+        }
+
+        // Editors may summarise any doc.
+        if ( current_user_can( 'edit_docs' ) ) {
+            return true;
+        }
+
+        // Anonymous / low-privilege callers: published docs only.
+        if ( 'publish' !== $doc->post_status ) {
+            return new WP_Error( 'wedocs_forbidden', __( 'You are not allowed to generate this summary.', 'wedocs' ), [ 'status' => 403 ] );
+        }
+
+        // Rate-limit anonymous requests to prevent AI cost abuse.
+        if ( ! wedocs_rate_limit_ok( 'ai_summary', 5, HOUR_IN_SECONDS ) ) {
+            return new WP_Error( 'wedocs_rate_limited', __( 'Too many requests. Please try again later.', 'wedocs' ), [ 'status' => 429 ] );
+        }
+
+        return true;
+    }
+
+    /**
      * Generate AI summary for a doc
      *
      * @since 2.0.0
@@ -2785,8 +2823,8 @@ class API extends WP_REST_Controller {
                 0.5  // Lower temperature for more focused summaries
             );
 
-            // Save the generated summary
-            $summary = $response['content'];
+            // Save the generated summary (sanitize AI HTML before storing).
+            $summary = wp_kses_post( $response['content'] );
             update_post_meta( $post_id, '_wedocs_ai_summary', $summary );
 
             return rest_ensure_response( [

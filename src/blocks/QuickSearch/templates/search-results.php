@@ -41,15 +41,15 @@ $result_image_type = $result_image_type ?? 'icon';
                 $doc_type_color = $modal_styles['articleLabelColor'] ?? '#8B5CF6';
             }
 
-            // Get document title
-            $title = is_array( $doc['title'] ) ? $doc['title']['rendered'] : $doc['title'];
+            // Get document title (escaped for HTML — only the <mark> wrapper below is markup).
+            $title = esc_html( is_array( $doc['title'] ) ? $doc['title']['rendered'] : $doc['title'] );
             $permalink = $doc['permalink'] ?? '#';
 
             // Highlight search terms in title
             $highlighted_title = $title;
             if ( ! empty( $query ) && strlen( $query ) >= 2 ) {
                 $highlighted_title = preg_replace(
-                    '/(' . preg_quote( $query, '/' ) . ')/i',
+                    '/(' . preg_quote( esc_html( $query ), '/' ) . ')/i',
                     '<mark class="bg-yellow-200 px-1 rounded">$1</mark>',
                     $title
                 );

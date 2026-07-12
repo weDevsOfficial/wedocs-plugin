@@ -1182,3 +1182,33 @@ function use_wedocs_legacy_template(){
 
     return false;
 }
+
+if ( ! function_exists( 'wedocs_rate_limit_ok' ) ) {
+    /**
+     * Simple per-IP transient rate limiter.
+     *
+     * Allows up to $max hits from a single IP within $window seconds for a
+     * given bucket. Used to bound abuse of unauthenticated endpoints.
+     *
+     * @since 2.3.2
+     *
+     * @param string $bucket Logical action name.
+     * @param int    $max    Max allowed hits per window.
+     * @param int    $window Window length in seconds.
+     *
+     * @return bool True when the request is within the limit.
+     */
+    function wedocs_rate_limit_ok( $bucket, $max, $window ) {
+        $ip   = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : 'unknown';
+        $key  = 'wedocs_rl_' . $bucket . '_' . md5( $ip );
+        $hits = (int) get_transient( $key );
+
+        if ( $hits >= $max ) {
+            return false;
+        }
+
+        set_transient( $key, $hits + 1, $window );
+
+        return true;
+    }
+}
