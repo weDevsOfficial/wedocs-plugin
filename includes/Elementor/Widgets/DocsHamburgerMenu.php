@@ -455,8 +455,8 @@ class DocsHamburgerMenu extends Widget_Base {
             <div class="wedocs-hamburger__header">
                 <?php if ($show_title && $parent): ?>
                     <h3 class="wedocs-hamburger__title">
-                        <a href="<?php echo get_permalink($parent); ?>" style="text-decoration: none; color: inherit;">
-                            <?php echo get_post_field('post_title', $parent, 'display'); ?>
+                        <a href="<?php echo esc_url( get_permalink( $parent ) ); ?>" style="text-decoration: none; color: inherit;">
+                            <?php echo esc_html( get_post_field( 'post_title', $parent, 'display' ) ); ?>
                         </a>
                     </h3>
                 <?php else: ?>
