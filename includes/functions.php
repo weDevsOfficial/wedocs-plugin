@@ -1201,13 +1201,23 @@ if ( ! function_exists( 'wedocs_rate_limit_ok' ) ) {
     function wedocs_rate_limit_ok( $bucket, $max, $window ) {
         $ip   = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : 'unknown';
         $key  = 'wedocs_rl_' . $bucket . '_' . md5( $ip );
-        $hits = (int) get_transient( $key );
+        $data = get_transient( $key );
 
-        if ( $hits >= $max ) {
+        // First request in the window — start a fresh fixed window.
+        if ( false === $data || ! is_array( $data ) ) {
+            set_transient( $key, array( 'count' => 1, 'start' => time() ), $window );
+            return true;
+        }
+
+        $count = (int) ( isset( $data['count'] ) ? $data['count'] : 0 );
+        if ( $count >= $max ) {
             return false;
         }
 
-        set_transient( $key, $hits + 1, $window );
+        // Preserve the original window expiry instead of sliding the TTL forward.
+        $start     = (int) ( isset( $data['start'] ) ? $data['start'] : time() );
+        $remaining = max( 1, $window - ( time() - $start ) );
+        set_transient( $key, array( 'count' => $count + 1, 'start' => $start ), $remaining );
 
         return true;
     }

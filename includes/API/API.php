@@ -806,7 +806,10 @@ class API extends WP_REST_Controller {
             $data             = array();
             $doc_contributors = (array) get_post_meta( $doc->ID, 'wedocs_contributors', true );
             foreach ( $doc_contributors as $contributor_id ) {
-                $user_data               = get_userdata( $contributor_id );
+                $user_data = get_userdata( $contributor_id );
+                if ( ! $user_data ) {
+                    continue;
+                }
                 $data[ $contributor_id ] = array(
                     'name' => $user_data->display_name,
                     'src' => get_avatar_url( $contributor_id )
