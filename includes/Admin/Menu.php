@@ -90,6 +90,14 @@ class Menu {
             ),
         );
 
+        if ( ! wedocs_is_pro_active() ) {
+            $all_submenus[] = array(
+                __( 'Premium', 'wedocs' ),
+                $this->capability,
+                $base . '#/premium',
+            );
+        }
+
         $all_submenus = apply_filters( 'wedocs_submenu', $all_submenus );
         if ( empty( $submenu['wedocs'] ) ) {
             $submenu['wedocs'] = array(); // phpcs:ignore.
