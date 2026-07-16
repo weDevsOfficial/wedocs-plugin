@@ -11,6 +11,7 @@ import Documentations from './Documentations';
 import Migrate from './Migrations';
 import NotFound from './NotFound';
 import PermissionSettingsDemo from './PermissionSettingsDemo';
+import Premium from './Premium';
 
 const App = () => {
   let routes = [
@@ -21,6 +22,11 @@ const App = () => {
     { path: 'section/:id', component: ListingPage },
     { path: 'migrate', component: Migrate },
   ];
+
+  // Premium upgrade page is only for free users.
+  if ( ! window.weDocsAdminVars?.pro_active ) {
+    routes.push( { path: 'premium', component: Premium } );
+  }
 
   routes = wp.hooks.applyFilters('wedocs_register_menu_routes', routes);
   
