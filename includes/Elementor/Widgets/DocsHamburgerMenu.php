@@ -402,6 +402,12 @@ class DocsHamburgerMenu extends Widget_Base {
         $show_title = ($settings['show_title'] ?? 'yes') === 'yes';
 
         global $post;
+        if ( ! ( $post instanceof \WP_Post ) || $post->post_type !== 'docs' ) {
+            if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
+                echo '<p style="color: `#999`; font-style: italic; padding: 20px; text-align: center;">' . esc_html__( 'Hamburger Menu: Preview it on a single doc page.', 'wedocs' ) . '</p>';
+            }
+            return;
+        }
 
         // Determine the parent doc
         $ancestors = [];

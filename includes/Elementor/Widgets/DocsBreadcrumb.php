@@ -379,11 +379,9 @@ class DocsBreadcrumb extends Widget_Base {
             while ($parent_id && !isset($seen[$parent_id])) {
                 $seen[$parent_id] = true;
                 $page = get_post($parent_id);
-
-                if (!$page) {
+                if ( ! $page ) {
                     break;
                 }
-
                 $parents[] = [
                     'label' => get_the_title($page->ID),
                     'url'   => get_permalink($page->ID),
@@ -396,7 +394,7 @@ class DocsBreadcrumb extends Widget_Base {
 
         // Current page (no link)
         $items[] = [
-            'label'   => get_the_title(),
+            'label'   => get_the_title( $current_post->ID ),
             'current' => true,
         ];
 
