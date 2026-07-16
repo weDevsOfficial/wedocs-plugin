@@ -263,15 +263,19 @@ if ( !function_exists( 'wedocs_get_breadcrumb_item' ) ) {
  */
 function wedocs_get_doc_root_id( $post_id ) {
     $post_id = (int) $post_id;
-    $guard   = 0; // Prevent infinite loops on corrupted data.
+    $visited = [];
 
-    while ( $post_id && $guard < 50 ) {
+    while ( $post_id ) {
+        if ( isset( $visited[ $post_id ] ) ) {
+            return 0;
+        }
+        $visited[ $post_id ] = true;
+
         $parent = (int) wp_get_post_parent_id( $post_id );
         if ( ! $parent ) {
             break;
         }
         $post_id = $parent;
-        $guard++;
     }
 
     return $post_id;
