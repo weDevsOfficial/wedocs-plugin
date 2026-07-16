@@ -761,7 +761,7 @@ msgid "Show Docs in Vendor Dashboard"
 msgstr ""
 
 #: includes/Dokan/VendorDashboard.php:36
-msgid "Allow vendors to view from their dashboard"
+msgid "Allow vendors to view from their dashboard using weDocs"
 msgstr ""
 
 #: includes/Elementor/Widgets/DocsGrid.php:26
