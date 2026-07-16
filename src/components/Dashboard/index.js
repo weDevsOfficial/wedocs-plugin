@@ -231,6 +231,7 @@ const Dashboard = () => {
                         <span className="inline-flex items-center gap-2">
                           <a
                             href={ doc.edit }
+                            aria-label={ __( 'Edit', 'wedocs' ) }
                             title={ __( 'Edit', 'wedocs' ) }
                             className="text-gray-400 hover:text-indigo-600"
                           >
@@ -240,9 +241,12 @@ const Dashboard = () => {
                             href={ doc.link }
                             target="_blank"
                             rel="noreferrer"
+                            aria-label={ __( 'View', 'wedocs' ) }
                             title={ __( 'View', 'wedocs' ) }
                             className="text-gray-400 hover:text-indigo-600"
                           >
+                            <ArrowTopRightOnSquareIcon className="h-4 w-4" aria-hidden="true" />
+                          </a>
                             <ArrowTopRightOnSquareIcon className="h-4 w-4" aria-hidden="true" />
                           </a>
                         </span>
