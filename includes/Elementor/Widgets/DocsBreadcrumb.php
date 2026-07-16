@@ -388,7 +388,7 @@ class DocsBreadcrumb extends Widget_Base {
 
         // Current page (no link)
         $items[] = [
-            'label'   => get_the_title(),
+            'label'   => get_the_title( $current_post->ID ),
             'current' => true,
         ];
 
