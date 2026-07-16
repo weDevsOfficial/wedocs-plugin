@@ -163,13 +163,13 @@ class Analytics {
             "SELECT COALESCE( SUM( CAST( pm.meta_value AS UNSIGNED ) ), 0 )
              FROM {$wpdb->postmeta} pm
              INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
-             WHERE pm.meta_key = 'positive' AND p.post_type = 'docs'"
+             WHERE pm.meta_key = 'positive' AND p.post_type = 'docs' AND p.post_status = 'publish'"
         );
         $negative = (int) $wpdb->get_var(
             "SELECT COALESCE( SUM( CAST( pm.meta_value AS UNSIGNED ) ), 0 )
              FROM {$wpdb->postmeta} pm
              INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
-             WHERE pm.meta_key = 'negative' AND p.post_type = 'docs'"
+             WHERE pm.meta_key = 'negative' AND p.post_type = 'docs' AND p.post_status = 'publish'"
         );
 
         // ---- Popular docs (by views) -------------------------------------
