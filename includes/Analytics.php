@@ -69,8 +69,22 @@ class Analytics {
         }
         set_transient( $key, 1, 6 * HOUR_IN_SECONDS );
 
-        $views = (int) get_post_meta( $post_id, self::VIEWS_META, true );
-        update_post_meta( $post_id, self::VIEWS_META, $views + 1 );
+        global $wpdb;
+
+        $updated = (int) $wpdb->query(
+            $wpdb->prepare(
+                "UPDATE {$wpdb->postmeta}
+                 SET meta_value = CAST( meta_value AS UNSIGNED ) + 1
+                 WHERE post_id = %d AND meta_key = %s
+                 LIMIT 1",
+                $post_id,
+                self::VIEWS_META
+            )
+        );
+
+        if ( 0 === $updated ) {
+            add_post_meta( $post_id, self::VIEWS_META, 1, true );
+        }
     }
 
     /**
