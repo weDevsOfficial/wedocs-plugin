@@ -41,18 +41,28 @@ $result_image_type = $result_image_type ?? 'icon';
                 $doc_type_color = $modal_styles['articleLabelColor'] ?? '#8B5CF6';
             }
 
-            // Get document title
+            // Keep the raw title for matching; escape at output boundaries only.
             $title = is_array( $doc['title'] ) ? $doc['title']['rendered'] : $doc['title'];
             $permalink = $doc['permalink'] ?? '#';
 
-            // Highlight search terms in title
-            $highlighted_title = $title;
+            // Highlight search terms in title. Match against the raw title so we
+            // never match HTML entity names, then escape every fragment and wrap
+            // only the matched pieces in the trusted <mark> markup.
+            $highlighted_title = esc_html( $title );
             if ( ! empty( $query ) && strlen( $query ) >= 2 ) {
-                $highlighted_title = preg_replace(
+                $parts = preg_split(
                     '/(' . preg_quote( $query, '/' ) . ')/i',
-                    '<mark class="bg-yellow-200 px-1 rounded">$1</mark>',
-                    $title
+                    $title,
+                    -1,
+                    PREG_SPLIT_DELIM_CAPTURE
                 );
+                $highlighted_title = '';
+                foreach ( $parts as $i => $part ) {
+                    // Odd indices are the captured (matched) delimiters.
+                    $highlighted_title .= ( $i % 2 )
+                        ? '<mark class="bg-yellow-200 px-1 rounded">' . esc_html( $part ) . '</mark>'
+                        : esc_html( $part );
+                }
             }
             ?>
 
