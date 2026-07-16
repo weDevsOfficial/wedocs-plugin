@@ -374,8 +374,16 @@ class DocsBreadcrumb extends Widget_Base {
             $parent_id = $current_post->post_parent;
             $parents = [];
 
-            while ($parent_id) {
+            $seen = [];
+
+            while ($parent_id && !isset($seen[$parent_id])) {
+                $seen[$parent_id] = true;
                 $page = get_post($parent_id);
+
+                if (!$page) {
+                    break;
+                }
+
                 $parents[] = [
                     'label' => get_the_title($page->ID),
                     'url'   => get_permalink($page->ID),

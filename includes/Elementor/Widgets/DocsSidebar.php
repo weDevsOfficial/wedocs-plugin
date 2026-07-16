@@ -669,7 +669,7 @@ class DocsSidebar extends Widget_Base {
 
             <?php if ($show_title && $parent): ?>
                 <h3 class="wedocs-el-sidebar__title">
-                    <a href="<?php echo get_permalink($parent); ?>"><?php echo get_post_field('post_title', $parent, 'display'); ?></a>
+                    <a href="<?php echo esc_url(get_permalink($parent)); ?>"><?php echo esc_html(get_post_field('post_title', $parent, 'display')); ?></a>
                 </h3>
             <?php endif; ?>
 
