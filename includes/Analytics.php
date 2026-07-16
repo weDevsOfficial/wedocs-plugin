@@ -62,6 +62,10 @@ class Analytics {
 
         // De-dupe per visitor for 6 hours.
         $user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
+        if ( $user_agent && preg_match( '/bot|crawl|spider|slurp|facebookexternalhit|mediapartners/i', $user_agent ) ) {
+            return;
+        }
+
         $visitor    = md5( $this->get_visitor_ip() . $user_agent );
         $key     = 'wedocs_view_' . $post_id . '_' . $visitor;
         if ( get_transient( $key ) ) {
