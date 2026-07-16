@@ -141,14 +141,23 @@ class Elementor {
             return;
         }
 
-        $template_id = $this->import_template_from_json('three_column', 'weDocs - Single Doc Page');
+        if (! add_option('wedocs_elementor_templates_import_lock', time(), '', 'no')) {
+            return;
+        }
 
-        if ($template_id) {
-            // Set template conditions for single docs
-            $this->set_template_conditions($template_id, 'single_docs');
+        try {
+            $template_id = $this->import_template_from_json('three_column', 'weDocs - Single Doc Page');
 
-            // Mark as imported
-            update_option('wedocs_elementor_templates_imported', true);
+            if ($template_id) {
+                // Set template conditions for single docs
+                $this->set_template_conditions($template_id, 'single_docs');
+
+                // Mark as imported
+                update_option('wedocs_elementor_templates_imported', true);
+            }
+        } finally {
+            delete_option('wedocs_elementor_templates_import_lock');
+        }
         }
     }
 
