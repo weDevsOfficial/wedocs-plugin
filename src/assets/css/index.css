@@ -27,6 +27,25 @@ html.wp-toolbar {
     margin-right: 0;
 }
 
+/*
+ * The premium upgrade page is a full-bleed design (see Figma weDocs-Pro-Design):
+ * its bands run edge to edge, so the admin chrome padding has to go. Scoped to a
+ * body class the Premium component toggles on mount, so every other weDocs admin
+ * screen keeps the 25px gutter above. !important is required to beat the
+ * max-width:782px rule below, which is itself !important.
+ */
+body.wedocs-premium-fullwidth #wpcontent {
+    padding: 0 !important;
+}
+
+body.wedocs-premium-fullwidth #wpbody-content {
+    padding-bottom: 0;
+}
+
+body.wedocs-premium-fullwidth #wpbody-content > .wrap {
+    margin: 0;
+}
+
 #adminmenu .wp-menu-image img {
     margin: 0 auto;
 }
