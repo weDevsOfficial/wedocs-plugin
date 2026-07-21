@@ -247,8 +247,6 @@ const Dashboard = () => {
                           >
                             <ArrowTopRightOnSquareIcon className="h-4 w-4" aria-hidden="true" />
                           </a>
-                            <ArrowTopRightOnSquareIcon className="h-4 w-4" aria-hidden="true" />
-                          </a>
                         </span>
                       </td>
                     </tr>
