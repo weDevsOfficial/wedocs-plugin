@@ -219,7 +219,7 @@ const pricingPlans = [
   {
     name: __( 'Starter', 'wedocs' ),
     badge: null,
-    description: __( 'Everything you need for professional docs on a single site', 'wedocs' ),
+    description: __( 'Everything you need for professional docs', 'wedocs' ),
     annual: 39,
     lifetime: 119,
     lifetimeRegular: 125,
