@@ -1,4 +1,4 @@
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
 
 import heroIllustration from '../../assets/img/premium/hero-illustration.png';
@@ -24,9 +24,8 @@ import iconTranslation from '../../assets/img/premium/icon-translation.svg';
 
 const PRICING_URL =
   'https://wedocs.co/pricing/?utm_source=wp-admin&utm_medium=premium-page&utm_campaign=upgrade';
-const COUPON_CODE = 'LiteUpgrade25';
+const COUPON_CODE = 'LiteUpgrade';
 const VIDEO_ID = 'UgXtmkgAEGI';
-const VIDEO_URL = `https://www.youtube.com/watch?v=${ VIDEO_ID }`;
 const VIDEO_EMBED_URL = `https://www.youtube-nocookie.com/embed/${ VIDEO_ID }?autoplay=1&rel=0`;
 
 const ArrowRightIcon = ( { className = 'w-5 h-5' } ) => (
@@ -223,7 +222,6 @@ const pricingPlans = [
     annual: 39,
     lifetime: 119,
     lifetimeRegular: 125,
-    lifetimeDiscount: 5,
     sites: __( '1 Site', 'wedocs' ),
     highlighted: false,
   },
@@ -234,7 +232,6 @@ const pricingPlans = [
     annual: 59,
     lifetime: 149,
     lifetimeRegular: 165,
-    lifetimeDiscount: 10,
     sites: __( '5 Sites', 'wedocs' ),
     highlighted: false,
   },
@@ -245,7 +242,6 @@ const pricingPlans = [
     annual: 79,
     lifetime: 199,
     lifetimeRegular: 235,
-    lifetimeDiscount: 15,
     sites: __( '10 Sites', 'wedocs' ),
     highlighted: true,
   },
@@ -256,7 +252,6 @@ const pricingPlans = [
     annual: 149,
     lifetime: 249,
     lifetimeRegular: 312,
-    lifetimeDiscount: 20,
     sites: __( 'Unlimited Sites', 'wedocs' ),
     highlighted: false,
   },
@@ -471,9 +466,6 @@ const DokanSection = () => {
           </button>
         ) }
       </div>
-      <PrimaryLinkButton href={ VIDEO_URL }>
-        { __( 'Watch on YouTube', 'wedocs' ) }
-      </PrimaryLinkButton>
     </section>
   );
 };
@@ -579,13 +571,6 @@ const PricingSection = () => {
                 <p className="m-0 flex items-center gap-2 text-sm text-[#6A7282]">
                   <span className="line-through">
                     ${ plan.lifetimeRegular }
-                  </span>
-                  <span className="rounded-[20px] bg-[#ECFDF5] px-2 py-0.5 text-xs font-semibold text-[#047857]">
-                    { sprintf(
-                      /* translators: %s: discount percentage, e.g. 15% */
-                      __( 'Save %s', 'wedocs' ),
-                      `${ plan.lifetimeDiscount }%`
-                    ) }
                   </span>
                 </p>
               ) }
