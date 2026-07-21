@@ -26,6 +26,7 @@ const PRICING_URL =
   'https://wedocs.co/pricing/?utm_source=wp-admin&utm_medium=premium-page&utm_campaign=upgrade';
 const COUPON_CODE = 'LiteUpgrade';
 const VIDEO_ID = 'UgXtmkgAEGI';
+const DOKAN_DOC_URL = 'https://wedocs.co/docs/wedocs/dokan-support-for-wedocs/';
 const VIDEO_EMBED_URL = `https://www.youtube-nocookie.com/embed/${ VIDEO_ID }?autoplay=1&rel=0`;
 
 const ArrowRightIcon = ( { className = 'w-5 h-5' } ) => (
@@ -466,6 +467,9 @@ const DokanSection = () => {
           </button>
         ) }
       </div>
+      <PrimaryLinkButton href={ DOKAN_DOC_URL }>
+        { __( 'Learn More', 'wedocs' ) }
+      </PrimaryLinkButton>
     </section>
   );
 };
