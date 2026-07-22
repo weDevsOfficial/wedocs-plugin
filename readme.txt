@@ -1,7 +1,7 @@
 === weDocs: AI Powered Knowledge Base, Docs, Documentation, Wiki & AI Chatbot ===
 Contributors: tareq1988, wedevs
 Donate link: https://wedocs.co/
-Tags: docs, documentation, knowledge base, wiki, ai powered knowledge base
+Tags: docs, documentation, knowledge base, wiki, ai-powered knowledgebase
 Requires at least: 5.6
 Tested up to: 7.0
 Requires PHP: 7.4
@@ -9,7 +9,7 @@ Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Build a powerful documentation hub with an AI-powered knowledge base, docs, wiki tools, and an AI chatbot to help users find answers instantly.
+Build a powerful documentation hub with an AI-powered knowledge base, docs, wiki tools, changelogs and an AI chatbot to help users find answers instantly.
 
 ### The Ultimate AI-Powered Knowledge Base & Documentation Solution for WordPress
 
@@ -37,6 +37,8 @@ If you document WordPress plugins, themes, SaaS apps, or internal team processes
 * Pre-built layouts and advanced styling options (Pro)
 * Role-based permissions and privacy control (Pro)
 * Multilingual support via Weglot
+* Documentation dashboard with knowledge base analytics
+* Product changelog with a public release timeline (Pro)
 
 ---
 
@@ -75,6 +77,8 @@ The free version of weDocs provides a solid foundation for building a profession
 
 – **[AI Doc Writer with Image Analysis](https://wedocs.co/docs/wedocs/how-to/ai-doc-writer/)**: Generate documentation from prompts, product details, or even screenshots. Turn visuals into structured docs instantly.
 
+-**[Documentation Dashboard](https://wedocs.co/docs/permission-management/advanced-analytics/)**: Get a complete overview of your knowledge base at a glance, including total docs, article views, helpful rate, popular docs, most helpful docs, and recently updated content.
+
 ---
 
 ## Vendor Documentation for Dokan Multivendor Marketplaces 
@@ -112,6 +116,10 @@ weDocs Pro unlocks advanced tools for businesses that need deeper customization,
 – **[7-Layer Hierarchical Article Creation](https://wedocs.co/docs/permission-management/multi-layer-7-level-doc-structure/):** Great for extensive product documentation.
 
 – **[Social Sharing Options](https://wedocs.co/docs/permission-management/social-share/):** Allow users to share docs across popular social platforms.
+
+– **[Changelog](https://wedocs.co/docs/permission-management/changelogs/)**: Publish a public release timeline for your product, with multiple channels, custom categories, banner styling, and RSS support.
+
+– **Advanced Analytics:** Go deeper than the basic dashboard with views broken down per document, a full reactions overview, plus Top Contributors and Top Tags cards.
 
 ## Perfect For
  
@@ -183,9 +191,11 @@ weDocs uses the Appsero SDK to collect telemetry data (only with user permission
 ## Frequently Asked Questions
 
 = Is weDocs free? =
+
 Yes. The free version includes unlimited docs, a drag-and-drop editor, live search, the AI Doc Writer, BetterDocs migration, and more. You can build and publish a complete knowledge base without paying. Pro adds the AI Chatbot, permissions, privacy controls, and advanced styling.
 
 = Does weDocs slow down my site? =
+
 No. weDocs 2.x loads its scripts and styles only on documentation pages where they are needed, so the rest of your site stays fast. If you ever see a performance issue, contact support and the team will help.
 
 = Can I build a help center or FAQ page with weDocs? =
@@ -207,6 +217,14 @@ Yes. weDocs includes a one-click migration tool that moves your existing BetterD
 = Can I customize how my documentation looks? =
  
 Yes. The free version supports full Gutenberg styling and 18 blocks. Pro adds pre-built layouts and templates you can apply without code.
+
+= Can I publish a changelog with weDocs? =
+
+Yes. weDocs Pro includes a changelog feature that publishes your product updates on a public timeline alongside your documentation. You can run separate release channels, categorize entries, style the banner, and offer an RSS feed. The free version includes a changelog preview in Settings so you can see how it looks before upgrading.
+
+= Does weDocs show analytics for my documentation? =
+
+Yes. The free version includes a dashboard showing total docs, articles, total views, helpful rate, popular docs, most helpful docs, and recently updated content. Pro adds advanced analytics with views per document, a reactions overview, top contributors, and top tags.
  
 
 ---
