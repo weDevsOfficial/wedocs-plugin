@@ -158,7 +158,6 @@ class Elementor {
         } finally {
             delete_option('wedocs_elementor_templates_import_lock');
         }
-        }
     }
 
     /**

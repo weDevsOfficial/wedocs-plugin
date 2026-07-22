@@ -518,23 +518,26 @@ const GeneralSettings = ( {
                       id="wedocs-single-doc-template"
                       name="single_doc_template"
                       className="w-full !rounded-md !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-                      value={
-                          generalSettings?.single_doc_template
-                          || ( generalSettings?.use_legacy_template === 'on' ? 'legacy' : 'block' )
-                      }
-                      onChange={( e ) =>
-                          setSettings( {
-                              ...settingsData,
-                              general: {
-                                  ...generalSettingsData,
-                                  single_doc_template: e.target.value,
-                                  // Keep the legacy flag in sync for back-compat.
-                                  use_legacy_template:
-                                      e.target.value === 'legacy' ? 'on' : 'off',
-                              },
-                          } )
-                      }
+                      value={ generalSettings?.single_doc_template || '' }
+                      onChange={( e ) => {
+                          const general = {
+                              ...generalSettingsData,
+                              single_doc_template: e.target.value,
+                          };
+
+                          // Keep the legacy flag in sync for back-compat, but leave
+                          // it untouched on 'Automatic' so PHP can auto-detect.
+                          if ( e.target.value ) {
+                              general.use_legacy_template =
+                                  e.target.value === 'legacy' ? 'on' : 'off';
+                          } else {
+                              delete general.use_legacy_template;
+                          }
+
+                          setSettings( { ...settingsData, general } );
+                      }}
                   >
+                    <option value="">{__('Automatic (Detect)', 'wedocs')}</option>
                     <option value="legacy">{__('Classic (PHP Template)', 'wedocs')}</option>
                     <option value="block">{__('Block (Block Theme Template)', 'wedocs')}</option>
                     <option value="elementor">{__('Elementor', 'wedocs')}</option>

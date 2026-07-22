@@ -1246,7 +1246,8 @@ function wedocs_get_upgrade_popup_content() {
  *
  * Resolution order:
  *   1. Explicit `single_doc_template` setting, when the user has chosen one.
- *   2. Back-compat: legacy boolean `use_legacy_template` ('on' => legacy).
+ *   2. Back-compat: legacy boolean `use_legacy_template` ('on' => legacy),
+ *      consulted only when no `single_doc_template` setting is stored.
  *   3. Auto-detect: Elementor template present => elementor; block theme => block.
  *   4. Fallback: legacy.
  *
@@ -1269,8 +1270,9 @@ function wedocs_get_single_doc_renderer() {
         }
     }
 
-    // 2. Back-compat with the old binary flag.
-    if ( isset( $general_settings['use_legacy_template'] ) ) {
+    // 2. Back-compat with the old binary flag — only when no modern setting exists.
+    if ( empty( $general_settings['single_doc_template'] )
+        && isset( $general_settings['use_legacy_template'] ) ) {
         $renderer = 'on' === $general_settings['use_legacy_template'] ? 'legacy' : 'block';
 
         return apply_filters( 'wedocs_single_doc_renderer', $renderer );
