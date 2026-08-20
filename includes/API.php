@@ -97,9 +97,12 @@ class API {
      * @return \WP_REST_Response
      */
     public function set_comment_count_to_docs_response( $response, $post, $request ) {
-        $post_id                         = $post->ID;
-        $comments_count                  = wp_count_comments( $post_id );
-        $response->data['comment_count'] = $comments_count->approved;
+        // WordPress already keeps `posts.comment_count` in sync with the number of
+        // approved comments (see wp_update_comment_count_now()), and the column is
+        // loaded with the post itself. Reading it costs nothing, whereas
+        // wp_count_comments() fires five COUNT queries per post and is only cached
+        // in-request, so on a large doc tree it dominated the response time.
+        $response->data['comment_count'] = (int) $post->comment_count;
 
         return $response;
     }

@@ -24,6 +24,21 @@ const selectors = {
     return loading;
   },
 
+  getPagination: ( state ) => {
+    const { pagination } = state;
+    return pagination;
+  },
+
+  getLoadingChildren: ( state ) => {
+    const { loadingChildren } = state;
+    return loadingChildren;
+  },
+
+  hasLoadedChildren: ( state, id ) => {
+    const { loadedChildren } = state;
+    return loadedChildren.includes( parseInt( id, 10 ) );
+  },
+
   getSortingStatus: ( state ) => {
     const { sorting } = state;
     return sorting;
@@ -88,6 +103,44 @@ const selectors = {
     );
 
     return sortableChildrens;
+  },
+
+  /**
+   * Number of sections in a documentation.
+   *
+   * Prefers the count the listing endpoint supplies, so the badge is correct
+   * before the branch has been expanded; falls back to counting whatever is
+   * loaded for docs that arrived from elsewhere.
+   */
+  getSectionsCount: ( state, id ) => {
+    const { docs } = state;
+    const doc = docs.find( ( item ) => item.id === id );
+
+    if ( doc && typeof doc.sections_count === 'number' ) {
+      return doc.sections_count;
+    }
+
+    return docs.filter( ( item ) => item.parent === id ).length;
+  },
+
+  /**
+   * Number of articles across all sections of a documentation.
+   *
+   * @see getSectionsCount for why the server count is preferred.
+   */
+  getArticlesCount: ( state, id ) => {
+    const { docs } = state;
+    const doc = docs.find( ( item ) => item.id === id );
+
+    if ( doc && typeof doc.articles_count === 'number' ) {
+      return doc.articles_count;
+    }
+
+    const sectionIds = docs
+      .filter( ( item ) => item.parent === id )
+      .map( ( section ) => section.id );
+
+    return docs.filter( ( item ) => sectionIds.includes( item.parent ) ).length;
   },
 
   getHelpfulDocs: ( state ) => {

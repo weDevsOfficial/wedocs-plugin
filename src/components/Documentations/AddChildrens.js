@@ -3,10 +3,14 @@ import AddArticleModal from '../AddArticleModal';
 import { __ } from '@wordpress/i18n';
 import AddSectionModal from '../AddSectionModal';
 
-const AddChildrens = ( { docId, sections, className, children } ) => {
+const AddChildrens = ( { docId, sections, className, children, onOpen } ) => {
   return (
     <>
-      <div className="documentation-ellipsis-actions relative group">
+      <div
+        className="documentation-ellipsis-actions relative group"
+        onMouseEnter={ onOpen }
+        onFocus={ onOpen }
+      >
         <span className={ className }>
           { children }
         </span>
