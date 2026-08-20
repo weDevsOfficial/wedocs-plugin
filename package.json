@@ -59,5 +59,8 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.6.2",
     "sweetalert2": "^11.7.1"
+  },
+  "overrides": {
+    "fast-uri": "4.1.2"
   }
 }
