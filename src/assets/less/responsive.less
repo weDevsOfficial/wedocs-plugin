@@ -63,13 +63,22 @@
     }
 
     footer.entry-footer.wedocs-entry-footer {
+        flex-direction: column;
+        align-items: stretch;
+
         .help-content {
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 16px;
+
             .wedocs-help-link {
                 font-size: 13px;
             }
         }
 
         .feedback-content {
+            width: 100%;
+
             .wedocs-feedback-wrap {
                 line-height: 56px;
 
@@ -81,7 +90,7 @@
     }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 480px) {
 
     .wedocs-hide-mobile {
         display: none;
