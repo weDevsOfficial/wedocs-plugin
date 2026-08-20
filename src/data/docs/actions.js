@@ -157,27 +157,24 @@ const actions = {
 
     yield actions.setLoadingChildren( true );
 
-    let sections = [];
+    const sections = ( yield actions.fetchFromAPI( getDocsChildrenPath( [ id ] ) ) ) || [];
+    yield actions.mergeDocs( sections );
+
+    const sectionIds = sections.map( ( section ) => section.id );
     let articles = [];
 
-    try {
-      sections = ( yield actions.fetchFromAPI( getDocsChildrenPath( [ id ] ) ) ) || [];
-      yield actions.mergeDocs( sections );
-
-      const sectionIds = sections.map( ( section ) => section.id );
-
-      if ( sectionIds.length ) {
-        articles = ( yield actions.fetchFromAPI( getDocsChildrenPath( sectionIds ) ) ) || [];
-        yield actions.mergeDocs( articles );
-      }
-
-      // Marked only on success, so a documentation that genuinely has no
-      // sections still counts as loaded and stops the screen waiting, while a
-      // failed request is left unmarked and retried.
-      yield actions.markChildrenLoaded( [ id, ...sectionIds ] );
-    } finally {
-      yield actions.setLoadingChildren( false );
+    if ( sectionIds.length ) {
+      articles = ( yield actions.fetchFromAPI( getDocsChildrenPath( sectionIds ) ) ) || [];
+      yield actions.mergeDocs( articles );
     }
+
+    // Only remember the branch as loaded once its sections are actually in the
+    // store, so a failed request retries rather than showing an empty tree.
+    if ( sections.length ) {
+      yield actions.markChildrenLoaded( [ id, ...sectionIds ] );
+    }
+
+    yield actions.setLoadingChildren( false );
 
     return [ ...sections, ...articles ];
   },

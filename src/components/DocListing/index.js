@@ -37,21 +37,13 @@ const ListingPage = () => {
     [ id ]
   );
 
-  const [ treeRequested, setTreeRequested ] = useState( null );
-
   useEffect( () => {
-    const docId = parseInt( id );
-
-    // Guard on the requested ID rather than the loaded flag alone: a failed
-    // request leaves the branch unmarked, and re-running on every render would
-    // turn that into a request loop.
-    if ( childrenLoaded || treeRequested === docId ) {
+    if ( childrenLoaded ) {
       return;
     }
 
-    setTreeRequested( docId );
-    dispatch( docsStore ).loadDocTree( docId ).catch( () => {} );
-  }, [ id, childrenLoaded, treeRequested ] );
+    dispatch( docsStore ).loadDocTree( parseInt( id ) ).catch( () => {} );
+  }, [ id, childrenLoaded ] );
 
   // A documentation reached by direct link may not be on the loaded page of
   // roots, so pull the doc itself when it is missing. Reading it through the
@@ -63,22 +55,12 @@ const ListingPage = () => {
 
   const sectionsData = useSelect( ( select ) => {
     return select( docsStore ).getSectionsDocs( parseInt( id ) );
-  }, [ id, docs ] );
+  }, [] );
 
-  const docsLoading = useSelect(
+  const loading = useSelect(
     ( select ) => select( docsStore ).getLoading(),
     []
   );
-
-  const loadingChildren = useSelect(
-    ( select ) => select( docsStore ).getLoadingChildren(),
-    []
-  );
-
-  // This screen is only ready once the documentation's own branch has been
-  // fetched. Without this it rendered its empty state for the whole of that
-  // request, because the store's `loading` flag belongs to the dashboard.
-  const loading = docsLoading || loadingChildren || ! childrenLoaded;
 
   const sortableStatus = useSelect(
     ( select ) => select( docsStore ).getSortingStatus(),
@@ -103,7 +85,7 @@ const ListingPage = () => {
 
   const docArticles = useSelect(
     ( select ) => select( docsStore ).getDocArticles( parseInt( id ) ),
-    [ id, docs ]
+    []
   );
 
   const filteredArticles = docArticles?.filter( ( article ) => {
