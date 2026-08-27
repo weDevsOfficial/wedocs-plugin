@@ -135,7 +135,10 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
         const frame = window.requestAnimationFrame( () => setExpandHeight( '0px' ) );
 
         return () => window.cancelAnimationFrame( frame );
-    }, [ isExpanded ] );
+        // faqsLoaded and the row count are dependencies because the panel is
+        // measured while the list is still loading, which would otherwise clip
+        // the FAQs once they arrive.
+    }, [ isExpanded, faqsLoaded, faqs.length, showAddForm ] );
 
     const {
         attributes,
@@ -490,7 +493,13 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                 style={ { maxHeight: expandHeight } }
             >
                 <div className="border-t border-gray-200 px-5 py-4 space-y-3">
-                    { faqs.length === 0 && ! showAddForm && (
+                    { ! faqsLoaded && (
+                        <p className="text-sm text-gray-500 italic">
+                            { __( 'Loading FAQs…', 'wedocs' ) }
+                        </p>
+                    ) }
+
+                    { faqsLoaded && faqs.length === 0 && ! showAddForm && (
                         <p className="text-sm text-gray-500 italic">
                             { __( 'No FAQs in this group yet. Click "Add a New FAQ" to get started.', 'wedocs' ) }
                         </p>
