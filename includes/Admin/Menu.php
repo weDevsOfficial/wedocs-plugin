@@ -49,13 +49,40 @@ class Menu {
             $this->capability,
             $parent_slug,
             array( $this, 'display_wedocs' ),
-            'dashicons-media-document',
+            $this->get_menu_icon(),
             $this->get_menu_position()
         );
 
         $faq = add_submenu_page( $parent_slug, __( 'FAQ', 'wedocs' ), __( 'FAQ', 'wedocs' ), $this->capability, 'wedocs-faq', array( $this, 'display_faq' ) );
 
         add_action( 'load-' . $faq, [ $this, 'faq_menu_action' ] );
+    }
+
+    /**
+     * Get the weDocs admin menu icon.
+     *
+     * WordPress renders a base64 SVG data URI as a background image, so the
+     * colour has to be baked into the file — core only sets its size. Falls
+     * back to a dashicon if the asset is ever missing from the build.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return string
+     */
+    public function get_menu_icon() {
+        $icon_path = WEDOCS_PATH . '/assets/img/wedocs-menu-icon.svg';
+
+        if ( ! is_readable( $icon_path ) ) {
+            return 'dashicons-media-document';
+        }
+
+        $icon = file_get_contents( $icon_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+        if ( empty( $icon ) ) {
+            return 'dashicons-media-document';
+        }
+
+        return 'data:image/svg+xml;base64,' . base64_encode( $icon ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
     }
 
     /**
