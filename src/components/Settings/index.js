@@ -6,6 +6,7 @@ import { dispatch, useSelect } from '@wordpress/data';
 import settingsStore from '../../data/settings';
 import GeneralSettings from './GeneralSettings';
 import AiSettings from './AiSettings';
+import ShortcodeSettings from './ShortcodeSettings';
 import Swal from 'sweetalert2';
 import { __ } from '@wordpress/i18n';
 import Upgrade from '../Upgrade';
@@ -76,6 +77,7 @@ const SettingsPage = () => {
       aiSettingsData={ docSettings?.ai }
       setSettings={ setDocSettings }
     />,
+    <ShortcodeSettings />,
   ];
 
   templates = wp.hooks.applyFilters(
