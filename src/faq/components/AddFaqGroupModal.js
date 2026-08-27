@@ -189,7 +189,7 @@ const AddFaqGroupModal = ( {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className="w-full max-w-xl transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all overflow-visible">
-                                    <div className="flex items-center justify-between mb-6 border-b border-gray-200 px-8">
+                                    <div className="flex items-center justify-between border-b border-gray-200 px-8 py-5">
                                         <Dialog.Title
                                             as="h3"
                                             className="text-xl font-bold text-gray-900"
