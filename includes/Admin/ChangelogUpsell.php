@@ -61,15 +61,10 @@ class ChangelogUpsell {
             return;
         }
 
-        $index = null;
-        foreach ( $submenu['wedocs'] as $i => $item ) {
-            if ( isset( $item[2] ) && 'wedocs-changelog' === $item[2] ) {
-                $index = $i;
-                break;
-            }
-        }
+        // Every submenu row is [ title, cap, slug, ... ], so column 2 is the slug.
+        $index = array_search( 'wedocs-changelog', array_column( $submenu['wedocs'], 2 ), true );
 
-        if ( null === $index ) {
+        if ( false === $index ) {
             return;
         }
 
@@ -79,15 +74,9 @@ class ChangelogUpsell {
 
         // Land directly after Docs rather than at a fixed offset, so the
         // position holds if the surrounding entries ever change.
-        $docs_index = null;
-        foreach ( $submenu['wedocs'] as $i => $item ) {
-            if ( isset( $item[2] ) && false !== strpos( $item[2], 'page=wedocs#/' ) && '#/' === substr( $item[2], -2 ) ) {
-                $docs_index = $i;
-                break;
-            }
-        }
-
-        $insert_at = null === $docs_index ? 1 : $docs_index + 1;
+        $docs_slug  = admin_url( 'admin.php?page=wedocs' ) . '#/';
+        $docs_index = array_search( $docs_slug, array_column( $submenu['wedocs'], 2 ), true );
+        $insert_at  = false === $docs_index ? 1 : $docs_index + 1;
 
         array_splice( $submenu['wedocs'], $insert_at, 0, [ $entry ] );
     }
