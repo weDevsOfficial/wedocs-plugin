@@ -263,7 +263,7 @@ const AddFaqGroupModal = ( {
                                                     className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 cursor-pointer bg-white"
                                                 >
                                                     <span className="dashicons dashicons-cloud-upload text-gray-400 text-3xl mb-2"></span>
-                                                    <span className="text-emerald-500 font-medium text-sm">
+                                                    <span className="text-indigo-600 font-medium text-sm">
                                                         { __( 'Click to upload', 'wedocs' ) }
                                                     </span>
                                                     <span className="text-gray-400 text-xs mt-1">
@@ -281,7 +281,7 @@ const AddFaqGroupModal = ( {
                                                 { __( 'Cancel', 'wedocs' ) }
                                             </button>
                                             <button
-                                                className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium text-base py-2 px-5 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                                                className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-base py-2 px-5 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
                                                 onClick={ handleSubmit }
                                                 disabled={ isSubmitting }
                                             >
