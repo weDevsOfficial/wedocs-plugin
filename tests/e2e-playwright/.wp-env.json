@@ -1,0 +1,15 @@
+{
+  "phpVersion": "8.1",
+  "plugins": [ "../../" ],
+  "config": {
+    "WP_MEMORY_LIMIT": "512M",
+    "WP_MAX_MEMORY_LIMIT": "512M",
+    "WP_DEBUG": true,
+    "WP_DEBUG_LOG": "/var/www/html/wp-data/debug.log",
+    "WP_DEBUG_DISPLAY": false
+  },
+  "mappings": {
+    "wp-content/mu-plugins": "./mu-plugins",
+    "wp-data": "./wp-data"
+  }
+}
