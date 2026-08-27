@@ -25,13 +25,17 @@ There were historically **two** publishers racing on each tag:
 - **2.2.5** (dark-mode CSS fix, #322) shipped broken: `assets/build` had just been untracked (BUILD_DIR experiment), but **Appsero** (git-tracked deployer) published → package had **no built blocks** (`assets/build/index.js` 404) and **leaked `.claude`** (tracked, not in `appsero.json` exclude).
 - **2.2.6** hotfix *also* broken — the BUILD_DIR/`.distignore`/10up changes were **moot** because Appsero, not 10up, was deploying.
 - **2.2.7** finally fixed it by **re-tracking** `assets/build` (so Appsero shipped it) + adding `.claude`/`FILTERS.md` to `appsero.json` exclude.
-- Then Appsero auto-release was turned **off**, and `assets/build` was **untracked again** (10up now ships it from CI). The untracked→10up pipeline is validated at the **next** release.
+- Then Appsero auto-release was turned **off**, and `assets/build` was **untracked again** (10up now ships it from CI). **This pipeline is now PROVEN** — v2.4.0 (21 Jul 2026) shipped on it and SVN served the CI-built assets correctly. Keep Appsero off.
 
 ## 🚨 MANDATORY pre-release verification (run in the tmp clone, STOP if any fails)
 
 ```bash
-LAST=$(git ls-remote --tags origin | awk -F/ '{print $NF}' | grep -E '^v[0-9]' | grep -v '\^' | sort -V | tail -1)
+# ⚠️ Do NOT derive PREV with `sort -V | tail -1`. A stray v2.11.12 tag (pushed
+# 2025-07-24, a full year BEFORE v2.3.1) sorts highest and silently makes every
+# diff below compare against the wrong baseline. Sort by tag DATE, not name:
+LAST=$(git for-each-ref --sort=-creatordate --format='%(refname:short)' 'refs/tags/v*' | head -1)
 PREV=${LAST#v}
+echo "diffing against $LAST"   # sanity-check this is really the previous release
 # 1. assets/build must be UNTRACKED now (10up builds + ships it from CI).
 git ls-files assets/build | grep -q . && echo "FAIL: assets/build is tracked — untrack it (git rm -r --cached assets/build)"
 # 2. register_blocks() must still have the full block list (security cleanups love to delete it)
@@ -39,13 +43,59 @@ grep -q 'block_directories' wedocs.php || echo "FAIL: register_blocks gutted"
 grep -c 'assets/build/blocks/' wedocs.php   # expect ~17-19 entries, not 1
 # 3. the block-styles helper require must be intact
 grep -q "blocks/helpers/block-styles.php" wedocs.php || echo "FAIL: block-styles require missing"
-# 4. NO BUILD_DIR in the deploy workflow
-grep -q 'BUILD_DIR' .github/workflows/deploy-org.yml && echo "FAIL: BUILD_DIR present — it strips the untracked build"
+# 4. NO BUILD_DIR *input* in the deploy workflow. Match the YAML key only — a bare
+#    `grep BUILD_DIR` also matches the warning COMMENT above the 10up step and
+#    false-fails every single time.
+grep -qE '^\s*BUILD_DIR\s*:' .github/workflows/deploy-org.yml && echo "FAIL: BUILD_DIR present — it strips the untracked build"
 # 5. tailwind.config.js must be the clean ESM import form
 head -6 tailwind.config.js | grep -q "^import {" || echo "WARN: tailwind not ESM-import form"
 # 6. diff the two files security-cleanups have damaged before
 git --no-pager diff "v$PREV" -- wedocs.php tailwind.config.js
 ```
+
+## 🔁 "Install and build" fails with an npm cache EEXIST (seen on v2.4.0)
+
+Symptom — the **Install and build** step dies at `npm ci`, long before the deploy:
+
+```
+npm error code EEXIST
+npm error syscall rename
+npm error ENOENT: no such file or directory, rename
+  '/home/runner/.npm/_cacache/tmp/xxxx' -> '.../content-v2/sha512/...'
+npm error File exists: .../content-v2/sha512/...
+##[error]Process completed with exit code 254
+```
+
+`ENOENT` on the temp file **and** `File exists` on the destination in the same error is the
+signature of a corrupt/partial npm `_cacache` — not a dependency problem. Do not go hunting
+through `package-lock.json`; on v2.4.0 the lockfile was byte-identical to v2.3.1 apart from the
+version bump, and the workflow file had not changed since before v2.3.1.
+
+**Why it happens.** `actions/setup-node` `cache: 'npm'` keys the cache off the lockfile hash. The
+release commit bumps the version *inside* `package-lock.json`, so the key always misses on a
+release tag, falls back to a `restore-key`, and hydrates a **partial** cache that `npm ci` then
+collides with. GitHub force-upgrading `actions/checkout@v4` / `setup-node@v4` onto Node 24
+(annotation: *"Node.js 20 is deprecated … forced to run on Node.js 24"*) made this surface.
+
+**Ignore these red herrings** — they appear in green runs too:
+- `npm warn EBADENGINE` for `hashery`, `joi`, `qified` wanting node >= 20 on node 18. Present in
+  v2.3.1's lockfile as well. Warnings, never the cause.
+- The Node 20 → 24 deprecation annotation itself.
+
+**Recovery — it is safe to just retry.** The step fails *upstream* of the disk-gate, zip, GitHub
+Release and SVN deploy, so nothing was published and wp.org is untouched. There is no
+half-released version to clean up, and no need to re-tag:
+
+```bash
+gh run rerun <run-id> --repo weDevsOfficial/wedocs-plugin --failed
+gh run watch  <run-id> --repo weDevsOfficial/wedocs-plugin --exit-status
+```
+v2.4.0 went green on the first rerun (4m23s).
+
+**Durable fix (not yet applied — do it as its own PR, never inside a release):** in
+`.github/workflows/deploy-org.yml`, drop `cache: 'npm'` from the `setup-node` step, or bump to
+`actions/setup-node@v5` + `actions/checkout@v5`. A cold `npm ci` costs ~1 extra minute and removes
+the race entirely. Releases are infrequent — the cache buys nothing here.
 
 ## ✅ MANDATORY post-release verification — green workflow ≠ working package
 
@@ -63,7 +113,13 @@ curl -sI "https://plugins.svn.wordpress.org/wedocs/trunk/assets/build/index.js" 
 curl -sI "https://plugins.svn.wordpress.org/wedocs/tags/$V/assets/build/index.js" | head -1          # 200
 curl -sI "https://plugins.svn.wordpress.org/wedocs/trunk/.claude/skills/wedocs-release/SKILL.md" | head -1  # 404
 ```
-The canonical `wedocs.zip` CDN cache lags (~minutes to an hour) — the versioned `wedocs.$V.zip` + SVN are authoritative.
+**SVN is the only immediately-authoritative source.** Both the canonical `wedocs.zip` *and* the
+versioned `wedocs.$V.zip` lag (~minutes to an hour) while wp.org generates them. Worse, the
+versioned URL returns **HTTP 200 with the literal body `Not found`** until it exists — so
+`curl -o` writes a ~4KB text file and `unzip -l` reports 0 blocks, which looks exactly like a
+broken release. Always confirm with `file /tmp/w.zip` before panicking; if it says `ASCII text`,
+the package simply is not built yet. Re-check the zip later, and judge the release on the SVN
+`curl -sI` results above.
 
 ## ⭐ Golden path
 
@@ -126,4 +182,5 @@ The workflow extracts this block into the GitHub Release body. **User-facing onl
 - Repo `weDevsOfficial/wedocs-plugin` · branch `develop` · wp.org slug `wedocs` · fork `arifulhoque7/wedocs-plugin`
 - Main file `wedocs.php` · tag `vX.Y.Z` · build Node 18 + npm + Composer + PHP 7.4
 - `assets/build/` is **gitignored** (built in CI). Package excludes via `.distignore`.
-- Last good release: **v2.2.7** (10 Jun 2026) — re-tracked build via Appsero. Next release is the first on the untracked-build + 10up-sole-publisher pipeline (commit d960a5a) — verify it hard.
+- Last good release: **v2.4.0** (21 Jul 2026) — first release fully validated on the untracked-build + 10up-sole-publisher pipeline. SVN trunk and `tags/2.4.0` both served `assets/build/index.js` (200) with no `.claude` leak, confirming CI-built gitignored assets ship correctly. Needed one rerun for the npm cache race documented above.
+- Stray tag warning: **`v2.11.12`** exists upstream (pushed 2025-07-24, before v2.3.1). It is NOT a real release but sorts highest under `sort -V` — never derive the previous version by name-sort.
