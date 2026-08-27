@@ -77,7 +77,7 @@ const SettingsPage = () => {
       aiSettingsData={ docSettings?.ai }
       setSettings={ setDocSettings }
     />,
-    <ShortcodeSettings />,
+    <ShortcodeSettings key="shortcodes" />,
   ];
 
   templates = wp.hooks.applyFilters(

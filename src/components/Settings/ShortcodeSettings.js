@@ -99,6 +99,40 @@ const getShortcodes = () => {
     },
   ];
 
+  // [wedocs_changelog] only exists while Pro is running, so it is listed only
+  // then rather than advertising a shortcode the site cannot render.
+  if ( wp.hooks.applyFilters( 'wedocs_pro_loaded', false ) ) {
+    shortcodes.push( {
+      tag: 'wedocs_changelog',
+      title: __( 'Changelog', 'wedocs' ),
+      description: __(
+        'Embeds your changelog timeline on any page.',
+        'wedocs'
+      ),
+      example: '[wedocs_changelog channel="" rail="yes" switcher="no"]',
+      attributes: [
+        {
+          name: 'channel',
+          default: '',
+          description: __(
+            'Channel slug to show. Leave empty to show every channel.',
+            'wedocs'
+          ),
+        },
+        {
+          name: 'rail',
+          default: 'yes',
+          description: __( 'Show the timeline rail down the side.', 'wedocs' ),
+        },
+        {
+          name: 'switcher',
+          default: 'no',
+          description: __( 'Show the channel switcher above the timeline.', 'wedocs' ),
+        },
+      ],
+    } );
+  }
+
   return wp.hooks.applyFilters( 'wedocs_shortcodes', shortcodes );
 };
 
@@ -114,8 +148,11 @@ const ShortcodeCard = ( { shortcode } ) => {
       window.setTimeout( () => setCopied( false ), 2000 );
     };
 
-    if ( navigator.clipboard?.writeText ) {
-      navigator.clipboard.writeText( shortcode.example ).then( done ).catch( () => {} );
+    if ( window.navigator.clipboard?.writeText ) {
+      window.navigator.clipboard
+        .writeText( shortcode.example )
+        .then( done )
+        .catch( () => {} );
 
       return;
     }
