@@ -12,8 +12,10 @@ import { toastSuccess, toastError } from '../utils/toast';
 
 const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
     const [ isEditing, setIsEditing ] = useState( false );
-    const [ question, setQuestion ] = useState( faq.title.rendered );
-    const [ answer, setAnswer ] = useState( faq.content.rendered );
+    // Edit the stored values, not the filtered output. Saving `rendered` back
+    // would persist wptexturize entities and wpautop markup into the post.
+    const [ question, setQuestion ] = useState( faq.title.raw ?? faq.title.rendered );
+    const [ answer, setAnswer ] = useState( faq.content.raw ?? faq.content.rendered );
     const [ openByDefault, setOpenByDefault ] = useState( faq.meta?._faq_open_by_default || false );
     const [ isSaving, setIsSaving ] = useState( false );
     const [ isDeleting, setIsDeleting ] = useState( false );
@@ -125,8 +127,8 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
     };
 
     const handleCancel = () => {
-        setQuestion( faq.title.rendered );
-        setAnswer( faq.content.rendered );
+        setQuestion( faq.title.raw ?? faq.title.rendered );
+        setAnswer( faq.content.raw ?? faq.content.rendered );
         setOpenByDefault( faq.meta?._faq_open_by_default || false );
         setIsEditing( false );
     };
@@ -183,7 +185,7 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
                         onClick={ () => setIsEditing( ( prev ) => ! prev ) }
                         className="text-base font-medium text-gray-700 flex-1 truncate !m-0 py-4"
                     >
-                        { faq.title.rendered }
+                        { faq.title.raw ?? faq.title.rendered }
                     </h4>
                 </div>
                 <div

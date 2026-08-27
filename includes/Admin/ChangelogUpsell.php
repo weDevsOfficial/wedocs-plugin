@@ -76,7 +76,20 @@ class ChangelogUpsell {
         $entry = $submenu['wedocs'][ $index ];
         unset( $submenu['wedocs'][ $index ] );
         $submenu['wedocs'] = array_values( $submenu['wedocs'] );
-        array_splice( $submenu['wedocs'], 1, 0, [ $entry ] );
+
+        // Land directly after Docs rather than at a fixed offset, so the
+        // position holds if the surrounding entries ever change.
+        $docs_index = null;
+        foreach ( $submenu['wedocs'] as $i => $item ) {
+            if ( isset( $item[2] ) && false !== strpos( $item[2], 'page=wedocs#/' ) && '#/' === substr( $item[2], -2 ) ) {
+                $docs_index = $i;
+                break;
+            }
+        }
+
+        $insert_at = null === $docs_index ? 1 : $docs_index + 1;
+
+        array_splice( $submenu['wedocs'], $insert_at, 0, [ $entry ] );
     }
 
     /**

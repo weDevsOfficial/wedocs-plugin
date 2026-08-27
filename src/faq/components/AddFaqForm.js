@@ -7,7 +7,7 @@ import apiFetch from '@wordpress/api-fetch';
 import TiptapEditor from './TiptapEditor';
 import { toastSuccess, toastError } from '../utils/toast';
 
-const AddFaqForm = ( { groupId, onFaqCreated, onCancel } ) => {
+const AddFaqForm = ( { groupId, nextMenuOrder = 0, onFaqCreated, onCancel } ) => {
     const [ question, setQuestion ] = useState( '' );
     const [ answer, setAnswer ] = useState( '' );
     const [ openByDefault, setOpenByDefault ] = useState( false );
@@ -44,6 +44,9 @@ const AddFaqForm = ( { groupId, onFaqCreated, onCancel } ) => {
                     title: question.trim(),
                     content: answer.trim(),
                     status: 'publish',
+                    // Without this the FAQ stores menu_order 0 and jumps to the
+                    // top of every ordered list instead of landing at the end.
+                    menu_order: nextMenuOrder,
                     'wedocs-faq-groups': [ groupId ],
                     meta: {
                         _faq_open_by_default: openByDefault,

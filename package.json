@@ -57,6 +57,7 @@
     "@wordpress/core-data": "^6.0.0",
     "@wordpress/data": "^8.3.0",
     "@wordpress/element": "^5.0.0",
+    "@wordpress/html-entities": "^3.23.0",
     "@wordpress/i18n": "^4.23.0",
     "daisyui": "^2.49.0",
     "he": "^1.2.0",

@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import apiFetch from '@wordpress/api-fetch';
+import { decodeEntities } from '@wordpress/html-entities';
 import { toastSuccess, toastError } from '../utils/toast';
 
 const AddFaqGroupModal = ( {
@@ -31,7 +32,7 @@ const AddFaqGroupModal = ( {
     // Pre-fill form when editing.
     useEffect( () => {
         if ( isOpen && editGroup ) {
-            setTitle( editGroup.name || '' );
+            setTitle( decodeEntities( editGroup.name || '' ) );
 
             if ( editGroup.meta?.icon && editGroup.meta.icon > 0 ) {
                 // Fetch the attachment to get URL.

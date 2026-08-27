@@ -22,6 +22,7 @@ import FaqConfirmDialog from './FaqConfirmDialog';
 import AddFaqForm from './AddFaqForm';
 import FaqItem from './FaqItem';
 import AddFaqGroupModal from './AddFaqGroupModal';
+import { decodeEntities } from '@wordpress/html-entities';
 import { toastSuccess, toastError } from '../utils/toast';
 
 const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated } ) => {
@@ -93,7 +94,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
     useEffect( () => {
         if ( isExpanded && ! faqsLoaded ) {
             apiFetch( {
-                path: `/wp/v2/wedocs-faqs?wedocs-faq-groups=${ group.id }&per_page=100&orderby=menu_order&order=asc`,
+                path: `/wp/v2/wedocs-faqs?wedocs-faq-groups=${ group.id }&per_page=100&orderby=menu_order&order=asc&context=edit`,
             } ).then( ( data ) => {
                 setFaqs( data );
                 setFaqsLoaded( true );
@@ -243,7 +244,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
         try {
             // Try creating the group with (Copy) suffix, incrementing if the name already exists.
             let duplicated = null;
-            const baseName = group.name + ' ' + __( '(Copy)', 'wedocs' );
+            const baseName = decodeEntities( group.name ) + ' ' + __( '(Copy)', 'wedocs' );
             const maxAttempts = 10;
 
             for ( let attempt = 0; attempt < maxAttempts; attempt++ ) {
@@ -387,7 +388,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                     className="flex items-center flex-1 min-w-0 cursor-pointer py-5"
                 >
                     <span className="text-base font-medium text-black truncate">
-                        { group.name }
+                        { decodeEntities( group.name ) }
                     </span>
                 </div>
 
@@ -521,6 +522,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                     { showAddForm && (
                         <AddFaqForm
                             groupId={ group.id }
+                            nextMenuOrder={ faqs.length }
                             onFaqCreated={ ( faq ) => {
                                 setFaqs( ( prev ) => [ ...prev, faq ] );
                                 setShowAddForm( false );

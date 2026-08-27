@@ -10,28 +10,47 @@ document.addEventListener( 'DOMContentLoaded', function () {
             return;
         }
 
-        // Items open by default need the inline style set so transitions work.
-        if ( details.open ) {
-            answer.style.gridTemplateRows = '1fr';
-        }
+        var closing = null;
+
+        // Set the starting row size explicitly so the very first toggle in
+        // either direction has two values to transition between.
+        answer.style.gridTemplateRows = details.open ? '1fr' : '0fr';
+
+        var finishClose = function () {
+            if ( ! closing ) {
+                return;
+            }
+
+            answer.removeEventListener( 'transitionend', finishClose );
+            window.clearTimeout( closing );
+            closing = null;
+            details.open = false;
+        };
 
         summary.addEventListener( 'click', function ( e ) {
             e.preventDefault();
 
-            if ( details.open ) {
-                // Closing: let the transition finish before removing open.
-                answer.style.gridTemplateRows = '0fr';
-                answer.addEventListener( 'transitionend', function handler() {
-                    details.open = false;
-                    answer.removeEventListener( 'transitionend', handler );
-                } );
-            } else {
-                // Opening: set open first so content is measurable, then animate.
-                details.open = true;
-                // Force a reflow so the browser registers the 0fr starting state.
-                answer.offsetHeight; // eslint-disable-line no-unused-expressions
-                answer.style.gridTemplateRows = '1fr';
+            if ( closing ) {
+                // Mid-close: settle it now so the click reopens from a known state.
+                finishClose();
             }
+
+            if ( details.open ) {
+                answer.style.gridTemplateRows = '0fr';
+                answer.addEventListener( 'transitionend', finishClose );
+
+                // Browsers that cannot interpolate grid-template-rows never fire
+                // transitionend, which would leave the item stuck open because
+                // preventDefault() already suppressed the native toggle.
+                closing = window.setTimeout( finishClose, 400 );
+                return;
+            }
+
+            details.open = true;
+            answer.style.gridTemplateRows = '0fr';
+            // Force a reflow so the browser registers the 0fr starting state.
+            answer.offsetHeight; // eslint-disable-line no-unused-expressions
+            answer.style.gridTemplateRows = '1fr';
         } );
     } );
 } );

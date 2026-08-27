@@ -170,14 +170,22 @@ class Menu {
 
         $all_submenus = apply_filters( 'wedocs_submenu', $all_submenus );
 
-        // Reset submenu to remove the auto-generated parent duplicate
-        // that WordPress creates when add_submenu_page() is used.
-        $submenu['wedocs'] = array(); // phpcs:ignore.
+        // Rebuild the submenu in our own order, dropping the duplicate of the
+        // parent that WordPress generates and the entries we are about to add
+        // again, but keeping anything another plugin registered under us.
+        $own_slugs = array_merge( array( 'wedocs' ), wp_list_pluck( $all_submenus, 2 ) );
+        $existing  = empty( $submenu['wedocs'] ) ? array() : $submenu['wedocs'];
 
-        array_push(
-            $submenu['wedocs'],
-            ...$all_submenus
+        $foreign = array_values(
+            array_filter(
+                $existing,
+                function ( $item ) use ( $own_slugs ) {
+                    return isset( $item[2] ) && ! in_array( $item[2], $own_slugs, true );
+                }
+            )
         );
+
+        $submenu['wedocs'] = array_merge( $all_submenus, $foreign ); // phpcs:ignore.
     }
 
     /**
