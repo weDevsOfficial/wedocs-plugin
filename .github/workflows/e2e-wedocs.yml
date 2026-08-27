@@ -55,10 +55,13 @@ jobs:
         with:
           node-version: 22
 
-      # assets/build is gitignored, so the admin bundle the browser loads has to
-      # be built here or every SPA spec fails on an empty container.
+      # wedocs.php requires vendor/autoload.php outright, so without composer the
+      # plugin fatals on load and wp-env start exits 255 before a spec ever runs.
+      # assets/build is gitignored too, so the admin bundle has to be built here
+      # or every SPA spec fails on an empty container.
       - name: Build wedocs
         run: |
+          composer install --no-dev -o
           npm ci
           npm run build
 
@@ -143,10 +146,17 @@ jobs:
           pnpm exec playwright merge-reports --reporter=json ./all-blob-reports > merged-results.json 2>/dev/null || true
           node utils/ghSummary.mjs merged-results.json
       # Full HTML report kept as a downloadable artifact for deep dives.
+      # Skip rather than fail when no shard produced a report; the real error is
+      # already on the failing test job.
       - name: Merge into one HTML report
         if: always()
         working-directory: tests/e2e-playwright
-        run: pnpm exec playwright merge-reports --reporter=html ./all-blob-reports
+        run: |
+          if [ -d ./all-blob-reports ] && [ -n "$(ls -A ./all-blob-reports)" ]; then
+            pnpm exec playwright merge-reports --reporter=html ./all-blob-reports
+          else
+            echo 'no blob reports to merge'
+          fi
       - name: Upload HTML report (artifact)
         if: always()
         uses: actions/upload-artifact@v4

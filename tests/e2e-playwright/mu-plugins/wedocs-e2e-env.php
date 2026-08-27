@@ -42,6 +42,16 @@ add_action( 'admin_enqueue_scripts', function () {
 // weDocs shows a first-run setup/upgrade notice that covers the top of the admin
 // screen. Mark it seen so the SPA is reachable on a fresh install.
 add_action( 'init', function () {
-    update_option( 'wedocs_admin_notice_dismissed', true );
-    update_option( 'wedocs_upgrade_popup_dismissed', true );
+    // wp-env provisions the container before WordPress is installed, so this can
+    // fire with no tables yet. Writing then fills the log with "table doesn't
+    // exist" errors, which the CI job dutifully surfaces on every run.
+    if ( ! is_blog_installed() ) {
+        return;
+    }
+
+    foreach ( array( 'wedocs_admin_notice_dismissed', 'wedocs_upgrade_popup_dismissed' ) as $option ) {
+        if ( ! get_option( $option ) ) {
+            update_option( $option, true );
+        }
+    }
 }, 2 );

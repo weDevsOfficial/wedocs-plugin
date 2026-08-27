@@ -6,7 +6,17 @@ import { readFileSync, appendFileSync, existsSync } from 'fs';
 
 const file = process.argv[2] || 'merged-results.json';
 if (!existsSync(file)) { console.error(`no ${file}`); process.exit(0); }
-const report = JSON.parse(readFileSync(file, 'utf8'));
+
+// When every shard fails before producing a blob report, merge-reports writes
+// nothing and this file is empty. Report that plainly instead of throwing a
+// SyntaxError that buries the real failure further up the log.
+let report;
+try {
+  report = JSON.parse(readFileSync(file, 'utf8'));
+} catch {
+  console.error(`${file} is empty or unparseable — the test jobs produced no report`);
+  process.exit(0);
+}
 
 const byFile = {};
 let passed = 0, failed = 0, skipped = 0, flaky = 0;
