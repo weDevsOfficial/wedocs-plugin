@@ -23,7 +23,10 @@ const getShortcodes = () => {
         {
           name: 'col',
           default: '2',
-          description: __( 'Number of columns to lay the docs out in.', 'wedocs' ),
+          description: __(
+            'Number of columns to lay the docs out in. The Pro layout setting takes over when it is set.',
+            'wedocs'
+          ),
         },
         {
           name: 'items',
@@ -41,7 +44,10 @@ const getShortcodes = () => {
         {
           name: 'exclude',
           default: '',
-          description: __( 'Comma separated doc IDs to leave out.', 'wedocs' ),
+          description: __(
+            'Comma separated doc IDs to leave out. Ignored for any ID that include also names.',
+            'wedocs'
+          ),
         },
         {
           name: 'more',
@@ -112,7 +118,7 @@ const getShortcodes = () => {
         'Embeds your changelog timeline on any page.',
         'wedocs'
       ),
-      example: '[wedocs_changelog channel="" rail="yes" switcher="no"]',
+      example: '[wedocs_changelog channel="" switcher="no"]',
       attributes: [
         {
           name: 'channel',
@@ -121,11 +127,6 @@ const getShortcodes = () => {
             'Channel slug to show. Leave empty to show every channel.',
             'wedocs'
           ),
-        },
-        {
-          name: 'rail',
-          default: 'yes',
-          description: __( 'Show the timeline rail down the side.', 'wedocs' ),
         },
         {
           name: 'switcher',
