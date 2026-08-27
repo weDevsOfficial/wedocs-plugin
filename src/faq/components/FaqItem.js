@@ -144,7 +144,7 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
             ref={ setNodeRef }
             style={ style }
             { ...attributes }
-            className={ `border border-gray-200 rounded-md ${ isEditing ? 'bg-gray-50' : 'cursor-pointer hover:border-gray-300' } transition-colors ${ isDragging ? 'shadow-lg opacity-90' : '' }` }
+            className={ `border border-gray-300 rounded-md ${ isEditing ? '' : 'cursor-pointer hover:border-gray-400' } transition-colors ${ isDragging ? 'shadow-lg opacity-90' : '' }` }
         >
             { /* Collapsed header — always visible */ }
             <div className="flex items-center justify-between">
@@ -167,7 +167,7 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
                 <div className="flex items-center flex-1 min-w-0">
                     <h4
                         onClick={ () => setIsEditing( ( prev ) => ! prev ) }
-                        className="font-medium text-gray-800 text-sm flex-1 truncate !m-0 py-4"
+                        className="text-base font-medium text-gray-700 flex-1 truncate !m-0 py-4"
                     >
                         { faq.title.rendered }
                     </h4>
@@ -202,7 +202,7 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
                     <div className="mb-4">
                         <label
                             htmlFor={ `faq-edit-question-${ faq.id }` }
-                            className="block text-sm font-semibold text-gray-700 mb-1.5"
+                            className="block text-sm font-medium text-gray-600 mb-1.5"
                         >
                             { __( 'Question', 'wedocs' ) }
                             <span className="text-red-500 ml-0.5">*</span>
@@ -212,13 +212,13 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
                             id={ `faq-edit-question-${ faq.id }` }
                             value={ question }
                             onChange={ ( e ) => setQuestion( e.target.value ) }
-                            className="w-full h-11 bg-white text-gray-900 text-base !rounded-md !py-2 !px-3 !border-gray-300"
+                            className="w-full h-11 bg-gray-50 text-gray-900 text-base !rounded-md !py-2 !px-3 !border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
 
                     <div className="mb-5">
                         <label
-                            className="block text-sm font-semibold text-gray-700 mb-1.5"
+                            className="block text-sm font-medium text-gray-600 mb-1.5"
                         >
                             { __( 'Answer', 'wedocs' ) }
                         </label>
@@ -267,11 +267,11 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
                             </span>
                             <button
                                 onClick={ () => handleToggleOpenByDefault( ! openByDefault ) }
-                                className={ `relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${ openByDefault ? 'bg-indigo-600' : 'bg-gray-300' }` }
+                                className={ `relative inline-flex h-5 w-10 items-center rounded-full transition-colors ${ openByDefault ? 'bg-indigo-600' : 'bg-gray-200' }` }
                                 aria-label={ __( 'Toggle open by default', 'wedocs' ) }
                             >
                                 <span
-                                    className={ `inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${ openByDefault ? 'translate-x-[18px]' : 'translate-x-0.5' }` }
+                                    className={ `inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${ openByDefault ? 'translate-x-5' : 'translate-x-1' }` }
                                 />
                             </button>
                         </div>

@@ -210,7 +210,7 @@ const AddFaqGroupModal = ( {
                                         <div className="mb-5">
                                             <label
                                                 htmlFor="faq-group-title"
-                                                className="block text-sm font-semibold text-gray-700 mb-2"
+                                                className="block text-sm font-medium text-gray-600 mb-2"
                                             >
                                                 { __( 'FAQ Group Title', 'wedocs' ) }
                                             </label>
@@ -240,11 +240,11 @@ const AddFaqGroupModal = ( {
                                         </div>
 
                                         <div className="mb-6">
-                                            <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                            <label className="block text-sm font-medium text-gray-600 mb-2">
                                                 { __( 'FAQ Group Icon', 'wedocs' ) }
                                             </label>
                                             { icon ? (
-                                                <div className="relative inline-block border border-gray-200 rounded-lg p-4">
+                                                <div className="relative inline-block border border-gray-300 rounded-lg p-4">
                                                     <img
                                                         src={ icon.url }
                                                         alt={ icon.alt }

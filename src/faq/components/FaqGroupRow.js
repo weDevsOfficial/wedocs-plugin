@@ -333,7 +333,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             ref={ setNodeRef }
             style={ style }
             { ...attributes }
-            className={ `bg-white border border-gray-200 rounded-md ${ isDragging ? 'shadow-lg opacity-90' : '' }` }
+            className={ `bg-white border border-gray-300 rounded-md ${ isDragging ? 'shadow-lg opacity-90' : '' }` }
         >
             <div className="flex items-center justify-between">
                     { /* Drag handle */ }
@@ -356,7 +356,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                     onClick={ toggleExpand }
                     className="flex items-center flex-1 min-w-0 cursor-pointer py-5"
                 >
-                    <span className="font-medium text-gray-800 truncate">
+                    <span className="text-base font-medium text-black truncate">
                         { group.name }
                     </span>
                 </div>
@@ -410,20 +410,20 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                     </button>
 
                     { /* Visibility toggle */ }
-                    <div className="flex items-center gap-1.5">
-                        <span className="text-xs text-gray-500">
-                            { isActive ? __( 'Active', 'wedocs' ) : __( 'Inactive', 'wedocs' ) }
-                        </span>
+                    <div className="flex items-center">
                         <button
                             onClick={ handleToggle }
                             disabled={ isToggling }
-                            className={ `relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${ isActive ? 'bg-indigo-600' : 'bg-gray-300' } ${ isToggling ? 'opacity-50 cursor-not-allowed' : '' }` }
+                            className={ `relative inline-flex h-5 w-10 items-center rounded-full transition-colors ${ isActive ? 'bg-indigo-600' : 'bg-gray-200' } ${ isToggling ? 'opacity-50 cursor-not-allowed' : '' }` }
                             aria-label={ isActive ? __( 'Deactivate FAQ group', 'wedocs' ) : __( 'Activate FAQ group', 'wedocs' ) }
                         >
                             <span
-                                className={ `inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${ isActive ? 'translate-x-6' : 'translate-x-1' }` }
+                                className={ `inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${ isActive ? 'translate-x-5' : 'translate-x-1' }` }
                             />
                         </button>
+                        <span className="ml-3 text-sm text-gray-900">
+                            { isActive ? __( 'Active', 'wedocs' ) : __( 'Inactive', 'wedocs' ) }
+                        </span>
                     </div>
 
                     { /* Expand/collapse chevron */ }

@@ -94,7 +94,7 @@ const BlockTypeDropdown = ( { editor } ) => {
                 </svg>
             </button>
             { isOpen && (
-                <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 min-w-[130px] py-1">
+                <div className="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 min-w-[130px] py-1">
                     { options.map( ( opt ) => (
                         <button
                             key={ opt.label }

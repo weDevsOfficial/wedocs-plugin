@@ -70,7 +70,7 @@ const AddFaqForm = ( { groupId, onFaqCreated, onCancel } ) => {
             <div className="mb-4">
                 <label
                     htmlFor={ `faq-question-${ groupId }` }
-                    className="block text-sm font-semibold text-gray-700 mb-1.5"
+                    className="block text-sm font-medium text-gray-600 mb-1.5"
                 >
                     { __( 'Question', 'wedocs' ) }
                     <span className="text-red-500 ml-0.5">*</span>
@@ -86,7 +86,7 @@ const AddFaqForm = ( { groupId, onFaqCreated, onCancel } ) => {
                             setErrors( ( prev ) => ( { ...prev, question: undefined } ) );
                         }
                     } }
-                    className={ `w-full h-11 bg-white text-gray-900 text-base !rounded-md !py-2 !px-3 ${ errors.question ? '!border-red-500' : '!border-gray-300' }` }
+                    className={ `w-full h-11 bg-gray-50 text-gray-900 text-base !rounded-md !py-2 !px-3 ${ errors.question ? '!border-red-500 focus:ring-red-500 focus:border-red-500' : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500' }` }
                 />
                 { errors.question && (
                     <p className="mt-1 text-sm text-red-500">{ errors.question }</p>
@@ -95,7 +95,7 @@ const AddFaqForm = ( { groupId, onFaqCreated, onCancel } ) => {
 
             <div className="mb-5">
                 <label
-                    className="block text-sm font-semibold text-gray-700 mb-1.5"
+                    className="block text-sm font-medium text-gray-600 mb-1.5"
                 >
                     { __( 'Answer', 'wedocs' ) }
                     <span className="text-red-500 ml-0.5">*</span>
@@ -147,11 +147,11 @@ const AddFaqForm = ( { groupId, onFaqCreated, onCancel } ) => {
                     </span>
                     <button
                         onClick={ () => setOpenByDefault( ( prev ) => ! prev ) }
-                        className={ `relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${ openByDefault ? 'bg-indigo-600' : 'bg-gray-300' }` }
+                        className={ `relative inline-flex h-5 w-10 items-center rounded-full transition-colors ${ openByDefault ? 'bg-indigo-600' : 'bg-gray-200' }` }
                         aria-label={ __( 'Toggle open by default', 'wedocs' ) }
                     >
                         <span
-                            className={ `inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${ openByDefault ? 'translate-x-[18px]' : 'translate-x-0.5' }` }
+                            className={ `inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${ openByDefault ? 'translate-x-5' : 'translate-x-1' }` }
                         />
                     </button>
                 </div>
