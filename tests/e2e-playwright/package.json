@@ -11,9 +11,16 @@
     "env:stop": "pnpm exec wp-env stop",
     "env:destroy": "pnpm exec wp-env destroy",
     "install:browsers": "pnpm exec playwright install chromium",
-    "merge-reports": "pnpm exec playwright merge-reports --reporter=html ./blob-report"
+    "merge-reports": "pnpm exec playwright merge-reports --reporter=html ./blob-report",
+    "env:reset": "pnpm exec wp-env clean tests && pnpm exec wp-env run tests-cli wp plugin activate wedocs"
   },
-  "keywords": [ "playwright", "e2e", "wordpress", "wedevs", "wedocs" ],
+  "keywords": [
+    "playwright",
+    "e2e",
+    "wordpress",
+    "wedevs",
+    "wedocs"
+  ],
   "author": "weDevs QA",
   "license": "MIT",
   "devDependencies": {
