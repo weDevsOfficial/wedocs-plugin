@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import TiptapEditor from './TiptapEditor';
+import { toastSuccess, toastError } from '../utils/toast';
 
 const AddFaqForm = ( { groupId, onFaqCreated, onCancel } ) => {
     const [ question, setQuestion ] = useState( '' );
@@ -58,15 +59,23 @@ const AddFaqForm = ( { groupId, onFaqCreated, onCancel } ) => {
             setAnswer( '' );
             setOpenByDefault( false );
             setErrors( {} );
-        } catch {
-            setErrors( { submit: __( 'Failed to create FAQ. Please try again.', 'wedocs' ) } );
+            toastSuccess(
+                __( 'FAQ added!', 'wedocs' ),
+                __( 'The new FAQ has been created.', 'wedocs' )
+            );
+        } catch ( error ) {
+            const message =
+                error?.message || __( 'Failed to create FAQ. Please try again.', 'wedocs' );
+
+            setErrors( { submit: message } );
+            toastError( message );
         } finally {
             setIsSubmitting( false );
         }
     };
 
     return (
-        <div className="bg-gray-50 rounded-md p-5">
+        <div className="border border-gray-300 rounded-md p-5">
             <div className="mb-4">
                 <label
                     htmlFor={ `faq-question-${ groupId }` }

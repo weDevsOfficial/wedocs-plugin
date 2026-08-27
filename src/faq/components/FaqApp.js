@@ -18,6 +18,7 @@ import {
 } from '@dnd-kit/sortable';
 import EmptyFaq from './EmptyFaq';
 import AddFaqGroupModal from './AddFaqGroupModal';
+import { toastError } from '../utils/toast';
 import FaqGroupRow from './FaqGroupRow';
 
 const FaqApp = () => {
@@ -39,8 +40,9 @@ const FaqApp = () => {
                 path: '/wp/v2/wedocs-faq-groups?per_page=100',
             } );
             setGroups( data );
-        } catch {
+        } catch ( error ) {
             setGroups( [] );
+            toastError( error, __( 'Could not load the FAQ groups. Please reload the page.', 'wedocs' ) );
         } finally {
             setIsLoading( false );
         }
@@ -51,19 +53,21 @@ const FaqApp = () => {
     }, [] );
 
     const handleGroupAdded = ( group ) => {
-        setGroups( ( prev ) => {
-            const newOrder = prev.length;
+        const newOrder = groups.length;
 
-            // Persist the order meta so the group appears at the end.
-            apiFetch( {
-                path: `/wp/v2/wedocs-faq-groups/${ group.id }`,
-                method: 'POST',
-                data: { meta: { order: newOrder } },
-            } ).catch( () => {
-                // Order update failed — the group still exists, just may not sort correctly on reload.
-            } );
+        setGroups( ( prev ) => [
+            ...prev,
+            { ...group, meta: { ...group.meta, order: newOrder } },
+        ] );
 
-            return [ ...prev, { ...group, meta: { ...group.meta, order: newOrder } } ];
+        // Persist the order meta so the group appears at the end.
+        apiFetch( {
+            path: `/wp/v2/wedocs-faq-groups/${ group.id }`,
+            method: 'POST',
+            data: { meta: { order: newOrder } },
+        } ).catch( ( error ) => {
+            // The group exists either way; only its position is at risk.
+            toastError( error, __( 'The group was created but its position could not be saved.', 'wedocs' ) );
         } );
     };
 
@@ -77,6 +81,27 @@ const FaqApp = () => {
         );
     };
 
+    const persistGroupOrder = async ( ordered ) => {
+        const results = await Promise.allSettled(
+            ordered.map( ( group, index ) =>
+                apiFetch( {
+                    path: `/wp/v2/wedocs-faq-groups/${ group.id }`,
+                    method: 'POST',
+                    data: { meta: { order: index } },
+                } )
+            )
+        );
+
+        const failed = results.find( ( result ) => result.status === 'rejected' );
+
+        if ( failed ) {
+            toastError(
+                failed.reason,
+                __( 'The new order could not be saved and will reset when you reload.', 'wedocs' )
+            );
+        }
+    };
+
     const handleDragEnd = ( event ) => {
         const { active, over } = event;
 
@@ -84,24 +109,17 @@ const FaqApp = () => {
             return;
         }
 
-        setGroups( ( prev ) => {
-            const oldIndex = prev.findIndex( ( g ) => g.id === active.id );
-            const newIndex = prev.findIndex( ( g ) => g.id === over.id );
-            const reordered = arrayMove( prev, oldIndex, newIndex );
+        const oldIndex = groups.findIndex( ( g ) => g.id === active.id );
+        const newIndex = groups.findIndex( ( g ) => g.id === over.id );
 
-            // Persist the new order to the backend.
-            reordered.forEach( ( group, index ) => {
-                apiFetch( {
-                    path: `/wp/v2/wedocs-faq-groups/${ group.id }`,
-                    method: 'POST',
-                    data: { meta: { order: index } },
-                } ).catch( () => {
-                    // Order persist failed — will correct on next page load.
-                } );
-            } );
+        if ( oldIndex === -1 || newIndex === -1 ) {
+            return;
+        }
 
-            return reordered;
-        } );
+        const reordered = arrayMove( groups, oldIndex, newIndex );
+
+        setGroups( reordered );
+        persistGroupOrder( reordered );
     };
 
     return (

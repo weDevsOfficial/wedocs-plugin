@@ -22,6 +22,7 @@ import FaqConfirmDialog from './FaqConfirmDialog';
 import AddFaqForm from './AddFaqForm';
 import FaqItem from './FaqItem';
 import AddFaqGroupModal from './AddFaqGroupModal';
+import { toastSuccess, toastError } from '../utils/toast';
 
 const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated } ) => {
     const [ isExpanded, setIsExpanded ] = useState( false );
@@ -48,6 +49,27 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
         } )
     );
 
+    const persistFaqOrder = async ( ordered ) => {
+        const results = await Promise.allSettled(
+            ordered.map( ( faq, index ) =>
+                apiFetch( {
+                    path: `/wp/v2/wedocs-faqs/${ faq.id }`,
+                    method: 'POST',
+                    data: { menu_order: index },
+                } )
+            )
+        );
+
+        const failed = results.find( ( result ) => result.status === 'rejected' );
+
+        if ( failed ) {
+            toastError(
+                failed.reason,
+                __( 'The new order could not be saved and will reset when you reload.', 'wedocs' )
+            );
+        }
+    };
+
     const handleFaqDragEnd = ( event ) => {
         const { active, over } = event;
 
@@ -55,24 +77,17 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             return;
         }
 
-        setFaqs( ( prev ) => {
-            const oldIndex = prev.findIndex( ( f ) => f.id === active.id );
-            const newIndex = prev.findIndex( ( f ) => f.id === over.id );
-            const reordered = arrayMove( prev, oldIndex, newIndex );
+        const oldIndex = faqs.findIndex( ( f ) => f.id === active.id );
+        const newIndex = faqs.findIndex( ( f ) => f.id === over.id );
 
-            // Persist the new order to the backend.
-            reordered.forEach( ( faq, index ) => {
-                apiFetch( {
-                    path: `/wp/v2/wedocs-faqs/${ faq.id }`,
-                    method: 'POST',
-                    data: { menu_order: index },
-                } ).catch( () => {
-                    // Order persist failed — will correct on next page load.
-                } );
-            } );
+        if ( oldIndex === -1 || newIndex === -1 ) {
+            return;
+        }
 
-            return reordered;
-        } );
+        const reordered = arrayMove( faqs, oldIndex, newIndex );
+
+        setFaqs( reordered );
+        persistFaqOrder( reordered );
     };
 
     useEffect( () => {
@@ -82,8 +97,9 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             } ).then( ( data ) => {
                 setFaqs( data );
                 setFaqsLoaded( true );
-            } ).catch( () => {
+            } ).catch( ( error ) => {
                 setFaqsLoaded( true );
+                toastError( error, __( 'Could not load the FAQs in this group.', 'wedocs' ) );
             } );
         }
     }, [ isExpanded, faqsLoaded, group.id ] );
@@ -157,9 +173,10 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             if ( onGroupUpdated ) {
                 onGroupUpdated( updated );
             }
-        } catch {
-            // Revert on failure.
+        } catch ( error ) {
+            // Revert so the switch keeps matching what is stored.
             setIsActive( ! nextStatus );
+            toastError( error, __( 'Failed to update the FAQ group. Please try again.', 'wedocs' ) );
         } finally {
             setIsToggling( false );
         }
@@ -290,11 +307,18 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             }
 
             setShowDuplicateConfirm( false );
-        } catch ( error ) {
-            setDuplicateError(
-                error?.message || __( 'Something went wrong while duplicating the FAQ group.', 'wedocs' )
+            toastSuccess(
+                __( 'FAQ group duplicated!', 'wedocs' ),
+                __( 'A copy of the group and its FAQs has been created.', 'wedocs' )
             );
+        } catch ( error ) {
+            const message =
+                error?.message ||
+                __( 'Something went wrong while duplicating the FAQ group.', 'wedocs' );
+
+            setDuplicateError( message );
             setShowDuplicateConfirm( false );
+            toastError( message );
         } finally {
             setIsDuplicating( false );
         }
@@ -322,9 +346,15 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             if ( onGroupDeleted ) {
                 onGroupDeleted( group.id );
             }
-        } catch {
+
+            toastSuccess(
+                __( 'FAQ group deleted!', 'wedocs' ),
+                __( 'The group and its FAQs have been removed.', 'wedocs' )
+            );
+        } catch ( error ) {
             setIsDeleting( false );
             setShowDeleteConfirm( false );
+            toastError( error, __( 'Failed to delete the FAQ group. Please try again.', 'wedocs' ) );
         }
     };
 

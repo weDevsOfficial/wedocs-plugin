@@ -8,6 +8,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import TiptapEditor from './TiptapEditor';
 import FaqConfirmDialog from './FaqConfirmDialog';
+import { toastSuccess, toastError } from '../utils/toast';
 
 const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
     const [ isEditing, setIsEditing ] = useState( false );
@@ -83,8 +84,13 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
             }
 
             setIsEditing( false );
-        } catch {
-            // Stay in edit mode on failure.
+            toastSuccess(
+                __( 'FAQ updated!', 'wedocs' ),
+                __( 'Your changes have been saved.', 'wedocs' )
+            );
+        } catch ( error ) {
+            // Stay in edit mode so the user can retry without losing input.
+            toastError( error, __( 'Failed to save the FAQ. Please try again.', 'wedocs' ) );
         } finally {
             setIsSaving( false );
         }
@@ -106,8 +112,15 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
             if ( onFaqDeleted ) {
                 onFaqDeleted( faq.id );
             }
-        } catch {
+
+            toastSuccess(
+                __( 'FAQ deleted!', 'wedocs' ),
+                __( 'The FAQ has been removed.', 'wedocs' )
+            );
+        } catch ( error ) {
             setIsDeleting( false );
+            setShowDeleteConfirm( false );
+            toastError( error, __( 'Failed to delete the FAQ. Please try again.', 'wedocs' ) );
         }
     };
 
@@ -133,9 +146,10 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
             if ( onFaqUpdated ) {
                 onFaqUpdated( updated );
             }
-        } catch {
-            // Revert on failure.
+        } catch ( error ) {
+            // Revert so the switch keeps matching what is stored.
             setOpenByDefault( ! nextValue );
+            toastError( error, __( 'Failed to update the FAQ. Please try again.', 'wedocs' ) );
         }
     };
 

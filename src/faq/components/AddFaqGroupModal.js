@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 import apiFetch from '@wordpress/api-fetch';
+import { toastSuccess, toastError } from '../utils/toast';
 
 const AddFaqGroupModal = ( {
     className,
@@ -146,10 +147,22 @@ const AddFaqGroupModal = ( {
             }
 
             closeModal();
-        } catch ( error ) {
-            setApiError(
-                error?.message || __( 'Failed to save FAQ group. Please try again.', 'wedocs' )
+
+            toastSuccess(
+                isEditMode
+                    ? __( 'FAQ group updated!', 'wedocs' )
+                    : __( 'FAQ group created!', 'wedocs' ),
+                isEditMode
+                    ? __( 'Your changes have been saved.', 'wedocs' )
+                    : __( 'The new group is ready for FAQs.', 'wedocs' )
             );
+        } catch ( error ) {
+            const message =
+                error?.message || __( 'Failed to save FAQ group. Please try again.', 'wedocs' );
+
+            // Keep the inline message so the reason stays visible in the modal.
+            setApiError( message );
+            toastError( message );
         } finally {
             setIsSubmitting( false );
         }
