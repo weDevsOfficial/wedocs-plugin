@@ -11,6 +11,7 @@ const getShortcodes = () => {
   const shortcodes = [
     {
       tag: 'wedocs',
+      plan: 'free',
       title: __( 'Documentation List', 'wedocs' ),
       description: __(
         'Lists your documentation. Use this on the page you have set as the docs home.',
@@ -59,6 +60,7 @@ const getShortcodes = () => {
     },
     {
       tag: 'wedocs_faq',
+      plan: 'free',
       title: __( 'FAQ Section', 'wedocs' ),
       description: __(
         'Renders your FAQ groups as an accordion. Inactive groups and groups with no FAQs are skipped.',
@@ -104,6 +106,7 @@ const getShortcodes = () => {
   if ( wp.hooks.applyFilters( 'wedocs_pro_loaded', false ) ) {
     shortcodes.push( {
       tag: 'wedocs_changelog',
+      plan: 'pro',
       title: __( 'Changelog', 'wedocs' ),
       description: __(
         'Embeds your changelog timeline on any page.',
@@ -135,6 +138,24 @@ const getShortcodes = () => {
 
   return wp.hooks.applyFilters( 'wedocs_shortcodes', shortcodes );
 };
+
+/**
+ * Which plugin registers a shortcode.
+ *
+ * Reuses the pills the docs listing already ships: the grey draft badge for
+ * free and the indigo vendor badge for Pro.
+ */
+const PlanBadge = ( { plan } ) => (
+  <span
+    className={ `shrink-0 rounded-[42px] px-2.5 py-0.5 text-xs font-medium leading-5 ${
+      'pro' === plan
+        ? 'bg-indigo-100 text-indigo-700'
+        : 'bg-[#E3E5E7] text-gray-800'
+    }` }
+  >
+    { 'pro' === plan ? __( 'Pro', 'wedocs' ) : __( 'Free', 'wedocs' ) }
+  </span>
+);
 
 /**
  * One shortcode, its example and the attributes it takes.
@@ -173,9 +194,12 @@ const ShortcodeCard = ( { shortcode } ) => {
   return (
     <div className="border border-gray-300 rounded-md">
       <div className="px-5 py-4">
-        <h3 className="text-base font-medium text-black !m-0">
-          { shortcode.title }
-        </h3>
+        <div className="flex items-center gap-2">
+          <h3 className="text-base font-medium text-black !m-0">
+            { shortcode.title }
+          </h3>
+          <PlanBadge plan={ shortcode.plan } />
+        </div>
         <p className="mt-1 mb-0 text-sm text-[#6B7280]">
           { shortcode.description }
         </p>
