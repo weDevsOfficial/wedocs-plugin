@@ -46,8 +46,7 @@ If you document WordPress plugins, themes, SaaS apps, or internal team processes
 
 The free version of weDocs provides a solid foundation for building a professional knowledge base. It includes:
 
-– **[Full Gutenberg Support](https://wedocs.co/docs/wedocs/full-site-editing/
-)**: Design and customize your documentation using Gutenberg blocks with complete flexibility.
+– **[Full Gutenberg Support](https://wedocs.co/docs/wedocs/full-site-editing/)**: Design and customize your documentation using Gutenberg blocks with complete flexibility.
 
 – **User-friendly Interface:** Clean and intuitive dashboard for creating and managing documentation without technical complexity.
 

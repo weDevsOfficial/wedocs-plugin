@@ -14,6 +14,7 @@ class Assets {
         add_action( 'init', array( $this, 'register' ) );
         add_action( 'init', array( $this, 'register_translations' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
+        add_action( 'wedocs_load_faq_page', array( $this, 'enqueue_faq_assets' ) );
     }
 
     /**
@@ -54,6 +55,7 @@ class Assets {
             wp_register_style(
                 'wedocs-app-style',
                 $assets_url . '/build/index.css',
+                array(),
                 $react_dependencies['version'],
             );
 
@@ -131,6 +133,34 @@ class Assets {
             );
         }
 
+        // Register FAQ assets.
+        if ( file_exists( WEDOCS_PATH . '/assets/build/faq.asset.php' ) ) {
+            $faq_dependencies = require WEDOCS_PATH . '/assets/build/faq.asset.php';
+
+            wp_register_style(
+                'wedocs-faq-style',
+                $assets_url . '/build/faq.css',
+                array(),
+                $faq_dependencies['version'],
+            );
+
+            wp_register_script(
+                'wedocs-faq-script',
+                $assets_url . '/build/faq.js',
+                $faq_dependencies['dependencies'],
+                $faq_dependencies['version'],
+                true
+            );
+
+            wp_localize_script(
+                'wedocs-faq-script',
+                'weDocsFaqVars',
+                array(
+                    'restNonce' => wp_create_nonce( 'wp_rest' ),
+                ),
+            );
+        }
+
         wp_enqueue_style( 'wedocs-block-style' );
     }
 
@@ -174,5 +204,20 @@ class Assets {
         if ( $screen && ( 'post' === $screen->base && 'docs' === $screen->post_type ) ) {
             wp_enqueue_script( 'wedocs-editor-script' );
         }
+    }
+
+    /**
+     * Enqueue FAQ page assets.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function enqueue_faq_assets() {
+        wp_enqueue_media();
+        // Shared Tailwind build, so the FAQ stylesheet only carries its own rules.
+        wp_enqueue_style( 'wedocs-app-style' );
+        wp_enqueue_style( 'wedocs-faq-style' );
+        wp_enqueue_script( 'wedocs-faq-script' );
     }
 }
