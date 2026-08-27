@@ -5,9 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { useState, useRef, useEffect } from '@wordpress/element';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
-import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Highlight from '@tiptap/extension-highlight';
 
@@ -330,13 +328,14 @@ const Toolbar = ( { editor } ) => {
 const TiptapEditor = ( { content, onChange, placeholder, hasError, id } ) => {
     const editor = useEditor( {
         extensions: [
+            // StarterKit already ships link and underline; configuring them
+            // here avoids registering either extension twice.
             StarterKit.configure( {
                 heading: { levels: [ 2, 3, 4 ] },
-            } ),
-            Underline,
-            Link.configure( {
-                openOnClick: false,
-                HTMLAttributes: { rel: 'noopener noreferrer nofollow' },
+                link: {
+                    openOnClick: false,
+                    HTMLAttributes: { rel: 'noopener noreferrer nofollow' },
+                },
             } ),
             Placeholder.configure( {
                 placeholder: placeholder || __( 'Write your answer here...', 'wedocs' ),
