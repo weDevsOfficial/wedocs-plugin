@@ -16,6 +16,7 @@ class Admin {
         new Admin\Admin();
         new Admin\Migrate();
         new Admin\Docs_List_Table();
+        new Admin\ChangelogUpsell();
 
         add_action( 'admin_init', array( $this, 'init_admin_actions' ), 5 );
 

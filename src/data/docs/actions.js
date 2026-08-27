@@ -1,3 +1,8 @@
+import {
+  getDocsFetchingPath,
+  getDocsListingPath,
+  getDocsChildrenPath,
+} from './docsPath';
 const actions = {
   setDocs( docs ) {
     return {
@@ -48,6 +53,132 @@ const actions = {
     return { type: 'FETCH_FROM_API', path };
   },
 
+  fetchWithHeadersFromAPI( path ) {
+    return { type: 'FETCH_WITH_HEADERS_FROM_API', path };
+  },
+
+  mergeDocs( docs ) {
+    return { type: 'MERGE_DOCS', docs };
+  },
+
+  setPageDocs( docs ) {
+    return { type: 'SET_PAGE_DOCS', docs };
+  },
+
+  setPagination( pagination ) {
+    return { type: 'SET_PAGINATION', pagination };
+  },
+
+  markChildrenLoaded( parentIds ) {
+    return { type: 'MARK_CHILDREN_LOADED', parentIds };
+  },
+
+  setLoadingChildren( loadingChildren ) {
+    return { type: 'SET_LOADING_CHILDREN', loadingChildren };
+  },
+
+  /**
+   * Load one page of top-level docs.
+   *
+   * Only roots are fetched — their section/article badges come from counts the
+   * endpoint attaches, so no descendant is loaded until a doc is opened.
+   *
+   * @param {Object} options page / perPage / search overrides.
+   */
+  *loadDocsPage( options = {} ) {
+    yield actions.setLoading( true );
+
+    const { page = 1, perPage = 20, search = '' } = options;
+    const { body, headers } = yield actions.fetchWithHeadersFromAPI(
+      getDocsListingPath( { page, perPage, search } )
+    );
+
+    const roots = body || [];
+
+    // Replace the roots for this page while keeping any children already
+    // fetched: the dashboard resolver and a doc's own tree load can be in
+    // flight at once, and a plain replace would drop the children under a
+    // branch that still believes it is loaded.
+    yield actions.setPageDocs( roots );
+    yield actions.setParentDocs( roots );
+    yield actions.setPagination( {
+      page,
+      perPage,
+      search,
+      total: parseInt( headers?.get?.( 'X-WP-Total' ) || roots.length, 10 ),
+      totalPages: parseInt( headers?.get?.( 'X-WP-TotalPages' ) || 1, 10 ),
+    } );
+
+    yield actions.setLoading( false );
+
+    return roots;
+  },
+
+  /**
+   * Load the direct children of a doc, once.
+   *
+   * Children are merged into the same flat list the tree selectors already read
+   * from, so every existing selector keeps working unchanged.
+   *
+   * @param {number} parentId Doc whose children should be loaded.
+   */
+  *loadDocChildren( parentId ) {
+    const id = parseInt( parentId, 10 );
+
+    if ( ! id ) {
+      return [];
+    }
+
+    yield actions.setLoadingChildren( true );
+
+    const children = yield actions.fetchFromAPI( getDocsChildrenPath( [ id ] ) );
+
+    yield actions.mergeDocs( children || [] );
+    yield actions.markChildrenLoaded( [ id ] );
+    yield actions.setLoadingChildren( false );
+
+    return children || [];
+  },
+
+  /**
+   * Load a doc's sections and, in one further request, all of their articles.
+   *
+   * Used when a documentation is opened, where the listing screen needs two
+   * levels at once. Two requests regardless of how many sections there are.
+   *
+   * @param {number} parentId Documentation being opened.
+   */
+  *loadDocTree( parentId ) {
+    const id = parseInt( parentId, 10 );
+
+    if ( ! id ) {
+      return [];
+    }
+
+    yield actions.setLoadingChildren( true );
+
+    const sections = ( yield actions.fetchFromAPI( getDocsChildrenPath( [ id ] ) ) ) || [];
+    yield actions.mergeDocs( sections );
+
+    const sectionIds = sections.map( ( section ) => section.id );
+    let articles = [];
+
+    if ( sectionIds.length ) {
+      articles = ( yield actions.fetchFromAPI( getDocsChildrenPath( sectionIds ) ) ) || [];
+      yield actions.mergeDocs( articles );
+    }
+
+    // Only remember the branch as loaded once its sections are actually in the
+    // store, so a failed request retries rather than showing an empty tree.
+    if ( sections.length ) {
+      yield actions.markChildrenLoaded( [ id, ...sectionIds ] );
+    }
+
+    yield actions.setLoadingChildren( false );
+
+    return [ ...sections, ...articles ];
+  },
+
   setHelpfulDocs( helpfulDocs ) {
     return { type: 'SET_HELPFUL_DOCS', helpfulDocs };
   },
@@ -77,10 +208,7 @@ const actions = {
   },
 
   *updateDoc( docId, data ) {
-    const getDocsPath = wp.hooks.applyFilters(
-      'wedocs_documentation_fetching_path',
-      `/wp/v2/docs?per_page=-1&status=publish${ typeof weDocsAdminVars !== 'undefined' ? ',draft,private' : ''}`
-    );
+    const getDocsPath = getDocsFetchingPath();
     const path = '/wp/v2/docs/' + docId;
     yield { type: 'UPDATE_TO_API', path, data };
     const response = yield actions.fetchFromAPI( getDocsPath );
@@ -95,9 +223,7 @@ const actions = {
   *updateDocs( data ) {
     const path = '/wp/v2/docs/update_docs_status';
     yield { type: 'UPDATE_TO_API', path, data };
-    const response = yield actions.fetchFromAPI(
-      '/wp/v2/docs?per_page=-1&status=publish,draft,private'
-    );
+    const response = yield actions.fetchFromAPI( getDocsFetchingPath() );
     const parentDocs = response.filter( ( doc ) => ! doc.parent );
     const sortableDocs = parentDocs?.sort(
       ( a, b ) => a.menu_order - b.menu_order
@@ -139,10 +265,7 @@ const actions = {
   },
 
   *updateParentDocs() {
-    const getDocsPath = wp.hooks.applyFilters(
-      'wedocs_documentation_fetching_path',
-      `/wp/v2/docs?per_page=-1&status=publish${ typeof weDocsAdminVars !== 'undefined' ? ',draft,private' : ''}`
-    );
+    const getDocsPath = getDocsFetchingPath();
 
     const response = yield actions.fetchFromAPI( getDocsPath );
     const parentDocs = response.filter( ( doc ) => ! doc.parent );

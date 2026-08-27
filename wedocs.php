@@ -3,7 +3,7 @@
 Plugin Name: weDocs
 Plugin URI: https://wedocs.co/
 Description: A documentation plugin for WordPress
-Version: 2.3.1
+Version: 2.4.1
 Author: weDevs
 Author URI: https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri
 License: GPL2
@@ -60,7 +60,7 @@ final class WeDocs {
      *
      * @var string
      */
-    const VERSION = '2.3.1';
+    const VERSION = '2.4.1';
 
     /**
      * The plugin url.
@@ -313,6 +313,7 @@ final class WeDocs {
         }
 
         $this->container['api']        = new WeDevs\WeDocs\API();
+        $this->container['analytics']  = new WeDevs\WeDocs\Analytics();
         $this->container['assets']     = new WeDevs\WeDocs\Assets();
         $this->container['migrate']    = new WeDevs\WeDocs\Admin\Migrate();
         $this->container['upgrader']   = new WeDevs\WeDocs\Upgrader\Upgrader();

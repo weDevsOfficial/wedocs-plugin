@@ -1,5 +1,5 @@
 import { __, sprintf } from '@wordpress/i18n';
-import { useSelect } from '@wordpress/data';
+import { dispatch, useSelect } from '@wordpress/data';
 import docsStore from '../../data/docs';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -33,17 +33,40 @@ const ParentDocs = ( { doc } ) => {
     doc.id
   );
 
+  // Counts come from the listing endpoint, so the badges are accurate without
+  // the documentation's descendants having been fetched.
+  const sectionsCount = useSelect(
+    ( select ) => select( docsStore ).getSectionsCount( doc.id ),
+    [ doc.id, doc.sections_count ]
+  );
+
+  const articlesCount = useSelect(
+    ( select ) => select( docsStore ).getArticlesCount( doc.id ),
+    [ doc.id, doc.articles_count ]
+  );
+
+  // The "Add" menu needs the real sections to offer them as a target, so this
+  // stays a live list — empty until the branch is loaded.
   const sections =
     useSelect(
       ( select ) => select( docsStore ).getSectionsDocs( doc.id ),
-      []
+      [ doc.id ]
     ) || [];
 
-  const articles =
-    useSelect(
-      ( select ) => select( docsStore ).getDocArticles( doc.id ),
-      []
-    ) || [];
+  const sectionsLoaded = useSelect(
+    ( select ) => select( docsStore ).hasLoadedChildren( doc.id ),
+    [ doc.id ]
+  );
+
+  // Pull this doc's sections the first time the add menu is opened, so the
+  // dashboard itself still loads nothing but roots.
+  const loadSections = () => {
+    if ( sectionsLoaded ) {
+      return;
+    }
+
+    dispatch( docsStore ).loadDocChildren( doc.id ).catch( () => {} );
+  };
 
   const footerLeft = wp.hooks.applyFilters(
     'wedocs_documentation_footer_left',
@@ -150,7 +173,7 @@ const ParentDocs = ( { doc } ) => {
                   { sprintf(
                     // translators: %d: Length of documentation sections
                     __( '%d Sections', 'wedocs' ),
-                    sections.length
+                    sectionsCount
                   ) }
                 </span>
               </div>
@@ -177,7 +200,7 @@ const ParentDocs = ( { doc } ) => {
                   { sprintf(
                     // translators: %d: Length of documentation articles
                     __( '%d Articles', 'wedocs' ),
-                    articles.length
+                    articlesCount
                   ) }
                 </span>
               </div>
@@ -202,6 +225,7 @@ const ParentDocs = ( { doc } ) => {
               <AddChildrens
                 docId={ doc?.id }
                 sections={ sections }
+                onOpen={ loadSections }
                 className="py-2 inline-flex items-center bg-indigo-600 text-white rounded-md border border-gray-200 ease-in-out duration-200 shadow-gray-100 px-4 text-sm text-gray shadow-sm cursor-pointer"
               >
                 <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-2 text-base flex items-center"></span>

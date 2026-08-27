@@ -1,23 +1,17 @@
+import { getDocsFetchingPath, DEFAULT_PER_PAGE } from './docsPath';
 import actions from './actions';
 
 const resolvers = {
   *getDocs() {
-    // Compute path at runtime to ensure Pro filters are applied
-    const getDocsPath = wp.hooks.applyFilters(
-      'wedocs_documentation_fetching_path',
-      `/wp/v2/docs?per_page=-1&status=publish${ typeof weDocsAdminVars !== 'undefined' ? ',draft,private' : ''}`
-    );
-
-    yield actions.setLoading( true );
-    const response = yield actions.fetchFromAPI( getDocsPath );
-    yield actions.setDocs( response );
-    const parentDocs = response.filter( ( doc ) => ! doc.parent );
-    const sortableDocs = parentDocs?.sort(
-      ( a, b ) => a.menu_order - b.menu_order
-    );
-    yield actions.setParentDocs( sortableDocs );
-    return actions.setLoading( false );
+    // Load only the first page of top-level docs. Sections and articles are
+    // fetched when a documentation is opened, so the dashboard no longer pays
+    // for the whole tree up front.
+    yield* actions.loadDocsPage( { page: 1, perPage: DEFAULT_PER_PAGE } );
   },
+
+  // getDocs already populates the parent list from the same response, so this
+  // resolver deliberately does no fetching of its own — declaring it would make
+  // the dashboard request the first page twice.
 
   *getDoc( id ) {
     yield actions.setLoading( true );
@@ -63,7 +57,7 @@ const resolvers = {
   },
 
   *getHelpfulDocs() {
-    const docs = yield actions.fetchFromAPI( getDocsPath );
+    const docs = yield actions.fetchFromAPI( getDocsFetchingPath() );
     yield actions.setDocs( docs );
     const helpfulDocIds = yield actions.fetchFromAPI(
       '/wp/v2/docs/helpfulness'

@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import PermissionSettings from './PermissionSettings';
+import ChangelogSettings from './ChangelogSettings';
 import { userIsAdmin } from '../../utils/helper';
 import UpgradePopup from './common/UpgradePopup';
 import LayoutSettings from './LayoutSettings';
@@ -18,6 +19,27 @@ wp.hooks.addFilter(
         // Check if Pro is loaded dynamically
         const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
         if (isProLoaded) return menus;
+            menus.changelog = {
+                pro: true,
+                text: __( 'Changelog', 'wedocs' ),
+                icon: (
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#6b7280"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="-ml-1 mr-4 pro-settings"
+                    >
+                        <path d="M3 11l18-5v12L3 14v-3z" />
+                        <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+                    </svg>
+                ),
+            };
             menus.permission = {
                 pro: true,
                 text: __( 'Permission Management', 'wedocs' ),
@@ -190,6 +212,7 @@ wp.hooks.addFilter(
 
             return [
                 ...templates,
+                <ChangelogSettings key={ index } />,
                 <PermissionSettings key={ index } />,
                 ...assistantWidgetSubPanels,
                 <LayoutSettings
