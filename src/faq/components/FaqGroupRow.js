@@ -165,6 +165,61 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
         }
     };
 
+    // The REST API caps per_page at 100, so page through until a short page comes back.
+    const fetchAllGroupFaqs = async ( query = '' ) => {
+        const perPage = 100;
+        const collected = [];
+        let page = 1;
+
+        for ( ;; ) {
+            let batch;
+
+            try {
+                batch = await apiFetch( {
+                    path: `/wp/v2/wedocs-faqs?wedocs-faq-groups=${ group.id }&per_page=${ perPage }&page=${ page }${ query }`,
+                } );
+            } catch ( fetchError ) {
+                // A full last page makes us ask for one page too many; that is not a failure.
+                if ( fetchError?.code === 'rest_post_invalid_page_number' ) {
+                    return collected;
+                }
+
+                throw fetchError;
+            }
+
+            collected.push( ...batch );
+
+            if ( batch.length < perPage ) {
+                return collected;
+            }
+
+            page++;
+        }
+    };
+
+    // Best-effort cleanup for a duplication that failed part-way through.
+    const rollbackDuplicate = async ( groupId, faqIds ) => {
+        for ( const faqId of faqIds ) {
+            try {
+                await apiFetch( {
+                    path: `/wp/v2/wedocs-faqs/${ faqId }?force=true`,
+                    method: 'DELETE',
+                } );
+            } catch {
+                // Keep cleaning up the rest even if one delete fails.
+            }
+        }
+
+        try {
+            await apiFetch( {
+                path: `/wp/v2/wedocs-faq-groups/${ groupId }?force=true`,
+                method: 'DELETE',
+            } );
+        } catch {
+            // Nothing more we can do; the duplicate error is surfaced to the user.
+        }
+    };
+
     const handleDuplicate = async () => {
         setIsDuplicating( true );
 
@@ -202,25 +257,32 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             }
 
             // Fetch all FAQs in the original group and clone them into the new group.
-            const originalFaqs = await apiFetch( {
-                path: `/wp/v2/wedocs-faqs?wedocs-faq-groups=${ group.id }&per_page=100&orderby=menu_order&order=asc&context=edit`,
-            } );
+            const originalFaqs = await fetchAllGroupFaqs( '&orderby=menu_order&order=asc&context=edit' );
+            const clonedFaqIds = [];
 
-            for ( const faq of originalFaqs ) {
-                await apiFetch( {
-                    path: '/wp/v2/wedocs-faqs',
-                    method: 'POST',
-                    data: {
-                        title: faq.title.raw,
-                        content: faq.content.raw,
-                        status: faq.status,
-                        menu_order: faq.menu_order,
-                        meta: {
-                            _faq_open_by_default: faq.meta?._faq_open_by_default || false,
+            try {
+                for ( const faq of originalFaqs ) {
+                    const cloned = await apiFetch( {
+                        path: '/wp/v2/wedocs-faqs',
+                        method: 'POST',
+                        data: {
+                            title: faq.title.raw,
+                            content: faq.content.raw,
+                            status: faq.status,
+                            menu_order: faq.menu_order,
+                            meta: {
+                                _faq_open_by_default: faq.meta?._faq_open_by_default || false,
+                            },
+                            'wedocs-faq-groups': [ duplicated.id ],
                         },
-                        'wedocs-faq-groups': [ duplicated.id ],
-                    },
-                } );
+                    } );
+
+                    clonedFaqIds.push( cloned.id );
+                }
+            } catch ( cloneError ) {
+                // Roll back so a failed duplicate never leaves a half-filled group behind.
+                await rollbackDuplicate( duplicated.id, clonedFaqIds );
+                throw cloneError;
             }
 
             if ( onGroupDuplicated ) {
@@ -243,9 +305,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
 
         try {
             // Delete all FAQs in this group before deleting the group itself.
-            const groupFaqs = await apiFetch( {
-                path: `/wp/v2/wedocs-faqs?wedocs-faq-groups=${ group.id }&per_page=100`,
-            } );
+            const groupFaqs = await fetchAllGroupFaqs();
 
             for ( const faq of groupFaqs ) {
                 await apiFetch( {

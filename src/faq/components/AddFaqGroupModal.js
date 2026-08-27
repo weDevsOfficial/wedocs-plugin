@@ -76,6 +76,11 @@ const AddFaqGroupModal = ( {
     };
 
     const openMediaUploader = () => {
+        if ( ! window.wp?.media ) {
+            setApiError( __( 'Media uploader is unavailable. Please reload the page.', 'wedocs' ) );
+            return;
+        }
+
         const mediaUploader = wp.media( {
             title: __( 'Select FAQ Group Icon', 'wedocs' ),
             button: { text: __( 'Use this icon', 'wedocs' ) },

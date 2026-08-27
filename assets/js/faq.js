@@ -6,6 +6,10 @@ document.addEventListener( 'DOMContentLoaded', function () {
         var summary = details.querySelector( '.wedocs-faq-item__question' );
         var answer  = details.querySelector( '.wedocs-faq-item__answer' );
 
+        if ( ! summary || ! answer ) {
+            return;
+        }
+
         // Items open by default need the inline style set so transitions work.
         if ( details.open ) {
             answer.style.gridTemplateRows = '1fr';

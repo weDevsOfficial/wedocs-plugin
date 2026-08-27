@@ -354,6 +354,21 @@ const TiptapEditor = ( { content, onChange, placeholder, hasError, id } ) => {
         },
     } );
 
+    // useEditor only reads `content` on init, so mirror later prop changes.
+    useEffect( () => {
+        if ( ! editor ) {
+            return;
+        }
+
+        const next    = content || '';
+        const current = editor.getHTML();
+
+        // Tiptap returns '<p></p>' for empty content.
+        if ( ( current === '<p></p>' ? '' : current ) !== next ) {
+            editor.commands.setContent( next, { emitUpdate: false } );
+        }
+    }, [ editor, content ] );
+
     return (
         <div
             id={ id }

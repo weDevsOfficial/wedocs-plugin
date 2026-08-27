@@ -59,7 +59,7 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
     };
 
     const handleSave = async () => {
-        if ( question.trim() === '' || isSaving ) {
+        if ( question.trim() === '' || answer.trim() === '' || isSaving ) {
             return;
         }
 
@@ -241,7 +241,7 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
                             </button>
                             <button
                                 onClick={ handleSave }
-                                disabled={ isSaving || question.trim() === '' }
+                                disabled={ isSaving || question.trim() === '' || answer.trim() === '' }
                                 className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm py-2 px-5 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 { isSaving

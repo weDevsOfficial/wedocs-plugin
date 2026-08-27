@@ -299,10 +299,13 @@ class Post_Types {
             'show_in_rest'      => true,
             'rest_base'         => 'wedocs-faq-groups',
             'show_admin_column' => false,
+            // Mapped to the doc editing capability, which is granted to the
+            // administrator and editor roles only. Dedicated *_doc_terms caps
+            // are never granted to any role, so using them would 403 the REST routes.
             'capabilities'      => [
-                'manage_terms' => 'manage_doc_terms',
-                'edit_terms'   => 'edit_doc_terms',
-                'delete_terms' => 'delete_doc_terms',
+                'manage_terms' => 'edit_docs',
+                'edit_terms'   => 'edit_docs',
+                'delete_terms' => 'edit_docs',
                 'assign_terms' => 'edit_docs',
             ],
         ];
@@ -388,7 +391,12 @@ class Post_Types {
             $order_a = (int) get_term_meta( $a->term_id, 'order', true );
             $order_b = (int) get_term_meta( $b->term_id, 'order', true );
 
-            return $order_a - $order_b;
+            // Fall back to the term ID so groups sharing an order stay stable.
+            if ( $order_a === $order_b ) {
+                return $a->term_id <=> $b->term_id;
+            }
+
+            return $order_a <=> $order_b;
         } );
 
         return $terms;
