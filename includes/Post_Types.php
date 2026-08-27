@@ -265,6 +265,16 @@ class Post_Types {
             'publicly_queryable'  => false,
             'map_meta_cap'        => true,
             'capability_type'     => [ 'doc', 'docs' ],
+            // The delete_*_docs caps are never granted to any role, and the
+            // user_has_cap filter in Capability only covers the docs post type
+            // on classic edit screens, so REST deletes would always 403.
+            // Deleting a FAQ needs the same access as creating one.
+            'capabilities'        => [
+                'delete_posts'           => 'edit_docs',
+                'delete_others_posts'    => 'edit_docs',
+                'delete_published_posts' => 'edit_docs',
+                'delete_private_posts'   => 'edit_docs',
+            ],
         ];
 
         register_post_type( 'wedocs_faq', apply_filters( 'wedocs_faq_post_type', $args ) );
