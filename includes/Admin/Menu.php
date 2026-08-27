@@ -61,28 +61,70 @@ class Menu {
     /**
      * Get the weDocs admin menu icon.
      *
-     * WordPress renders a base64 SVG data URI as a background image, so the
-     * colour has to be baked into the file — core only sets its size. Falls
-     * back to a dashicon if the asset is ever missing from the build.
+     * WordPress renders a base64 SVG data URI as a background image and only
+     * sets its size, so the colour has to be baked in. Paint it with the icon
+     * colour of the active admin colour scheme, otherwise the mark disappears
+     * on the light schemes. Falls back to a dashicon if the asset is missing.
      *
      * @since WEDOCS_SINCE
      *
      * @return string
      */
     public function get_menu_icon() {
+        static $icon_uri = null;
+
+        if ( null !== $icon_uri ) {
+            return $icon_uri;
+        }
+
         $icon_path = WEDOCS_PATH . '/assets/img/wedocs-menu-icon.svg';
 
         if ( ! is_readable( $icon_path ) ) {
-            return 'dashicons-media-document';
+            $icon_uri = 'dashicons-media-document';
+
+            return $icon_uri;
         }
 
         $icon = file_get_contents( $icon_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
         if ( empty( $icon ) ) {
-            return 'dashicons-media-document';
+            $icon_uri = 'dashicons-media-document';
+
+            return $icon_uri;
         }
 
-        return 'data:image/svg+xml;base64,' . base64_encode( $icon ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+        $icon = str_replace( '#fff', $this->get_menu_icon_color(), $icon );
+
+        $icon_uri = 'data:image/svg+xml;base64,' . base64_encode( $icon ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+
+        return $icon_uri;
+    }
+
+    /**
+     * Resolve the icon colour of the active admin colour scheme.
+     *
+     * Mirrors what core paints dashicons with, so the weDocs mark sits at the
+     * same weight as its neighbours on every scheme.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return string
+     */
+    protected function get_menu_icon_color() {
+        global $_wp_admin_css_colors;
+
+        $default = '#a7aaad';
+        $scheme  = get_user_option( 'admin_color' );
+
+        if ( empty( $scheme ) ) {
+            $scheme = 'fresh';
+        }
+
+        if ( empty( $_wp_admin_css_colors[ $scheme ]->icon_colors['base'] ) ) {
+            return $default;
+        }
+
+        return $_wp_admin_css_colors[ $scheme ]->icon_colors['base'];
     }
 
     /**

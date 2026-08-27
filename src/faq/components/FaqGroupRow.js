@@ -126,12 +126,15 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             return () => el.removeEventListener( 'transitionend', onEnd );
         }
 
-        // Collapsing: first pin max-height to current value so
-        // the transition has a start point, then collapse to 0.
-        setExpandHeight( `${ el.scrollHeight }px` );
-        // Force a reflow so the browser registers the starting value.
+        // Collapsing from 'none' cannot animate, and two setState calls in one
+        // effect are batched into just the last one. Pin the measured height on
+        // the element itself, then let React drop it to 0 on the next frame.
+        el.style.maxHeight = `${ el.scrollHeight }px`;
         void el.offsetHeight;
-        setExpandHeight( '0px' );
+
+        const frame = window.requestAnimationFrame( () => setExpandHeight( '0px' ) );
+
+        return () => window.cancelAnimationFrame( frame );
     }, [ isExpanded ] );
 
     const {
@@ -484,7 +487,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             <div
                 ref={ expandRef }
                 className="overflow-hidden transition-[max-height] duration-300 ease-in-out"
-                style={ { maxHeight: isExpanded ? expandHeight : '0px' } }
+                style={ { maxHeight: expandHeight } }
             >
                 <div className="border-t border-gray-200 px-5 py-4 space-y-3">
                     { faqs.length === 0 && ! showAddForm && (

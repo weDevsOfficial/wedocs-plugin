@@ -170,8 +170,6 @@ class Shortcode {
      * @return string
      */
     public function faq_shortcode( $atts, $content = '' ) {
-        Frontend::enqueue_assets();
-
         ob_start();
         self::wedocs_faq( $atts );
         $content .= ob_get_clean();
@@ -189,8 +187,12 @@ class Shortcode {
      * @return void
      */
     public static function wedocs_faq( $args = [] ) {
-        wp_enqueue_style( 'wedocs-faq' );
-        wp_enqueue_script( 'wedocs-faq' );
+        // A FAQ answer containing the shortcode again would otherwise recurse.
+        static $rendering = false;
+
+        if ( $rendering ) {
+            return;
+        }
 
         $defaults = [
             'group'   => '',
@@ -296,6 +298,14 @@ class Shortcode {
             ]
         );
 
+        // Only load the assets once there is markup that needs them.
+        wp_enqueue_style( 'wedocs-faq' );
+        wp_enqueue_script( 'wedocs-faq' );
+
+        $rendering = true;
+
         wedocs_get_template( $template_dir, $template_args );
+
+        $rendering = false;
     }
 }

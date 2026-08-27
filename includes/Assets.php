@@ -155,9 +155,7 @@ class Assets {
                 'wedocs-faq-script',
                 'weDocsFaqVars',
                 array(
-                    'adminUrl'     => admin_url(),
-                    'restNonce'    => wp_create_nonce( 'wp_rest' ),
-                    'hasManageCap' => current_user_can( 'manage_options' ),
+                    'restNonce' => wp_create_nonce( 'wp_rest' ),
                 ),
             );
         }
@@ -216,6 +214,8 @@ class Assets {
      */
     public function enqueue_faq_assets() {
         wp_enqueue_media();
+        // Shared Tailwind build, so the FAQ stylesheet only carries its own rules.
+        wp_enqueue_style( 'wedocs-app-style' );
         wp_enqueue_style( 'wedocs-faq-style' );
         wp_enqueue_script( 'wedocs-faq-script' );
     }

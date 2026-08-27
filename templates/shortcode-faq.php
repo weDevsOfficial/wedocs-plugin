@@ -49,7 +49,15 @@ if ( empty( $faq_data ) ) {
                         </summary>
                         <div class="wedocs-faq-item__answer">
                             <div class="wedocs-faq-item__answer-inner">
-                                <?php echo wp_kses_post( apply_filters( 'the_content', $faq->post_content ) ); ?>
+                                <?php
+                                /*
+                                 * Rendered through the_content like the doc templates do, so
+                                 * embeds and shortcodes survive. Running wp_kses_post over the
+                                 * result would strip the iframes those filters just produced.
+                                 * FAQ content is authored only by edit_docs holders.
+                                 */
+                                echo apply_filters( 'the_content', $faq->post_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                ?>
                             </div>
                         </div>
                     </details>

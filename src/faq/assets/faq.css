@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* The shared admin stylesheet (assets/build/index.css) already carries the
+ * full Tailwind build for this same content set, so the FAQ page enqueues
+ * that and keeps only its own rules here. */
 
 /* Tiptap editor styles */
 .wedocs-tiptap-content .tiptap {

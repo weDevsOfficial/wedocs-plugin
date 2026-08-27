@@ -41,9 +41,15 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
             return () => el.removeEventListener( 'transitionend', onEnd );
         }
 
-        setEditHeight( `${ el.scrollHeight }px` );
+        // Collapsing from 'none' cannot animate, and two setState calls in one
+        // effect are batched into just the last one. Pin the measured height on
+        // the element itself, then let React drop it to 0 on the next frame.
+        el.style.maxHeight = `${ el.scrollHeight }px`;
         void el.offsetHeight;
-        setEditHeight( '0px' );
+
+        const frame = window.requestAnimationFrame( () => setEditHeight( '0px' ) );
+
+        return () => window.cancelAnimationFrame( frame );
     }, [ isEditing ] );
 
     const {
@@ -212,7 +218,7 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
             <div
                 ref={ editRef }
                 className="overflow-hidden transition-[max-height] duration-300 ease-in-out"
-                style={ { maxHeight: isEditing ? editHeight : '0px' } }
+                style={ { maxHeight: editHeight } }
             >
                 <div className="border-t border-gray-200 p-5">
                     <div className="mb-4">
