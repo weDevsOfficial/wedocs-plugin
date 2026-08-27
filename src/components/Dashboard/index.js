@@ -13,11 +13,13 @@ import {
 import StatCard from './StatCard';
 import ProAnalytics from './ProAnalytics';
 
+// Pill colours follow the ones the docs listing already uses: the indigo pill
+// from the vendor badge and the grey pill from the draft badge.
 const STATUS_BADGE = {
-  publish: 'bg-emerald-50 text-emerald-700',
-  draft: 'bg-gray-100 text-gray-600',
-  pending: 'bg-amber-50 text-amber-700',
-  private: 'bg-sky-50 text-sky-700',
+  publish: 'bg-indigo-100 text-indigo-700',
+  draft: 'bg-[#E3E5E7] text-gray-800',
+  pending: 'bg-gray-100 text-gray-600',
+  private: 'bg-gray-100 text-gray-600',
 };
 
 const numberFormat = ( n ) => new Intl.NumberFormat().format( n || 0 );
@@ -30,7 +32,7 @@ const numberFormat = ( n ) => new Intl.NumberFormat().format( n || 0 );
 const Card = ( { title, icon: Icon, children, action } ) => (
   <div className="bg-white shadow sm:rounded-md">
     <div className="section-heading flex items-center justify-between px-8 py-4">
-      <h2 className="flex items-center gap-2 text-lg font-medium text-gray-900">
+      <h2 className="flex items-center gap-2 text-lg font-medium text-[#3B3F4A]">
         { Icon && <Icon className="h-5 w-5 text-indigo-600" aria-hidden="true" /> }
         { title }
       </h2>
@@ -112,28 +114,24 @@ const Dashboard = () => {
             label={ __( 'Total Docs', 'wedocs' ) }
             value={ numberFormat( t.docs ) }
             helper={ `${ numberFormat( t.published ) } ${ __( 'published', 'wedocs' ) }${ t.drafts ? ` · ${ numberFormat( t.drafts ) } ${ __( 'draft', 'wedocs' ) }` : '' }` }
-            accent="indigo"
           />
           <StatCard
             icon={ DocumentDuplicateIcon }
             label={ __( 'Articles', 'wedocs' ) }
             value={ numberFormat( t.articles ) }
             helper={ `${ numberFormat( t.contributors ) } ${ __( 'contributor(s)', 'wedocs' ) }` }
-            accent="sky"
           />
           <StatCard
             icon={ EyeIcon }
             label={ __( 'Total Views', 'wedocs' ) }
             value={ numberFormat( t.views ) }
             helper={ __( 'across all docs', 'wedocs' ) }
-            accent="emerald"
           />
           <StatCard
             icon={ HandThumbUpIcon }
             label={ __( 'Helpful Rate', 'wedocs' ) }
             value={ `${ t.helpful_rate }%` }
             helper={ `${ numberFormat( t.positive ) } ${ __( 'up', 'wedocs' ) } · ${ numberFormat( t.negative ) } ${ __( 'down', 'wedocs' ) }` }
-            accent="amber"
           />
         </div>
 
@@ -185,7 +183,7 @@ const Dashboard = () => {
                     </div>
                     <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
                       <div
-                        className="h-full rounded-full bg-emerald-500"
+                        className="h-full rounded-full bg-indigo-600"
                         style={ { width: `${ doc.percentage }%` } }
                       />
                     </div>
@@ -220,7 +218,7 @@ const Dashboard = () => {
                       </td>
                       <td className="px-4 py-3.5">
                         <span
-                          className={ `rounded-full px-2 py-0.5 text-xs font-medium ${ STATUS_BADGE[ doc.status ] || STATUS_BADGE.draft }` }
+                          className={ `rounded-[42px] px-2.5 py-0.5 text-sm font-medium leading-5 ${ STATUS_BADGE[ doc.status ] || STATUS_BADGE.draft }` }
                         >
                           { doc.status }
                         </span>

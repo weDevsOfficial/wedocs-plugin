@@ -55,6 +55,7 @@ class Assets {
             wp_register_style(
                 'wedocs-app-style',
                 $assets_url . '/build/index.css',
+                array(),
                 $react_dependencies['version'],
             );
 
