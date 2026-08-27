@@ -39,6 +39,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
     const [ faqs, setFaqs ] = useState( [] );
     const [ faqsLoaded, setFaqsLoaded ] = useState( false );
     const [ expandHeight, setExpandHeight ] = useState( '0px' );
+    const wasExpandedRef = useRef( false );
     const expandRef = useRef( null );
 
     const faqSensors = useSensors(
@@ -113,6 +114,9 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             return;
         }
 
+        const wasExpanded = wasExpandedRef.current;
+        wasExpandedRef.current = isExpanded;
+
         if ( isExpanded ) {
             // Set a measured max-height to kick off the CSS transition.
             setExpandHeight( `${ el.scrollHeight }px` );
@@ -124,6 +128,14 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             el.addEventListener( 'transitionend', onEnd );
 
             return () => el.removeEventListener( 'transitionend', onEnd );
+        }
+
+        // Already closed, so there is nothing to animate from. This covers the
+        // first render and any content change while the group stays collapsed.
+        if ( ! wasExpanded ) {
+            setExpandHeight( '0px' );
+
+            return;
         }
 
         // Collapsing from 'none' cannot animate, and two setState calls in one
@@ -493,13 +505,13 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
                 style={ { maxHeight: expandHeight } }
             >
                 <div className="border-t border-gray-200 px-5 py-4 space-y-3">
-                    { ! faqsLoaded && (
+                    { isExpanded && ! faqsLoaded && (
                         <p className="text-sm text-gray-500 italic">
                             { __( 'Loading FAQs…', 'wedocs' ) }
                         </p>
                     ) }
 
-                    { faqsLoaded && faqs.length === 0 && ! showAddForm && (
+                    { isExpanded && faqsLoaded && faqs.length === 0 && ! showAddForm && (
                         <p className="text-sm text-gray-500 italic">
                             { __( 'No FAQs in this group yet. Click "Add a New FAQ" to get started.', 'wedocs' ) }
                         </p>
