@@ -22,6 +22,7 @@ import FaqConfirmDialog from './FaqConfirmDialog';
 import AddFaqForm from './AddFaqForm';
 import FaqItem from './FaqItem';
 import AddFaqGroupModal from './AddFaqGroupModal';
+import ToggleSwitch from './ToggleSwitch';
 import { decodeEntities } from '@wordpress/html-entities';
 import { toastSuccess, toastError } from '../utils/toast';
 
@@ -460,19 +461,12 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
 
                     { /* Visibility toggle */ }
                     <div className="flex items-center">
-                        <button
-                            onClick={ handleToggle }
+                        <ToggleSwitch
+                            checked={ isActive }
+                            onChange={ handleToggle }
                             disabled={ isToggling }
-                            className={ `relative inline-flex h-5 w-10 items-center rounded-full transition-colors ${ isActive ? 'bg-indigo-600' : 'bg-gray-200' } ${ isToggling ? 'opacity-50 cursor-not-allowed' : '' }` }
-                            aria-label={ isActive ? __( 'Deactivate FAQ group', 'wedocs' ) : __( 'Activate FAQ group', 'wedocs' ) }
-                        >
-                            <span
-                                className={ `inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${ isActive ? 'translate-x-5' : 'translate-x-1' }` }
-                            />
-                        </button>
-                        <span className="ml-3 text-sm text-gray-900">
-                            { isActive ? __( 'Active', 'wedocs' ) : __( 'Inactive', 'wedocs' ) }
-                        </span>
+                            label={ isActive ? __( 'Deactivate FAQ group', 'wedocs' ) : __( 'Activate FAQ group', 'wedocs' ) }
+                        />
                     </div>
 
                     { /* Expand/collapse chevron */ }

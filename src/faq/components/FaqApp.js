@@ -132,7 +132,7 @@ const FaqApp = () => {
                         className="ml-5 mr-auto py-2 h-fit inline-flex items-center rounded-md border border-transparent bg-indigo-600 ease-in-out duration-200 px-4 text-sm text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                         <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-2 text-base flex items-center"></span>
-                        { __( 'New FAQ', 'wedocs' ) }
+                        { __( 'New FAQ Group', 'wedocs' ) }
                     </AddFaqGroupModal>
                 </h1>
             </div>

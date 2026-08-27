@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import TiptapEditor from './TiptapEditor';
+import ToggleSwitch from './ToggleSwitch';
 import { toastSuccess, toastError } from '../utils/toast';
 
 const AddFaqForm = ( { groupId, nextMenuOrder = 0, onFaqCreated, onCancel } ) => {
@@ -157,15 +158,11 @@ const AddFaqForm = ( { groupId, nextMenuOrder = 0, onFaqCreated, onCancel } ) =>
                     <span className="text-sm text-gray-600">
                         { __( 'Keep It Open By Default', 'wedocs' ) }
                     </span>
-                    <button
-                        onClick={ () => setOpenByDefault( ( prev ) => ! prev ) }
-                        className={ `relative inline-flex h-5 w-10 items-center rounded-full transition-colors ${ openByDefault ? 'bg-indigo-600' : 'bg-gray-200' }` }
-                        aria-label={ __( 'Toggle open by default', 'wedocs' ) }
-                    >
-                        <span
-                            className={ `inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${ openByDefault ? 'translate-x-5' : 'translate-x-1' }` }
-                        />
-                    </button>
+                    <ToggleSwitch
+                        checked={ openByDefault }
+                        onChange={ () => setOpenByDefault( ( prev ) => ! prev ) }
+                        label={ __( 'Toggle open by default', 'wedocs' ) }
+                    />
                 </div>
             </div>
         </div>

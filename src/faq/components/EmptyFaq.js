@@ -63,15 +63,15 @@ const EmptyFaq = ( { onGroupCreated } ) => {
                                 </defs>
                             </svg>
                             <p className="text-[#3B3F4A] font-bold text-2xl mx-auto">
-                                { __( 'Get started by creating your first FAQ', 'wedocs' ) }
+                                { __( 'Get started by creating your first FAQ group', 'wedocs' ) }
                             </p>
                             <p className="text-[#666B79] text-lg mx-auto mt-2">
-                                { __( 'Create frequently asked questions to help your users find answers quickly.', 'wedocs' ) }
+                                { __( 'Group your frequently asked questions so users can find answers quickly.', 'wedocs' ) }
                             </p>
                         </h2>
                         <AddFaqGroupModal onGroupCreated={ onGroupCreated } className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-2.5 text-base text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                             <span className="dashicons dashicons-plus-alt2 w-3.5 h-3.5 mr-4 text-base flex items-center"></span>
-                            { __( 'Create a new FAQ', 'wedocs' ) }
+                            { __( 'Create a new FAQ group', 'wedocs' ) }
                         </AddFaqGroupModal>
                     </div>
                 </div>
