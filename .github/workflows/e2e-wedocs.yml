@@ -50,10 +50,10 @@ jobs:
         with:
           version: 9
 
-      - name: Use Node.js 22
+      - name: Use Node.js 24
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
 
       # wedocs.php requires vendor/autoload.php outright, so without composer the
       # plugin fatals on load and wp-env start exits 255 before a spec ever runs.
@@ -128,7 +128,7 @@ jobs:
           version: 9
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
       - name: Install e2e dependencies
         working-directory: tests/e2e-playwright
         run: pnpm install --frozen-lockfile

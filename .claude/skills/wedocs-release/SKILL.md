@@ -5,7 +5,7 @@ description: Release weDocs (free) to wp.org. Bump version + changelog, then pus
 
 # weDocs (Free) Release
 
-Orchestrator: `~/wedocs-release.sh`. Pushing tag `vX.Y.Z` triggers `.github/workflows/deploy-org.yml` (Node 18 + npm + Composer + PHP 7.4): build → POT → composer → disk-gate → **zip + GitHub Release** → **wp.org SVN deploy** (10up). SVN secrets `SVN_USERNAME`/`SVN_PASSWORD` are set on the upstream repo only.
+Orchestrator: `~/wedocs-release.sh`. Pushing tag `vX.Y.Z` triggers `.github/workflows/deploy-org.yml` (Node 24 + npm + Composer + PHP 7.4): build → POT → composer → disk-gate → **zip + GitHub Release** → **wp.org SVN deploy** (10up). SVN secrets `SVN_USERNAME`/`SVN_PASSWORD` are set on the upstream repo only.
 
 ## 🚨 Who actually publishes to wp.org — read this first (learned from the 2.2.5→2.2.7 triple-blunder)
 
@@ -124,6 +124,6 @@ The workflow extracts this block into the GitHub Release body. **User-facing onl
 
 ## Repo facts
 - Repo `weDevsOfficial/wedocs-plugin` · branch `develop` · wp.org slug `wedocs` · fork `arifulhoque7/wedocs-plugin`
-- Main file `wedocs.php` · tag `vX.Y.Z` · build Node 18 + npm + Composer + PHP 7.4
+- Main file `wedocs.php` · tag `vX.Y.Z` · build Node 24 + npm + Composer + PHP 7.4
 - `assets/build/` is **gitignored** (built in CI). Package excludes via `.distignore`.
 - Last good release: **v2.2.7** (10 Jun 2026) — re-tracked build via Appsero. Next release is the first on the untracked-build + 10up-sole-publisher pipeline (commit d960a5a) — verify it hard.

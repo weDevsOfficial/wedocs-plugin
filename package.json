@@ -6,6 +6,10 @@
   "license": "GPL",
   "private": true,
   "main": "src/index.js",
+  "engines": {
+    "node": ">=22.0.0",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
     "build": "wp-scripts build",
     "check-engines": "wp-scripts check-engines",
