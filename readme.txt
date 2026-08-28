@@ -2,7 +2,7 @@
 Contributors: tareq1988, wedevs
 Donate link: https://wedocs.co/
 Tags: docs, documentation, knowledge base, wiki, ai-powered knowledgebase
-Requires at least: 5.6
+Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 2.5.0

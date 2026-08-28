@@ -1,7 +1,7 @@
 import { useBlockProps } from "@wordpress/block-editor";
 import { useState, useEffect } from "@wordpress/element";
 import Inspector from "./Inspector";
-import "./style.scss";
+import "./style.css";
 
 export default function Edit({ attributes, setAttributes }) {
 	// Set default styles if not already set using useEffect
