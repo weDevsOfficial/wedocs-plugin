@@ -17,10 +17,10 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
 
-      - name: Use Node.js 24
+      - name: Use Node.js (version from .nvmrc)
         uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version-file: '.nvmrc'
           cache: 'pnpm'
 
       - name: Use desired version of PHP
