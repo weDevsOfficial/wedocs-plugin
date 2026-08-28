@@ -1,11 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-import {
-  scopedPreflightStyles,
-  isolateInsideOfContainer,
-} from 'tailwindcss-scoped-preflight';
 
 const rootClass = '.wedocs-document'; //We will use this class to scope the styles.
 
+// Tailwind 4 is CSS-first: preflight scoping, daisyUI and the forms plugin are
+// now declared with `@plugin` in the stylesheets (see src/assets/css/index.css).
+// This file is still loaded through `@config` for the settings that have no CSS
+// equivalent: the `important` scope, the class-based dark mode and the content
+// globs.
 module.exports = {
   important: rootClass,
   // Gate `dark:` variants behind a `.dark` class, NOT the OS preference.
@@ -18,17 +19,4 @@ module.exports = {
   theme: {
     extend: {},
   },
-  // Stop daisyui injecting its GLOBAL base ([data-theme]{background-color;color},
-  // html, :root resets) into every block stylesheet — that base leaks out of the
-  // blocks and paints the block editor canvas dark. Theme vars + components stay.
-  daisyui: {
-    base: false,
-  },
-  plugins: [
-    scopedPreflightStyles( {
-      isolationStrategy: isolateInsideOfContainer( rootClass, {} ),
-    } ),
-    require( 'daisyui' ),
-    require( '@tailwindcss/forms' )
-  ],
 };
