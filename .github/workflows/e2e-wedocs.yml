@@ -50,10 +50,10 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
 
-      - name: Use Node.js 24
+      - name: Use Node.js (version from .nvmrc)
         uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version-file: '.nvmrc'
 
       # wedocs.php requires vendor/autoload.php outright, so without composer the
       # plugin fatals on load and wp-env start exits 255 before a spec ever runs.
@@ -126,7 +126,7 @@ jobs:
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version-file: '.nvmrc'
       - name: Install e2e dependencies
         working-directory: tests/e2e-playwright
         run: pnpm install --frozen-lockfile
