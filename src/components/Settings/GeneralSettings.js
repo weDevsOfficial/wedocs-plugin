@@ -88,7 +88,7 @@ const GeneralSettings = ( {
                     {__('weDocs Home', 'wedocs')}
                   </label>
                 </div>
-                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto">
                   <div className="relative">
                     <SelectBox
                         name="docs_home"
@@ -154,7 +154,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto">
                   {applyFilters(
                       'wedocs_general_settings_docs_url_structure_field',
                       (
@@ -234,7 +234,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="email"
                       settingsPanel={generalSettings}
@@ -283,7 +283,7 @@ const GeneralSettings = ( {
                       </svg>
                     </div>
                   </div>
-                  <div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+                  <div className="settings-field w-full max-w-[490px] ml-auto">
                     <div className="relative">
                       <input
                           type="email"
@@ -336,7 +336,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="enable_search"
                       settingsPanel={generalSettings}
@@ -382,7 +382,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="helpful"
                       settingsPanel={generalSettings}
@@ -428,7 +428,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="comments"
                       settingsPanel={generalSettings}
@@ -474,7 +474,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="print"
                       settingsPanel={generalSettings}
@@ -520,7 +520,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="show_faq"
                       settingsPanel={generalSettings}
@@ -566,7 +566,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="use_legacy_template"
                       settingsPanel={generalSettings}

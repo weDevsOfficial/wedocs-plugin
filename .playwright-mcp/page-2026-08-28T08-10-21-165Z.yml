@@ -1,0 +1,327 @@
+- generic [ref=f29e2]:
+  - navigation "Main menu":
+    - link "Skip to main content" [ref=f29e3] [cursor=pointer]:
+      - /url: "#wpbody-content"
+    - link "Skip to toolbar" [ref=f29e4] [cursor=pointer]:
+      - /url: "#wp-toolbar"
+    - list [ref=f29e7]:
+      - listitem [ref=f29e8]:
+        - link "Dashboard" [ref=f29e9] [cursor=pointer]:
+          - /url: index.php
+          - generic [ref=f29e10]: 
+        - list [ref=f29e12]:
+          - listitem [ref=f29e13]:
+            - link "Home" [ref=f29e14] [cursor=pointer]:
+              - /url: index.php
+          - listitem [ref=f29e15]:
+            - link "Updates" [ref=f29e16] [cursor=pointer]:
+              - /url: update-core.php
+      - listitem [ref=f29e17]
+      - listitem [ref=f29e19]:
+        - link "Posts" [ref=f29e20] [cursor=pointer]:
+          - /url: edit.php
+          - generic [ref=f29e21]: 
+        - list [ref=f29e23]:
+          - listitem [ref=f29e24]:
+            - link "All Posts" [ref=f29e25] [cursor=pointer]:
+              - /url: edit.php
+          - listitem [ref=f29e26]:
+            - link "Add Post" [ref=f29e27] [cursor=pointer]:
+              - /url: post-new.php
+          - listitem [ref=f29e28]:
+            - link "Categories" [ref=f29e29] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=category
+          - listitem [ref=f29e30]:
+            - link "Tags" [ref=f29e31] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=post_tag
+      - listitem [ref=f29e32]:
+        - link "Media" [ref=f29e33] [cursor=pointer]:
+          - /url: upload.php
+          - generic [ref=f29e34]: 
+        - list [ref=f29e36]:
+          - listitem [ref=f29e37]:
+            - link "Library" [ref=f29e38] [cursor=pointer]:
+              - /url: upload.php
+          - listitem [ref=f29e39]:
+            - link "Add Media File" [ref=f29e40] [cursor=pointer]:
+              - /url: media-new.php
+      - listitem [ref=f29e41]:
+        - link "Pages" [ref=f29e42] [cursor=pointer]:
+          - /url: edit.php?post_type=page
+          - generic [ref=f29e43]: 
+        - list [ref=f29e45]:
+          - listitem [ref=f29e46]:
+            - link "All Pages" [ref=f29e47] [cursor=pointer]:
+              - /url: edit.php?post_type=page
+          - listitem [ref=f29e48]:
+            - link "Add Page" [ref=f29e49] [cursor=pointer]:
+              - /url: post-new.php?post_type=page
+      - listitem [ref=f29e50]:
+        - link "Comments" [ref=f29e51] [cursor=pointer]:
+          - /url: edit-comments.php
+          - generic [ref=f29e52]: 
+      - listitem [ref=f29e54]:
+        - link "weDocs" [ref=f29e55] [cursor=pointer]:
+          - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/dashboard
+        - list [ref=f29e58]:
+          - listitem [ref=f29e59]:
+            - link "Dashboard" [ref=f29e60] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/dashboard
+          - listitem [ref=f29e61]:
+            - link "Docs" [ref=f29e62] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/
+          - listitem [ref=f29e63]:
+            - link "Changelogs" [ref=f29e64] [cursor=pointer]:
+              - /url: admin.php?page=wedocs-changelog
+          - listitem [ref=f29e65]:
+            - link "Tags" [ref=f29e66] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=doc_tag&post_type=docs
+          - listitem [ref=f29e67]:
+            - link "FAQ" [ref=f29e68] [cursor=pointer]:
+              - /url: admin.php?page=wedocs-faq
+          - listitem [ref=f29e69]:
+            - link "Settings" [ref=f29e70] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/settings
+          - listitem [ref=f29e71]:
+            - link "Migration" [ref=f29e72] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/migrate
+          - listitem [ref=f29e73]:
+            - link "License" [ref=f29e74] [cursor=pointer]:
+              - /url: admin.php?page=wedocs_pro_settings
+      - listitem [ref=f29e75]
+      - listitem [ref=f29e77]:
+        - link "Appearance" [ref=f29e78] [cursor=pointer]:
+          - /url: themes.php
+          - generic [ref=f29e79]: 
+        - list [ref=f29e81]:
+          - listitem [ref=f29e82]:
+            - link "Themes" [ref=f29e83] [cursor=pointer]:
+              - /url: themes.php
+          - listitem [ref=f29e84]:
+            - link "Editor" [ref=f29e85] [cursor=pointer]:
+              - /url: site-editor.php
+          - listitem [ref=f29e86]:
+            - link "Fonts" [ref=f29e87] [cursor=pointer]:
+              - /url: font-library.php
+      - listitem [ref=f29e88]:
+        - link "Plugins" [ref=f29e89] [cursor=pointer]:
+          - /url: plugins.php
+          - generic [ref=f29e90]: 
+        - list [ref=f29e92]:
+          - listitem [ref=f29e93]:
+            - link "Installed Plugins" [ref=f29e94] [cursor=pointer]:
+              - /url: plugins.php
+          - listitem [ref=f29e95]:
+            - link "Add Plugin" [ref=f29e96] [cursor=pointer]:
+              - /url: plugin-install.php
+      - listitem [ref=f29e97]:
+        - link "Users" [ref=f29e98] [cursor=pointer]:
+          - /url: users.php
+          - generic [ref=f29e99]: 
+        - list [ref=f29e101]:
+          - listitem [ref=f29e102]:
+            - link "All Users" [ref=f29e103] [cursor=pointer]:
+              - /url: users.php
+          - listitem [ref=f29e104]:
+            - link "Add User" [ref=f29e105] [cursor=pointer]:
+              - /url: user-new.php
+          - listitem [ref=f29e106]:
+            - link "Profile" [ref=f29e107] [cursor=pointer]:
+              - /url: profile.php
+      - listitem [ref=f29e108]:
+        - link "Tools" [ref=f29e109] [cursor=pointer]:
+          - /url: tools.php
+          - generic [ref=f29e110]: 
+        - list [ref=f29e112]:
+          - listitem [ref=f29e113]:
+            - link "Available Tools" [ref=f29e114] [cursor=pointer]:
+              - /url: tools.php
+          - listitem [ref=f29e115]:
+            - link "Import" [ref=f29e116] [cursor=pointer]:
+              - /url: import.php
+          - listitem [ref=f29e117]:
+            - link "Export" [ref=f29e118] [cursor=pointer]:
+              - /url: export.php
+          - listitem [ref=f29e119]:
+            - link "Site Health" [ref=f29e120] [cursor=pointer]:
+              - /url: site-health.php
+          - listitem [ref=f29e121]:
+            - link "Export Personal Data" [ref=f29e122] [cursor=pointer]:
+              - /url: export-personal-data.php
+          - listitem [ref=f29e123]:
+            - link "Erase Personal Data" [ref=f29e124] [cursor=pointer]:
+              - /url: erase-personal-data.php
+          - listitem [ref=f29e125]:
+            - link "Scheduled Actions" [ref=f29e126] [cursor=pointer]:
+              - /url: tools.php?page=action-scheduler
+          - listitem [ref=f29e127]:
+            - link "Theme File Editor" [ref=f29e128] [cursor=pointer]:
+              - /url: theme-editor.php
+          - listitem [ref=f29e129]:
+            - link "Plugin File Editor" [ref=f29e130] [cursor=pointer]:
+              - /url: plugin-editor.php
+      - listitem [ref=f29e131]:
+        - link "Settings" [ref=f29e132] [cursor=pointer]:
+          - /url: options-general.php
+          - generic [ref=f29e133]: 
+        - list [ref=f29e135]:
+          - listitem [ref=f29e136]:
+            - link "General" [ref=f29e137] [cursor=pointer]:
+              - /url: options-general.php
+          - listitem [ref=f29e138]:
+            - link "Connectors" [ref=f29e139] [cursor=pointer]:
+              - /url: options-connectors.php
+          - listitem [ref=f29e140]:
+            - link "Writing" [ref=f29e141] [cursor=pointer]:
+              - /url: options-writing.php
+          - listitem [ref=f29e142]:
+            - link "Reading" [ref=f29e143] [cursor=pointer]:
+              - /url: options-reading.php
+          - listitem [ref=f29e144]:
+            - link "Discussion" [ref=f29e145] [cursor=pointer]:
+              - /url: options-discussion.php
+          - listitem [ref=f29e146]:
+            - link "Media" [ref=f29e147] [cursor=pointer]:
+              - /url: options-media.php
+          - listitem [ref=f29e148]:
+            - link "Permalinks" [ref=f29e149] [cursor=pointer]:
+              - /url: options-permalink.php
+          - listitem [ref=f29e150]:
+            - link "Privacy" [ref=f29e151] [cursor=pointer]:
+              - /url: options-privacy.php
+      - listitem [ref=f29e152]:
+        - button "Collapse Main menu" [expanded] [ref=f29e153] [cursor=pointer]:
+          - generic [ref=f29e155]: Collapse Menu
+  - generic [ref=f29e156]:
+    - generic [ref=f29e157]:
+      - navigation "Toolbar":
+        - menu:
+          - group [ref=f29e158]:
+            - menuitem "About WordPress" [ref=f29e159] [cursor=pointer]
+          - group [ref=f29e162]:
+            - menuitem "weDocs Fresh Branch Check" [ref=f29e163] [cursor=pointer]
+          - group [ref=f29e164]:
+            - menuitem "⌘K Open command palette" [ref=f29e165] [cursor=pointer]:
+              - generic [ref=f29e167]:
+                - text: ⌘K
+                - generic [ref=f29e168]: Open command palette
+          - group [ref=f29e169]:
+            - menuitem "0 Comments in moderation" [ref=f29e170] [cursor=pointer]:
+              - generic [ref=f29e172]: "0"
+          - group [ref=f29e174]:
+            - menuitem "New" [ref=f29e175] [cursor=pointer]
+        - menu [ref=f29e178]:
+          - group [ref=f29e179]:
+            - menuitem "Howdy, admin" [ref=f29e180] [cursor=pointer]
+    - main [ref=f29e181]:
+      - generic [ref=f29e186]:
+        - generic [ref=f29e187]:
+          - img "weDocs Icon" [ref=f29e189]
+          - generic [ref=f29e190]:
+            - heading "Unlock weDocs Premium - upto 30% off!" [level=3] [ref=f29e191]
+            - paragraph [ref=f29e192]: Unlock all premium features with up to 30% discount now!
+            - link "Grab the Deal" [ref=f29e193] [cursor=pointer]:
+              - /url: https://wedocs.co/pricing/?utm_source=wp-dashboard&utm_medium=admin-notice&utm_campaign=august_flash_sale
+          - button "Dismiss this notice" [ref=f29e194] [cursor=pointer]
+        - main [ref=f29e196]:
+          - generic [ref=f29e199]:
+            - main [ref=f29e200]:
+              - generic [ref=f29e202]:
+                - complementary [ref=f29e203]:
+                  - navigation [ref=f29e204]:
+                    - tablist [ref=f29e205]:
+                      - tab "General" [ref=f29e206] [cursor=pointer]
+                      - tab "AI Control" [ref=f29e211] [cursor=pointer]
+                      - tab "Shortcodes" [ref=f29e216] [cursor=pointer]
+                      - tab "Changelog" [ref=f29e221] [cursor=pointer]
+                      - tab "Permission Management" [ref=f29e226] [cursor=pointer]
+                      - generic [ref=f29e230] [cursor=pointer]: Assistant Widget
+                      - tab "A.I. Chat" [ref=f29e236]
+                      - tab "Explore" [ref=f29e241]
+                      - tab "Messaging" [ref=f29e246]
+                      - tab "Placement" [ref=f29e251]
+                      - tab "Widget Preference" [ref=f29e256]
+                      - tab "Layout & Styles" [active] [selected] [ref=f29e261] [cursor=pointer]
+                      - tab "Social Share" [ref=f29e265] [cursor=pointer]
+                - tabpanel "Layout & Styles" [ref=f29e345]:
+                  - generic [ref=f29e347]:
+                    - heading "Layout Settings" [level=2] [ref=f29e349]
+                    - separator [ref=f29e350]
+                    - generic [ref=f29e351]:
+                      - generic [ref=f29e354]:
+                        - generic [ref=f29e355]: Documentation homepage showcasing style
+                        - generic [ref=f29e356] [cursor=pointer]: Choose how multiple KBs would look like in the weDocs Home frontend
+                      - radiogroup [ref=f29e359]:
+                        - generic [ref=f29e360]:
+                          - radio [ref=f29e361] [cursor=pointer]
+                          - radio [ref=f29e366] [cursor=pointer]
+                      - generic [ref=f29e376]:
+                        - generic [ref=f29e377]: Choose Single Doc Template
+                        - generic [ref=f29e378] [cursor=pointer]: Customize the template for individual docs. Choose a layout that suits your content best
+                      - radiogroup [ref=f29e381]:
+                        - generic [ref=f29e382]:
+                          - generic [ref=f29e383]:
+                            - radio [ref=f29e384] [cursor=pointer]
+                            - text: Default
+                          - generic [ref=f29e439]:
+                            - radio [ref=f29e440] [cursor=pointer]
+                            - text: Bootstrap
+                          - generic [ref=f29e488]:
+                            - radio [ref=f29e489] [cursor=pointer]
+                            - text: Tailwind
+                      - generic [ref=f29e530]:
+                        - generic [ref=f29e531]:
+                          - generic [ref=f29e532]: Active Navigation Background Color
+                          - generic [ref=f29e533] [cursor=pointer]: Highlight the active navigation section. Pick a background color that stands out
+                        - generic [ref=f29e538] [cursor=pointer]
+                      - generic [ref=f29e543]:
+                        - generic [ref=f29e544]:
+                          - generic [ref=f29e545]: Active Navigation Text Color
+                          - generic [ref=f29e546] [cursor=pointer]: Make navigation clear. Choose a text color for the active navigation section
+                        - generic [ref=f29e551] [cursor=pointer]
+                      - generic [ref=f29e556]:
+                        - generic [ref=f29e557]:
+                          - generic [ref=f29e558]: Active Font Color
+                          - generic [ref=f29e559] [cursor=pointer]: Enhance readability. Select a font color for the active elements in your layout
+                        - generic [ref=f29e564] [cursor=pointer]
+                      - generic [ref=f29e569]:
+                        - generic [ref=f29e570]:
+                          - generic [ref=f29e571]: Enable Table of Contents
+                          - generic [ref=f29e572] [cursor=pointer]: Improve content navigation by turning on a right-side table of contents for easy access to document sections
+                        - generic [ref=f29e575]:
+                          - switch [checked] [ref=f29e576] [cursor=pointer]
+                          - generic [ref=f29e577]: Enable
+                      - generic [ref=f29e579]:
+                        - generic [ref=f29e580]:
+                          - generic [ref=f29e581]: Enable Docs Sidebar Toggle for Mobile
+                          - generic [ref=f29e582] [cursor=pointer]: Allow mobile users to toggle the document navigation sidebar for better accessibility on smaller screens
+                        - generic [ref=f29e585]:
+                          - switch [checked] [ref=f29e586] [cursor=pointer]
+                          - generic [ref=f29e587]: Enable
+                      - generic [ref=f29e589]:
+                        - generic [ref=f29e590]:
+                          - generic [ref=f29e591]: Enable Navigation Icon
+                          - generic [ref=f29e592] [cursor=pointer]: Enable/Disable navigation icons for a user-friendly experience on your single document pages
+                        - generic [ref=f29e595]:
+                          - switch [checked] [ref=f29e596] [cursor=pointer]
+                          - generic [ref=f29e597]: Enable
+                      - generic [ref=f29e599]:
+                        - generic [ref=f29e600]:
+                          - generic [ref=f29e601]: Collapse Documentation Page Articles
+                          - generic [ref=f29e602] [cursor=pointer]: Choose if your sections should be collapsed or expanded in Doc Homepage
+                        - generic [ref=f29e605]:
+                          - switch [ref=f29e606] [cursor=pointer]
+                          - generic [ref=f29e607]: Disable
+            - button "Save Settings" [ref=f29e336]
+  - contentinfo [ref=f29e337]:
+    - paragraph [ref=f29e338]:
+      - text: Thank you for using
+      - strong [ref=f29e339]: weDocs
+      - text: . Please leave us a
+      - link "★★★★★" [ref=f29e340] [cursor=pointer]:
+        - /url: https://wordpress.org/support/view/plugin-reviews/wedocs?filter=5#postform
+      - text: rating. Use the
+      - link "classic UI" [ref=f29e341] [cursor=pointer]:
+        - /url: http://wedocs-fresh.test/wp-admin/edit.php?post_type=docs
+      - text: .
+    - paragraph [ref=f29e342]: Version 7.1

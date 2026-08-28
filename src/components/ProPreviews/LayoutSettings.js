@@ -529,7 +529,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 										</svg>
 									</div>
 								</div>
-								<div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+								<div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
 									<div className="color-container flex gap-2.5">
 										<div className="flex justify-center items-center space-x-1 px-2 py-1.5 rounded-md bg-white border border-[#E2E2E2] cursor-pointer relative">
 											<div className={ `${option?.key === 'active_nav_text' ? 'bg-white border border-[#E2E2E2]' : 'bg-[#06B6D4]' } w-6 h-6 rounded-full flex justify-center items-center` }></div>
@@ -575,7 +575,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 									</svg>
 								</div>
 							</div>
-							<div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+							<div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
 								<Switcher
 									name="nav_icon"
 									settingsPanel={ layout }
@@ -619,7 +619,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
 									</svg>
 								</div>
 							</div>
-							<div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+							<div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
 								<Switcher
 									name="right_bar"
 									settingsPanel={ layout }
@@ -663,7 +663,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
                                     </svg>
                                 </div>
                             </div>
-                            <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                            <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                                 <Switcher
                                     name='collapse_articles'
                                     settingsPanel={ general }

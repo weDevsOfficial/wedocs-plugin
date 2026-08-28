@@ -1,0 +1,387 @@
+- generic [ref=f28e2]:
+  - navigation "Main menu":
+    - link "Skip to main content" [ref=f28e3] [cursor=pointer]:
+      - /url: "#wpbody-content"
+    - link "Skip to toolbar" [ref=f28e4] [cursor=pointer]:
+      - /url: "#wp-toolbar"
+    - list [ref=f28e7]:
+      - listitem [ref=f28e8]:
+        - link "Dashboard" [ref=f28e9] [cursor=pointer]:
+          - /url: index.php
+          - generic [ref=f28e10]: 
+        - list [ref=f28e12]:
+          - listitem [ref=f28e13]:
+            - link "Home" [ref=f28e14] [cursor=pointer]:
+              - /url: index.php
+          - listitem [ref=f28e15]:
+            - link "Updates" [ref=f28e16] [cursor=pointer]:
+              - /url: update-core.php
+      - listitem [ref=f28e17]
+      - listitem [ref=f28e19]:
+        - link "Posts" [ref=f28e20] [cursor=pointer]:
+          - /url: edit.php
+          - generic [ref=f28e21]: 
+        - list [ref=f28e23]:
+          - listitem [ref=f28e24]:
+            - link "All Posts" [ref=f28e25] [cursor=pointer]:
+              - /url: edit.php
+          - listitem [ref=f28e26]:
+            - link "Add Post" [ref=f28e27] [cursor=pointer]:
+              - /url: post-new.php
+          - listitem [ref=f28e28]:
+            - link "Categories" [ref=f28e29] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=category
+          - listitem [ref=f28e30]:
+            - link "Tags" [ref=f28e31] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=post_tag
+      - listitem [ref=f28e32]:
+        - link "Media" [ref=f28e33] [cursor=pointer]:
+          - /url: upload.php
+          - generic [ref=f28e34]: 
+        - list [ref=f28e36]:
+          - listitem [ref=f28e37]:
+            - link "Library" [ref=f28e38] [cursor=pointer]:
+              - /url: upload.php
+          - listitem [ref=f28e39]:
+            - link "Add Media File" [ref=f28e40] [cursor=pointer]:
+              - /url: media-new.php
+      - listitem [ref=f28e41]:
+        - link "Pages" [ref=f28e42] [cursor=pointer]:
+          - /url: edit.php?post_type=page
+          - generic [ref=f28e43]: 
+        - list [ref=f28e45]:
+          - listitem [ref=f28e46]:
+            - link "All Pages" [ref=f28e47] [cursor=pointer]:
+              - /url: edit.php?post_type=page
+          - listitem [ref=f28e48]:
+            - link "Add Page" [ref=f28e49] [cursor=pointer]:
+              - /url: post-new.php?post_type=page
+      - listitem [ref=f28e50]:
+        - link "Comments" [ref=f28e51] [cursor=pointer]:
+          - /url: edit-comments.php
+          - generic [ref=f28e52]: 
+      - listitem [ref=f28e54]:
+        - link "weDocs" [ref=f28e55] [cursor=pointer]:
+          - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/dashboard
+        - list [ref=f28e58]:
+          - listitem [ref=f28e59]:
+            - link "Dashboard" [ref=f28e60] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/dashboard
+          - listitem [ref=f28e61]:
+            - link "Docs" [ref=f28e62] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/
+          - listitem [ref=f28e63]:
+            - link "Changelogs" [ref=f28e64] [cursor=pointer]:
+              - /url: admin.php?page=wedocs-changelog
+          - listitem [ref=f28e65]:
+            - link "Tags" [ref=f28e66] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=doc_tag&post_type=docs
+          - listitem [ref=f28e67]:
+            - link "FAQ" [ref=f28e68] [cursor=pointer]:
+              - /url: admin.php?page=wedocs-faq
+          - listitem [ref=f28e69]:
+            - link "Settings" [ref=f28e70] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/settings
+          - listitem [ref=f28e71]:
+            - link "Migration" [ref=f28e72] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/migrate
+          - listitem [ref=f28e73]:
+            - link "License" [ref=f28e74] [cursor=pointer]:
+              - /url: admin.php?page=wedocs_pro_settings
+      - listitem [ref=f28e75]
+      - listitem [ref=f28e77]:
+        - link "Appearance" [ref=f28e78] [cursor=pointer]:
+          - /url: themes.php
+          - generic [ref=f28e79]: 
+        - list [ref=f28e81]:
+          - listitem [ref=f28e82]:
+            - link "Themes" [ref=f28e83] [cursor=pointer]:
+              - /url: themes.php
+          - listitem [ref=f28e84]:
+            - link "Editor" [ref=f28e85] [cursor=pointer]:
+              - /url: site-editor.php
+          - listitem [ref=f28e86]:
+            - link "Fonts" [ref=f28e87] [cursor=pointer]:
+              - /url: font-library.php
+      - listitem [ref=f28e88]:
+        - link "Plugins" [ref=f28e89] [cursor=pointer]:
+          - /url: plugins.php
+          - generic [ref=f28e90]: 
+        - list [ref=f28e92]:
+          - listitem [ref=f28e93]:
+            - link "Installed Plugins" [ref=f28e94] [cursor=pointer]:
+              - /url: plugins.php
+          - listitem [ref=f28e95]:
+            - link "Add Plugin" [ref=f28e96] [cursor=pointer]:
+              - /url: plugin-install.php
+      - listitem [ref=f28e97]:
+        - link "Users" [ref=f28e98] [cursor=pointer]:
+          - /url: users.php
+          - generic [ref=f28e99]: 
+        - list [ref=f28e101]:
+          - listitem [ref=f28e102]:
+            - link "All Users" [ref=f28e103] [cursor=pointer]:
+              - /url: users.php
+          - listitem [ref=f28e104]:
+            - link "Add User" [ref=f28e105] [cursor=pointer]:
+              - /url: user-new.php
+          - listitem [ref=f28e106]:
+            - link "Profile" [ref=f28e107] [cursor=pointer]:
+              - /url: profile.php
+      - listitem [ref=f28e108]:
+        - link "Tools" [ref=f28e109] [cursor=pointer]:
+          - /url: tools.php
+          - generic [ref=f28e110]: 
+        - list [ref=f28e112]:
+          - listitem [ref=f28e113]:
+            - link "Available Tools" [ref=f28e114] [cursor=pointer]:
+              - /url: tools.php
+          - listitem [ref=f28e115]:
+            - link "Import" [ref=f28e116] [cursor=pointer]:
+              - /url: import.php
+          - listitem [ref=f28e117]:
+            - link "Export" [ref=f28e118] [cursor=pointer]:
+              - /url: export.php
+          - listitem [ref=f28e119]:
+            - link "Site Health" [ref=f28e120] [cursor=pointer]:
+              - /url: site-health.php
+          - listitem [ref=f28e121]:
+            - link "Export Personal Data" [ref=f28e122] [cursor=pointer]:
+              - /url: export-personal-data.php
+          - listitem [ref=f28e123]:
+            - link "Erase Personal Data" [ref=f28e124] [cursor=pointer]:
+              - /url: erase-personal-data.php
+          - listitem [ref=f28e125]:
+            - link "Scheduled Actions" [ref=f28e126] [cursor=pointer]:
+              - /url: tools.php?page=action-scheduler
+          - listitem [ref=f28e127]:
+            - link "Theme File Editor" [ref=f28e128] [cursor=pointer]:
+              - /url: theme-editor.php
+          - listitem [ref=f28e129]:
+            - link "Plugin File Editor" [ref=f28e130] [cursor=pointer]:
+              - /url: plugin-editor.php
+      - listitem [ref=f28e131]:
+        - link "Settings" [ref=f28e132] [cursor=pointer]:
+          - /url: options-general.php
+          - generic [ref=f28e133]: 
+        - list [ref=f28e135]:
+          - listitem [ref=f28e136]:
+            - link "General" [ref=f28e137] [cursor=pointer]:
+              - /url: options-general.php
+          - listitem [ref=f28e138]:
+            - link "Connectors" [ref=f28e139] [cursor=pointer]:
+              - /url: options-connectors.php
+          - listitem [ref=f28e140]:
+            - link "Writing" [ref=f28e141] [cursor=pointer]:
+              - /url: options-writing.php
+          - listitem [ref=f28e142]:
+            - link "Reading" [ref=f28e143] [cursor=pointer]:
+              - /url: options-reading.php
+          - listitem [ref=f28e144]:
+            - link "Discussion" [ref=f28e145] [cursor=pointer]:
+              - /url: options-discussion.php
+          - listitem [ref=f28e146]:
+            - link "Media" [ref=f28e147] [cursor=pointer]:
+              - /url: options-media.php
+          - listitem [ref=f28e148]:
+            - link "Permalinks" [ref=f28e149] [cursor=pointer]:
+              - /url: options-permalink.php
+          - listitem [ref=f28e150]:
+            - link "Privacy" [ref=f28e151] [cursor=pointer]:
+              - /url: options-privacy.php
+      - listitem [ref=f28e152]:
+        - button "Collapse Main menu" [expanded] [ref=f28e153] [cursor=pointer]:
+          - generic [ref=f28e155]: Collapse Menu
+  - generic [ref=f28e156]:
+    - generic [ref=f28e157]:
+      - navigation "Toolbar":
+        - menu:
+          - group [ref=f28e158]:
+            - menuitem "About WordPress" [ref=f28e159] [cursor=pointer]
+          - group [ref=f28e162]:
+            - menuitem "weDocs Fresh Branch Check" [ref=f28e163] [cursor=pointer]
+          - group [ref=f28e164]:
+            - menuitem "⌘K Open command palette" [ref=f28e165] [cursor=pointer]:
+              - generic [ref=f28e167]:
+                - text: ⌘K
+                - generic [ref=f28e168]: Open command palette
+          - group [ref=f28e169]:
+            - menuitem "0 Comments in moderation" [ref=f28e170] [cursor=pointer]:
+              - generic [ref=f28e172]: "0"
+          - group [ref=f28e174]:
+            - menuitem "New" [ref=f28e175] [cursor=pointer]
+        - menu [ref=f28e178]:
+          - group [ref=f28e179]:
+            - menuitem "Howdy, admin" [ref=f28e180] [cursor=pointer]
+    - main [ref=f28e181]:
+      - generic [ref=f28e186]:
+        - generic [ref=f28e187]:
+          - img "weDocs Icon" [ref=f28e189]
+          - generic [ref=f28e190]:
+            - heading "Unlock weDocs Premium - upto 30% off!" [level=3] [ref=f28e191]
+            - paragraph [ref=f28e192]: Unlock all premium features with up to 30% discount now!
+            - link "Grab the Deal" [ref=f28e193] [cursor=pointer]:
+              - /url: https://wedocs.co/pricing/?utm_source=wp-dashboard&utm_medium=admin-notice&utm_campaign=august_flash_sale
+          - button "Dismiss this notice" [ref=f28e194] [cursor=pointer]
+        - main [ref=f28e196]:
+          - generic [ref=f28e199]:
+            - main [ref=f28e200]:
+              - generic [ref=f28e202]:
+                - complementary [ref=f28e203]:
+                  - navigation [ref=f28e204]:
+                    - tablist [ref=f28e205]:
+                      - tab "General" [ref=f28e206] [cursor=pointer]
+                      - tab "AI Control" [ref=f28e211] [cursor=pointer]
+                      - tab "Shortcodes" [active] [selected] [ref=f28e216] [cursor=pointer]
+                      - tab "Changelog" [ref=f28e221] [cursor=pointer]
+                      - tab "Permission Management" [ref=f28e226] [cursor=pointer]
+                      - generic [ref=f28e230] [cursor=pointer]: Assistant Widget
+                      - tab "A.I. Chat" [ref=f28e236]
+                      - tab "Explore" [ref=f28e241]
+                      - tab "Messaging" [ref=f28e246]
+                      - tab "Placement" [ref=f28e251]
+                      - tab "Widget Preference" [ref=f28e256]
+                      - tab "Layout & Styles" [ref=f28e261] [cursor=pointer]
+                      - tab "Social Share" [ref=f28e265] [cursor=pointer]
+                - tabpanel "Shortcodes" [ref=f28e273]:
+                  - generic [ref=f28e276]:
+                    - heading "Shortcodes" [level=2] [ref=f28e278]
+                    - separator [ref=f28e279]
+                    - generic [ref=f28e280]:
+                      - paragraph [ref=f28e281]: Paste any of these into a page or post. Every attribute is optional, so the shortcode on its own works too.
+                      - generic [ref=f28e282]:
+                        - generic [ref=f28e283]:
+                          - generic [ref=f28e284]:
+                            - generic [ref=f28e285]:
+                              - heading "Documentation List" [level=3] [ref=f28e286]
+                              - generic [ref=f28e287]: Free
+                            - paragraph [ref=f28e288]: Lists your documentation. Use this on the page you have set as the docs home.
+                            - generic [ref=f28e289]:
+                              - code [ref=f28e290]: "[wedocs col=\"2\" items=\"10\" include=\"any\" exclude=\"\" more=\"View Details\" paginate=\"\"]"
+                              - button "Copy shortcode" [ref=f28e291]
+                          - generic [ref=f28e295]:
+                            - generic [ref=f28e296]: Attributes
+                            - table [ref=f28e298]:
+                              - rowgroup [ref=f28e299]:
+                                - row [ref=f28e300]:
+                                  - columnheader "Attribute" [ref=f28e301]
+                                  - columnheader "Default" [ref=f28e302]
+                                  - columnheader "Description" [ref=f28e303]
+                              - rowgroup [ref=f28e304]:
+                                - row [ref=f28e305]:
+                                  - cell [ref=f28e306]:
+                                    - code [ref=f28e307]: col
+                                  - cell [ref=f28e308]:
+                                    - code [ref=f28e309]: "2"
+                                  - cell "Number of columns to lay the docs out in. The Pro layout setting takes over when it is set." [ref=f28e310]
+                                - row [ref=f28e311]:
+                                  - cell [ref=f28e312]:
+                                    - code [ref=f28e313]: items
+                                  - cell [ref=f28e314]:
+                                    - code [ref=f28e315]: "10"
+                                  - cell "How many sections to show under each doc." [ref=f28e316]
+                                - row [ref=f28e317]:
+                                  - cell [ref=f28e318]:
+                                    - code [ref=f28e319]: include
+                                  - cell [ref=f28e320]:
+                                    - code [ref=f28e321]: any
+                                  - cell "Comma separated doc IDs to show. Leave as any to show all of them." [ref=f28e322]
+                                - row [ref=f28e323]:
+                                  - cell [ref=f28e324]:
+                                    - code [ref=f28e325]: exclude
+                                  - cell "empty" [ref=f28e326]
+                                  - cell "Comma separated doc IDs to leave out. Ignored for any ID that include also names." [ref=f28e327]
+                                - row [ref=f28e328]:
+                                  - cell [ref=f28e329]:
+                                    - code [ref=f28e330]: more
+                                  - cell [ref=f28e331]:
+                                    - code [ref=f28e332]: View Details
+                                  - cell "Label for the link at the foot of each doc." [ref=f28e333]
+                                - row [ref=f28e334]:
+                                  - cell [ref=f28e335]:
+                                    - code [ref=f28e336]: paginate
+                                  - cell "empty" [ref=f28e337]
+                                  - cell "Docs per page. Leave empty to show every doc on one page." [ref=f28e338]
+                        - generic [ref=f28e339]:
+                          - generic [ref=f28e340]:
+                            - generic [ref=f28e341]:
+                              - heading "FAQ Section" [level=3] [ref=f28e342]
+                              - generic [ref=f28e343]: Free
+                            - paragraph [ref=f28e344]: Renders your FAQ groups as an accordion. Inactive groups and groups with no FAQs are skipped.
+                            - generic [ref=f28e345]:
+                              - code [ref=f28e346]: "[wedocs_faq group=\"\" limit=\"-1\" orderby=\"menu_order\" order=\"ASC\"]"
+                              - button "Copy shortcode" [ref=f28e347]
+                          - generic [ref=f28e351]:
+                            - generic [ref=f28e352]: Attributes
+                            - table [ref=f28e354]:
+                              - rowgroup [ref=f28e355]:
+                                - row [ref=f28e356]:
+                                  - columnheader "Attribute" [ref=f28e357]
+                                  - columnheader "Default" [ref=f28e358]
+                                  - columnheader "Description" [ref=f28e359]
+                              - rowgroup [ref=f28e360]:
+                                - row [ref=f28e361]:
+                                  - cell [ref=f28e362]:
+                                    - code [ref=f28e363]: group
+                                  - cell "empty" [ref=f28e364]
+                                  - cell "Comma separated FAQ group slugs to show. Leave empty for all groups." [ref=f28e365]
+                                - row [ref=f28e366]:
+                                  - cell [ref=f28e367]:
+                                    - code [ref=f28e368]: limit
+                                  - cell [ref=f28e369]:
+                                    - code [ref=f28e370]: "-1"
+                                  - cell "FAQs to show per group. Use -1 for no limit." [ref=f28e371]
+                                - row [ref=f28e372]:
+                                  - cell [ref=f28e373]:
+                                    - code [ref=f28e374]: orderby
+                                  - cell [ref=f28e375]:
+                                    - code [ref=f28e376]: menu_order
+                                  - cell "What to sort the FAQs by, for example menu_order, title or date." [ref=f28e377]
+                                - row [ref=f28e378]:
+                                  - cell [ref=f28e379]:
+                                    - code [ref=f28e380]: order
+                                  - cell [ref=f28e381]:
+                                    - code [ref=f28e382]: ASC
+                                  - cell "Sort direction, ASC or DESC." [ref=f28e383]
+                        - generic [ref=f28e384]:
+                          - generic [ref=f28e385]:
+                            - generic [ref=f28e386]:
+                              - heading "Changelog" [level=3] [ref=f28e387]
+                              - generic [ref=f28e388]: Pro
+                            - paragraph [ref=f28e389]: Embeds your changelog timeline on any page.
+                            - generic [ref=f28e390]:
+                              - code [ref=f28e391]: "[wedocs_changelog channel=\"\" switcher=\"no\"]"
+                              - button "Copy shortcode" [ref=f28e392]
+                          - generic [ref=f28e396]:
+                            - generic [ref=f28e397]: Attributes
+                            - table [ref=f28e399]:
+                              - rowgroup [ref=f28e400]:
+                                - row [ref=f28e401]:
+                                  - columnheader "Attribute" [ref=f28e402]
+                                  - columnheader "Default" [ref=f28e403]
+                                  - columnheader "Description" [ref=f28e404]
+                              - rowgroup [ref=f28e405]:
+                                - row [ref=f28e406]:
+                                  - cell [ref=f28e407]:
+                                    - code [ref=f28e408]: channel
+                                  - cell "empty" [ref=f28e409]
+                                  - cell "Channel slug to show. Leave empty to show every channel." [ref=f28e410]
+                                - row [ref=f28e411]:
+                                  - cell [ref=f28e412]:
+                                    - code [ref=f28e413]: switcher
+                                  - cell [ref=f28e414]:
+                                    - code [ref=f28e415]: "no"
+                                  - cell "Show the channel switcher above the timeline." [ref=f28e416]
+            - button "Save Settings" [ref=f28e418]
+  - contentinfo [ref=f28e419]:
+    - paragraph [ref=f28e420]:
+      - text: Thank you for using
+      - strong [ref=f28e421]: weDocs
+      - text: . Please leave us a
+      - link "★★★★★" [ref=f28e422] [cursor=pointer]:
+        - /url: https://wordpress.org/support/view/plugin-reviews/wedocs?filter=5#postform
+      - text: rating. Use the
+      - link "classic UI" [ref=f28e423] [cursor=pointer]:
+        - /url: http://wedocs-fresh.test/wp-admin/edit.php?post_type=docs
+      - text: .
+    - paragraph [ref=f28e424]: Version 7.1

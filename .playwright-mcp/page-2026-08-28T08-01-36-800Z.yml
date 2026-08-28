@@ -1,0 +1,331 @@
+- generic [ref=f10e2]:
+  - navigation "Main menu":
+    - link "Skip to main content" [ref=f10e3] [cursor=pointer]:
+      - /url: "#wpbody-content"
+    - link "Skip to toolbar" [ref=f10e4] [cursor=pointer]:
+      - /url: "#wp-toolbar"
+    - list [ref=f10e7]:
+      - listitem [ref=f10e8]:
+        - link "Dashboard" [ref=f10e9] [cursor=pointer]:
+          - /url: index.php
+          - generic [ref=f10e10]: 
+        - list [ref=f10e12]:
+          - listitem [ref=f10e13]:
+            - link "Home" [ref=f10e14] [cursor=pointer]:
+              - /url: index.php
+          - listitem [ref=f10e15]:
+            - link "Updates" [ref=f10e16] [cursor=pointer]:
+              - /url: update-core.php
+      - listitem [ref=f10e17]
+      - listitem [ref=f10e19]:
+        - link "Posts" [ref=f10e20] [cursor=pointer]:
+          - /url: edit.php
+          - generic [ref=f10e21]: 
+        - list [ref=f10e23]:
+          - listitem [ref=f10e24]:
+            - link "All Posts" [ref=f10e25] [cursor=pointer]:
+              - /url: edit.php
+          - listitem [ref=f10e26]:
+            - link "Add Post" [ref=f10e27] [cursor=pointer]:
+              - /url: post-new.php
+          - listitem [ref=f10e28]:
+            - link "Categories" [ref=f10e29] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=category
+          - listitem [ref=f10e30]:
+            - link "Tags" [ref=f10e31] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=post_tag
+      - listitem [ref=f10e32]:
+        - link "Media" [ref=f10e33] [cursor=pointer]:
+          - /url: upload.php
+          - generic [ref=f10e34]: 
+        - list [ref=f10e36]:
+          - listitem [ref=f10e37]:
+            - link "Library" [ref=f10e38] [cursor=pointer]:
+              - /url: upload.php
+          - listitem [ref=f10e39]:
+            - link "Add Media File" [ref=f10e40] [cursor=pointer]:
+              - /url: media-new.php
+      - listitem [ref=f10e41]:
+        - link "Pages" [ref=f10e42] [cursor=pointer]:
+          - /url: edit.php?post_type=page
+          - generic [ref=f10e43]: 
+        - list [ref=f10e45]:
+          - listitem [ref=f10e46]:
+            - link "All Pages" [ref=f10e47] [cursor=pointer]:
+              - /url: edit.php?post_type=page
+          - listitem [ref=f10e48]:
+            - link "Add Page" [ref=f10e49] [cursor=pointer]:
+              - /url: post-new.php?post_type=page
+      - listitem [ref=f10e50]:
+        - link "Comments" [ref=f10e51] [cursor=pointer]:
+          - /url: edit-comments.php
+          - generic [ref=f10e52]: 
+      - listitem [ref=f10e54]:
+        - link "weDocs" [ref=f10e55] [cursor=pointer]:
+          - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/dashboard
+        - list [ref=f10e58]:
+          - listitem [ref=f10e59]:
+            - link "Dashboard" [ref=f10e60] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/dashboard
+          - listitem [ref=f10e61]:
+            - link "Docs" [ref=f10e62] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/
+          - listitem [ref=f10e63]:
+            - link "Changelogs" [ref=f10e64] [cursor=pointer]:
+              - /url: admin.php?page=wedocs-changelog
+          - listitem [ref=f10e65]:
+            - link "Tags" [ref=f10e66] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=doc_tag&post_type=docs
+          - listitem [ref=f10e67]:
+            - link "FAQ" [ref=f10e68] [cursor=pointer]:
+              - /url: admin.php?page=wedocs-faq
+          - listitem [ref=f10e69]:
+            - link "Settings" [ref=f10e70] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/settings
+          - listitem [ref=f10e71]:
+            - link "Migration" [ref=f10e72] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/migrate
+          - listitem [ref=f10e73]:
+            - link "License" [ref=f10e74] [cursor=pointer]:
+              - /url: admin.php?page=wedocs_pro_settings
+      - listitem [ref=f10e75]
+      - listitem [ref=f10e77]:
+        - link "Appearance" [ref=f10e78] [cursor=pointer]:
+          - /url: themes.php
+          - generic [ref=f10e79]: 
+        - list [ref=f10e81]:
+          - listitem [ref=f10e82]:
+            - link "Themes" [ref=f10e83] [cursor=pointer]:
+              - /url: themes.php
+          - listitem [ref=f10e84]:
+            - link "Editor" [ref=f10e85] [cursor=pointer]:
+              - /url: site-editor.php
+          - listitem [ref=f10e86]:
+            - link "Fonts" [ref=f10e87] [cursor=pointer]:
+              - /url: font-library.php
+      - listitem [ref=f10e88]:
+        - link "Plugins" [ref=f10e89] [cursor=pointer]:
+          - /url: plugins.php
+          - generic [ref=f10e90]: 
+        - list [ref=f10e92]:
+          - listitem [ref=f10e93]:
+            - link "Installed Plugins" [ref=f10e94] [cursor=pointer]:
+              - /url: plugins.php
+          - listitem [ref=f10e95]:
+            - link "Add Plugin" [ref=f10e96] [cursor=pointer]:
+              - /url: plugin-install.php
+      - listitem [ref=f10e97]:
+        - link "Users" [ref=f10e98] [cursor=pointer]:
+          - /url: users.php
+          - generic [ref=f10e99]: 
+        - list [ref=f10e101]:
+          - listitem [ref=f10e102]:
+            - link "All Users" [ref=f10e103] [cursor=pointer]:
+              - /url: users.php
+          - listitem [ref=f10e104]:
+            - link "Add User" [ref=f10e105] [cursor=pointer]:
+              - /url: user-new.php
+          - listitem [ref=f10e106]:
+            - link "Profile" [ref=f10e107] [cursor=pointer]:
+              - /url: profile.php
+      - listitem [ref=f10e108]:
+        - link "Tools" [ref=f10e109] [cursor=pointer]:
+          - /url: tools.php
+          - generic [ref=f10e110]: 
+        - list [ref=f10e112]:
+          - listitem [ref=f10e113]:
+            - link "Available Tools" [ref=f10e114] [cursor=pointer]:
+              - /url: tools.php
+          - listitem [ref=f10e115]:
+            - link "Import" [ref=f10e116] [cursor=pointer]:
+              - /url: import.php
+          - listitem [ref=f10e117]:
+            - link "Export" [ref=f10e118] [cursor=pointer]:
+              - /url: export.php
+          - listitem [ref=f10e119]:
+            - link "Site Health" [ref=f10e120] [cursor=pointer]:
+              - /url: site-health.php
+          - listitem [ref=f10e121]:
+            - link "Export Personal Data" [ref=f10e122] [cursor=pointer]:
+              - /url: export-personal-data.php
+          - listitem [ref=f10e123]:
+            - link "Erase Personal Data" [ref=f10e124] [cursor=pointer]:
+              - /url: erase-personal-data.php
+          - listitem [ref=f10e125]:
+            - link "Scheduled Actions" [ref=f10e126] [cursor=pointer]:
+              - /url: tools.php?page=action-scheduler
+          - listitem [ref=f10e127]:
+            - link "Theme File Editor" [ref=f10e128] [cursor=pointer]:
+              - /url: theme-editor.php
+          - listitem [ref=f10e129]:
+            - link "Plugin File Editor" [ref=f10e130] [cursor=pointer]:
+              - /url: plugin-editor.php
+      - listitem [ref=f10e131]:
+        - link "Settings" [ref=f10e132] [cursor=pointer]:
+          - /url: options-general.php
+          - generic [ref=f10e133]: 
+        - list [ref=f10e135]:
+          - listitem [ref=f10e136]:
+            - link "General" [ref=f10e137] [cursor=pointer]:
+              - /url: options-general.php
+          - listitem [ref=f10e138]:
+            - link "Connectors" [ref=f10e139] [cursor=pointer]:
+              - /url: options-connectors.php
+          - listitem [ref=f10e140]:
+            - link "Writing" [ref=f10e141] [cursor=pointer]:
+              - /url: options-writing.php
+          - listitem [ref=f10e142]:
+            - link "Reading" [ref=f10e143] [cursor=pointer]:
+              - /url: options-reading.php
+          - listitem [ref=f10e144]:
+            - link "Discussion" [ref=f10e145] [cursor=pointer]:
+              - /url: options-discussion.php
+          - listitem [ref=f10e146]:
+            - link "Media" [ref=f10e147] [cursor=pointer]:
+              - /url: options-media.php
+          - listitem [ref=f10e148]:
+            - link "Permalinks" [ref=f10e149] [cursor=pointer]:
+              - /url: options-permalink.php
+          - listitem [ref=f10e150]:
+            - link "Privacy" [ref=f10e151] [cursor=pointer]:
+              - /url: options-privacy.php
+      - listitem [ref=f10e152]:
+        - button "Collapse Main menu" [expanded] [ref=f10e153] [cursor=pointer]:
+          - generic [ref=f10e155]: Collapse Menu
+  - generic [ref=f10e156]:
+    - generic [ref=f10e157]:
+      - navigation "Toolbar":
+        - menu:
+          - group [ref=f10e158]:
+            - menuitem "About WordPress" [ref=f10e159] [cursor=pointer]
+          - group [ref=f10e162]:
+            - menuitem "weDocs Fresh Branch Check" [ref=f10e163] [cursor=pointer]
+          - group [ref=f10e164]:
+            - menuitem "⌘K Open command palette" [ref=f10e165] [cursor=pointer]:
+              - generic [ref=f10e167]:
+                - text: ⌘K
+                - generic [ref=f10e168]: Open command palette
+          - group [ref=f10e169]:
+            - menuitem "0 Comments in moderation" [ref=f10e170] [cursor=pointer]:
+              - generic [ref=f10e172]: "0"
+          - group [ref=f10e174]:
+            - menuitem "New" [ref=f10e175] [cursor=pointer]
+        - menu [ref=f10e178]:
+          - group [ref=f10e179]:
+            - menuitem "Howdy, admin" [ref=f10e180] [cursor=pointer]
+    - main [ref=f10e181]:
+      - generic [ref=f10e185]:
+        - heading [level=1] [ref=f10e187]:
+          - text: All Docs
+          - button " New doc" [ref=f10e188] [cursor=pointer]:
+            - generic [ref=f10e189]: 
+            - text: New doc
+        - generic [ref=f10e190]:
+          - generic [ref=f10e191]:
+            - link [ref=f10e196] [cursor=pointer]:
+              - /url: "#"
+              - heading [level=3] [ref=f10e197]
+            - list [ref=f10e202]:
+              - listitem [ref=f10e203]
+              - listitem [ref=f10e208]
+            - button [ref=f10e216] [cursor=pointer]
+          - generic [ref=f10e218]:
+            - link [ref=f10e223] [cursor=pointer]:
+              - /url: "#"
+              - heading [level=3] [ref=f10e224]
+            - list [ref=f10e229]:
+              - listitem [ref=f10e230]
+              - listitem [ref=f10e235]
+            - button [ref=f10e243] [cursor=pointer]
+          - generic [ref=f10e245]:
+            - link [ref=f10e250] [cursor=pointer]:
+              - /url: "#"
+              - heading [level=3] [ref=f10e251]
+            - list [ref=f10e256]:
+              - listitem [ref=f10e257]
+              - listitem [ref=f10e262]
+            - button [ref=f10e270] [cursor=pointer]
+          - generic [ref=f10e272]:
+            - link [ref=f10e277] [cursor=pointer]:
+              - /url: "#"
+              - heading [level=3] [ref=f10e278]
+            - list [ref=f10e283]:
+              - listitem [ref=f10e284]
+              - listitem [ref=f10e289]
+            - button [ref=f10e297] [cursor=pointer]
+          - generic [ref=f10e299]:
+            - link [ref=f10e304] [cursor=pointer]:
+              - /url: "#"
+              - heading [level=3] [ref=f10e305]
+            - list [ref=f10e310]:
+              - listitem [ref=f10e311]
+              - listitem [ref=f10e316]
+            - button [ref=f10e324] [cursor=pointer]
+          - generic [ref=f10e326]:
+            - link [ref=f10e331] [cursor=pointer]:
+              - /url: "#"
+              - heading [level=3] [ref=f10e332]
+            - list [ref=f10e337]:
+              - listitem [ref=f10e338]
+              - listitem [ref=f10e343]
+            - button [ref=f10e351] [cursor=pointer]
+          - generic [ref=f10e353]:
+            - link [ref=f10e358] [cursor=pointer]:
+              - /url: "#"
+              - heading [level=3] [ref=f10e359]
+            - list [ref=f10e364]:
+              - listitem [ref=f10e365]
+              - listitem [ref=f10e370]
+            - button [ref=f10e378] [cursor=pointer]
+          - generic [ref=f10e380]:
+            - link [ref=f10e385] [cursor=pointer]:
+              - /url: "#"
+              - heading [level=3] [ref=f10e386]
+            - list [ref=f10e391]:
+              - listitem [ref=f10e392]
+              - listitem [ref=f10e397]
+            - button [ref=f10e405] [cursor=pointer]
+          - generic [ref=f10e407]:
+            - link [ref=f10e412] [cursor=pointer]:
+              - /url: "#"
+              - heading [level=3] [ref=f10e413]
+            - list [ref=f10e418]:
+              - listitem [ref=f10e419]
+              - listitem [ref=f10e424]
+            - button [ref=f10e432] [cursor=pointer]
+          - generic [ref=f10e434]:
+            - link [ref=f10e439] [cursor=pointer]:
+              - /url: "#"
+              - heading [level=3] [ref=f10e440]
+            - list [ref=f10e445]:
+              - listitem [ref=f10e446]
+              - listitem [ref=f10e451]
+            - button [ref=f10e459] [cursor=pointer]
+          - generic [ref=f10e461]:
+            - link [ref=f10e466] [cursor=pointer]:
+              - /url: "#"
+              - heading [level=3] [ref=f10e467]
+            - list [ref=f10e472]:
+              - listitem [ref=f10e473]
+              - listitem [ref=f10e478]
+            - button [ref=f10e486] [cursor=pointer]
+          - generic [ref=f10e488]:
+            - link [ref=f10e493] [cursor=pointer]:
+              - /url: "#"
+              - heading [level=3] [ref=f10e494]
+            - list [ref=f10e499]:
+              - listitem [ref=f10e500]
+              - listitem [ref=f10e505]
+            - button [ref=f10e513] [cursor=pointer]
+  - contentinfo [ref=f10e515]:
+    - paragraph [ref=f10e516]:
+      - text: Thank you for using
+      - strong [ref=f10e517]: weDocs
+      - text: . Please leave us a
+      - link "★★★★★" [ref=f10e518] [cursor=pointer]:
+        - /url: https://wordpress.org/support/view/plugin-reviews/wedocs?filter=5#postform
+      - text: rating. Use the
+      - link "classic UI" [ref=f10e519] [cursor=pointer]:
+        - /url: http://wedocs-fresh.test/wp-admin/edit.php?post_type=docs
+      - text: .
+    - paragraph [ref=f10e520]: Version 7.1

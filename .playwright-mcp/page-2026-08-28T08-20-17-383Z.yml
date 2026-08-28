@@ -1,0 +1,328 @@
+- generic [ref=f45e2]:
+  - navigation "Main menu":
+    - link "Skip to main content" [ref=f45e3] [cursor=pointer]:
+      - /url: "#wpbody-content"
+    - link "Skip to toolbar" [ref=f45e4] [cursor=pointer]:
+      - /url: "#wp-toolbar"
+    - list [ref=f45e7]:
+      - listitem [ref=f45e8]:
+        - link "Dashboard" [ref=f45e9] [cursor=pointer]:
+          - /url: index.php
+          - generic [ref=f45e10]: 
+        - list [ref=f45e12]:
+          - listitem [ref=f45e13]:
+            - link "Home" [ref=f45e14] [cursor=pointer]:
+              - /url: index.php
+          - listitem [ref=f45e15]:
+            - link "Updates" [ref=f45e16] [cursor=pointer]:
+              - /url: update-core.php
+      - listitem [ref=f45e17]
+      - listitem [ref=f45e19]:
+        - link "Posts" [ref=f45e20] [cursor=pointer]:
+          - /url: edit.php
+          - generic [ref=f45e21]: 
+        - list [ref=f45e23]:
+          - listitem [ref=f45e24]:
+            - link "All Posts" [ref=f45e25] [cursor=pointer]:
+              - /url: edit.php
+          - listitem [ref=f45e26]:
+            - link "Add Post" [ref=f45e27] [cursor=pointer]:
+              - /url: post-new.php
+          - listitem [ref=f45e28]:
+            - link "Categories" [ref=f45e29] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=category
+          - listitem [ref=f45e30]:
+            - link "Tags" [ref=f45e31] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=post_tag
+      - listitem [ref=f45e32]:
+        - link "Media" [ref=f45e33] [cursor=pointer]:
+          - /url: upload.php
+          - generic [ref=f45e34]: 
+        - list [ref=f45e36]:
+          - listitem [ref=f45e37]:
+            - link "Library" [ref=f45e38] [cursor=pointer]:
+              - /url: upload.php
+          - listitem [ref=f45e39]:
+            - link "Add Media File" [ref=f45e40] [cursor=pointer]:
+              - /url: media-new.php
+      - listitem [ref=f45e41]:
+        - link "Pages" [ref=f45e42] [cursor=pointer]:
+          - /url: edit.php?post_type=page
+          - generic [ref=f45e43]: 
+        - list [ref=f45e45]:
+          - listitem [ref=f45e46]:
+            - link "All Pages" [ref=f45e47] [cursor=pointer]:
+              - /url: edit.php?post_type=page
+          - listitem [ref=f45e48]:
+            - link "Add Page" [ref=f45e49] [cursor=pointer]:
+              - /url: post-new.php?post_type=page
+      - listitem [ref=f45e50]:
+        - link "Comments" [ref=f45e51] [cursor=pointer]:
+          - /url: edit-comments.php
+          - generic [ref=f45e52]: 
+      - listitem [ref=f45e54]:
+        - link "weDocs" [ref=f45e55] [cursor=pointer]:
+          - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/dashboard
+        - list [ref=f45e58]:
+          - listitem [ref=f45e59]:
+            - link "Dashboard" [ref=f45e60] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/dashboard
+          - listitem [ref=f45e61]:
+            - link "Docs" [ref=f45e62] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/
+          - listitem [ref=f45e63]:
+            - link "Changelogs" [ref=f45e64] [cursor=pointer]:
+              - /url: admin.php?page=wedocs-changelog
+          - listitem [ref=f45e65]:
+            - link "Tags" [ref=f45e66] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=doc_tag&post_type=docs
+          - listitem [ref=f45e67]:
+            - link "FAQ" [ref=f45e68] [cursor=pointer]:
+              - /url: admin.php?page=wedocs-faq
+          - listitem [ref=f45e69]:
+            - link "Settings" [ref=f45e70] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/settings
+          - listitem [ref=f45e71]:
+            - link "Migration" [ref=f45e72] [cursor=pointer]:
+              - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/migrate
+          - listitem [ref=f45e73]:
+            - link "License" [ref=f45e74] [cursor=pointer]:
+              - /url: admin.php?page=wedocs_pro_settings
+      - listitem [ref=f45e75]
+      - listitem [ref=f45e77]:
+        - link "Appearance" [ref=f45e78] [cursor=pointer]:
+          - /url: themes.php
+          - generic [ref=f45e79]: 
+        - list [ref=f45e81]:
+          - listitem [ref=f45e82]:
+            - link "Themes" [ref=f45e83] [cursor=pointer]:
+              - /url: themes.php
+          - listitem [ref=f45e84]:
+            - link "Editor" [ref=f45e85] [cursor=pointer]:
+              - /url: site-editor.php
+          - listitem [ref=f45e86]:
+            - link "Fonts" [ref=f45e87] [cursor=pointer]:
+              - /url: font-library.php
+      - listitem [ref=f45e88]:
+        - link "Plugins" [ref=f45e89] [cursor=pointer]:
+          - /url: plugins.php
+          - generic [ref=f45e90]: 
+        - list [ref=f45e92]:
+          - listitem [ref=f45e93]:
+            - link "Installed Plugins" [ref=f45e94] [cursor=pointer]:
+              - /url: plugins.php
+          - listitem [ref=f45e95]:
+            - link "Add Plugin" [ref=f45e96] [cursor=pointer]:
+              - /url: plugin-install.php
+      - listitem [ref=f45e97]:
+        - link "Users" [ref=f45e98] [cursor=pointer]:
+          - /url: users.php
+          - generic [ref=f45e99]: 
+        - list [ref=f45e101]:
+          - listitem [ref=f45e102]:
+            - link "All Users" [ref=f45e103] [cursor=pointer]:
+              - /url: users.php
+          - listitem [ref=f45e104]:
+            - link "Add User" [ref=f45e105] [cursor=pointer]:
+              - /url: user-new.php
+          - listitem [ref=f45e106]:
+            - link "Profile" [ref=f45e107] [cursor=pointer]:
+              - /url: profile.php
+      - listitem [ref=f45e108]:
+        - link "Tools" [ref=f45e109] [cursor=pointer]:
+          - /url: tools.php
+          - generic [ref=f45e110]: 
+        - list [ref=f45e112]:
+          - listitem [ref=f45e113]:
+            - link "Available Tools" [ref=f45e114] [cursor=pointer]:
+              - /url: tools.php
+          - listitem [ref=f45e115]:
+            - link "Import" [ref=f45e116] [cursor=pointer]:
+              - /url: import.php
+          - listitem [ref=f45e117]:
+            - link "Export" [ref=f45e118] [cursor=pointer]:
+              - /url: export.php
+          - listitem [ref=f45e119]:
+            - link "Site Health" [ref=f45e120] [cursor=pointer]:
+              - /url: site-health.php
+          - listitem [ref=f45e121]:
+            - link "Export Personal Data" [ref=f45e122] [cursor=pointer]:
+              - /url: export-personal-data.php
+          - listitem [ref=f45e123]:
+            - link "Erase Personal Data" [ref=f45e124] [cursor=pointer]:
+              - /url: erase-personal-data.php
+          - listitem [ref=f45e125]:
+            - link "Scheduled Actions" [ref=f45e126] [cursor=pointer]:
+              - /url: tools.php?page=action-scheduler
+          - listitem [ref=f45e127]:
+            - link "Theme File Editor" [ref=f45e128] [cursor=pointer]:
+              - /url: theme-editor.php
+          - listitem [ref=f45e129]:
+            - link "Plugin File Editor" [ref=f45e130] [cursor=pointer]:
+              - /url: plugin-editor.php
+      - listitem [ref=f45e131]:
+        - link "Settings" [ref=f45e132] [cursor=pointer]:
+          - /url: options-general.php
+          - generic [ref=f45e133]: 
+        - list [ref=f45e135]:
+          - listitem [ref=f45e136]:
+            - link "General" [ref=f45e137] [cursor=pointer]:
+              - /url: options-general.php
+          - listitem [ref=f45e138]:
+            - link "Connectors" [ref=f45e139] [cursor=pointer]:
+              - /url: options-connectors.php
+          - listitem [ref=f45e140]:
+            - link "Writing" [ref=f45e141] [cursor=pointer]:
+              - /url: options-writing.php
+          - listitem [ref=f45e142]:
+            - link "Reading" [ref=f45e143] [cursor=pointer]:
+              - /url: options-reading.php
+          - listitem [ref=f45e144]:
+            - link "Discussion" [ref=f45e145] [cursor=pointer]:
+              - /url: options-discussion.php
+          - listitem [ref=f45e146]:
+            - link "Media" [ref=f45e147] [cursor=pointer]:
+              - /url: options-media.php
+          - listitem [ref=f45e148]:
+            - link "Permalinks" [ref=f45e149] [cursor=pointer]:
+              - /url: options-permalink.php
+          - listitem [ref=f45e150]:
+            - link "Privacy" [ref=f45e151] [cursor=pointer]:
+              - /url: options-privacy.php
+      - listitem [ref=f45e152]:
+        - button "Collapse Main menu" [expanded] [ref=f45e153] [cursor=pointer]:
+          - generic [ref=f45e155]: Collapse Menu
+  - generic [ref=f45e156]:
+    - generic [ref=f45e157]:
+      - navigation "Toolbar":
+        - menu:
+          - group [ref=f45e158]:
+            - menuitem "About WordPress" [ref=f45e159] [cursor=pointer]
+          - group [ref=f45e162]:
+            - menuitem "weDocs Fresh Branch Check" [ref=f45e163] [cursor=pointer]
+          - group [ref=f45e164]:
+            - menuitem "⌘K Open command palette" [ref=f45e165] [cursor=pointer]:
+              - generic [ref=f45e167]:
+                - text: ⌘K
+                - generic [ref=f45e168]: Open command palette
+          - group [ref=f45e169]:
+            - menuitem "0 Comments in moderation" [ref=f45e170] [cursor=pointer]:
+              - generic [ref=f45e172]: "0"
+          - group [ref=f45e174]:
+            - menuitem "New" [ref=f45e175] [cursor=pointer]
+        - menu [ref=f45e178]:
+          - group [ref=f45e179]:
+            - menuitem "Howdy, admin" [ref=f45e180] [cursor=pointer]
+    - main [ref=f45e181]:
+      - main [ref=f45e187]:
+        - generic [ref=f45e190]:
+          - main [ref=f45e191]:
+            - generic [ref=f45e193]:
+              - complementary [ref=f45e194]:
+                - navigation [ref=f45e195]:
+                  - tablist [ref=f45e196]:
+                    - tab "General" [selected] [ref=f45e197] [cursor=pointer]
+                    - tab "AI Control" [ref=f45e202] [cursor=pointer]
+                    - tab "Shortcodes" [ref=f45e207] [cursor=pointer]
+                    - tab "Changelog" [ref=f45e212] [cursor=pointer]
+                    - tab "Permission Management" [ref=f45e217] [cursor=pointer]
+                    - generic [ref=f45e221] [cursor=pointer]: Assistant Widget
+                    - tab "A.I. Chat" [ref=f45e227]
+                    - tab "Explore" [ref=f45e232]
+                    - tab "Messaging" [ref=f45e237]
+                    - tab "Placement" [ref=f45e242]
+                    - tab "Widget Preference" [ref=f45e247]
+                    - tab "Layout & Styles" [ref=f45e252] [cursor=pointer]
+                    - tab "Social Share" [ref=f45e256] [cursor=pointer]
+              - tabpanel "General" [ref=f45e264]:
+                - generic [ref=f45e267]:
+                  - heading "General" [level=2] [ref=f45e269]
+                  - separator [ref=f45e270]
+                  - generic [ref=f45e271]:
+                    - generic [ref=f45e272]:
+                      - generic [ref=f45e273]:
+                        - generic [ref=f45e274]: weDocs Home
+                        - textbox "Page not found" [disabled] [ref=f45e279] [cursor=pointer]
+                      - paragraph [ref=f45e281]:
+                        - text: Select the documentation Home page, where the shortcode [wedocs]
+                        - link "shortcode" [ref=f45e282] [cursor=pointer]:
+                          - /url: https://wedocs.co/docs/wedocs/shortcodes/
+                        - text: is used.
+                    - generic [ref=f45e283]:
+                      - generic [ref=f45e284]:
+                        - generic [ref=f45e285]:
+                          - generic [ref=f45e286]: Docs URL Structure
+                          - generic [ref=f45e287] [cursor=pointer]: Control how documentation URLs and breadcrumbs will be structured
+                        - button "Before Doc" [ref=f45e292] [cursor=pointer]
+                      - paragraph [ref=f45e295]:
+                        - generic [ref=f45e296]:
+                          - text: "Before Doc:"
+                          - code [ref=f45e297]: "http://wedocs-fresh.test/docs/{doc}/{section}/{article}/"
+                        - generic [ref=f45e298]: Changing this structure updates URLs and breadcrumbs for all docs. Previous URLs will automatically redirect (301).
+                    - generic [ref=f45e300]:
+                      - generic [ref=f45e301]:
+                        - generic [ref=f45e302]: Email Feedback on Article
+                        - generic [ref=f45e303] [cursor=pointer]: Invite readers to share their thoughts through an email feedback form
+                      - generic [ref=f45e306]:
+                        - switch [checked] [ref=f45e307] [cursor=pointer]
+                        - generic [ref=f45e308]: Enable
+                    - generic [ref=f45e310]:
+                      - generic [ref=f45e311]:
+                        - generic [ref=f45e312]: Email Address
+                        - generic [ref=f45e313] [cursor=pointer]: Enter the email address where you would like to receive feedback
+                      - textbox "Write your email address" [ref=f45e318]
+                    - generic [ref=f45e320]:
+                      - generic [ref=f45e321]:
+                        - generic [ref=f45e322]: Enable searchbar on docs home
+                        - generic [ref=f45e323] [cursor=pointer]: Enable searchbar on docs homepage, applicable only for those using the [weDocs] shortcode
+                      - generic [ref=f45e326]:
+                        - switch [checked] [ref=f45e327] [cursor=pointer]
+                        - generic [ref=f45e328]: Enable
+                    - generic [ref=f45e330]:
+                      - generic [ref=f45e331]:
+                        - generic [ref=f45e332]: Helpful Feedback on Article
+                        - generic [ref=f45e333] [cursor=pointer]: Enabling helpful feedback on your article allows readers to provide opinions on your content
+                      - generic [ref=f45e336]:
+                        - switch [checked] [ref=f45e337] [cursor=pointer]
+                        - generic [ref=f45e338]: Enable
+                    - generic [ref=f45e340]:
+                      - generic [ref=f45e341]:
+                        - generic [ref=f45e342]: Allow Comments on Article
+                        - generic [ref=f45e343] [cursor=pointer]: Increase reader engagement by turning on comments
+                      - generic [ref=f45e346]:
+                        - switch [ref=f45e347] [cursor=pointer]
+                        - generic [ref=f45e348]: Disable
+                    - generic [ref=f45e350]:
+                      - generic [ref=f45e351]:
+                        - generic [ref=f45e352]: Allow Article Printing
+                        - generic [ref=f45e353] [cursor=pointer]: Allow users to print articles directly from the website
+                      - generic [ref=f45e356]:
+                        - switch [checked] [ref=f45e357] [cursor=pointer]
+                        - generic [ref=f45e358]: Enable
+                    - generic [ref=f45e360]:
+                      - generic [ref=f45e361]:
+                        - generic [ref=f45e362]: Show FAQ on Docs Home
+                        - generic [ref=f45e363] [cursor=pointer]: Display the FAQ section on the documentation home page where the [wedocs] shortcode is used
+                      - generic [ref=f45e366]:
+                        - switch [ref=f45e367] [cursor=pointer]
+                        - generic [ref=f45e368]: Disable
+                    - generic [ref=f45e370]:
+                      - generic [ref=f45e371]:
+                        - generic [ref=f45e372]: Use Legacy Template
+                        - generic [ref=f45e373] [cursor=pointer]: Enable legacy PHP template system for single doc pages. Disable to use the new builder template.
+                      - generic [ref=f45e376]:
+                        - switch [ref=f45e377] [cursor=pointer]
+                        - generic [ref=f45e378]: Disable
+          - button "Save Settings" [ref=f45e380]
+  - contentinfo [ref=f45e381]:
+    - paragraph [ref=f45e382]:
+      - text: Thank you for using
+      - strong [ref=f45e383]: weDocs
+      - text: . Please leave us a
+      - link "★★★★★" [ref=f45e384] [cursor=pointer]:
+        - /url: https://wordpress.org/support/view/plugin-reviews/wedocs?filter=5#postform
+      - text: rating. Use the
+      - link "classic UI" [ref=f45e385] [cursor=pointer]:
+        - /url: http://wedocs-fresh.test/wp-admin/edit.php?post_type=docs
+      - text: .
+    - paragraph [ref=f45e386]: Version 7.1

@@ -1,0 +1,405 @@
+- generic [active] [ref=f18e1]:
+  - generic [ref=f18e2]:
+    - navigation "Main menu":
+      - link "Skip to main content" [ref=f18e3] [cursor=pointer]:
+        - /url: "#wpbody-content"
+      - link "Skip to toolbar" [ref=f18e4] [cursor=pointer]:
+        - /url: "#wp-toolbar"
+      - list [ref=f18e7]:
+        - listitem [ref=f18e8]:
+          - link "Dashboard" [ref=f18e9] [cursor=pointer]:
+            - /url: index.php
+            - generic [ref=f18e10]: 
+          - list [ref=f18e12]:
+            - listitem [ref=f18e13]:
+              - link "Home" [ref=f18e14] [cursor=pointer]:
+                - /url: index.php
+            - listitem [ref=f18e15]:
+              - link "Updates" [ref=f18e16] [cursor=pointer]:
+                - /url: update-core.php
+        - listitem [ref=f18e17]
+        - listitem [ref=f18e19]:
+          - link "Posts" [ref=f18e20] [cursor=pointer]:
+            - /url: edit.php
+            - generic [ref=f18e21]: 
+          - list [ref=f18e23]:
+            - listitem [ref=f18e24]:
+              - link "All Posts" [ref=f18e25] [cursor=pointer]:
+                - /url: edit.php
+            - listitem [ref=f18e26]:
+              - link "Add Post" [ref=f18e27] [cursor=pointer]:
+                - /url: post-new.php
+            - listitem [ref=f18e28]:
+              - link "Categories" [ref=f18e29] [cursor=pointer]:
+                - /url: edit-tags.php?taxonomy=category
+            - listitem [ref=f18e30]:
+              - link "Tags" [ref=f18e31] [cursor=pointer]:
+                - /url: edit-tags.php?taxonomy=post_tag
+        - listitem [ref=f18e32]:
+          - link "Media" [ref=f18e33] [cursor=pointer]:
+            - /url: upload.php
+            - generic [ref=f18e34]: 
+          - list [ref=f18e36]:
+            - listitem [ref=f18e37]:
+              - link "Library" [ref=f18e38] [cursor=pointer]:
+                - /url: upload.php
+            - listitem [ref=f18e39]:
+              - link "Add Media File" [ref=f18e40] [cursor=pointer]:
+                - /url: media-new.php
+        - listitem [ref=f18e41]:
+          - link "Pages" [ref=f18e42] [cursor=pointer]:
+            - /url: edit.php?post_type=page
+            - generic [ref=f18e43]: 
+          - list [ref=f18e45]:
+            - listitem [ref=f18e46]:
+              - link "All Pages" [ref=f18e47] [cursor=pointer]:
+                - /url: edit.php?post_type=page
+            - listitem [ref=f18e48]:
+              - link "Add Page" [ref=f18e49] [cursor=pointer]:
+                - /url: post-new.php?post_type=page
+        - listitem [ref=f18e50]:
+          - link "Comments" [ref=f18e51] [cursor=pointer]:
+            - /url: edit-comments.php
+            - generic [ref=f18e52]: 
+        - listitem [ref=f18e54]:
+          - link "weDocs" [ref=f18e55] [cursor=pointer]:
+            - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/dashboard
+          - list [ref=f18e58]:
+            - listitem [ref=f18e59]:
+              - link "Dashboard" [ref=f18e60] [cursor=pointer]:
+                - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/dashboard
+            - listitem [ref=f18e61]:
+              - link "Docs" [ref=f18e62] [cursor=pointer]:
+                - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/
+            - listitem [ref=f18e63]:
+              - link "Changelogs" [ref=f18e64] [cursor=pointer]:
+                - /url: admin.php?page=wedocs-changelog
+            - listitem [ref=f18e65]:
+              - link "Tags" [ref=f18e66] [cursor=pointer]:
+                - /url: edit-tags.php?taxonomy=doc_tag&post_type=docs
+            - listitem [ref=f18e67]:
+              - link "FAQ" [ref=f18e68] [cursor=pointer]:
+                - /url: admin.php?page=wedocs-faq
+            - listitem [ref=f18e69]:
+              - link "Settings" [ref=f18e70] [cursor=pointer]:
+                - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/settings
+            - listitem [ref=f18e71]:
+              - link "Migration" [ref=f18e72] [cursor=pointer]:
+                - /url: http://wedocs-fresh.test/wp-admin/admin.php?page=wedocs#/migrate
+            - listitem [ref=f18e73]:
+              - link "License" [ref=f18e74] [cursor=pointer]:
+                - /url: admin.php?page=wedocs_pro_settings
+        - listitem [ref=f18e75]
+        - listitem [ref=f18e77]:
+          - link "Appearance" [ref=f18e78] [cursor=pointer]:
+            - /url: themes.php
+            - generic [ref=f18e79]: 
+          - list [ref=f18e81]:
+            - listitem [ref=f18e82]:
+              - link "Themes" [ref=f18e83] [cursor=pointer]:
+                - /url: themes.php
+            - listitem [ref=f18e84]:
+              - link "Editor" [ref=f18e85] [cursor=pointer]:
+                - /url: site-editor.php
+            - listitem [ref=f18e86]:
+              - link "Fonts" [ref=f18e87] [cursor=pointer]:
+                - /url: font-library.php
+        - listitem [ref=f18e88]:
+          - link "Plugins" [ref=f18e89] [cursor=pointer]:
+            - /url: plugins.php
+            - generic [ref=f18e90]: 
+          - list [ref=f18e92]:
+            - listitem [ref=f18e93]:
+              - link "Installed Plugins" [ref=f18e94] [cursor=pointer]:
+                - /url: plugins.php
+            - listitem [ref=f18e95]:
+              - link "Add Plugin" [ref=f18e96] [cursor=pointer]:
+                - /url: plugin-install.php
+        - listitem [ref=f18e97]:
+          - link "Users" [ref=f18e98] [cursor=pointer]:
+            - /url: users.php
+            - generic [ref=f18e99]: 
+          - list [ref=f18e101]:
+            - listitem [ref=f18e102]:
+              - link "All Users" [ref=f18e103] [cursor=pointer]:
+                - /url: users.php
+            - listitem [ref=f18e104]:
+              - link "Add User" [ref=f18e105] [cursor=pointer]:
+                - /url: user-new.php
+            - listitem [ref=f18e106]:
+              - link "Profile" [ref=f18e107] [cursor=pointer]:
+                - /url: profile.php
+        - listitem [ref=f18e108]:
+          - link "Tools" [ref=f18e109] [cursor=pointer]:
+            - /url: tools.php
+            - generic [ref=f18e110]: 
+          - list [ref=f18e112]:
+            - listitem [ref=f18e113]:
+              - link "Available Tools" [ref=f18e114] [cursor=pointer]:
+                - /url: tools.php
+            - listitem [ref=f18e115]:
+              - link "Import" [ref=f18e116] [cursor=pointer]:
+                - /url: import.php
+            - listitem [ref=f18e117]:
+              - link "Export" [ref=f18e118] [cursor=pointer]:
+                - /url: export.php
+            - listitem [ref=f18e119]:
+              - link "Site Health" [ref=f18e120] [cursor=pointer]:
+                - /url: site-health.php
+            - listitem [ref=f18e121]:
+              - link "Export Personal Data" [ref=f18e122] [cursor=pointer]:
+                - /url: export-personal-data.php
+            - listitem [ref=f18e123]:
+              - link "Erase Personal Data" [ref=f18e124] [cursor=pointer]:
+                - /url: erase-personal-data.php
+            - listitem [ref=f18e125]:
+              - link "Scheduled Actions" [ref=f18e126] [cursor=pointer]:
+                - /url: tools.php?page=action-scheduler
+            - listitem [ref=f18e127]:
+              - link "Theme File Editor" [ref=f18e128] [cursor=pointer]:
+                - /url: theme-editor.php
+            - listitem [ref=f18e129]:
+              - link "Plugin File Editor" [ref=f18e130] [cursor=pointer]:
+                - /url: plugin-editor.php
+        - listitem [ref=f18e131]:
+          - link "Settings" [ref=f18e132] [cursor=pointer]:
+            - /url: options-general.php
+            - generic [ref=f18e133]: 
+          - list [ref=f18e135]:
+            - listitem [ref=f18e136]:
+              - link "General" [ref=f18e137] [cursor=pointer]:
+                - /url: options-general.php
+            - listitem [ref=f18e138]:
+              - link "Connectors" [ref=f18e139] [cursor=pointer]:
+                - /url: options-connectors.php
+            - listitem [ref=f18e140]:
+              - link "Writing" [ref=f18e141] [cursor=pointer]:
+                - /url: options-writing.php
+            - listitem [ref=f18e142]:
+              - link "Reading" [ref=f18e143] [cursor=pointer]:
+                - /url: options-reading.php
+            - listitem [ref=f18e144]:
+              - link "Discussion" [ref=f18e145] [cursor=pointer]:
+                - /url: options-discussion.php
+            - listitem [ref=f18e146]:
+              - link "Media" [ref=f18e147] [cursor=pointer]:
+                - /url: options-media.php
+            - listitem [ref=f18e148]:
+              - link "Permalinks" [ref=f18e149] [cursor=pointer]:
+                - /url: options-permalink.php
+            - listitem [ref=f18e150]:
+              - link "Privacy" [ref=f18e151] [cursor=pointer]:
+                - /url: options-privacy.php
+        - listitem [ref=f18e152]:
+          - button "Collapse Main menu" [expanded] [ref=f18e153] [cursor=pointer]:
+            - generic [ref=f18e155]: Collapse Menu
+    - generic [ref=f18e156]:
+      - generic [ref=f18e157]:
+        - navigation "Toolbar":
+          - menu:
+            - group [ref=f18e158]:
+              - menuitem "About WordPress" [ref=f18e159] [cursor=pointer]
+            - group [ref=f18e162]:
+              - menuitem "weDocs Fresh Branch Check" [ref=f18e163] [cursor=pointer]
+            - group [ref=f18e164]:
+              - menuitem "⌘K Open command palette" [ref=f18e165] [cursor=pointer]:
+                - generic [ref=f18e167]:
+                  - text: ⌘K
+                  - generic [ref=f18e168]: Open command palette
+            - group [ref=f18e169]:
+              - menuitem "0 Comments in moderation" [ref=f18e170] [cursor=pointer]:
+                - generic [ref=f18e172]: "0"
+            - group [ref=f18e174]:
+              - menuitem "New" [ref=f18e175] [cursor=pointer]
+          - menu [ref=f18e178]:
+            - group [ref=f18e179]:
+              - menuitem "Howdy, admin" [ref=f18e180] [cursor=pointer]
+      - main [ref=f18e181]:
+        - generic [ref=f18e185]:
+          - heading "All Docs  New doc 💡 Feedback" [level=1] [ref=f18e187]:
+            - text: All Docs
+            - button " New doc" [ref=f18e188]:
+              - generic [ref=f18e189]: 
+              - text: New doc
+            - generic [ref=f18e191] [cursor=pointer]
+            - generic [ref=f18e192]:
+              - link [ref=f18e193] [cursor=pointer]:
+                - /url: https://feedback.wedevs.com/b/wedocs
+                - img "💡" [ref=f18e194]
+                - text: Feedback
+              - textbox "Search by document name" [ref=f18e196]
+          - generic [ref=f18e197]:
+            - img "weDocs Icon" [ref=f18e199]
+            - generic [ref=f18e200]:
+              - heading "Unlock weDocs Premium - upto 30% off!" [level=3] [ref=f18e201]
+              - paragraph [ref=f18e202]: Unlock all premium features with up to 30% discount now!
+              - link "Grab the Deal" [ref=f18e203] [cursor=pointer]:
+                - /url: https://wedocs.co/pricing/?utm_source=wp-dashboard&utm_medium=admin-notice&utm_campaign=august_flash_sale
+            - button "Dismiss this notice" [ref=f18e204] [cursor=pointer]
+          - list [ref=f18e206]:
+            - button "Node 24 + pnpm upgra...  0 Sections 0 Articles admin admin  Add" [ref=f18e207]:
+              - generic [ref=f18e208]:
+                - link [ref=f18e213] [cursor=pointer]:
+                  - /url: "#/section/6"
+                  - heading "Node 24 + pnpm upgra..." [level=3] [ref=f18e214]
+                - generic [ref=f18e218]: 
+              - link "0 Sections 0 Articles admin admin" [ref=f18e221] [cursor=pointer]:
+                - /url: "#/section/6"
+                - generic [ref=f18e222]:
+                  - list [ref=f18e223]:
+                    - listitem [ref=f18e224]:
+                      - generic [ref=f18e225]: 0 Sections
+                    - listitem [ref=f18e230]:
+                      - generic [ref=f18e231]: 0 Articles
+                  - generic [ref=f18e237]:
+                    - text: admin
+                    - img "admin" [ref=f18e238]
+              - generic [ref=f18e243] [cursor=pointer]:
+                - generic [ref=f18e244]: 
+                - text: Add
+            - button "E2E Baseline Doc  1 Sections 1 Articles admin admin  Add" [ref=f18e245]:
+              - generic [ref=f18e246]:
+                - link [ref=f18e251] [cursor=pointer]:
+                  - /url: "#/section/8"
+                  - heading "E2E Baseline Doc" [level=3] [ref=f18e252]
+                - generic [ref=f18e256]: 
+              - link "1 Sections 1 Articles admin admin" [ref=f18e259] [cursor=pointer]:
+                - /url: "#/section/8"
+                - generic [ref=f18e260]:
+                  - list [ref=f18e261]:
+                    - listitem [ref=f18e262]:
+                      - generic [ref=f18e263]: 1 Sections
+                    - listitem [ref=f18e268]:
+                      - generic [ref=f18e269]: 1 Articles
+                  - generic [ref=f18e275]:
+                    - text: admin
+                    - img "admin" [ref=f18e276]
+              - generic [ref=f18e281] [cursor=pointer]:
+                - generic [ref=f18e282]: 
+                - text: Add
+            - button "E2E Docs Home Doc  0 Sections 0 Articles admin admin  Add" [ref=f18e283]:
+              - generic [ref=f18e284]:
+                - link [ref=f18e289] [cursor=pointer]:
+                  - /url: "#/section/99"
+                  - heading "E2E Docs Home Doc" [level=3] [ref=f18e290]
+                - generic [ref=f18e294]: 
+              - link "0 Sections 0 Articles admin admin" [ref=f18e297] [cursor=pointer]:
+                - /url: "#/section/99"
+                - generic [ref=f18e298]:
+                  - list [ref=f18e299]:
+                    - listitem [ref=f18e300]:
+                      - generic [ref=f18e301]: 0 Sections
+                    - listitem [ref=f18e306]:
+                      - generic [ref=f18e307]: 0 Articles
+                  - generic [ref=f18e313]:
+                    - text: admin
+                    - img "admin" [ref=f18e314]
+              - generic [ref=f18e319] [cursor=pointer]:
+                - generic [ref=f18e320]: 
+                - text: Add
+            - button "E2E Pagination Doc 1...  0 Sections 0 Articles admin admin  Add" [ref=f18e321]:
+              - generic [ref=f18e322]:
+                - link [ref=f18e327] [cursor=pointer]:
+                  - /url: "#/section/38"
+                  - heading "E2E Pagination Doc 1..." [level=3] [ref=f18e328]
+                - generic [ref=f18e332]: 
+              - link "0 Sections 0 Articles admin admin" [ref=f18e335] [cursor=pointer]:
+                - /url: "#/section/38"
+                - generic [ref=f18e336]:
+                  - list [ref=f18e337]:
+                    - listitem [ref=f18e338]:
+                      - generic [ref=f18e339]: 0 Sections
+                    - listitem [ref=f18e344]:
+                      - generic [ref=f18e345]: 0 Articles
+                  - generic [ref=f18e351]:
+                    - text: admin
+                    - img "admin" [ref=f18e352]
+              - generic [ref=f18e357] [cursor=pointer]:
+                - generic [ref=f18e358]: 
+                - text: Add
+            - button "E2E Pagination Doc 2...  0 Sections 0 Articles admin admin  Add" [ref=f18e359]:
+              - generic [ref=f18e360]:
+                - link [ref=f18e365] [cursor=pointer]:
+                  - /url: "#/section/39"
+                  - heading "E2E Pagination Doc 2..." [level=3] [ref=f18e366]
+                - generic [ref=f18e370]: 
+              - link "0 Sections 0 Articles admin admin" [ref=f18e373] [cursor=pointer]:
+                - /url: "#/section/39"
+                - generic [ref=f18e374]:
+                  - list [ref=f18e375]:
+                    - listitem [ref=f18e376]:
+                      - generic [ref=f18e377]: 0 Sections
+                    - listitem [ref=f18e382]:
+                      - generic [ref=f18e383]: 0 Articles
+                  - generic [ref=f18e389]:
+                    - text: admin
+                    - img "admin" [ref=f18e390]
+              - generic [ref=f18e395] [cursor=pointer]:
+                - generic [ref=f18e396]: 
+                - text: Add
+            - status [ref=f18e397]
+    - contentinfo [ref=f18e398]:
+      - paragraph [ref=f18e399]:
+        - text: Thank you for using
+        - strong [ref=f18e400]: weDocs
+        - text: . Please leave us a
+        - link "★★★★★" [ref=f18e401] [cursor=pointer]:
+          - /url: https://wordpress.org/support/view/plugin-reviews/wedocs?filter=5#postform
+        - text: rating. Use the
+        - link "classic UI" [ref=f18e402] [cursor=pointer]:
+          - /url: http://wedocs-fresh.test/wp-admin/edit.php?post_type=docs
+        - text: .
+      - paragraph [ref=f18e403]: Version 7.1
+  - iframe [ref=f18e406]:
+    - generic [ref=f19e4]:
+      - generic [ref=f19e5]:
+        - heading "Latest changes" [level=3] [ref=f19e7]
+        - generic [ref=f19e8]:
+          - 'link "Fix weDocs Pro v1.3.3 – Changelog Timelines That Works. Release Notes: Pro v1.3.3 🗓️ August 27, 2026 🛠️ What''s Fixed Reliable Embedded Changelogs: \"..." [ref=f19e9] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f19e10]: Fix
+            - strong [ref=f19e11]: weDocs Pro v1.3.3 – Changelog Timelines That Works.
+            - text: "Release Notes: Pro v1.3.3 🗓️ August 27, 2026 🛠️ What's Fixed Reliable Embedded Changelogs: \"..."
+          - 'link "New Enhancement weDocs Free v2.5.0 – Answer Every Question: Built-In FAQs & One-Click Shortcodes. Release Notes: Free v2.5.0 🗓️ August 27, 2026 ✨ What''s New Turn Common Questions into a Polis..." [ref=f19e12] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f19e13]: New
+            - generic [ref=f19e14]: Enhancement
+            - strong [ref=f19e15]: "weDocs Free v2.5.0 – Answer Every Question: Built-In FAQs & One-Click Shortcodes."
+            - text: "Release Notes: Free v2.5.0 🗓️ August 27, 2026 ✨ What's New Turn Common Questions into a Polis..."
+          - 'link "Enhancement Fix weDocs Pro v1.3.2 – A Snappier Dashboard with Batched Contributor Loading. Release Notes: Pro v1.3.2 🗓️ August 20, 2026 📈 What''s Improved Platform Compatibility: Teste..." [ref=f19e16] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f19e17]: Enhancement
+            - generic [ref=f19e18]: Fix
+            - strong [ref=f19e19]: weDocs Pro v1.3.2 – A Snappier Dashboard with Batched Contributor Loading.
+            - text: "Release Notes: Pro v1.3.2 🗓️ August 20, 2026 📈 What's Improved Platform Compatibility: Teste..."
+        - generic [ref=f19e20]:
+          - link "weDocs changelog" [ref=f19e21] [cursor=pointer]:
+            - /url: https://headwayapp.co/wedocs-changelog?utm_medium=widget
+          - text: powered by
+          - link "Headway" [ref=f19e22] [cursor=pointer]:
+            - /url: https://headwayapp.co?utm_medium=widget&utm_source=wedocs
+      - generic [ref=f19e23]:
+        - generic [ref=f19e24]:
+          - generic [ref=f19e25]:
+            - link [ref=f19e26] [cursor=pointer]:
+              - /url: "#back"
+            - heading "weDocs Pro v1.3.3 – Changelog Timelines That Works" [level=3] [ref=f19e27]
+          - paragraph [ref=f19e30]:
+            - link "Read the whole post" [ref=f19e31] [cursor=pointer]:
+              - /url: https://headwayapp.co/wedocs-changelog/wedocs-pro-v1-3-3-changelog-timelines-that-works-345056
+        - generic [ref=f19e32]:
+          - generic [ref=f19e33]:
+            - link [ref=f19e34] [cursor=pointer]:
+              - /url: "#back"
+            - 'heading "weDocs Free v2.5.0 – Answer Every Question: Built-In FAQs & One-Click Shortcodes" [level=3] [ref=f19e35]'
+          - paragraph [ref=f19e38]:
+            - link "Read the whole post" [ref=f19e39] [cursor=pointer]:
+              - /url: https://headwayapp.co/wedocs-changelog/wedocs-free-v2-5-0-answer-every-question-built-in-faqs-one-click-shortcodes-345055
+        - generic [ref=f19e40]:
+          - generic [ref=f19e41]:
+            - link [ref=f19e42] [cursor=pointer]:
+              - /url: "#back"
+            - heading "weDocs Pro v1.3.2 – A Snappier Dashboard with Batched Contributor Loading" [level=3] [ref=f19e43]
+          - paragraph [ref=f19e46]:
+            - link "Read the whole post" [ref=f19e47] [cursor=pointer]:
+              - /url: https://headwayapp.co/wedocs-changelog/wedocs-pro-v1-3-2-a-snappier-dashboard-with-batched-contributor-loading-344649

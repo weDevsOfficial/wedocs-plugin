@@ -150,11 +150,22 @@ const SettingsPage = () => {
       <WedocsPromoNotice />
       <main>
         <div className="pb-10 pt-3 sm:px-0">
-          <div className="h-100">
+          { /* No wrapper height here. `h-100` is not a Tailwind 3 utility, so
+               it never did anything; Tailwind 4's dynamic scale turns it into
+               height:400px, which clips the settings panel and lets the admin
+               footer overlap the content. */ }
+          <div>
             <div className="h-full">
               <main>
-                <div className="lg:grid lg:grid-cols-12 lg:gap-x-6">
+                <div>
+                  { /* The grid lives on Tab.Group, not on a wrapper around it.
+                       Headless UI v2 always renders an element for Tab.Group
+                       (v1 rendered none, and it ignores `as={ Fragment }`), so a
+                       separate grid container would leave that element sitting
+                       between the grid and its items - which collapses the whole
+                       settings layout into a single 1/12 column. */ }
                   <Tab.Group
+                    className="lg:grid lg:grid-cols-12 lg:gap-x-6"
                     vertical
                     onChange={ setSelectedIndex }
                     selectedIndex={ selectedIndex }
