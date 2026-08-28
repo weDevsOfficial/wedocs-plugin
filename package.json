@@ -7,7 +7,7 @@
   "private": true,
   "main": "src/index.js",
   "engines": {
-    "node": ">=22.0.0",
+    "node": ">=22.12.0",
     "npm": ">=10.0.0"
   },
   "scripts": {
@@ -26,22 +26,22 @@
     "test:e2e": "wp-scripts test-e2e",
     "test:unit": "wp-scripts test-unit-js",
     "make-pot:local": "wp i18n make-pot . languages/wedocs.pot",
-    "zip:create": "node bin/zip",
-    "version:replace": "node bin/version-replace",
-    "release": "npm run version:replace && npm run build && npm run make-pot:local && npm run zip:create"
+    "zip:create": "node bin/zip.mjs",
+    "version:replace": "node bin/version-replace.mjs",
+    "release": "pnpm run version:replace && pnpm run build && pnpm run make-pot:local && pnpm run zip:create"
   },
   "devDependencies": {
     "@wordpress/block-editor": "^14.5.0",
     "@wordpress/components": "^28.10.0",
     "@wordpress/icons": "^10.10.0",
-    "@wordpress/scripts": "^30.25.0",
-    "archiver": "^5.3.1",
+    "@wordpress/scripts": "^34.2.0",
+    "archiver": "^8.0.0",
     "autoprefixer": "^10.4.13",
-    "copy-webpack-plugin": "^13.0.1",
-    "css-loader": "^6.7.3",
+    "copy-webpack-plugin": "^14.0.0",
+    "css-loader": "^7.1.4",
     "postcss": "^8.4.21",
-    "replace-in-file": "^6.3.5",
-    "style-loader": "^3.3.1",
+    "replace-in-file": "^9.0.0",
+    "style-loader": "^4.0.0",
     "tailwindcss": "^3.2.4",
     "tailwindcss-scoped-preflight": "^3.4.12"
   },
@@ -65,12 +65,24 @@
     "@wordpress/i18n": "^4.23.0",
     "daisyui": "^2.49.0",
     "he": "^1.2.0",
-    "less-loader": "^11.1.0",
+    "less-loader": "^13.0.0",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.6.2",
     "sweetalert2": "^11.7.1"
   },
   "overrides": {
     "fast-uri": "4.1.2"
-  }
+  },
+  "pnpm": {
+    "overrides": {
+      "fast-uri": "4.1.2"
+    },
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+      "core-js",
+      "core-js-pure",
+      "unrs-resolver"
+    ]
+  },
+  "packageManager": "pnpm@10.8.1"
 }

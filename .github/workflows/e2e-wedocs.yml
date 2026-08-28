@@ -45,10 +45,10 @@ jobs:
       - name: Checkout wedocs
         uses: actions/checkout@v7
 
+      # No `version:` — pnpm/action-setup reads package.json "packageManager",
+      # and passing both makes the action fail with "multiple versions".
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
-        with:
-          version: 9
 
       - name: Use Node.js 24
         uses: actions/setup-node@v7
@@ -62,8 +62,8 @@ jobs:
       - name: Build wedocs
         run: |
           composer install --no-dev -o
-          npm ci
-          npm run build
+          pnpm install --frozen-lockfile
+          pnpm run build
 
       - name: Install e2e dependencies
         working-directory: tests/e2e-playwright
@@ -124,8 +124,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
-        with:
-          version: 9
       - uses: actions/setup-node@v7
         with:
           node-version: 24
