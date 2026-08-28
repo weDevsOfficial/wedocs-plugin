@@ -43,15 +43,15 @@ jobs:
 
     steps:
       - name: Checkout wedocs
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 9
 
       - name: Use Node.js 24
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
 
@@ -77,7 +77,7 @@ jobs:
 
       - name: Cache Playwright binaries
         id: playwright-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('tests/e2e-playwright/pnpm-lock.yaml') }}
@@ -110,7 +110,7 @@ jobs:
       # Each shard emits a blob report; the merge job stitches them into one HTML.
       - name: Upload blob report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: blob-report-${{ matrix.group }}
           path: tests/e2e-playwright/blob-report
@@ -122,18 +122,18 @@ jobs:
     needs: [test]
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
         with:
           version: 9
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
       - name: Install e2e dependencies
         working-directory: tests/e2e-playwright
         run: pnpm install --frozen-lockfile
       - name: Download shard blob reports
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: tests/e2e-playwright/all-blob-reports
           pattern: blob-report-*
@@ -159,7 +159,7 @@ jobs:
           fi
       - name: Upload HTML report (artifact)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-report
           path: tests/e2e-playwright/playwright-report
