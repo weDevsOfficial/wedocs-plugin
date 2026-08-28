@@ -9,7 +9,7 @@ Stable tag: 2.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Build a powerful documentation hub with an AI-powered knowledge base, docs, wiki tools, changelogs and an AI chatbot to help users find answers instantly.
+Build a powerful documentation hub with an AI-powered knowledge base, docs, wiki tools, changelogs, FAQ, and an AI chatbot to help users find answers instantly.
 
 ### The Ultimate AI-Powered Knowledge Base & Documentation Solution for WordPress
 
@@ -30,6 +30,7 @@ If you document WordPress plugins, themes, SaaS apps, or internal team processes
 
 * Organize all your documentation in one place
 * Easy-to-use drag-and-drop interface
+* Built-in FAQ builder with accordion display
 * Supports unlimited documents and knowledge bases
 * Seamless integration with WordPress & Gutenberg
 * AI Chatbot (Pro) for instant automated user support
@@ -77,6 +78,8 @@ The free version of weDocs provides a solid foundation for building a profession
 – **[AI Doc Writer with Image Analysis](https://wedocs.co/docs/wedocs/how-to/ai-doc-writer/)**: Generate documentation from prompts, product details, or even screenshots. Turn visuals into structured docs instantly.
 
 -**[Documentation Dashboard](https://wedocs.co/docs/permission-management/advanced-analytics/)**: Get a complete overview of your knowledge base at a glance, including total docs, article views, helpful rate, popular docs, most helpful docs, and recently updated content.
+
+– **[FAQ Section](https://wedocs.co/docs/wedocs/faq_feature/)**: Create FAQ groups, write questions and answers in a rich text editor, drag to reorder them, and publish them as an expandable accordion on any page with the `[wedocs_faq]` shortcode. Switch any group on or off without deleting it.
 
 ---
 
@@ -199,7 +202,7 @@ No. weDocs 2.x loads its scripts and styles only on documentation pages where th
 
 = Can I build a help center or FAQ page with weDocs? =
  
-Yes. weDocs is built for help centers, FAQ pages, product docs, and self-service support. Use sections, live search, and feedback voting to help readers find answers on their own.
+Yes. weDocs is built for help centers, FAQ pages, product docs, and self-service support. Use the built-in FAQ builder for common questions, then sections, live search, and feedback voting for longer documentation.
  
 = Is the AI Chatbot free? =
  
@@ -225,7 +228,9 @@ Yes. weDocs Pro includes a changelog feature that publishes your product updates
 
 Yes. The free version includes a dashboard showing total docs, articles, total views, helpful rate, popular docs, most helpful docs, and recently updated content. Pro adds advanced analytics with views per document, a reactions overview, top contributors, and top tags.
  
+= Can I add an FAQ section to my site? =
 
+Yes. Create FAQ groups, add questions and answers using a rich text editor, drag them into the order you want, and publish the group anywhere on your site with the `[wedocs_faq]` shortcode. It renders as an expandable accordion. You can switch a group off without deleting it, which is useful for seasonal or product-specific questions.
 ---
 
 ## Changelog
