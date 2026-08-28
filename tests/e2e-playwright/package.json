@@ -29,6 +29,11 @@
     "@types/node": "^24.10.1",
     "typescript": "^5.9.3"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "fs-ext-extra-prebuilt"
+    ]
+  },
   "dependencies": {
     "@wordpress/env": "^10.36.0",
     "dotenv": "^17.2.3"

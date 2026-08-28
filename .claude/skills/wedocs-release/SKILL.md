@@ -17,7 +17,7 @@ There were historically **two** publishers racing on each tag:
 
 ### The current model (post-2.2.7, commit d960a5a)
 - **`assets/build/` is UNTRACKED (gitignored).** Do NOT commit it. A guard workflow (`guard-build-untracked.yml`) fails any PR/push that tracks it.
-- CI runs `npm run build`; the **default 10up deploy ships the on-disk working tree** (minus `.distignore`) to SVN — exactly like `wedevs-project-manager` ships its gitignored `/views/assets/dist`.
+- CI runs `pnpm run build`; the **default 10up deploy ships the on-disk working tree** (minus `.distignore`) to SVN — exactly like `wedevs-project-manager` ships its gitignored `/views/assets/dist`.
 - **NEVER set `BUILD_DIR`** on the 10up action. It makes 10up sync the git-tracked set instead of the working tree, which **strips the untracked `assets/build`** → package ships with no blocks (this broke 2.2.5/2.2.6).
 - `.distignore` is honored by 10up now — it excludes `.claude`, `FILTERS.md`, `src`, `bin`, `tests`, build/tooling config, etc.
 
