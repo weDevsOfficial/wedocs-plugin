@@ -577,17 +577,18 @@ const GeneralSettings = ( {
                   />
                 </div>
               </div>
-
-              {/* Slot for General fields that ship with an add-on (the Pro
-                  glossary toggle, for one). Rows added here get the same
-                  settings state as the fields above, so they save with the
-                  page. */}
-              {applyFilters(
-                  'wedocs_general_settings_after_fields',
-                  null,
-                  { settingsData, settingsPanel: generalSettings, setSettings }
-              )}
             </div>
+
+            {/* Slot for General fields that ship with an add-on (the Pro
+                glossary toggle, for one). It sits directly in the grid, beside
+                the rows above, so an added row is its own cell and lines up
+                with them. Rows get the same settings state as the built-in
+                fields, so they save with the page. */}
+            {applyFilters(
+                'wedocs_general_settings_after_fields',
+                null,
+                { settingsData, settingsPanel: generalSettings, setSettings }
+            )}
           </div>
         </div>
       </div>
