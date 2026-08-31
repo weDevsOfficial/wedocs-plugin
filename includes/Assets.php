@@ -48,6 +48,22 @@ class Assets {
             ),
         );
 
+        // Register the shared component registry. Pro reads its components from
+        // the `window.wedocs` namespace this bundle publishes, so it has to be
+        // in the dependency list of every weDocs admin bundle - that guarantees
+        // the registry exists before any weDocs React tree renders.
+        if ( file_exists( WEDOCS_PATH . '/assets/build/shared.asset.php' ) ) {
+            $shared_dependencies = require WEDOCS_PATH . '/assets/build/shared.asset.php';
+
+            wp_register_script(
+                'wedocs-shared-script',
+                $assets_url . '/build/shared.js',
+                $shared_dependencies['dependencies'],
+                $shared_dependencies['version'],
+                true
+            );
+        }
+
         if ( file_exists( WEDOCS_PATH . '/assets/build/index.asset.php' ) ) {
             $react_dependencies = require WEDOCS_PATH . '/assets/build/index.asset.php';
 
@@ -62,7 +78,7 @@ class Assets {
             wp_register_script(
                 'wedocs-app-script',
                 $assets_url . '/build/index.js',
-                $react_dependencies['dependencies'],
+                array_merge( $react_dependencies['dependencies'], array( 'wedocs-shared-script' ) ),
                 $react_dependencies['version'],
                 true
             );
@@ -147,7 +163,7 @@ class Assets {
             wp_register_script(
                 'wedocs-faq-script',
                 $assets_url . '/build/faq.js',
-                $faq_dependencies['dependencies'],
+                array_merge( $faq_dependencies['dependencies'], array( 'wedocs-shared-script' ) ),
                 $faq_dependencies['version'],
                 true
             );
@@ -174,6 +190,15 @@ class Assets {
     public function register_translations() {
         wp_set_script_translations(
             'wedocs-app-script',
+            'wedocs',
+            plugin_dir_path( WEDOCS_FILE ) . 'languages'
+        );
+
+        // The shared components carry their own strings ("Cancel",
+        // "Processing...", the toast fallbacks), so they need translations of
+        // their own - the app bundle's registration does not cover them.
+        wp_set_script_translations(
+            'wedocs-shared-script',
             'wedocs',
             plugin_dir_path( WEDOCS_FILE ) . 'languages'
         );

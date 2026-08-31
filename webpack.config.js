@@ -10,6 +10,7 @@ const updatedConfig = {
     ...defaultConfig.entry(),
     // Add your custom entries while preserving the automatic block detection
     index    : './src/index',
+    shared   : './src/shared.js',
     block    : './src/block.js',
     editor   : './src/editor/index.js',
     store    : './src/data/store.js',

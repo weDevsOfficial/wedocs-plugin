@@ -1,11 +1,13 @@
-// DESCRIPTION: Reusable confirmation dialog for FAQ actions.
+// DESCRIPTION: Shared confirmation dialog.
 // Renders a modal with icon, title, message, and confirm/cancel buttons.
+// Lives in components/shared because the Pro plugin consumes it through the
+// window.wedocs.components registry (see components/shared/index.js).
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { Dialog, Transition } from '@headlessui/react';
 
-const FaqConfirmDialog = ( {
+const ConfirmDialog = ( {
     isOpen,
     onClose,
     onConfirm,
@@ -94,4 +96,4 @@ const FaqConfirmDialog = ( {
     );
 };
 
-export default FaqConfirmDialog;
+export default ConfirmDialog;
