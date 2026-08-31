@@ -932,11 +932,12 @@ class DocsGrid extends Widget_Base {
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
-                        'min' => 0,
+                        'min' => 50,
                         'max' => 1000,
                         'step' => 10,
                     ],
                 ],
+                'description' => __('Leave empty for no limit. Sets a scrollable maximum height for the card body.', 'wedocs'),
                 'selectors' => [
                     '{{WRAPPER}} .wedocs-docs-grid__content' => 'max-height: {{SIZE}}{{UNIT}}; overflow-y: auto;',
                 ],
@@ -1675,6 +1676,12 @@ class DocsGrid extends Widget_Base {
                 'name' => 'docTitleTypography',
                 'label' => __('Typography', 'wedocs'),
                 'selector' => '{{WRAPPER}} .wedocs-docs-grid__title',
+                'fields_options' => [
+                    'typography'  => ['default' => 'custom'],
+                    'font_size'   => ['default' => ['unit' => 'px', 'size' => 20]],
+                    'font_weight' => ['default' => '600'],
+                    'line_height' => ['default' => ['unit' => 'em', 'size' => 1.3]],
+                ],
             ]
         );
 
@@ -1737,6 +1744,12 @@ class DocsGrid extends Widget_Base {
                 'name' => 'sectionTitleTypography',
                 'label' => __('Typography', 'wedocs'),
                 'selector' => '{{WRAPPER}} .wedocs-docs-grid__section-title',
+                'fields_options' => [
+                    'typography'  => ['default' => 'custom'],
+                    'font_size'   => ['default' => ['unit' => 'px', 'size' => 16]],
+                    'font_weight' => ['default' => '600'],
+                    'line_height' => ['default' => ['unit' => 'em', 'size' => 1.4]],
+                ],
             ]
         );
 
@@ -1813,6 +1826,12 @@ class DocsGrid extends Widget_Base {
                 'name' => 'articleLinkTypography',
                 'label' => __('Typography', 'wedocs'),
                 'selector' => '{{WRAPPER}} .wedocs-docs-grid__article-link, {{WRAPPER}} .wedocs-docs-grid__section-link',
+                'fields_options' => [
+                    'typography'  => ['default' => 'custom'],
+                    'font_size'   => ['default' => ['unit' => 'px', 'size' => 15]],
+                    'font_weight' => ['default' => '400'],
+                    'line_height' => ['default' => ['unit' => 'em', 'size' => 1.5]],
+                ],
             ]
         );
 
@@ -1896,6 +1915,11 @@ class DocsGrid extends Widget_Base {
                 'name' => 'buttonTypography',
                 'label' => __('Typography', 'wedocs'),
                 'selector' => '{{WRAPPER}} .wedocs-docs-grid__details-link',
+                'fields_options' => [
+                    'typography'  => ['default' => 'custom'],
+                    'font_size'   => ['default' => ['unit' => 'px', 'size' => 14]],
+                    'font_weight' => ['default' => '600'],
+                ],
             ]
         );
 
@@ -2871,7 +2895,7 @@ class DocsGrid extends Widget_Base {
                     $anim_class = ($item_animation !== 'none') ? ' wedocs-anim wedocs-anim--' . esc_attr($item_animation) : '';
                     $anim_delay = ($item_animation !== 'none' && $stagger_animation) ? ($index * $animation_delay) : 0;
                 ?>
-                    <div class="wedocs-docs-grid__item<?php echo $anim_class; ?>"<?php if ($item_animation !== 'none'): ?> data-anim-delay="<?php echo esc_attr($anim_delay); ?>"<?php endif; ?>>
+                    <div class="wedocs-docs-grid__item<?php echo $anim_class; ?>" data-date="<?php echo esc_attr(get_post_time('U', true, $doc->ID)); ?>"<?php if ($item_animation !== 'none'): ?> data-anim-delay="<?php echo esc_attr($anim_delay); ?>"<?php endif; ?>>
                         <div class="wedocs-docs-grid__header">
                             <h3 class="wedocs-docs-grid__title">
                                 <?php if ($doc_style === 'list'): ?>
@@ -3409,13 +3433,16 @@ class DocsGrid extends Widget_Base {
                     var $items = $grid.find('.wedocs-docs-grid__item');
 
                     $items.sort(function(a, b) {
-                        var aTitle = $(a).find('.wedocs-docs-grid__title a').text();
-                        var bTitle = $(b).find('.wedocs-docs-grid__title a').text();
-
-                        if (sortValue === 'title_asc') {
-                            return aTitle.localeCompare(bTitle);
-                        } else if (sortValue === 'title_desc') {
-                            return bTitle.localeCompare(aTitle);
+                        if (sortValue === 'title_asc' || sortValue === 'title_desc') {
+                            var aTitle = $(a).find('.wedocs-docs-grid__title a').text();
+                            var bTitle = $(b).find('.wedocs-docs-grid__title a').text();
+                            return sortValue === 'title_asc'
+                                ? aTitle.localeCompare(bTitle)
+                                : bTitle.localeCompare(aTitle);
+                        } else if (sortValue === 'date_asc' || sortValue === 'date_desc') {
+                            var aDate = parseInt($(a).data('date'), 10) || 0;
+                            var bDate = parseInt($(b).data('date'), 10) || 0;
+                            return sortValue === 'date_asc' ? aDate - bDate : bDate - aDate;
                         }
                         return 0;
                     });
@@ -3695,14 +3722,41 @@ class DocsGrid extends Widget_Base {
             iconStyle +='margin-right: ' + settings.listIconSpacing.size + 'px; ' ;
             }
 
+            // Build inline CSS from an Elementor Typography group so the editor preview
+            // reflects font-size/family/weight/etc (the frontend applies these via generated CSS).
+            var wedocsTypo=function(prefix){
+                var css='';
+                var g=function(k){ return settings[prefix + '_' + k]; };
+                var sz=function(k,fallbackUnit){
+                    var v=g(k);
+                    if(v && v.size!=='' && v.size!==undefined && v.size!==null){
+                        return v.size + (v.unit==='custom' ? '' : (v.unit || fallbackUnit || 'px'));
+                    }
+                    return '';
+                };
+                if(g('font_family')) css+='font-family:' + g('font_family') + ';';
+                var fs=sz('font_size'); if(fs) css+='font-size:' + fs + ';';
+                if(g('font_weight')) css+='font-weight:' + g('font_weight') + ';';
+                if(g('text_transform')) css+='text-transform:' + g('text_transform') + ';';
+                if(g('font_style')) css+='font-style:' + g('font_style') + ';';
+                if(g('text_decoration')) css+='text-decoration:' + g('text_decoration') + ';';
+                var lh=g('line_height'); if(lh && lh.size!=='' && lh.size!==undefined && lh.size!==null) css+='line-height:' + lh.size + (lh.unit==='px' ? 'px' : '') + ';';
+                var ls=sz('letter_spacing'); if(ls) css+='letter-spacing:' + ls + ';';
+                var ws=sz('word_spacing'); if(ws) css+='word-spacing:' + ws + ';';
+                return css;
+            };
+
             var titleStyle='color: ' + (settings.docTitleColor || '#333333' ) + '; ' ;
             titleStyle +='margin-top: 0; margin-bottom: 15px;' ;
+            titleStyle += wedocsTypo('docTitleTypography');
 
             var sectionTitleStyle='color: ' + (settings.sectionTitleColor || '#444444' ) + '; ' ;
             sectionTitleStyle +='margin: 10px 0 5px; font-weight: 600;' ;
+            sectionTitleStyle += wedocsTypo('sectionTitleTypography');
 
             var linkStyle='color: ' + (settings.articleLinkColor || '#666666' ) + '; ' ;
             linkStyle +='text-decoration: none; display: inline;' ;
+            linkStyle += wedocsTypo('articleLinkTypography');
 
             var buttonStyle='background-color: ' + (settings.buttonColor || '#0073aa' ) + '; ' ;
             buttonStyle +='color: ' + (settings.buttonTextColor || '#ffffff' ) + '; ' ;
@@ -3716,6 +3770,7 @@ class DocsGrid extends Widget_Base {
             buttonStyle +=(settings.buttonMargin?.left || '0' ) + (settings.buttonMargin?.unit || 'px' ) + '; ' ;
             buttonStyle +='border-radius: ' + (settings.buttonBorderRadius?.size || '4' ) + 'px; ' ;
             buttonStyle +='text-decoration: none; display: inline-block; border: none; cursor: pointer; transition: all 0.3s ease;' ;
+            buttonStyle += wedocsTypo('buttonTypography');
             #>
 
             <div class="wedocs-grid-wrapper">
