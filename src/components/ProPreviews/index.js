@@ -225,8 +225,10 @@ wp.hooks.addFilter(
                         strokeLinejoin="round"
                         className="-ml-1 mr-4 pro-settings"
                     >
-                        <path d="M12 2a4 4 0 0 1 4 4v5a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z" />
-                        <path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4" />
+                        <path d="M12 22v-5" />
+                        <path d="M9 8V2" />
+                        <path d="M15 8V2" />
+                        <path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8z" />
                     </svg>
                 ),
             };

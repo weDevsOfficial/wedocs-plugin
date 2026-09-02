@@ -9,6 +9,25 @@
   selector: .wedocs-document;
 }
 
+/* Tailwind 4 dropped preflight's element-level margin reset and folded it into
+   the universal `*` rule, which carries no specificity at all. wp-admin styles
+   bare elements (`p, .wp-die-message { margin: 1em 0 }`,
+   `h2, h3 { margin: 1em 0 }`), so those margins beat it and came back inside
+   our container, padding out every card and card header.
+
+   This restores the element list Tailwind 3's preflight reset, at the same
+   specificity wp-admin uses, scoped exactly as the plugin above scopes the rest
+   of preflight. `:where()` keeps the scope free, so the rule stays at (0,0,1):
+   enough to tie wp-admin and win on load order, and still below every utility
+   class, so `mt-*` and friends keep overriding it. */
+:where(.wedocs-document, .wedocs-document *):is(
+  blockquote, dd, dl, fieldset, figure, h1, h2, h3, h4, h5, h6, hr, legend,
+  menu, ol, p, pre, ul
+) {
+  margin: 0;
+  padding: 0;
+}
+
 /* daisyUI 5 replaces v2's `base: false`. Three things matter here:
    - `root` scopes the theme custom properties to our container instead of
      `:root`, so the colour variables never touch the rest of wp-admin.
