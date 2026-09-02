@@ -10,11 +10,15 @@ import { useState } from '@wordpress/element';
 const McpSettings = () => {
 	const [ showOverlay, setShowOverlay ] = useState( false );
 
+	// Everything below is a still of what the panel looks like with Pro
+	// running. The switch itself stays off, because on this site it is: weDocs
+	// answers no AI connection without Pro, and a preview that showed the
+	// switch on would be claiming otherwise.
 	const stats = [
-		{ label: __( 'Server status', 'wedocs' ), value: __( 'Active', 'wedocs' ) },
+		{ label: __( 'Server status', 'wedocs' ), value: __( 'Off', 'wedocs' ) },
 		{ label: __( 'Registered tools', 'wedocs' ), value: '6' },
-		{ label: __( 'Connected apps', 'wedocs' ), value: '1' },
-		{ label: __( 'Last activity', 'wedocs' ), value: __( 'Today', 'wedocs' ) },
+		{ label: __( 'Connected apps', 'wedocs' ), value: '0' },
+		{ label: __( 'Last activity', 'wedocs' ), value: __( 'Never', 'wedocs' ) },
 	];
 
 	const steps = [
@@ -24,9 +28,9 @@ const McpSettings = () => {
 	];
 
 	const checks = [
-		{ label: __( 'Secure connection', 'wedocs' ), detail: __( 'HTTPS is on and every WordPress URL agrees.', 'wedocs' ) },
-		{ label: __( 'Registered tools', 'wedocs' ), detail: __( '6 weDocs tools are offered to connected clients.', 'wedocs' ) },
-		{ label: __( 'Sign-in challenge', 'wedocs' ), detail: __( 'An unauthenticated request is refused with a sign-in challenge.', 'wedocs' ) },
+		__( 'Whether this site is reachable over HTTPS, which hosted AI clients require.', 'wedocs' ),
+		__( 'How many weDocs tools a connected client would be offered.', 'wedocs' ),
+		__( 'Whether an unauthenticated request is refused with a proper sign-in challenge.', 'wedocs' ),
 	];
 
 	return (
@@ -35,14 +39,14 @@ const McpSettings = () => {
 				<div className="flex items-center justify-between py-4 px-8">
 					<div className="flex items-center gap-3">
 						<h2 className="text-gray-900 font-medium text-lg m-0">{ __( 'MCP', 'wedocs' ) }</h2>
-						<span className="rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700">
-							{ __( 'Active', 'wedocs' ) }
+						<span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500">
+							{ __( 'Off', 'wedocs' ) }
 						</span>
 					</div>
 					<div className="flex items-center gap-3">
 						<span className="text-sm text-gray-600">{ __( 'Enable MCP access', 'wedocs' ) }</span>
-						<span className="relative inline-flex h-6 w-11 items-center rounded-full bg-indigo-600">
-							<span className="inline-block h-5 w-5 rounded-full border border-gray-200 bg-white shadow translate-x-[22px]" />
+						<span className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-300">
+							<span className="inline-block h-5 w-5 rounded-full border border-gray-200 bg-white shadow translate-x-0.5" />
 						</span>
 					</div>
 				</div>
@@ -81,8 +85,8 @@ const McpSettings = () => {
 							</span>
 							<span className="text-sm font-medium text-indigo-600">{ __( 'Copy', 'wedocs' ) }</span>
 						</div>
-						<div className="rounded-md border border-gray-300 bg-gray-50 px-3 py-2.5 text-xs text-gray-800 mb-5">
-							{ `${ window.location.origin }/wedocs/mcp` }
+						<div className="rounded-md border border-gray-300 bg-gray-50 px-3 py-2.5 text-xs text-gray-400 mb-5">
+							{ __( 'Available with weDocs Pro', 'wedocs' ) }
 						</div>
 
 						<span className="block text-sm font-semibold text-gray-900 mb-2">{ __( 'Claude', 'wedocs' ) }</span>
@@ -97,19 +101,14 @@ const McpSettings = () => {
 						{ __( 'Connection health', 'wedocs' ) }
 					</h3>
 
-					<div className="rounded-lg border border-gray-200 divide-y divide-gray-200">
+					<p className="mt-0 mb-3 text-sm text-gray-500">
+						{ __( 'With Pro, a connection test makes the real round trip from this server and reports:', 'wedocs' ) }
+					</p>
+					<ul className="m-0 pl-5 text-sm leading-relaxed text-gray-600">
 						{ checks.map( ( check, i ) => (
-							<div key={ i } className="flex items-start justify-between gap-4 px-5 py-3.5">
-								<div>
-									<span className="block text-sm font-medium text-gray-900">{ check.label }</span>
-									<span className="block text-xs text-gray-500">{ check.detail }</span>
-								</div>
-								<span className="shrink-0 rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700">
-									{ __( 'OK', 'wedocs' ) }
-								</span>
-							</div>
+							<li key={ i }>{ check }</li>
 						) ) }
-					</div>
+					</ul>
 
 					<Overlay classes={ `${ showOverlay ? 'flex items-center justify-center' : 'hidden' }` } />
 				</div>
