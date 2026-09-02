@@ -95,7 +95,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 									</svg>
 								</div>
 							</div>
-							<div className="settings-field w-full max-w-[490px] ml-auto -mt-1 flex-2">
+							<div className="settings-field w-full max-w-[490px] ml-auto -mt-1">
 								<div className="pageSelectionBox">
 									<div className="relative mb-2">
 										<button className="w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
@@ -165,7 +165,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 									</svg>
 								</div>
 							</div>
-							<div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+							<div className="settings-field w-full max-w-[490px] ml-auto">
 								<FontSettings
 									name={ 'widget_title_font' }
 									classes={ `justify-end` }
@@ -211,7 +211,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 									</svg>
 								</div>
 							</div>
-							<div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+							<div className="settings-field w-full max-w-[490px] ml-auto">
 								<div className="relative">
 									<FontSettings
 										name={ 'widget_description_font' }

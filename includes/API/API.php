@@ -472,7 +472,7 @@ class API extends WP_REST_Controller {
             [
                 'methods'             => WP_REST_Server::CREATABLE,
                 'callback'            => [ $this, 'generate_ai_summary' ],
-                'permission_callback' => '__return_true', // Allow public access for frontend generation
+                'permission_callback' => [ $this, 'generate_summary_permissions_check' ],
                 'args'                => [
                     'id' => [
                         'validate_callback' => function( $param, $request, $key ) {
@@ -482,6 +482,292 @@ class API extends WP_REST_Controller {
                 ],
             ],
         ] );
+
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/listing', [
+            [
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => [ $this, 'get_docs_listing' ],
+                'permission_callback' => [ $this, 'listing_permissions_check' ],
+                'args'                => [
+                    'page'     => [
+                        'default'           => 1,
+                        'type'              => 'integer',
+                        'minimum'           => 1,
+                        'sanitize_callback' => 'absint',
+                        'validate_callback' => 'rest_validate_request_arg',
+                    ],
+                    'per_page' => [
+                        'default'           => 20,
+                        'type'              => 'integer',
+                        'minimum'           => 1,
+                        'maximum'           => 100,
+                        'sanitize_callback' => 'absint',
+                        'validate_callback' => 'rest_validate_request_arg',
+                    ],
+                    'search'   => [
+                        'default'           => '',
+                        'type'              => 'string',
+                        'sanitize_callback' => 'sanitize_text_field',
+                    ],
+                ],
+            ],
+        ] );
+
+        register_rest_route( $this->namespace, '/' . $this->rest_base . '/children', [
+            [
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => [ $this, 'get_docs_children' ],
+                'permission_callback' => [ $this, 'listing_permissions_check' ],
+                'args'                => [
+                    'parent' => [
+                        'required'          => true,
+                        'type'              => 'array',
+                        'items'             => [ 'type' => 'integer' ],
+                        'sanitize_callback' => function ( $value ) {
+                            return array_values( array_unique( array_filter( array_map( 'absint', (array) $value ) ) ) );
+                        },
+                    ],
+                ],
+            ],
+        ] );
+    }
+
+    /**
+     * Permission check for the admin listing endpoints.
+     *
+     * Mirrors the capability the weDocs admin menu itself is registered with, so
+     * anyone who can reach the screen can populate it.
+     *
+     * @since 2.4.1
+     *
+     * @return \WP_Error|bool
+     */
+    public function listing_permissions_check() {
+        if ( ! current_user_can( wedocs_get_publish_cap() ) && ! current_user_can( 'edit_docs' ) ) {
+            return new WP_Error(
+                'wedocs_permission_failure',
+                __( 'Unauthorized permission error', 'wedocs' ),
+                [ 'status' => rest_authorization_required_code() ]
+            );
+        }
+
+        return true;
+    }
+
+    /**
+     * Statuses the current user is allowed to see in the admin listing.
+     *
+     * @since 2.4.1
+     *
+     * @return array
+     */
+    protected function get_listing_statuses() {
+        $statuses = [ 'publish' ];
+
+        if ( current_user_can( 'edit_docs' ) || current_user_can( wedocs_get_publish_cap() ) ) {
+            $statuses = [ 'publish', 'draft', 'private' ];
+        }
+
+        return $statuses;
+    }
+
+    /**
+     * Shape a doc row for the admin tree.
+     *
+     * Deliberately mirrors the handful of fields the tree reads from the
+     * collection endpoint, so the store can treat both sources identically.
+     *
+     * @since 2.4.1
+     *
+     * @param \WP_Post $post
+     *
+     * @return array
+     */
+    protected function prepare_listing_item( $post ) {
+        return [
+            'id'            => (int) $post->ID,
+            'parent'        => (int) $post->post_parent,
+            'menu_order'    => (int) $post->menu_order,
+            'title'         => [ 'rendered' => get_the_title( $post ) ],
+            'status'        => $post->post_status,
+            'slug'          => $post->post_name,
+            'modified'      => mysql_to_rfc3339( $post->post_modified ),
+            'comment_count' => (int) $post->comment_count,
+            'link'          => get_permalink( $post ),
+            'meta'          => [
+                '_is_vendor_doc' => (string) get_post_meta( $post->ID, '_is_vendor_doc', true ),
+            ],
+        ];
+    }
+
+    /**
+     * Paginated listing of top-level docs, with descendant counts attached.
+     *
+     * The admin tree used to fetch every doc just to render root cards and their
+     * "N sections / N articles" badges. That meant pulling the entire tree — the
+     * dominant cost on large sites. Here the roots are paginated and the counts
+     * come from a single aggregate query, so children are only fetched when a
+     * doc is actually opened.
+     *
+     * @since 2.4.1
+     *
+     * @param \WP_REST_Request $request
+     *
+     * @return \WP_REST_Response
+     */
+    public function get_docs_listing( $request ) {
+        global $wpdb;
+
+        $page     = max( 1, (int) $request['page'] );
+        $per_page = max( 1, (int) $request['per_page'] );
+        $search   = trim( (string) $request['search'] );
+        $statuses = $this->get_listing_statuses();
+
+        $query_args = [
+            'post_type'              => 'docs',
+            'post_status'            => $statuses,
+            'post_parent'            => 0,
+            'posts_per_page'         => $per_page,
+            'paged'                  => $page,
+            'orderby'                => [ 'menu_order' => 'ASC', 'ID' => 'ASC' ],
+            'ignore_sticky_posts'    => true,
+            'no_found_rows'          => false,
+            'update_post_term_cache' => false,
+        ];
+
+        // The tree's search box has always matched titles only, so keep WP_Query
+        // from widening it to post content.
+        $title_search = null;
+
+        if ( '' !== $search ) {
+            $title_search = $search;
+
+            $filter_title_search = function ( $where, $wp_query ) use ( &$filter_title_search, $title_search ) {
+                global $wpdb;
+
+                remove_filter( 'posts_where', $filter_title_search, 10 );
+
+                return $where . $wpdb->prepare(
+                    " AND {$wpdb->posts}.post_title LIKE %s",
+                    '%' . $wpdb->esc_like( $title_search ) . '%'
+                );
+            };
+
+            add_filter( 'posts_where', $filter_title_search, 10, 2 );
+        }
+
+        $query = new \WP_Query( $query_args );
+        $items = array_map( [ $this, 'prepare_listing_item' ], $query->posts );
+
+        // Attach section/article counts for the roots on this page using a single
+        // aggregate query rather than loading their descendants.
+        $root_ids = wp_list_pluck( $items, 'id' );
+
+        if ( ! empty( $root_ids ) ) {
+            $counts = $this->get_descendant_counts( $root_ids, $statuses );
+
+            foreach ( $items as $index => $item ) {
+                $items[ $index ]['sections_count'] = isset( $counts[ $item['id'] ] ) ? $counts[ $item['id'] ]['sections'] : 0;
+                $items[ $index ]['articles_count'] = isset( $counts[ $item['id'] ] ) ? $counts[ $item['id'] ]['articles'] : 0;
+            }
+        }
+
+        $response = rest_ensure_response( $items );
+        $response->header( 'X-WP-Total', (int) $query->found_posts );
+        $response->header( 'X-WP-TotalPages', (int) $query->max_num_pages );
+
+        return $response;
+    }
+
+    /**
+     * Section and article counts for a set of root docs, in one query.
+     *
+     * "Sections" are the direct children of a root and "articles" their children
+     * in turn, matching how the tree counts them client side.
+     *
+     * @since 2.4.1
+     *
+     * @param array $root_ids
+     * @param array $statuses
+     *
+     * @return array Keyed by root ID, each with `sections` and `articles` counts.
+     */
+    protected function get_descendant_counts( $root_ids, $statuses ) {
+        global $wpdb;
+
+        $root_ids = array_map( 'absint', (array) $root_ids );
+
+        if ( empty( $root_ids ) || empty( $statuses ) ) {
+            return [];
+        }
+
+        $id_placeholders     = implode( ', ', array_fill( 0, count( $root_ids ), '%d' ) );
+        $status_placeholders = implode( ', ', array_fill( 0, count( $statuses ), '%s' ) );
+
+        // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- placeholders built above, values passed to prepare().
+        $sql = $wpdb->prepare(
+            "SELECT r.ID AS root_id,
+                    COUNT( DISTINCT s.ID ) AS sections,
+                    COUNT( DISTINCT a.ID ) AS articles
+             FROM {$wpdb->posts} r
+             LEFT JOIN {$wpdb->posts} s
+                    ON s.post_parent = r.ID
+                   AND s.post_type = 'docs'
+                   AND s.post_status IN ( {$status_placeholders} )
+             LEFT JOIN {$wpdb->posts} a
+                    ON a.post_parent = s.ID
+                   AND a.post_type = 'docs'
+                   AND a.post_status IN ( {$status_placeholders} )
+             WHERE r.ID IN ( {$id_placeholders} )
+             GROUP BY r.ID",
+            array_merge( $statuses, $statuses, $root_ids )
+        );
+        // phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
+        $counts = [];
+
+        foreach ( $wpdb->get_results( $sql ) as $row ) {
+            $counts[ (int) $row->root_id ] = [
+                'sections' => (int) $row->sections,
+                'articles' => (int) $row->articles,
+            ];
+        }
+
+        return $counts;
+    }
+
+    /**
+     * Fetch the direct children of one or more docs.
+     *
+     * Used to expand a branch of the tree on demand instead of shipping every
+     * descendant up front.
+     *
+     * @since 2.4.1
+     *
+     * @param \WP_REST_Request $request
+     *
+     * @return \WP_REST_Response
+     */
+    public function get_docs_children( $request ) {
+        $parents = array_map( 'absint', (array) $request['parent'] );
+        $parents = array_values( array_filter( $parents ) );
+
+        if ( empty( $parents ) ) {
+            return rest_ensure_response( [] );
+        }
+
+        $query = new \WP_Query( [
+            'post_type'              => 'docs',
+            'post_status'            => $this->get_listing_statuses(),
+            'post_parent__in'        => $parents,
+            'posts_per_page'         => -1,
+            'orderby'                => [ 'menu_order' => 'ASC', 'ID' => 'ASC' ],
+            'ignore_sticky_posts'    => true,
+            'no_found_rows'          => true,
+            'update_post_term_cache' => false,
+        ] );
+
+        return rest_ensure_response( array_map( [ $this, 'prepare_listing_item' ], $query->posts ) );
     }
 
     /**
@@ -807,9 +1093,12 @@ class API extends WP_REST_Controller {
             $data             = array();
             $doc_contributors = (array) get_post_meta( $doc->ID, 'wedocs_contributors', true );
             foreach ( $doc_contributors as $contributor_id ) {
-                $user_data               = get_userdata( $contributor_id );
+                $user_data = get_userdata( $contributor_id );
+                if ( ! $user_data ) {
+                    continue;
+                }
                 $data[ $contributor_id ] = array(
-                    'name' => $user_data->user_login,
+                    'name' => $user_data->display_name,
                     'src' => get_avatar_url( $contributor_id )
                 );
             }
@@ -2690,6 +2979,44 @@ class API extends WP_REST_Controller {
     }
 
     /**
+     * Permission check for AI summary generation.
+     *
+     * Keeps the public "Generate AI Summary" button working for published docs
+     * while preventing anonymous callers from summarising unpublished content
+     * and rate-limiting anonymous requests to curb paid-API cost abuse.
+     *
+     * @since 2.3.2
+     *
+     * @param WP_REST_Request $request full data about the request
+     *
+     * @return bool|WP_Error
+     */
+    public function generate_summary_permissions_check( $request ) {
+        $doc = get_post( (int) $request->get_param( 'id' ) );
+
+        if ( ! $doc || 'docs' !== $doc->post_type ) {
+            return new WP_Error( 'wedocs_invalid_doc', __( 'Invalid documentation post.', 'wedocs' ), [ 'status' => 404 ] );
+        }
+
+        // Editors may summarise any doc.
+        if ( current_user_can( 'edit_docs' ) ) {
+            return true;
+        }
+
+        // Anonymous / low-privilege callers: published docs only.
+        if ( 'publish' !== $doc->post_status ) {
+            return new WP_Error( 'wedocs_forbidden', __( 'You are not allowed to generate this summary.', 'wedocs' ), [ 'status' => 403 ] );
+        }
+
+        // Rate-limit anonymous requests to prevent AI cost abuse.
+        if ( ! wedocs_rate_limit_ok( 'ai_summary', 5, HOUR_IN_SECONDS ) ) {
+            return new WP_Error( 'wedocs_rate_limited', __( 'Too many requests. Please try again later.', 'wedocs' ), [ 'status' => 429 ] );
+        }
+
+        return true;
+    }
+
+    /**
      * Generate AI summary for a doc
      *
      * @since 2.0.0
@@ -2786,8 +3113,8 @@ class API extends WP_REST_Controller {
                 0.5  // Lower temperature for more focused summaries
             );
 
-            // Save the generated summary
-            $summary = $response['content'];
+            // Save the generated summary (sanitize AI HTML before storing).
+            $summary = wp_kses_post( $response['content'] );
             update_post_meta( $post_id, '_wedocs_ai_summary', $summary );
 
             return rest_ensure_response( [

@@ -30,6 +30,29 @@ const ListingPage = () => {
 
   const parentDoc = docs?.find( doc => doc?.id === parseInt( id ) );
 
+  // The dashboard only loads top-level docs, so pull this documentation's
+  // sections and articles the first time it is opened.
+  const childrenLoaded = useSelect(
+    ( select ) => select( docsStore ).hasLoadedChildren( parseInt( id ) ),
+    [ id ]
+  );
+
+  useEffect( () => {
+    if ( childrenLoaded ) {
+      return;
+    }
+
+    dispatch( docsStore ).loadDocTree( parseInt( id ) ).catch( () => {} );
+  }, [ id, childrenLoaded ] );
+
+  // A documentation reached by direct link may not be on the loaded page of
+  // roots, so pull the doc itself when it is missing. Reading it through the
+  // store's resolver keeps the fetch to one request.
+  useSelect(
+    ( select ) => ( parentDoc ? null : select( docsStore ).getDoc( parseInt( id ) ) ),
+    [ id, parentDoc ]
+  );
+
   const sectionsData = useSelect( ( select ) => {
     return select( docsStore ).getSectionsDocs( parseInt( id ) );
   }, [] );

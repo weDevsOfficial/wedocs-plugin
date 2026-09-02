@@ -54,12 +54,8 @@ const SocialShareSettings = ( { settingsData, setSettings } ) => {
 									</svg>
 								</div>
 							</div>
-							<div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
-								<div className="flex items-center space-x-2">
-									<span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">
-										PRO
-									</span>
-									<SwitcherComponent
+							<div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
+								<div className="flex items-center space-x-2">									<SwitcherComponent
 										name="social_share"
 										settingsPanel={ general }
 										settingsData={ settingsData }

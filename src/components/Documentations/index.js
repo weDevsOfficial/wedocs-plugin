@@ -14,6 +14,8 @@ import settingsStore from '../../data/settings';
 import Swal from "sweetalert2";
 import { userIsAdmin } from "../../utils/helper";
 import WedocsPromoNotice from '../WedocsPromoNotice';
+import DocsPagination from './DocsPagination';
+import { DEFAULT_PER_PAGE } from '../../data/docs/docsPath';
 
 const Documentations = () => {
   const docs = useSelect(
@@ -28,6 +30,11 @@ const Documentations = () => {
 
   const loading = useSelect(
     ( select ) => select( docsStore ).getLoading(),
+    []
+  );
+
+  const pagination = useSelect(
+    ( select ) => select( docsStore ).getPagination(),
     []
   );
 
@@ -58,6 +65,24 @@ const Documentations = () => {
     }
   };
 
+  const loadPage = ( page, perPage = pagination?.perPage || DEFAULT_PER_PAGE, search = searchValue ) => {
+    dispatch( docsStore ).loadDocsPage( { page, perPage, search } ).catch( () => {} );
+  };
+
+  // Searching now runs on the server so it covers every doc rather than just the
+  // page in memory; debounced so typing does not fire a request per keystroke.
+  useEffect( () => {
+    if ( searchValue === ( pagination?.search ?? '' ) ) {
+      return;
+    }
+
+    const timer = setTimeout( () => {
+      loadPage( 1, pagination?.perPage || DEFAULT_PER_PAGE, searchValue );
+    }, 300 );
+
+    return () => clearTimeout( timer );
+  }, [ searchValue ] );
+
   const isAdmin = userIsAdmin();
   const showActions = wp.hooks.applyFilters(
     'wedocs_show_parent_documentation_addition_actions',
@@ -80,11 +105,10 @@ const Documentations = () => {
       return;
     }
 
+    // Titles are matched server side, so pass the loaded page straight through.
     let filteredDocs = wp.hooks.applyFilters(
       'wedocs_filter_parent_documentations',
-      parentDocs?.filter( ( doc ) =>
-        doc?.title?.rendered?.toLowerCase().includes( searchValue?.toLowerCase() )
-      )
+      parentDocs
     );
 
     wp.hooks.doAction(
@@ -193,6 +217,17 @@ const Documentations = () => {
 
           { !loading && !searchValue && showEmptyNotice }
         </div>
+      ) }
+
+      { ! loading && (
+        <DocsPagination
+          page={ pagination?.page || 1 }
+          perPage={ pagination?.perPage || DEFAULT_PER_PAGE }
+          total={ pagination?.total || 0 }
+          totalPages={ pagination?.totalPages || 1 }
+          onPageChange={ ( page ) => loadPage( page ) }
+          onPerPageChange={ ( perPage ) => loadPage( 1, perPage ) }
+        />
       ) }
     </>
   );

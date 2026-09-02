@@ -8,6 +8,18 @@ const DEFAULT_STATE = {
   helpfulDocs: [],
   needSorting: false,
   restrictedArticleList: [],
+  // Pagination state for the top-level doc listing.
+  pagination: {
+    page: 1,
+    perPage: 20,
+    total: 0,
+    totalPages: 1,
+    search: '',
+  },
+  // Parent IDs whose children have already been fetched, so a branch is only
+  // ever loaded once.
+  loadedChildren: [],
+  loadingChildren: false,
 };
 
 const reducer = ( state = DEFAULT_STATE, action ) => {
@@ -16,6 +28,59 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
       return {
         ...state,
         docs: [ ...action.docs ],
+      };
+
+    // Merge lazily-loaded docs into the flat list the tree selectors read from,
+    // replacing any existing entry so a refetch never duplicates a row.
+    case 'MERGE_DOCS': {
+      const incoming = action.docs || [];
+
+      if ( ! incoming.length ) {
+        return state;
+      }
+
+      const merged = new Map( state.docs.map( ( doc ) => [ doc.id, doc ] ) );
+      incoming.forEach( ( doc ) => merged.set( doc.id, { ...merged.get( doc.id ), ...doc } ) );
+
+      return {
+        ...state,
+        docs: [ ...merged.values() ],
+      };
+    }
+
+    // Swap in the current page's top-level docs without discarding children
+    // that other requests have already loaded.
+    case 'SET_PAGE_DOCS': {
+      const roots = action.docs || [];
+      const rootIds = new Set( roots.map( ( doc ) => doc.id ) );
+      const keptChildren = state.docs.filter(
+        ( doc ) => doc.parent && ! rootIds.has( doc.id )
+      );
+
+      return {
+        ...state,
+        docs: [ ...roots, ...keptChildren ],
+      };
+    }
+
+    case 'SET_PAGINATION':
+      return {
+        ...state,
+        pagination: { ...state.pagination, ...action.pagination },
+      };
+
+    case 'MARK_CHILDREN_LOADED':
+      return {
+        ...state,
+        loadedChildren: [
+          ...new Set( [ ...state.loadedChildren, ...action.parentIds ] ),
+        ],
+      };
+
+    case 'SET_LOADING_CHILDREN':
+      return {
+        ...state,
+        loadingChildren: action.loadingChildren,
       };
 
     case 'SET_DOC':
@@ -83,6 +148,7 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
         ...state,
         docs: [ ...state.docs?.filter( doc => doc.id !== action.docId ) ],
         parents: [ ...state.parents?.filter( parent => parent.id !== action.docId ) ],
+        loadedChildren: state.loadedChildren.filter( ( id ) => id !== action.docId ),
       };
 
     case 'SET_RESTRICTED_ARTICLES':

@@ -16,6 +16,8 @@ class Admin {
         new Admin\Admin();
         new Admin\Migrate();
         new Admin\Docs_List_Table();
+        new Admin\ChangelogUpsell();
+        new Admin\GlossaryUpsell();
 
         add_action( 'admin_init', array( $this, 'init_admin_actions' ), 5 );
 

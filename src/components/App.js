@@ -11,11 +11,13 @@ import Documentations from './Documentations';
 import Migrate from './Migrations';
 import NotFound from './NotFound';
 import PermissionSettingsDemo from './PermissionSettingsDemo';
+import Dashboard from './Dashboard';
 import Premium from './Premium';
 
 const App = () => {
   let routes = [
     { path: '/', component: Documentations },
+    { path: 'dashboard', component: Dashboard },
     { path: 'settings', component: SettingsPage },
     { path: 'settings/permission', component: PermissionSettingsDemo },
     { path: 'settings/:panel', component: SettingsPage },

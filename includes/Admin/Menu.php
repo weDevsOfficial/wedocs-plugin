@@ -31,6 +31,7 @@ class Menu {
         add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
         add_action( 'admin_menu', array( $this, 'add_admin_submenu' ) );
         add_action( 'admin_head', array( $this, 'cleanup_admin_notices' ), 1 );
+        add_action( 'admin_head', array( $this, 'premium_menu_styles' ) );
     }
 
     /**
@@ -41,15 +42,115 @@ class Menu {
      * @return void
      */
     public function add_admin_menu() {
+        $parent_slug = 'wedocs';
         add_menu_page(
             __( 'weDocs', 'wedocs' ),
             __( 'weDocs', 'wedocs' ),
             $this->capability,
-            'wedocs',
+            $parent_slug,
             array( $this, 'display_wedocs' ),
-            'dashicons-media-document',
+            $this->get_menu_icon(),
             $this->get_menu_position()
         );
+
+        $faq = add_submenu_page( $parent_slug, __( 'FAQ', 'wedocs' ), __( 'FAQ', 'wedocs' ), $this->capability, 'wedocs-faq', array( $this, 'display_faq' ) );
+
+        add_action( 'load-' . $faq, [ $this, 'faq_menu_action' ] );
+    }
+
+    /**
+     * Get the weDocs admin menu icon.
+     *
+     * WordPress renders a base64 SVG data URI as a background image and only
+     * sets its size, so the colour has to be baked in. Paint it with the icon
+     * colour of the active admin colour scheme, otherwise the mark disappears
+     * on the light schemes. Falls back to a dashicon if the asset is missing.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return string
+     */
+    public function get_menu_icon() {
+        static $icon_uri = null;
+
+        if ( null !== $icon_uri ) {
+            return $icon_uri;
+        }
+
+        $icon_path = WEDOCS_PATH . '/assets/img/wedocs-menu-icon.svg';
+
+        if ( ! is_readable( $icon_path ) ) {
+            $icon_uri = 'dashicons-media-document';
+
+            return $icon_uri;
+        }
+
+        $icon = file_get_contents( $icon_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+        if ( empty( $icon ) ) {
+            $icon_uri = 'dashicons-media-document';
+
+            return $icon_uri;
+        }
+
+        $icon = str_replace( '#fff', $this->get_menu_icon_color(), $icon );
+
+        $icon_uri = 'data:image/svg+xml;base64,' . base64_encode( $icon ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+
+        return $icon_uri;
+    }
+
+    /**
+     * Resolve the icon colour of the active admin colour scheme.
+     *
+     * Mirrors what core paints dashicons with, so the weDocs mark sits at the
+     * same weight as its neighbours on every scheme.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return string
+     */
+    protected function get_menu_icon_color() {
+        global $_wp_admin_css_colors;
+
+        $default = '#a7aaad';
+        $scheme  = get_user_option( 'admin_color' );
+
+        if ( empty( $scheme ) ) {
+            $scheme = 'fresh';
+        }
+
+        if ( empty( $_wp_admin_css_colors[ $scheme ]->icon_colors['base'] ) ) {
+            return $default;
+        }
+
+        return $_wp_admin_css_colors[ $scheme ]->icon_colors['base'];
+    }
+
+    /**
+     * Fire the FAQ page load hook.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function faq_menu_action() {
+        /**
+         * Backdoor for calling the menu hook.
+         * This hook won't get translated even the site language is changed
+         */
+        do_action( 'wedocs_load_faq_page' );
+    }
+
+    /**
+     * Display FAQ page.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function display_faq() {
+        wedocs_get_template_part( 'admin/faq' );
     }
 
     /**
@@ -69,6 +170,11 @@ class Menu {
         $base         = admin_url( 'admin.php?page=wedocs' );
         $all_submenus = array(
             array(
+                __( 'Dashboard', 'wedocs' ),
+                $this->capability,
+                $base . '#/dashboard',
+            ),
+            array(
                 __( 'Docs', 'wedocs' ),
                 $this->capability,
                 $base . '#/',
@@ -77,6 +183,12 @@ class Menu {
                 __( 'Tags', 'wedocs' ),
                 $this->capability,
                 'edit-tags.php?taxonomy=doc_tag&post_type=docs',
+            ),
+            array(
+                __( 'FAQ', 'wedocs' ),
+                $this->capability,
+                'wedocs-faq',
+                __( 'FAQ', 'wedocs' ),
             ),
             array(
                 __( 'Settings', 'wedocs' ),
@@ -92,21 +204,107 @@ class Menu {
 
         if ( ! wedocs_is_pro_active() ) {
             $all_submenus[] = array(
-                __( 'Premium', 'wedocs' ),
+                $this->get_premium_menu_title(),
                 $this->capability,
                 $base . '#/premium',
             );
         }
 
         $all_submenus = apply_filters( 'wedocs_submenu', $all_submenus );
-        if ( empty( $submenu['wedocs'] ) ) {
-            $submenu['wedocs'] = array(); // phpcs:ignore.
-        }
 
-        array_push(
-            $submenu['wedocs'],
-            ...$all_submenus
+        // Rebuild the submenu in our own order, dropping the duplicate of the
+        // parent that WordPress generates and the entries we are about to add
+        // again, but keeping anything another plugin registered under us.
+        $own_slugs = array_merge( array( 'wedocs' ), wp_list_pluck( $all_submenus, 2 ) );
+        $existing  = empty( $submenu['wedocs'] ) ? array() : $submenu['wedocs'];
+
+        $foreign = array_values(
+            array_filter(
+                $existing,
+                function ( $item ) use ( $own_slugs ) {
+                    return isset( $item[2] ) && ! in_array( $item[2], $own_slugs, true );
+                }
+            )
         );
+
+        $submenu['wedocs'] = array_merge( $all_submenus, $foreign ); // phpcs:ignore.
+    }
+
+    /**
+     * Build the Premium submenu title with its crown icon.
+     *
+     * WordPress prints submenu titles unescaped, so markup is allowed here. The
+     * crown is inlined rather than enqueued so it costs no extra request, and the
+     * glow itself is handled in CSS — see premium_menu_styles().
+     *
+     * @since 2.4.0
+     *
+     * @return string
+     */
+    public function get_premium_menu_title() {
+        $crown = '<svg class="wedocs-premium-menu__crown" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 16L3 6l5.5 4L12 4l3.5 6L21 6l-2 10H5zm14 3a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-1h14v1z"/></svg>';
+
+        return '<span class="wedocs-premium-menu">' . esc_html__( 'Premium', 'wedocs' ) . $crown . '</span>';
+    }
+
+    /**
+     * Print the glow styles for the Premium submenu item.
+     *
+     * Lives in admin_head because the admin menu renders on every screen, while
+     * the plugin stylesheet is only enqueued on weDocs pages.
+     *
+     * @since 2.4.0
+     *
+     * @return void
+     */
+    public function premium_menu_styles() {
+        if ( wedocs_is_pro_active() ) {
+            return;
+        }
+        ?>
+        <style id="wedocs-premium-menu-style">
+            #adminmenu .wedocs-premium-menu {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                font-weight: 600;
+                color: #ffb900;
+            }
+
+            #adminmenu .wedocs-premium-menu__crown {
+                width: 14px;
+                height: 14px;
+                flex-shrink: 0;
+                fill: currentColor;
+                animation: wedocs-premium-glow 2.4s ease-in-out infinite;
+            }
+
+            #adminmenu a:hover .wedocs-premium-menu,
+            #adminmenu a:focus .wedocs-premium-menu,
+            #adminmenu .current .wedocs-premium-menu {
+                color: #ffc83d;
+            }
+
+            @keyframes wedocs-premium-glow {
+                0%, 100% {
+                    filter: drop-shadow( 0 0 0 rgba( 255, 185, 0, 0 ) );
+                    transform: scale( 1 );
+                }
+
+                50% {
+                    filter: drop-shadow( 0 0 5px rgba( 255, 185, 0, .9 ) );
+                    transform: scale( 1.12 );
+                }
+            }
+
+            @media ( prefers-reduced-motion: reduce ) {
+                #adminmenu .wedocs-premium-menu__crown {
+                    animation: none;
+                    filter: drop-shadow( 0 0 3px rgba( 255, 185, 0, .7 ) );
+                }
+            }
+        </style>
+        <?php
     }
 
     /**

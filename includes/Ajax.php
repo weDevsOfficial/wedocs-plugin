@@ -75,9 +75,12 @@ class Ajax {
     public function get_docs() {
         check_ajax_referer('wedocs-ajax');
 
+        // Only users who can edit docs may see unpublished documentation.
+        $statuses = current_user_can( 'edit_docs' ) ? ['publish', 'draft', 'pending'] : ['publish'];
+
         $docs = get_posts([
             'post_type'      => 'docs',
-            'post_status'    => ['publish', 'draft', 'pending'],
+            'post_status'    => $statuses,
             'posts_per_page' => -1,
             'orderby'        => 'menu_order',
             'order'          => 'ASC',
@@ -187,6 +190,11 @@ class Ajax {
         $previous = isset($_COOKIE['wedocs_response']) ? explode(',', $_COOKIE['wedocs_response']) : [];
         $post_id  = intval($_POST['post_id']);
         $type     = in_array($_POST['type'], ['positive', 'negative']) ? $_POST['type'] : false;
+
+        // Only documentation posts accept feedback votes.
+        if ( 'docs' !== get_post_type( $post_id ) ) {
+            wp_send_json_error( __( 'Invalid post.', 'wedocs' ) );
+        }
 
         // check previous response
         if (in_array($post_id, $previous)) {

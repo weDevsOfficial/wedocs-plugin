@@ -52,13 +52,13 @@ const GeneralSettings = ( {
       <>
         <span className="block">
           {__('Before Doc: ', 'wedocs')}
-          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+          <code className="text-gray-400 bg-gray-50 px-1 py-0.5 rounded break-all">
             {beforeDocUrl}
           </code>
         </span>
         <span className="block mt-2">
           {__('After Doc: ', 'wedocs')}
-          <code className="text-indigo-700 bg-gray-50 px-1 py-0.5 rounded break-all">
+          <code className="text-gray-400 bg-gray-50 px-1 py-0.5 rounded break-all">
             {afterDocUrl}
           </code>
         </span>
@@ -88,7 +88,7 @@ const GeneralSettings = ( {
                     {__('weDocs Home', 'wedocs')}
                   </label>
                 </div>
-                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto">
                   <div className="relative">
                     <SelectBox
                         name="docs_home"
@@ -121,7 +121,7 @@ const GeneralSettings = ( {
             <div className="col-span-4">
               <div className="settings-content flex items-center justify-between">
                 <div className="settings-field-heading md:min-w-[300px] flex items-center space-x-2 flex-1">
-                  <label className="block text-sm font-medium text-gray-600">
+                  <label className={`block text-sm font-medium ${ applyFilters('wedocs_pro_loaded', false) ? 'text-gray-600' : 'text-gray-400' }`}>
                     {__('Docs URL Structure', 'wedocs')}
                   </label>
                   {!applyFilters('wedocs_pro_loaded', false) && (
@@ -154,7 +154,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto">
                   {applyFilters(
                       'wedocs_general_settings_docs_url_structure_field',
                       (
@@ -183,14 +183,20 @@ const GeneralSettings = ( {
                 </div>
               </div>
               <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
-                <p className="text-sm text-[#6B7280]">
-                  {renderUrlStructureDescription()}
-                  <span className="block mt-2">
-                    {__(
-                        'Changing this structure updates URLs and breadcrumbs for all docs. Previous URLs will automatically redirect (301).',
-                        'wedocs'
-                    )}
-                  </span>
+                <p className={`text-sm ${ applyFilters('wedocs_pro_loaded', false) ? 'text-[#6B7280]' : 'text-gray-400' }`}>
+                  {applyFilters('wedocs_pro_loaded', false) ? (
+                    <>
+                      {renderUrlStructureDescription()}
+                      <span className="block mt-2">
+                        {__(
+                            'Changing this structure updates URLs and breadcrumbs for all docs. Previous URLs will automatically redirect (301).',
+                            'wedocs'
+                        )}
+                      </span>
+                    </>
+                  ) : (
+                    __('Choose how doc URLs and breadcrumbs are structured — changing it updates all docs with automatic 301 redirects.', 'wedocs')
+                  )}
                 </p>
               </div>
             </div>
@@ -228,7 +234,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="email"
                       settingsPanel={generalSettings}
@@ -277,7 +283,7 @@ const GeneralSettings = ( {
                       </svg>
                     </div>
                   </div>
-                  <div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+                  <div className="settings-field w-full max-w-[490px] ml-auto">
                     <div className="relative">
                       <input
                           type="email"
@@ -330,7 +336,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="enable_search"
                       settingsPanel={generalSettings}
@@ -376,7 +382,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="helpful"
                       settingsPanel={generalSettings}
@@ -422,7 +428,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="comments"
                       settingsPanel={generalSettings}
@@ -468,7 +474,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="print"
                       settingsPanel={generalSettings}
@@ -486,14 +492,15 @@ const GeneralSettings = ( {
                 <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
                   <label
                       className="block text-sm font-medium text-gray-600"
-                      htmlFor="wedocs-single-doc-template"
+                      id="headlessui-listbox-label-15"
+                      data-headlessui-state="open"
                   >
-                    {__('Single Doc Template', 'wedocs')}
+                    {__('Show FAQ on Docs Home', 'wedocs')}
                   </label>
                   <div
                       className="tooltip cursor-pointer ml-2 z-[9999]"
                       data-tip={__(
-                          'Choose which renderer builds your single doc pages: Classic (PHP template), Block (block theme template), or Elementor (Elementor template).',
+                          'Display the FAQ section on the documentation home page where the [wedocs] shortcode is used',
                           'wedocs'
                       )}
                   >
@@ -513,7 +520,53 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
+                  <Switcher
+                      name="show_faq"
+                      settingsPanel={generalSettings}
+                      settingsData={settingsData}
+                      setSettings={setSettings}
+                      panelName={`general`}
+                      isEnabled={generalSettings?.show_faq === 'on'}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="col-span-4">
+              <div className="settings-content flex items-center justify-between">
+                <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
+                  <label
+                      className="block text-sm font-medium text-gray-600"
+                      id="headlessui-listbox-label-15"
+                      data-headlessui-state="open"
+                  >
+                    {__('Single Doc Template', 'wedocs')}
+                  </label>
+                  <div
+                      className="tooltip cursor-pointer ml-2 z-[9999]"
+                      data-tip={__(
+                          'Which template renders a single doc page. Automatic detects the active theme; the others force Classic, Block or Elementor.',
+                          'wedocs'
+                      )}
+                  >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        fill="none"
+                    >
+                      <path
+                          d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                          stroke="#6b7280"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className="settings-field w-full max-w-[490px] ml-auto">
                   <select
                       id="wedocs-single-doc-template"
                       name="single_doc_template"
@@ -544,15 +597,18 @@ const GeneralSettings = ( {
                   </select>
                 </div>
               </div>
-              <div className="settings-description w-full max-w-[490px] ml-auto mt-1">
-                <p className="text-sm text-[#6B7280]">
-                  {__(
-                      'Only the selected renderer will build single doc pages. Elementor requires the Elementor plugin (and Elementor Pro Theme Builder for full template conditions).',
-                      'wedocs'
-                  )}
-                </p>
-              </div>
             </div>
+
+            {/* Slot for General fields that ship with an add-on (the Pro
+                glossary toggle, for one). It sits directly in the grid, beside
+                the rows above, so an added row is its own cell and lines up
+                with them. Rows get the same settings state as the built-in
+                fields, so they save with the page. */}
+            {applyFilters(
+                'wedocs_general_settings_after_fields',
+                null,
+                { settingsData, settingsPanel: generalSettings, setSettings }
+            )}
           </div>
         </div>
       </div>

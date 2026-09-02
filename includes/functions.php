@@ -1320,3 +1320,43 @@ function wedocs_has_elementor_single_doc_template() {
 function use_wedocs_legacy_template(){
     return 'legacy' === wedocs_get_single_doc_renderer();
 }
+
+if ( ! function_exists( 'wedocs_rate_limit_ok' ) ) {
+    /**
+     * Simple per-IP transient rate limiter.
+     *
+     * Allows up to $max hits from a single IP within $window seconds for a
+     * given bucket. Used to bound abuse of unauthenticated endpoints.
+     *
+     * @since 2.3.2
+     *
+     * @param string $bucket Logical action name.
+     * @param int    $max    Max allowed hits per window.
+     * @param int    $window Window length in seconds.
+     *
+     * @return bool True when the request is within the limit.
+     */
+    function wedocs_rate_limit_ok( $bucket, $max, $window ) {
+        $ip   = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : 'unknown';
+        $key  = 'wedocs_rl_' . $bucket . '_' . md5( $ip );
+        $data = get_transient( $key );
+
+        // First request in the window — start a fresh fixed window.
+        if ( false === $data || ! is_array( $data ) ) {
+            set_transient( $key, array( 'count' => 1, 'start' => time() ), $window );
+            return true;
+        }
+
+        $count = (int) ( isset( $data['count'] ) ? $data['count'] : 0 );
+        if ( $count >= $max ) {
+            return false;
+        }
+
+        // Preserve the original window expiry instead of sliding the TTL forward.
+        $start     = (int) ( isset( $data['start'] ) ? $data['start'] : time() );
+        $remaining = max( 1, $window - ( time() - $start ) );
+        set_transient( $key, array( 'count' => $count + 1, 'start' => $start ), $remaining );
+
+        return true;
+    }
+}

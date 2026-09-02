@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import PermissionSettings from './PermissionSettings';
+import ChangelogSettings from './ChangelogSettings';
 import { userIsAdmin } from '../../utils/helper';
 import UpgradePopup from './common/UpgradePopup';
 import LayoutSettings from './LayoutSettings';
@@ -9,6 +10,8 @@ import MessageSettings from './AssistantWidgetPanels/MessagePanel';
 import PlacementSettings from './AssistantWidgetPanels/PlacementPanel';
 import PreferenceSettings from './AssistantWidgetPanels/PreferencePanel';
 import SocialShareSettings from './SocialShareSettings';
+import GlossarySettings from './GlossarySettings';
+import McpSettings from './McpSettings';
 import Badge from './common/Badge';
 
 wp.hooks.addFilter(
@@ -18,6 +21,27 @@ wp.hooks.addFilter(
         // Check if Pro is loaded dynamically
         const isProLoaded = wp.hooks.applyFilters('wedocs_pro_loaded', false);
         if (isProLoaded) return menus;
+            menus.changelog = {
+                pro: true,
+                text: __( 'Changelog', 'wedocs' ),
+                icon: (
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#6b7280"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="-ml-1 mr-4 pro-settings"
+                    >
+                        <path d="M3 11l18-5v12L3 14v-3z" />
+                        <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+                    </svg>
+                ),
+            };
             menus.permission = {
                 pro: true,
                 text: __( 'Permission Management', 'wedocs' ),
@@ -142,6 +166,30 @@ wp.hooks.addFilter(
                         <path d="M1 2.47a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-2zm0 8a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-6zm12 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-6z" />
                     </svg>
                 ),
+                // A parent row, matching what Pro registers: the two panels
+                // below belong to its sub-tabs, so this tab order has to stay
+                // in step with the template order further down.
+                disabled: true,
+                subtabs: [
+                    {
+                        text: __( 'Doc Home', 'wedocs' ),
+                        icon: (
+                            <svg width="20" height="20" fill="none" strokeWidth="2" stroke="#6b7280" strokeLinejoin="round" className="-ml-1 mr-4">
+                                <path d="M3 2.5h11a1.5 1.5 0 0 1 1.5 1.5v11a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 15V4A1.5 1.5 0 0 1 3 2.5z" />
+                                <path d="M1.5 7h14" />
+                            </svg>
+                        ),
+                    },
+                    {
+                        text: __( 'Glossary', 'wedocs' ),
+                        icon: (
+                            <svg width="20" height="20" fill="none" strokeWidth="2" stroke="#6b7280" strokeLinejoin="round" className="-ml-1 mr-4">
+                                <path d="M2.5 3.5h13v11h-13z" />
+                                <path d="M5 7h8M5 10.5h5" strokeLinecap="round" />
+                            </svg>
+                        ),
+                    },
+                ],
             };
             menus.social_share = {
                 pro: true,
@@ -159,6 +207,28 @@ wp.hooks.addFilter(
                         <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                         <rect width="4" height="12" x="2" y="9" rx="2" />
                         <circle cx="4" cy="4" r="2" />
+                    </svg>
+                ),
+            };
+            menus.mcp = {
+                pro: true,
+                text: __( 'MCP', 'wedocs' ),
+                icon: (
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#6b7280"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="-ml-1 mr-4 pro-settings"
+                    >
+                        <path d="M12 22v-5" />
+                        <path d="M9 8V2" />
+                        <path d="M15 8V2" />
+                        <path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8z" />
                     </svg>
                 ),
             };
@@ -190,6 +260,7 @@ wp.hooks.addFilter(
 
             return [
                 ...templates,
+                <ChangelogSettings key={ index } />,
                 <PermissionSettings key={ index } />,
                 ...assistantWidgetSubPanels,
                 <LayoutSettings
@@ -197,11 +268,13 @@ wp.hooks.addFilter(
                     settingsData={ docSettings }
                     setSettings={ setDocSettings }
                 />,
+                <GlossarySettings key={ index } />,
                 <SocialShareSettings
                     key={ index }
                     settingsData={ docSettings }
                     setSettings={ setDocSettings }
                 />,
+                <McpSettings key={ index } />,
             ];
         },
         5

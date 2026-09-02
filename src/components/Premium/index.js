@@ -1,5 +1,5 @@
-import { __, sprintf } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { useEffect, useState } from '@wordpress/element';
 
 import heroIllustration from '../../assets/img/premium/hero-illustration.png';
 import videoThumbnail from '../../assets/img/premium/video-thumbnail.png';
@@ -24,7 +24,10 @@ import iconTranslation from '../../assets/img/premium/icon-translation.svg';
 
 const PRICING_URL =
   'https://wedocs.co/pricing/?utm_source=wp-admin&utm_medium=premium-page&utm_campaign=upgrade';
-const COUPON_CODE = 'LiteUpgrade25';
+const COUPON_CODE = 'LiteUpgrade';
+const VIDEO_ID = 'UgXtmkgAEGI';
+const DOKAN_DOC_URL = 'https://wedocs.co/docs/wedocs/dokan-support-for-wedocs/';
+const VIDEO_EMBED_URL = `https://www.youtube-nocookie.com/embed/${ VIDEO_ID }?autoplay=1&rel=0`;
 
 const ArrowRightIcon = ( { className = 'w-5 h-5' } ) => (
   <svg
@@ -41,20 +44,14 @@ const ArrowRightIcon = ( { className = 'w-5 h-5' } ) => (
   </svg>
 );
 
-const CopyIcon = ( { className = 'w-5 h-5' } ) => (
+const PlayIcon = () => (
   <svg
-    className={ className }
+    className="w-7 h-7 text-white"
     viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
+    fill="currentColor"
     aria-hidden="true"
   >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-    />
+    <path d="M8 5v14l11-7z" />
   </svg>
 );
 
@@ -222,9 +219,10 @@ const pricingPlans = [
   {
     name: __( 'Starter', 'wedocs' ),
     badge: null,
-    description: __( 'Everything you need for professional docs on a single site', 'wedocs' ),
+    description: __( 'Everything you need for professional docs', 'wedocs' ),
     annual: 39,
-    lifetime: 125,
+    lifetime: 119,
+    lifetimeRegular: 125,
     sites: __( '1 Site', 'wedocs' ),
     highlighted: false,
   },
@@ -233,7 +231,8 @@ const pricingPlans = [
     badge: null,
     description: __( 'Do more with weDocs using powerful advanced features', 'wedocs' ),
     annual: 59,
-    lifetime: 165,
+    lifetime: 149,
+    lifetimeRegular: 165,
     sites: __( '5 Sites', 'wedocs' ),
     highlighted: false,
   },
@@ -242,7 +241,8 @@ const pricingPlans = [
     badge: { label: __( 'Most Popular', 'wedocs' ), className: 'bg-[#FFE2B4]' },
     description: __( 'The ultimate documentation toolkit for growing teams', 'wedocs' ),
     annual: 79,
-    lifetime: 235,
+    lifetime: 199,
+    lifetimeRegular: 235,
     sites: __( '10 Sites', 'wedocs' ),
     highlighted: true,
   },
@@ -251,42 +251,27 @@ const pricingPlans = [
     badge: { label: __( 'Best Valued', 'wedocs' ), className: 'bg-[#88FFB3]' },
     description: __( 'Reach greater heights with docs across all client sites', 'wedocs' ),
     annual: 149,
-    lifetime: 312,
+    lifetime: 249,
+    lifetimeRegular: 312,
     sites: __( 'Unlimited Sites', 'wedocs' ),
     highlighted: false,
   },
 ];
 
-const CouponButton = ( { dark = true } ) => {
-  const [ copied, setCopied ] = useState( false );
-
-  const copyCoupon = () => {
-    window.navigator.clipboard?.writeText( COUPON_CODE );
-    setCopied( true );
-    setTimeout( () => setCopied( false ), 2000 );
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={ copyCoupon }
-      className={ `inline-flex items-center gap-3 rounded-md border pl-[17px] pr-[15px] py-[9px] text-base font-medium transition-colors cursor-pointer ${
-        dark
-          ? 'bg-transparent border-[#3C434A] text-[#A7AAAD] hover:text-white'
-          : 'bg-white border-gray-300 text-gray-600'
-      }` }
-    >
-      { copied
-        ? __( 'Copied!', 'wedocs' )
-        : sprintf(
-          /* translators: %s: coupon code */
-          __( 'Coupon: %s', 'wedocs' ),
-          COUPON_CODE
-        ) }
-      <CopyIcon />
-    </button>
-  );
-};
+const CouponBadge = ( { dark = true } ) => (
+  <span
+    className={ `inline-flex items-center gap-2 rounded-md border pl-[17px] pr-[15px] py-[9px] text-base font-medium ${
+      dark
+        ? 'bg-transparent border-[#3C434A] text-[#A7AAAD]'
+        : 'bg-white border-gray-300 text-gray-600'
+    }` }
+  >
+    { __( 'Coupon:', 'wedocs' ) }
+    <strong className={ dark ? 'text-white' : 'text-[#23282D]' }>
+      { COUPON_CODE }
+    </strong>
+  </span>
+);
 
 const HeroSection = () => (
   <section className="relative overflow-hidden rounded-[20px] bg-[#000823]">
@@ -312,14 +297,14 @@ const HeroSection = () => (
         <PrimaryLinkButton href={ PRICING_URL }>
           { __( 'Upgrade to Pro', 'wedocs' ) }
         </PrimaryLinkButton>
-        <CouponButton />
+        <CouponBadge />
       </div>
     </div>
     <div className="absolute top-8 right-0 hidden xl:block w-[426px]">
       <img
         src={ heroIllustration }
         alt=""
-        className="w-full max-w-full h-auto"
+        className="w-full max-w-full h-auto border-0"
       />
       <span className="absolute left-1/2 -translate-x-1/2 bottom-4 rounded-full bg-[#000D37] px-8 py-2.5 text-2xl font-bold text-white whitespace-nowrap">
         { __( 'Up to 25% Off', 'wedocs' ) }
@@ -405,12 +390,16 @@ const FeatureCardsSection = () => (
             className="flex min-h-[214px] flex-col gap-5 rounded-[20px] border border-gray-200 bg-white p-5"
           >
             <span className="relative self-start w-[35px]">
-              <img src={ card.icon } alt="" className="block h-9 w-auto" />
+              <img
+                src={ card.icon }
+                alt=""
+                className="block h-9 w-auto border-0"
+              />
               { card.iconOverlay && (
                 <img
                   src={ card.iconOverlay }
                   alt=""
-                  className="absolute -right-2 -top-1 h-4 w-auto"
+                  className="absolute -right-2 -top-1 h-4 w-auto border-0"
                 />
               ) }
             </span>
@@ -432,36 +421,58 @@ const FeatureCardsSection = () => (
   </section>
 );
 
-const DokanSection = () => (
-  <section className="mx-auto flex w-full max-w-[1000px] flex-col items-center gap-10 px-8 xl:px-0">
-    <div className="flex max-w-[581px] flex-col items-center gap-4 text-center">
-      <h2 className="text-3xl font-bold text-gray-800 m-0 p-0">
-        { __( 'Dokan Support for weDocs', 'wedocs' ) }
-      </h2>
-      <p className="m-0 text-sm text-gray-500">
-        { __(
-          'This feature lets marketplace owners create vendor-specific documentation to simplify onboarding, store management, policies, payments, and other resources.',
-          'wedocs'
+const DokanSection = () => {
+  const [ playing, setPlaying ] = useState( false );
+  const videoTitle = __( 'How to mark a doc as vendor docs', 'wedocs' );
+
+  return (
+    <section className="mx-auto flex w-full max-w-[1000px] flex-col items-center gap-11 px-8 xl:px-0">
+      <div className="flex max-w-[581px] flex-col items-center gap-4 text-center">
+        <h2 className="text-3xl font-bold text-gray-800 m-0 p-0">
+          { __( 'Dokan Support for weDocs', 'wedocs' ) }
+        </h2>
+        <p className="m-0 text-sm text-gray-500">
+          { __(
+            'This feature lets marketplace owners create vendor-specific documentation to simplify onboarding, store management, policies, payments, and other resources.',
+            'wedocs'
+          ) }
+        </p>
+      </div>
+      <div className="relative w-full overflow-hidden rounded-[20px] aspect-video bg-[#0A101A]">
+        { playing ? (
+          <iframe
+            src={ VIDEO_EMBED_URL }
+            title={ videoTitle }
+            className="absolute inset-0 h-full w-full border-0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={ () => setPlaying( true ) }
+            aria-label={ videoTitle }
+            className="group absolute inset-0 h-full w-full cursor-pointer border-0 bg-transparent p-0"
+          >
+            <img
+              src={ videoThumbnail }
+              alt={ videoTitle }
+              className="block h-full w-full border-0 object-cover"
+            />
+            <span className="absolute inset-0 flex items-center justify-center">
+              <span className="flex h-[68px] w-[96px] items-center justify-center rounded-[14px] bg-black/60 transition-colors group-hover:bg-[#FF0000]">
+                <PlayIcon />
+              </span>
+            </span>
+          </button>
         ) }
-      </p>
-    </div>
-    <a
-      href={ PRICING_URL }
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block w-full overflow-hidden rounded-[20px]"
-    >
-      <img
-        src={ videoThumbnail }
-        alt={ __( 'How to mark a doc as vendor docs', 'wedocs' ) }
-        className="block w-full max-w-full h-auto"
-      />
-    </a>
-    <PrimaryLinkButton href={ PRICING_URL }>
-      { __( 'View Details', 'wedocs' ) }
-    </PrimaryLinkButton>
-  </section>
-);
+      </div>
+      <PrimaryLinkButton href={ DOKAN_DOC_URL }>
+        { __( 'Learn More', 'wedocs' ) }
+      </PrimaryLinkButton>
+    </section>
+  );
+};
 
 const BrandsSection = () => (
   <section className="mx-auto flex w-full max-w-[1200px] flex-col items-center gap-14 px-8 xl:px-0">
@@ -474,7 +485,7 @@ const BrandsSection = () => (
         'Dokan, WP User Frontend, WP ERP, WP Project Manager, FlyWP, WP Hive, weMail, Appsero, weDocs, wePOS, and InboxWP logos',
         'wedocs'
       ) }
-      className="w-full max-w-[1013px] h-auto"
+      className="w-full max-w-[1013px] h-auto border-0"
     />
   </section>
 );
@@ -551,12 +562,23 @@ const PricingSection = () => {
                 { plan.description }
               </p>
             </div>
-            <p className="m-0 text-4xl font-bold text-[#101828]">
-              ${ isAnnual ? plan.annual : plan.lifetime }
-              <span className="text-base font-normal text-[#6A7282]">
-                { isAnnual ? __( '/y', 'wedocs' ) : __( '/lifetime', 'wedocs' ) }
-              </span>
-            </p>
+            <div className="flex flex-col gap-1.5">
+              <p className="m-0 text-4xl font-bold text-[#101828]">
+                ${ isAnnual ? plan.annual : plan.lifetime }
+                <span className="text-base font-normal text-[#6A7282]">
+                  { isAnnual
+                    ? __( '/y', 'wedocs' )
+                    : __( '/lifetime', 'wedocs' ) }
+                </span>
+              </p>
+              { ! isAnnual && (
+                <p className="m-0 flex items-center gap-2 text-sm text-[#6A7282]">
+                  <span className="line-through">
+                    ${ plan.lifetimeRegular }
+                  </span>
+                </p>
+              ) }
+            </div>
             <a
               href={ PRICING_URL }
               target="_blank"
@@ -587,6 +609,32 @@ const PricingSection = () => {
             </ul>
           </div>
         ) ) }
+      </div>
+
+      <div className="flex w-full flex-col items-center gap-3 rounded-2xl border border-[#E4E4E4] bg-white px-8 py-6 text-center sm:flex-row sm:justify-center sm:gap-4 sm:text-left">
+        <span className="relative w-[35px] shrink-0">
+          <img
+            src={ iconAiChatbot }
+            alt=""
+            className="block h-9 w-auto border-0"
+          />
+          <img
+            src={ iconAiSparkle }
+            alt=""
+            className="absolute -right-2 -top-1 h-4 w-auto border-0"
+          />
+        </span>
+        <p className="m-0 text-sm text-[#4A5565]">
+          <strong className="text-[#101828]">
+            { __( 'AI Chatbot Add-on', 'wedocs' ) }
+          </strong>{ ' ' }
+          { __( 'is available on any plan for', 'wedocs' ) }{ ' ' }
+          <strong className="text-[#101828]">
+            { __( '$7.99/month', 'wedocs' ) }
+          </strong>
+          { '. ' }
+          { __( 'Not available as a lifetime purchase.', 'wedocs' ) }
+        </p>
       </div>
     </section>
   );
@@ -624,7 +672,7 @@ const RefundSection = () => (
       <img
         src={ refundBadge }
         alt={ __( '14-day money back guarantee', 'wedocs' ) }
-        className="h-[158px] w-[158px] shrink-0"
+        className="h-[158px] w-[158px] shrink-0 border-0"
       />
     </div>
   </section>
@@ -635,7 +683,7 @@ const FinalCtaSection = () => (
     <img
       src={ heroIllustration }
       alt=""
-      className="pointer-events-none absolute -right-6 -bottom-10 w-[235px] max-w-none opacity-30"
+      className="pointer-events-none absolute -right-6 -bottom-10 w-[235px] max-w-none opacity-30 border-0"
     />
     <div className="relative z-10 flex flex-col items-start gap-6 p-10 lg:flex-row lg:items-center lg:justify-between">
       <div className="flex max-w-[458px] flex-col gap-4">
@@ -659,21 +707,35 @@ const FinalCtaSection = () => (
   </section>
 );
 
-const Premium = () => (
-  <div className="wedocs-premium-page -mx-2.5 bg-[#F5F5F5] pb-[72px]">
-    <div className="mx-auto flex max-w-[1216px] flex-col gap-[72px] px-8 pt-[72px] xl:px-0">
-      <HeroSection />
-      <ComparisonSection />
+const Premium = () => {
+  // Full-bleed design: strip the admin chrome padding while this page is mounted.
+  useEffect( () => {
+    document.body.classList.add( 'wedocs-premium-fullwidth' );
+
+    return () => document.body.classList.remove( 'wedocs-premium-fullwidth' );
+  }, [] );
+
+  return (
+    <div className="wedocs-premium-page bg-[#F5F5F5] pb-[72px]">
+      <div className="mx-auto flex max-w-[1216px] flex-col gap-[72px] px-8 pt-[72px] xl:px-0">
+        <HeroSection />
+        <ComparisonSection />
+      </div>
+      <div className="mt-[72px] flex flex-col">
+        <FeatureCardsSection />
+        { /* Dokan + brands sit on a white band in the design, not on the page gray. */ }
+        <div className="flex flex-col gap-[72px] bg-white py-[72px]">
+          <DokanSection />
+          <BrandsSection />
+        </div>
+        <div className="flex flex-col gap-[72px] pt-[72px]">
+          <PricingSection />
+          <RefundSection />
+          <FinalCtaSection />
+        </div>
+      </div>
     </div>
-    <div className="mt-[72px] flex flex-col gap-[72px]">
-      <FeatureCardsSection />
-      <DokanSection />
-      <BrandsSection />
-      <PricingSection />
-      <RefundSection />
-      <FinalCtaSection />
-    </div>
-  </div>
-);
+  );
+};
 
 export default Premium;

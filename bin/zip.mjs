@@ -1,5 +1,5 @@
-const archiver = require( 'archiver' );
-const fs = require( 'fs' );
+import { ZipArchive } from 'archiver';
+import fs from 'node:fs';
 
 /**
  * Adapted from: https://stackoverflow.com/a/51518100
@@ -11,7 +11,8 @@ const fs = require( 'fs' );
  * @return {Promise} The result of the compression
  */
 function zipDirectories( sourceDirs, sourceFiles, outPath ) {
-  const archive = archiver( 'zip', { zlib: { level: 9 } } );
+  // archiver 8 dropped the `archiver('zip', …)` factory for named format classes.
+  const archive = new ZipArchive( { zlib: { level: 9 } } );
   const stream = fs.createWriteStream( outPath );
 
   return new Promise( ( resolve, reject ) => {
@@ -49,9 +50,12 @@ zipDirectories(
 )
   .then( () => {
     process.stdout.write(
-      'ZIP File: ' + zipFileName + ' Created successfully.'
+      'ZIP File: ' + zipFileName + ' Created successfully.\n'
     );
   } )
-  .catch( () => {
-    process.stdout.write( 'ZIP file creation failed.' );
+  // Exit non-zero: the release workflow uploads whatever zip it finds, so a
+  // silent failure here would publish a stale or missing package.
+  .catch( ( err ) => {
+    process.stderr.write( 'ZIP file creation failed: ' + err.message + '\n' );
+    process.exitCode = 1;
   } );

@@ -1,0 +1,164 @@
+name: Playwright tests/e2e
+
+on:
+  workflow_dispatch:
+    inputs:
+      testsuite:
+        description: 'Test suite to run'
+        required: true
+        default: 'E2E'
+        type: choice
+        options:
+          - 'E2E'
+  schedule:
+    # 1:00 AM Bangladesh Time (Sunday)
+    - cron: '0 19 * * 0'
+  push:
+    branches: ['develop', 'test/e2e-playwright']
+  pull_request:
+    branches: ['develop']
+
+jobs:
+  test:
+    name: e2e (${{ matrix.group }})
+    # Run on forks only — the canonical repos are covered elsewhere, and this
+    # spins up a full WordPress per shard.
+    if: github.repository != 'weDevsOfficial/wedocs-plugin' && github.repository != 'weDevsOfficial/wedocs-pro'
+    timeout-minutes: 45
+    runs-on: ubuntu-22.04
+    strategy:
+      # Feature-grouped shards: each job runs a set of feature FOLDERS so related
+      # specs stay together. Shards are independent — each is self-contained (its
+      # own wp-env, and the setup project runs first within the shard for auth and
+      # fixtures); no job depends on another (only merge-report waits on all).
+      fail-fast: false
+      matrix:
+        include:
+          - group: shortcodes
+            folders: tests/shortcodes
+          - group: faq
+            folders: tests/faq tests/frontend
+          - group: admin
+            folders: tests/docs tests/settings
+
+    steps:
+      - name: Checkout wedocs
+        uses: actions/checkout@v7
+
+      # No `version:` — pnpm/action-setup reads package.json "packageManager",
+      # and passing both makes the action fail with "multiple versions".
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Use Node.js (version from .nvmrc)
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+
+      # wedocs.php requires vendor/autoload.php outright, so without composer the
+      # plugin fatals on load and wp-env start exits 255 before a spec ever runs.
+      # assets/build is gitignored too, so the admin bundle has to be built here
+      # or every SPA spec fails on an empty container.
+      - name: Build wedocs
+        run: |
+          composer install --no-dev -o
+          pnpm install --frozen-lockfile
+          pnpm run build
+
+      - name: Install e2e dependencies
+        working-directory: tests/e2e-playwright
+        run: pnpm install --frozen-lockfile
+
+      # wp-env applies .wp-env.json: the plugin from the repo root, plus mu-plugins
+      # for pretty permalinks and notice suppression, and WP_DEBUG_LOG → wp-data.
+      - name: Start WordPress env
+        working-directory: tests/e2e-playwright
+        run: npx wp-env start
+
+      - name: Cache Playwright binaries
+        id: playwright-cache
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('tests/e2e-playwright/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-playwright-
+
+      - name: Install Playwright browser binaries
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        working-directory: tests/e2e-playwright
+        run: npx playwright install chromium --with-deps
+
+      - name: 🧪 Run e2e tests (${{ matrix.group }})
+        env:
+          CI: true
+          QA_BASE_URL: http://localhost:8889
+          QA_ADMIN_USERNAME: admin
+          QA_ADMIN_PASSWORD: password
+        if: success() && (github.event_name != 'workflow_dispatch' || github.event.inputs.testsuite == 'E2E')
+        working-directory: tests/e2e-playwright
+        # The setup project runs first (dependency) for auth and fixtures, then
+        # this group's folders.
+        run: pnpm exec playwright test ${{ matrix.folders }}
+
+      # PHP notices and errors land in wp-data/debug.log (WP_DEBUG_LOG); surface
+      # them, since a shortcode that warns still renders and would pass silently.
+      - name: Surface WP debug.log
+        if: always()
+        working-directory: tests/e2e-playwright
+        run: test -s wp-data/debug.log && { echo '--- wp-data/debug.log ---'; cat wp-data/debug.log; } || echo 'debug.log empty'
+
+      # Each shard emits a blob report; the merge job stitches them into one HTML.
+      - name: Upload blob report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: blob-report-${{ matrix.group }}
+          path: tests/e2e-playwright/blob-report
+          retention-days: 3
+
+  merge-report:
+    name: merge shard reports
+    if: always() && github.repository != 'weDevsOfficial/wedocs-plugin' && github.repository != 'weDevsOfficial/wedocs-pro'
+    needs: [test]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+      - name: Install e2e dependencies
+        working-directory: tests/e2e-playwright
+        run: pnpm install --frozen-lockfile
+      - name: Download shard blob reports
+        uses: actions/download-artifact@v8
+        with:
+          path: tests/e2e-playwright/all-blob-reports
+          pattern: blob-report-*
+          merge-multiple: true
+      # Results TABLE straight on the run page (Summary tab), no download needed.
+      - name: Results summary table
+        if: always()
+        working-directory: tests/e2e-playwright
+        run: |
+          pnpm exec playwright merge-reports --reporter=json ./all-blob-reports > merged-results.json 2>/dev/null || true
+          node utils/ghSummary.mjs merged-results.json
+      # Full HTML report kept as a downloadable artifact for deep dives.
+      # Skip rather than fail when no shard produced a report; the real error is
+      # already on the failing test job.
+      - name: Merge into one HTML report
+        if: always()
+        working-directory: tests/e2e-playwright
+        run: |
+          if [ -d ./all-blob-reports ] && [ -n "$(ls -A ./all-blob-reports)" ]; then
+            pnpm exec playwright merge-reports --reporter=html ./all-blob-reports
+          else
+            echo 'no blob reports to merge'
+          fi
+      - name: Upload HTML report (artifact)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: tests/e2e-playwright/playwright-report
+          retention-days: 7

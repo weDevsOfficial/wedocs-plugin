@@ -1,6 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/theme";
+@import "tailwindcss/utilities";
+@config "../../../tailwind.config.js";
+
+/* Preflight stays locked inside the weDocs container so the reset never leaks
+   into the rest of wp-admin or a theme's markup. */
+@plugin "tailwindcss-scoped-preflight" {
+  isolation-strategy: inside;
+  selector: .wedocs-document;
+}
+
+/* daisyUI 5 replaces v2's `base: false`. Three things matter here:
+   - `root` scopes the theme custom properties to our container instead of
+     `:root`, so the colour variables never touch the rest of wp-admin.
+   - the excluded base items are the ones that paint globally: `rootcolor`
+     (`:root,[data-theme]{background-color;color}` - this is what used to paint
+     the block editor canvas), plus the scroll-gutter, scroll-lock and scrollbar
+     rules. `properties` and `svg` stay: components need them and they add no
+     global styling.
+   - only the light theme is registered. weDocs deliberately never follows the
+     OS theme (see `darkMode: 'class'`), and daisyUI's default theme list would
+     otherwise reintroduce a `prefers-color-scheme: dark` rule. */
+@plugin "daisyui" {
+  root: ".wedocs-document";
+  themes: light --default;
+  exclude: rootcolor, rootscrollgutter, rootscrolllock, scrollbar;
+  logs: false;
+}
+
+@plugin "@tailwindcss/forms";
 
 /* Breadcrumb Block Specific Styles */
 .wp-block-wedocs-breadcrumbs {

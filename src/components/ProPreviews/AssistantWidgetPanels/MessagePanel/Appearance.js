@@ -43,7 +43,7 @@ const Appearance = () => {
 								</svg>
 							</div>
 						</div>
-						<div className="settings-field w-full max-w-[490px] ml-auto flex flex-2">
+						<div className="settings-field w-full max-w-[490px] ml-auto flex">
 							<UploadButton />
 						</div>
 					</div>
@@ -81,7 +81,7 @@ const Appearance = () => {
 								</svg>
 							</div>
 						</div>
-						<div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+						<div className="settings-field w-full max-w-[490px] ml-auto">
 							<div className="relative">
 								<input
 									type="text"
@@ -135,7 +135,7 @@ const Appearance = () => {
 								</svg>
 							</div>
 						</div>
-						<div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+						<div className="settings-field w-full max-w-[490px] ml-auto">
 							<div className="relative">
 								<input
 									type="text"
@@ -189,7 +189,7 @@ const Appearance = () => {
 								</svg>
 							</div>
 						</div>
-						<div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+						<div className="settings-field w-full max-w-[490px] ml-auto">
 							<div className="relative">
 								<input
 									type="text"
