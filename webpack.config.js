@@ -10,11 +10,13 @@ const updatedConfig = {
     ...defaultConfig.entry(),
     // Add your custom entries while preserving the automatic block detection
     index    : './src/index',
+    shared   : './src/shared.js',
     block    : './src/block.js',
     editor   : './src/editor/index.js',
     store    : './src/data/store.js',
     icons    : './src/icons/index.js',
     faq      : './src/faq/index.js',
+    upsell   : './src/upsell.js',
     print    : './src/assets/less/print.less',
     frontend : './src/assets/less/frontend.less',
   },

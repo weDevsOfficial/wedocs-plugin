@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import TiptapEditor from './TiptapEditor';
-import ToggleSwitch from './ToggleSwitch';
+import ToggleSwitch from '../../components/shared/ToggleSwitch';
 import { toastSuccess, toastError } from '../utils/toast';
 
 const AddFaqForm = ( { groupId, nextMenuOrder = 0, onFaqCreated, onCancel } ) => {
