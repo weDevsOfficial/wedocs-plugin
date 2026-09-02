@@ -6,53 +6,46 @@ namespace WeDevs\WeDocs\Admin;
  * Free "Changelogs" submenu - a Pro upsell.
  *
  * Registered only when weDocs Pro is not active, since Pro ships the real
- * screen at the same slug and in the same place.
+ * screen at the same slug and in the same place, so the menu does not
+ * rearrange itself on upgrade.
+ *
+ * The screen itself is the ProPreviews panel the settings page already shows,
+ * mounted by `src/upsell.js`. Drawing a second mock here would be a preview
+ * that could drift from the first one.
  */
-class ChangelogUpsell extends UpsellScreen {
+class ChangelogUpsell {
 
     /**
-     * @return string
+     * The submenu slug. Pro registers the real screen at the same one.
      */
-    protected function slug() {
-        return 'wedocs-changelog';
+    const PAGE = 'wedocs-changelog';
+
+    /**
+     * Which ProPreviews panel this screen renders.
+     */
+    const PANEL = 'changelog';
+
+    /**
+     * Constructor.
+     */
+    public function __construct() {
+        add_action( 'admin_menu', [ $this, 'register_page' ], 20 );
+        add_action( 'admin_menu', [ $this, 'reorder_menu' ], 999 );
+        add_action( 'admin_head', [ $this, 'print_badge_styles' ] );
+        add_action( 'admin_enqueue_scripts', [ $this, 'enqueue' ] );
     }
 
     /**
-     * @return string
+     * Whether weDocs Pro is active, in which case Free stands aside.
+     *
+     * @return bool
      */
-    protected function menu_title() {
-        return __( 'Changelogs', 'wedocs' );
+    protected function is_pro_active() {
+        return function_exists( 'wedocs_is_pro_active' ) ? wedocs_is_pro_active() : defined( 'WEDOCS_PRO_VERSION' );
     }
 
     /**
-     * @return string
-     */
-    protected function heading() {
-        return __( 'Changelog', 'wedocs' );
-    }
-
-    /**
-     * @return string
-     */
-    protected function tagline() {
-        return __( 'Keep your users in the loop with a polished, filterable changelog for your product.', 'wedocs' );
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function features() {
-        return [
-            __( 'Publish a changelog timeline at /changelog', 'wedocs' ),
-            __( 'Group updates into channels (Free, Pro, …) with their own pages', 'wedocs' ),
-            __( 'Colour-coded categories: Fixes, Improvements, New feature, New releases', 'wedocs' ),
-            __( 'Customisable header banner, brand colour and RSS feed', 'wedocs' ),
-            __( 'Embed anywhere with the [wedocs_changelog] shortcode', 'wedocs' ),
-        ];
-    }
-
-    /**
-     * Directly below Docs, which is where Pro puts the real screen.
+     * The submenu slug this entry sits after. Docs, for the changelog.
      *
      * @return string
      */
@@ -61,78 +54,155 @@ class ChangelogUpsell extends UpsellScreen {
     }
 
     /**
-     * A still of the Changelogs screen: the same header and Add button, and
-     * rows carrying the version, its release date, and the colour-coded
-     * category and channel the real list shows.
+     * Register the submenu page.
+     *
+     * The badge markup goes in a submenu title only. WordPress derives a
+     * top-level page's hook suffix from its title, so decorating a parent
+     * would rename every child hook and stop their assets loading; a
+     * submenu's hook comes from its slug.
      *
      * @return void
      */
-    protected function render_mock() {
-        $entries = [
-            [
-                'title'    => 'v2.5.0',
-                'date'     => __( 'Released 12 August 2026', 'wedocs' ),
-                'category' => __( 'New feature', 'wedocs' ),
-                'color'    => '#0ea5e9',
-                'channel'  => __( 'Pro', 'wedocs' ),
-            ],
-            [
-                'title'    => 'v2.4.3',
-                'date'     => __( 'Released 29 July 2026', 'wedocs' ),
-                'category' => __( 'Fixes', 'wedocs' ),
-                'color'    => '#b45309',
-                'channel'  => __( 'Free', 'wedocs' ),
-            ],
-            [
-                'title'    => 'v2.4.2',
-                'date'     => __( 'Released 15 July 2026', 'wedocs' ),
-                'category' => __( 'Improvements', 'wedocs' ),
-                'color'    => '#15a66e',
-                'channel'  => __( 'Free', 'wedocs' ),
-            ],
-        ];
+    public function register_page() {
+        if ( $this->is_pro_active() ) {
+            return;
+        }
+
+        $cap = function_exists( 'wedocs_get_publish_cap' ) ? wedocs_get_publish_cap() : 'edit_posts';
+
+        add_submenu_page(
+            'wedocs',
+            $this->page_title(),
+            $this->page_title() . ' <span class="wedocs-pro-badge">' . esc_html__( 'Pro', 'wedocs' ) . '</span>',
+            $cap,
+            static::PAGE,
+            [ $this, 'render' ]
+        );
+    }
+
+    /**
+     * The menu label, without the badge.
+     *
+     * @return string
+     */
+    protected function page_title() {
+        return __( 'Changelogs', 'wedocs' );
+    }
+
+    /**
+     * Sit the entry where Pro will later put the real one.
+     *
+     * @return void
+     */
+    public function reorder_menu() {
+        global $submenu;
+
+        if ( $this->is_pro_active() || empty( $submenu['wedocs'] ) ) {
+            return;
+        }
+
+        // Every submenu row is [ title, cap, slug, ... ], so column 2 is the slug.
+        $index = array_search( static::PAGE, array_column( $submenu['wedocs'], 2 ), true );
+
+        if ( false === $index ) {
+            return;
+        }
+
+        $entry = $submenu['wedocs'][ $index ];
+        unset( $submenu['wedocs'][ $index ] );
+        $submenu['wedocs'] = array_values( $submenu['wedocs'] );
+
+        // Anchored to a neighbour rather than a fixed offset, so the position
+        // holds if the surrounding entries ever change.
+        $anchor    = array_search( $this->anchor_slug(), array_column( $submenu['wedocs'], 2 ), true );
+        $insert_at = false === $anchor ? count( $submenu['wedocs'] ) : $anchor + 1;
+
+        array_splice( $submenu['wedocs'], $insert_at, 0, [ $entry ] );
+    }
+
+    /**
+     * Style the PRO badge.
+     *
+     * In `admin_head` because the admin menu renders on every screen, while
+     * the plugin stylesheet only loads on weDocs pages. Printed once even
+     * though both upsell screens ask for it.
+     *
+     * @return void
+     */
+    public function print_badge_styles() {
+        static $printed = false;
+
+        if ( $printed || $this->is_pro_active() ) {
+            return;
+        }
+
+        $printed = true;
         ?>
-        <div class="wedocs-mock__bar">
-            <h2 class="wedocs-mock__title"><?php esc_html_e( 'Changelogs', 'wedocs' ); ?></h2>
-            <span class="wedocs-mock__add" aria-hidden="true">
-                <span class="dashicons dashicons-plus"></span>
-            </span>
-        </div>
-
-        <?php foreach ( $entries as $entry ) : ?>
-            <div class="wedocs-mock__row">
-                <span class="wedocs-mock__grip" aria-hidden="true">
-                    <svg width="10" height="16" viewBox="0 0 10 16" fill="currentColor">
-                        <circle cx="2" cy="2" r="1.5" /><circle cx="8" cy="2" r="1.5" />
-                        <circle cx="2" cy="8" r="1.5" /><circle cx="8" cy="8" r="1.5" />
-                        <circle cx="2" cy="14" r="1.5" /><circle cx="8" cy="14" r="1.5" />
-                    </svg>
-                </span>
-
-                <div class="wedocs-mock__body">
-                    <span class="wedocs-mock__term"><?php echo esc_html( $entry['title'] ); ?></span>
-                    <p class="wedocs-mock__meaning"><?php echo esc_html( $entry['date'] ); ?></p>
-                </div>
-
-                <div class="wedocs-mock__actions">
-                    <span class="wedocs-upsell-tag" style="background:<?php echo esc_attr( $entry['color'] ); ?>26;color:<?php echo esc_attr( $entry['color'] ); ?>;">
-                        <?php echo esc_html( $entry['category'] ); ?>
-                    </span>
-                    <span class="wedocs-upsell-tag" style="background:#f3f4f6;color:#4b5563;">
-                        <?php echo esc_html( $entry['channel'] ); ?>
-                    </span>
-
-                    <svg class="wedocs-mock__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                    </svg>
-                    <svg class="wedocs-mock__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <polyline points="3 6 5 6 21 6" />
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                    </svg>
-                </div>
-            </div>
-        <?php endforeach; ?>
+        <style id="wedocs-pro-badge-style">
+            #adminmenu .wedocs-pro-badge {
+                display: inline-block;
+                margin-left: 6px;
+                padding: 1px 6px;
+                border-radius: 9999px;
+                background: #4f46e5;
+                color: #fff;
+                font-size: 9px;
+                font-weight: 600;
+                line-height: 16px;
+                letter-spacing: .04em;
+                text-transform: uppercase;
+                vertical-align: middle;
+            }
+            #adminmenu li.current .wedocs-pro-badge,
+            #adminmenu a:hover .wedocs-pro-badge {
+                background: #4338ca;
+            }
+        </style>
         <?php
+    }
+
+    /**
+     * Load the preview bundle on this screen only.
+     *
+     * @param string $hook Current admin page hook.
+     *
+     * @return void
+     */
+    public function enqueue( $hook ) {
+        if ( $this->is_pro_active() || 'wedocs_page_' . static::PAGE !== $hook ) {
+            return;
+        }
+
+        $asset_file = WEDOCS_PATH . '/assets/build/upsell.asset.php';
+
+        if ( ! file_exists( $asset_file ) ) {
+            return;
+        }
+
+        $asset = require $asset_file;
+
+        wp_enqueue_style( 'wedocs-app-style' );
+
+        wp_enqueue_script(
+            'wedocs-upsell-script',
+            WEDOCS_ASSETS . '/build/upsell.js',
+            $asset['dependencies'],
+            $asset['version'],
+            true
+        );
+
+        wp_set_script_translations( 'wedocs-upsell-script', 'wedocs', WEDOCS_PATH . '/languages/' );
+    }
+
+    /**
+     * The mount point the preview renders into.
+     *
+     * @return void
+     */
+    public function render() {
+        printf(
+            '<div class="wrap"><div id="wedocs-upsell-app" data-screen="%s"></div></div>',
+            esc_attr( static::PANEL )
+        );
     }
 }

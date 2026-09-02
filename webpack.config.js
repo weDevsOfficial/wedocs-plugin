@@ -16,6 +16,7 @@ const updatedConfig = {
     store    : './src/data/store.js',
     icons    : './src/icons/index.js',
     faq      : './src/faq/index.js',
+    upsell   : './src/upsell.js',
     print    : './src/assets/less/print.less',
     frontend : './src/assets/less/frontend.less',
   },
