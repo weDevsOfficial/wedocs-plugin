@@ -24,8 +24,10 @@ if ( container ) {
 		// Tailwind is scoped to `.wedocs-document` (see tailwind.config.js),
 		// so the panel needs that wrapper to pick up any styling at all.
 		createRoot( container ).render(
-			<div className="wedocs-document">
-				<Panel />
+			// `screen` asks for the list the menu entry promises, rather than
+			// the settings panel the same component draws on the settings page.
+			<div className="wedocs-document w-full">
+				<Panel variant="screen" />
 			</div>
 		);
 	}

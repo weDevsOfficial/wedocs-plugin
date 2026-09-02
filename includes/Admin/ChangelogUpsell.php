@@ -73,11 +73,27 @@ class ChangelogUpsell {
         add_submenu_page(
             'wedocs',
             $this->page_title(),
-            $this->page_title() . ' <span class="wedocs-pro-badge">' . esc_html__( 'Pro', 'wedocs' ) . '</span>',
+            $this->page_title() . ' ' . $this->badge(),
             $cap,
             static::PAGE,
             [ $this, 'render' ]
         );
+    }
+
+    /**
+     * The PRO badge, crown and all.
+     *
+     * The same crown the Premium entry already uses, so the two read as one
+     * family rather than two attempts at the same idea.
+     *
+     * @return string
+     */
+    protected function badge() {
+        $crown = '<svg class="wedocs-pro-badge__crown" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+            . '<path d="M5 16L3 6l5.5 4L12 4l3.5 6L21 6l-2 10H5zm14 3a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-1h14v1z"/>'
+            . '</svg>';
+
+        return '<span class="wedocs-pro-badge">' . esc_html__( 'Pro', 'wedocs' ) . $crown . '</span>';
     }
 
     /**
@@ -140,9 +156,11 @@ class ChangelogUpsell {
         ?>
         <style id="wedocs-pro-badge-style">
             #adminmenu .wedocs-pro-badge {
-                display: inline-block;
+                display: inline-flex;
+                align-items: center;
+                gap: 3px;
                 margin-left: 6px;
-                padding: 1px 6px;
+                padding: 1px 7px;
                 border-radius: 9999px;
                 background: #4f46e5;
                 color: #fff;
@@ -152,6 +170,11 @@ class ChangelogUpsell {
                 letter-spacing: .04em;
                 text-transform: uppercase;
                 vertical-align: middle;
+            }
+            #adminmenu .wedocs-pro-badge__crown {
+                width: 10px;
+                height: 10px;
+                fill: currentColor;
             }
             #adminmenu li.current .wedocs-pro-badge,
             #adminmenu a:hover .wedocs-pro-badge {
@@ -201,7 +224,7 @@ class ChangelogUpsell {
      */
     public function render() {
         printf(
-            '<div class="wrap"><div id="wedocs-upsell-app" data-screen="%s"></div></div>',
+            '<div class="wrap" style="margin-right:20px;"><div id="wedocs-upsell-app" data-screen="%s"></div></div>',
             esc_attr( static::PANEL )
         );
     }
