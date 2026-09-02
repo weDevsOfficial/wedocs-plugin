@@ -10,6 +10,7 @@ import MessageSettings from './AssistantWidgetPanels/MessagePanel';
 import PlacementSettings from './AssistantWidgetPanels/PlacementPanel';
 import PreferenceSettings from './AssistantWidgetPanels/PreferencePanel';
 import SocialShareSettings from './SocialShareSettings';
+import McpSettings from './McpSettings';
 import Badge from './common/Badge';
 
 wp.hooks.addFilter(
@@ -184,6 +185,26 @@ wp.hooks.addFilter(
                     </svg>
                 ),
             };
+            menus.mcp = {
+                pro: true,
+                text: __( 'MCP', 'wedocs' ),
+                icon: (
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#6b7280"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="-ml-1 mr-4 pro-settings"
+                    >
+                        <path d="M12 2a4 4 0 0 1 4 4v5a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z" />
+                        <path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4" />
+                    </svg>
+                ),
+            };
 
             return menus;
         },
@@ -225,6 +246,7 @@ wp.hooks.addFilter(
                     settingsData={ docSettings }
                     setSettings={ setDocSettings }
                 />,
+                <McpSettings key={ index } />,
             ];
         },
         5
