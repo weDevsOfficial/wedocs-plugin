@@ -18,11 +18,11 @@ import {
     useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import FaqConfirmDialog from './FaqConfirmDialog';
+import ConfirmDialog from '../../components/shared/ConfirmDialog';
 import AddFaqForm from './AddFaqForm';
 import FaqItem from './FaqItem';
 import AddFaqGroupModal from './AddFaqGroupModal';
-import ToggleSwitch from './ToggleSwitch';
+import ToggleSwitch from '../../components/shared/ToggleSwitch';
 import { decodeEntities } from '@wordpress/html-entities';
 import { toastSuccess, toastError } from '../utils/toast';
 
@@ -552,7 +552,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             </div>
 
             { /* Duplicate confirmation dialog */ }
-            <FaqConfirmDialog
+            <ConfirmDialog
                 isOpen={ showDuplicateConfirm }
                 onClose={ () => setShowDuplicateConfirm( false ) }
                 onConfirm={ handleDuplicate }
@@ -572,7 +572,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             />
 
             { /* Delete confirmation dialog */ }
-            <FaqConfirmDialog
+            <ConfirmDialog
                 isOpen={ showDeleteConfirm }
                 onClose={ () => setShowDeleteConfirm( false ) }
                 onConfirm={ handleDelete }
@@ -593,7 +593,7 @@ const FaqGroupRow = ( { group, onGroupDuplicated, onGroupDeleted, onGroupUpdated
             />
 
             { /* Duplicate error dialog */ }
-            <FaqConfirmDialog
+            <ConfirmDialog
                 isOpen={ !! duplicateError }
                 onClose={ () => setDuplicateError( '' ) }
                 onConfirm={ () => setDuplicateError( '' ) }

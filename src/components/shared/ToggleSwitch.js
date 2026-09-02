@@ -1,6 +1,6 @@
-// DESCRIPTION: Toggle switch for the FAQ screens.
+// DESCRIPTION: Presentational toggle switch.
 // Mirrors the markup of the settings Switcher (src/components/Switcher.js) so
-// the FAQ toggles look identical to the ones on the settings page. Switcher
+// every toggle looks identical to the ones on the settings page. Switcher
 // itself is bound to the settings store, so only its presentation is reused.
 
 import { Switch } from '@headlessui/react';

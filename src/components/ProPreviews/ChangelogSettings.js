@@ -6,7 +6,77 @@ import { useState } from '@wordpress/element';
  * Pro preview for the Changelog settings (shown in free; locked behind an
  * upgrade overlay). Static mock only — no functional controls.
  */
-const ChangelogSettings = () => {
+/**
+ * The Changelogs list, as the Pro screen draws it: header with the Add button,
+ * then a row per entry with its release date, category and channel.
+ */
+const ChangelogList = () => {
+	const entries = [
+		{ title: 'v2.5.0', date: __( 'Released 12 August 2026', 'wedocs' ), category: __( 'New feature', 'wedocs' ), color: '#0ea5e9', channel: __( 'Pro', 'wedocs' ) },
+		{ title: 'v2.4.3', date: __( 'Released 29 July 2026', 'wedocs' ), category: __( 'Fixes', 'wedocs' ), color: '#b45309', channel: __( 'Free', 'wedocs' ) },
+		{ title: 'v2.4.2', date: __( 'Released 15 July 2026', 'wedocs' ), category: __( 'Improvements', 'wedocs' ), color: '#15a66e', channel: __( 'Free', 'wedocs' ) },
+	];
+
+	return (
+		<>
+			<div className="my-7 flex items-center justify-between">
+				<h1 className="text-xl font-medium text-gray-900 m-0">{ __( 'Changelogs', 'wedocs' ) }</h1>
+				<span className="flex h-9 w-9 items-center justify-center rounded-md bg-indigo-600 text-white">
+					<span className="dashicons dashicons-plus" />
+				</span>
+			</div>
+
+			<div className="space-y-3">
+				{ entries.map( ( entry, i ) => (
+					<div key={ i } className="bg-white border border-gray-300 rounded-md">
+						<div className="flex items-center justify-between">
+							<span className="text-gray-400 flex-shrink-0 px-4 py-6">
+								<svg width="10" height="16" viewBox="0 0 10 16" fill="currentColor">
+									<circle cx="2" cy="2" r="1.5" /><circle cx="8" cy="2" r="1.5" />
+									<circle cx="2" cy="8" r="1.5" /><circle cx="8" cy="8" r="1.5" />
+									<circle cx="2" cy="14" r="1.5" /><circle cx="8" cy="14" r="1.5" />
+								</svg>
+							</span>
+
+							<div className="flex-1 min-w-0 py-5 pr-4">
+								<span className="block truncate text-base font-medium text-black">{ entry.title }</span>
+								<p className="mt-1 mb-0 text-sm text-gray-500">{ entry.date }</p>
+							</div>
+
+							<div className="flex flex-shrink-0 items-center space-x-3 py-5 pr-4">
+								<span
+									className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
+									style={ { background: entry.color + '26', color: entry.color } }
+								>
+									{ entry.category }
+								</span>
+								<span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-semibold text-gray-600">
+									{ entry.channel }
+								</span>
+
+								<svg className="text-gray-400" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+									<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+									<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+								</svg>
+								<svg className="text-gray-400" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+									<polyline points="3 6 5 6 21 6" />
+									<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+								</svg>
+							</div>
+						</div>
+					</div>
+				) ) }
+			</div>
+		</>
+	);
+};
+
+/**
+ * `variant` decides which half of the feature is being previewed: the
+ * Changelogs screen itself, or its settings panel. One component either way,
+ * so the two can only drift together.
+ */
+const ChangelogSettings = ( { variant = 'settings' } ) => {
 	const [ showOverlay, setShowOverlay ] = useState( false );
 
 	const modes = [
@@ -28,6 +98,21 @@ const ChangelogSettings = () => {
 		{ name: __( 'New feature', 'wedocs' ), color: '#0ea5e9' },
 		{ name: __( 'New releases', 'wedocs' ), color: '#4f46e5' },
 	];
+
+	if ( 'screen' === variant ) {
+		return (
+			<section>
+				<div
+					className="relative"
+					onMouseEnter={ () => setShowOverlay( true ) }
+					onMouseLeave={ () => setShowOverlay( false ) }
+				>
+					<ChangelogList />
+					<Overlay classes={ `${ showOverlay ? 'flex items-center justify-center' : 'hidden' }` } />
+				</div>
+			</section>
+		);
+	}
 
 	return (
 		<section>

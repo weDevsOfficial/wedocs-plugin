@@ -7,8 +7,8 @@ import apiFetch from '@wordpress/api-fetch';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import TiptapEditor from './TiptapEditor';
-import FaqConfirmDialog from './FaqConfirmDialog';
-import ToggleSwitch from './ToggleSwitch';
+import ConfirmDialog from '../../components/shared/ConfirmDialog';
+import ToggleSwitch from '../../components/shared/ToggleSwitch';
 import { toastSuccess, toastError } from '../utils/toast';
 
 const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
@@ -298,7 +298,7 @@ const FaqItem = ( { faq, onFaqUpdated, onFaqDeleted } ) => {
                 </div>
             </div>
 
-            <FaqConfirmDialog
+            <ConfirmDialog
                 isOpen={ showDeleteConfirm }
                 onClose={ () => setShowDeleteConfirm( false ) }
                 onConfirm={ () => {

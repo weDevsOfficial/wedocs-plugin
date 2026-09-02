@@ -10,6 +10,7 @@ import MessageSettings from './AssistantWidgetPanels/MessagePanel';
 import PlacementSettings from './AssistantWidgetPanels/PlacementPanel';
 import PreferenceSettings from './AssistantWidgetPanels/PreferencePanel';
 import SocialShareSettings from './SocialShareSettings';
+import GlossarySettings from './GlossarySettings';
 import Badge from './common/Badge';
 
 wp.hooks.addFilter(
@@ -164,6 +165,30 @@ wp.hooks.addFilter(
                         <path d="M1 2.47a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-2zm0 8a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-6zm12 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-6z" />
                     </svg>
                 ),
+                // A parent row, matching what Pro registers: the two panels
+                // below belong to its sub-tabs, so this tab order has to stay
+                // in step with the template order further down.
+                disabled: true,
+                subtabs: [
+                    {
+                        text: __( 'Doc Home', 'wedocs' ),
+                        icon: (
+                            <svg width="20" height="20" fill="none" strokeWidth="2" stroke="#6b7280" strokeLinejoin="round" className="-ml-1 mr-4">
+                                <path d="M3 2.5h11a1.5 1.5 0 0 1 1.5 1.5v11a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 15V4A1.5 1.5 0 0 1 3 2.5z" />
+                                <path d="M1.5 7h14" />
+                            </svg>
+                        ),
+                    },
+                    {
+                        text: __( 'Glossary', 'wedocs' ),
+                        icon: (
+                            <svg width="20" height="20" fill="none" strokeWidth="2" stroke="#6b7280" strokeLinejoin="round" className="-ml-1 mr-4">
+                                <path d="M2.5 3.5h13v11h-13z" />
+                                <path d="M5 7h8M5 10.5h5" strokeLinecap="round" />
+                            </svg>
+                        ),
+                    },
+                ],
             };
             menus.social_share = {
                 pro: true,
@@ -220,6 +245,7 @@ wp.hooks.addFilter(
                     settingsData={ docSettings }
                     setSettings={ setDocSettings }
                 />,
+                <GlossarySettings key={ index } />,
                 <SocialShareSettings
                     key={ index }
                     settingsData={ docSettings }
