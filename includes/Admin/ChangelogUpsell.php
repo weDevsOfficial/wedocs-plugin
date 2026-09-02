@@ -3,124 +3,111 @@
 namespace WeDevs\WeDocs\Admin;
 
 /**
- * Free "Changelogs" submenu — a Pro upsell.
+ * Free "Changelogs" submenu - a Pro upsell.
  *
- * Registered only when weDocs Pro is not active (Pro ships the real screen).
- * Sits under the weDocs menu, right after Docs.
+ * Registered only when weDocs Pro is not active, since Pro ships the real
+ * screen at the same slug and in the same place.
  */
-class ChangelogUpsell {
+class ChangelogUpsell extends UpsellScreen {
 
     /**
-     * Constructor.
+     * @return string
      */
-    public function __construct() {
-        add_action( 'admin_menu', [ $this, 'register_page' ], 20 );
-        add_action( 'admin_menu', [ $this, 'reorder_menu' ], 999 );
+    protected function slug() {
+        return 'wedocs-changelog';
     }
 
     /**
-     * Whether weDocs Pro is active.
-     *
-     * @return bool
+     * @return string
      */
-    private function is_pro_active() {
-        return ( function_exists( 'wedocs_is_pro_active' ) && wedocs_is_pro_active() ) || defined( 'WEDOCS_PRO_VERSION' );
+    protected function menu_title() {
+        return __( 'Changelogs', 'wedocs' );
     }
 
     /**
-     * Register the submenu page.
-     *
-     * @return void
+     * @return string
      */
-    public function register_page() {
-        if ( $this->is_pro_active() ) {
-            return;
-        }
-
-        $cap = function_exists( 'wedocs_get_publish_cap' ) ? wedocs_get_publish_cap() : 'edit_posts';
-
-        add_submenu_page(
-            'wedocs',
-            __( 'Changelogs', 'wedocs' ),
-            __( 'Changelogs', 'wedocs' ),
-            $cap,
-            'wedocs-changelog',
-            [ $this, 'render' ]
-        );
+    protected function heading() {
+        return __( 'Changelog', 'wedocs' );
     }
 
     /**
-     * Move the Changelogs submenu directly below Docs.
-     *
-     * @return void
+     * @return string
      */
-    public function reorder_menu() {
-        global $submenu;
-
-        if ( $this->is_pro_active() || empty( $submenu['wedocs'] ) ) {
-            return;
-        }
-
-        // Every submenu row is [ title, cap, slug, ... ], so column 2 is the slug.
-        $index = array_search( 'wedocs-changelog', array_column( $submenu['wedocs'], 2 ), true );
-
-        if ( false === $index ) {
-            return;
-        }
-
-        $entry = $submenu['wedocs'][ $index ];
-        unset( $submenu['wedocs'][ $index ] );
-        $submenu['wedocs'] = array_values( $submenu['wedocs'] );
-
-        // Land directly after Docs rather than at a fixed offset, so the
-        // position holds if the surrounding entries ever change.
-        $docs_slug  = admin_url( 'admin.php?page=wedocs' ) . '#/';
-        $docs_index = array_search( $docs_slug, array_column( $submenu['wedocs'], 2 ), true );
-        $insert_at  = false === $docs_index ? 1 : $docs_index + 1;
-
-        array_splice( $submenu['wedocs'], $insert_at, 0, [ $entry ] );
+    protected function tagline() {
+        return __( 'Keep your users in the loop with a polished, filterable changelog for your product.', 'wedocs' );
     }
 
     /**
-     * Render the upsell screen.
-     *
-     * @return void
+     * @return string[]
      */
-    public function render() {
-        $upgrade = apply_filters( 'wedocs_changelog_upgrade_url', 'https://wedocs.co/pricing/?utm_source=wp-admin&utm_medium=changelog-menu' );
-
-        $features = [
-            __( 'Publish a beautiful changelog timeline at /changelog', 'wedocs' ),
+    protected function features() {
+        return [
+            __( 'Publish a changelog timeline at /changelog', 'wedocs' ),
             __( 'Group updates into channels (Free, Pro, …) with their own pages', 'wedocs' ),
             __( 'Colour-coded categories: Fixes, Improvements, New feature, New releases', 'wedocs' ),
             __( 'Customisable header banner, brand colour and RSS feed', 'wedocs' ),
             __( 'Embed anywhere with the [wedocs_changelog] shortcode', 'wedocs' ),
         ];
+    }
+
+    /**
+     * Directly below Docs, which is where Pro puts the real screen.
+     *
+     * @return string
+     */
+    protected function anchor_slug() {
+        return admin_url( 'admin.php?page=wedocs' ) . '#/';
+    }
+
+    /**
+     * A still of the changelog list.
+     *
+     * @return void
+     */
+    protected function render_mock() {
+        $entries = [
+            [
+                'title'    => 'v2.5.0',
+                'date'     => __( 'Released 12 August 2026', 'wedocs' ),
+                'category' => __( 'New feature', 'wedocs' ),
+                'color'    => '#0ea5e9',
+                'channel'  => __( 'Pro', 'wedocs' ),
+            ],
+            [
+                'title'    => 'v2.4.3',
+                'date'     => __( 'Released 29 July 2026', 'wedocs' ),
+                'category' => __( 'Fixes', 'wedocs' ),
+                'color'    => '#b45309',
+                'channel'  => __( 'Free', 'wedocs' ),
+            ],
+            [
+                'title'    => 'v2.4.2',
+                'date'     => __( 'Released 15 July 2026', 'wedocs' ),
+                'category' => __( 'Improvements', 'wedocs' ),
+                'color'    => '#15a66e',
+                'channel'  => __( 'Free', 'wedocs' ),
+            ],
+        ];
         ?>
-        <div class="wrap">
-            <div style="max-width:720px;margin:40px auto 0;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:40px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.05);">
-                <span style="display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#4f46e5;background:#eef2ff;border-radius:9999px;padding:5px 12px;">
-                    <?php esc_html_e( 'Pro feature', 'wedocs' ); ?>
-                </span>
-                <h1 style="font-size:28px;margin:18px 0 8px;color:#111827;"><?php esc_html_e( 'Changelog', 'wedocs' ); ?></h1>
-                <p style="font-size:15px;color:#6b7280;margin:0 auto 24px;max-width:520px;">
-                    <?php esc_html_e( 'Keep your users in the loop with a polished, filterable changelog for your product — available in weDocs Pro.', 'wedocs' ); ?>
-                </p>
+        <h2><?php esc_html_e( 'This is what the Changelog screen looks like', 'wedocs' ); ?></h2>
 
-                <ul style="text-align:left;max-width:520px;margin:0 auto 28px;padding:0;list-style:none;">
-                    <?php foreach ( $features as $feature ) : ?>
-                        <li style="display:flex;align-items:flex-start;gap:10px;margin:0 0 12px;color:#374151;font-size:14px;">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;margin-top:1px;"><circle cx="10" cy="10" r="10" fill="#ecfdf5"/><path d="M6 10.5l2.5 2.5L14 7" stroke="#15a66e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            <span><?php echo esc_html( $feature ); ?></span>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-
-                <a href="<?php echo esc_url( $upgrade ); ?>" target="_blank" rel="noopener" class="button button-primary button-hero" style="background:#4f46e5;border-color:#4f46e5;">
-                    <?php esc_html_e( 'Upgrade to Pro', 'wedocs' ); ?>
-                </a>
+        <?php foreach ( $entries as $entry ) : ?>
+            <div class="wedocs-upsell-row">
+                <div>
+                    <p class="wedocs-upsell-row__title"><?php echo esc_html( $entry['title'] ); ?></p>
+                    <p class="wedocs-upsell-row__meta"><?php echo esc_html( $entry['date'] ); ?></p>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <span class="wedocs-upsell-tag" style="background:<?php echo esc_attr( $entry['color'] ); ?>26;color:<?php echo esc_attr( $entry['color'] ); ?>;">
+                        <?php echo esc_html( $entry['category'] ); ?>
+                    </span>
+                    <span class="wedocs-upsell-tag" style="background:#f3f4f6;color:#4b5563;">
+                        <?php echo esc_html( $entry['channel'] ); ?>
+                    </span>
+                </div>
             </div>
-        </div>
+        <?php endforeach; ?>
         <?php
     }
 }
