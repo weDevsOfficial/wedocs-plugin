@@ -219,7 +219,12 @@ abstract class UpsellScreen {
     }
 
     /**
-     * Draw the mock under the upgrade card.
+     * Draw the screen: the mock itself, with the upgrade prompt over it.
+     *
+     * The same treatment the locked settings panels use - a still of the real
+     * thing, dimmed, with the prompt appearing over it - so a Free site meets
+     * one pattern for Pro features rather than a marketing card here and a
+     * preview there.
      *
      * @since WEDOCS_SINCE
      *
@@ -228,30 +233,34 @@ abstract class UpsellScreen {
     public function render() {
         ?>
         <div class="wrap wedocs-upsell">
-            <div class="wedocs-upsell__card">
+            <h1 class="wedocs-upsell__heading">
+                <?php echo esc_html( $this->heading() ); ?>
                 <span class="wedocs-upsell__pill"><?php esc_html_e( 'Pro feature', 'wedocs' ); ?></span>
-                <h1 class="wedocs-upsell__title"><?php echo esc_html( $this->heading() ); ?></h1>
-                <p class="wedocs-upsell__lede"><?php echo esc_html( $this->tagline() ); ?></p>
+            </h1>
+            <p class="wedocs-upsell__lede"><?php echo esc_html( $this->tagline() ); ?></p>
 
-                <ul class="wedocs-upsell__features">
-                    <?php foreach ( $this->features() as $feature ) : ?>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                                <circle cx="10" cy="10" r="10" fill="#ecfdf5" />
-                                <path d="M6 10.5l2.5 2.5L14 7" stroke="#15a66e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                            <span><?php echo esc_html( $feature ); ?></span>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
+            <div class="wedocs-upsell__preview">
+                <div class="wedocs-upsell__mock"><?php $this->render_mock(); ?></div>
 
-                <a href="<?php echo esc_url( $this->upgrade_url() ); ?>" target="_blank" rel="noopener" class="button button-primary button-hero wedocs-upsell__cta">
-                    <?php esc_html_e( 'Upgrade to Pro', 'wedocs' ); ?>
-                </a>
-            </div>
-
-            <div class="wedocs-upsell__preview" aria-hidden="true">
-                <?php $this->render_mock(); ?>
+                <div class="wedocs-upsell__overlay">
+                    <div class="wedocs-upsell__popup">
+                        <h2><?php esc_html_e( 'Unlock and enjoy Pro features', 'wedocs' ); ?></h2>
+                        <ul>
+                            <?php foreach ( $this->features() as $feature ) : ?>
+                                <li>
+                                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                                        <circle cx="10" cy="10" r="10" fill="#ecfdf5" />
+                                        <path d="M6 10.5l2.5 2.5L14 7" stroke="#15a66e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span><?php echo esc_html( $feature ); ?></span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                        <a href="<?php echo esc_url( $this->upgrade_url() ); ?>" target="_blank" rel="noopener" class="wedocs-upsell__cta">
+                            <?php esc_html_e( 'Upgrade to Pro', 'wedocs' ); ?>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
         <?php $this->print_styles(); ?>
@@ -272,33 +281,96 @@ abstract class UpsellScreen {
     protected function print_styles() {
         ?>
         <style>
-            .wedocs-upsell { max-width: 960px; margin: 32px auto 0; }
-            .wedocs-upsell__card {
-                background: #fff; border: 1px solid #e5e7eb; border-radius: 12px;
-                padding: 36px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.05);
+            .wedocs-upsell { max-width: 960px; margin: 24px auto 0; }
+            .wedocs-upsell__heading {
+                display: flex; align-items: center; gap: 12px;
+                font-size: 23px; color: #111827; margin: 0 0 6px; padding: 0;
             }
             .wedocs-upsell__pill {
-                display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .04em;
-                text-transform: uppercase; color: #4f46e5; background: #eef2ff;
-                border-radius: 9999px; padding: 5px 12px;
+                font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+                color: #4f46e5; background: #eef2ff; border-radius: 9999px; padding: 4px 10px;
             }
-            .wedocs-upsell__title { font-size: 28px; margin: 18px 0 8px; color: #111827; }
-            .wedocs-upsell__lede { font-size: 15px; color: #6b7280; margin: 0 auto 24px; max-width: 560px; }
-            .wedocs-upsell__features { text-align: left; max-width: 560px; margin: 0 auto 28px; padding: 0; list-style: none; }
-            .wedocs-upsell__features li {
-                display: flex; align-items: flex-start; gap: 10px;
-                margin: 0 0 12px; color: #374151; font-size: 14px;
-            }
-            .wedocs-upsell__features svg { flex-shrink: 0; margin-top: 1px; }
-            .wedocs-upsell__cta { background: #4f46e5 !important; border-color: #4f46e5 !important; }
-            /* The still of the real screen. Dimmed and inert: it is an
-               illustration, not a control surface. */
+            .wedocs-upsell__lede { font-size: 14px; color: #6b7280; margin: 0 0 20px; max-width: 640px; }
+
             .wedocs-upsell__preview {
-                margin-top: 28px; border: 1px solid #e5e7eb; border-radius: 12px;
-                background: #fff; padding: 24px; opacity: .55; filter: saturate(.85);
-                pointer-events: none; user-select: none;
+                position: relative; border: 1px solid #e5e7eb; border-radius: 12px;
+                background: #fff; overflow: hidden;
             }
-            .wedocs-upsell__preview h2 { font-size: 15px; margin: 0 0 16px; color: #111827; }
+            /* The still is an illustration, not a control surface. */
+            .wedocs-upsell__mock { padding: 24px; pointer-events: none; user-select: none; }
+            .wedocs-upsell__mock h2 { font-size: 15px; margin: 0 0 16px; color: #111827; }
+
+            .wedocs-upsell__overlay {
+                position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+                background: rgba(17, 24, 39, .5); opacity: 0; transition: opacity .15s ease;
+            }
+            .wedocs-upsell__preview:hover .wedocs-upsell__overlay,
+            .wedocs-upsell__overlay:focus-within { opacity: 1; }
+            /* Keyboard and touch users never hover, so the prompt has to be
+               reachable without it. */
+            @media (hover: none) {
+                .wedocs-upsell__overlay { opacity: 1; }
+            }
+
+            .wedocs-upsell__popup {
+                background: #fff; border-radius: 12px; padding: 28px 32px;
+                max-width: 460px; box-shadow: 0 10px 30px rgba(0,0,0,.18);
+            }
+            .wedocs-upsell__popup h2 { margin: 0 0 16px; font-size: 17px; color: #111827; }
+            .wedocs-upsell__popup ul { margin: 0 0 20px; padding: 0; list-style: none; }
+            .wedocs-upsell__popup li {
+                display: flex; align-items: flex-start; gap: 9px;
+                margin: 0 0 10px; color: #374151; font-size: 13px; line-height: 1.5;
+            }
+            .wedocs-upsell__popup svg { flex-shrink: 0; margin-top: 2px; }
+            .wedocs-upsell__cta {
+                display: inline-block; background: #4f46e5; color: #fff; text-decoration: none;
+                font-size: 14px; font-weight: 500; padding: 9px 20px; border-radius: 6px;
+            }
+            .wedocs-upsell__cta:hover, .wedocs-upsell__cta:focus { background: #4338ca; color: #fff; }
+
+            /* Mock chrome, matching the real screens closely enough to be
+               recognisable when the customer later sees them. */
+            .wedocs-mock__bar { display: flex; align-items: center; justify-content: space-between; margin: 0 0 18px; }
+            .wedocs-mock__title { font-size: 18px; font-weight: 600; color: #111827; margin: 0; }
+            .wedocs-mock__add {
+                display: inline-flex; align-items: center; justify-content: center;
+                width: 34px; height: 34px; border-radius: 6px; background: #4f46e5; color: #fff;
+            }
+            .wedocs-mock__add .dashicons { font-size: 20px; width: 20px; height: 20px; }
+            .wedocs-mock__row {
+                display: flex; align-items: flex-start; gap: 4px;
+                background: #fff; border: 1px solid #d1d5db; border-radius: 6px; margin-bottom: 12px;
+            }
+            .wedocs-mock__grip { color: #9ca3af; padding: 22px 16px; flex-shrink: 0; }
+            .wedocs-mock__body { flex: 1; min-width: 0; padding: 18px 16px 18px 0; }
+            .wedocs-mock__term { display: block; font-size: 15px; font-weight: 500; color: #000; }
+            .wedocs-mock__meaning { margin: 4px 0 0; font-size: 13px; color: #6b7280; }
+            .wedocs-mock__link { display: inline-block; margin-top: 4px; font-size: 13px; font-weight: 500; color: #4f46e5; }
+            .wedocs-mock__actions { display: flex; align-items: center; gap: 12px; padding: 20px 16px; flex-shrink: 0; }
+            .wedocs-mock__count { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280; }
+            .wedocs-mock__icon { color: #9ca3af; }
+            .wedocs-mock__switch {
+                display: inline-block; width: 40px; height: 22px; border-radius: 9999px;
+                background: #d1d5db; position: relative;
+            }
+            .wedocs-mock__switch span {
+                position: absolute; top: 2px; left: 2px; width: 18px; height: 18px;
+                border-radius: 9999px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.2);
+            }
+            .wedocs-mock__switch.is-on { background: #4f46e5; }
+            .wedocs-mock__switch.is-on span { left: 20px; }
+
+            .wedocs-mock__reader { border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; background: #f9fafb; }
+            .wedocs-mock__reader p { margin: 0; font-size: 14px; line-height: 1.7; color: #374151; }
+            .wedocs-mock__hit { color: #4f46e5; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+            .wedocs-mock__tooltip {
+                margin-top: 14px; display: inline-block; max-width: 320px;
+                background: #111827; border: 1px solid #111827; border-radius: 6px; padding: 12px 16px;
+            }
+            .wedocs-mock__tooltip span { display: block; color: #f9fafb; font-size: 12px; line-height: 1.6; }
+            .wedocs-mock__tooltip-link { margin-top: 8px; color: #fbbf24 !important; font-weight: 500; }
+
             .wedocs-upsell-row {
                 display: flex; align-items: center; justify-content: space-between; gap: 16px;
                 border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px;

@@ -61,7 +61,9 @@ class ChangelogUpsell extends UpsellScreen {
     }
 
     /**
-     * A still of the changelog list.
+     * A still of the Changelogs screen: the same header and Add button, and
+     * rows carrying the version, its release date, and the colour-coded
+     * category and channel the real list shows.
      *
      * @return void
      */
@@ -90,21 +92,44 @@ class ChangelogUpsell extends UpsellScreen {
             ],
         ];
         ?>
-        <h2><?php esc_html_e( 'This is what the Changelog screen looks like', 'wedocs' ); ?></h2>
+        <div class="wedocs-mock__bar">
+            <h2 class="wedocs-mock__title"><?php esc_html_e( 'Changelogs', 'wedocs' ); ?></h2>
+            <span class="wedocs-mock__add" aria-hidden="true">
+                <span class="dashicons dashicons-plus"></span>
+            </span>
+        </div>
 
         <?php foreach ( $entries as $entry ) : ?>
-            <div class="wedocs-upsell-row">
-                <div>
-                    <p class="wedocs-upsell-row__title"><?php echo esc_html( $entry['title'] ); ?></p>
-                    <p class="wedocs-upsell-row__meta"><?php echo esc_html( $entry['date'] ); ?></p>
+            <div class="wedocs-mock__row">
+                <span class="wedocs-mock__grip" aria-hidden="true">
+                    <svg width="10" height="16" viewBox="0 0 10 16" fill="currentColor">
+                        <circle cx="2" cy="2" r="1.5" /><circle cx="8" cy="2" r="1.5" />
+                        <circle cx="2" cy="8" r="1.5" /><circle cx="8" cy="8" r="1.5" />
+                        <circle cx="2" cy="14" r="1.5" /><circle cx="8" cy="14" r="1.5" />
+                    </svg>
+                </span>
+
+                <div class="wedocs-mock__body">
+                    <span class="wedocs-mock__term"><?php echo esc_html( $entry['title'] ); ?></span>
+                    <p class="wedocs-mock__meaning"><?php echo esc_html( $entry['date'] ); ?></p>
                 </div>
-                <div style="display:flex;align-items:center;gap:8px;">
+
+                <div class="wedocs-mock__actions">
                     <span class="wedocs-upsell-tag" style="background:<?php echo esc_attr( $entry['color'] ); ?>26;color:<?php echo esc_attr( $entry['color'] ); ?>;">
                         <?php echo esc_html( $entry['category'] ); ?>
                     </span>
                     <span class="wedocs-upsell-tag" style="background:#f3f4f6;color:#4b5563;">
                         <?php echo esc_html( $entry['channel'] ); ?>
                     </span>
+
+                    <svg class="wedocs-mock__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                    </svg>
+                    <svg class="wedocs-mock__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    </svg>
                 </div>
             </div>
         <?php endforeach; ?>
