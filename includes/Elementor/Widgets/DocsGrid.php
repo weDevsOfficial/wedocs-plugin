@@ -2748,129 +2748,40 @@ class DocsGrid extends Widget_Base {
     /**
      * Render widget output on the frontend.
      */
-    protected function render() {
-        $settings = $this->get_settings_for_display();
 
-        // Get settings
-        $doc_style = $settings['docStyle'] ?? '1x1';
-        $docs_per_page = intval($settings['docsPerPage'] ?? 9);
-        $exclude_docs = $settings['excludeDocs'] ?? [];
-        $order = $settings['order'] ?? 'asc';
-        $order_by = $settings['orderBy'] ?? 'menu_order';
-        $sections_per_doc = $settings['sectionsPerDoc'] ?? 'all';
+    /**
+     * Render a single doc card.
+     *
+     * Shared by render() and the AJAX "load more" handler so an appended card is
+     * identical to the ones already on the page, instead of a reduced version.
+     *
+     * @since 2.3.2
+     *
+     * @param \WP_Post $doc      The doc post.
+     * @param array    $settings Widget settings.
+     * @param int      $index    Zero-based index within the current page, for stagger delay.
+     *
+     * @return string Card markup.
+     */
+    public static function render_doc_card($doc, $settings, $index = 0) {
+        $doc_style           = $settings['docStyle'] ?? '1x1';
+        $order               = $settings['order'] ?? 'asc';
+        $order_by            = $settings['orderBy'] ?? 'menu_order';
+        $sections_per_doc    = $settings['sectionsPerDoc'] ?? 'all';
         $articles_per_section = $settings['articlesPerSection'] ?? 'all';
-        $show_articles = ($settings['showDocArticle'] ?? 'yes') === 'yes';
-        $keep_collapsed = ($settings['keepArticlesCollapsed'] ?? '') === 'yes';
-        $show_view_details = ($settings['showViewDetails'] ?? 'yes') === 'yes';
-        $button_text = $settings['buttonText'] ?? __('View Details', 'wedocs');
+        $show_articles       = ($settings['showDocArticle'] ?? 'yes') === 'yes';
+        $keep_collapsed      = ($settings['keepArticlesCollapsed'] ?? '') === 'yes';
+        $show_view_details   = ($settings['showViewDetails'] ?? 'yes') === 'yes';
+        $button_text         = $settings['buttonText'] ?? __('View Details', 'wedocs');
+        $item_animation      = $settings['itemAnimation'] ?? 'none';
+        $animation_delay     = $settings['animationDelay']['size'] ?? 100;
+        $stagger_animation   = ($settings['staggerAnimation'] ?? 'yes') === 'yes';
 
-        // Pagination settings
-        $enable_pagination = ($settings['enablePagination'] ?? 'no') === 'yes';
-        $pagination_type = $settings['paginationType'] ?? 'numbers';
-        $load_more_text = $settings['loadMoreText'] ?? __('Load More', 'wedocs');
-        $show_page_info = ($settings['showPageInfo'] ?? 'no') === 'yes';
-        $show_total_count = ($settings['showTotalCount'] ?? 'no') === 'yes';
+        $anim_class = ($item_animation !== 'none') ? ' wedocs-anim wedocs-anim--' . esc_attr($item_animation) : '';
+        $anim_delay = ($item_animation !== 'none' && $stagger_animation) ? ($index * $animation_delay) : 0;
 
-        // Filtering settings
-        $enable_search = ($settings['enableSearch'] ?? 'no') === 'yes';
-        $search_placeholder = $settings['searchPlaceholder'] ?? __('Search docs...', 'wedocs');
-        $enable_sorting = ($settings['enableSorting'] ?? 'no') === 'yes';
-        $enable_view_toggle = ($settings['enableViewToggle'] ?? '') === 'yes';
-
-        // Animation settings
-        $item_animation = $settings['itemAnimation'] ?? 'none';
-        $animation_delay = $settings['animationDelay']['size'] ?? 100;
-        $stagger_animation = ($settings['staggerAnimation'] ?? 'yes') === 'yes';
-
-        // Get current page
-        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-
-        // Query args
-        $args = [
-            'post_type' => 'docs',
-            'post_status' => 'publish',
-            'post_parent' => 0,
-            'orderby' => $order_by,
-            'order' => $order,
-        ];
-
-        // Handle pagination
-        if ($enable_pagination && $docs_per_page > 0) {
-            $args['posts_per_page'] = $docs_per_page;
-            $args['paged'] = $paged;
-        } elseif ($docs_per_page == -1) {
-            $args['posts_per_page'] = -1;
-        } else {
-            $args['posts_per_page'] = $docs_per_page;
-        }
-
-        if (!empty($exclude_docs)) {
-            $args['post__not_in'] = $exclude_docs;
-        }
-
-        $docs_query = new \WP_Query($args);
-        $docs = $docs_query->posts;
-        $total_docs = $docs_query->found_posts;
-        $max_pages = $docs_query->max_num_pages;
-
-        if (empty($docs)) {
-            echo '<p>' . __('No documentation found.', 'wedocs') . '</p>';
-            return;
-        }
-
-        // Grid class
-        $grid_class = 'wedocs-docs-grid';
-        if ($doc_style === '2x2') {
-            $grid_class .= ' wedocs-docs-grid--2x2';
-        } elseif ($doc_style === 'list') {
-            $grid_class .= ' wedocs-docs-grid--list';
-        }
-
+        ob_start();
 ?>
-        <div class="wedocs-grid-wrapper">
-            <?php if ($enable_search || $enable_sorting || $enable_view_toggle): ?>
-                <div class="wedocs-grid-filters">
-                    <?php if ($enable_search): ?>
-                        <div class="wedocs-grid-search">
-                            <input type="text" placeholder="<?php echo esc_attr($search_placeholder); ?>" class="wedocs-grid-search-input" data-grid-id="<?php echo $this->get_id(); ?>">
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if ($enable_sorting): ?>
-                        <div class="wedocs-grid-sort">
-                            <select class="wedocs-grid-sort-select" data-grid-id="<?php echo $this->get_id(); ?>">
-                                <option value="title_asc"><?php _e('Title (A-Z)', 'wedocs'); ?></option>
-                                <option value="title_desc"><?php _e('Title (Z-A)', 'wedocs'); ?></option>
-                                <option value="date_desc"><?php _e('Newest First', 'wedocs'); ?></option>
-                                <option value="date_asc"><?php _e('Oldest First', 'wedocs'); ?></option>
-                            </select>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if ($enable_view_toggle): ?>
-                        <div class="wedocs-view-toggle" data-grid-id="<?php echo $this->get_id(); ?>">
-                            <button type="button" class="wedocs-view-toggle__btn <?php echo ($doc_style !== 'list') ? 'active' : ''; ?>" data-view="grid" title="<?php esc_attr_e('Grid View', 'wedocs'); ?>">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="0" y="0" width="7" height="7"/><rect x="9" y="0" width="7" height="7"/><rect x="0" y="9" width="7" height="7"/><rect x="9" y="9" width="7" height="7"/></svg>
-                            </button>
-                            <button type="button" class="wedocs-view-toggle__btn <?php echo ($doc_style === 'list') ? 'active' : ''; ?>" data-view="list" title="<?php esc_attr_e('List View', 'wedocs'); ?>">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="0" y="1" width="16" height="3"/><rect x="0" y="6.5" width="16" height="3"/><rect x="0" y="12" width="16" height="3"/></svg>
-                            </button>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            <?php endif; ?>
-
-            <?php if ($show_total_count): ?>
-                <div class="wedocs-grid-count">
-                    <?php printf(__('Total: %d documents', 'wedocs'), $total_docs); ?>
-                </div>
-            <?php endif; ?>
-
-            <div class="<?php echo esc_attr($grid_class); ?>" data-grid-id="<?php echo $this->get_id(); ?>">
-                <?php foreach ($docs as $index => $doc):
-                    $anim_class = ($item_animation !== 'none') ? ' wedocs-anim wedocs-anim--' . esc_attr($item_animation) : '';
-                    $anim_delay = ($item_animation !== 'none' && $stagger_animation) ? ($index * $animation_delay) : 0;
-                ?>
                     <div class="wedocs-docs-grid__item<?php echo $anim_class; ?>"<?php if ($item_animation !== 'none'): ?> data-anim-delay="<?php echo esc_attr($anim_delay); ?>"<?php endif; ?>>
                         <div class="wedocs-docs-grid__header">
                             <h3 class="wedocs-docs-grid__title">
@@ -2975,6 +2886,137 @@ class DocsGrid extends Widget_Base {
                             </a>
                         <?php endif; ?>
                     </div>
+<?php
+        return ob_get_clean();
+    }
+
+    protected function render() {
+        $settings = $this->get_settings_for_display();
+
+        // Get settings
+        $doc_style = $settings['docStyle'] ?? '1x1';
+        $docs_per_page = intval($settings['docsPerPage'] ?? 9);
+        $exclude_docs = $settings['excludeDocs'] ?? [];
+        $order = $settings['order'] ?? 'asc';
+        $order_by = $settings['orderBy'] ?? 'menu_order';
+        // Per-card display settings are derived inside render_doc_card().
+
+        // Pagination settings
+        $enable_pagination = ($settings['enablePagination'] ?? 'no') === 'yes';
+        $pagination_type = $settings['paginationType'] ?? 'numbers';
+
+        // Fall back to numbers so an unexpected stored value never renders an
+        // empty pagination area with no way to reach page two.
+        if (!in_array($pagination_type, ['numbers', 'ajax', 'infinite', 'prev_next'], true)) {
+            $pagination_type = 'numbers';
+        }
+        $load_more_text = $settings['loadMoreText'] ?? __('Load More', 'wedocs');
+        $show_page_info = ($settings['showPageInfo'] ?? 'no') === 'yes';
+        $show_total_count = ($settings['showTotalCount'] ?? 'no') === 'yes';
+
+        // Filtering settings
+        $enable_search = ($settings['enableSearch'] ?? 'no') === 'yes';
+        $search_placeholder = $settings['searchPlaceholder'] ?? __('Search docs...', 'wedocs');
+        $enable_sorting = ($settings['enableSorting'] ?? 'no') === 'yes';
+        $enable_view_toggle = ($settings['enableViewToggle'] ?? '') === 'yes';
+
+
+        // Get current page
+        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
+        // Id of the document this widget is saved on. Used by the AJAX "load
+        // more" handler to read these same settings back server-side, so it
+        // must be the Elementor document, not the current post in the loop.
+        $current_doc_id = get_queried_object_id();
+
+        if (class_exists('\Elementor\Plugin') && \Elementor\Plugin::$instance->documents->get_current()) {
+            $current_doc_id = \Elementor\Plugin::$instance->documents->get_current()->get_main_id();
+        }
+
+        // Query args
+        $args = [
+            'post_type' => 'docs',
+            'post_status' => 'publish',
+            'post_parent' => 0,
+            'orderby' => $order_by,
+            'order' => $order,
+        ];
+
+        // Handle pagination
+        if ($enable_pagination && $docs_per_page > 0) {
+            $args['posts_per_page'] = $docs_per_page;
+            $args['paged'] = $paged;
+        } elseif ($docs_per_page == -1) {
+            $args['posts_per_page'] = -1;
+        } else {
+            $args['posts_per_page'] = $docs_per_page;
+        }
+
+        if (!empty($exclude_docs)) {
+            $args['post__not_in'] = $exclude_docs;
+        }
+
+        $docs_query = new \WP_Query($args);
+        $docs = $docs_query->posts;
+        $total_docs = $docs_query->found_posts;
+        $max_pages = $docs_query->max_num_pages;
+
+        if (empty($docs)) {
+            echo '<p>' . __('No documentation found.', 'wedocs') . '</p>';
+            return;
+        }
+
+        // Grid class
+        $grid_class = 'wedocs-docs-grid';
+        if ($doc_style === '2x2') {
+            $grid_class .= ' wedocs-docs-grid--2x2';
+        } elseif ($doc_style === 'list') {
+            $grid_class .= ' wedocs-docs-grid--list';
+        }
+
+?>
+        <div class="wedocs-grid-wrapper">
+            <?php if ($enable_search || $enable_sorting || $enable_view_toggle): ?>
+                <div class="wedocs-grid-filters">
+                    <?php if ($enable_search): ?>
+                        <div class="wedocs-grid-search">
+                            <input type="text" placeholder="<?php echo esc_attr($search_placeholder); ?>" class="wedocs-grid-search-input" data-grid-id="<?php echo $this->get_id(); ?>">
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ($enable_sorting): ?>
+                        <div class="wedocs-grid-sort">
+                            <select class="wedocs-grid-sort-select" data-grid-id="<?php echo $this->get_id(); ?>">
+                                <option value="title_asc"><?php _e('Title (A-Z)', 'wedocs'); ?></option>
+                                <option value="title_desc"><?php _e('Title (Z-A)', 'wedocs'); ?></option>
+                                <option value="date_desc"><?php _e('Newest First', 'wedocs'); ?></option>
+                                <option value="date_asc"><?php _e('Oldest First', 'wedocs'); ?></option>
+                            </select>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ($enable_view_toggle): ?>
+                        <div class="wedocs-view-toggle" data-grid-id="<?php echo $this->get_id(); ?>">
+                            <button type="button" class="wedocs-view-toggle__btn <?php echo ($doc_style !== 'list') ? 'active' : ''; ?>" data-view="grid" title="<?php esc_attr_e('Grid View', 'wedocs'); ?>">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="0" y="0" width="7" height="7"/><rect x="9" y="0" width="7" height="7"/><rect x="0" y="9" width="7" height="7"/><rect x="9" y="9" width="7" height="7"/></svg>
+                            </button>
+                            <button type="button" class="wedocs-view-toggle__btn <?php echo ($doc_style === 'list') ? 'active' : ''; ?>" data-view="list" title="<?php esc_attr_e('List View', 'wedocs'); ?>">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="0" y="1" width="16" height="3"/><rect x="0" y="6.5" width="16" height="3"/><rect x="0" y="12" width="16" height="3"/></svg>
+                            </button>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($show_total_count): ?>
+                <div class="wedocs-grid-count">
+                    <?php printf(__('Total: %d documents', 'wedocs'), $total_docs); ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="<?php echo esc_attr($grid_class); ?>" data-grid-id="<?php echo $this->get_id(); ?>">
+                <?php foreach ($docs as $index => $doc): ?>
+                    <?php echo self::render_doc_card($doc, $settings, $index); ?>
                 <?php endforeach; ?>
             </div>
 
@@ -3443,6 +3485,7 @@ class DocsGrid extends Widget_Base {
                             action: 'wedocs_load_more_docs',
                             page: page + 1,
                             widget_id: widgetId,
+                            post_id: <?php echo (int) $current_doc_id; ?>,
                             nonce: '<?php echo wp_create_nonce('wedocs_load_more'); ?>'
                         },
                         success: function(response) {

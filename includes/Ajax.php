@@ -53,6 +53,18 @@ class Ajax {
         // Handle load more for DocsGrid widget
         add_action('wp_ajax_wedocs_load_more_docs', [$this, 'load_more_docs']);
         add_action('wp_ajax_nopriv_wedocs_load_more_docs', [$this, 'load_more_docs']);
+
+        // Handle "Was This Helpful" votes
+        add_action('wp_ajax_wedocs_helpful_vote', [$this, 'handle_helpful_vote']);
+        add_action('wp_ajax_nopriv_wedocs_helpful_vote', [$this, 'handle_helpful_vote']);
+
+        // Handle "Was This Helpful" feedback
+        add_action('wp_ajax_wedocs_helpful_feedback', [$this, 'handle_helpful_feedback']);
+        add_action('wp_ajax_nopriv_wedocs_helpful_feedback', [$this, 'handle_helpful_feedback']);
+
+        // Handle "Need More Help" form submission
+        add_action('wp_ajax_wedocs_need_help_submit', [$this, 'handle_need_help_submit']);
+        add_action('wp_ajax_nopriv_wedocs_need_help_submit', [$this, 'handle_need_help_submit']);
     }
 
     /**
@@ -336,51 +348,118 @@ class Ajax {
     public function load_more_docs() {
         check_ajax_referer('wedocs_load_more', 'nonce');
 
-        $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+        $page      = isset($_POST['page']) ? max(1, intval($_POST['page'])) : 1;
         $widget_id = isset($_POST['widget_id']) ? sanitize_text_field($_POST['widget_id']) : '';
+        $post_id   = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
 
-        // This is a simplified version - in production you'd need to get all the widget settings
-        // from the POST data or store them in a transient
+        // Resolve the widget's own settings server-side. They are never taken
+        // from the request: this endpoint is unauthenticated, so a client-supplied
+        // posts_per_page or post__not_in would let anyone shape the query.
+        // An empty result is not fatal: the widget may live in a theme-builder
+        // template rather than the queried post. Fall back to defaults, which
+        // still yields a correctly shaped card.
+        $settings = $this->get_widget_settings($widget_id, $post_id);
+
+        $docs_per_page = intval($settings['docsPerPage'] ?? 9);
+        $exclude_docs  = $settings['excludeDocs'] ?? [];
+        $order         = $settings['order'] ?? 'asc';
+        $order_by      = $settings['orderBy'] ?? 'menu_order';
+
+        if ($docs_per_page <= 0) {
+            $docs_per_page = 9;
+        }
+
         $args = [
-            'post_type' => 'docs',
-            'post_status' => 'publish',
-            'post_parent' => 0,
-            'posts_per_page' => 9, // Default, should come from settings
-            'paged' => $page,
+            'post_type'      => 'docs',
+            'post_status'    => 'publish',
+            'post_parent'    => 0,
+            'orderby'        => $order_by,
+            'order'          => $order,
+            'posts_per_page' => $docs_per_page,
+            'paged'          => $page,
         ];
+
+        if (!empty($exclude_docs)) {
+            $args['post__not_in'] = array_map('intval', (array) $exclude_docs);
+        }
 
         $docs_query = new \WP_Query($args);
 
         if (!$docs_query->have_posts()) {
-            wp_send_json_error(['message' => 'No more docs found']);
-            return;
+            wp_send_json_error(['message' => __('No more docs found.', 'wedocs')]);
         }
 
-        ob_start();
+        // Continue the stagger delay from where the previous page finished.
+        $offset = ($page - 1) * $docs_per_page;
+        $html   = '';
 
-        while ($docs_query->have_posts()) {
-            $docs_query->the_post();
-            $doc = get_post();
-?>
-            <div class="wedocs-docs-grid__item">
-                <h3 class="wedocs-docs-grid__title">
-                    <a href="<?php echo get_permalink($doc->ID); ?>"><?php echo esc_html($doc->post_title); ?></a>
-                </h3>
-                <a href="<?php echo get_permalink($doc->ID); ?>" class="wedocs-docs-grid__details-link">
-                    <?php _e('View Details', 'wedocs'); ?>
-                </a>
-            </div>
-<?php
+        foreach ($docs_query->posts as $index => $doc) {
+            $html .= \WeDevs\WeDocs\Elementor\Widgets\DocsGrid::render_doc_card($doc, $settings, $offset + $index);
         }
-
-        $html = ob_get_clean();
-        wp_reset_postdata();
 
         wp_send_json_success([
-            'html' => $html,
-            'page' => $page,
-            'max_pages' => $docs_query->max_num_pages
+            'html'      => $html,
+            'page'      => $page,
+            'max_pages' => $docs_query->max_num_pages,
         ]);
+    }
+
+    /**
+     * Resolve an Elementor widget's saved settings server-side.
+     *
+     * Mirrors get_need_help_recipient(): settings for an unauthenticated
+     * endpoint are read from the Elementor document rather than the request
+     * payload, so a caller cannot influence the resulting query.
+     *
+     * @since 2.3.2
+     *
+     * @param string $widget_id Elementor widget (element) id.
+     * @param int    $post_id   Post the widget lives on.
+     *
+     * @return array Widget settings, or an empty array when not resolvable.
+     */
+    private function get_widget_settings($widget_id, $post_id) {
+        if (!$post_id || !$widget_id || !did_action('elementor/loaded') || !class_exists('\Elementor\Plugin')) {
+            return [];
+        }
+
+        $document = \Elementor\Plugin::$instance->documents->get($post_id);
+
+        if (!$document) {
+            return [];
+        }
+
+        $settings = $this->find_widget_settings($document->get_elements_data(), $widget_id);
+
+        return is_array($settings) ? $settings : [];
+    }
+
+    /**
+     * Recursively find the settings array for a given Elementor element id.
+     *
+     * @since 2.3.2
+     *
+     * @param array  $elements  Elementor elements tree.
+     * @param string $widget_id Target element id.
+     *
+     * @return array|null
+     */
+    private function find_widget_settings($elements, $widget_id) {
+        foreach ((array) $elements as $element) {
+            if (isset($element['id']) && $element['id'] === $widget_id) {
+                return isset($element['settings']) ? (array) $element['settings'] : [];
+            }
+
+            if (!empty($element['elements'])) {
+                $found = $this->find_widget_settings($element['elements'], $widget_id);
+
+                if (null !== $found) {
+                    return $found;
+                }
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -418,7 +497,7 @@ class Ajax {
 
         // Get current user ID and IP
         $user_id = get_current_user_id();
-        $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
+        $user_ip = wedocs_get_client_ip();
 
         // Check if user can vote
         if ( ! $user_id && ! $allow_anonymous ) {
@@ -445,7 +524,7 @@ class Ajax {
             }
         } elseif ( ! $has_voted && $allow_anonymous && $user_ip ) {
             // Check by IP for anonymous users
-            $ip_vote = get_post_meta( $post_id, "wedocs_helpful_vote_ip_" . md5( $user_ip ), true );
+            $ip_vote = wedocs_has_anonymous_voted( $post_id, $user_ip );
             if ( $ip_vote ) {
                 $has_voted = true;
             }
@@ -467,7 +546,7 @@ class Ajax {
         if ( $user_id ) {
             update_post_meta( $post_id, "wedocs_helpful_vote_user_{$user_id}", $vote );
         } elseif ( $allow_anonymous && $user_ip ) {
-            update_post_meta( $post_id, "wedocs_helpful_vote_ip_" . md5( $user_ip ), $vote );
+            wedocs_record_anonymous_vote( $post_id, $user_ip, $vote );
         }
 
         // Also update cookie-based tracking for compatibility with existing system
@@ -581,5 +660,300 @@ class Ajax {
             // Return JSON response
             wp_send_json_success( $results );
         }
+    }
+
+    /**
+     * Handle "Was This Helpful" vote.
+     */
+    public function handle_helpful_vote() {
+        check_ajax_referer('wedocs_helpful_vote', 'nonce');
+
+        $post_id = intval($_POST['post_id'] ?? 0);
+        $vote = sanitize_text_field($_POST['vote'] ?? '');
+
+        if (!$post_id || !in_array($vote, ['yes', 'no'], true)) {
+            wp_send_json_error(['message' => __('Invalid vote.', 'wedocs')]);
+        }
+
+        // Only allow voting on docs posts.
+        if (get_post_type($post_id) !== 'docs') {
+            wp_send_json_error(['message' => __('Invalid post type.', 'wedocs')]);
+        }
+
+        // Prevent duplicate/inflated votes (cookie + user meta + IP transient).
+        $user_id = get_current_user_id();
+        $user_ip = wedocs_get_client_ip();
+
+        $previous = isset($_COOKIE['wedocs_response']) ? explode(',', $_COOKIE['wedocs_response']) : [];
+        $has_voted = in_array((string) $post_id, $previous, true);
+
+        if (!$has_voted && $user_id && get_post_meta($post_id, "wedocs_helpful_vote_user_{$user_id}", true)) {
+            $has_voted = true;
+        }
+
+        if (!$has_voted && !$user_id && $user_ip && wedocs_has_anonymous_voted($post_id, $user_ip)) {
+            $has_voted = true;
+        }
+
+        if ($has_voted) {
+            wp_send_json_error([
+                'already_voted' => true,
+                'message'       => __('You have already voted on this article.', 'wedocs'),
+            ]);
+        }
+
+        $meta_key = $vote === 'yes' ? 'positive' : 'negative';
+        $current = (int) get_post_meta($post_id, $meta_key, true);
+        update_post_meta($post_id, $meta_key, $current + 1);
+
+        // Record the vote so it cannot be repeated.
+        if ($user_id) {
+            update_post_meta($post_id, "wedocs_helpful_vote_user_{$user_id}", $vote);
+        } elseif ($user_ip) {
+            wedocs_record_anonymous_vote($post_id, $user_ip, $vote);
+        }
+
+        $previous[] = $post_id;
+        setcookie('wedocs_response', implode(',', $previous), time() + WEEK_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+
+        wp_send_json_success([
+            'yes' => (int) get_post_meta($post_id, 'positive', true),
+            'no' => (int) get_post_meta($post_id, 'negative', true),
+        ]);
+    }
+
+    /**
+     * Handle "Was This Helpful" negative feedback text.
+     */
+    public function handle_helpful_feedback() {
+        check_ajax_referer('wedocs_helpful_vote', 'nonce');
+
+        // Unauthenticated and appends to a single growing meta row, so throttle
+        // per IP the same way the other public write endpoints do.
+        if (!wedocs_rate_limit_ok('helpful_feedback', 5, HOUR_IN_SECONDS)) {
+            wp_send_json_error(['message' => __('Too many requests. Please try again later.', 'wedocs')]);
+        }
+
+        $post_id = intval($_POST['post_id'] ?? 0);
+        $feedback = sanitize_textarea_field($_POST['feedback'] ?? '');
+
+        if (!$post_id || empty($feedback)) {
+            wp_send_json_error(['message' => __('Invalid feedback.', 'wedocs')]);
+        }
+
+        // Only allow feedback on docs posts.
+        if (get_post_type($post_id) !== 'docs') {
+            wp_send_json_error(['message' => __('Invalid post type.', 'wedocs')]);
+        }
+
+        $existing = get_post_meta($post_id, '_wedocs_helpful_feedback', true);
+        if (!is_array($existing)) {
+            $existing = [];
+        }
+
+        $existing[] = [
+            'feedback' => $feedback,
+            'date' => current_time('mysql'),
+            'ip' => wedocs_get_client_ip(),
+        ];
+
+        update_post_meta($post_id, '_wedocs_helpful_feedback', $existing);
+        wp_send_json_success();
+    }
+
+
+    /**
+     * Handle "Need More Help" contact form submission.
+     */
+    public function handle_need_help_submit() {
+        $widget_id = sanitize_text_field($_POST['widget_id'] ?? '');
+
+        if (!wp_verify_nonce($_POST['nonce'] ?? '', 'wedocs_need_help_' . $widget_id)) {
+            wp_send_json_error(['message' => __('Security check failed.', 'wedocs')]);
+        }
+
+        // The nonce is public to every anonymous visitor, so throttle per IP
+        // before doing any work that sends mail or writes a submission row.
+        if (!wedocs_rate_limit_ok('need_help', 5, HOUR_IN_SECONDS)) {
+            wp_send_json_error(['message' => __('Too many requests. Please try again later.', 'wedocs')]);
+        }
+
+        $name = sanitize_text_field($_POST['name'] ?? '');
+        $email = sanitize_email($_POST['email'] ?? '');
+        $subject = sanitize_text_field($_POST['subject'] ?? '');
+        $message = sanitize_textarea_field($_POST['message'] ?? '');
+        $page_url = esc_url_raw($_POST['page_url'] ?? '');
+        $page_title = sanitize_text_field($_POST['page_title'] ?? '');
+        $save_to_elementor = sanitize_text_field($_POST['save_to_elementor'] ?? '');
+        $post_id = intval($_POST['post_id'] ?? 0);
+
+        if (empty($message)) {
+            wp_send_json_error(['message' => __('Message is required.', 'wedocs')]);
+        }
+
+        // SECURITY: never trust a client-supplied recipient (open-relay risk).
+        // Resolve the recipient server-side from the widget's saved settings and
+        // fall back to the site admin email.
+        $recipient = $this->get_need_help_recipient($widget_id, $post_id);
+
+        if (empty($recipient) || !is_email($recipient)) {
+            $recipient = get_option('admin_email');
+        }
+
+        // Send email
+        $email_subject = !empty($subject) ? $subject : sprintf(__('[weDocs] Support request from %s', 'wedocs'), $page_title);
+
+        $body = sprintf(__("Name: %s\n", 'wedocs'), $name ?: __('Not provided', 'wedocs'));
+        $body .= sprintf(__("Email: %s\n", 'wedocs'), $email ?: __('Not provided', 'wedocs'));
+        $body .= sprintf(__("Page: %s (%s)\n\n", 'wedocs'), $page_title, $page_url);
+        $body .= sprintf(__("Message:\n%s", 'wedocs'), $message);
+
+        $headers = ['Content-Type: text/plain; charset=UTF-8'];
+        if (!empty($email) && is_email($email)) {
+            $headers[] = 'Reply-To: ' . ($name ? "$name <$email>" : $email);
+        }
+
+        $sent = wp_mail($recipient, $email_subject, $body, $headers);
+
+        // Save to Elementor Pro submissions if enabled
+        if ($save_to_elementor === 'yes') {
+            $this->save_to_elementor_submissions($widget_id, $post_id, $page_url, $page_title, [
+                'name' => $name,
+                'email' => $email,
+                'subject' => $subject,
+                'message' => $message,
+            ]);
+        }
+
+        if ($sent) {
+            wp_send_json_success();
+        } else {
+            wp_send_json_error(['message' => __('Failed to send email. Please try again.', 'wedocs')]);
+        }
+    }
+
+    /**
+     * Resolve the "Need More Help" recipient email server-side.
+     *
+     * The recipient is configured in the Elementor widget settings and must
+     * NEVER be taken from the request payload, otherwise the endpoint becomes
+     * an open mail relay. We read the widget's `recipient_email` control from
+     * the Elementor document of the given post; if unavailable we fall back to
+     * the site admin email.
+     *
+     * @param string $widget_id The Elementor widget (element) id.
+     * @param int    $post_id   The post/page the widget lives on.
+     *
+     * @return string
+     */
+    private function get_need_help_recipient($widget_id, $post_id) {
+        $recipient = '';
+
+        if ($post_id && $widget_id && did_action('elementor/loaded') && class_exists('\Elementor\Plugin')) {
+            $document = \Elementor\Plugin::$instance->documents->get($post_id);
+
+            if ($document) {
+                $data = $document->get_elements_data();
+                $recipient = $this->find_widget_setting($data, $widget_id, 'recipient_email');
+            }
+        }
+
+        $recipient = sanitize_email($recipient);
+
+        /**
+         * Filters the resolved "Need More Help" recipient email.
+         *
+         * @param string $recipient Recipient email resolved from widget settings.
+         * @param string $widget_id Elementor widget id.
+         * @param int    $post_id   Post id the widget lives on.
+         */
+        return apply_filters('wedocs_need_help_recipient', $recipient, $widget_id, $post_id);
+    }
+
+    /**
+     * Recursively find a setting value for a given Elementor element id.
+     *
+     * @param array  $elements Elementor elements tree.
+     * @param string $widget_id Target element id.
+     * @param string $setting_key Setting key to read.
+     *
+     * @return string
+     */
+    private function find_widget_setting($elements, $widget_id, $setting_key) {
+        foreach ((array) $elements as $element) {
+            if (isset($element['id']) && $element['id'] === $widget_id) {
+                return isset($element['settings'][$setting_key]) ? (string) $element['settings'][$setting_key] : '';
+            }
+
+            if (!empty($element['elements'])) {
+                $found = $this->find_widget_setting($element['elements'], $widget_id, $setting_key);
+                if ($found !== '') {
+                    return $found;
+                }
+            }
+        }
+
+        return '';
+    }
+
+    /**
+     * Save form data to Elementor Pro submissions table.
+     *
+     * @param string $widget_id   The Elementor widget ID.
+     * @param int    $post_id     The post/page ID where the form was submitted.
+     * @param string $page_url    The page URL (referer).
+     * @param string $page_title  The page title.
+     * @param array  $fields      Associative array of field id => value.
+     */
+    private function save_to_elementor_submissions($widget_id, $post_id, $page_url, $page_title, $fields) {
+        // Check if Elementor Pro submissions are available
+        if (!class_exists('\ElementorPro\Modules\Forms\Submissions\Database\Query')) {
+            return;
+        }
+
+        $query = \ElementorPro\Modules\Forms\Submissions\Database\Query::get_instance();
+
+        $fields_data = [];
+        foreach ($fields as $id => $value) {
+            if (empty($value)) {
+                continue;
+            }
+
+            $type = 'text';
+            if ($id === 'email') {
+                $type = 'email';
+            } elseif ($id === 'message') {
+                $type = 'textarea';
+            }
+
+            $fields_data[] = [
+                'id'    => $id,
+                'value' => $value,
+                'type'  => $type,
+            ];
+        }
+
+        if (empty($fields_data)) {
+            return;
+        }
+
+        $submission_data = [
+            'post_id'                 => $post_id ?: 0,
+            'referer'                 => $page_url,
+            'referer_title'           => $page_title,
+            'element_id'              => $widget_id,
+            'form_name'               => __('weDocs - Need More Help', 'wedocs'),
+            'campaign_id'             => 0,
+            'user_id'                 => get_current_user_id() ?: null,
+            'user_ip'                 => sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? ''),
+            'user_agent'              => sanitize_text_field($_SERVER['HTTP_USER_AGENT'] ?? ''),
+            'actions_count'           => 1,
+            'actions_succeeded_count' => 1,
+            'meta'                    => wp_json_encode([
+                'edit_post_id' => $post_id ?: 0,
+            ]),
+        ];
+
+        $query->add_submission($submission_data, $fields_data);
     }
 }

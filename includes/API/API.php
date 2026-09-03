@@ -1042,8 +1042,9 @@ class API extends WP_REST_Controller {
                 continue;
             }
 
-            $positive = (int) get_post_meta( $doc->ID, 'positive', true );
-            $negative = (int) get_post_meta( $doc->ID, 'negative', true );
+            // Get feedback counts
+            $positive = (int) get_post_meta($doc->ID, 'positive', true);
+            $negative = (int) get_post_meta($doc->ID, 'negative', true);
             if ( empty( $positive ) && empty( $negative ) ) {
                 continue;
             }
@@ -1520,7 +1521,7 @@ class API extends WP_REST_Controller {
         return false;
     }
 
-     /**
+    /**
      * Handle promotional notice hidden action
      *
      * @since 2.1.11

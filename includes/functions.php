@@ -250,53 +250,138 @@ if ( !function_exists( 'wedocs_get_breadcrumb_item' ) ) {
 }
 
 /**
+ * Find the top-level (root) doc ancestor for a given doc.
+ *
+ * weDocs docs form a tree: parent doc -> sections -> articles. The root is
+ * the ancestor whose post_parent is 0.
+ *
+ * @since 2.2.7
+ *
+ * @param int $post_id Doc post ID.
+ *
+ * @return int Root doc ID (returns $post_id itself if already top-level).
+ */
+function wedocs_get_doc_root_id( $post_id ) {
+    $post_id = (int) $post_id;
+    $visited = [];
+
+    while ( $post_id ) {
+        if ( isset( $visited[ $post_id ] ) ) {
+            return 0;
+        }
+        $visited[ $post_id ] = true;
+
+        $parent = (int) wp_get_post_parent_id( $post_id );
+        if ( ! $parent ) {
+            break;
+        }
+        $post_id = $parent;
+    }
+
+    return $post_id;
+}
+
+/**
+ * Build the full reading order of a doc tree as a flat list.
+ *
+ * Walks the tree depth-first (parent, then each child's subtree in
+ * menu_order) so the result matches the order a reader sees in the sidebar
+ * — the same order a book reads. This lets next/prev cross section
+ * boundaries instead of being trapped among same-parent siblings.
+ *
+ * @since 2.2.7
+ *
+ * @param int $root_id Top-level doc ID.
+ *
+ * @return array List of post objects ( ID, post_title ) in reading order.
+ */
+function wedocs_get_doc_tree_order( $root_id ) {
+    global $wpdb;
+
+    $root_id = (int) $root_id;
+    if ( ! $root_id ) {
+        return [];
+    }
+
+    // Pull every published doc once, then assemble the tree in PHP.
+    // No user input in this query; table name comes from $wpdb.
+    //
+    // Order must mirror the sidebar exactly. The sidebar renders via
+    // wp_list_pages( order=menu_order ), whose effective sort is
+    // ( menu_order ASC, post_title ASC ). Matching that here keeps next/prev
+    // perfectly in step with the visible nav at every nesting level — equal
+    // menu_order values (e.g. all 0, never drag-reordered) fall back to
+    // alphabetical title, just like the sidebar.
+    $rows = $wpdb->get_results(
+        "SELECT ID, post_title, post_parent, menu_order
+         FROM {$wpdb->posts}
+         WHERE post_type = 'docs' AND post_status = 'publish'
+         ORDER BY menu_order ASC, post_title ASC"
+    );
+
+    // Group children by parent.
+    $children = [];
+    foreach ( $rows as $row ) {
+        $children[ (int) $row->post_parent ][] = $row;
+    }
+
+    $order = [];
+
+    $walk = function ( $id ) use ( &$walk, &$order, $children ) {
+        if ( empty( $children[ $id ] ) ) {
+            return;
+        }
+        foreach ( $children[ $id ] as $child ) {
+            $order[] = $child;
+            $walk( (int) $child->ID );
+        }
+    };
+
+    // Seed with the root node itself, then descend.
+    $root_post = get_post( $root_id );
+    if ( $root_post && 'docs' === $root_post->post_type && 'publish' === $root_post->post_status ) {
+        $order[] = (object) [
+            'ID'         => $root_post->ID,
+            'post_title' => $root_post->post_title,
+        ];
+    }
+    $walk( $root_id );
+
+    return $order;
+}
+
+/**
  * Get next and previous document posts for navigation.
- * Improved version that handles menu_order = 0 and non-sequential ordering.
+ *
+ * Tree-aware: navigates the entire doc tree in reading order, so next/prev
+ * cross section boundaries (e.g. last article of a section links to the
+ * first article of the next section) instead of dead-ending on a section
+ * with a single article.
  *
  * @param WP_Post $post Current post object
  * @return array Array with 'next' and 'prev' keys containing post objects or null
  */
 function wedocs_get_doc_navigation_posts( $post ) {
-    global $wpdb;
-
     if ( ! $post || $post->post_type !== 'docs' ) {
         return [ 'next' => null, 'prev' => null ];
     }
-    // Get all sibling posts ordered by menu_order, then by date
-    $siblings_query = "SELECT ID, post_title, menu_order FROM {$wpdb->posts}
-        WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish'
-        ORDER BY menu_order ASC, post_date ASC";
-    $siblings = $wpdb->get_results( $siblings_query );
-    $next_post     = null;
-    $prev_post     = null;
-    $current_found = false;
-    // Find current post position and determine next/prev
-    foreach ( $siblings as $index => $sibling ) {
-        if ( $sibling->ID == $post->ID ) {
-            $current_found = true;
-            // Get previous post (if exists)
+
+    $root_id = wedocs_get_doc_root_id( $post->ID );
+    $order   = wedocs_get_doc_tree_order( $root_id );
+
+    $next_post = null;
+    $prev_post = null;
+
+    foreach ( $order as $index => $node ) {
+        if ( (int) $node->ID === (int) $post->ID ) {
             if ( $index > 0 ) {
-                $prev_post = $siblings[ $index - 1 ];
+                $prev_post = $order[ $index - 1 ];
             }
-            // Get next post (if exists)
-            if ( $index < count( $siblings ) - 1 ) {
-                $next_post = $siblings[ $index + 1 ];
+            if ( $index < count( $order ) - 1 ) {
+                $next_post = $order[ $index + 1 ];
             }
             break;
         }
-    }
-    // Fallback to original queries if current post not found in siblings
-    if ( ! $current_found ) {
-        $next_query = "SELECT ID, post_title FROM {$wpdb->posts}
-            WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish' and menu_order > {$post->menu_order}
-            ORDER BY menu_order ASC
-            LIMIT 0, 1";
-        $prev_query = "SELECT ID, post_title FROM {$wpdb->posts}
-            WHERE post_parent = {$post->post_parent} and post_type = 'docs' and post_status = 'publish' and menu_order < {$post->menu_order}
-            ORDER BY menu_order DESC
-            LIMIT 0, 1";
-        $next_post = $wpdb->get_row( $next_query );
-        $prev_post = $wpdb->get_row( $prev_query );
     }
 
     return [
@@ -1152,35 +1237,88 @@ function wedocs_get_upgrade_popup_content() {
 	return apply_filters( 'wedocs_upgrade_popup_content', $default_content );
 }
 
-function use_wedocs_legacy_template(){
+/**
+ * Resolve which renderer should handle the single doc page.
+ *
+ * Single source of truth for the template/builder competition. Every
+ * renderer (classic, block, Elementor, and any future editor) must gate
+ * itself on this value so only one of them ever renders a single doc.
+ *
+ * Resolution order:
+ *   1. Explicit `single_doc_template` setting, when the user has chosen one.
+ *   2. Back-compat: legacy boolean `use_legacy_template` ('on' => legacy),
+ *      consulted only when no `single_doc_template` setting is stored.
+ *   3. Auto-detect: Elementor template present => elementor; block theme => block.
+ *   4. Fallback: legacy.
+ *
+ * @since 2.2.7
+ *
+ * @return string One of: 'legacy', 'block', 'elementor'.
+ */
+function wedocs_get_single_doc_renderer() {
     $general_settings = wedocs_get_option( 'general', 'wedocs_settings', [] );
+    $valid            = [ 'legacy', 'block', 'elementor' ];
 
-    // If the setting has been explicitly set, use it directly.
-    if ( isset( $general_settings['use_legacy_template'] ) ) {
-        return $general_settings['use_legacy_template'] === 'on';
+    // 1. Explicit modern setting wins.
+    if ( ! empty( $general_settings['single_doc_template'] )
+        && in_array( $general_settings['single_doc_template'], $valid, true ) ) {
+        $renderer = $general_settings['single_doc_template'];
+
+        // 'elementor' only valid while Elementor is active; otherwise fall through.
+        if ( 'elementor' !== $renderer || did_action( 'elementor/loaded' ) ) {
+            return apply_filters( 'wedocs_single_doc_renderer', $renderer );
+        }
     }
 
-    // current installed version is lower than 2.1.19 and wp_is_block_theme() is false, then set use_legacy_template to on.
-    $current_version = get_option( 'wedocs_version', '2.0.0' );
-    if ( version_compare( $current_version, '2.1.19', '<' ) && ! wp_is_block_theme() ) {
+    // 2. Back-compat with the old binary flag — only when no modern setting exists.
+    if ( empty( $general_settings['single_doc_template'] )
+        && isset( $general_settings['use_legacy_template'] ) ) {
+        $renderer = 'on' === $general_settings['use_legacy_template'] ? 'legacy' : 'block';
 
-        $settings['general']['use_legacy_template'] = 'on';
-        update_option( 'wedocs_settings', $settings );
-
-        return true;
+        return apply_filters( 'wedocs_single_doc_renderer', $renderer );
     }
 
-    if ( wp_is_block_theme() ) {
-
-        $settings['general']['use_legacy_template'] = 'off';
-        update_option( 'wedocs_settings', $settings );
-
-        return false;
+    // 3. No explicit choice yet — auto-detect a sensible default.
+    if ( did_action( 'elementor/loaded' ) && wedocs_has_elementor_single_doc_template() ) {
+        $renderer = 'elementor';
+    } elseif ( wp_is_block_theme() ) {
+        $renderer = 'block';
+    } else {
+        // Pre-2.1.19 classic installs default to legacy.
+        $current_version = get_option( 'wedocs_version', '2.0.0' );
+        $renderer = version_compare( $current_version, '2.1.19', '<' ) ? 'legacy' : 'legacy';
     }
 
+    return apply_filters( 'wedocs_single_doc_renderer', $renderer );
+}
 
+/**
+ * Whether an imported Elementor single-doc template exists.
+ *
+ * @since 2.2.7
+ *
+ * @return bool
+ */
+function wedocs_has_elementor_single_doc_template() {
+    $templates = get_posts( [
+        'post_type'      => 'elementor_library',
+        'meta_key'       => '_wedocs_template',
+        'meta_value'     => true,
+        'posts_per_page' => 1,
+        'fields'         => 'ids',
+        'no_found_rows'  => true,
+    ] );
 
-    return false;
+    return ! empty( $templates );
+}
+
+/**
+ * Back-compat shim. Prefer wedocs_get_single_doc_renderer().
+ *
+ * @return bool True when the classic (legacy) renderer should be used.
+ */
+function use_wedocs_legacy_template(){
+    return 'legacy' === wedocs_get_single_doc_renderer();
 }
 
 if ( ! function_exists( 'wedocs_rate_limit_ok' ) ) {
@@ -1220,5 +1358,126 @@ if ( ! function_exists( 'wedocs_rate_limit_ok' ) ) {
         set_transient( $key, array( 'count' => $count + 1, 'start' => $start ), $remaining );
 
         return true;
+    }
+}
+
+if ( ! function_exists( 'wedocs_get_vote_ip_key' ) ) {
+    /**
+     * Build the transient key that records an anonymous vote for a doc.
+     *
+     * Anonymous votes used to be stored as one permanent postmeta row per
+     * unique IP per doc (`wedocs_helpful_vote_ip_<md5>`), which grew without
+     * bound on a busy site. They are now kept in an expiring transient keyed
+     * by a salted hash, so the address is not recoverable from the stored key.
+     *
+     * @since 2.3.2
+     *
+     * @param int    $post_id Doc post id.
+     * @param string $ip      Client IP address.
+     *
+     * @return string Transient key, or an empty string when the IP is unusable.
+     */
+    function wedocs_get_vote_ip_key( $post_id, $ip ) {
+        $post_id = (int) $post_id;
+
+        if ( ! $post_id || empty( $ip ) ) {
+            return '';
+        }
+
+        return 'wedocs_vote_' . md5( $post_id . '|' . wp_salt( 'nonce' ) . '|' . $ip );
+    }
+}
+
+if ( ! function_exists( 'wedocs_has_anonymous_voted' ) ) {
+    /**
+     * Check whether an anonymous visitor already voted on a doc.
+     *
+     * Reads the current transient store and falls back to the legacy postmeta
+     * row so visitors who voted before the upgrade stay de-duplicated.
+     *
+     * @since 2.3.2
+     *
+     * @param int    $post_id Doc post id.
+     * @param string $ip      Client IP address.
+     *
+     * @return string|false The recorded vote, or false when none exists.
+     */
+    function wedocs_has_anonymous_voted( $post_id, $ip ) {
+        $key = wedocs_get_vote_ip_key( $post_id, $ip );
+
+        if ( empty( $key ) ) {
+            return false;
+        }
+
+        $vote = get_transient( $key );
+
+        if ( ! empty( $vote ) ) {
+            return $vote;
+        }
+
+        // Legacy store, still honoured for votes cast before the upgrade.
+        $legacy = get_post_meta( (int) $post_id, 'wedocs_helpful_vote_ip_' . md5( $ip ), true );
+
+        return ! empty( $legacy ) ? $legacy : false;
+    }
+}
+
+if ( ! function_exists( 'wedocs_record_anonymous_vote' ) ) {
+    /**
+     * Record an anonymous vote so it cannot be repeated.
+     *
+     * @since 2.3.2
+     *
+     * @param int    $post_id Doc post id.
+     * @param string $ip      Client IP address.
+     * @param string $vote    Either 'yes' or 'no'.
+     *
+     * @return void
+     */
+    function wedocs_record_anonymous_vote( $post_id, $ip, $vote ) {
+        $key = wedocs_get_vote_ip_key( $post_id, $ip );
+
+        if ( empty( $key ) ) {
+            return;
+        }
+
+        /**
+         * Filters how long an anonymous vote is remembered.
+         *
+         * @since 2.3.2
+         *
+         * @param int $ttl Lifetime in seconds.
+         */
+        $ttl = (int) apply_filters( 'wedocs_anonymous_vote_ttl', MONTH_IN_SECONDS );
+
+        set_transient( $key, $vote, $ttl );
+    }
+}
+
+if ( ! function_exists( 'wedocs_get_client_ip' ) ) {
+    /**
+     * Resolve the client IP address used for rate limiting and vote de-duplication.
+     *
+     * Only REMOTE_ADDR is trusted by default, because forwarded headers are
+     * attacker-controlled unless a known proxy sits in front of the site.
+     * Sites behind a trusted reverse proxy or CDN can opt in via the filter.
+     *
+     * @since 2.3.2
+     *
+     * @return string Validated IP address, or an empty string.
+     */
+    function wedocs_get_client_ip() {
+        $ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+
+        /**
+         * Filters the resolved client IP address.
+         *
+         * @since 2.3.2
+         *
+         * @param string $ip Client IP resolved from REMOTE_ADDR.
+         */
+        $ip = apply_filters( 'wedocs_client_ip', $ip );
+
+        return filter_var( $ip, FILTER_VALIDATE_IP ) ? $ip : '';
     }
 }
