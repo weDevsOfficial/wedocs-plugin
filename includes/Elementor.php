@@ -18,11 +18,10 @@ class Elementor {
         add_action('elementor/frontend/after_register_scripts', [$this, 'register_widget_scripts']);
         add_action('elementor/frontend/after_enqueue_styles', [$this, 'register_widget_styles']);
 
-        // Register templates
-        add_action('init', [$this, 'init_templates']);
-
-        // Admin only scripts for Elementor editor
+        // Admin-only: template import is a one-time setup task and the editor
+        // scripts are editor-only, so visitors never enter either path.
         if (is_admin()) {
+            add_action('init', [$this, 'init_templates']);
             add_action('elementor/editor/footer', [$this, 'enqueue_template_scripts']);
         }
     }
@@ -115,30 +114,50 @@ class Elementor {
      * Import default weDocs templates
      */
     public function import_default_templates() {
-        // Clean up any existing templates with incorrect format
-        $this->fix_existing_template_conditions();
+        $already_imported = (bool) get_option('wedocs_elementor_templates_imported');
 
-        // Force re-import if templates exist with wrong format
-        $existing_templates = get_posts([
-            'post_type' => 'elementor_library',
-            'meta_key' => '_wedocs_template',
-            'meta_value' => true,
-            'posts_per_page' => 1
-        ]);
+        // The format repair below only ever applies to a template this plugin
+        // already imported, and it is a one-time migration. Run it once per
+        // version instead of on every request: the checks used to sit above the
+        // "already imported" guard, so each front-end request paid for repeated
+        // elementor_library meta queries.
+        $repair_version = get_option('wedocs_elementor_templates_repaired');
 
-        if (!empty($existing_templates)) {
-            // Check if existing template has proper data format
-            $elementor_data = get_post_meta($existing_templates[0]->ID, '_elementor_data', true);
-            if (is_array($elementor_data)) {
-                // Re-import with correct format
-                delete_option('wedocs_elementor_templates_imported');
-                wp_delete_post($existing_templates[0]->ID, true);
-            }
+        if ($already_imported && WEDOCS_VERSION === $repair_version) {
+            return;
         }
 
-        // Check if template import is needed
-        if (get_option('wedocs_elementor_templates_imported')) {
-            return;
+        if ($already_imported) {
+            // Clean up any existing templates with incorrect format.
+            $this->fix_existing_template_conditions();
+
+            // Force re-import if templates exist with wrong format.
+            $existing_templates = get_posts([
+                'post_type' => 'elementor_library',
+                'meta_key' => '_wedocs_template',
+                'meta_value' => true,
+                'posts_per_page' => 1
+            ]);
+
+            if (!empty($existing_templates)) {
+                // Check if existing template has proper data format
+                $elementor_data = get_post_meta($existing_templates[0]->ID, '_elementor_data', true);
+
+                if (is_array($elementor_data)) {
+                    // Trash rather than permanently delete: the site owner may
+                    // have customised this template, and a hard delete leaves
+                    // them nothing to recover.
+                    delete_option('wedocs_elementor_templates_imported');
+                    wp_trash_post($existing_templates[0]->ID);
+                    $already_imported = false;
+                }
+            }
+
+            update_option('wedocs_elementor_templates_repaired', WEDOCS_VERSION);
+
+            if ($already_imported) {
+                return;
+            }
         }
 
         if (! add_option('wedocs_elementor_templates_import_lock', time(), '', 'no')) {
@@ -152,11 +171,59 @@ class Elementor {
                 // Set template conditions for single docs
                 $this->set_template_conditions($template_id, 'single_docs');
 
+                // Writing _elementor_conditions is not enough on its own:
+                // Elementor Pro serves the theme-builder location from its own
+                // conditions cache, so the template never applies until that
+                // cache is rebuilt from the meta we just wrote.
+                // Deferred: Pro registers its conditions on `wp_loaded`, after
+                // the `init` hook this import runs on, so regenerating here
+                // would rebuild against an unregistered set.
+                if (did_action('wp_loaded')) {
+                    $this->refresh_theme_builder_conditions();
+                } else {
+                    add_action('wp_loaded', [$this, 'refresh_theme_builder_conditions'], 20);
+                }
+
                 // Mark as imported
                 update_option('wedocs_elementor_templates_imported', true);
+                update_option('wedocs_elementor_templates_repaired', WEDOCS_VERSION);
             }
         } finally {
             delete_option('wedocs_elementor_templates_import_lock');
+        }
+    }
+
+    /**
+     * Rebuild Elementor Pro's theme-builder conditions cache.
+     *
+     * Pro resolves which template applies to a request from the
+     * `elementor_pro_theme_builder_conditions` option, not from the
+     * `_elementor_conditions` post meta directly. A template imported by
+     * writing meta is therefore invisible until the cache is regenerated.
+     *
+     * @return void
+     */
+    public function refresh_theme_builder_conditions() {
+        if (! class_exists('\ElementorPro\Modules\ThemeBuilder\Module')) {
+            return;
+        }
+
+        $module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
+
+        if (! $module || ! method_exists($module, 'get_conditions_manager')) {
+            return;
+        }
+
+        $manager = $module->get_conditions_manager();
+
+        if (! $manager || ! method_exists($manager, 'get_cache')) {
+            return;
+        }
+
+        $cache = $manager->get_cache();
+
+        if ($cache && method_exists($cache, 'regenerate')) {
+            $cache->regenerate();
         }
     }
 

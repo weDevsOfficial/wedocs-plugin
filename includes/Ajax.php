@@ -348,51 +348,118 @@ class Ajax {
     public function load_more_docs() {
         check_ajax_referer('wedocs_load_more', 'nonce');
 
-        $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+        $page      = isset($_POST['page']) ? max(1, intval($_POST['page'])) : 1;
         $widget_id = isset($_POST['widget_id']) ? sanitize_text_field($_POST['widget_id']) : '';
+        $post_id   = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
 
-        // This is a simplified version - in production you'd need to get all the widget settings
-        // from the POST data or store them in a transient
+        // Resolve the widget's own settings server-side. They are never taken
+        // from the request: this endpoint is unauthenticated, so a client-supplied
+        // posts_per_page or post__not_in would let anyone shape the query.
+        // An empty result is not fatal: the widget may live in a theme-builder
+        // template rather than the queried post. Fall back to defaults, which
+        // still yields a correctly shaped card.
+        $settings = $this->get_widget_settings($widget_id, $post_id);
+
+        $docs_per_page = intval($settings['docsPerPage'] ?? 9);
+        $exclude_docs  = $settings['excludeDocs'] ?? [];
+        $order         = $settings['order'] ?? 'asc';
+        $order_by      = $settings['orderBy'] ?? 'menu_order';
+
+        if ($docs_per_page <= 0) {
+            $docs_per_page = 9;
+        }
+
         $args = [
-            'post_type' => 'docs',
-            'post_status' => 'publish',
-            'post_parent' => 0,
-            'posts_per_page' => 9, // Default, should come from settings
-            'paged' => $page,
+            'post_type'      => 'docs',
+            'post_status'    => 'publish',
+            'post_parent'    => 0,
+            'orderby'        => $order_by,
+            'order'          => $order,
+            'posts_per_page' => $docs_per_page,
+            'paged'          => $page,
         ];
+
+        if (!empty($exclude_docs)) {
+            $args['post__not_in'] = array_map('intval', (array) $exclude_docs);
+        }
 
         $docs_query = new \WP_Query($args);
 
         if (!$docs_query->have_posts()) {
-            wp_send_json_error(['message' => 'No more docs found']);
-            return;
+            wp_send_json_error(['message' => __('No more docs found.', 'wedocs')]);
         }
 
-        ob_start();
+        // Continue the stagger delay from where the previous page finished.
+        $offset = ($page - 1) * $docs_per_page;
+        $html   = '';
 
-        while ($docs_query->have_posts()) {
-            $docs_query->the_post();
-            $doc = get_post();
-?>
-            <div class="wedocs-docs-grid__item">
-                <h3 class="wedocs-docs-grid__title">
-                    <a href="<?php echo get_permalink($doc->ID); ?>"><?php echo esc_html($doc->post_title); ?></a>
-                </h3>
-                <a href="<?php echo get_permalink($doc->ID); ?>" class="wedocs-docs-grid__details-link">
-                    <?php _e('View Details', 'wedocs'); ?>
-                </a>
-            </div>
-<?php
+        foreach ($docs_query->posts as $index => $doc) {
+            $html .= \WeDevs\WeDocs\Elementor\Widgets\DocsGrid::render_doc_card($doc, $settings, $offset + $index);
         }
-
-        $html = ob_get_clean();
-        wp_reset_postdata();
 
         wp_send_json_success([
-            'html' => $html,
-            'page' => $page,
-            'max_pages' => $docs_query->max_num_pages
+            'html'      => $html,
+            'page'      => $page,
+            'max_pages' => $docs_query->max_num_pages,
         ]);
+    }
+
+    /**
+     * Resolve an Elementor widget's saved settings server-side.
+     *
+     * Mirrors get_need_help_recipient(): settings for an unauthenticated
+     * endpoint are read from the Elementor document rather than the request
+     * payload, so a caller cannot influence the resulting query.
+     *
+     * @since 2.3.2
+     *
+     * @param string $widget_id Elementor widget (element) id.
+     * @param int    $post_id   Post the widget lives on.
+     *
+     * @return array Widget settings, or an empty array when not resolvable.
+     */
+    private function get_widget_settings($widget_id, $post_id) {
+        if (!$post_id || !$widget_id || !did_action('elementor/loaded') || !class_exists('\Elementor\Plugin')) {
+            return [];
+        }
+
+        $document = \Elementor\Plugin::$instance->documents->get($post_id);
+
+        if (!$document) {
+            return [];
+        }
+
+        $settings = $this->find_widget_settings($document->get_elements_data(), $widget_id);
+
+        return is_array($settings) ? $settings : [];
+    }
+
+    /**
+     * Recursively find the settings array for a given Elementor element id.
+     *
+     * @since 2.3.2
+     *
+     * @param array  $elements  Elementor elements tree.
+     * @param string $widget_id Target element id.
+     *
+     * @return array|null
+     */
+    private function find_widget_settings($elements, $widget_id) {
+        foreach ((array) $elements as $element) {
+            if (isset($element['id']) && $element['id'] === $widget_id) {
+                return isset($element['settings']) ? (array) $element['settings'] : [];
+            }
+
+            if (!empty($element['elements'])) {
+                $found = $this->find_widget_settings($element['elements'], $widget_id);
+
+                if (null !== $found) {
+                    return $found;
+                }
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -430,7 +497,7 @@ class Ajax {
 
         // Get current user ID and IP
         $user_id = get_current_user_id();
-        $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
+        $user_ip = wedocs_get_client_ip();
 
         // Check if user can vote
         if ( ! $user_id && ! $allow_anonymous ) {
@@ -457,7 +524,7 @@ class Ajax {
             }
         } elseif ( ! $has_voted && $allow_anonymous && $user_ip ) {
             // Check by IP for anonymous users
-            $ip_vote = get_post_meta( $post_id, "wedocs_helpful_vote_ip_" . md5( $user_ip ), true );
+            $ip_vote = wedocs_has_anonymous_voted( $post_id, $user_ip );
             if ( $ip_vote ) {
                 $has_voted = true;
             }
@@ -479,7 +546,7 @@ class Ajax {
         if ( $user_id ) {
             update_post_meta( $post_id, "wedocs_helpful_vote_user_{$user_id}", $vote );
         } elseif ( $allow_anonymous && $user_ip ) {
-            update_post_meta( $post_id, "wedocs_helpful_vote_ip_" . md5( $user_ip ), $vote );
+            wedocs_record_anonymous_vote( $post_id, $user_ip, $vote );
         }
 
         // Also update cookie-based tracking for compatibility with existing system
@@ -613,9 +680,9 @@ class Ajax {
             wp_send_json_error(['message' => __('Invalid post type.', 'wedocs')]);
         }
 
-        // Prevent duplicate/inflated votes (cookie + user meta + IP meta).
+        // Prevent duplicate/inflated votes (cookie + user meta + IP transient).
         $user_id = get_current_user_id();
-        $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
+        $user_ip = wedocs_get_client_ip();
 
         $previous = isset($_COOKIE['wedocs_response']) ? explode(',', $_COOKIE['wedocs_response']) : [];
         $has_voted = in_array((string) $post_id, $previous, true);
@@ -624,7 +691,7 @@ class Ajax {
             $has_voted = true;
         }
 
-        if (!$has_voted && !$user_id && $user_ip && get_post_meta($post_id, 'wedocs_helpful_vote_ip_' . md5($user_ip), true)) {
+        if (!$has_voted && !$user_id && $user_ip && wedocs_has_anonymous_voted($post_id, $user_ip)) {
             $has_voted = true;
         }
 
@@ -643,7 +710,7 @@ class Ajax {
         if ($user_id) {
             update_post_meta($post_id, "wedocs_helpful_vote_user_{$user_id}", $vote);
         } elseif ($user_ip) {
-            update_post_meta($post_id, 'wedocs_helpful_vote_ip_' . md5($user_ip), $vote);
+            wedocs_record_anonymous_vote($post_id, $user_ip, $vote);
         }
 
         $previous[] = $post_id;
@@ -660,6 +727,12 @@ class Ajax {
      */
     public function handle_helpful_feedback() {
         check_ajax_referer('wedocs_helpful_vote', 'nonce');
+
+        // Unauthenticated and appends to a single growing meta row, so throttle
+        // per IP the same way the other public write endpoints do.
+        if (!wedocs_rate_limit_ok('helpful_feedback', 5, HOUR_IN_SECONDS)) {
+            wp_send_json_error(['message' => __('Too many requests. Please try again later.', 'wedocs')]);
+        }
 
         $post_id = intval($_POST['post_id'] ?? 0);
         $feedback = sanitize_textarea_field($_POST['feedback'] ?? '');
@@ -681,12 +754,13 @@ class Ajax {
         $existing[] = [
             'feedback' => $feedback,
             'date' => current_time('mysql'),
-            'ip' => sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? ''),
+            'ip' => wedocs_get_client_ip(),
         ];
 
         update_post_meta($post_id, '_wedocs_helpful_feedback', $existing);
         wp_send_json_success();
     }
+
 
     /**
      * Handle "Need More Help" contact form submission.
@@ -696,6 +770,12 @@ class Ajax {
 
         if (!wp_verify_nonce($_POST['nonce'] ?? '', 'wedocs_need_help_' . $widget_id)) {
             wp_send_json_error(['message' => __('Security check failed.', 'wedocs')]);
+        }
+
+        // The nonce is public to every anonymous visitor, so throttle per IP
+        // before doing any work that sends mail or writes a submission row.
+        if (!wedocs_rate_limit_ok('need_help', 5, HOUR_IN_SECONDS)) {
+            wp_send_json_error(['message' => __('Too many requests. Please try again later.', 'wedocs')]);
         }
 
         $name = sanitize_text_field($_POST['name'] ?? '');

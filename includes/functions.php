@@ -1360,3 +1360,124 @@ if ( ! function_exists( 'wedocs_rate_limit_ok' ) ) {
         return true;
     }
 }
+
+if ( ! function_exists( 'wedocs_get_vote_ip_key' ) ) {
+    /**
+     * Build the transient key that records an anonymous vote for a doc.
+     *
+     * Anonymous votes used to be stored as one permanent postmeta row per
+     * unique IP per doc (`wedocs_helpful_vote_ip_<md5>`), which grew without
+     * bound on a busy site. They are now kept in an expiring transient keyed
+     * by a salted hash, so the address is not recoverable from the stored key.
+     *
+     * @since 2.3.2
+     *
+     * @param int    $post_id Doc post id.
+     * @param string $ip      Client IP address.
+     *
+     * @return string Transient key, or an empty string when the IP is unusable.
+     */
+    function wedocs_get_vote_ip_key( $post_id, $ip ) {
+        $post_id = (int) $post_id;
+
+        if ( ! $post_id || empty( $ip ) ) {
+            return '';
+        }
+
+        return 'wedocs_vote_' . md5( $post_id . '|' . wp_salt( 'nonce' ) . '|' . $ip );
+    }
+}
+
+if ( ! function_exists( 'wedocs_has_anonymous_voted' ) ) {
+    /**
+     * Check whether an anonymous visitor already voted on a doc.
+     *
+     * Reads the current transient store and falls back to the legacy postmeta
+     * row so visitors who voted before the upgrade stay de-duplicated.
+     *
+     * @since 2.3.2
+     *
+     * @param int    $post_id Doc post id.
+     * @param string $ip      Client IP address.
+     *
+     * @return string|false The recorded vote, or false when none exists.
+     */
+    function wedocs_has_anonymous_voted( $post_id, $ip ) {
+        $key = wedocs_get_vote_ip_key( $post_id, $ip );
+
+        if ( empty( $key ) ) {
+            return false;
+        }
+
+        $vote = get_transient( $key );
+
+        if ( ! empty( $vote ) ) {
+            return $vote;
+        }
+
+        // Legacy store, still honoured for votes cast before the upgrade.
+        $legacy = get_post_meta( (int) $post_id, 'wedocs_helpful_vote_ip_' . md5( $ip ), true );
+
+        return ! empty( $legacy ) ? $legacy : false;
+    }
+}
+
+if ( ! function_exists( 'wedocs_record_anonymous_vote' ) ) {
+    /**
+     * Record an anonymous vote so it cannot be repeated.
+     *
+     * @since 2.3.2
+     *
+     * @param int    $post_id Doc post id.
+     * @param string $ip      Client IP address.
+     * @param string $vote    Either 'yes' or 'no'.
+     *
+     * @return void
+     */
+    function wedocs_record_anonymous_vote( $post_id, $ip, $vote ) {
+        $key = wedocs_get_vote_ip_key( $post_id, $ip );
+
+        if ( empty( $key ) ) {
+            return;
+        }
+
+        /**
+         * Filters how long an anonymous vote is remembered.
+         *
+         * @since 2.3.2
+         *
+         * @param int $ttl Lifetime in seconds.
+         */
+        $ttl = (int) apply_filters( 'wedocs_anonymous_vote_ttl', MONTH_IN_SECONDS );
+
+        set_transient( $key, $vote, $ttl );
+    }
+}
+
+if ( ! function_exists( 'wedocs_get_client_ip' ) ) {
+    /**
+     * Resolve the client IP address used for rate limiting and vote de-duplication.
+     *
+     * Only REMOTE_ADDR is trusted by default, because forwarded headers are
+     * attacker-controlled unless a known proxy sits in front of the site.
+     * Sites behind a trusted reverse proxy or CDN can opt in via the filter.
+     *
+     * @since 2.3.2
+     *
+     * @return string Validated IP address, or an empty string.
+     */
+    function wedocs_get_client_ip() {
+        $ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+
+        /**
+         * Filters the resolved client IP address.
+         *
+         * @since 2.3.2
+         *
+         * @param string $ip Client IP resolved from REMOTE_ADDR.
+         */
+        $ip = apply_filters( 'wedocs_client_ip', $ip );
+
+        return filter_var( $ip, FILTER_VALIDATE_IP ) ? $ip : '';
+    }
+}
