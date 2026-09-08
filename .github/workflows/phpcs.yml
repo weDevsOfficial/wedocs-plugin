@@ -1,0 +1,81 @@
+on:
+  # Every pull request that touches a PHP file, inspecting only the files that
+  # pull request changes. The paths filter keeps frontend-only work from
+  # spending a runner on a job with nothing to check.
+  pull_request:
+    paths:
+      - '**.php'
+
+# Cancels a previous run of this workflow that has not completed.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+name: PHPCS Inspections
+jobs:
+  runPHPCSInspection:
+    name: Run PHPCS inspection
+    runs-on: ubuntu-latest
+    steps:
+      # A pull_request checkout is the merge commit, whose first parent is the
+      # base branch tip and second parent is the pull request head. Depth 2 is
+      # therefore all the history the diff below needs.
+      # The job never pushes, so the checkout token is not kept on disk.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: none
+          tools: cs2pr, composer:v2
+
+      - name: Get composer cache directory
+        id: composercache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          key: "${{ runner.os }}-phpcs-${{ hashFiles('phpcs.xml.dist') }}"
+          restore-keys: ${{ runner.os }}-phpcs-
+
+      # Installed outside the repository, unlike the Dokan and WPUF workflows
+      # this mirrors. weDocs lists includes/functions.php in composer's
+      # autoload.files, and that file calls WordPress functions at file scope
+      # (wedocs_is_plugin_active() at :397, add_action at :583 and :584,
+      # add_filter at :613). PHPCS loads vendor/autoload.php when it is present,
+      # so installing the tooling in the plugin's own vendor/ makes phpcs fatal
+      # on an undefined ABSPATH before it lints anything.
+      # Tracked in weDevsOfficial/wedocs-pro#420, which also carries the fix.
+      - name: Install PHPCS and the WordPress standards
+        run: |
+          mkdir -p "$RUNNER_TEMP/phpcs-tools"
+          cd "$RUNNER_TEMP/phpcs-tools"
+          echo '{}' > composer.json
+          composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+          composer require --no-interaction --prefer-dist --no-progress \
+            squizlabs/php_codesniffer:^3.10 \
+            wp-coding-standards/wpcs:^3.1 \
+            phpcompatibility/phpcompatibility-wp:^2.1
+          echo "$RUNNER_TEMP/phpcs-tools/vendor/bin" >> "$GITHUB_PATH"
+
+      # The PHP files this pull request changes: the merge commit against its
+      # first parent, so nothing that merely landed on the base branch in the
+      # meantime is inspected. Deleted files are dropped by the -f test.
+      - id: changes
+        run: |
+          FILES=$(git diff --name-only HEAD^1 HEAD -- '*.php' \
+            | sort -u \
+            | while read -r f; do [ -n "$f" ] && [ -f "$f" ] && echo "$f"; done \
+            | xargs)
+          echo "files=$FILES" >> $GITHUB_OUTPUT
+          echo "PHP files changed by this pull request: ${FILES:-none}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Detect coding standard violations
+        if: steps.changes.outputs.files != ''
+        run: phpcs --standard=phpcs.xml.dist ${{ steps.changes.outputs.files }} -q --report=checkstyle | cs2pr --graceful-warnings
