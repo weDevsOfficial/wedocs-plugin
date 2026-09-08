@@ -8,7 +8,8 @@
  * what they do. This keeps only findings that sit on added or modified lines.
  *
  * Usage: phpcs --report=json <files> | php bin/phpcs-changed-lines.php <base-sha>
- * Exits 1 if any finding survives, 0 otherwise. Emits GitHub annotations.
+ * Annotates every surviving finding, but only ERRORS fail the run. That mirrors
+ * cs2pr --graceful-warnings, which the Dokan and WPUF workflows already use.
  *
  * @package weDocs
  */
@@ -60,8 +61,9 @@ function wedocs_changed_lines( $base, $file ) {
 }
 
 $root  = rtrim( shell_exec( 'git rev-parse --show-toplevel' ) ?: '', "\n" );
-$kept  = 0;
-$total = 0;
+$kept   = 0;
+$errors = 0;
+$total  = 0;
 
 foreach ( $report['files'] as $path => $data ) {
     if ( empty( $data['messages'] ) ) {
@@ -82,9 +84,14 @@ foreach ( $report['files'] as $path => $data ) {
         }
 
         $kept++;
+        $is_error = ( 'ERROR' === $message['type'] );
+        if ( $is_error ) {
+            $errors++;
+        }
+
         printf(
             "::%s file=%s,line=%d,col=%d::%s (%s)\n",
-            'ERROR' === $message['type'] ? 'error' : 'warning',
+            $is_error ? 'error' : 'warning',
             $relative,
             $message['line'],
             $message['column'],
@@ -94,6 +101,14 @@ foreach ( $report['files'] as $path => $data ) {
     }
 }
 
-fwrite( STDERR, sprintf( "PHPCS: %d finding(s) on changed lines (%d in the files overall).\n", $kept, $total ) );
+fwrite(
+    STDERR,
+    sprintf(
+        "PHPCS: %d finding(s) on changed lines, %d of them errors (%d findings in these files overall).\n",
+        $kept,
+        $errors,
+        $total
+    )
+);
 
-exit( $kept > 0 ? 1 : 0 );
+exit( $errors > 0 ? 1 : 0 );
