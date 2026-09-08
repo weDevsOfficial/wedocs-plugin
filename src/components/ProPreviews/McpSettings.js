@@ -60,7 +60,7 @@ const McpSettings = () => {
 				>
 					<p className="mt-0 mb-6 text-sm leading-relaxed text-gray-500 max-w-3xl">
 						{ __(
-							'Let AI assistants such as Claude and ChatGPT read and write your documentation directly, over the Model Context Protocol. Access runs through a revocable connection token or a one-time sign-in, and every action is performed as the person who granted it.',
+							'Let AI assistants like Claude or ChatGPT generate your articles, tags, changelog, glossary or FAQs.',
 							'wedocs'
 						) }
 					</p>
