@@ -2751,11 +2751,27 @@ class DocsGrid extends Widget_Base {
     /**
      * Render widget output on the frontend.
      */
-    protected function render() {
-        $settings = $this->get_settings_for_display();
 
+    /**
+     * Render a single doc card.
+     *
+     * Shared by render() and the AJAX "load more" handler so an appended card is
+     * identical to the ones already on the page, instead of a reduced version.
+     *
+     * @since 2.3.2
+     *
+     * @param \WP_Post $doc      The doc post.
+     * @param array    $settings Widget settings.
+     * @param int      $index    Zero-based index within the current page, for stagger delay.
+     *
+     * @return string Card markup.
+     */
+    public static function render_doc_card($doc, $settings, $index = 0) {
         // A stored Max Height of 0 means "no limit", not "collapse the body".
-        // Elementor's selectors cannot express that, so the rule is built here.
+        // Elementor counts a SLIDER size of 0 as a value, so a selector would
+        // emit "max-height: 0px" and hide every section and article. The editor
+        // preview in content_template() already guards on ?.size, where 0 is
+        // falsy, so only the front end was ever wrong.
         $body_max_height_attr = '';
         $body_max_height      = isset( $settings['cardBodyMaxHeight']['size'] ) ? $settings['cardBodyMaxHeight']['size'] : '';
 
@@ -2768,22 +2784,152 @@ class DocsGrid extends Widget_Base {
             ) . '"';
         }
 
+        $doc_style           = $settings['docStyle'] ?? '1x1';
+        $order               = $settings['order'] ?? 'asc';
+        $order_by            = $settings['orderBy'] ?? 'menu_order';
+        $sections_per_doc    = $settings['sectionsPerDoc'] ?? 'all';
+        $articles_per_section = $settings['articlesPerSection'] ?? 'all';
+        $show_articles       = ($settings['showDocArticle'] ?? 'yes') === 'yes';
+        $keep_collapsed      = ($settings['keepArticlesCollapsed'] ?? '') === 'yes';
+        $show_view_details   = ($settings['showViewDetails'] ?? 'yes') === 'yes';
+        $button_text         = $settings['buttonText'] ?? __('View Details', 'wedocs');
+        $item_animation      = $settings['itemAnimation'] ?? 'none';
+        $animation_delay     = $settings['animationDelay']['size'] ?? 100;
+        $stagger_animation   = ($settings['staggerAnimation'] ?? 'yes') === 'yes';
+
+        $anim_class = ($item_animation !== 'none') ? ' wedocs-anim wedocs-anim--' . esc_attr($item_animation) : '';
+        $anim_delay = ($item_animation !== 'none' && $stagger_animation) ? ($index * $animation_delay) : 0;
+
+        ob_start();
+?>
+                    <div class="wedocs-docs-grid__item<?php echo esc_attr( $anim_class ); ?>"<?php if ($item_animation !== 'none'): ?> data-anim-delay="<?php echo esc_attr($anim_delay); ?>"<?php endif; ?>>
+                        <div class="wedocs-docs-grid__header">
+                            <h3 class="wedocs-docs-grid__title">
+                                <?php if ($doc_style === 'list'): ?>
+                                    <span class="wedocs-docs-grid__icon">
+                                        <?php
+                                        if (!empty($settings['listIcon']['value'])) {
+                                            \Elementor\Icons_Manager::render_icon($settings['listIcon'], ['aria-hidden' => 'true']);
+                                        } else {
+                                            echo '📄';
+                                        }
+                                        ?>
+                                    </span>
+                                <?php endif; ?>
+                                <a href="<?php echo esc_url( get_permalink( $doc->ID ) ); ?>"><?php echo esc_html($doc->post_title); ?></a>
+                            </h3>
+                        </div>
+
+                        <?php if ($show_articles): ?>
+                            <div class="wedocs-docs-grid__content"<?php echo $body_max_height_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above from a float-cast size and an allow-listed unit, already escaped. ?>>
+                                <?php
+                                // Get sections (children of this doc)
+                                $section_args = [
+                                    'post_type' => 'docs',
+                                    'post_status' => 'publish',
+                                    'post_parent' => $doc->ID,
+                                    'orderby' => $order_by,
+                                    'order' => $order,
+                                ];
+
+                                if ($sections_per_doc !== 'all') {
+                                    $section_args['posts_per_page'] = intval($sections_per_doc);
+                                } else {
+                                    $section_args['posts_per_page'] = -1;
+                                }
+
+                                $sections = get_posts($section_args);
+
+                                if (!empty($sections)):
+                                    foreach ($sections as $section):
+                                ?>
+                                        <div class="wedocs-docs-grid__section">
+                                            <h4 class="wedocs-docs-grid__section-title">
+                                                <a href="<?php echo esc_url( get_permalink( $section->ID ) ); ?>" class="wedocs-docs-grid__section-link">
+                                                    <?php echo esc_html($section->post_title); ?>
+                                                </a>
+                                            </h4>
+
+                                            <?php
+                                            // Get articles (children of this section)
+                                            $article_args = [
+                                                'post_type' => 'docs',
+                                                'post_status' => 'publish',
+                                                'post_parent' => $section->ID,
+                                                'orderby' => $order_by,
+                                                'order' => $order,
+                                            ];
+
+                                            if ($articles_per_section !== 'all') {
+                                                $article_args['posts_per_page'] = intval($articles_per_section);
+                                            } else {
+                                                $article_args['posts_per_page'] = -1;
+                                            }
+
+                                            $articles = get_posts($article_args);
+
+                                            if (!empty($articles)):
+                                            ?>
+                                                <ul class="wedocs-docs-grid__articles <?php echo $keep_collapsed ? 'wedocs-docs-grid__articles--collapsed' : ''; ?>">
+                                                    <?php
+                                                    $prefix_type = $settings['articlePrefixType'] ?? 'icon';
+                                                    foreach ($articles as $article):
+                                                    ?>
+                                                        <li>
+                                                            <?php if ($prefix_type === 'icon' && !empty($settings['articlePrefixIcon']['value'])): ?>
+                                                                <span class="wedocs-docs-grid__article-icon">
+                                                                    <?php \Elementor\Icons_Manager::render_icon($settings['articlePrefixIcon'], ['aria-hidden' => 'true']); ?>
+                                                                </span>
+                                                                <a href="<?php echo esc_url( get_permalink( $article->ID ) ); ?>" class="wedocs-docs-grid__article-link">
+                                                                    <?php echo esc_html($article->post_title); ?>
+                                                                </a>
+                                                            <?php else: ?>
+                                                                <a href="<?php echo esc_url( get_permalink( $article->ID ) ); ?>" class="wedocs-docs-grid__article-link" data-prefix="<?php echo esc_attr($settings['articlePrefix'] ?? '→'); ?>">
+                                                                    <?php echo esc_html($article->post_title); ?>
+                                                                </a>
+                                                            <?php endif; ?>
+                                                        </li>
+                                                    <?php endforeach; ?>
+                                                </ul>
+                                            <?php endif; ?>
+                                        </div>
+                                <?php
+                                    endforeach;
+                                endif;
+                                ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($show_view_details): ?>
+                            <a href="<?php echo esc_url( get_permalink( $doc->ID ) ); ?>" class="wedocs-docs-grid__details-link">
+                                <?php echo esc_html($button_text); ?>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+<?php
+        return ob_get_clean();
+    }
+
+    protected function render() {
+        $settings = $this->get_settings_for_display();
+
         // Get settings
         $doc_style = $settings['docStyle'] ?? '1x1';
         $docs_per_page = intval($settings['docsPerPage'] ?? 9);
         $exclude_docs = $settings['excludeDocs'] ?? [];
         $order = $settings['order'] ?? 'asc';
         $order_by = $settings['orderBy'] ?? 'menu_order';
-        $sections_per_doc = $settings['sectionsPerDoc'] ?? 'all';
-        $articles_per_section = $settings['articlesPerSection'] ?? 'all';
-        $show_articles = ($settings['showDocArticle'] ?? 'yes') === 'yes';
-        $keep_collapsed = ($settings['keepArticlesCollapsed'] ?? '') === 'yes';
-        $show_view_details = ($settings['showViewDetails'] ?? 'yes') === 'yes';
-        $button_text = $settings['buttonText'] ?? __('View Details', 'wedocs');
+        // Per-card display settings are derived inside render_doc_card().
 
         // Pagination settings
         $enable_pagination = ($settings['enablePagination'] ?? 'no') === 'yes';
         $pagination_type = $settings['paginationType'] ?? 'numbers';
+
+        // Fall back to numbers so an unexpected stored value never renders an
+        // empty pagination area with no way to reach page two.
+        if (!in_array($pagination_type, ['numbers', 'ajax', 'infinite', 'prev_next'], true)) {
+            $pagination_type = 'numbers';
+        }
         $load_more_text = $settings['loadMoreText'] ?? __('Load More', 'wedocs');
         $show_page_info = ($settings['showPageInfo'] ?? 'no') === 'yes';
         $show_total_count = ($settings['showTotalCount'] ?? 'no') === 'yes';
@@ -2794,13 +2940,18 @@ class DocsGrid extends Widget_Base {
         $enable_sorting = ($settings['enableSorting'] ?? 'no') === 'yes';
         $enable_view_toggle = ($settings['enableViewToggle'] ?? '') === 'yes';
 
-        // Animation settings
-        $item_animation = $settings['itemAnimation'] ?? 'none';
-        $animation_delay = $settings['animationDelay']['size'] ?? 100;
-        $stagger_animation = ($settings['staggerAnimation'] ?? 'yes') === 'yes';
 
         // Get current page
         $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
+        // Id of the document this widget is saved on. Used by the AJAX "load
+        // more" handler to read these same settings back server-side, so it
+        // must be the Elementor document, not the current post in the loop.
+        $current_doc_id = get_queried_object_id();
+
+        if (class_exists('\Elementor\Plugin') && \Elementor\Plugin::$instance->documents->get_current()) {
+            $current_doc_id = \Elementor\Plugin::$instance->documents->get_current()->get_main_id();
+        }
 
         // Query args
         $args = [
@@ -2884,114 +3035,8 @@ class DocsGrid extends Widget_Base {
             <?php endif; ?>
 
             <div class="<?php echo esc_attr($grid_class); ?>" data-grid-id="<?php echo $this->get_id(); ?>">
-                <?php foreach ($docs as $index => $doc):
-                    $anim_class = ($item_animation !== 'none') ? ' wedocs-anim wedocs-anim--' . esc_attr($item_animation) : '';
-                    $anim_delay = ($item_animation !== 'none' && $stagger_animation) ? ($index * $animation_delay) : 0;
-                ?>
-                    <div class="wedocs-docs-grid__item<?php echo $anim_class; ?>"<?php if ($item_animation !== 'none'): ?> data-anim-delay="<?php echo esc_attr($anim_delay); ?>"<?php endif; ?>>
-                        <div class="wedocs-docs-grid__header">
-                            <h3 class="wedocs-docs-grid__title">
-                                <?php if ($doc_style === 'list'): ?>
-                                    <span class="wedocs-docs-grid__icon">
-                                        <?php
-                                        if (!empty($settings['listIcon']['value'])) {
-                                            \Elementor\Icons_Manager::render_icon($settings['listIcon'], ['aria-hidden' => 'true']);
-                                        } else {
-                                            echo '📄';
-                                        }
-                                        ?>
-                                    </span>
-                                <?php endif; ?>
-                                <a href="<?php echo get_permalink($doc->ID); ?>"><?php echo esc_html($doc->post_title); ?></a>
-                            </h3>
-                        </div>
-
-                        <?php if ($show_articles): ?>
-                            <div class="wedocs-docs-grid__content"<?php echo $body_max_height_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above from a float-cast size and an allow-listed unit, already escaped. ?>>
-                                <?php
-                                // Get sections (children of this doc)
-                                $section_args = [
-                                    'post_type' => 'docs',
-                                    'post_status' => 'publish',
-                                    'post_parent' => $doc->ID,
-                                    'orderby' => $order_by,
-                                    'order' => $order,
-                                ];
-
-                                if ($sections_per_doc !== 'all') {
-                                    $section_args['posts_per_page'] = intval($sections_per_doc);
-                                } else {
-                                    $section_args['posts_per_page'] = -1;
-                                }
-
-                                $sections = get_posts($section_args);
-
-                                if (!empty($sections)):
-                                    foreach ($sections as $section):
-                                ?>
-                                        <div class="wedocs-docs-grid__section">
-                                            <h4 class="wedocs-docs-grid__section-title">
-                                                <a href="<?php echo get_permalink($section->ID); ?>" class="wedocs-docs-grid__section-link">
-                                                    <?php echo esc_html($section->post_title); ?>
-                                                </a>
-                                            </h4>
-
-                                            <?php
-                                            // Get articles (children of this section)
-                                            $article_args = [
-                                                'post_type' => 'docs',
-                                                'post_status' => 'publish',
-                                                'post_parent' => $section->ID,
-                                                'orderby' => $order_by,
-                                                'order' => $order,
-                                            ];
-
-                                            if ($articles_per_section !== 'all') {
-                                                $article_args['posts_per_page'] = intval($articles_per_section);
-                                            } else {
-                                                $article_args['posts_per_page'] = -1;
-                                            }
-
-                                            $articles = get_posts($article_args);
-
-                                            if (!empty($articles)):
-                                            ?>
-                                                <ul class="wedocs-docs-grid__articles <?php echo $keep_collapsed ? 'wedocs-docs-grid__articles--collapsed' : ''; ?>">
-                                                    <?php
-                                                    $prefix_type = $settings['articlePrefixType'] ?? 'icon';
-                                                    foreach ($articles as $article):
-                                                    ?>
-                                                        <li>
-                                                            <?php if ($prefix_type === 'icon' && !empty($settings['articlePrefixIcon']['value'])): ?>
-                                                                <span class="wedocs-docs-grid__article-icon">
-                                                                    <?php \Elementor\Icons_Manager::render_icon($settings['articlePrefixIcon'], ['aria-hidden' => 'true']); ?>
-                                                                </span>
-                                                                <a href="<?php echo get_permalink($article->ID); ?>" class="wedocs-docs-grid__article-link">
-                                                                    <?php echo esc_html($article->post_title); ?>
-                                                                </a>
-                                                            <?php else: ?>
-                                                                <a href="<?php echo get_permalink($article->ID); ?>" class="wedocs-docs-grid__article-link" data-prefix="<?php echo esc_attr($settings['articlePrefix'] ?? '→'); ?>">
-                                                                    <?php echo esc_html($article->post_title); ?>
-                                                                </a>
-                                                            <?php endif; ?>
-                                                        </li>
-                                                    <?php endforeach; ?>
-                                                </ul>
-                                            <?php endif; ?>
-                                        </div>
-                                <?php
-                                    endforeach;
-                                endif;
-                                ?>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if ($show_view_details): ?>
-                            <a href="<?php echo get_permalink($doc->ID); ?>" class="wedocs-docs-grid__details-link">
-                                <?php echo esc_html($button_text); ?>
-                            </a>
-                        <?php endif; ?>
-                    </div>
+                <?php foreach ($docs as $index => $doc): ?>
+                    <?php echo self::render_doc_card($doc, $settings, $index); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- returns markup this class builds and escapes. ?>
                 <?php endforeach; ?>
             </div>
 
@@ -3460,6 +3505,7 @@ class DocsGrid extends Widget_Base {
                             action: 'wedocs_load_more_docs',
                             page: page + 1,
                             widget_id: widgetId,
+                            post_id: <?php echo (int) $current_doc_id; ?>,
                             nonce: '<?php echo wp_create_nonce('wedocs_load_more'); ?>'
                         },
                         success: function(response) {

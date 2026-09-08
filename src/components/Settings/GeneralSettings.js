@@ -541,12 +541,12 @@ const GeneralSettings = ( {
                       id="headlessui-listbox-label-15"
                       data-headlessui-state="open"
                   >
-                    {__('Use Legacy Template', 'wedocs')}
+                    {__('Single Doc Template', 'wedocs')}
                   </label>
                   <div
                       className="tooltip cursor-pointer ml-2 z-[9999]"
                       data-tip={__(
-                          'Enable legacy PHP template system for single doc pages. Disable to use the new builder template.',
+                          'Which template renders a single doc page. Automatic detects the active theme; the others force Classic, Block or Elementor.',
                           'wedocs'
                       )}
                   >
@@ -566,15 +566,35 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
-                  <Switcher
-                      name="use_legacy_template"
-                      settingsPanel={generalSettings}
-                      settingsData={settingsData}
-                      setSettings={setSettings}
-                      panelName={`general`}
-                      isEnabled={generalSettings?.use_legacy_template === 'on'}
-                  />
+                <div className="settings-field w-full max-w-[490px] ml-auto">
+                  <select
+                      id="wedocs-single-doc-template"
+                      name="single_doc_template"
+                      className="w-full !rounded-md !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                      value={ generalSettings?.single_doc_template || '' }
+                      onChange={( e ) => {
+                          const general = {
+                              ...generalSettingsData,
+                              single_doc_template: e.target.value,
+                          };
+
+                          // Keep the legacy flag in sync for back-compat, but leave
+                          // it untouched on 'Automatic' so PHP can auto-detect.
+                          if ( e.target.value ) {
+                              general.use_legacy_template =
+                                  e.target.value === 'legacy' ? 'on' : 'off';
+                          } else {
+                              delete general.use_legacy_template;
+                          }
+
+                          setSettings( { ...settingsData, general } );
+                      }}
+                  >
+                    <option value="">{__('Automatic (Detect)', 'wedocs')}</option>
+                    <option value="legacy">{__('Classic (PHP Template)', 'wedocs')}</option>
+                    <option value="block">{__('Block (Block Theme Template)', 'wedocs')}</option>
+                    <option value="elementor">{__('Elementor', 'wedocs')}</option>
+                  </select>
                 </div>
               </div>
             </div>
