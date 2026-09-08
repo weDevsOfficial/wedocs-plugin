@@ -76,6 +76,14 @@ jobs:
           echo "files=$FILES" >> $GITHUB_OUTPUT
           echo "PHP files changed by this pull request: ${FILES:-none}" >> $GITHUB_STEP_SUMMARY
 
+      # Findings are filtered to the lines this pull request actually changed.
+      # PHPCS reports whole files, so without this, touching one line of a legacy
+      # file inherits every violation already in it and the job is red no matter
+      # what the author does. Measured on the Elementor branch: 175 security
+      # findings in the files it touches, but only 63 on lines it wrote.
       - name: Detect coding standard violations
         if: steps.changes.outputs.files != ''
-        run: phpcs --standard=phpcs.xml.dist ${{ steps.changes.outputs.files }} -q --report=checkstyle | cs2pr --graceful-warnings
+        run: |
+          set -o pipefail
+          phpcs --standard=phpcs.xml.dist ${{ steps.changes.outputs.files }} -q --report=json \
+            | php bin/phpcs-changed-lines.php "$(git rev-parse HEAD^1)"
