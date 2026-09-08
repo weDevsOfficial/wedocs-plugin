@@ -11,6 +11,10 @@
     <exclude-pattern>*/node_modules/*</exclude-pattern>
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/tests/*</exclude-pattern>
+    <!-- Developer tooling, not shipped plugin runtime: the WordPress sniffs for
+         global prefixes, WP_Filesystem and system calls do not apply to a CLI
+         script. WPUF excludes this directory for the same reason. -->
+    <exclude-pattern>*/bin/*</exclude-pattern>
     <exclude-pattern>*.js</exclude-pattern>
     <exclude-pattern>*.mo</exclude-pattern>
     <exclude-pattern>*.po</exclude-pattern>
