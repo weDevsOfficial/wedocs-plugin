@@ -1,0 +1,66 @@
+on: pull_request
+
+name: Inspections
+jobs:
+  runPHPCSInspection:
+    name: Run PHPCS inspection
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4"
+          coverage: none
+          tools: composer, cs2pr
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Setup cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-phpcs-${{ hashFiles('phpcs.xml.dist') }}
+          restore-keys: ${{ runner.os }}-phpcs-
+
+      - name: Install PHPCS and the WordPress standards
+        # Installed outside the repo, unlike the WPUF workflows this mirrors.
+        # weDocs lists includes/functions.php in composer's autoload.files, and
+        # that file calls WordPress functions at file scope (add_action at :583,
+        # add_filter at :613, a wedocs_is_plugin_active() call at :397). PHPCS
+        # loads vendor/autoload.php when it is present, so installing the tools
+        # in the plugin's own vendor/ makes phpcs fatal on an undefined ABSPATH
+        # before it lints anything. Tracked in weDevsOfficial/wedocs-pro#420.
+        run: |
+          mkdir -p "$RUNNER_TEMP/phpcs-tools"
+          cd "$RUNNER_TEMP/phpcs-tools"
+          echo '{}' > composer.json
+          composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+          composer require --no-interaction --prefer-dist --no-progress \
+            squizlabs/php_codesniffer:^3.10 \
+            wp-coding-standards/wpcs:^3.1 \
+            phpcompatibility/phpcompatibility-wp:^2.1
+          echo "$RUNNER_TEMP/phpcs-tools/vendor/bin" >> "$GITHUB_PATH"
+
+      - id: changes
+        # Only PHP files that still exist. Deleted files would make phpcs exit 2
+        # ("does not exist") and fail the job for a PR that removed a file, and
+        # non-PHP paths (.yml, .gitignore, .css) are not ours to lint.
+        run: |
+          URL="https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files?per_page=100"
+          FILES=$(curl --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -s -X GET -G $URL \
+            | jq -r '.[] | select( .status != "removed" ) | .filename' \
+            | grep -E '\.php$' \
+            | while IFS= read -r f; do [ -f "$f" ] && printf '%s ' "$f"; done)
+          echo "files=$FILES" >> $GITHUB_OUTPUT
+
+      - name: Detect coding standard violations
+        run: |
+          if [ -z "${{ steps.changes.outputs.files }}" ]; then
+            echo "No changed PHP files to inspect."
+            exit 0
+          fi
+          phpcs --standard=phpcs.xml.dist ${{ steps.changes.outputs.files }} -q --report=checkstyle | cs2pr --graceful-warnings
