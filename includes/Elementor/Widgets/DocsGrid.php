@@ -937,9 +937,12 @@ class DocsGrid extends Widget_Base {
                         'step' => 10,
                     ],
                 ],
-                'selectors' => [
-                    '{{WRAPPER}} .wedocs-docs-grid__content' => 'max-height: {{SIZE}}{{UNIT}}; overflow-y: auto;',
-                ],
+                'description' => __('Leave empty, or 0, for no limit.', 'wedocs'),
+                // Deliberately no 'selectors'. Elementor treats a stored size of
+                // 0 as a value and would emit "max-height: 0px", collapsing the
+                // card body and hiding every section and article. The rule is
+                // applied in render() instead, behind the same guard the editor
+                // preview in content_template() already uses.
             ]
         );
 
@@ -2751,6 +2754,20 @@ class DocsGrid extends Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
 
+        // A stored Max Height of 0 means "no limit", not "collapse the body".
+        // Elementor's selectors cannot express that, so the rule is built here.
+        $body_max_height_attr = '';
+        $body_max_height      = isset( $settings['cardBodyMaxHeight']['size'] ) ? $settings['cardBodyMaxHeight']['size'] : '';
+
+        if ( '' !== $body_max_height && (float) $body_max_height > 0 ) {
+            $unit = ! empty( $settings['cardBodyMaxHeight']['unit'] ) ? $settings['cardBodyMaxHeight']['unit'] : 'px';
+            $unit = in_array( $unit, [ 'px', '%', 'em', 'rem', 'vh' ], true ) ? $unit : 'px';
+
+            $body_max_height_attr = ' style="' . esc_attr(
+                sprintf( 'max-height: %s%s; overflow-y: auto;', (float) $body_max_height, $unit )
+            ) . '"';
+        }
+
         // Get settings
         $doc_style = $settings['docStyle'] ?? '1x1';
         $docs_per_page = intval($settings['docsPerPage'] ?? 9);
@@ -2890,7 +2907,7 @@ class DocsGrid extends Widget_Base {
                         </div>
 
                         <?php if ($show_articles): ?>
-                            <div class="wedocs-docs-grid__content">
+                            <div class="wedocs-docs-grid__content"<?php echo $body_max_height_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above from a float-cast size and an allow-listed unit, already escaped. ?>>
                                 <?php
                                 // Get sections (children of this doc)
                                 $section_args = [
