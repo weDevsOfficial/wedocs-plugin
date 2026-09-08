@@ -401,7 +401,8 @@ class DocsBreadcrumb extends Widget_Base {
 ?>
         <nav class="wedocs-el-breadcrumb" aria-label="<?php esc_attr_e('Breadcrumb', 'wedocs'); ?>" itemscope itemtype="http://schema.org/BreadcrumbList">
             <ol class="wedocs-el-breadcrumb__list">
-                <?php foreach ($items as $i => $item):
+                <?php
+                foreach ($items as $i => $item):
                     $is_current = !empty($item['current']);
                     $is_home = !empty($item['home']);
                     $label = $item['label'];
@@ -429,7 +430,7 @@ class DocsBreadcrumb extends Widget_Base {
                                 <?php endif; ?>
                                 <span itemprop="name"><?php echo esc_html($label); ?></span>
                             </a>
-                            <meta itemprop="position" content="<?php echo $i + 1; ?>" />
+                            <meta itemprop="position" content="<?php echo (int) ( $i + 1 ); ?>" />
                         </li>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -577,13 +578,14 @@ class DocsBreadcrumb extends Widget_Base {
             [
                 'label' => __('Installation Guide', 'wedocs'),
                 'current' => true,
-            ]
+            ],
         ];
 
         ?>
             <nav class="wedocs-el-breadcrumb" aria-label="<?php esc_attr_e('Breadcrumb', 'wedocs'); ?>">
                 <ol class="wedocs-el-breadcrumb__list">
-                    <?php foreach ($items as $i => $item):
+                    <?php
+                foreach ($items as $i => $item):
                         $is_current = !empty($item['current']);
                         $is_home = !empty($item['home']);
                         $label = $item['label'];
@@ -617,7 +619,7 @@ class DocsBreadcrumb extends Widget_Base {
                 </ol>
 
                 <div style="margin-top: 10px; padding: 10px; background: #f0f8ff; border-left: 3px solid #2196f3; font-size: 12px; color: #666;">
-                    📝 <?php _e('Preview: This widget shows the navigation path on documentation pages.', 'wedocs'); ?>
+                    📝 <?php esc_html_e('Preview: This widget shows the navigation path on documentation pages.', 'wedocs'); ?>
                 </div>
             </nav>
     <?php

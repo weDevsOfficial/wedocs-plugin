@@ -136,7 +136,7 @@ class Elementor {
                 'post_type' => 'elementor_library',
                 'meta_key' => '_wedocs_template',
                 'meta_value' => true,
-                'posts_per_page' => 1
+                'posts_per_page' => 1,
             ]);
 
             if (!empty($existing_templates)) {
@@ -235,7 +235,7 @@ class Elementor {
             'post_type' => 'elementor_library',
             'meta_key' => '_wedocs_template',
             'meta_value' => true,
-            'posts_per_page' => -1
+            'posts_per_page' => -1,
         ]);
 
         foreach ($templates as $template) {
@@ -278,7 +278,7 @@ class Elementor {
             // Check if elementor data is stored as array instead of JSON string
             if (is_array($elementor_data) && !empty($elementor_data)) {
                 // Convert from array to JSON string
-                update_post_meta($template->ID, '_elementor_data', wp_json_encode($elementor_data));
+                update_post_meta($template->ID, '_elementor_data', wp_slash(wp_json_encode($elementor_data)));
             }
         }
     }
@@ -292,13 +292,13 @@ class Elementor {
         switch ($condition_type) {
             case 'single_docs':
                 $conditions = [
-                    'include/single/docs'
+                    'include/singular/docs',
                 ];
                 break;
 
             case 'docs_archive':
                 $conditions = [
-                    'include/archive/docs'
+                    'include/archive/docs',
                 ];
                 break;
         }
@@ -342,13 +342,13 @@ class Elementor {
             'post_status' => 'publish',
             'post_title'  => $template_title,
             'meta_input'  => [
-                '_elementor_data' => wp_json_encode($template_data['content']),
+                '_elementor_data' => wp_slash(wp_json_encode($template_data['content'])),
                 '_elementor_page_settings' => $page_settings,
                 '_elementor_template_type' => $template_data['type'] ?? 'single',
                 '_elementor_version' => $template_data['version'] ?? ELEMENTOR_VERSION,
                 '_elementor_edit_mode' => 'builder',
                 '_wedocs_template' => true, // Mark as weDocs template
-            ]
+            ],
         ]);
 
         return ($template_id && ! is_wp_error($template_id)) ? $template_id : false;
@@ -386,7 +386,7 @@ class Elementor {
             'post_type' => 'elementor_library',
             'meta_key' => '_wedocs_template',
             'meta_value' => true,
-            'posts_per_page' => -1
+            'posts_per_page' => -1,
         ]);
 
         foreach ($templates as $template) {

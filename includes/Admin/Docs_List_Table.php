@@ -28,7 +28,7 @@ class Docs_List_Table {
     }
 
     public function helpfulness_css() {
-        if ('docs' != get_current_screen()->post_type) {
+        if ('docs' !== get_current_screen()->post_type) {
             return;
         } ?>
         <style type="text/css">
@@ -54,12 +54,12 @@ class Docs_List_Table {
             <tr>
                 <td class="wedocs-positive">
                     <span class="dashicons dashicons-thumbs-up"></span>
-                    <?php printf('%d', $positive); ?>
+                    <?php echo (int) $positive; ?>
                 </td>
 
                 <td class="wedocs-negative">
                     <span class="dashicons dashicons-thumbs-down"></span>
-                    <?php printf('%d', $negative); ?>
+                    <?php echo (int) $negative; ?>
                 </td>
             </tr>
         </table>
@@ -90,11 +90,11 @@ class Docs_List_Table {
     }
 
     public function docs_list_columns_row($column_name, $post_id) {
-        if ('votes' == $column_name) {
+        if ('votes' === $column_name) {
             $positive = get_post_meta($post_id, 'positive', true);
             $negative = get_post_meta($post_id, 'negative', true);
 
-            printf('<span class="wedocs-positive">%d</span>/<span class="wedocs-negative">%d</span>', $positive, $negative);
+            echo wp_kses_post( sprintf( '<span class="wedocs-positive">%d</span>/<span class="wedocs-negative">%d</span>', (int) $positive, (int) $negative ) );
         }
     }
 
@@ -105,9 +105,9 @@ class Docs_List_Table {
     // Sorts the movies.
     public function sort_docs($vars) {
         // Check if we're viewing the 'movie' post type.
-        if (isset($vars['post_type']) && 'docs' == $vars['post_type']) {
+        if (isset($vars['post_type']) && 'docs' === $vars['post_type']) {
             // Check if 'orderby' is set to 'duration'.
-            if (isset($vars['orderby']) && 'votes' == $vars['orderby']) {
+            if (isset($vars['orderby']) && 'votes' === $vars['orderby']) {
                 $vars = array_merge(
                     $vars,
                     [

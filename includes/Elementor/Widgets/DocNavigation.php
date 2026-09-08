@@ -673,7 +673,7 @@ class DocNavigation extends Widget_Base {
                             <?php endif; ?>
                             <span class="wedocs-el-nav__content">
                                 <span class="wedocs-el-nav__label"><?php echo esc_html($prev_label); ?></span>
-                                <span class="wedocs-el-nav__title"><?php _e('Getting Started', 'wedocs'); ?></span>
+                                <span class="wedocs-el-nav__title"><?php esc_html_e('Getting Started', 'wedocs'); ?></span>
                             </span>
                         </a>
                     </div>
@@ -688,7 +688,7 @@ class DocNavigation extends Widget_Base {
                         <a href="#" class="wedocs-el-nav__link">
                             <span class="wedocs-el-nav__content">
                                 <span class="wedocs-el-nav__label"><?php echo esc_html($next_label); ?></span>
-                                <span class="wedocs-el-nav__title"><?php _e('Advanced Configuration', 'wedocs'); ?></span>
+                                <span class="wedocs-el-nav__title"><?php esc_html_e('Advanced Configuration', 'wedocs'); ?></span>
                             </span>
                             <?php if ($show_arrows): ?>
                                 <span class="wedocs-el-nav__arrow wedocs-el-nav__arrow--next">
@@ -703,7 +703,7 @@ class DocNavigation extends Widget_Base {
                 <?php endif; ?>
 
                 <div style="margin-top: 10px; padding: 10px; background: #f0f8ff; border-left: 3px solid #2196f3; font-size: 12px; color: #666;">
-                    📝 <?php _e('Preview: This widget shows navigation between documentation pages.', 'wedocs'); ?>
+                    📝 <?php esc_html_e('Preview: This widget shows navigation between documentation pages.', 'wedocs'); ?>
                 </div>
             </nav>
     <?php

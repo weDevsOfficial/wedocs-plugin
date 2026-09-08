@@ -539,27 +539,27 @@ class NeedHelp extends Widget_Base {
 
                     <?php if ($show_name): ?>
                     <div class="wedocs-need-help__field">
-                        <label for="wedocs-help-name-<?php echo esc_attr($widget_id); ?>"><?php _e('Name', 'wedocs'); ?></label>
+                        <label for="wedocs-help-name-<?php echo esc_attr($widget_id); ?>"><?php esc_html_e('Name', 'wedocs'); ?></label>
                         <input type="text" id="wedocs-help-name-<?php echo esc_attr($widget_id); ?>" name="name" required>
                     </div>
                     <?php endif; ?>
 
                     <?php if ($show_email): ?>
                     <div class="wedocs-need-help__field">
-                        <label for="wedocs-help-email-<?php echo esc_attr($widget_id); ?>"><?php _e('Email', 'wedocs'); ?></label>
+                        <label for="wedocs-help-email-<?php echo esc_attr($widget_id); ?>"><?php esc_html_e('Email', 'wedocs'); ?></label>
                         <input type="email" id="wedocs-help-email-<?php echo esc_attr($widget_id); ?>" name="email" required>
                     </div>
                     <?php endif; ?>
 
                     <?php if ($show_subject): ?>
                     <div class="wedocs-need-help__field">
-                        <label for="wedocs-help-subject-<?php echo esc_attr($widget_id); ?>"><?php _e('Subject', 'wedocs'); ?></label>
+                        <label for="wedocs-help-subject-<?php echo esc_attr($widget_id); ?>"><?php esc_html_e('Subject', 'wedocs'); ?></label>
                         <input type="text" id="wedocs-help-subject-<?php echo esc_attr($widget_id); ?>" name="subject">
                     </div>
                     <?php endif; ?>
 
                     <div class="wedocs-need-help__field">
-                        <label for="wedocs-help-message-<?php echo esc_attr($widget_id); ?>"><?php _e('Message', 'wedocs'); ?> <span class="required">*</span></label>
+                        <label for="wedocs-help-message-<?php echo esc_attr($widget_id); ?>"><?php esc_html_e('Message', 'wedocs'); ?> <span class="required">*</span></label>
                         <textarea id="wedocs-help-message-<?php echo esc_attr($widget_id); ?>" name="message" rows="5" required></textarea>
                     </div>
 
@@ -803,10 +803,10 @@ class NeedHelp extends Widget_Base {
 
                     if ($submitBtn.hasClass('loading')) return;
 
-                    $submitBtn.addClass('loading').text('<?php _e('Sending...', 'wedocs'); ?>');
+                    $submitBtn.addClass('loading').text('<?php echo esc_js( __( 'Sending...', 'wedocs' ) ); ?>');
 
                     $.ajax({
-                        url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                        url: '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>',
                         type: 'POST',
                         data: {
                             action: 'wedocs_need_help_submit',
@@ -818,7 +818,7 @@ class NeedHelp extends Widget_Base {
                             message: $form.find('[name="message"]').val(),
                             page_url: window.location.href,
                             page_title: document.title,
-                            post_id: <?php echo get_the_ID(); ?>,
+                            post_id: <?php echo (int) get_the_ID(); ?>,
                             recipient: '<?php echo esc_js($settings['recipient_email']); ?>',
                             save_to_elementor: '<?php echo esc_js($settings['save_to_elementor'] ?? ''); ?>'
                         },
@@ -828,12 +828,12 @@ class NeedHelp extends Widget_Base {
                                 $form.find('.wedocs-need-help__success').fadeIn();
                             } else {
                                 $submitBtn.removeClass('loading').text('<?php echo esc_js($settings['submit_text']); ?>');
-                                alert(response.data?.message || '<?php _e('Something went wrong. Please try again.', 'wedocs'); ?>');
+                                alert(response.data?.message || '<?php echo esc_js( __( 'Something went wrong. Please try again.', 'wedocs' ) ); ?>');
                             }
                         },
                         error: function() {
                             $submitBtn.removeClass('loading').text('<?php echo esc_js($settings['submit_text']); ?>');
-                            alert('<?php _e('Something went wrong. Please try again.', 'wedocs'); ?>');
+                            alert('<?php echo esc_js( __( 'Something went wrong. Please try again.', 'wedocs' ) ); ?>');
                         }
                     });
                 });

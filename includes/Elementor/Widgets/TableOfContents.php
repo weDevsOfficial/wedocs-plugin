@@ -57,7 +57,7 @@ class TableOfContents extends Widget_Base {
             // Return a sample post for preview
             return (object) [
                 'ID' => 0,
-                'post_content' => '<h2>Introduction</h2><p>Welcome to the documentation.</p><h3>Getting Started</h3><p>First steps...</p><h2>Configuration</h2><p>How to configure...</p><h3>Basic Settings</h3><p>Basic configuration...</p><h3>Advanced Options</h3><p>Advanced settings...</p><h2>Troubleshooting</h2><p>Common issues...</p>'
+                'post_content' => '<h2>Introduction</h2><p>Welcome to the documentation.</p><h3>Getting Started</h3><p>First steps...</p><h2>Configuration</h2><p>How to configure...</p><h3>Basic Settings</h3><p>Basic configuration...</p><h3>Advanced Options</h3><p>Advanced settings...</p><h2>Troubleshooting</h2><p>Common issues...</p>',
             ];
         }
 
@@ -533,11 +533,11 @@ class TableOfContents extends Widget_Base {
         }
 
         if (!empty($current_post->post_content)) {
-            $content = apply_filters('the_content', $current_post->post_content);
+            $content = apply_filters('the_content', $current_post->post_content); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WordPress core filter.
             if (preg_match_all('/<h(' . $level_pattern . ')[^>]*(?:\s+id=["\']([^"\']*)["\'])?[^>]*>(.*?)<\/h\1>/si', $content, $matches, PREG_SET_ORDER)) {
                 $counter = 0;
                 foreach ($matches as $match) {
-                    $counter++;
+                    ++$counter;
                     $level = intval($match[1]);
                     $id = !empty($match[2]) ? $match[2] : 'wedocs-heading-' . $counter;
                     $text = wp_strip_all_tags($match[3]);
@@ -612,17 +612,17 @@ class TableOfContents extends Widget_Base {
                     <?php if (!empty($headings)): ?>
                         <?php foreach ($headings as $heading): ?>
                             <?php $depth = $heading['level'] - $min_level; ?>
-                            <li class="wedocs-toc__item" style="padding-left: <?php echo $depth * 16; ?>px;">
+                            <li class="wedocs-toc__item" style="padding-left: <?php echo (int) ( $depth * 16 ); ?>px;">
                                 <a href="#<?php echo esc_attr($heading['id']); ?>" class="wedocs-toc__link">
                                     <?php if ($show_numbers): ?>
-                                        <span class="wedocs-toc__number"><?php echo $heading['index']; ?>.</span>
+                                        <span class="wedocs-toc__number"><?php echo esc_html( $heading['index'] ); ?>.</span>
                                     <?php endif; ?>
                                     <?php echo esc_html($heading['text']); ?>
                                 </a>
                             </li>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <li class="wedocs-toc__placeholder"><?php _e('No headings found in the content.', 'wedocs'); ?></li>
+                        <li class="wedocs-toc__placeholder"><?php esc_html_e('No headings found in the content.', 'wedocs'); ?></li>
                     <?php endif; ?>
                 </ul>
             </nav>
@@ -630,7 +630,7 @@ class TableOfContents extends Widget_Base {
 
         <?php if (\Elementor\Plugin::$instance->editor->is_edit_mode() && empty($headings)): ?>
             <div style="margin-top: 10px; padding: 10px; background: #f0f8ff; border-left: 3px solid #2196f3; font-size: 12px; color: #666;">
-                📝 <?php _e('Preview: This widget extracts headings from your content. Add H2, H3 headings to see them here.', 'wedocs'); ?>
+                📝 <?php esc_html_e('Preview: This widget extracts headings from your content. Add H2, H3 headings to see them here.', 'wedocs'); ?>
             </div>
         <?php endif; ?>
 
@@ -980,10 +980,10 @@ class TableOfContents extends Widget_Base {
                     <ul class="wedocs-toc__list">
                         <?php foreach ($sample_headings as $i => $heading): ?>
                             <?php $depth = $heading['level'] - $min_level; ?>
-                            <li class="wedocs-toc__item <?php echo $i === 0 ? 'active' : ''; ?>" style="padding-left: <?php echo $depth * 16; ?>px;">
+                            <li class="wedocs-toc__item <?php echo $i === 0 ? 'active' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- literal class name. ?>" style="padding-left: <?php echo (int) ( $depth * 16 ); ?>px;">
                                 <a href="#<?php echo esc_attr($heading['id']); ?>" class="wedocs-toc__link">
                                     <?php if ($show_numbers): ?>
-                                        <span class="wedocs-toc__number"><?php echo $heading['index']; ?>.</span>
+                                        <span class="wedocs-toc__number"><?php echo esc_html( $heading['index'] ); ?>.</span>
                                     <?php endif; ?>
                                     <?php echo esc_html($heading['text']); ?>
                                 </a>
@@ -993,7 +993,7 @@ class TableOfContents extends Widget_Base {
                 </nav>
 
                 <div style="margin-top: 10px; padding: 10px; background: #f0f8ff; border-left: 3px solid #2196f3; font-size: 12px; color: #666;">
-                    📝 <?php _e('Preview: This widget will show headings from your page content.', 'wedocs'); ?>
+                    📝 <?php esc_html_e('Preview: This widget will show headings from your page content.', 'wedocs'); ?>
                 </div>
             </div>
     <?php

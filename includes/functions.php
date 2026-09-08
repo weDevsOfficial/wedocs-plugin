@@ -252,7 +252,7 @@ if ( !function_exists( 'wedocs_get_breadcrumb_item' ) ) {
 /**
  * Find the top-level (root) doc ancestor for a given doc.
  *
- * weDocs docs form a tree: parent doc -> sections -> articles. The root is
+ * WeDocs docs form a tree: parent doc -> sections -> articles. The root is
  * the ancestor whose post_parent is 0.
  *
  * @since 2.2.7
@@ -1317,7 +1317,7 @@ function wedocs_has_elementor_single_doc_template() {
  *
  * @return bool True when the classic (legacy) renderer should be used.
  */
-function use_wedocs_legacy_template(){
+function use_wedocs_legacy_template() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- public API, renaming would break callers.
     return 'legacy' === wedocs_get_single_doc_renderer();
 }
 

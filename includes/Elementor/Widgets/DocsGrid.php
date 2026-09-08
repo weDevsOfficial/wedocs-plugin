@@ -2782,7 +2782,7 @@ class DocsGrid extends Widget_Base {
 
         ob_start();
 ?>
-                    <div class="wedocs-docs-grid__item<?php echo $anim_class; ?>"<?php if ($item_animation !== 'none'): ?> data-anim-delay="<?php echo esc_attr($anim_delay); ?>"<?php endif; ?>>
+                    <div class="wedocs-docs-grid__item<?php echo esc_attr( $anim_class ); ?>"<?php if ($item_animation !== 'none'): ?> data-anim-delay="<?php echo esc_attr($anim_delay); ?>"<?php endif; ?>>
                         <div class="wedocs-docs-grid__header">
                             <h3 class="wedocs-docs-grid__title">
                                 <?php if ($doc_style === 'list'): ?>
@@ -2796,7 +2796,7 @@ class DocsGrid extends Widget_Base {
                                         ?>
                                     </span>
                                 <?php endif; ?>
-                                <a href="<?php echo get_permalink($doc->ID); ?>"><?php echo esc_html($doc->post_title); ?></a>
+                                <a href="<?php echo esc_url( get_permalink( $doc->ID ) ); ?>"><?php echo esc_html($doc->post_title); ?></a>
                             </h3>
                         </div>
 
@@ -2825,7 +2825,7 @@ class DocsGrid extends Widget_Base {
                                 ?>
                                         <div class="wedocs-docs-grid__section">
                                             <h4 class="wedocs-docs-grid__section-title">
-                                                <a href="<?php echo get_permalink($section->ID); ?>" class="wedocs-docs-grid__section-link">
+                                                <a href="<?php echo esc_url( get_permalink( $section->ID ) ); ?>" class="wedocs-docs-grid__section-link">
                                                     <?php echo esc_html($section->post_title); ?>
                                                 </a>
                                             </h4>
@@ -2860,11 +2860,11 @@ class DocsGrid extends Widget_Base {
                                                                 <span class="wedocs-docs-grid__article-icon">
                                                                     <?php \Elementor\Icons_Manager::render_icon($settings['articlePrefixIcon'], ['aria-hidden' => 'true']); ?>
                                                                 </span>
-                                                                <a href="<?php echo get_permalink($article->ID); ?>" class="wedocs-docs-grid__article-link">
+                                                                <a href="<?php echo esc_url( get_permalink( $article->ID ) ); ?>" class="wedocs-docs-grid__article-link">
                                                                     <?php echo esc_html($article->post_title); ?>
                                                                 </a>
                                                             <?php else: ?>
-                                                                <a href="<?php echo get_permalink($article->ID); ?>" class="wedocs-docs-grid__article-link" data-prefix="<?php echo esc_attr($settings['articlePrefix'] ?? '→'); ?>">
+                                                                <a href="<?php echo esc_url( get_permalink( $article->ID ) ); ?>" class="wedocs-docs-grid__article-link" data-prefix="<?php echo esc_attr($settings['articlePrefix'] ?? '→'); ?>">
                                                                     <?php echo esc_html($article->post_title); ?>
                                                                 </a>
                                                             <?php endif; ?>
@@ -2881,7 +2881,7 @@ class DocsGrid extends Widget_Base {
                         <?php endif; ?>
 
                         <?php if ($show_view_details): ?>
-                            <a href="<?php echo get_permalink($doc->ID); ?>" class="wedocs-docs-grid__details-link">
+                            <a href="<?php echo esc_url( get_permalink( $doc->ID ) ); ?>" class="wedocs-docs-grid__details-link">
                                 <?php echo esc_html($button_text); ?>
                             </a>
                         <?php endif; ?>
@@ -3016,7 +3016,7 @@ class DocsGrid extends Widget_Base {
 
             <div class="<?php echo esc_attr($grid_class); ?>" data-grid-id="<?php echo $this->get_id(); ?>">
                 <?php foreach ($docs as $index => $doc): ?>
-                    <?php echo self::render_doc_card($doc, $settings, $index); ?>
+                    <?php echo self::render_doc_card($doc, $settings, $index); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- returns markup this class builds and escapes. ?>
                 <?php endforeach; ?>
             </div>
 

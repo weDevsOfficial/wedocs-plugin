@@ -423,7 +423,7 @@ class DocsHamburgerMenu extends Widget_Base {
 
         if (!$parent) {
             if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
-                echo '<p style="color: #999; font-style: italic; padding: 20px; text-align: center;">' . __('Hamburger Menu: Preview it on a single doc page.', 'wedocs') . '</p>';
+                echo '<p style="color: #999; font-style: italic; padding: 20px; text-align: center;">' . esc_html__('Hamburger Menu: Preview it on a single doc page.', 'wedocs') . '</p>';
             }
             return;
         }
@@ -485,7 +485,7 @@ class DocsHamburgerMenu extends Widget_Base {
 
             <?php if ($children): ?>
                 <ul class="wedocs-hamburger__nav doc-nav-list">
-                    <?php echo $children; ?>
+                    <?php echo $children; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- markup built above with escaped values. ?>
                 </ul>
             <?php endif; ?>
         </div>

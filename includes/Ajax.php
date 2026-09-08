@@ -187,7 +187,7 @@ class Ajax {
         check_ajax_referer('wedocs-ajax');
 
         $template = '<div class="wedocs-alert wedocs-alert-%s">%s</div>';
-        $previous = isset($_COOKIE['wedocs_response']) ? explode(',', $_COOKIE['wedocs_response']) : [];
+        $previous = isset($_COOKIE['wedocs_response']) ? explode(',', sanitize_text_field(wp_unslash($_COOKIE['wedocs_response']))) : [];
         $post_id  = intval($_POST['post_id']);
         $type     = in_array($_POST['type'], ['positive', 'negative']) ? $_POST['type'] : false;
 
@@ -445,7 +445,7 @@ class Ajax {
      * @return array|null
      */
     private function find_widget_settings($elements, $widget_id) {
-        foreach ((array) $elements as $element) {
+        foreach ( (array) $elements as $element) {
             if (isset($element['id']) && $element['id'] === $widget_id) {
                 return isset($element['settings']) ? (array) $element['settings'] : [];
             }
@@ -669,7 +669,7 @@ class Ajax {
         check_ajax_referer('wedocs_helpful_vote', 'nonce');
 
         $post_id = intval($_POST['post_id'] ?? 0);
-        $vote = sanitize_text_field($_POST['vote'] ?? '');
+        $vote = sanitize_text_field(wp_unslash($_POST['vote'] ?? ''));
 
         if (!$post_id || !in_array($vote, ['yes', 'no'], true)) {
             wp_send_json_error(['message' => __('Invalid vote.', 'wedocs')]);
@@ -684,8 +684,8 @@ class Ajax {
         $user_id = get_current_user_id();
         $user_ip = wedocs_get_client_ip();
 
-        $previous = isset($_COOKIE['wedocs_response']) ? explode(',', $_COOKIE['wedocs_response']) : [];
-        $has_voted = in_array((string) $post_id, $previous, true);
+        $previous = isset($_COOKIE['wedocs_response']) ? explode(',', sanitize_text_field(wp_unslash($_COOKIE['wedocs_response']))) : [];
+        $has_voted = in_array( (string) $post_id, $previous, true);
 
         if (!$has_voted && $user_id && get_post_meta($post_id, "wedocs_helpful_vote_user_{$user_id}", true)) {
             $has_voted = true;
@@ -735,7 +735,7 @@ class Ajax {
         }
 
         $post_id = intval($_POST['post_id'] ?? 0);
-        $feedback = sanitize_textarea_field($_POST['feedback'] ?? '');
+        $feedback = sanitize_textarea_field(wp_unslash($_POST['feedback'] ?? ''));
 
         if (!$post_id || empty($feedback)) {
             wp_send_json_error(['message' => __('Invalid feedback.', 'wedocs')]);
@@ -766,9 +766,9 @@ class Ajax {
      * Handle "Need More Help" contact form submission.
      */
     public function handle_need_help_submit() {
-        $widget_id = sanitize_text_field($_POST['widget_id'] ?? '');
+        $widget_id = sanitize_text_field(wp_unslash($_POST['widget_id'] ?? ''));
 
-        if (!wp_verify_nonce($_POST['nonce'] ?? '', 'wedocs_need_help_' . $widget_id)) {
+        if (!wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'] ?? '')), 'wedocs_need_help_' . $widget_id)) {
             wp_send_json_error(['message' => __('Security check failed.', 'wedocs')]);
         }
 
@@ -778,13 +778,13 @@ class Ajax {
             wp_send_json_error(['message' => __('Too many requests. Please try again later.', 'wedocs')]);
         }
 
-        $name = sanitize_text_field($_POST['name'] ?? '');
-        $email = sanitize_email($_POST['email'] ?? '');
-        $subject = sanitize_text_field($_POST['subject'] ?? '');
-        $message = sanitize_textarea_field($_POST['message'] ?? '');
-        $page_url = esc_url_raw($_POST['page_url'] ?? '');
-        $page_title = sanitize_text_field($_POST['page_title'] ?? '');
-        $save_to_elementor = sanitize_text_field($_POST['save_to_elementor'] ?? '');
+        $name = sanitize_text_field(wp_unslash($_POST['name'] ?? ''));
+        $email = sanitize_email(wp_unslash($_POST['email'] ?? ''));
+        $subject = sanitize_text_field(wp_unslash($_POST['subject'] ?? ''));
+        $message = sanitize_textarea_field(wp_unslash($_POST['message'] ?? ''));
+        $page_url = esc_url_raw(wp_unslash($_POST['page_url'] ?? ''));
+        $page_title = sanitize_text_field(wp_unslash($_POST['page_title'] ?? ''));
+        $save_to_elementor = sanitize_text_field(wp_unslash($_POST['save_to_elementor'] ?? ''));
         $post_id = intval($_POST['post_id'] ?? 0);
 
         if (empty($message)) {
@@ -801,11 +801,16 @@ class Ajax {
         }
 
         // Send email
+        /* translators: %s: title of the page the request was sent from. */
         $email_subject = !empty($subject) ? $subject : sprintf(__('[weDocs] Support request from %s', 'wedocs'), $page_title);
 
-        $body = sprintf(__("Name: %s\n", 'wedocs'), $name ?: __('Not provided', 'wedocs'));
-        $body .= sprintf(__("Email: %s\n", 'wedocs'), $email ?: __('Not provided', 'wedocs'));
-        $body .= sprintf(__("Page: %s (%s)\n\n", 'wedocs'), $page_title, $page_url);
+        /* translators: %s: submitted name. */
+        $body = sprintf(__("Name: %s\n", 'wedocs'), $name ? $name : __('Not provided', 'wedocs'));
+        /* translators: %s: submitted email address. */
+        $body .= sprintf(__("Email: %s\n", 'wedocs'), $email ? $email : __('Not provided', 'wedocs'));
+        /* translators: 1: page title, 2: page URL. */
+        $body .= sprintf(__("Page: %1\$s (%2\$s)\n\n", 'wedocs'), $page_title, $page_url);
+        /* translators: %s: submitted message body. */
         $body .= sprintf(__("Message:\n%s", 'wedocs'), $message);
 
         $headers = ['Content-Type: text/plain; charset=UTF-8'];
@@ -880,7 +885,7 @@ class Ajax {
      * @return string
      */
     private function find_widget_setting($elements, $widget_id, $setting_key) {
-        foreach ((array) $elements as $element) {
+        foreach ( (array) $elements as $element) {
             if (isset($element['id']) && $element['id'] === $widget_id) {
                 return isset($element['settings'][$setting_key]) ? (string) $element['settings'][$setting_key] : '';
             }
@@ -938,19 +943,19 @@ class Ajax {
         }
 
         $submission_data = [
-            'post_id'                 => $post_id ?: 0,
+            'post_id'                 => $post_id ? $post_id : 0,
             'referer'                 => $page_url,
             'referer_title'           => $page_title,
             'element_id'              => $widget_id,
             'form_name'               => __('weDocs - Need More Help', 'wedocs'),
             'campaign_id'             => 0,
-            'user_id'                 => get_current_user_id() ?: null,
-            'user_ip'                 => sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? ''),
-            'user_agent'              => sanitize_text_field($_SERVER['HTTP_USER_AGENT'] ?? ''),
+            'user_id'                 => get_current_user_id() ? get_current_user_id() : null,
+            'user_ip'                 => sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'] ?? '')),
+            'user_agent'              => sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT'] ?? '')),
             'actions_count'           => 1,
             'actions_succeeded_count' => 1,
             'meta'                    => wp_json_encode([
-                'edit_post_id' => $post_id ?: 0,
+                'edit_post_id' => $post_id ? $post_id : 0,
             ]),
         ];
 

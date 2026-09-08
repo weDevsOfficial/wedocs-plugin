@@ -379,31 +379,31 @@ class WasThisHelpful extends Widget_Base {
                 <?php if ($style === 'thumbs'): ?>
                     <button type="button" class="wedocs-helpful__btn wedocs-helpful__btn--positive" data-vote="yes" title="<?php esc_attr_e('Yes', 'wedocs'); ?>">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
-                        <?php if ($show_count): ?><span class="wedocs-helpful__count"><?php echo $positive_count; ?></span><?php endif; ?>
+                        <?php if ($show_count): ?><span class="wedocs-helpful__count"><?php echo (int) $positive_count; ?></span><?php endif; ?>
                     </button>
                     <button type="button" class="wedocs-helpful__btn wedocs-helpful__btn--negative" data-vote="no" title="<?php esc_attr_e('No', 'wedocs'); ?>">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>
-                        <?php if ($show_count): ?><span class="wedocs-helpful__count"><?php echo $negative_count; ?></span><?php endif; ?>
+                        <?php if ($show_count): ?><span class="wedocs-helpful__count"><?php echo (int) $negative_count; ?></span><?php endif; ?>
                     </button>
 
                 <?php elseif ($style === 'emoji'): ?>
                     <button type="button" class="wedocs-helpful__btn wedocs-helpful__btn--positive" data-vote="yes" title="<?php esc_attr_e('Helpful', 'wedocs'); ?>">
                         <span class="wedocs-helpful__emoji">&#128077;</span>
-                        <?php if ($show_count): ?><span class="wedocs-helpful__count"><?php echo $positive_count; ?></span><?php endif; ?>
+                        <?php if ($show_count): ?><span class="wedocs-helpful__count"><?php echo (int) $positive_count; ?></span><?php endif; ?>
                     </button>
                     <button type="button" class="wedocs-helpful__btn wedocs-helpful__btn--negative" data-vote="no" title="<?php esc_attr_e('Not helpful', 'wedocs'); ?>">
                         <span class="wedocs-helpful__emoji">&#128078;</span>
-                        <?php if ($show_count): ?><span class="wedocs-helpful__count"><?php echo $negative_count; ?></span><?php endif; ?>
+                        <?php if ($show_count): ?><span class="wedocs-helpful__count"><?php echo (int) $negative_count; ?></span><?php endif; ?>
                     </button>
 
                 <?php elseif ($style === 'yes_no'): ?>
                     <button type="button" class="wedocs-helpful__btn wedocs-helpful__btn--text wedocs-helpful__btn--positive" data-vote="yes">
                         <?php echo esc_html($settings['yes_text']); ?>
-                        <?php if ($show_count): ?><span class="wedocs-helpful__count">(<?php echo $positive_count; ?>)</span><?php endif; ?>
+                        <?php if ($show_count): ?><span class="wedocs-helpful__count">(<?php echo (int) $positive_count; ?>)</span><?php endif; ?>
                     </button>
                     <button type="button" class="wedocs-helpful__btn wedocs-helpful__btn--text wedocs-helpful__btn--negative" data-vote="no">
                         <?php echo esc_html($settings['no_text']); ?>
-                        <?php if ($show_count): ?><span class="wedocs-helpful__count">(<?php echo $negative_count; ?>)</span><?php endif; ?>
+                        <?php if ($show_count): ?><span class="wedocs-helpful__count">(<?php echo (int) $negative_count; ?>)</span><?php endif; ?>
                     </button>
                 <?php endif; ?>
             </div>
@@ -411,7 +411,7 @@ class WasThisHelpful extends Widget_Base {
             <?php if ($negative_follow_up): ?>
             <div class="wedocs-helpful__follow-up" style="display: none;">
                 <textarea class="wedocs-helpful__feedback-text" placeholder="<?php echo esc_attr($settings['follow_up_placeholder']); ?>" rows="3"></textarea>
-                <button type="button" class="wedocs-helpful__feedback-submit"><?php _e('Submit Feedback', 'wedocs'); ?></button>
+                <button type="button" class="wedocs-helpful__feedback-submit"><?php esc_html_e('Submit Feedback', 'wedocs'); ?></button>
             </div>
             <?php endif; ?>
 
@@ -563,11 +563,11 @@ class WasThisHelpful extends Widget_Base {
 
                     // Send vote
                     $.ajax({
-                        url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                        url: '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>',
                         type: 'POST',
                         data: {
                             action: 'wedocs_helpful_vote',
-                            nonce: '<?php echo wp_create_nonce('wedocs_helpful_vote'); ?>',
+                            nonce: '<?php echo esc_js( wp_create_nonce( 'wedocs_helpful_vote' ) ); ?>',
                             post_id: $widget.data('post-id'),
                             vote: vote
                         }
@@ -590,11 +590,11 @@ class WasThisHelpful extends Widget_Base {
                     if (!feedback.trim()) return;
 
                     $.ajax({
-                        url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                        url: '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>',
                         type: 'POST',
                         data: {
                             action: 'wedocs_helpful_feedback',
-                            nonce: '<?php echo wp_create_nonce('wedocs_helpful_vote'); ?>',
+                            nonce: '<?php echo esc_js( wp_create_nonce( 'wedocs_helpful_vote' ) ); ?>',
                             post_id: $widget.data('post-id'),
                             feedback: feedback
                         }
