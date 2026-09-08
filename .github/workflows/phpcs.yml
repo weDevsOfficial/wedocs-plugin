@@ -84,6 +84,9 @@ jobs:
       - name: Detect coding standard violations
         if: steps.changes.outputs.files != ''
         run: |
-          set -o pipefail
-          phpcs --standard=phpcs.xml.dist ${{ steps.changes.outputs.files }} -q --report=json \
-            | php bin/phpcs-changed-lines.php "$(git rev-parse HEAD^1)"
+          # phpcs exits non-zero whenever the FILES hold violations, including
+          # pre-existing ones on lines this change never touched. Its status is
+          # therefore not the signal we want, so it is discarded here and the
+          # filter below decides the outcome from the changed lines alone.
+          phpcs --standard=phpcs.xml.dist ${{ steps.changes.outputs.files }} -q --report=json > phpcs-report.json || true
+          php bin/phpcs-changed-lines.php "$(git rev-parse HEAD^1)" < phpcs-report.json
