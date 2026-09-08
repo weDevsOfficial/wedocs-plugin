@@ -113,7 +113,7 @@ class SettingsApi extends \WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function get_items_permissions_check( $request ) {
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! AbilitiesPolicy::can( 'settings.read' ) ) {
             return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to do that.', 'wedocs' ), array( 'status' => rest_authorization_required_code() ) );
         }
 
@@ -130,7 +130,7 @@ class SettingsApi extends \WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function create_item_permissions_check( $request ) {
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! AbilitiesPolicy::can( 'settings.write' ) ) {
             return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to do that.', 'wedocs' ), array( 'status' => rest_authorization_required_code() ) );
         }
 
