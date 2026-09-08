@@ -63,10 +63,18 @@ const EmptyFaq = ( { onGroupCreated } ) => {
                                 </defs>
                             </svg>
                             <p className="text-[#3B3F4A] font-bold text-2xl mx-auto">
-                                { __( 'Get started by creating your first FAQ group', 'wedocs' ) }
+                                { __( 'Get started by creating FAQs for your site', 'wedocs' ) }
                             </p>
                             <p className="text-[#666B79] text-lg mx-auto mt-2">
-                                { __( 'Group your frequently asked questions so users can find answers quickly.', 'wedocs' ) }
+                                <a
+                                    href="https://wedocs.co/docs/wedocs/faq_feature/"
+                                    className="text-[#0043FF] !shadow-none"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    { __( 'Learn more ', 'wedocs' ) }
+                                </a>
+                                { __( 'how to manage FAQs', 'wedocs' ) }
                             </p>
                         </h2>
                         <AddFaqGroupModal onGroupCreated={ onGroupCreated } className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-2.5 text-base text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
