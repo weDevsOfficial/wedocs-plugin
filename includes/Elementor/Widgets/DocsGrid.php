@@ -937,9 +937,12 @@ class DocsGrid extends Widget_Base {
                         'step' => 10,
                     ],
                 ],
-                'selectors' => [
-                    '{{WRAPPER}} .wedocs-docs-grid__content' => 'max-height: {{SIZE}}{{UNIT}}; overflow-y: auto;',
-                ],
+                'description' => __('Leave empty, or 0, for no limit.', 'wedocs'),
+                // Deliberately no 'selectors'. Elementor treats a stored size of
+                // 0 as a value and would emit "max-height: 0px", collapsing the
+                // card body and hiding every section and article. The rule is
+                // applied in render() instead, behind the same guard the editor
+                // preview in content_template() already uses.
             ]
         );
 
@@ -2764,6 +2767,23 @@ class DocsGrid extends Widget_Base {
      * @return string Card markup.
      */
     public static function render_doc_card($doc, $settings, $index = 0) {
+        // A stored Max Height of 0 means "no limit", not "collapse the body".
+        // Elementor counts a SLIDER size of 0 as a value, so a selector would
+        // emit "max-height: 0px" and hide every section and article. The editor
+        // preview in content_template() already guards on ?.size, where 0 is
+        // falsy, so only the front end was ever wrong.
+        $body_max_height_attr = '';
+        $body_max_height      = isset( $settings['cardBodyMaxHeight']['size'] ) ? $settings['cardBodyMaxHeight']['size'] : '';
+
+        if ( '' !== $body_max_height && (float) $body_max_height > 0 ) {
+            $unit = ! empty( $settings['cardBodyMaxHeight']['unit'] ) ? $settings['cardBodyMaxHeight']['unit'] : 'px';
+            $unit = in_array( $unit, [ 'px', '%', 'em', 'rem', 'vh' ], true ) ? $unit : 'px';
+
+            $body_max_height_attr = ' style="' . esc_attr(
+                sprintf( 'max-height: %s%s; overflow-y: auto;', (float) $body_max_height, $unit )
+            ) . '"';
+        }
+
         $doc_style           = $settings['docStyle'] ?? '1x1';
         $order               = $settings['order'] ?? 'asc';
         $order_by            = $settings['orderBy'] ?? 'menu_order';
@@ -2801,7 +2821,7 @@ class DocsGrid extends Widget_Base {
                         </div>
 
                         <?php if ($show_articles): ?>
-                            <div class="wedocs-docs-grid__content">
+                            <div class="wedocs-docs-grid__content"<?php echo $body_max_height_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above from a float-cast size and an allow-listed unit, already escaped. ?>>
                                 <?php
                                 // Get sections (children of this doc)
                                 $section_args = [

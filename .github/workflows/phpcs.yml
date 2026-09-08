@@ -41,28 +41,11 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.composercache.outputs.dir }}
-          key: "${{ runner.os }}-phpcs-${{ hashFiles('phpcs.xml.dist') }}"
-          restore-keys: ${{ runner.os }}-phpcs-
+          key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}"
+          restore-keys: ${{ runner.os }}-composer-
 
-      # Installed outside the repository, unlike the Dokan and WPUF workflows
-      # this mirrors. weDocs lists includes/functions.php in composer's
-      # autoload.files, and that file calls WordPress functions at file scope
-      # (wedocs_is_plugin_active() at :397, add_action at :583 and :584,
-      # add_filter at :613). PHPCS loads vendor/autoload.php when it is present,
-      # so installing the tooling in the plugin's own vendor/ makes phpcs fatal
-      # on an undefined ABSPATH before it lints anything.
-      # Tracked in weDevsOfficial/wedocs-pro#420, which also carries the fix.
-      - name: Install PHPCS and the WordPress standards
-        run: |
-          mkdir -p "$RUNNER_TEMP/phpcs-tools"
-          cd "$RUNNER_TEMP/phpcs-tools"
-          echo '{}' > composer.json
-          composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-          composer require --no-interaction --prefer-dist --no-progress \
-            squizlabs/php_codesniffer:^3.10 \
-            wp-coding-standards/wpcs:^3.1 \
-            phpcompatibility/phpcompatibility-wp:^2.1
-          echo "$RUNNER_TEMP/phpcs-tools/vendor/bin" >> "$GITHUB_PATH"
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress || composer update --prefer-dist --no-progress
 
       # The PHP files this pull request changes: the merge commit against its
       # first parent, so nothing that merely landed on the base branch in the
@@ -88,5 +71,5 @@ jobs:
           # pre-existing ones on lines this change never touched. Its status is
           # therefore not the signal we want, so it is discarded here and the
           # filter below decides the outcome from the changed lines alone.
-          phpcs --standard=phpcs.xml.dist ${{ steps.changes.outputs.files }} -q --report=json > phpcs-report.json || true
+          vendor/bin/phpcs --standard=phpcs.xml.dist ${{ steps.changes.outputs.files }} -q --report=json > phpcs-report.json || true
           php bin/phpcs-changed-lines.php "$(git rev-parse HEAD^1)" < phpcs-report.json
