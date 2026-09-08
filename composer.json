@@ -17,10 +17,28 @@
     "psr-4": {
       "WeDevs\\WeDocs\\": "includes/"
     },
-    "files": [ "includes/functions.php" ]
+    "files": [
+      "includes/functions.php"
+    ]
   },
   "require-dev": {
     "phpunit/phpunit": "7.5.9",
-    "tareq1988/wp-php-cs-fixer": "dev-master"
+    "tareq1988/wp-php-cs-fixer": "dev-master",
+    "wp-coding-standards/wpcs": "^3.1",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+    "phpcompatibility/phpcompatibility-wp": "^2.1"
+  },
+  "scripts": {
+    "phpcs": [
+      "phpcs -p -s"
+    ],
+    "phpcbf": [
+      "phpcbf -p"
+    ]
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }

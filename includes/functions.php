@@ -1,4 +1,14 @@
 <?php
+// This file is listed in composer's autoload.files, and it calls WordPress
+// functions at file scope: wedocs_is_plugin_active() below, plus add_action()
+// and add_filter() further down. Requiring vendor/autoload.php outside
+// WordPress would therefore fatal on an undefined ABSPATH. CLI tooling such as
+// PHPCS only needs to parse this file, not run it, and a top-level return ends
+// just this include rather than the calling process the way exit would.
+if ( ! defined( 'ABSPATH' ) ) {
+    return;
+}
+
 /**
  * Get template part implementation for wedocs.
  * Looks at the theme directory first.
