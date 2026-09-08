@@ -9,6 +9,7 @@ Author URI: https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=a
 License: GPL2
 Text Domain: wedocs
 Domain Path: /languages
+Requires PHP: 7.4
 */
 
 /*
