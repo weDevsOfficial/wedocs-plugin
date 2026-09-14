@@ -15,6 +15,95 @@ class Assets {
         add_action( 'init', array( $this, 'register_translations' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
         add_action( 'wedocs_load_faq_page', array( $this, 'enqueue_faq_assets' ) );
+
+        // Runs right after core's global block-style enqueue (priority 10) on classic themes.
+        add_action( 'enqueue_block_assets', array( $this, 'dequeue_block_styles_when_unused' ), 20 );
+    }
+
+    /**
+     * Keep weDocs block stylesheets off pages that cannot render a weDocs block.
+     *
+     * On classic themes WordPress enqueues the `style` of every registered block
+     * on every front-end request (wp_enqueue_registered_block_scripts_and_styles),
+     * which put all 17 weDocs block stylesheets on every page of the site. Block
+     * themes, and WordPress 6.8+ sites that opt into on-demand block assets, never
+     * enqueue them globally, so there is nothing to undo there.
+     *
+     * This removes the global enqueue on requests that hold no weDocs block.
+     * WP_Block::render() enqueues a block's style again the moment the block
+     * renders, so a weDocs block placed anywhere (a landing page, a widget area,
+     * a template part) still gets its stylesheet, just not every other page.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return void
+     */
+    public function dequeue_block_styles_when_unused() {
+        if ( is_admin() || is_feed() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+            return;
+        }
+
+        // Core already loads block assets on demand: nothing was enqueued globally.
+        $on_demand = function_exists( 'wp_should_load_block_assets_on_demand' )
+            ? wp_should_load_block_assets_on_demand()
+            : wp_should_load_separate_core_block_assets();
+
+        if ( $on_demand || $this->request_can_render_blocks() ) {
+            return;
+        }
+
+        $registry = \WP_Block_Type_Registry::get_instance();
+
+        foreach ( $registry->get_all_registered() as $block_name => $block_type ) {
+            if ( 0 !== strpos( $block_name, 'wedocs/' ) ) {
+                continue;
+            }
+
+            foreach ( (array) $block_type->style_handles as $handle ) {
+                wp_dequeue_style( $handle );
+            }
+        }
+    }
+
+    /**
+     * Whether the current request is one where weDocs blocks are expected to render.
+     *
+     * Covers the docs post type (single, archive, tag), the configured docs home
+     * page, and any singular post whose content contains a weDocs block. Blocks
+     * that render outside these (a template part, a widget) are still styled by
+     * the render-time enqueue in WP_Block::render(), only later in the page.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return bool
+     */
+    private function request_can_render_blocks() {
+        if ( is_singular( 'docs' ) || is_post_type_archive( 'docs' ) || is_tax( 'doc_tag' ) ) {
+            return true;
+        }
+
+        $docs_home = function_exists( 'wedocs_get_general_settings' ) ? absint( wedocs_get_general_settings( 'docs_home' ) ) : 0;
+
+        if ( $docs_home && is_page( $docs_home ) ) {
+            return true;
+        }
+
+        $queried = get_queried_object();
+
+        if ( $queried instanceof \WP_Post && is_string( $queried->post_content ) && false !== strpos( $queried->post_content, '<!-- wp:wedocs/' ) ) {
+            return true;
+        }
+
+        /**
+         * Filters whether weDocs block stylesheets should stay enqueued on this request.
+         *
+         * Return true for requests that render weDocs blocks in a way the plugin cannot detect.
+         *
+         * @since WEDOCS_SINCE
+         *
+         * @param bool $can_render Whether weDocs blocks are expected on this request.
+         */
+        return (bool) apply_filters( 'wedocs_request_can_render_blocks', false );
     }
 
     /**
