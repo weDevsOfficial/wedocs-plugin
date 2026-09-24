@@ -179,9 +179,6 @@ final class WeDocs {
     }
 
     public function register_blocks() {
-        // Enqueue admin script early to make weDocsAdminScriptVars available for blocks
-        wp_enqueue_script( 'wedocs-admin-script' );
-
         // Modern WordPress block registration using block.json files
         $block_directories = [
             // Free blocks
