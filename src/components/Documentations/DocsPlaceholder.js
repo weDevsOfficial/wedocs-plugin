@@ -1,75 +1,45 @@
+// Loading state for the docs grid. It mirrors the real doc card in
+// ParentDocs.js (white rounded card, 4.5rem header, two count rows, the
+// contributor avatars and a footer holding the Add button) so the page does not jump when the docs
+// arrive. Colours are set explicitly: in Tailwind 4 a bare `border-*`
+// takes `currentColor`, which drew a dark line under every placeholder.
+const Bar = ( { className = '' } ) => (
+  <span className={ `block animate-pulse rounded bg-gray-200 ${ className }` } />
+);
+
 const DocsPlaceholder = () => {
   return (
-    <div className={ `documentation relative mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7` }>
-      { [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ].map( ( value, index ) => (
-        <div
-          key={ index }
-          className="animate-pulse bg-white border-b hover:bg-gray-50 font-extrabold"
-        >
-          <div className="flex w-full items-center justify-between space-x-6 p-6 pt-5">
-            <div className="flex-1 truncate">
-              <div className="inline-flex items-center space-x-3">
-                <div className="flex items-center space-x-3 flex-1 group">
-                  <a href="#" className="mt-1.5 !shadow-none">
-                    <h3 className="animate-pulse bg-slate-200 rounded h-4 w-64 border-b hover:bg-slate-300"></h3>
-                  </a>
-                  <a
-                    target="_blank"
-                    href="#"
-                    rel="noreferrer"
-                    className="mt-[-2px] hidden group-hover:block !shadow-none"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      fill="none"
-                    >
-                      <path
-                        d="M7.118 3.5H3.452c-1.013 0-1.833.821-1.833 1.833V14.5c0 1.012.821 1.833 1.833 1.833h9.167c1.012 0 1.833-.821 1.833-1.833v-3.667m-3.667-9.167h5.5m0 0v5.5m0-5.5l-9.167 9.167"
-                        stroke="#4338ca"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></path>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="flex gap-5 items-center">
-              <div className="documentation-ellipsis-actions relative h-4 w-8">
-                <span className="animate-pulse bg-slate-200 w-full h-full rounded absolute border-b hover:bg-slate-300"></span>
-              </div>
+    <div
+      className="documentation relative mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7"
+      aria-hidden="true"
+    >
+      { [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ].map( ( index ) => (
+        <div key={ index } className="col-span-1 rounded bg-white shadow">
+          <div className="flex w-full items-center justify-between px-6 h-[4.5rem]">
+            <Bar className="h-5 w-40" />
+            <div className="flex items-center gap-6">
+              <Bar className="h-4 w-4" />
+              <Bar className="h-4 w-1.5" />
             </div>
           </div>
           <div className="w-full p-6 pt-0 pb-7">
-            <ul role="list" className="mb-6 rounded-md">
-              <li className="flex items-center justify-between mb-0 py-1.5 pl-3 pr-4 text-sm">
-                <div className="w-full inline-flex items-center">
-                  <div className="w-6 flex justify-center">
-                    <span className="mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-8 border-b hover:bg-slate-300"></span>
-                  </div>
-                  <span className="ml-2 mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-52 border-b hover:bg-slate-300"></span>
-                </div>
-              </li>
-              <li className="flex items-center justify-between mb-0 py-1.5 pl-3 pr-4 text-sm">
-                <div className="flex w-0 flex-1 items-center">
-                  <div className="w-6 flex justify-center">
-                    <span className="mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-8 border-b hover:bg-slate-300"></span>
-                  </div>
-                  <span className="ml-2 mt-0.5 animate-pulse bg-slate-200 rounded h-4 w-52 border-b hover:bg-slate-300"></span>
-                </div>
-              </li>
+            <ul role="list" className="mb-6">
+              { [ 0, 1 ].map( ( row ) => (
+                <li key={ row } className="flex h-8 items-center mb-0 py-1.5 pl-3 pr-4">
+                  <Bar className="h-4 w-5" />
+                  <Bar className="ml-2 h-4 w-24" />
+                </li>
+              ) ) }
             </ul>
+            <div className="ml-4 flex -space-x-2 h-7">
+              { [ 0, 1, 2 ].map( ( avatar ) => (
+                <Bar key={ avatar } className="h-7 w-7 rounded-full ring-2 ring-white" />
+              ) ) }
+            </div>
           </div>
           <div className="border-t border-gray-200">
-            <div className="-mt-px flex divide-x divide-gray-200">
-              <div className="flex w-0 flex-1 justify-end items-center py-4 px-6">
-                <button className="py-2 inline-flex items-center h-8 w-16 hover:text-white rounded-md border border-gray-200 ease-in-out duration-200 shadow-gray-100 px-4 text-sm text-gray shadow-sm">
-                  <span className="animate-pulse bg-slate-200 w-10 h-4 rounded absolute border-b hover:bg-slate-300"></span>
-                </button>
-              </div>
+            <div className="flex justify-end py-4 px-6">
+              <Bar className="h-[38px] w-20 rounded-md" />
             </div>
           </div>
         </div>

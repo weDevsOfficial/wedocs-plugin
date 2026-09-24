@@ -24,6 +24,58 @@ const STATUS_BADGE = {
 
 const numberFormat = ( n ) => new Intl.NumberFormat().format( n || 0 );
 
+// Loading state shaped like the dashboard it stands in for: title, the four
+// stat cards, the Popular / Most Helpful pair and the Recently Updated table,
+// each in the same card shell and spacing, so nothing moves when data lands.
+const Bar = ( { className = '' } ) => (
+  <span className={ `block animate-pulse rounded bg-gray-200 ${ className }` } />
+);
+
+const SkeletonCard = ( { rows = 3 } ) => (
+  <div className="bg-white shadow sm:rounded-md">
+    <div className="flex items-center gap-2 px-8 py-4">
+      <Bar className="h-5 w-5" />
+      <Bar className="h-5 w-36" />
+    </div>
+    <hr className="h-px border-0 !bg-gray-200" />
+    <ul className="divide-y divide-gray-100">
+      { Array.from( { length: rows } ).map( ( _, i ) => (
+        <li key={ i } className="flex items-center justify-between gap-3 px-8 py-3.5">
+          <Bar className="h-4 w-48" />
+          <Bar className="h-4 w-10" />
+        </li>
+      ) ) }
+    </ul>
+  </div>
+);
+
+const DashboardSkeleton = () => (
+  <div className="wedocs-dashboard min-h-full pt-7" aria-hidden="true">
+    <div className="space-y-6 pb-10 pt-3">
+      <h1 className="flex items-center text-xl font-medium text-[#111827]">
+        { __( 'Dashboard', 'wedocs' ) }
+      </h1>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        { [ 0, 1, 2, 3 ].map( ( i ) => (
+          <div key={ i } className="flex items-center gap-4 bg-white p-6 shadow sm:rounded-md">
+            <Bar className="h-12 w-12 shrink-0 rounded-md" />
+            <div className="min-w-0 flex-1 space-y-2">
+              <Bar className="h-3 w-20" />
+              <Bar className="h-6 w-12" />
+              <Bar className="h-3 w-24" />
+            </div>
+          </div>
+        ) ) }
+      </div>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <SkeletonCard rows={ 3 } />
+        <SkeletonCard rows={ 3 } />
+      </div>
+      <SkeletonCard rows={ 4 } />
+    </div>
+  </div>
+);
+
 /**
  * Card shell matching the weDocs settings panels:
  * `shadow sm:rounded-md` surface, `section-heading px-8 py-4` header with an
@@ -73,18 +125,7 @@ const Dashboard = () => {
   }, [] );
 
   if ( loading ) {
-    return (
-      <div className="min-h-full pt-7">
-        <div className="grid gap-6 pt-3 sm:grid-cols-2 lg:grid-cols-4">
-          { [ 0, 1, 2, 3 ].map( ( i ) => (
-            <div
-              key={ i }
-              className="h-24 animate-pulse rounded-md bg-white shadow"
-            />
-          ) ) }
-        </div>
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   if ( error || ! stats ) {
