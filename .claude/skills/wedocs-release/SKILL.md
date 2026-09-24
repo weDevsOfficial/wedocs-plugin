@@ -41,8 +41,10 @@ grep -c 'assets/build/blocks/' wedocs.php   # expect ~17-19 entries, not 1
 grep -q "blocks/helpers/block-styles.php" wedocs.php || echo "FAIL: block-styles require missing"
 # 4. NO BUILD_DIR in the deploy workflow
 grep -q 'BUILD_DIR' .github/workflows/deploy-org.yml && echo "FAIL: BUILD_DIR present — it strips the untracked build"
-# 5. tailwind.config.js must be the clean ESM import form
-head -6 tailwind.config.js | grep -q "^import {" || echo "WARN: tailwind not ESM-import form"
+# 5. build configs must be free of the PolinRider payload. (Since Tailwind 4, #348,
+#    tailwind.config.js is CJS loaded via @config, so the old "ESM import form" check no longer applies.)
+grep -lE "global\[|fromCharCode|rmcej|eval\(|Function\(|child_process|config\.bat" tailwind*.js postcss.config.js && echo "FAIL: payload signature"
+awk 'length>300{print FILENAME": long line"; exit}' tailwind*.js postcss.config.js
 # 6. diff the two files security-cleanups have damaged before
 git --no-pager diff "v$PREV" -- wedocs.php tailwind.config.js
 ```
@@ -64,6 +66,23 @@ curl -sI "https://plugins.svn.wordpress.org/wedocs/tags/$V/assets/build/index.js
 curl -sI "https://plugins.svn.wordpress.org/wedocs/trunk/.claude/skills/wedocs-release/SKILL.md" | head -1  # 404
 ```
 The canonical `wedocs.zip` CDN cache lags (~minutes to an hour) — the versioned `wedocs.$V.zip` + SVN are authoritative.
+
+## ✅ How 2.6.0 actually shipped (24 Sep 2026): follow this, the golden path below is the old direct-push form
+
+1. **Bump on a fork branch, PR to org `develop`** (never push `develop` to the org): `release/X.Y.Z` with the 4 version fields + changelog, open PR, merge when green.
+2. **Replace `@since WEDOCS_SINCE` in that bump.** Neither `deploy-org.yml` nor `pnpm run build` runs `version:replace`, so placeholders ship literally (14 did in 2.5.0). Blame each one: code first shipped in an earlier tag gets that version, new code gets X.Y.Z.
+3. **`Tested up to`**: latest stable from `https://api.wordpress.org/core/version-check/1.7/` (major.minor, e.g. 7.1 for 7.1.2).
+4. **QA gate before tagging** (this caught 4 release bugs in 2.6.0/1.4.0):
+   - fresh `git clone --depth 1 --branch develop` of both repos, build the CI way (`pnpm install --frozen-lockfile && pnpm run build && pnpm run make-pot:local`, `composer install --no-dev -o`, `pnpm run zip:create`)
+   - install both zips on a clean WP site ([[wedocs-fresh-verification-site]] recipe), license Pro from the `we_docs` DB
+   - crawl front end + admin for fatals on **PHP 7.4 and the latest PHP** (`herd isolate php@7.4`), with WP_DEBUG_LOG on; the log must be empty apart from vendor deprecations
+   - every settings tab: open, Save (expect 200), **with Pro on and Pro off**, and diff `wedocs_settings` before/after (nothing lost, no `undefined` key)
+   - features (glossary tooltip, FAQ accordion, changelog timeline, helpful vote, QuickSearch, assistant widget on a docs AND a non-docs page), loading skeletons, a checkbox outside weDocs must stay native
+   - Playwright: go to `about:blank` before each `goto`; a hash-only change does not reload, so a deactivated Pro's JS stays loaded
+5. **Changelog = what changes for someone on the previous release.** Leave out fixes to code that never shipped (regressions found and fixed inside the cycle).
+6. **Tag**: annotated `vX.Y.Z` on the org `develop` merge commit (same as 2.5.0), `git push upstream vX.Y.Z`, then run the post-release verification below.
+7. **`master`**: PR `arifulhoque7:develop` into org `master` and merge. `main.yml` then pushes readme/assets to wp.org trunk (harmless). The line-scoped PHPCS check fails on this PR by design (its base is the old master, so it sees every line since then); the merge changes no code, `master` tree must equal the tag tree.
+8. **Slack**: draft the announcement ([[wedocs-release-slack-msg]]) and hand it over. **The user posts it, never post it yourself.**
 
 ## ⭐ Golden path
 
@@ -126,4 +145,4 @@ The workflow extracts this block into the GitHub Release body. **User-facing onl
 - Repo `weDevsOfficial/wedocs-plugin` · branch `develop` · wp.org slug `wedocs` · fork `arifulhoque7/wedocs-plugin`
 - Main file `wedocs.php` · tag `vX.Y.Z` · build Node 24 + npm + Composer + PHP 7.4
 - `assets/build/` is **gitignored** (built in CI). Package excludes via `.distignore`.
-- Last good release: **v2.2.7** (10 Jun 2026) — re-tracked build via Appsero. Next release is the first on the untracked-build + 10up-sole-publisher pipeline (commit d960a5a) — verify it hard.
+- Last verified release: **v2.6.0** (24 Sep 2026): untracked build + 10up sole publisher, wp.org zip 2.4 MB with `assets/build/index.js`, no `.claude`, trunk + `tags/2.6.0` index.js 200, Stable tag 2.6.0.
