@@ -321,7 +321,7 @@ const PreferenceSettings = ( { settingsData, setSettings } ) => {
 					</div>
 				) }
 
-				<div className="palette-options-container flex gap-24 my-6">
+				<div className="palette-options-container flex gap-8 my-6">
 					<ColorPaletteSettings />
 					<MessagePreview settings={ settingsData } previewColors={ defaultColorPalette } />
 				</div>
