@@ -242,10 +242,10 @@ Yes. Create FAQ groups, add questions and answers using a rich text editor, drag
 - **Added:** Previews of the Pro Glossary and AI assistant (MCP) settings, and a Glossaries menu entry.
 - **Improved:** On classic themes, block stylesheets and the block admin script now load only on pages that can show weDocs content, instead of on every page of the site.
 - **Improved:** The Breadcrumb, Sidebar, Doc Navigation and Quick Search block stylesheets dropped from about 200 KB to about 33 KB each, and no longer restyle buttons, cards and menus elsewhere on the site.
-- **Fixed:** weDocs styles changed every checkbox, radio button and dropdown on pages where they loaded, including theme and other plugins' forms. They now apply only inside weDocs.
-- **Fixed:** The loading placeholders on the Docs and Dashboard screens now match the cards they stand in for, without the dark lines under each card, so the page no longer jumps when data arrives.
-- **Improved:** The Pro Assistant Widget preview in Settings now matches the Pro widget's layout and stays inside the settings card.
+- **Improved:** The loading placeholders on the Docs and Dashboard screens now have the same shape and position as the content they stand in for, so the page no longer jumps when data arrives.
+- **Improved:** The Pro Assistant Widget preview in Settings now matches the layout of the Pro widget.
 - **Improved:** The FAQ empty state now links to the FAQ documentation.
+- **Fixed:** weDocs styles changed every checkbox, radio button and dropdown on pages where they loaded, including theme and other plugins' forms. They now apply only inside weDocs.
 - **Update:** The plugin header now declares the PHP 7.4 requirement, and the readme declares the real WordPress 6.6 minimum.
 
 **v2.5.0 (27 Aug, 2026)**
