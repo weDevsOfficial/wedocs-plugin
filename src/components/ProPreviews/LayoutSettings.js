@@ -666,6 +666,7 @@ const LayoutSettings = ( { settingsData, setSettings } ) => {
                             <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                                 <Switcher
                                     name='collapse_articles'
+                                    panelName='general'
                                     settingsPanel={ general }
                                     setSettings={ setSettings }
                                     settingsData={ settingsData }
