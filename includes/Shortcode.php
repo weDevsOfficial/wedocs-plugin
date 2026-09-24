@@ -162,7 +162,7 @@ class Shortcode {
     /**
      * FAQ shortcode handler.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.5.0
      *
      * @param array  $atts    Shortcode attributes.
      * @param string $content Shortcode content.
@@ -180,7 +180,7 @@ class Shortcode {
     /**
      * Query and render FAQ groups and items.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.5.0
      *
      * @param array $args Shortcode attributes.
      *
@@ -251,7 +251,7 @@ class Shortcode {
             /**
              * Filter the FAQ query arguments for a specific group.
              *
-             * @since WEDOCS_SINCE
+             * @since 2.5.0
              *
              * @param array    $faq_query_args WP_Query arguments.
              * @param \WP_Term $group          The FAQ group term.
@@ -278,7 +278,7 @@ class Shortcode {
         /**
          * Filter the FAQ shortcode template path.
          *
-         * @since WEDOCS_SINCE
+         * @since 2.5.0
          *
          * @param string $template_dir Template file name.
          */
@@ -287,7 +287,7 @@ class Shortcode {
         /**
          * Filter the FAQ shortcode template arguments.
          *
-         * @since WEDOCS_SINCE
+         * @since 2.5.0
          *
          * @param array $template_args Template arguments.
          */
