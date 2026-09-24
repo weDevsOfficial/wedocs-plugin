@@ -37,7 +37,12 @@
    daisyUI component or theme colour, and registering it emitted the whole
    component set into every one of these four stylesheets. */
 
-@plugin "@tailwindcss/forms";
+/* The forms reset, scoped to the weDocs container (see tailwind.scoped-forms.js).
+   The bare `@tailwindcss/forms` plugin restyled every checkbox and radio on
+   the page, not just the ones inside weDocs markup. */
+@plugin "../../../tailwind.scoped-forms.js" {
+  selector: .wedocs-document;
+}
 
 .components-grid.components-tools-panel.block-editor-panel-color-gradient-settings {
     padding: 0;

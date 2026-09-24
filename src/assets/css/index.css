@@ -46,7 +46,11 @@
   logs: false;
 }
 
-@plugin "@tailwindcss/forms";
+/* The forms reset, scoped to the weDocs container (see tailwind.scoped-forms.js),
+   so it stops restyling the checkboxes and fields of the rest of wp-admin. */
+@plugin "../../../tailwind.scoped-forms.js" {
+  selector: .wedocs-document;
+}
 
 /*
  * Force a light color-scheme for all weDocs UI (modals, blocks, settings all
