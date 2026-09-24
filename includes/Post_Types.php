@@ -231,7 +231,7 @@ class Post_Types {
     /**
      * Register the FAQ post type.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.5.0
      *
      * @return void
      */
@@ -283,7 +283,7 @@ class Post_Types {
     /**
      * Register the FAQ group taxonomy.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.5.0
      *
      * @return void
      */
@@ -326,7 +326,7 @@ class Post_Types {
     /**
      * Register FAQ post meta fields for REST API exposure.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.5.0
      *
      * @return void
      */
@@ -373,7 +373,7 @@ class Post_Types {
      * Uses the get_terms filter instead of meta_key query arg because
      * terms without an explicit order meta row would be excluded by WP_Term_Query.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.5.0
      *
      * @param array          $terms      Array of found terms.
      * @param array|null     $taxonomies Array of taxonomies.

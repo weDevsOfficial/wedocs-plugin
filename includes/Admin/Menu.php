@@ -66,7 +66,7 @@ class Menu {
      * colour of the active admin colour scheme, otherwise the mark disappears
      * on the light schemes. Falls back to a dashicon if the asset is missing.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.5.0
      *
      * @return string
      */
@@ -106,7 +106,7 @@ class Menu {
      * Mirrors what core paints dashicons with, so the weDocs mark sits at the
      * same weight as its neighbours on every scheme.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.5.0
      *
      * @return string
      */
@@ -130,7 +130,7 @@ class Menu {
     /**
      * Fire the FAQ page load hook.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.5.0
      *
      * @return void
      */
@@ -145,7 +145,7 @@ class Menu {
     /**
      * Display FAQ page.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.5.0
      *
      * @return void
      */

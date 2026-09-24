@@ -34,7 +34,7 @@ class Assets {
      * renders, so a weDocs block placed anywhere (a landing page, a widget area,
      * a template part) still gets its stylesheet, just not every other page.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.0
      *
      * @return void
      */
@@ -73,7 +73,7 @@ class Assets {
      * that render outside these (a template part, a widget) are still styled by
      * the render-time enqueue in WP_Block::render(), only later in the page.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.0
      *
      * @return bool
      */
@@ -99,7 +99,7 @@ class Assets {
          *
          * Return true for requests that render weDocs blocks in a way the plugin cannot detect.
          *
-         * @since WEDOCS_SINCE
+         * @since 2.6.0
          *
          * @param bool $can_render Whether weDocs blocks are expected on this request.
          */
@@ -323,7 +323,7 @@ class Assets {
     /**
      * Enqueue FAQ page assets.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.5.0
      *
      * @return void
      */
