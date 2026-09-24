@@ -32,10 +32,12 @@ phpunit.xml.dist
 
 # Build / tooling config
 tailwind.config.js
+tailwind.scoped-forms.js
 postcss.config.js
 webpack.config.js
 package.json
-package-lock.json
+pnpm-lock.yaml
+.npmrc
 composer.json
 composer.lock
 

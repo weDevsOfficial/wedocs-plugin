@@ -1,0 +1,50 @@
+@import "tailwindcss/theme";
+@import "tailwindcss/utilities";
+@config "../../../tailwind.blocks.config.js";
+
+/* Tailwind 4 scans the whole project for class names by default, admin app
+   included, which is how each of these four block stylesheets came to carry
+   every utility the admin app uses (600 KB+ each). The exclusions below keep
+   the scan to the block sources and the front-end templates, so the file holds
+   the utilities the blocks use. (`source(none)` + `@source` would be the
+   tidier form, but it drops the `important` scope from the JS config, and the
+   utilities then lose their `.wedocs-document` prefix.) */
+@source not "../../../src/assets";
+@source not "../../../src/components";
+@source not "../../../src/data";
+@source not "../../../src/editor";
+@source not "../../../src/faq";
+@source not "../../../src/hooks";
+@source not "../../../src/icons";
+@source not "../../../src/utils";
+@source not "../../../src/*.js";
+@source not "../../../templates/admin";
+@source not "../../../includes";
+@source not "../../../assets";
+@source not "../../../tests";
+@source not "../../../bin";
+@source not "../../../vendor";
+@source not "../../../languages";
+
+/* Preflight stays locked inside the weDocs container so the reset never leaks
+   into the rest of wp-admin or a theme's markup. */
+@plugin "tailwindcss-scoped-preflight" {
+  isolation-strategy: inside;
+  selector: .wedocs-document;
+}
+
+/* No daisyUI here on purpose: no block markup, front-end or editor, uses a
+   daisyUI component or theme colour, and registering it emitted the whole
+   component set into every one of these four stylesheets. */
+
+/* The forms reset, scoped to the weDocs container (see tailwind.scoped-forms.js).
+   The bare `@tailwindcss/forms` plugin restyled every checkbox and radio on
+   the page, not just the ones inside weDocs markup. */
+@plugin "../../../tailwind.scoped-forms.js" {
+  selector: .wedocs-document;
+}
+
+.components-grid.components-tools-panel.block-editor-panel-color-gradient-settings {
+    padding: 0;
+    margin-bottom: 1rem;
+}

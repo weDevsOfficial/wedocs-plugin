@@ -74,6 +74,12 @@ class Frontend {
         wp_register_script( 'wedocs-anchorjs', WEDOCS_ASSETS . '/js/anchor.min.js', [ 'jquery' ], WEDOCS_VERSION, true );
         wp_register_script( 'wedocs-scripts', WEDOCS_ASSETS . '/js/frontend.js', [ 'jquery', 'wedocs-anchorjs' ], filemtime( WEDOCS_PATH . '/assets/js/frontend.js' ), true );
 
+        $faq_css_path = WEDOCS_PATH . '/assets/css/faq.css';
+        $faq_js_path  = WEDOCS_PATH . '/assets/js/faq.js';
+
+        wp_register_style( 'wedocs-faq', WEDOCS_ASSETS . '/css/faq.css', [], file_exists( $faq_css_path ) ? filemtime( $faq_css_path ) : WEDOCS_VERSION );
+        wp_register_script( 'wedocs-faq', WEDOCS_ASSETS . '/js/faq.js', [], file_exists( $faq_js_path ) ? filemtime( $faq_js_path ) : WEDOCS_VERSION, true );
+
         $store_dependencies = require WEDOCS_PATH . '/assets/build/store.asset.php';
         wp_register_script( 'wedocs-store-js', WEDOCS_ASSETS . '/build/store.js', $store_dependencies['dependencies'], $store_dependencies['version'], true );
 

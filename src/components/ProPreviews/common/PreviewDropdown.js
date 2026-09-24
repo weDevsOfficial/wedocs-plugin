@@ -38,7 +38,7 @@ const PreviewDropdown = ( { options = [], ariaLabel } ) => {
       </button>
 
       { isOpen && (
-        <ul className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+        <ul className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
           { options.map( ( option ) => {
             const isSelected = option?.id === selected?.id;
             const rowClasses = `group flex items-center select-none py-2 pl-3 pr-9 ${

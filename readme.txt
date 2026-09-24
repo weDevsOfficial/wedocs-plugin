@@ -2,14 +2,14 @@
 Contributors: tareq1988, wedevs
 Donate link: https://wedocs.co/
 Tags: docs, documentation, knowledge base, wiki, ai-powered knowledgebase
-Requires at least: 5.6
+Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.4.1
+Stable tag: 2.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Build a powerful documentation hub with an AI-powered knowledge base, docs, wiki tools, changelogs and an AI chatbot to help users find answers instantly.
+Build a powerful documentation hub with an AI-powered knowledge base, docs, wiki tools, changelogs, FAQ, and an AI chatbot to help users find answers instantly.
 
 ### The Ultimate AI-Powered Knowledge Base & Documentation Solution for WordPress
 
@@ -30,6 +30,7 @@ If you document WordPress plugins, themes, SaaS apps, or internal team processes
 
 * Organize all your documentation in one place
 * Easy-to-use drag-and-drop interface
+* Built-in FAQ builder with accordion display
 * Supports unlimited documents and knowledge bases
 * Seamless integration with WordPress & Gutenberg
 * AI Chatbot (Pro) for instant automated user support
@@ -46,8 +47,7 @@ If you document WordPress plugins, themes, SaaS apps, or internal team processes
 
 The free version of weDocs provides a solid foundation for building a professional knowledge base. It includes:
 
-– **[Full Gutenberg Support](https://wedocs.co/docs/wedocs/full-site-editing/
-)**: Design and customize your documentation using Gutenberg blocks with complete flexibility.
+– **[Full Gutenberg Support](https://wedocs.co/docs/wedocs/full-site-editing/)**: Design and customize your documentation using Gutenberg blocks with complete flexibility.
 
 – **User-friendly Interface:** Clean and intuitive dashboard for creating and managing documentation without technical complexity.
 
@@ -78,6 +78,8 @@ The free version of weDocs provides a solid foundation for building a profession
 – **[AI Doc Writer with Image Analysis](https://wedocs.co/docs/wedocs/how-to/ai-doc-writer/)**: Generate documentation from prompts, product details, or even screenshots. Turn visuals into structured docs instantly.
 
 -**[Documentation Dashboard](https://wedocs.co/docs/permission-management/advanced-analytics/)**: Get a complete overview of your knowledge base at a glance, including total docs, article views, helpful rate, popular docs, most helpful docs, and recently updated content.
+
+– **[FAQ Section](https://wedocs.co/docs/wedocs/faq_feature/)**: Create FAQ groups, write questions and answers in a rich text editor, drag to reorder them, and publish them as an expandable accordion on any page with the `[wedocs_faq]` shortcode. Switch any group on or off without deleting it.
 
 ---
 
@@ -200,7 +202,7 @@ No. weDocs 2.x loads its scripts and styles only on documentation pages where th
 
 = Can I build a help center or FAQ page with weDocs? =
  
-Yes. weDocs is built for help centers, FAQ pages, product docs, and self-service support. Use sections, live search, and feedback voting to help readers find answers on their own.
+Yes. weDocs is built for help centers, FAQ pages, product docs, and self-service support. Use the built-in FAQ builder for common questions, then sections, live search, and feedback voting for longer documentation.
  
 = Is the AI Chatbot free? =
  
@@ -226,10 +228,30 @@ Yes. weDocs Pro includes a changelog feature that publishes your product updates
 
 Yes. The free version includes a dashboard showing total docs, articles, total views, helpful rate, popular docs, most helpful docs, and recently updated content. Pro adds advanced analytics with views per document, a reactions overview, top contributors, and top tags.
  
+= Can I add an FAQ section to my site? =
 
+Yes. Create FAQ groups, add questions and answers using a rich text editor, drag them into the order you want, and publish the group anywhere on your site with the `[wedocs_faq]` shortcode. It renders as an expandable accordion. You can switch a group off without deleting it, which is useful for seasonal or product-specific questions.
 ---
 
 ## Changelog
+
+**v2.6.0 (24 Sep, 2026)**
+- **Added:** Elementor widgets for building doc pages visually: Docs Grid, Docs Sidebar, Breadcrumb, Doc Navigation, Table of Contents, Search, Search Modal, Hamburger Menu, Was This Helpful and Need More Help.
+- **Added:** A ready-made Elementor single-doc template, plus a Single Doc Template setting to choose Classic, Block or Elementor rendering, with an Automatic option that picks the right one for your site.
+- **Added:** Previous and next doc links now follow the full documentation tree in reading order, so they carry readers across section boundaries.
+- **Added:** Previews of the Pro Glossary and AI assistant (MCP) settings, and a Glossaries menu entry.
+- **Improved:** On classic themes, block stylesheets and the block admin script now load only on pages that can show weDocs content, instead of on every page of the site.
+- **Improved:** The Breadcrumb, Sidebar, Doc Navigation and Quick Search block stylesheets dropped from about 200 KB to about 33 KB each, and no longer restyle buttons, cards and menus elsewhere on the site.
+- **Improved:** The loading placeholders on the Docs and Dashboard screens now have the same shape and position as the content they stand in for, so the page no longer jumps when data arrives.
+- **Improved:** The Pro Assistant Widget preview in Settings now matches the layout of the Pro widget.
+- **Improved:** The FAQ empty state now links to the FAQ documentation.
+- **Fixed:** weDocs styles changed every checkbox, radio button and dropdown on pages where they loaded, including theme and other plugins' forms. They now apply only inside weDocs.
+- **Update:** The plugin header now declares the PHP 7.4 requirement, and the readme declares the real WordPress 6.6 minimum.
+
+**v2.5.0 (27 Aug, 2026)**
+- **Added:** FAQ section for your documentation site. Create FAQ groups, write questions and answers in a rich text editor, drag to reorder them, switch a group on or off, and publish them as an expandable accordion on any page with the `[wedocs_faq]` shortcode.
+- **Added:** Shortcodes tab in Settings listing every weDocs shortcode with its attributes, defaults and an example you can copy in one click, so you no longer have to look them up.
+- **Improved:** Documentation Dashboard cards now follow the weDocs colour palette, and the admin menu uses the weDocs mark in place of a generic icon.
 
 **v2.4.1 (20 Aug, 2026)**
 - **Update:** Tested up to WordPress 7.1.

@@ -13,14 +13,68 @@ import {
 import StatCard from './StatCard';
 import ProAnalytics from './ProAnalytics';
 
+// Pill colours follow the ones the docs listing already uses: the indigo pill
+// from the vendor badge and the grey pill from the draft badge.
 const STATUS_BADGE = {
-  publish: 'bg-emerald-50 text-emerald-700',
-  draft: 'bg-gray-100 text-gray-600',
-  pending: 'bg-amber-50 text-amber-700',
-  private: 'bg-sky-50 text-sky-700',
+  publish: 'bg-indigo-100 text-indigo-700',
+  draft: 'bg-[#E3E5E7] text-gray-800',
+  pending: 'bg-gray-100 text-gray-600',
+  private: 'bg-gray-100 text-gray-600',
 };
 
 const numberFormat = ( n ) => new Intl.NumberFormat().format( n || 0 );
+
+// Loading state shaped like the dashboard it stands in for: title, the four
+// stat cards, the Popular / Most Helpful pair and the Recently Updated table,
+// each in the same card shell and spacing, so nothing moves when data lands.
+const Bar = ( { className = '' } ) => (
+  <span className={ `block animate-pulse rounded bg-gray-200 ${ className }` } />
+);
+
+const SkeletonCard = ( { rows = 3 } ) => (
+  <div className="bg-white shadow sm:rounded-md">
+    <div className="flex items-center gap-2 px-8 py-4">
+      <Bar className="h-5 w-5" />
+      <Bar className="h-5 w-36" />
+    </div>
+    <hr className="h-px border-0 !bg-gray-200" />
+    <ul className="divide-y divide-gray-100">
+      { Array.from( { length: rows } ).map( ( _, i ) => (
+        <li key={ i } className="flex items-center justify-between gap-3 px-8 py-3.5">
+          <Bar className="h-4 w-48" />
+          <Bar className="h-4 w-10" />
+        </li>
+      ) ) }
+    </ul>
+  </div>
+);
+
+const DashboardSkeleton = () => (
+  <div className="wedocs-dashboard min-h-full pt-7" aria-hidden="true">
+    <div className="space-y-6 pb-10 pt-3">
+      <h1 className="flex items-center text-xl font-medium text-[#111827]">
+        { __( 'Dashboard', 'wedocs' ) }
+      </h1>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        { [ 0, 1, 2, 3 ].map( ( i ) => (
+          <div key={ i } className="flex items-center gap-4 bg-white p-6 shadow sm:rounded-md">
+            <Bar className="h-12 w-12 shrink-0 rounded-md" />
+            <div className="min-w-0 flex-1 space-y-2">
+              <Bar className="h-3 w-20" />
+              <Bar className="h-6 w-12" />
+              <Bar className="h-3 w-24" />
+            </div>
+          </div>
+        ) ) }
+      </div>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <SkeletonCard rows={ 3 } />
+        <SkeletonCard rows={ 3 } />
+      </div>
+      <SkeletonCard rows={ 4 } />
+    </div>
+  </div>
+);
 
 /**
  * Card shell matching the weDocs settings panels:
@@ -30,7 +84,7 @@ const numberFormat = ( n ) => new Intl.NumberFormat().format( n || 0 );
 const Card = ( { title, icon: Icon, children, action } ) => (
   <div className="bg-white shadow sm:rounded-md">
     <div className="section-heading flex items-center justify-between px-8 py-4">
-      <h2 className="flex items-center gap-2 text-lg font-medium text-gray-900">
+      <h2 className="flex items-center gap-2 text-lg font-medium text-[#3B3F4A]">
         { Icon && <Icon className="h-5 w-5 text-indigo-600" aria-hidden="true" /> }
         { title }
       </h2>
@@ -71,18 +125,7 @@ const Dashboard = () => {
   }, [] );
 
   if ( loading ) {
-    return (
-      <div className="min-h-full pt-7">
-        <div className="grid gap-6 pt-3 sm:grid-cols-2 lg:grid-cols-4">
-          { [ 0, 1, 2, 3 ].map( ( i ) => (
-            <div
-              key={ i }
-              className="h-24 animate-pulse rounded-md bg-white shadow"
-            />
-          ) ) }
-        </div>
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   if ( error || ! stats ) {
@@ -112,28 +155,24 @@ const Dashboard = () => {
             label={ __( 'Total Docs', 'wedocs' ) }
             value={ numberFormat( t.docs ) }
             helper={ `${ numberFormat( t.published ) } ${ __( 'published', 'wedocs' ) }${ t.drafts ? ` · ${ numberFormat( t.drafts ) } ${ __( 'draft', 'wedocs' ) }` : '' }` }
-            accent="indigo"
           />
           <StatCard
             icon={ DocumentDuplicateIcon }
             label={ __( 'Articles', 'wedocs' ) }
             value={ numberFormat( t.articles ) }
             helper={ `${ numberFormat( t.contributors ) } ${ __( 'contributor(s)', 'wedocs' ) }` }
-            accent="sky"
           />
           <StatCard
             icon={ EyeIcon }
             label={ __( 'Total Views', 'wedocs' ) }
             value={ numberFormat( t.views ) }
             helper={ __( 'across all docs', 'wedocs' ) }
-            accent="emerald"
           />
           <StatCard
             icon={ HandThumbUpIcon }
             label={ __( 'Helpful Rate', 'wedocs' ) }
             value={ `${ t.helpful_rate }%` }
             helper={ `${ numberFormat( t.positive ) } ${ __( 'up', 'wedocs' ) } · ${ numberFormat( t.negative ) } ${ __( 'down', 'wedocs' ) }` }
-            accent="amber"
           />
         </div>
 
@@ -185,7 +224,7 @@ const Dashboard = () => {
                     </div>
                     <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
                       <div
-                        className="h-full rounded-full bg-emerald-500"
+                        className="h-full rounded-full bg-indigo-600"
                         style={ { width: `${ doc.percentage }%` } }
                       />
                     </div>
@@ -220,7 +259,7 @@ const Dashboard = () => {
                       </td>
                       <td className="px-4 py-3.5">
                         <span
-                          className={ `rounded-full px-2 py-0.5 text-xs font-medium ${ STATUS_BADGE[ doc.status ] || STATUS_BADGE.draft }` }
+                          className={ `rounded-[42px] px-2.5 py-0.5 text-sm font-medium leading-5 ${ STATUS_BADGE[ doc.status ] || STATUS_BADGE.draft }` }
                         >
                           { doc.status }
                         </span>

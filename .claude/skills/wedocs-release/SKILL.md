@@ -5,7 +5,7 @@ description: Release weDocs (free) to wp.org. Bump version + changelog, then pus
 
 # weDocs (Free) Release
 
-Orchestrator: `~/wedocs-release.sh`. Pushing tag `vX.Y.Z` triggers `.github/workflows/deploy-org.yml` (Node 18 + npm + Composer + PHP 7.4): build → POT → composer → disk-gate → **zip + GitHub Release** → **wp.org SVN deploy** (10up). SVN secrets `SVN_USERNAME`/`SVN_PASSWORD` are set on the upstream repo only.
+Orchestrator: `~/wedocs-release.sh`. Pushing tag `vX.Y.Z` triggers `.github/workflows/deploy-org.yml` (Node 24 + npm + Composer + PHP 7.4): build → POT → composer → disk-gate → **zip + GitHub Release** → **wp.org SVN deploy** (10up). SVN secrets `SVN_USERNAME`/`SVN_PASSWORD` are set on the upstream repo only.
 
 ## 🚨 Who actually publishes to wp.org — read this first (learned from the 2.2.5→2.2.7 triple-blunder)
 
@@ -17,7 +17,7 @@ There were historically **two** publishers racing on each tag:
 
 ### The current model (post-2.2.7, commit d960a5a)
 - **`assets/build/` is UNTRACKED (gitignored).** Do NOT commit it. A guard workflow (`guard-build-untracked.yml`) fails any PR/push that tracks it.
-- CI runs `npm run build`; the **default 10up deploy ships the on-disk working tree** (minus `.distignore`) to SVN — exactly like `wedevs-project-manager` ships its gitignored `/views/assets/dist`.
+- CI runs `pnpm run build`; the **default 10up deploy ships the on-disk working tree** (minus `.distignore`) to SVN — exactly like `wedevs-project-manager` ships its gitignored `/views/assets/dist`.
 - **NEVER set `BUILD_DIR`** on the 10up action. It makes 10up sync the git-tracked set instead of the working tree, which **strips the untracked `assets/build`** → package ships with no blocks (this broke 2.2.5/2.2.6).
 - `.distignore` is honored by 10up now — it excludes `.claude`, `FILTERS.md`, `src`, `bin`, `tests`, build/tooling config, etc.
 
@@ -124,6 +124,6 @@ The workflow extracts this block into the GitHub Release body. **User-facing onl
 
 ## Repo facts
 - Repo `weDevsOfficial/wedocs-plugin` · branch `develop` · wp.org slug `wedocs` · fork `arifulhoque7/wedocs-plugin`
-- Main file `wedocs.php` · tag `vX.Y.Z` · build Node 18 + npm + Composer + PHP 7.4
+- Main file `wedocs.php` · tag `vX.Y.Z` · build Node 24 + npm + Composer + PHP 7.4
 - `assets/build/` is **gitignored** (built in CI). Package excludes via `.distignore`.
 - Last good release: **v2.2.7** (10 Jun 2026) — re-tracked build via Appsero. Next release is the first on the untracked-build + 10up-sole-publisher pipeline (commit d960a5a) — verify it hard.

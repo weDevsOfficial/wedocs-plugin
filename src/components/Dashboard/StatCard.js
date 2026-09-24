@@ -1,21 +1,12 @@
-import { __ } from '@wordpress/i18n';
-
 /**
  * A single stat card: icon + label + big value + optional helper line.
  */
-const StatCard = ( { icon: Icon, label, value, helper, accent = 'indigo' } ) => {
-  const accents = {
-    indigo: 'bg-indigo-50 text-indigo-600',
-    emerald: 'bg-emerald-50 text-emerald-600',
-    sky: 'bg-sky-50 text-sky-600',
-    amber: 'bg-amber-50 text-amber-600',
-  };
-
+const StatCard = ( { icon: Icon, label, value, helper } ) => {
   return (
     <div className="flex items-center gap-4 bg-white p-6 shadow transition hover:shadow-md sm:rounded-md">
-      <span
-        className={ `flex h-12 w-12 shrink-0 items-center justify-center rounded-md ${ accents[ accent ] || accents.indigo }` }
-      >
+      { /* The icon pill uses the plugin's indigo accent; the icon itself is
+           what tells the cards apart, not four separate hues. */ }
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-indigo-50 text-indigo-600">
         <Icon className="h-6 w-6" aria-hidden="true" />
       </span>
       <div className="min-w-0">

@@ -1,0 +1,14 @@
+node_modules/
+.env
+test-results/
+playwright-report/
+*.log
+
+# Playwright saved auth state (produced by the setup project)
+playwright/.auth/
+
+# wp-env debug log mount
+wp-data/
+blob-report/
+all-blob-reports/
+merged-results.json

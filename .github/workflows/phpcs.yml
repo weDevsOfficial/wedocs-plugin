@@ -1,0 +1,75 @@
+on:
+  # Every pull request that touches a PHP file, inspecting only the files that
+  # pull request changes. The paths filter keeps frontend-only work from
+  # spending a runner on a job with nothing to check.
+  pull_request:
+    paths:
+      - '**.php'
+
+# Cancels a previous run of this workflow that has not completed.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+name: PHPCS Inspections
+jobs:
+  runPHPCSInspection:
+    name: Run PHPCS inspection
+    runs-on: ubuntu-latest
+    steps:
+      # A pull_request checkout is the merge commit, whose first parent is the
+      # base branch tip and second parent is the pull request head. Depth 2 is
+      # therefore all the history the diff below needs.
+      # The job never pushes, so the checkout token is not kept on disk.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: none
+          tools: cs2pr, composer:v2
+
+      - name: Get composer cache directory
+        id: composercache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}"
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress || composer update --prefer-dist --no-progress
+
+      # The PHP files this pull request changes: the merge commit against its
+      # first parent, so nothing that merely landed on the base branch in the
+      # meantime is inspected. Deleted files are dropped by the -f test.
+      - id: changes
+        run: |
+          FILES=$(git diff --name-only HEAD^1 HEAD -- '*.php' \
+            | sort -u \
+            | while read -r f; do [ -n "$f" ] && [ -f "$f" ] && echo "$f"; done \
+            | xargs)
+          echo "files=$FILES" >> $GITHUB_OUTPUT
+          echo "PHP files changed by this pull request: ${FILES:-none}" >> $GITHUB_STEP_SUMMARY
+
+      # Findings are filtered to the lines this pull request actually changed.
+      # PHPCS reports whole files, so without this, touching one line of a legacy
+      # file inherits every violation already in it and the job is red no matter
+      # what the author does. Measured on the Elementor branch: 175 security
+      # findings in the files it touches, but only 63 on lines it wrote.
+      - name: Detect coding standard violations
+        if: steps.changes.outputs.files != ''
+        run: |
+          # phpcs exits non-zero whenever the FILES hold violations, including
+          # pre-existing ones on lines this change never touched. Its status is
+          # therefore not the signal we want, so it is discarded here and the
+          # filter below decides the outcome from the changed lines alone.
+          vendor/bin/phpcs --standard=phpcs.xml.dist ${{ steps.changes.outputs.files }} -q --report=json > phpcs-report.json || true
+          php bin/phpcs-changed-lines.php "$(git rev-parse HEAD^1)" < phpcs-report.json

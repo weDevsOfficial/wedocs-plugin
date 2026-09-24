@@ -88,7 +88,7 @@ const GeneralSettings = ( {
                     {__('weDocs Home', 'wedocs')}
                   </label>
                 </div>
-                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto">
                   <div className="relative">
                     <SelectBox
                         name="docs_home"
@@ -154,7 +154,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+                <div className="settings-field w-full max-w-[490px] mt-1 ml-auto">
                   {applyFilters(
                       'wedocs_general_settings_docs_url_structure_field',
                       (
@@ -234,7 +234,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="email"
                       settingsPanel={generalSettings}
@@ -283,7 +283,7 @@ const GeneralSettings = ( {
                       </svg>
                     </div>
                   </div>
-                  <div className="settings-field w-full max-w-[490px] ml-auto flex-2">
+                  <div className="settings-field w-full max-w-[490px] ml-auto">
                     <div className="relative">
                       <input
                           type="email"
@@ -336,7 +336,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="enable_search"
                       settingsPanel={generalSettings}
@@ -382,7 +382,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="helpful"
                       settingsPanel={generalSettings}
@@ -428,7 +428,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="comments"
                       settingsPanel={generalSettings}
@@ -474,7 +474,7 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
                       name="print"
                       settingsPanel={generalSettings}
@@ -495,12 +495,12 @@ const GeneralSettings = ( {
                       id="headlessui-listbox-label-15"
                       data-headlessui-state="open"
                   >
-                    {__('Use Legacy Template', 'wedocs')}
+                    {__('Show FAQ on Docs Home', 'wedocs')}
                   </label>
                   <div
                       className="tooltip cursor-pointer ml-2 z-[9999]"
                       data-tip={__(
-                          'Enable legacy PHP template system for single doc pages. Disable to use the new builder template.',
+                          'Display the FAQ section on the documentation home page where the [wedocs] shortcode is used',
                           'wedocs'
                       )}
                   >
@@ -520,18 +520,95 @@ const GeneralSettings = ( {
                     </svg>
                   </div>
                 </div>
-                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto flex-2">
+                <div className="settings-field flex items-center w-full max-w-[490px] ml-auto">
                   <Switcher
-                      name="use_legacy_template"
+                      name="show_faq"
                       settingsPanel={generalSettings}
                       settingsData={settingsData}
                       setSettings={setSettings}
                       panelName={`general`}
-                      isEnabled={generalSettings?.use_legacy_template === 'on'}
+                      isEnabled={generalSettings?.show_faq === 'on'}
                   />
                 </div>
               </div>
             </div>
+
+            <div className="col-span-4">
+              <div className="settings-content flex items-center justify-between">
+                <div className="settings-heading md:min-w-[300px] space-x-2 items-center flex flex-1">
+                  <label
+                      className="block text-sm font-medium text-gray-600"
+                      id="headlessui-listbox-label-15"
+                      data-headlessui-state="open"
+                  >
+                    {__('Single Doc Template', 'wedocs')}
+                  </label>
+                  <div
+                      className="tooltip cursor-pointer ml-2 z-[9999]"
+                      data-tip={__(
+                          'Which template renders a single doc page. Automatic detects the active theme; the others force Classic, Block or Elementor.',
+                          'wedocs'
+                      )}
+                  >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        fill="none"
+                    >
+                      <path
+                          d="M9.833 12.333H9V9h-.833M9 5.667h.008M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 1 1 15 0z"
+                          stroke="#6b7280"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className="settings-field w-full max-w-[490px] ml-auto">
+                  <select
+                      id="wedocs-single-doc-template"
+                      name="single_doc_template"
+                      className="w-full !rounded-md !border-gray-300 bg-white !py-1 !pl-3 !pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                      value={ generalSettings?.single_doc_template || '' }
+                      onChange={( e ) => {
+                          const general = {
+                              ...generalSettingsData,
+                              single_doc_template: e.target.value,
+                          };
+
+                          // Keep the legacy flag in sync for back-compat, but leave
+                          // it untouched on 'Automatic' so PHP can auto-detect.
+                          if ( e.target.value ) {
+                              general.use_legacy_template =
+                                  e.target.value === 'legacy' ? 'on' : 'off';
+                          } else {
+                              delete general.use_legacy_template;
+                          }
+
+                          setSettings( { ...settingsData, general } );
+                      }}
+                  >
+                    <option value="">{__('Automatic (Detect)', 'wedocs')}</option>
+                    <option value="legacy">{__('Classic (PHP Template)', 'wedocs')}</option>
+                    <option value="block">{__('Block (Block Theme Template)', 'wedocs')}</option>
+                    <option value="elementor">{__('Elementor', 'wedocs')}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Slot for General fields that ship with an add-on (the Pro
+                glossary toggle, for one). It sits directly in the grid, beside
+                the rows above, so an added row is its own cell and lines up
+                with them. Rows get the same settings state as the built-in
+                fields, so they save with the page. */}
+            {applyFilters(
+                'wedocs_general_settings_after_fields',
+                null,
+                { settingsData, settingsPanel: generalSettings, setSettings }
+            )}
           </div>
         </div>
       </div>

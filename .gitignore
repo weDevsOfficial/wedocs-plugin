@@ -31,3 +31,6 @@ wedocs*.zip
 # manager ships its gitignored /views/assets/dist. NOTE: do NOT use 10up BUILD_DIR
 # (it syncs the git-tracked set and would strip this untracked build).
 assets/build/
+
+# Playwright MCP scratch output (screenshots, console logs)
+.playwright-mcp/

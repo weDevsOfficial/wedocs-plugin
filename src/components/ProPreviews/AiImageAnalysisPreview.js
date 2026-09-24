@@ -44,7 +44,7 @@ const AiImageAnalysisPreview = () => {
 						</svg>
 					</div>
 				</div>
-				<div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+				<div className="settings-field w-full max-w-[490px] mt-1 ml-auto">
 					<button
 						type="button"
 						className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer outline-0 items-center justify-center rounded-full"

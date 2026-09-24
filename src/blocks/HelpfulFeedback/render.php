@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 
         // Get current user ID or IP for vote tracking
         $user_id = get_current_user_id();
-        $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
+        $user_ip = wedocs_get_client_ip();
 
         // Get vote counts from post meta (using existing system meta keys)
         $yes_votes = (int) get_post_meta($post_id, 'positive', true);
@@ -61,7 +61,7 @@ if (!defined('ABSPATH')) {
             }
         } elseif (!$has_voted && ($attributes['allowAnonymous'] ?? true) && $user_ip) {
             // Check by IP for anonymous users
-            $ip_vote = get_post_meta($post_id, "wedocs_helpful_vote_ip_" . md5($user_ip), true);
+            $ip_vote = wedocs_has_anonymous_voted($post_id, $user_ip);
             if ($ip_vote) {
                 $has_voted = true;
                 $voted_option = $ip_vote;

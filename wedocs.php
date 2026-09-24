@@ -3,12 +3,13 @@
 Plugin Name: weDocs
 Plugin URI: https://wedocs.co/
 Description: A documentation plugin for WordPress
-Version: 2.4.1
+Version: 2.6.0
 Author: weDevs
 Author URI: https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri
 License: GPL2
 Text Domain: wedocs
 Domain Path: /languages
+Requires PHP: 7.4
 */
 
 /*
@@ -60,7 +61,7 @@ final class WeDocs {
      *
      * @var string
      */
-    const VERSION = '2.4.1';
+    const VERSION = '2.6.0';
 
     /**
      * The plugin url.
@@ -178,9 +179,6 @@ final class WeDocs {
     }
 
     public function register_blocks() {
-        // Enqueue admin script early to make weDocsAdminScriptVars available for blocks
-        wp_enqueue_script( 'wedocs-admin-script' );
-
         // Modern WordPress block registration using block.json files
         $block_directories = [
             // Free blocks

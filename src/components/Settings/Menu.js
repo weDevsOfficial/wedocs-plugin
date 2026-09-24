@@ -42,6 +42,25 @@ const Menu = () => {
         </svg>
       ),
     },
+    shortcodes: {
+      text: __( 'Shortcodes', 'wedocs' ),
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="#6b7280"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="-ml-1 mr-4"
+        >
+          <path d="M8 3H7a2 2 0 0 0-2 2v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a2 2 0 0 0 2 2h1" />
+          <path d="M12 3h1a2 2 0 0 1 2 2v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a2 2 0 0 1-2 2h-1" />
+        </svg>
+      ),
+    },
   };
 
   const [ showSubTabs, setShowSubTabs ] = useState( true );

@@ -39,7 +39,7 @@ const MessageEnable = () => {
 								</svg>
 							</div>
 						</div>
-						<div className="settings-field w-full max-w-[490px] mt-1 ml-auto flex-2">
+						<div className="settings-field w-full max-w-[490px] mt-1 ml-auto">
 							<div className="relative flex items-center">
 								<DummySwitch isEnabled={ true } />
 							</div>

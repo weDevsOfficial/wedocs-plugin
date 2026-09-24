@@ -42,6 +42,11 @@ class SingleDocTemplate extends AbstractTemplate {
 	 * @return void
 	 */
 	public function render_block_template() {
+		// Only run when the block renderer is the selected single-doc handler.
+		if ( 'block' !== wedocs_get_single_doc_renderer() ) {
+			return;
+		}
+
 		if ( ! is_embed() && is_singular( 'docs' ) ) {
 			global $post;
 
