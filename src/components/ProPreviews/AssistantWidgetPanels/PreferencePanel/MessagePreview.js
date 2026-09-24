@@ -16,7 +16,6 @@ const MessagePreview = ( { settings, previewColors } ) => {
         inactiveTabFont,
         tabTitleFont,
         tabDescriptionFont,
-        breadcrumbColor,
         bubbleIcon,
         bubbleBg,
     } = previewColors;
@@ -110,9 +109,9 @@ const MessagePreview = ( { settings, previewColors } ) => {
     ];
 
     return (
-        <div className={ `w-[26rem] palette-preview-container relative` }>
+        <div className={ `w-[26rem] shrink-0 palette-preview-container relative` }>
             <div className={ `palette-preview-content transition-all` }>
-                <div className={ `pb-6 palette-preview bg-white rounded-[10px] shadow-xl mb-5 overflow-hidden` }>
+                <div className={ `pb-4 palette-preview bg-white rounded-[10px] shadow-xl mb-5 overflow-hidden` }>
                     <div
                         className="preview-header flex items-center justify-center h-48"
                         style={ {
@@ -121,7 +120,7 @@ const MessagePreview = ( { settings, previewColors } ) => {
                     >
                         <div className="text-center">
                             <div
-                                className="tabs flex items-center font-medium text-sm leading-5 w-fit h-10 shadow-sm rounded-[10px] mb-5 mx-auto"
+                                className="tabs flex items-center font-medium text-sm leading-5 w-fit h-10 shadow-sm rounded-[10px] mb-5 mx-auto mt-[26px]"
                                 style={ {
                                     color: `rgba(${ inactiveTabFont?.r }, ${ inactiveTabFont?.g }, ${ inactiveTabFont?.b }, ${ inactiveTabFont?.a })`,
                                     background: `rgba(${ inactiveTabBg?.r }, ${ inactiveTabBg?.g }, ${ inactiveTabBg?.b }, ${ inactiveTabBg?.a })`,
@@ -190,10 +189,10 @@ const MessagePreview = ( { settings, previewColors } ) => {
                                     : __( 'Explore Feature', 'wedocs' ) }
                             </div>
                             <div
-                                className={ `preview-description w-80 ${
+                                className={ `preview-description w-80 mx-auto mb-[30px] ${
                                     settings?.preference?.widget_description_font?.size
                                         ? `text-${ settings?.preference?.widget_description_font?.size }`
-                                        : 'text-sm'
+                                        : 'text-base'
                                 } ${
                                     settings?.preference?.widget_description_font?.weight
                                         ? `font-${ settings?.preference?.widget_description_font?.weight }`
@@ -224,7 +223,10 @@ const MessagePreview = ( { settings, previewColors } ) => {
                         } explore-tab -mt-5` }
                     >
                         <div className={ `listing-docs` }>
-                            <div className={ `search-panel px-3 py-1 doc-search-panel relative flex items-center justify-center border border-[#D1D5DB] bg-white rounded-md w-80 mx-auto shadow-sm mb-8` }>
+                            { /* Same strip as the Pro widget: a white band under the
+                                 header holding a full-width search field. */ }
+                            <div className="sticky top-0 z-10 bg-white px-5 pt-4 pb-3 border-b border-gray-100">
+                            <div className={ `search-panel px-3 py-1 doc-search-panel relative flex items-center justify-center border border-solid border-[#D1D5DB] bg-white/90 rounded-md w-full mx-auto shadow-sm` }>
                                 <input
                                     id="doc-search"
                                     type="text"
@@ -251,9 +253,10 @@ const MessagePreview = ( { settings, previewColors } ) => {
                                     </svg>
                                 </label>
                             </div>
+                            </div>
 
                             <div
-                                className={ `h-80 explore-docs` }
+                                className={ `h-[420px] pb-4 explore-docs` }
                             >
                                 { dummyDocs?.map( ( docTitle, index ) => (
                                     <div
@@ -263,17 +266,6 @@ const MessagePreview = ( { settings, previewColors } ) => {
                                             'hidden'
                                         } doc-section border border-[#D1D5DB] box-border p-4 mb-2.5 last:mb-0 rounded-md w-[340px] mx-auto` }
                                     >
-                                        <div
-                                            className="breadcrumbs text-sm mb-2 p-0"
-                                            style={ {
-                                                color: `rgba(${ breadcrumbColor?.r }, ${ breadcrumbColor?.g }, ${ breadcrumbColor?.b }, ${ breadcrumbColor?.a })`,
-                                            } }
-                                        >
-                                            { __(
-                                                'WP User Frontend… > Getting Started',
-                                                'wedocs'
-                                            ) }
-                                        </div>
                                         <div className="doc-heading text-lg text-gray-900 mb-1.5">
                                             { docTitle }
                                         </div>
