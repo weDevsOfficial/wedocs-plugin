@@ -90,9 +90,9 @@ const ListingHeader = ( { doc } ) => {
             </Fragment>
           ) : (
             <div className="flex items-center group space-x-4">
-              <span className="animate-pulse bg-[#94a3b8] rounded h-4 w-56 border-b hover:bg-gray-50"></span>
-              <span className="animate-pulse bg-[#cbd5e1] rounded h-4 w-6 border-b hover:bg-gray-50"></span>
-              <span className="animate-pulse bg-[#cbd5e1] rounded h-4 w-6 border-b hover:bg-gray-50"></span>
+              <span className="animate-pulse bg-[#94a3b8] rounded h-4 w-56 border-b border-gray-200 hover:bg-gray-50"></span>
+              <span className="animate-pulse bg-[#cbd5e1] rounded h-4 w-6 border-b border-gray-200 hover:bg-gray-50"></span>
+              <span className="animate-pulse bg-[#cbd5e1] rounded h-4 w-6 border-b border-gray-200 hover:bg-gray-50"></span>
             </div>
           ) }
         </h1>
