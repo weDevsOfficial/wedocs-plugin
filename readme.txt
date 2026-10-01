@@ -9,11 +9,11 @@ Stable tag: 2.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Build a powerful documentation hub with an AI-powered knowledge base, docs, wiki tools, changelogs, FAQ, and an AI chatbot to help users find answers instantly.
+Build a powerful documentation hub with an AI-powered knowledge base, docs, wiki tools, changelogs, FAQ, glossary and an AI chatbot to help users find answers instantly.
 
 ### The Ultimate AI-Powered Knowledge Base & Documentation Solution for WordPress
 
-[weDocs](https://wedocs.co/) is a free knowledge base and documentation plugin for WordPress. Build a help center, product docs, an FAQ, a wiki, or an internal knowledge base in minutes, with a drag-and-drop editor, AI doc writer, live search, and an optional AI chatbot that answers your users automatically.
+[weDocs](https://wedocs.co/) is a free knowledge base and documentation plugin for WordPress. Build a help center, product docs, FAQ, wiki, or internal knowledge base with Gutenberg or Elementor. Organize your content with drag-and-drop, help users find answers with live search, and extend your documentation with powerful AI features.
 
 If you document WordPress plugins, themes, SaaS apps, or internal team processes, weDocs makes it fast and simple. No page builder required, no code, and a generous free version you can launch with today.
 
@@ -40,6 +40,10 @@ If you document WordPress plugins, themes, SaaS apps, or internal team processes
 * Multilingual support via Weglot
 * Documentation dashboard with knowledge base analytics
 * Product changelog with a public release timeline (Pro)
+* Build documentation pages with Gutenberg or Elementor
+* AI Assistant integration with Claude and ChatGPT via MCP (Pro)
+* Glossary with automatic term highlighting and tooltips (Pro)
+
 
 ---
 
@@ -80,6 +84,8 @@ The free version of weDocs provides a solid foundation for building a profession
 -**[Documentation Dashboard](https://wedocs.co/docs/permission-management/advanced-analytics/)**: Get a complete overview of your knowledge base at a glance, including total docs, article views, helpful rate, popular docs, most helpful docs, and recently updated content.
 
 – **[FAQ Section](https://wedocs.co/docs/wedocs/faq_feature/)**: Create FAQ groups, write questions and answers in a rich text editor, drag to reorder them, and publish them as an expandable accordion on any page with the `[wedocs_faq]` shortcode. Switch any group on or off without deleting it.
+
+- **Elementor Support:** Build and customize documentation pages visually using dedicated Elementor widgets.
 
 ---
 
@@ -122,6 +128,10 @@ weDocs Pro unlocks advanced tools for businesses that need deeper customization,
 – **[Changelog](https://wedocs.co/docs/permission-management/changelogs/)**: Publish a public release timeline for your product, with multiple channels, custom categories, banner styling, and RSS support.
 
 – **Advanced Analytics:** Go deeper than the basic dashboard with views broken down per document, a full reactions overview, plus Top Contributors and Top Tags cards.
+
+- **Glossary:** Define terms once and highlight them throughout your documentation with tooltips.
+
+- **AI Assistant with MCP:** Connect weDocs with Claude or ChatGPT to create and update articles, tags, changelogs, glossary entries, and FAQs.
 
 ## Perfect For
  
@@ -218,7 +228,7 @@ Yes. weDocs includes a one-click migration tool that moves your existing BetterD
  
 = Can I customize how my documentation looks? =
  
-Yes. The free version supports full Gutenberg styling and 18 blocks. Pro adds pre-built layouts and templates you can apply without code.
+Yes. weDocs supports both Gutenberg and Elementor for customizing your documentation. The latest version includes dedicated Elementor widgets and a ready-made Elementor single-doc template, with options to choose Classic, Block, Elementor, or Automatic rendering.
 
 = Can I publish a changelog with weDocs? =
 
@@ -231,6 +241,12 @@ Yes. The free version includes a dashboard showing total docs, articles, total v
 = Can I add an FAQ section to my site? =
 
 Yes. Create FAQ groups, add questions and answers using a rich text editor, drag them into the order you want, and publish the group anywhere on your site with the `[wedocs_faq]` shortcode. It renders as an expandable accordion. You can switch a group off without deleting it, which is useful for seasonal or product-specific questions.
+
+= Can I create a glossary with weDocs? =
+Yes. weDocs Pro includes a Glossary feature that lets you define terms once and automatically highlight them throughout your documentation with tooltips.
+
+= Can I connect weDocs with AI assistants? =
+Yes. weDocs Pro can connect with AI assistants like Claude and ChatGPT via MCP to create and update articles, tags, changelogs, glossary entries, and FAQs.
 ---
 
 ## Changelog
