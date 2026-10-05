@@ -89,7 +89,7 @@ The free version of weDocs provides a solid foundation for building a profession
 
 ---
 
-## Vendor Documentation for Dokan Multivendor Marketplaces 
+## Vendor Documentation for Dokan Multivendor Marketplaces
 
 weDocs now integrates with Dokan, the most popular multivendor marketplace plugin for WooCommerce. Mark any document as Vendor Documentation and display it right inside the Dokan vendor dashboard, so your sellers get a dedicated knowledge base built just for them.
 
@@ -134,7 +134,7 @@ weDocs Pro unlocks advanced tools for businesses that need deeper customization,
 - **AI Assistant with MCP:** Connect weDocs with Claude or ChatGPT to create and update articles, tags, changelogs, glossary entries, and FAQs.
 
 ## Perfect For
- 
+
 * SaaS product documentation and help centers
 * WordPress plugin and theme docs
 * Internal team wikis and private knowledge bases
@@ -211,23 +211,23 @@ Yes. The free version includes unlimited docs, a drag-and-drop editor, live sear
 No. weDocs 2.x loads its scripts and styles only on documentation pages where they are needed, so the rest of your site stays fast. If you ever see a performance issue, contact support and the team will help.
 
 = Can I build a help center or FAQ page with weDocs? =
- 
+
 Yes. weDocs is built for help centers, FAQ pages, product docs, and self-service support. Use the built-in FAQ builder for common questions, then sections, live search, and feedback voting for longer documentation.
- 
+
 = Is the AI Chatbot free? =
- 
+
 The AI Chatbot is a Pro feature. The free version still includes the AI Doc Writer, which generates documentation from prompts, product details, or screenshots.
- 
+
 = Can I create private or internal documentation? =
- 
+
 Yes. With weDocs Pro you can restrict docs to selected users or roles, which is ideal for internal team wikis and private knowledge bases.
- 
+
 = Can I migrate from BetterDocs? =
- 
+
 Yes. weDocs includes a one-click migration tool that moves your existing BetterDocs documentation into weDocs.
- 
+
 = Can I customize how my documentation looks? =
- 
+
 Yes. weDocs supports both Gutenberg and Elementor for customizing your documentation. The latest version includes dedicated Elementor widgets and a ready-made Elementor single-doc template, with options to choose Classic, Block, Elementor, or Automatic rendering.
 
 = Can I publish a changelog with weDocs? =
@@ -237,7 +237,7 @@ Yes. weDocs Pro includes a changelog feature that publishes your product updates
 = Does weDocs show analytics for my documentation? =
 
 Yes. The free version includes a dashboard showing total docs, articles, total views, helpful rate, popular docs, most helpful docs, and recently updated content. Pro adds advanced analytics with views per document, a reactions overview, top contributors, and top tags.
- 
+
 = Can I add an FAQ section to my site? =
 
 Yes. Create FAQ groups, add questions and answers using a rich text editor, drag them into the order you want, and publish the group anywhere on your site with the `[wedocs_faq]` shortcode. It renders as an expandable accordion. You can switch a group off without deleting it, which is useful for seasonal or product-specific questions.
@@ -247,6 +247,10 @@ Yes. weDocs Pro includes a Glossary feature that lets you define terms once and 
 
 = Can I connect weDocs with AI assistants? =
 Yes. weDocs Pro can connect with AI assistants like Claude and ChatGPT via MCP to create and update articles, tags, changelogs, glossary entries, and FAQs.
+
+= Where do I report security bugs found in this plugin? =
+Please report security bugs found in the source code of the weDocs plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/9e5fb989-3152-4a11-af81-183404529e50). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
+
 ---
 
 ## Changelog
