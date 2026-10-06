@@ -41,6 +41,8 @@ class Widget extends \WP_Widget {
         if ( isset( $_GET['search_in_doc'] ) && 'all' != $_GET['search_in_doc'] ) {
             $dropdown_args['selected'] = (int) $_GET['search_in_doc'];
         }
+        
+        $dropdown_args = apply_filters('wedocs/widget/$dropdown_args', $dropdown_args);
 
         $form = '<form role="search" method="get" class="search-form wedocs-search-form" action="' . esc_url( home_url( '/' ) ) . '">
             <div class="wedocs-search-input">
