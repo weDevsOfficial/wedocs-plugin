@@ -91,16 +91,62 @@ body.single.single-docs .content-area {
                     }
                 }
 
+                // Articles and sub-articles: a thin guide line per level, compact
+                // rows and a small step per level, so deep trees stay readable.
                 ul.children {
                     list-style: none;
-                    margin: 15px 0 15px 26px;
+                    margin: 6px 0 6px 26px;
                     padding: 0;
                     border: none;
-                    border-left: 1px solid #ddd;
+                    border-left: 1px solid #e5e7eb;
+
+                    li {
+                        margin: 0;
+                    }
 
                     a {
-                        color: #333333;
+                        align-items: flex-start;
+                        margin-left: -1px;
+                        padding: 6px 8px 6px 14px;
+                        border-left: 2px solid transparent;
+                        border-radius: 0 6px 6px 0;
+                        color: #4b5563;
+                        font-size: 14px;
                         font-weight: normal;
+                        line-height: 1.45;
+                        overflow-wrap: anywhere;
+                        transition: background-color 0.15s ease, color 0.15s ease;
+
+                        &:hover {
+                            background: #f3f4f6;
+                            color: #111827;
+                        }
+                    }
+
+                    // Sub-article parents get a small borderless chevron.
+                    li.wd-state-open > a > .wedocs-caret,
+                    li.wd-state-closed > a > .wedocs-caret {
+                        float: none;
+                        flex-shrink: 0;
+                        width: 20px;
+                        height: 20px;
+                        padding: 0;
+                        margin: 0 0 0 auto;
+                        border: none;
+                        border-radius: 4px;
+                        color: #9ca3af;
+                        font-size: 12px;
+                        line-height: 20px;
+                        text-align: center;
+
+                        &:hover {
+                            background: #e5e7eb;
+                            color: #111827;
+                        }
+                    }
+
+                    ul.children {
+                        margin: 2px 0 2px 10px;
                     }
                 }
 
@@ -128,8 +174,9 @@ body.single.single-docs .content-area {
 
                 li.current_page_item > a {
                     border-left: 2px solid @mainColor;
-                    color: #191919;
-                    font-weight: bold;
+                    background: fade(@mainColor, 10%);
+                    color: @mainColor;
+                    font-weight: 600;
                 }
             }
 
@@ -369,6 +416,12 @@ body.single.single-docs .content-area {
 
                 &:not(.active) {
                     display: none;
+                }
+
+                // Sub-articles nested under their parent article.
+                &.nested {
+                    margin: 2px 0;
+                    padding-left: 18px;
                 }
             }
         }
