@@ -14,12 +14,14 @@
     // var_dump( $parent, $ancestors, $root );
     $walker   = new WeDevs\WeDocs\Walker();
     $children = wp_list_pages( [
-        'title_li'  => '',
-        'order'     => 'menu_order',
-        'child_of'  => $parent,
-        'echo'      => false,
-        'post_type' => 'docs',
-        'walker'    => $walker,
+        'title_li'    => '',
+        'order'       => 'menu_order',
+        'child_of'    => $parent,
+        'echo'        => false,
+        'post_type'   => 'docs',
+        'walker'      => $walker,
+        // Private sections and articles are listed only for users who can read them.
+        'post_status' => current_user_can( 'read_private_docs' ) ? [ 'publish', 'private' ] : [ 'publish' ],
     ] );
     ?>
 
