@@ -132,6 +132,14 @@ class API extends WP_REST_Controller {
                 'callback'            => [ $this, 'search_docs' ],
                 'permission_callback' => '__return_true',
                 'args'                => [
+                    'context' => [
+                        'description'       => __( 'Scope under which the request is made; determines fields present in response.', 'wedocs' ),
+                        'type'              => 'string',
+                        'enum'              => [ 'view', 'embed', 'edit' ],
+                        'default'           => 'view',
+                        'sanitize_callback' => 'sanitize_key',
+                        'validate_callback' => 'rest_validate_request_arg',
+                    ],
                     'query' => [
                         'required'          => true,
                         'type'              => 'string',
@@ -1197,7 +1205,9 @@ class API extends WP_REST_Controller {
             'order'  => $doc->menu_order,
         ];
 
-        if ( 'edit' == $request['context'] ) {
+        // Raw fields are edit-only data, so the caller must be able to edit the doc.
+        // Otherwise `context=edit` on public routes would leak password-protected content.
+        if ( 'edit' === $request['context'] && current_user_can( 'edit_post', $doc->ID ) ) {
             $data['title']['raw']   = $doc->post_title;
             $data['content']['raw'] = $doc->post_content;
         }
