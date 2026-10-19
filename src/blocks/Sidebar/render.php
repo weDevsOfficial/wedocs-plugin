@@ -658,9 +658,11 @@ if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
         }
 
         // Tree-specific styles - hardcoded for reliability
+        // Only the first level is indented here; deeper levels are stepped by
+        // their `.wedocs-article-children` wrapper, so indents do not stack.
         $indentation = 20;
         $article_style = '';
-        if ( $level > 0 ) {
+        if ( 1 === $level ) {
             $article_style .= 'margin-left: ' . $indentation . 'px;';
         }
         $article_style .= 'margin-bottom: ' . wedocs_sanitize_css_length( $tree_styles['itemSpacing'] ?? '4px', '4px' ) . ';';
@@ -701,9 +703,11 @@ if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
         if ( $has_children && $enable_nested_articles ) {
             $children_style = '';
             if ( $level > 0 ) {
-                $children_style .= 'margin-left: ' . intval(
+                // Half the indentation per level keeps 7-level trees readable
+                // in a narrow sidebar.
+                $children_style .= 'margin-left: ' . ( intval(
                         str_replace( 'px', '', $tree_styles['indentation'] ?? '20' )
-                    ) . 'px;';
+                    ) / 2 ) . 'px;';
                 if ( ! empty( $tree_styles['connectorColor'] ) ) {
                     $children_style .= 'border-left: ' . wedocs_sanitize_css_length( $tree_styles['connectorWidth'] ?? '1px', '1px' ) . ' solid ' . esc_attr(
                             $tree_styles['connectorColor']

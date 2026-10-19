@@ -46,7 +46,9 @@ if ( $docs ) {
                                 $my_wp_query  = new WP_Query();
                                 $all_wp_pages = $my_wp_query->query( $article_args );
 
-                                $children_docs = get_page_children( $section->ID, $all_wp_pages );
+                                // Direct articles only; their sub-articles are nested below each one.
+                                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variable, included inside wedocs_get_template().
+                                $children_docs = wedocs_get_direct_doc_children( $section->ID, $all_wp_pages );
                                 $post_title    = wedocs_apply_short_content(
                                     __( $section->post_title, 'wedocs' ),
                                     $col > 1 ? 60 : 160
@@ -89,6 +91,17 @@ if ( $docs ) {
                                                 <a href="<?php echo esc_url( $article_link ); ?>"<?php echo $target_blank; ?>>
                                                     <?php echo esc_html( wedocs_apply_short_content( $article->post_title, $col > 1 ? 60 : 160 ) ); ?>
                                                 </a>
+                                                <?php
+                                                wedocs_shortcode_render_sub_articles(
+                                                    $article->ID,
+                                                    $all_wp_pages,
+                                                    [
+                                                        'dashboard_base' => $dashboard_base,
+                                                        'new_tab'        => '' !== $target_blank,
+                                                        'title_length'   => $col > 1 ? 60 : 160,
+                                                    ]
+                                                );
+                                                ?>
                                             </li>
                                         <?php endforeach; ?>
                                     </ul>

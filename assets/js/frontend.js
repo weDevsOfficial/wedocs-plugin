@@ -220,6 +220,9 @@
 
     toggleSidebar ( e ) {
       e.preventDefault();
+      // The handler is delegated from every parent item, so without this a
+      // nested caret would toggle its item once per ancestor and cancel out.
+      e.stopPropagation();
       const self = $( this ),
         parent = self.closest( '.page_item' );
 

@@ -176,6 +176,18 @@
     gap: var(--tree-item-spacing, 4px);
 }
 
+/* Nested articles: no side padding of their own, so each level only adds the
+   wrapper's step, and long titles wrap at word boundaries. */
+.wedocs-article-children > .wedocs-article {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.wedocs-article-title {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
 .wedocs-article-title a {
     color: var(--doc-list-text-color, #111111);
     text-decoration: none;

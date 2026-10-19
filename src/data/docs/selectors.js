@@ -136,11 +136,19 @@ const selectors = {
       return doc.articles_count;
     }
 
-    const sectionIds = docs
+    // Every doc below the sections, nested sub-articles included.
+    let parentIds = docs
       .filter( ( item ) => item.parent === id )
       .map( ( section ) => section.id );
+    let count = 0;
 
-    return docs.filter( ( item ) => sectionIds.includes( item.parent ) ).length;
+    while ( parentIds.length ) {
+      const children = docs.filter( ( item ) => parentIds.includes( item.parent ) );
+      count += children.length;
+      parentIds = children.map( ( child ) => child.id );
+    }
+
+    return count;
   },
 
   getHelpfulDocs: ( state ) => {
