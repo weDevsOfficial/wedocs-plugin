@@ -15,16 +15,15 @@ const ArticleItem = ({ article, attributes, level = 0 }) => {
         return textarea.value;
     };
 
-    // Tree-specific styles
-    const indentation = level * parseInt(treeStyles?.indentation?.replace('px', '') || 20);
-    
     // Helper function to get color value or fallback
     const getColorValue = (colorValue, fallback = '') => {
         return colorValue && colorValue.trim() !== '' ? colorValue : fallback;
     };
 
     const articleStyle = {
-        marginLeft: level > 0 ? `${indentation}px` : '0',
+        // Only the first level is indented here; deeper levels are stepped by
+        // the children wrapper, so indents do not stack (matches render.php).
+        marginLeft: level === 1 ? `${parseInt(treeStyles?.indentation?.replace('px', '') || 20)}px` : '0',
         marginBottom: treeStyles?.itemSpacing || '4px',
         position: 'relative',
         backgroundColor: getColorValue(docListStyles.backgroundColor),
@@ -110,7 +109,7 @@ const ArticleItem = ({ article, attributes, level = 0 }) => {
                 <div 
                     className="wedocs-article-children"
                     style={{
-                        marginLeft: level > 0 ? `${parseInt(treeStyles?.indentation?.replace('px', '') || 20)}px` : '0',
+                        marginLeft: level > 0 ? `${parseInt(treeStyles?.indentation?.replace('px', '') || 20) / 2}px` : '0',
                         borderLeft: level > 0 && treeStyles?.connectorColor ? `${treeStyles?.connectorWidth || '1px'} solid ${treeStyles.connectorColor}` : 'none',
                         paddingLeft: level > 0 ? '8px' : '0'
                     }}
