@@ -688,7 +688,7 @@ class API extends WP_REST_Controller {
      * query, so the cost grows with the depth, not with the number of docs.
      *
      * @since 2.4.1
-     * @since WEDOCS_SINCE Articles include nested sub-articles.
+     * @since 2.6.1 Articles include nested sub-articles.
      *
      * @param array $root_ids
      * @param array $statuses
@@ -737,7 +737,7 @@ class API extends WP_REST_Controller {
     /**
      * Child ID to parent ID map for the direct children of a set of docs.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.1
      *
      * @param array $parent_ids
      * @param array $statuses
