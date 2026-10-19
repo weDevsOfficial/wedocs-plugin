@@ -680,12 +680,15 @@ class API extends WP_REST_Controller {
     }
 
     /**
-     * Section and article counts for a set of root docs, in one query.
+     * Section and article counts for a set of root docs.
      *
-     * "Sections" are the direct children of a root and "articles" their children
-     * in turn, matching how the tree counts them client side.
+     * "Sections" are the direct children of a root. "Articles" are every doc
+     * below the sections, nested sub-articles included, so the count matches
+     * what the tree and the sidebar list. The tree is walked one level per
+     * query, so the cost grows with the depth, not with the number of docs.
      *
      * @since 2.4.1
+     * @since WEDOCS_SINCE Articles include nested sub-articles.
      *
      * @param array $root_ids
      * @param array $statuses
@@ -693,47 +696,86 @@ class API extends WP_REST_Controller {
      * @return array Keyed by root ID, each with `sections` and `articles` counts.
      */
     protected function get_descendant_counts( $root_ids, $statuses ) {
-        global $wpdb;
-
-        $root_ids = array_map( 'absint', (array) $root_ids );
+        $root_ids = array_values( array_filter( array_map( 'absint', (array) $root_ids ) ) );
 
         if ( empty( $root_ids ) || empty( $statuses ) ) {
             return [];
         }
 
-        $id_placeholders     = implode( ', ', array_fill( 0, count( $root_ids ), '%d' ) );
-        $status_placeholders = implode( ', ', array_fill( 0, count( $statuses ), '%s' ) );
-
-        // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- placeholders built above, values passed to prepare().
-        $sql = $wpdb->prepare(
-            "SELECT r.ID AS root_id,
-                    COUNT( DISTINCT s.ID ) AS sections,
-                    COUNT( DISTINCT a.ID ) AS articles
-             FROM {$wpdb->posts} r
-             LEFT JOIN {$wpdb->posts} s
-                    ON s.post_parent = r.ID
-                   AND s.post_type = 'docs'
-                   AND s.post_status IN ( {$status_placeholders} )
-             LEFT JOIN {$wpdb->posts} a
-                    ON a.post_parent = s.ID
-                   AND a.post_type = 'docs'
-                   AND a.post_status IN ( {$status_placeholders} )
-             WHERE r.ID IN ( {$id_placeholders} )
-             GROUP BY r.ID",
-            array_merge( $statuses, $statuses, $root_ids )
-        );
-        // phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-
         $counts = [];
 
-        foreach ( $wpdb->get_results( $sql ) as $row ) {
-            $counts[ (int) $row->root_id ] = [
-                'sections' => (int) $row->sections,
-                'articles' => (int) $row->articles,
+        foreach ( $root_ids as $root_id ) {
+            $counts[ $root_id ] = [
+                'sections' => 0,
+                'articles' => 0,
             ];
         }
 
+        // Map each doc of the current level to the root it belongs to.
+        $root_of = array_combine( $root_ids, $root_ids );
+        $level   = 0;
+
+        while ( ! empty( $root_of ) ) {
+            $children = $this->get_children_parent_map( array_keys( $root_of ), $statuses );
+            $next     = [];
+
+            foreach ( $children as $child_id => $parent_id ) {
+                $root_id = $root_of[ $parent_id ];
+                $key     = 0 === $level ? 'sections' : 'articles';
+
+                ++$counts[ $root_id ][ $key ];
+                $next[ $child_id ] = $root_id;
+            }
+
+            $root_of = $next;
+            ++$level;
+        }
+
         return $counts;
+    }
+
+    /**
+     * Child ID to parent ID map for the direct children of a set of docs.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param array $parent_ids
+     * @param array $statuses
+     *
+     * @return array Keyed by child ID, valued by its parent ID.
+     */
+    protected function get_children_parent_map( $parent_ids, $statuses ) {
+        global $wpdb;
+
+        $parent_ids = array_map( 'absint', (array) $parent_ids );
+
+        if ( empty( $parent_ids ) ) {
+            return [];
+        }
+
+        $id_placeholders     = implode( ', ', array_fill( 0, count( $parent_ids ), '%d' ) );
+        $status_placeholders = implode( ', ', array_fill( 0, count( $statuses ), '%s' ) );
+
+        // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- placeholders built above, values passed to prepare().
+        $rows = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_parent
+                 FROM {$wpdb->posts}
+                 WHERE post_type = 'docs'
+                   AND post_status IN ( {$status_placeholders} )
+                   AND post_parent IN ( {$id_placeholders} )",
+                array_merge( $statuses, $parent_ids )
+            )
+        );
+        // phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
+        $map = [];
+
+        foreach ( $rows as $row ) {
+            $map[ (int) $row->ID ] = (int) $row->post_parent;
+        }
+
+        return $map;
     }
 
     /**

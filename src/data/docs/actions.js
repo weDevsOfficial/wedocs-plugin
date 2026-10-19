@@ -3,6 +3,10 @@ import {
   getDocsListingPath,
   getDocsChildrenPath,
 } from './docsPath';
+
+// Parent IDs sent per children request, to keep the query string short.
+const CHILDREN_REQUEST_CHUNK = 100;
+
 const actions = {
   setDocs( docs ) {
     return {
@@ -141,10 +145,12 @@ const actions = {
   },
 
   /**
-   * Load a doc's sections and, in one further request, all of their articles.
+   * Load a doc's whole branch: sections, articles and nested sub-articles.
    *
-   * Used when a documentation is opened, where the listing screen needs two
-   * levels at once. Two requests regardless of how many sections there are.
+   * Used when a documentation is opened. The branch is walked one level at a
+   * time, so it costs one request per level (not per doc) and stops at the
+   * first level that has no children. Sub-articles must be in the store too,
+   * otherwise their parent article shows no child count or expand toggle.
    *
    * @param {number} parentId Documentation being opened.
    */
@@ -157,26 +163,40 @@ const actions = {
 
     yield actions.setLoadingChildren( true );
 
-    const sections = ( yield actions.fetchFromAPI( getDocsChildrenPath( [ id ] ) ) ) || [];
-    yield actions.mergeDocs( sections );
+    const loaded = [];
+    const loadedParents = [];
+    let parentIds = [ id ];
 
-    const sectionIds = sections.map( ( section ) => section.id );
-    let articles = [];
+    for ( let level = 0; parentIds.length; level++ ) {
+      let children = [];
 
-    if ( sectionIds.length ) {
-      articles = ( yield actions.fetchFromAPI( getDocsChildrenPath( sectionIds ) ) ) || [];
-      yield actions.mergeDocs( articles );
+      for ( let i = 0; i < parentIds.length; i += CHILDREN_REQUEST_CHUNK ) {
+        const chunk = parentIds.slice( i, i + CHILDREN_REQUEST_CHUNK );
+        children = children.concat(
+          ( yield actions.fetchFromAPI( getDocsChildrenPath( chunk ) ) ) || []
+        );
+      }
+
+      // Only the root's own sections decide whether the branch counts as
+      // loaded, so a failed first request retries rather than showing an
+      // empty tree.
+      if ( 0 === level && ! children.length ) {
+        break;
+      }
+
+      yield actions.mergeDocs( children );
+      loadedParents.push( ...parentIds );
+      loaded.push( ...children );
+      parentIds = children.map( ( doc ) => doc.id );
     }
 
-    // Only remember the branch as loaded once its sections are actually in the
-    // store, so a failed request retries rather than showing an empty tree.
-    if ( sections.length ) {
-      yield actions.markChildrenLoaded( [ id, ...sectionIds ] );
+    if ( loadedParents.length ) {
+      yield actions.markChildrenLoaded( loadedParents );
     }
 
     yield actions.setLoadingChildren( false );
 
-    return [ ...sections, ...articles ];
+    return loaded;
   },
 
   setHelpfulDocs( helpfulDocs ) {

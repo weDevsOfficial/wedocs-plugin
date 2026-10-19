@@ -103,6 +103,81 @@ function wedocs_apply_short_content( $content, $max_content_number ) {
     return ( mb_strlen( $content ) > $max_content_number ) ? mb_substr( $content, 0, $max_content_number ) . '...' : $content;
 }
 
+/**
+ * Get the direct children of a doc from an already queried list of docs.
+ *
+ * Unlike get_page_children(), which returns every descendant flattened, this
+ * keeps only the first level, so sub-articles can be nested under their own
+ * parent article instead of being listed beside it.
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @param int       $parent_id Parent doc ID.
+ * @param WP_Post[] $docs      Docs to pick from, already in display order.
+ *
+ * @return WP_Post[]
+ */
+function wedocs_get_direct_doc_children( $parent_id, $docs ) {
+    return array_values( wp_list_filter( (array) $docs, [ 'post_parent' => (int) $parent_id ] ) );
+}
+
+/**
+ * Render the nested sub-articles of an article in the docs shortcode.
+ *
+ * Outputs one `ul.children.nested` per level, matching the nesting the single
+ * doc sidebar shows, so the free and pro shortcode templates list sub-articles
+ * under their parent article.
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @param int       $parent_id Article whose sub-articles are rendered.
+ * @param WP_Post[] $docs      All docs the shortcode queried, in display order.
+ * @param array     $args {
+ *     Optional. Rendering options.
+ *
+ *     @type string $dashboard_base Base URL to link docs through, as `?doc_id=`.
+ *     @type bool   $new_tab        Whether links open in a new tab.
+ *     @type int    $title_length   Maximum title length before it is shortened.
+ * }
+ *
+ * @return void
+ */
+function wedocs_shortcode_render_sub_articles( $parent_id, $docs, $args = [] ) {
+    $args = wp_parse_args(
+        $args,
+        [
+            'dashboard_base' => '',
+            'new_tab'        => true,
+            'title_length'   => 160,
+        ]
+    );
+
+    $children = wedocs_get_direct_doc_children( $parent_id, $docs );
+
+    if ( empty( $children ) ) {
+        return;
+    }
+    ?>
+    <ul class="children nested active">
+        <?php foreach ( $children as $child ) : ?>
+            <?php
+            $child_link = $args['dashboard_base']
+                ? add_query_arg( 'doc_id', $child->ID, $args['dashboard_base'] )
+                : get_permalink( $child->ID );
+            ?>
+            <li>
+                <a href="<?php echo esc_url( $child_link ); ?>"<?php echo $args['new_tab'] ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
+                    <?php echo esc_html( wedocs_apply_short_content( $child->post_title, (int) $args['title_length'] ) ); ?>
+                </a>
+                <?php
+                wedocs_shortcode_render_sub_articles( $child->ID, $docs, $args );
+                ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <?php
+}
+
 if ( ! function_exists( 'wedocs_get_doc_breadcrumb_trail' ) ) {
 
     /**
@@ -700,6 +775,10 @@ function wedocs_sidebar_page_status_class( $css_class, $page, $depth, $args, $cu
         } else {
             $css_class[] = 'wd-state-closed';
         }
+    } elseif ( isset( $args['pages_with_children'][ $page->ID ] ) ) {
+        // Articles with sub-articles start expanded, and get a state so their
+        // caret shows and can collapse them like a section.
+        $css_class[] = 'wd-state-open';
     }
 
     return $css_class;

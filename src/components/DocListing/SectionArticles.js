@@ -1,7 +1,7 @@
 import he from 'he';
 import DocActions from '../DocActions';
 import { CSS } from '@dnd-kit/utilities';
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import QuickEditModal from './QuickEditModal';
 import { useSortable } from '@dnd-kit/sortable';
 import extractedTitle from '../../utils/extractedTitle';
@@ -162,6 +162,19 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
                       ></span>
                     </div>
                   </a>
+
+                  { articleChildrens?.length > 0 && (
+                    <div
+                      className="tooltip article-children-counter grid place-content-center text-white font-medium text-xs w-6 h-6 bg-[#00A1E4] rounded-full mr-5"
+                      data-tip={ sprintf(
+                        /* translators: %d: number of sub-articles */
+                        _n( '%d sub-article', '%d sub-articles', articleChildrens.length, 'wedocs' ),
+                        articleChildrens.length
+                      ) }
+                    >
+                      { articleChildrens.length }
+                    </div>
+                  ) }
 
                   { article?.status === 'draft' && (
                     <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5 mr-5` }>
