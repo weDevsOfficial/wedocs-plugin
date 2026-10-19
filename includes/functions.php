@@ -110,7 +110,7 @@ function wedocs_apply_short_content( $content, $max_content_number ) {
  * keeps only the first level, so sub-articles can be nested under their own
  * parent article instead of being listed beside it.
  *
- * @since WEDOCS_SINCE
+ * @since 2.6.1
  *
  * @param int       $parent_id Parent doc ID.
  * @param WP_Post[] $docs      Docs to pick from, already in display order.
@@ -128,7 +128,7 @@ function wedocs_get_direct_doc_children( $parent_id, $docs ) {
  * doc sidebar shows, so the free and pro shortcode templates list sub-articles
  * under their parent article.
  *
- * @since WEDOCS_SINCE
+ * @since 2.6.1
  *
  * @param int       $parent_id Article whose sub-articles are rendered.
  * @param WP_Post[] $docs      All docs the shortcode queried, in display order.
