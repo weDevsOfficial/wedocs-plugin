@@ -1533,6 +1533,19 @@ class API extends WP_REST_Controller {
             return false;
         }
 
+        /**
+         * Whether to show the remote upgrade promo. weDocs Pro turns it off
+         * while its licence is active, so paying customers are not asked to
+         * buy Premium.
+         *
+         * @since WEDOCS_SINCE
+         *
+         * @param bool $show Whether to show the promo.
+         */
+        if ( ! apply_filters( 'wedocs_show_promotional_notice', true ) ) {
+            return false;
+        }
+
 		$promos = get_transient( WEDOCS_PROMO_KEY );
 
 		if ( false === $promos ) {
