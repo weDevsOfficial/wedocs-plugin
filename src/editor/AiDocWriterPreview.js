@@ -1,9 +1,17 @@
 import { __ } from '@wordpress/i18n';
 import { Button, Notice, Card, CardBody, CardHeader, __experimentalHStack as HStack, __experimentalVStack as VStack } from '@wordpress/components';
 
-const AiDocWriterPreview = ({ content, onAccept, onReject, onClose }) => {
+const AiDocWriterPreview = ({ content, truncated = false, onAccept, onReject, onClose }) => {
     return (
         <VStack spacing={4}>
+            { truncated && (
+                <Notice status="warning" isDismissible={false}>
+                    {__(
+                        'The AI reached its length limit, so this text stops before the end. Generate again or shorten the instructions.',
+                        'wedocs'
+                    )}
+                </Notice>
+            ) }
             <Card>
                 <CardBody>
                     <div 

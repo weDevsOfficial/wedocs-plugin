@@ -108,3 +108,23 @@
 .wp-block-wedocs-breadcrumbs a[aria-current="page"] {
   @apply text-gray-900 font-medium;
 }
+
+/* Wrap between items, never inside a word. As shrinkable flex children the
+   items were squeezed below the width of one word, so "Docs" broke into one
+   letter per line beside a long title. */
+.wedocs-breadcrumb > ol {
+  flex-wrap: wrap;
+  row-gap: 0.25rem;
+}
+
+.wedocs-breadcrumb > ol > li {
+  flex-shrink: 0;
+  max-width: 100%;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+.wedocs-breadcrumb > ol > li a,
+.wedocs-breadcrumb > ol > li span {
+  word-break: normal;
+}

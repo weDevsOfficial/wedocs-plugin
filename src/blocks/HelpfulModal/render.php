@@ -208,6 +208,7 @@ if (!function_exists('get_help_icon_svg')) {
 
 // Prepare modal data for JavaScript
 $modal_data = [
+    'docId' => is_singular('docs') ? get_queried_object_id() : (int) get_the_ID(),
     'title' => $modal_title,
     'nameLabel' => $name_label,
     'emailLabel' => $email_label,

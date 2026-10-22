@@ -34,6 +34,28 @@ class SingleDocTemplate extends AbstractTemplate {
 		add_action( 'template_redirect', [ $this, 'render_block_template' ] );
 		// Hook into get_block_templates to modify template content when needed
 		add_filter( 'get_block_templates', [ $this, 'update_single_doc_content' ], 11, 3 );
+		// The template ships a comments block; show it only when articles allow comments.
+		add_filter( 'render_block_core/comments', [ $this, 'maybe_hide_comments' ], 10, 2 );
+	}
+
+	/**
+	 * Hide the comments block on docs unless "Allow Comments on Article" is on,
+	 * matching the classic template.
+	 *
+	 * @param string $block_content Rendered block.
+	 * @param array  $block         Parsed block.
+	 * @return string
+	 */
+	public function maybe_hide_comments( $block_content, $block ) {
+		if ( ! is_singular( 'docs' ) ) {
+			return $block_content;
+		}
+
+		if ( 'on' !== wedocs_get_general_settings( 'comments', 'off' ) ) {
+			return '';
+		}
+
+		return $block_content;
 	}
 
 	/**
