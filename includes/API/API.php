@@ -1324,26 +1324,44 @@ class API extends WP_REST_Controller {
      * @return WP_Error|bool true on success
      */
     public function helpful_update_permissions_check( $request ) {
-        if ( ! get_current_user_id() ) {
-            return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
-        }
-
         $doc_id       = absint( $request->get_param( 'id' ) );
         $doc_status   = get_post_status( $doc_id );
         $doc_statuses = array( 'publish', 'private' );
 
         // Check doc status is valid.
-        if ( ! in_array( $doc_status, $doc_statuses ) ) {
-            return new WP_Error( 'rest_doc_invalid_status', __( 'Doc status not valid for update helpful data', 'wedocs' ) );
+        if ( 'docs' !== get_post_type( $doc_id ) || ! in_array( $doc_status, $doc_statuses, true ) || ! \WeDevs\WeDocs\DocVisibility::is_visible( $doc_id ) ) {
+            return new WP_Error( 'rest_doc_invalid_status', __( 'Doc status not valid for update helpful data', 'wedocs' ), [ 'status' => 403 ] );
         }
 
-        $user_id         = get_current_user_id();
+        $user_id = get_current_user_id();
+
+        // Logged-out readers vote the way the article's own Yes/No buttons let
+        // them: one vote per doc, remembered in the wedocs_response cookie.
+        if ( ! $user_id ) {
+            if ( 'private' === $doc_status ) {
+                return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
+            }
+
+            $previous = isset( $_COOKIE['wedocs_response'] ) ? explode( ',', sanitize_text_field( wp_unslash( $_COOKIE['wedocs_response'] ) ) ) : [];
+
+            if ( in_array( (string) $doc_id, $previous, true ) ) {
+                return new WP_Error( 'rest_doc_invalid_helpful_update', __( 'Sorry, we have already recorded your feedback!', 'wedocs' ), [ 'status' => 409 ] );
+            }
+
+            $previous[] = $doc_id;
+            if ( ! headers_sent() ) {
+                setcookie( 'wedocs_response', implode( ',', array_filter( $previous ) ), time() + WEEK_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
+            }
+
+            return true;
+        }
+
         $updated_doc_ids = get_user_meta( $user_id, 'wedocs_response', true );
         $previous        = ! empty( $updated_doc_ids ) ? explode( ',', $updated_doc_ids ) : [];
 
         // Check doc status is valid.
         if ( in_array( $doc_id, $previous ) ) {
-            return new WP_Error( 'rest_doc_invalid_helpful_update', __( 'Sorry, we have already recorded your feedback!', 'wedocs' ) );
+            return new WP_Error( 'rest_doc_invalid_helpful_update', __( 'Sorry, we have already recorded your feedback!', 'wedocs' ), [ 'status' => 409 ] );
         }
 
         array_push( $previous, $doc_id );
