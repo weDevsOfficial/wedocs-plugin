@@ -85,6 +85,8 @@ class Ajax {
             'orderby'        => 'menu_order',
             'order'          => 'ASC',
             'meta_query'     => wedocs_exclude_vendor_doc_meta_query(),
+            // Sections and articles of a doc this visitor cannot read stay hidden.
+            'post__not_in'   => DocVisibility::hidden_ids(),
         ]);
 
         // Build a doc tree with separate parents, sections, articles & all docs together.
