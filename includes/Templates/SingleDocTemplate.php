@@ -36,6 +36,64 @@ class SingleDocTemplate extends AbstractTemplate {
 		add_filter( 'get_block_templates', [ $this, 'update_single_doc_content' ], 11, 3 );
 		// The template ships a comments block; show it only when articles allow comments.
 		add_filter( 'render_block_core/comments', [ $this, 'maybe_hide_comments' ], 10, 2 );
+		// The classic template marks the page up as a schema.org Article; the
+		// block template had no equivalent.
+		add_action( 'wp_head', [ $this, 'output_article_schema' ] );
+	}
+
+	/**
+	 * Print schema.org Article JSON-LD for a doc rendered by the block template.
+	 *
+	 * Skipped when an SEO plugin is active, since it writes its own graph.
+	 *
+	 * @since WEDOCS_SINCE
+	 *
+	 * @return void
+	 */
+	public function output_article_schema() {
+		if ( ! is_singular( 'docs' ) || 'block' !== wedocs_get_single_doc_renderer() ) {
+			return;
+		}
+
+		if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) || defined( 'AIOSEO_VERSION' ) || defined( 'SEOPRESS_VERSION' ) ) {
+			return;
+		}
+
+		$post = get_queried_object();
+		if ( ! $post instanceof \WP_Post ) {
+			return;
+		}
+
+		$data = [
+			'@context'         => 'https://schema.org',
+			'@type'            => 'Article',
+			'headline'         => wp_strip_all_tags( get_the_title( $post ) ),
+			'url'              => get_permalink( $post ),
+			'mainEntityOfPage' => get_permalink( $post ),
+			'datePublished'    => get_post_time( 'c', true, $post ),
+			'dateModified'     => get_post_modified_time( 'c', true, $post ),
+			'author'           => [
+				'@type' => 'Person',
+				'name'  => get_the_author_meta( 'display_name', $post->post_author ),
+				'url'   => get_author_posts_url( $post->post_author ),
+			],
+			'publisher'        => [
+				'@type' => 'Organization',
+				'name'  => get_bloginfo( 'name' ),
+			],
+		];
+
+		$description = wp_trim_words( wp_strip_all_tags( strip_shortcodes( $post->post_excerpt ? $post->post_excerpt : $post->post_content ) ), 30, '' );
+		if ( '' !== $description ) {
+			$data['description'] = $description;
+		}
+
+		$image = get_the_post_thumbnail_url( $post, 'large' );
+		if ( $image ) {
+			$data['image'] = $image;
+		}
+
+		echo '<script type="application/ld+json">' . wp_json_encode( $data, JSON_HEX_TAG | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- JSON-encoded.
 	}
 
 	/**
