@@ -458,7 +458,7 @@ $breadcrumbs = wedocs_collapse_breadcrumbs($breadcrumbs, $collapse_breadcrumbs, 
             <?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?>
         ">
             <?php $breadcrumb_position = 0; foreach ($breadcrumbs as $index => $breadcrumb): ?>
-                <li class="flex" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <li class="flex"<?php if (empty($breadcrumb['is_collapsed'])): ?> itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"<?php endif; ?>>
                     <div class="flex items-center">
                         <?php if ($index > 0): ?>
                             <!-- Separator -->
@@ -505,10 +505,12 @@ $breadcrumbs = wedocs_collapse_breadcrumbs($breadcrumbs, $collapse_breadcrumbs, 
                             <meta itemprop="position" content="<?php echo esc_attr($breadcrumb_position); ?>" />
                         <?php else: ?>
                             <!-- Current page (no link) -->
+                            <?php $breadcrumb_position++; ?>
                             <?php $display_title = wedocs_truncate_breadcrumb_title($breadcrumb['title'], $max_title_length, $truncate_title); ?>
                             <span aria-current="page" title="<?php echo esc_attr($breadcrumb['title']); ?>" style="<?php if ($font_size_from_style): ?>font-size: <?php echo esc_attr(get_typography_value($font_size_from_style)); ?>;<?php elseif ($font_size): ?>font-size: <?php echo esc_attr(get_typography_value($font_size)); ?>;<?php endif; ?>">
                                 <span itemprop="name"><?php echo esc_html($display_title); ?></span>
                             </span>
+                            <meta itemprop="position" content="<?php echo esc_attr($breadcrumb_position); ?>" />
                         <?php endif; ?>
                     </div>
                 </li>

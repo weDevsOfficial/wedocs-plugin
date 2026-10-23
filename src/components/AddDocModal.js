@@ -18,9 +18,13 @@ const AddDocModal = ( { className, children } ) => {
     status: 'publish',
   } );
 
+  // A vendor doc is shown only in the Dokan vendor dashboard, so without
+  // Dokan it would be hidden from everyone with no way to unmark it here.
+  const isDokanActive = !! window.weDocsAdminVars?.dokan_active;
+
   const visibilityOptions = [
     { value: '0', label: __( 'Regular Doc', 'wedocs' ) },
-    { value: '1', label: __( 'Dokan vendor doc', 'wedocs' ) },
+    ...( isDokanActive ? [ { value: '1', label: __( 'Dokan vendor doc', 'wedocs' ) } ] : [] ),
   ];
 
   const [ formError, setFormError ] = useState( false );
@@ -187,6 +191,7 @@ const AddDocModal = ( { className, children } ) => {
                     ) }
                   </div>
 
+                  { isDokanActive && (
                   <div className="mt-4 text-left">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       { __( 'Visibility', 'wedocs' ) }
@@ -233,6 +238,7 @@ const AddDocModal = ( { className, children } ) => {
                       </div>
                     </Listbox>
                   </div>
+                  ) }
 
                   <div className="mt-6 flex items-center justify-center space-x-3.5">
                     <button

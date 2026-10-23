@@ -687,7 +687,8 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
     $email_to = wedocs_get_general_settings( 'email_to', get_option( 'admin_email' ) );
     $subject  = sprintf( __( '[%1$s] New Doc Feedback: "%2$s"', 'wedocs' ), $blogname, $subject );
 
-    $email_body = sprintf( __( 'New feedback on your doc "%s"', 'wedocs' ), apply_filters( 'wedocs_translate_text', $document->post_title ) ) . "\r\n";
+    $doc_title  = $document ? $document->post_title : '';
+    $email_body = sprintf( __( 'New feedback on your doc "%s"', 'wedocs' ), apply_filters( 'wedocs_translate_text', $doc_title ) ) . "\r\n";
     $email_body .= sprintf( __( 'Author: %1$s (IP: %2$s)', 'wedocs' ), $author, wedocs_get_ip_address() ) . "\r\n";
     $email_body .= sprintf( __( 'Email: %s', 'wedocs' ), $email ) . "\r\n";
     $email_body .= sprintf( __( 'Feedback: %s', 'wedocs' ), "\r\n" . $message ) . "\r\n\r\n";
@@ -984,26 +985,6 @@ function wedocs_get_ai_provider_configs() {
 			'name'         => 'Google Gemini',
 			'endpoint'     => 'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent',
 			'models'       => [
-				'gemini-2.0-flash-exp'      => [
-					'name'   => 'Gemini 2.0 Flash Experimental - Latest',
-					'vision' => true,
-				],
-				'gemini-2.0-flash'          => [
-					'name'   => 'Gemini 2.0 Flash - Stable',
-					'vision' => true,
-				],
-				'gemini-2.0-flash-001'      => [
-					'name'   => 'Gemini 2.0 Flash 001 - Stable Version',
-					'vision' => true,
-				],
-				'gemini-2.0-flash-lite-001' => [
-					'name'   => 'Gemini 2.0 Flash-Lite 001 - Lightweight',
-					'vision' => true,
-				],
-				'gemini-2.0-flash-lite'     => [
-					'name'   => 'Gemini 2.0 Flash-Lite - Lightweight',
-					'vision' => true,
-				],
 				'gemini-2.5-flash'          => [
 					'name'   => 'Gemini 2.5 Flash - Latest Stable',
 					'vision' => true,
@@ -1569,4 +1550,37 @@ if ( ! function_exists( 'wedocs_get_client_ip' ) ) {
 
         return filter_var( $ip, FILTER_VALIDATE_IP ) ? $ip : '';
     }
+}
+
+/**
+ * Get the IDs of every section and article below a doc, at any depth.
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @param int $doc_id Doc ID.
+ *
+ * @return int[]
+ */
+function wedocs_get_doc_descendant_ids( $doc_id ) {
+    $descendants = [];
+    $parents     = [ absint( $doc_id ) ];
+
+    while ( ! empty( $parents ) ) {
+        $children = get_posts(
+            [
+                'post_type'       => 'docs',
+                'post_status'     => 'any',
+                'post_parent__in' => $parents,
+                'posts_per_page'  => -1,
+                'fields'          => 'ids',
+                'no_found_rows'   => true,
+            ]
+        );
+
+        $children    = array_diff( array_map( 'intval', $children ), $descendants );
+        $descendants = array_merge( $descendants, $children );
+        $parents     = $children;
+    }
+
+    return $descendants;
 }

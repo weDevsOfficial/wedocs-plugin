@@ -35,6 +35,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
     const [generatedContent, setGeneratedContent] = useState('');
     const [showPreview, setShowPreview] = useState(false);
     const [error, setError] = useState('');
+    const [isTruncated, setIsTruncated] = useState(false);
     const [images, setImages] = useState([]);
 
     // WordPress editor dispatch hooks
@@ -290,6 +291,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
             }
 
             setGeneratedContent(cleanedContent);
+            setIsTruncated(!! result.truncated);
             setShowPreview(true);
         } catch (err) {
             setError(err.message || __('Failed to generate content. Please try again.', 'wedocs'));
@@ -404,9 +406,23 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
                 // Insert Mode: Insert at current cursor position
                 // Use reliable method that appends to end of document
                 const currentBlocks = wp.data.select('core/block-editor').getBlocks();
-                const allBlocks = [...currentBlocks, ...contentBlocks];
-                const allBlockIds = currentBlocks.map(block => block.clientId);
-                wp.data.dispatch('core/block-editor').replaceBlocks(allBlockIds, allBlocks);
+
+                // replaceBlocks() with no client IDs does nothing, so on an
+                // empty article the generated text was dropped. Insert it, and
+                // take the place of a lone empty paragraph if that is all there is.
+                const onlyEmptyParagraph = currentBlocks.length === 1
+                    && currentBlocks[0].name === 'core/paragraph'
+                    && ! String( currentBlocks[0].attributes?.content ?? '' ).trim();
+
+                if (currentBlocks.length === 0) {
+                    wp.data.dispatch('core/block-editor').insertBlocks(contentBlocks);
+                } else if (onlyEmptyParagraph) {
+                    wp.data.dispatch('core/block-editor').replaceBlocks(currentBlocks[0].clientId, contentBlocks);
+                } else {
+                    const allBlocks = [...currentBlocks, ...contentBlocks];
+                    const allBlockIds = currentBlocks.map(block => block.clientId);
+                    wp.data.dispatch('core/block-editor').replaceBlocks(allBlockIds, allBlocks);
+                }
             }
             
             // Close modal
@@ -541,6 +557,7 @@ const AiDocWriterModal = ({ isOpen, onClose }) => {
             ) : (
                 <AiDocWriterPreview
                     content={generatedContent}
+                    truncated={isTruncated}
                     onAccept={handleAccept}
                     onReject={handleReject}
                     onClose={handleClose}

@@ -20,6 +20,11 @@ if (get_post_type() !== 'docs') {
     return '';
 }
 
+// Honour Settings > Social Share > "Enable Social Share", as the classic template does.
+if ( wedocs_get_general_settings( 'social_share', 'on' ) !== 'on' ) {
+    return '';
+}
+
 // Start output buffering
 ob_start();
 

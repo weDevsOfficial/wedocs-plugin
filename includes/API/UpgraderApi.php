@@ -101,7 +101,7 @@ class UpgraderApi extends \WP_REST_Controller {
             return true;
         }
 
-        return new \WP_Error( 'wedocs_permission_failure', __( "You don't have permission to get upgrader data", 'wedocs' ) );
+        return new \WP_Error( 'wedocs_permission_failure', __( "You don't have permission to get upgrader data", 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
     }
 
     /**

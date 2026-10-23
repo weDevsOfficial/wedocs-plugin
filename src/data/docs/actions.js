@@ -93,11 +93,21 @@ const actions = {
     yield actions.setLoading( true );
 
     const { page = 1, perPage = 20, search = '' } = options;
-    const { body, headers } = yield actions.fetchWithHeadersFromAPI(
-      getDocsListingPath( { page, perPage, search } )
-    );
 
-    const roots = body || [];
+    let body = [];
+    let headers = null;
+    try {
+      ( { body, headers } = yield actions.fetchWithHeadersFromAPI(
+        getDocsListingPath( { page, perPage, search } )
+      ) );
+    } catch ( error ) {
+      // A refused request (for example a role without doc access gets 403)
+      // must not leave the screen on its loading cards forever.
+      body = [];
+      headers = null;
+    }
+
+    const roots = Array.isArray( body ) ? body : [];
 
     // Replace the roots for this page while keeping any children already
     // fetched: the dashboard resolver and a doc's own tree load can be in
