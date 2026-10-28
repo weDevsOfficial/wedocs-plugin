@@ -231,8 +231,11 @@ class SettingsApi extends \WP_REST_Controller {
                 unset( $settings_data_filtered['permission'] );
             }
         }
-        if ( array_key_exists( 'integrate_ai', $existing_settings ) && ! array_key_exists( 'integrate_ai', $settings_data_filtered ) ) {
-            $settings_data_filtered['integrate_ai'] = $existing_settings['integrate_ai'];
+        // Keep stored sections the request did not send (integrate_ai, mcp, or
+        // anything a screen that has not finished loading leaves out), so a
+        // partial save never deletes them.
+        if ( is_array( $existing_settings ) && is_array( $settings_data_filtered ) ) {
+            $settings_data_filtered = array_merge( $existing_settings, $settings_data_filtered );
         }
 
         // Update wedocs_settings via docs store.

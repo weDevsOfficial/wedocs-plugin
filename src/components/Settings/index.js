@@ -36,7 +36,9 @@ const SettingsPage = () => {
   // The form starts from blank defaults. Saving before the stored settings
   // arrive would write those blanks over the real values, so wait for them.
   const settingsLoaded = useSelect(
-    ( select ) => select( settingsStore ).hasFinishedResolution( 'getSettings' ),
+    ( select ) =>
+      select( settingsStore ).hasFinishedResolution( 'getSettings' ) &&
+      ! select( settingsStore ).hasResolutionFailed( 'getSettings' ),
     []
   );
 
