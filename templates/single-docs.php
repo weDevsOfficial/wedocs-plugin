@@ -169,7 +169,7 @@ $skip_sidebar = ( get_post_meta( $post->ID, 'skip_sidebar', true ) == 'yes' ) ? 
                     <?php if ( wedocs_get_general_settings( 'comments', 'off' ) === 'on' ) { ?>
                         <?php if ( comments_open() || get_comments_number() ) { ?>
                             <div class="wedocs-comments-wrap">
-                                <?php comments_template(); ?>
+                                <?php wedocs_comments_template(); ?>
                             </div>
                         <?php } ?>
                     <?php } ?>

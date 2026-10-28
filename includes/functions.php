@@ -1584,3 +1584,41 @@ function wedocs_get_doc_descendant_ids( $doc_id ) {
 
     return $descendants;
 }
+
+/**
+ * Print the comment list and form on a classic doc template.
+ *
+ * Block themes such as Twenty Twenty-Five ship no comments.php, and calling
+ * comments_template() there makes WordPress fall back to its theme-compat
+ * file and log a deprecation notice on every article view. Render the core
+ * Comments block instead in that case.
+ *
+ * @since WEDOCS_SINCE
+ *
+ * @return void
+ */
+function wedocs_comments_template() {
+    if ( locate_template( 'comments.php' ) || ! function_exists( 'do_blocks' ) ) {
+        comments_template();
+        return;
+    }
+
+    $markup = '<!-- wp:comments --><div class="wp-block-comments">'
+        . '<!-- wp:comments-title /-->'
+        . '<!-- wp:comment-template -->'
+        . '<!-- wp:avatar {"size":40} /-->'
+        . '<!-- wp:comment-author-name /-->'
+        . '<!-- wp:comment-date /-->'
+        . '<!-- wp:comment-content /-->'
+        . '<!-- wp:comment-reply-link /-->'
+        . '<!-- /wp:comment-template -->'
+        . '<!-- wp:comments-pagination -->'
+        . '<!-- wp:comments-pagination-previous /-->'
+        . '<!-- wp:comments-pagination-numbers /-->'
+        . '<!-- wp:comments-pagination-next /-->'
+        . '<!-- /wp:comments-pagination -->'
+        . '<!-- wp:post-comments-form /-->'
+        . '</div><!-- /wp:comments -->';
+
+    echo do_blocks( $markup ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
