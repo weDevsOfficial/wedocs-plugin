@@ -688,6 +688,7 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
     $subject  = sprintf( __( '[%1$s] New Doc Feedback: "%2$s"', 'wedocs' ), $blogname, $subject );
 
     $doc_title  = $document ? $document->post_title : '';
+    // translators: %s: doc title.
     $email_body = sprintf( __( 'New feedback on your doc "%s"', 'wedocs' ), apply_filters( 'wedocs_translate_text', $doc_title ) ) . "\r\n";
     $email_body .= sprintf( __( 'Author: %1$s (IP: %2$s)', 'wedocs' ), $author, wedocs_get_ip_address() ) . "\r\n";
     $email_body .= sprintf( __( 'Email: %s', 'wedocs' ), $email ) . "\r\n";
