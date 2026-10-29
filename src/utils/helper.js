@@ -1,4 +1,5 @@
 import { useEffect } from "@wordpress/element";
+import { __ } from "@wordpress/i18n";
 
 export const userIsAdmin = ( id = 0 ) => {
     return weDocsAdminVars?.hasManageCap;
@@ -22,4 +23,16 @@ export const handleDocCreationByRef = ( creationBtnRef ) => {
 export const isArticleAccessible = ( restrictedValue ) => {
     // Article is accessible if the restriction value is NOT true, 1, or '1'
     return !(restrictedValue === true || restrictedValue === 1 || restrictedValue === '1');
+};
+
+// Label shown next to a doc in the admin tree for a status other than
+// published or private; empty for those two.
+export const docStatusLabel = ( status ) => {
+    const labels = {
+        draft   : __( 'Draft', 'wedocs' ),
+        pending : __( 'Pending', 'wedocs' ),
+        future  : __( 'Scheduled', 'wedocs' ),
+    };
+
+    return labels[ status ] || '';
 };

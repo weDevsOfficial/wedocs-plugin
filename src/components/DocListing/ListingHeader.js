@@ -4,6 +4,7 @@ import extractedTitle from '../../utils/extractedTitle';
 import { __ } from '@wordpress/i18n';
 import he from 'he';
 import { Fragment } from '@wordpress/element';
+import { docStatusLabel } from '../../utils/helper';
 
 const ListingHeader = ( { doc } ) => {
   if ( ! doc ) {
@@ -82,9 +83,9 @@ const ListingHeader = ( { doc } ) => {
                   />
                 </svg>
               </a>
-              { doc?.status === 'draft' && (
+              { docStatusLabel( doc?.status ) && (
                 <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5 !ml-4` }>
-                  { __( 'Draft', 'wedocs' ) }
+                  { docStatusLabel( doc?.status ) }
                 </div>
               ) }
             </Fragment>
