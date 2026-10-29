@@ -34,6 +34,9 @@ class Frontend {
         // Exclude vendor docs from all public-facing docs queries.
         add_action( 'pre_get_posts', [ $this, 'exclude_vendor_docs' ] );
 
+        // Doc pages have no working comments feed, so do not advertise one.
+        add_filter( 'feed_links_extra_show_post_comments_feed', [ $this, 'hide_doc_comments_feed_link' ] );
+
         // Loads frontend scripts and styles
         add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ], 9 );
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_single_scripts' ], 9 );
@@ -310,5 +313,21 @@ class Frontend {
         }
 
         return $template;
+    }
+
+    /**
+     * Leave the comments feed link out of doc pages.
+     *
+     * The docs permalinks serve no comment feed, so the link WordPress adds to
+     * every singular page sent crawlers to a 404.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param bool $show Whether to print the link.
+     *
+     * @return bool
+     */
+    public function hide_doc_comments_feed_link( $show ) {
+        return is_singular( 'docs' ) ? false : $show;
     }
 }
