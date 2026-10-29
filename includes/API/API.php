@@ -568,7 +568,7 @@ class API extends WP_REST_Controller {
         $statuses = [ 'publish' ];
 
         if ( current_user_can( 'edit_docs' ) || current_user_can( wedocs_get_publish_cap() ) ) {
-            $statuses = [ 'publish', 'draft', 'private' ];
+            $statuses = [ 'publish', 'draft', 'pending', 'future', 'private' ];
         }
 
         return $statuses;
@@ -1494,7 +1494,7 @@ class API extends WP_REST_Controller {
             return new WP_Error( 'rest_invalid_documentation', __( 'Invalid Documentation.', 'wedocs' ) );
         }
 
-        $this->remove_child_docs( $doc_id );
+        // DocTrash moves the sections and articles below to Trash with it.
         $deleted_doc = wp_trash_post( $doc_id );
 
         return rest_ensure_response( $deleted_doc );
@@ -1516,7 +1516,7 @@ class API extends WP_REST_Controller {
             foreach ( $childrens as $child_post ) {
                 // Recursively delete documentations.
                 $this->remove_child_docs( $child_post->ID );
-                wp_delete_post( $child_post->ID );
+                wp_trash_post( $child_post->ID );
             }
         }
     }

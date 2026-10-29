@@ -118,7 +118,7 @@ const RestictionModal = ( { classes, children, docId, type } ) => {
                       </Dialog.Title>
                       <p className="text-gray-500 text-base">
                         { __(
-                          'Deleting it means it will be permanently lost, and you won\'t be able to retrieve it again.',
+                          'It moves to the Trash together with everything under it. You can restore it from the Trash.',
                           'wedocs'
                         ) }
                       </p>
