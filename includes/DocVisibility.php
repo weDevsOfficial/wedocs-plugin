@@ -30,6 +30,7 @@ class DocVisibility {
     public function __construct() {
         add_action( 'template_redirect', [ $this, 'hide_single_doc' ], 1 );
         add_filter( 'rest_docs_query', [ $this, 'exclude_from_rest_query' ] );
+        add_filter( 'wp_sitemaps_posts_query_args', [ $this, 'exclude_from_sitemap' ], 10, 2 );
         add_filter( 'rest_request_before_callbacks', [ $this, 'guard_rest_item' ], 10, 3 );
     }
 
@@ -41,8 +42,8 @@ class DocVisibility {
      *
      * @return int[]
      */
-    public static function hidden_ids() {
-        $user_id = get_current_user_id();
+    public static function hidden_ids( $user_id = null ) {
+        $user_id = null === $user_id ? get_current_user_id() : (int) $user_id;
 
         if ( isset( self::$hidden[ $user_id ] ) ) {
             return self::$hidden[ $user_id ];
@@ -61,7 +62,7 @@ class DocVisibility {
 
         $hidden = [];
         foreach ( $unpublished as $doc_id ) {
-            if ( current_user_can( 'read_post', $doc_id ) ) {
+            if ( user_can( $user_id, 'read_post', $doc_id ) ) {
                 continue;
             }
 
@@ -125,6 +126,33 @@ class DocVisibility {
 
         if ( $hidden ) {
             $args['post__not_in'] = array_merge( isset( $args['post__not_in'] ) ? (array) $args['post__not_in'] : [], $hidden );
+        }
+
+        return $args;
+    }
+
+    /**
+     * Leave sections and articles of an unpublished doc out of the XML sitemap.
+     *
+     * Search engines crawl as visitors, so the list is built for a logged-out
+     * user whoever requests the sitemap.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param array  $args      WP_Query args.
+     * @param string $post_type Post type of the sitemap.
+     *
+     * @return array
+     */
+    public function exclude_from_sitemap( $args, $post_type ) {
+        if ( 'docs' !== $post_type ) {
+            return $args;
+        }
+
+        $hidden = self::hidden_ids( 0 );
+
+        if ( $hidden ) {
+            $args['post__not_in'] = array_merge( isset( $args['post__not_in'] ) ? (array) $args['post__not_in'] : [], $hidden ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in
         }
 
         return $args;
