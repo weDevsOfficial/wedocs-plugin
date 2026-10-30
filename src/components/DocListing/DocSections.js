@@ -17,6 +17,7 @@ import extractedTitle from '../../utils/extractedTitle';
 import settingsStore from '../../data/settings';
 import he from 'he';
 import docsStore from '../../data/docs';
+import { docStatusLabel } from '../../utils/helper';
 
 const DocSections = ( { docs, section, sections, searchValue } ) => {
   const isAdmin = weDocsAdminVars?.hasManageCap;
@@ -160,9 +161,9 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                   >
                     { filteredArticles.length }
                   </div>
-                  { section?.status === 'draft' && (
+                  { docStatusLabel( section?.status ) && (
                     <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5 !ml-5` }>
-                      { __( 'Draft', 'wedocs' ) }
+                      { docStatusLabel( section?.status ) }
                     </div>
                   ) }
                   <AddArticleModal

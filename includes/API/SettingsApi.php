@@ -104,6 +104,27 @@ class SettingsApi extends \WP_REST_Controller {
     }
 
     /**
+     * Whether the current user may read and save weDocs settings.
+     *
+     * Administrators always can. weDocs Pro adds the roles picked in
+     * Settings > Permission Management > "Who can manage weDocs Settings?",
+     * which already get the Settings menu.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @return bool
+     */
+    private function current_user_can_manage_settings() {
+        $can_manage = current_user_can( 'manage_options' );
+
+        if ( ! $can_manage && function_exists( 'wedocs_current_user_can_access_settings' ) ) {
+            $can_manage = is_user_logged_in() && wedocs_current_user_can_access_settings();
+        }
+
+        return (bool) apply_filters( 'wedocs_current_user_can_manage_settings', $can_manage );
+    }
+
+    /**
      * Check settings data read permission.
      *
      * @since 2.1.16
@@ -113,7 +134,7 @@ class SettingsApi extends \WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function get_items_permissions_check( $request ) {
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! $this->current_user_can_manage_settings() ) {
             return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to do that.', 'wedocs' ), array( 'status' => rest_authorization_required_code() ) );
         }
 
@@ -130,7 +151,7 @@ class SettingsApi extends \WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function create_item_permissions_check( $request ) {
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! $this->current_user_can_manage_settings() ) {
             return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to do that.', 'wedocs' ), array( 'status' => rest_authorization_required_code() ) );
         }
 
@@ -200,8 +221,21 @@ class SettingsApi extends \WP_REST_Controller {
 
         // Preserve integrate_ai (AI connection state) when saving general settings.
         $existing_settings = get_option( 'wedocs_settings', [] );
-        if ( array_key_exists( 'integrate_ai', $existing_settings ) && ! array_key_exists( 'integrate_ai', $settings_data_filtered ) ) {
-            $settings_data_filtered['integrate_ai'] = $existing_settings['integrate_ai'];
+
+        // Only administrators decide who gets access. A role that was given the
+        // settings screen must not be able to widen its own permissions.
+        if ( ! current_user_can( 'manage_options' ) ) {
+            if ( array_key_exists( 'permission', $existing_settings ) ) {
+                $settings_data_filtered['permission'] = $existing_settings['permission'];
+            } else {
+                unset( $settings_data_filtered['permission'] );
+            }
+        }
+        // Keep stored sections the request did not send (integrate_ai, mcp, or
+        // anything a screen that has not finished loading leaves out), so a
+        // partial save never deletes them.
+        if ( is_array( $existing_settings ) && is_array( $settings_data_filtered ) ) {
+            $settings_data_filtered = array_merge( $existing_settings, $settings_data_filtered );
         }
 
         // Update wedocs_settings via docs store.

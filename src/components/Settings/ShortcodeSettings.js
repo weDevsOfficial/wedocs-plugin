@@ -18,7 +18,7 @@ const getShortcodes = () => {
         'wedocs'
       ),
       example:
-        '[wedocs col="2" items="10" include="any" exclude="" more="View Details" paginate=""]',
+        '[wedocs col="2" items="10" include="any" exclude="" more="View Details" paginate="" new_tab="yes"]',
       attributes: [
         {
           name: 'col',
@@ -59,6 +59,14 @@ const getShortcodes = () => {
           default: '',
           description: __(
             'Docs per page. Leave empty to show every doc on one page.',
+            'wedocs'
+          ),
+        },
+        {
+          name: 'new_tab',
+          default: 'yes',
+          description: __(
+            'Open doc, section and article links in a new tab. Set to no to keep readers in the same tab.',
             'wedocs'
           ),
         },

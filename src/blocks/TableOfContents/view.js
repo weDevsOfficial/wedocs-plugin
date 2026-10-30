@@ -50,9 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		const showNumbering = tocBlock.dataset.showNumbering === 'true';
 
 		// Find all headings in the page content
-		const contentArea = document.querySelector('.entry-content, .post-content, main, .content') || document.body;
 		const headingSelector = supportedHeadings.map(h => h.toLowerCase()).join(', ');
-		const headings = contentArea.querySelectorAll(headingSelector);
+		const headings = getContentHeadings(headingSelector);
 
 		if (headings.length === 0) {
 			const tocContent = tocBlock.querySelector('.toc-content');
@@ -70,6 +69,31 @@ document.addEventListener('DOMContentLoaded', function() {
 			if (!heading.id) {
 				heading.id = 'toc-heading-' + index;
 			}
+		});
+	}
+
+	/**
+	 * Collect the headings of the doc's own content.
+	 *
+	 * A combined selector such as '.entry-content, main' matches whichever
+	 * element comes first in the page, which is the theme's <main>, so the
+	 * template's own headings (title, Contributors, footer...) were listed.
+	 * Look for the content wrappers one by one, and only fall back to the
+	 * whole page with weDocs blocks and the site header/footer left out.
+	 */
+	function getContentHeadings(headingSelector) {
+		const contentSelectors = ['.wp-block-post-content', '.entry-content', '.post-content'];
+
+		for (const selector of contentSelectors) {
+			const contentArea = document.querySelector(selector);
+			if (contentArea) {
+				return Array.from(contentArea.querySelectorAll(headingSelector));
+			}
+		}
+
+		const fallbackArea = document.querySelector('main, .content') || document.body;
+		return Array.from(fallbackArea.querySelectorAll(headingSelector)).filter(function(heading) {
+			return !heading.closest('[class*="wp-block-wedocs-"], header, footer, .wp-block-post-title');
 		});
 	}
 
@@ -103,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		headings.forEach(function(heading) {
 			const level = parseInt(heading.tagName.charAt(1));
 			const text = heading.textContent.trim();
-			const id = heading.id || 'toc-heading-' + Array.from(headings).indexOf(heading);
+			const id = heading.id || 'toc-heading-' + headings.indexOf(heading);
 
 			// Update counters
 			if (showNumbering) {
@@ -228,6 +252,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 				if (targetElement) {
 					const offsetTop = targetElement.offsetTop - 80; // Account for sticky headers
+
+					// Keep the heading's anchor in the address bar so it can be copied.
+					if (window.history && window.history.replaceState) {
+						window.history.replaceState(null, '', '#' + targetId);
+					}
 
 					if (smoothScroll && 'scrollBehavior' in document.documentElement.style) {
 						window.scrollTo({

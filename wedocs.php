@@ -300,6 +300,12 @@ final class WeDocs {
     public function init_classes() {
         $this->container['post_type'] = new WeDevs\WeDocs\Post_Types();
 
+        // Sections and articles follow the visibility of the doc above them.
+        $this->container['doc_visibility'] = new WeDevs\WeDocs\DocVisibility();
+
+        // Sections and articles go to Trash, and come back, with their doc.
+        $this->container['doc_trash'] = new WeDevs\WeDocs\DocTrash();
+
         if ( is_admin() ) {
             $this->container['admin'] = new WeDevs\WeDocs\Admin();
         } else {

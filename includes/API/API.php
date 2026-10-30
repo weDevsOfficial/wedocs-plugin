@@ -236,6 +236,9 @@ class API extends WP_REST_Controller {
                             'status' => array(
                                 'type' => 'string',
                             ),
+                            'parentId' => array(
+                                'type' => 'integer',
+                            ),
                         ),
                     ),
                 ],
@@ -573,7 +576,7 @@ class API extends WP_REST_Controller {
         $statuses = [ 'publish' ];
 
         if ( current_user_can( 'edit_docs' ) || current_user_can( wedocs_get_publish_cap() ) ) {
-            $statuses = [ 'publish', 'draft', 'private' ];
+            $statuses = [ 'publish', 'draft', 'pending', 'future', 'private' ];
         }
 
         return $statuses;
@@ -855,11 +858,11 @@ class API extends WP_REST_Controller {
      */
     public function update_need_sortable_status( $request ) {
         if ( ! is_user_logged_in() ) {
-            return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ) );
+            return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
         }
 
         if ( ! current_user_can( 'edit_docs' ) ) {
-            return new WP_Error( 'wedocs_permission_failure', __( 'Unauthorized permission error', 'wedocs' ) );
+            return new WP_Error( 'wedocs_permission_failure', __( 'Unauthorized permission error', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
         }
 
         if ( ! isset( $request['need_sortable_status'] ) ) {
@@ -882,12 +885,12 @@ class API extends WP_REST_Controller {
     public function update_sortable_status( $request ) {
         // Check log in status.
         if ( ! is_user_logged_in() ) {
-            return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ) );
+            return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
         }
 
         // Check current user is admin.
         if ( ! current_user_can( 'edit_docs' ) ) {
-            return new WP_Error( 'wedocs_permission_failure', __( 'Unauthorized permission error', 'wedocs' ) );
+            return new WP_Error( 'wedocs_permission_failure', __( 'Unauthorized permission error', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
         }
 
         // Check sortable status is running or not.
@@ -921,18 +924,35 @@ class API extends WP_REST_Controller {
      * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
      */
     public function update_docs_status( $request ) {
-        $status  = false;
-        $doc_ids = ! empty( $request['docIds'] ) ? array_map( 'intval', $request['docIds'] ) : array();
+        $status     = false;
+        $new_status = ! empty( $request['status'] ) ? sanitize_key( $request['status'] ) : 'publish';
+        $doc_ids    = ! empty( $request['docIds'] ) ? array_map( 'intval', (array) $request['docIds'] ) : array();
 
-        foreach ( $doc_ids as $doc_id ) {
+        if ( ! in_array( $new_status, array( 'publish', 'private' ), true ) ) {
+            return new WP_Error( 'wedocs_invalid_status', __( 'Invalid documentation status.', 'wedocs' ), [ 'status' => 400 ] );
+        }
+
+        // Collect every descendant of the given doc on the server. The admin
+        // screen only holds top-level docs, so a client-built list came out
+        // empty and a private doc left its sections and articles public.
+        $parent_id = ! empty( $request['parentId'] ) ? absint( $request['parentId'] ) : 0;
+        if ( $parent_id && 'docs' === get_post_type( $parent_id ) ) {
+            $doc_ids = array_merge( $doc_ids, wedocs_get_doc_descendant_ids( $parent_id ) );
+        }
+
+        foreach ( array_unique( $doc_ids ) as $doc_id ) {
+            if ( 'docs' !== get_post_type( $doc_id ) || ! current_user_can( 'edit_post', $doc_id ) ) {
+                continue;
+            }
+
             $doc_status = get_post_status( $doc_id );
-            if ( $doc_status === 'draft' ) {
+            if ( ! in_array( $doc_status, array( 'publish', 'private' ), true ) ) {
                 continue;
             }
 
             $post_data = array(
                 'ID'          => $doc_id,
-                'post_status' => ! empty( $request['status'] ) ? sanitize_text_field( $request['status'] ) : 'publish',
+                'post_status' => $new_status,
             );
 
             $status = wp_update_post( $post_data );
@@ -950,10 +970,7 @@ class API extends WP_REST_Controller {
      */
     public function sortable_item_permissions_check() {
         if ( ! current_user_can( 'edit_docs' ) ) {
-            return new WP_Error(
-                'wedocs_permission_failure',
-                __( 'Unauthorized permission error', 'wedocs' )
-            );
+            return new WP_Error( 'wedocs_permission_failure', __( 'Unauthorized permission error', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
         }
 
         return true;
@@ -1317,26 +1334,44 @@ class API extends WP_REST_Controller {
      * @return WP_Error|bool true on success
      */
     public function helpful_update_permissions_check( $request ) {
-        if ( ! get_current_user_id() ) {
-            return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ) );
-        }
-
         $doc_id       = absint( $request->get_param( 'id' ) );
         $doc_status   = get_post_status( $doc_id );
         $doc_statuses = array( 'publish', 'private' );
 
         // Check doc status is valid.
-        if ( ! in_array( $doc_status, $doc_statuses ) ) {
-            return new WP_Error( 'rest_doc_invalid_status', __( 'Doc status not valid for update helpful data', 'wedocs' ) );
+        if ( 'docs' !== get_post_type( $doc_id ) || ! in_array( $doc_status, $doc_statuses, true ) || ! \WeDevs\WeDocs\DocVisibility::is_visible( $doc_id ) ) {
+            return new WP_Error( 'rest_doc_invalid_status', __( 'Doc status not valid for update helpful data', 'wedocs' ), [ 'status' => 403 ] );
         }
 
-        $user_id         = get_current_user_id();
+        $user_id = get_current_user_id();
+
+        // Logged-out readers vote the way the article's own Yes/No buttons let
+        // them: one vote per doc, remembered in the wedocs_response cookie.
+        if ( ! $user_id ) {
+            if ( 'private' === $doc_status ) {
+                return new WP_Error( 'rest_not_logged_in', __( 'You are not currently logged in.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
+            }
+
+            $previous = isset( $_COOKIE['wedocs_response'] ) ? explode( ',', sanitize_text_field( wp_unslash( $_COOKIE['wedocs_response'] ) ) ) : [];
+
+            if ( in_array( (string) $doc_id, $previous, true ) ) {
+                return new WP_Error( 'rest_doc_invalid_helpful_update', __( 'Sorry, we have already recorded your feedback!', 'wedocs' ), [ 'status' => 409 ] );
+            }
+
+            $previous[] = $doc_id;
+            if ( ! headers_sent() ) {
+                setcookie( 'wedocs_response', implode( ',', array_filter( $previous ) ), time() + WEEK_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
+            }
+
+            return true;
+        }
+
         $updated_doc_ids = get_user_meta( $user_id, 'wedocs_response', true );
         $previous        = ! empty( $updated_doc_ids ) ? explode( ',', $updated_doc_ids ) : [];
 
         // Check doc status is valid.
         if ( in_array( $doc_id, $previous ) ) {
-            return new WP_Error( 'rest_doc_invalid_helpful_update', __( 'Sorry, we have already recorded your feedback!', 'wedocs' ) );
+            return new WP_Error( 'rest_doc_invalid_helpful_update', __( 'Sorry, we have already recorded your feedback!', 'wedocs' ), [ 'status' => 409 ] );
         }
 
         array_push( $previous, $doc_id );
@@ -1446,10 +1481,7 @@ class API extends WP_REST_Controller {
      */
     public function delete_item_permissions_check( $request ) {
         if ( ! current_user_can( 'edit_docs' ) ) {
-            return new WP_Error(
-                'wedocs_permission_failure',
-                __( 'You cannot delete the documentation resource.', 'wedocs' )
-            );
+            return new WP_Error( 'wedocs_permission_failure', __( 'You cannot delete the documentation resource.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
         }
 
         return true;
@@ -1472,7 +1504,7 @@ class API extends WP_REST_Controller {
             return new WP_Error( 'rest_invalid_documentation', __( 'Invalid Documentation.', 'wedocs' ) );
         }
 
-        $this->remove_child_docs( $doc_id );
+        // DocTrash moves the sections and articles below to Trash with it.
         $deleted_doc = wp_trash_post( $doc_id );
 
         return rest_ensure_response( $deleted_doc );
@@ -1494,7 +1526,7 @@ class API extends WP_REST_Controller {
             foreach ( $childrens as $child_post ) {
                 // Recursively delete documentations.
                 $this->remove_child_docs( $child_post->ID );
-                wp_delete_post( $child_post->ID );
+                wp_trash_post( $child_post->ID );
             }
         }
     }
@@ -1511,10 +1543,7 @@ class API extends WP_REST_Controller {
      */
     public function get_promotional_notice_check( $request ) {
         if ( ! current_user_can( 'manage_options' ) ) {
-            return new WP_Error(
-                'wedocs_permission_failure',
-                __( 'You cannot see promotion notices.', 'wedocs' )
-            );
+            return new WP_Error( 'wedocs_permission_failure', __( 'You cannot see promotion notices.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
         }
 
         return true;
@@ -1529,6 +1558,19 @@ class API extends WP_REST_Controller {
      */
     public function get_promotional_notice() {
         if ( ! current_user_can( 'manage_options' ) ) {
+            return false;
+        }
+
+        /**
+         * Whether to show the remote upgrade promo. weDocs Pro turns it off
+         * while its licence is active, so paying customers are not asked to
+         * buy Premium.
+         *
+         * @since WEDOCS_SINCE
+         *
+         * @param bool $show Whether to show the promo.
+         */
+        if ( ! apply_filters( 'wedocs_show_promotional_notice', true ) ) {
             return false;
         }
 
@@ -2076,6 +2118,12 @@ class API extends WP_REST_Controller {
 
         $selected_model = $model ?: ( $provider_config['selected_model'] ?? null );
 
+        // Google retired the Gemini 2.0 models that older versions offered and
+        // preselected. Use the current default instead of failing every request.
+        if ( 'google' === $selected_provider && $selected_model && preg_match( '/^gemini-2\.0-/', $selected_model ) ) {
+            $selected_model = 'gemini-2.5-flash';
+        }
+
         if ( ! $selected_model ) {
             return new WP_Error(
                 'wedocs_ai_model_not_specified',
@@ -2334,8 +2382,9 @@ class API extends WP_REST_Controller {
 
         if ( isset( $decoded['choices'][0]['message']['content'] ) ) {
             return [
-                'content' => $decoded['choices'][0]['message']['content'],
-                'usage'   => $decoded['usage'] ?? null,
+                'content'   => $decoded['choices'][0]['message']['content'],
+                'usage'     => $decoded['usage'] ?? null,
+                'truncated' => 'length' === ( $decoded['choices'][0]['finish_reason'] ?? '' ),
             ];
         }
 
@@ -2455,8 +2504,9 @@ class API extends WP_REST_Controller {
 
         if ( isset( $decoded['content'][0]['text'] ) ) {
             return [
-                'content' => $decoded['content'][0]['text'],
-                'usage'   => $decoded['usage'] ?? null,
+                'content'   => $decoded['content'][0]['text'],
+                'usage'     => $decoded['usage'] ?? null,
+                'truncated' => 'max_tokens' === ( $decoded['stop_reason'] ?? '' ),
             ];
         }
 
@@ -2538,6 +2588,27 @@ class API extends WP_REST_Controller {
             ],
         ];
 
+        // Gemini 2.5 and later "think" before answering, and those thinking
+        // tokens count against maxOutputTokens. With the plain cap most of the
+        // budget went on thinking and the article stopped mid-sentence, so
+        // give thinking its own allowance on top of the requested length.
+        if ( ! preg_match( '/^gemini-(1\.|2\.0)/', $model ) ) {
+            $is_gemini_25 = 0 === strpos( $model, 'gemini-2.5' );
+
+            // 2.5 models take an explicit thinking budget. Newer models and the
+            // "-latest" aliases pick their own, so leave them more headroom.
+            $thinking_budget = (int) apply_filters( 'wedocs_ai_google_thinking_budget', $is_gemini_25 ? 1024 : 4096, $model );
+            $thinking_budget = max( 0, $thinking_budget );
+
+            $data['generationConfig']['maxOutputTokens'] = $max_tokens + $thinking_budget;
+            if ( $is_gemini_25 ) {
+                // 2.5 Pro cannot turn thinking off; keep at least its minimum.
+                $data['generationConfig']['thinkingConfig'] = [
+                    'thinkingBudget' => max( false !== strpos( $model, 'pro' ) ? 128 : 0, $thinking_budget ),
+                ];
+            }
+        }
+
         $response = wp_remote_post( $endpoint, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -2568,9 +2639,17 @@ class API extends WP_REST_Controller {
         }
 
         if ( isset( $decoded['candidates'][0]['content']['parts'][0]['text'] ) ) {
+            $text = '';
+            foreach ( $decoded['candidates'][0]['content']['parts'] as $part ) {
+                if ( isset( $part['text'] ) && empty( $part['thought'] ) ) {
+                    $text .= $part['text'];
+                }
+            }
+
             return [
-                'content' => $decoded['candidates'][0]['content']['parts'][0]['text'],
-                'usage'   => $decoded['usageMetadata'] ?? null,
+                'content'   => $text,
+                'usage'     => $decoded['usageMetadata'] ?? null,
+                'truncated' => 'MAX_TOKENS' === ( $decoded['candidates'][0]['finishReason'] ?? '' ),
             ];
         }
 

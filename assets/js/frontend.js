@@ -99,7 +99,22 @@
           '" type="text/css" media="all" />'
       );
       mywindow.document.write( '</head><body >' );
-      mywindow.document.write( article.html() );
+
+      // Print a copy: drop hidden glossary tooltips, whose text otherwise runs
+      // into the sentence, and anything marked as not for print.
+      const printable = article.first().clone();
+      printable.find( '.wedocs-glossary__tooltip, [role="tooltip"], .wedocs-hide-print, script, style' ).remove();
+
+      // On a block theme the title is a separate Post Title block outside the
+      // content, so the printout did not say which article it was.
+      if ( ! printable.find( 'h1' ).length ) {
+        const pageTitle = $( '.wp-block-post-title, .entry-title' ).first().text().trim();
+        if ( pageTitle ) {
+          mywindow.document.write( $( '<h1 class="entry-title"></h1>' ).text( pageTitle ).prop( 'outerHTML' ) );
+        }
+      }
+
+      mywindow.document.write( printable.html() );
       mywindow.document.write(
         '<div class="powered-by">' + weDocs_Vars.powered + '</div>'
       );

@@ -14,6 +14,12 @@ if ( ! function_exists( 'wedocs_is_pro_active' ) || ! wedocs_is_pro_active() ) {
     return;
 }
 
+// Honour Settings > Layout & Styles > "Enable Table of Contents" on docs, as the classic template does.
+$wedocs_toc_layout = wedocs_get_option( 'layout', 'wedocs_settings', [] );
+if ( is_singular( 'docs' ) && ! empty( $wedocs_toc_layout['right_bar'] ) && 'off' === $wedocs_toc_layout['right_bar'] ) {
+    return;
+}
+
 
 /**
  * Generate TOC content from post headings

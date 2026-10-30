@@ -127,7 +127,8 @@ const DocActions = ( { doc, type, section, sections, setShowArticles } ) => {
             { __( 'View', 'wedocs' ) }
           </a>
 
-          { isDokanActive && type === 'doc' && (
+          { /* Keep the unmark action for a doc marked earlier, even without Dokan. */ }
+          { ( isDokanActive || isVendorDoc ) && type === 'doc' && (
             <button
               type="button"
               onClick={ toggleVendorDoc }

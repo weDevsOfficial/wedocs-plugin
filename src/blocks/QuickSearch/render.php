@@ -571,6 +571,9 @@ if ( ! function_exists( 'render_wedocs_quick_search' ) ) {
         trigger.addEventListener('click', (e) => {
             e.preventDefault();
             openModal();
+            // Move the cursor into the modal, otherwise typing keeps going to
+            // the sidebar box behind it and no search runs.
+            setTimeout(focusSearchInput, 100);
         });
 
         // Close modal when clicking close button

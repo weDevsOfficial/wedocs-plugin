@@ -10,8 +10,6 @@ import { createRoot } from '@wordpress/element';
 
 const container = document.getElementById( 'wedocs-app' );
 
-// Use requestIdleCallback or setTimeout to ensure all scripts have executed
-// This gives Pro plugin time to register its filters
 const renderApp = () => {
     if (!container) {
 		console.error('wedocs-app container not found');
@@ -22,12 +20,12 @@ const renderApp = () => {
 	menuFix( 'wedocs' );
 };
 
-// Check if Pro is loaded by testing for its global variable
-if ( typeof window.weDocsPro_Vars !== 'undefined' ) {
-	// Pro is loaded, render immediately
-	renderApp();
+// Render once the DOM is parsed. Pro's script is printed after this one, and
+// a timer could fire before it ran, so its routes (such as manager/:id) were
+// sometimes missing and the screen fell through to the 404 panel. By
+// DOMContentLoaded every footer script, Pro included, has executed.
+if ( document.readyState === 'loading' ) {
+	document.addEventListener( 'DOMContentLoaded', renderApp );
 } else {
-	// Give Pro a chance to load (it's enqueued as a dependency)
-	// Use setTimeout to defer execution until next tick
-	setTimeout( renderApp, 0 );
+	renderApp();
 }

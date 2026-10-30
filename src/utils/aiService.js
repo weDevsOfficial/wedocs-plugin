@@ -197,52 +197,21 @@ class AiService {
                 // Return in format expected by callers
                 return {
                     content: data.content || '',
-                    usage: data.usage || null
+                    usage: data.usage || null,
+                    truncated: !! data.truncated
                 };
             } catch (error) {
-                let errorMessage = __('AI content generation failed. Please try again.', 'wedocs');
+                // apiFetch rejects with the REST error body ({ code, message, data }),
+                // so show the provider's own message, such as a retired model.
+                let errorMessage = error?.message || error?.code || __('AI content generation failed. Please try again.', 'wedocs');
 
-                try {
-                    const responseText = await response.text();
-
-                    if (responseText.trim().startsWith('{')) {
-                        errorData = JSON.parse(responseText);
-                        // Use the message from the API, which should already be user-friendly
-                        errorMessage = errorData.message || errorData.code || errorMessage;
-
-                        // Clean up HTML error messages (WordPress fatal errors)
-                        if (errorMessage.includes('<p>') || errorMessage.includes('critical error')) {
-                            errorMessage = __('A server error occurred. Please try again or contact support if the problem persists.', 'wedocs');
-                        }
-                    } else {
-                        // For non-JSON responses, provide user-friendly message
-                        if (response.status === 500) {
-                            errorMessage = __('A server error occurred. Please try again.', 'wedocs');
-                        } else if (response.status === 403) {
-                            errorMessage = __('You do not have permission to perform this action.', 'wedocs');
-                        } else {
-                            errorMessage = __('An error occurred. Please try again.', 'wedocs');
-                        }
-                    }
-                } catch (parseError) {
-                    // If we can't parse the error, provide a generic user-friendly message
-                    if (response.status === 500) {
-                        errorMessage = __('A server error occurred. Please try again.', 'wedocs');
-                    } else {
-                        errorMessage = __('An error occurred. Please try again.', 'wedocs');
-                    }
+                // Clean up HTML error messages (WordPress fatal errors)
+                if (errorMessage.includes('<p>') || errorMessage.includes('critical error')) {
+                    errorMessage = __('A server error occurred. Please try again or contact support if the problem persists.', 'wedocs');
                 }
 
                 throw new Error(errorMessage);
             }
-
-            const data = await response.json();
-
-            // Return in format expected by callers
-            return {
-                content: data.content || '',
-                usage: data.usage || null
-            };
         } catch (error) {
             throw error;
         }

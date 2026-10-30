@@ -4,6 +4,13 @@ const selectors = {
     return docs;
   },
 
+  // Same data as getDocs, without its resolver: reading it never requests the
+  // admin-only listing endpoint, so front-end widgets can use it for visitors.
+  getLoadedDocs: ( state ) => {
+    const { docs } = state;
+    return docs;
+  },
+
   getParentDocs: ( state ) => {
     const { parents } = state;
     return parents;
