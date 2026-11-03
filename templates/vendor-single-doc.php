@@ -212,7 +212,8 @@ endif;
                 <?php
                 \WeDevs\WeDocs\Frontend::enqueue_assets();
 
-                $panel_content = apply_filters( 'the_content', $post->post_content );
+                // Respect post passwords: show the password form instead of the protected body.
+                $panel_content = post_password_required( $post ) ? get_the_password_form( $post ) : apply_filters( 'the_content', $post->post_content );
                 $child_posts   = get_posts(
                     [
                         'post_type'      => $post->post_type,

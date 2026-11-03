@@ -969,6 +969,15 @@ class API extends WP_REST_Controller {
     public function handle_feedback( $request ) {
         $id = (int) $request['id'];
 
+        if ( 'docs' !== get_post_type( $id ) ) {
+            return new WP_Error( 'rest_doc_invalid_id', __( 'Invalid doc ID.', 'wedocs' ), [ 'status' => 404 ] );
+        }
+
+        // Anyone can call this and it sends mail, so throttle per IP.
+        if ( ! wedocs_rate_limit_ok( 'doc_feedback', 5, HOUR_IN_SECONDS ) ) {
+            return new WP_Error( 'wedocs_rate_limited', __( 'Too many requests. Please try again later.', 'wedocs' ), [ 'status' => 429 ] );
+        }
+
         if ( !is_user_logged_in() ) {
             $name  = $request['name'];
             $email = $request['email'];
