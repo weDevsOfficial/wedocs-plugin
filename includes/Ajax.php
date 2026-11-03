@@ -250,6 +250,11 @@ class Ajax {
             wp_send_json_error(__('Please provide the message details.', 'wedocs'));
         }
 
+        // The nonce is public, so throttle per IP before sending mail.
+        if (!wedocs_rate_limit_ok('doc_feedback', 5, HOUR_IN_SECONDS)) {
+            wp_send_json_error(__('Too many requests. Please try again later.', 'wedocs'));
+        }
+
         wedocs_doc_feedback_email($doc_id, $name, $email, $subject, $message);
 
         wp_send_json_success(__('Thanks for your feedback.', 'wedocs'));
