@@ -803,13 +803,13 @@ class SearchModal extends Widget_Base {
                     $clear.toggle(val.length > 0);
 
                     if (!val) {
-                        $results.html('<div class="wedocs-sm__empty">' + blankMsg + '</div>');
+                        $results.html('<div class="wedocs-sm__empty">' + escHtml(blankMsg) + '</div>');
                         return;
                     }
 
                     var matches = searchDocs(val);
                     if (!matches.length) {
-                        $results.html('<div class="wedocs-sm__empty">' + emptyMsg + '</div>');
+                        $results.html('<div class="wedocs-sm__empty">' + escHtml(emptyMsg) + '</div>');
                         return;
                     }
 
@@ -843,14 +843,14 @@ class SearchModal extends Widget_Base {
                 $clear.on('click', function() {
                     $input.val('').focus();
                     $(this).hide();
-                    $results.html('<div class="wedocs-sm__empty">' + blankMsg + '</div>');
+                    $results.html('<div class="wedocs-sm__empty">' + escHtml(blankMsg) + '</div>');
                 });
 
                 function openModal() {
                     $modal.fadeIn(150);
                     $input.val('').focus();
                     $clear.hide();
-                    $results.html('<div class="wedocs-sm__empty">' + blankMsg + '</div>');
+                    $results.html('<div class="wedocs-sm__empty">' + escHtml(blankMsg) + '</div>');
                     $('body').css('overflow', 'hidden');
                 }
 
