@@ -87,29 +87,7 @@ class Ajax {
             'meta_query'     => wedocs_exclude_vendor_doc_meta_query(),
         ]);
 
-        // Build a doc tree with separate parents, sections, articles & all docs together.
-        $docs_tree = ['all_docs' => $docs];
-        foreach ($docs as $doc) {
-            $is_parent      = $this->is_a_parent_doc($doc->ID);
-            $doc->permalink = get_permalink($doc->ID);
-            if ($is_parent) {
-                // Get parents documentation.
-                $docs_tree['parents'][] = $doc;
-                continue;
-            }
-
-            $is_section = $this->is_a_parent_doc($doc->post_parent);
-            if ($is_section) {
-                // Get sections documentation.
-                $docs_tree['sections'][] = $doc;
-                continue;
-            }
-
-            // Get articles documentation.
-            $docs_tree['articles'][] = $doc;
-        }
-
-        wp_send_json_success($docs_tree);
+        wp_send_json_success( $this->build_search_docs_tree( $docs ) );
     }
 
     /**
@@ -144,26 +122,50 @@ class Ajax {
             ],
         ]);
 
-        // Build a doc tree with separate parents, sections, articles & all docs together.
-        $docs_tree = ['all_docs' => $docs];
-        foreach ($docs as $doc) {
-            $is_parent      = $this->is_a_parent_doc($doc->ID);
-            $doc->permalink = get_permalink($doc->ID);
-            if ($is_parent) {
-                $docs_tree['parents'][] = $doc;
+        wp_send_json_success( $this->build_search_docs_tree( $docs ) );
+    }
+
+    /**
+     * Build the search modal doc tree from a list of docs.
+     *
+     * Only the fields the search modal needs are sent. Full WP_Post objects
+     * would leak post_password and the body of password-protected docs.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param \WP_Post[] $docs Docs to include.
+     *
+     * @return array
+     */
+    private function build_search_docs_tree( $docs ) {
+        $docs_tree = [ 'all_docs' => [] ];
+
+        foreach ( $docs as $doc ) {
+            $item = (object) [
+                'ID'          => $doc->ID,
+                'post_title'  => $doc->post_title,
+                'post_parent' => $doc->post_parent,
+                'post_status' => $doc->post_status,
+                'menu_order'  => $doc->menu_order,
+                'permalink'   => get_permalink( $doc->ID ),
+            ];
+
+            $docs_tree['all_docs'][] = $item;
+
+            if ( $this->is_a_parent_doc( $doc->ID ) ) {
+                $docs_tree['parents'][] = $item;
                 continue;
             }
 
-            $is_section = $this->is_a_parent_doc($doc->post_parent);
-            if ($is_section) {
-                $docs_tree['sections'][] = $doc;
+            if ( $this->is_a_parent_doc( $doc->post_parent ) ) {
+                $docs_tree['sections'][] = $item;
                 continue;
             }
 
-            $docs_tree['articles'][] = $doc;
+            $docs_tree['articles'][] = $item;
         }
 
-        wp_send_json_success($docs_tree);
+        return $docs_tree;
     }
 
     /**
