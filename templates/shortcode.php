@@ -130,7 +130,7 @@ if ( $docs ) {
                         ? add_query_arg( 'doc_id', $main_doc['doc']->ID, $dashboard_base )
                         : get_permalink( $main_doc['doc']->ID );
                     ?>
-                    <a class="wedocs-view-details-btn" href="<?php echo esc_url( $view_details_link ); ?>"<?php echo $target_blank; ?>><?php echo esc_html( $more ); ?></a>
+                    <a class="wedocs-view-details-btn" href="<?php echo esc_url( $view_details_link ); ?>"<?php echo $target_blank; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static attribute string built at the top of this template. ?>><?php echo esc_html( $more ); ?></a>
                 </div>
             </li>
         <?php } ?>
