@@ -146,7 +146,7 @@ class Shortcode {
             'wedocs_get_doc_listing_template_args',
             array(
                 'docs'          => $arranged,
-                'more'          => $args['more'],
+                'more'          => sanitize_text_field( $args['more'] ),
                 'col'           => (int) ( $docs_length === 1 ? $docs_length : $args['col'] ),
                 'enable_search' => wedocs_get_general_settings( 'enable_search', 'on' ),
                 'show_faq'      => wedocs_get_general_settings( 'show_faq', 'off' ),
