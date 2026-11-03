@@ -213,7 +213,7 @@ endif;
                 \WeDevs\WeDocs\Frontend::enqueue_assets();
 
                 // Respect post passwords: show the password form instead of the protected body.
-                $panel_content = post_password_required( $post ) ? get_the_password_form( $post ) : apply_filters( 'the_content', $post->post_content );
+                $panel_content = post_password_required( $post ) ? get_the_password_form( $post ) : apply_filters( 'the_content', $post->post_content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals -- template-scoped variable passed through the core the_content filter.
                 $child_posts   = get_posts(
                     [
                         'post_type'      => $post->post_type,
