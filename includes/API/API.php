@@ -898,9 +898,15 @@ class API extends WP_REST_Controller {
         // Make sortable status running.
         update_option( 'wedocs_sortable_status', true );
         foreach ( $request['documentations'] as $index => $doc ) {
+            $doc_id = isset( $doc['id'] ) ? absint( $doc['id'] ) : 0;
+
+            // Only reorder docs the current user can edit; never touch other post types.
+            if ( 'docs' !== get_post_type( $doc_id ) || ! current_user_can( 'edit_post', $doc_id ) ) {
+                continue;
+            }
+
             $post_data = [
-                'ID'          => $doc['id'],
-                'post_type'   => 'docs',
+                'ID'          => $doc_id,
                 'menu_order'  => $index,
             ];
 
@@ -921,10 +927,26 @@ class API extends WP_REST_Controller {
      * @return WP_Error|WP_REST_Response response object on success, or WP_Error object on failure.
      */
     public function update_docs_status( $request ) {
-        $status  = false;
-        $doc_ids = ! empty( $request['docIds'] ) ? array_map( 'intval', $request['docIds'] ) : array();
+        $status     = false;
+        $doc_ids    = ! empty( $request['docIds'] ) ? array_map( 'intval', (array) $request['docIds'] ) : array();
+        $new_status = ! empty( $request['status'] ) ? sanitize_key( $request['status'] ) : 'publish';
+
+        if ( ! in_array( $new_status, array( 'publish', 'draft', 'pending', 'private' ), true ) ) {
+            return new WP_Error( 'wedocs_invalid_status', __( 'Invalid documentation status.', 'wedocs' ), array( 'status' => 400 ) );
+        }
+
+        $docs_type = get_post_type_object( 'docs' );
 
         foreach ( $doc_ids as $doc_id ) {
+            // Only docs the current user can edit; never touch other post types.
+            if ( 'docs' !== get_post_type( $doc_id ) || ! current_user_can( 'edit_post', $doc_id ) ) {
+                continue;
+            }
+
+            if ( in_array( $new_status, array( 'publish', 'private' ), true ) && ! current_user_can( $docs_type->cap->publish_posts ) ) {
+                continue;
+            }
+
             $doc_status = get_post_status( $doc_id );
             if ( $doc_status === 'draft' ) {
                 continue;
@@ -932,7 +954,7 @@ class API extends WP_REST_Controller {
 
             $post_data = array(
                 'ID'          => $doc_id,
-                'post_status' => ! empty( $request['status'] ) ? sanitize_text_field( $request['status'] ) : 'publish',
+                'post_status' => $new_status,
             );
 
             $status = wp_update_post( $post_data );
@@ -1428,7 +1450,7 @@ class API extends WP_REST_Controller {
 
         $post = get_post( (int) $id );
 
-        if ( empty( $post ) || empty( $post->ID ) || 'docs' !== $this->post_type ) {
+        if ( empty( $post ) || empty( $post->ID ) || 'docs' !== $post->post_type ) {
             return $error;
         }
 
@@ -1445,7 +1467,13 @@ class API extends WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function delete_item_permissions_check( $request ) {
-        if ( ! current_user_can( 'edit_docs' ) ) {
+        $doc = $this->get_doc( $request->get_param( 'id' ) );
+        if ( is_wp_error( $doc ) ) {
+            return $doc;
+        }
+
+        // weDocs gates doc deletion on edit caps (no delete_*_docs caps are granted), checked per doc here.
+        if ( ! current_user_can( 'edit_post', $doc->ID ) ) {
             return new WP_Error(
                 'wedocs_permission_failure',
                 __( 'You cannot delete the documentation resource.', 'wedocs' )
@@ -1488,7 +1516,14 @@ class API extends WP_REST_Controller {
      * @return WP_REST_Response|WP_Error
      */
     public function remove_child_docs( $parent_id ) {
-        $childrens = get_children( array( 'post_parent' => $parent_id ) );
+        // Only child docs; attachments and other post types parented to a doc are left alone.
+        $childrens = get_children(
+            array(
+                'post_parent' => $parent_id,
+                'post_type'   => 'docs',
+                'post_status' => 'any',
+            )
+        );
 
         if ( $childrens ) {
             foreach ( $childrens as $child_post ) {
