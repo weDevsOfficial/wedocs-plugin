@@ -436,7 +436,7 @@ class API extends WP_REST_Controller {
             [
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => [ $this, 'get_ai_summary' ],
-                'permission_callback' => '__return_true',
+                'permission_callback' => [ $this, 'get_ai_summary_permissions_check' ],
                 'args'                => [
                     'id' => [
                         'validate_callback' => function( $param, $request, $key ) {
@@ -448,7 +448,7 @@ class API extends WP_REST_Controller {
             [
                 'methods'             => WP_REST_Server::CREATABLE,
                 'callback'            => [ $this, 'save_ai_summary' ],
-                'permission_callback' => [ $this, 'ai_generate_permissions_check' ],
+                'permission_callback' => [ $this, 'edit_ai_summary_permissions_check' ],
                 'args'                => [
                     'id' => [
                         'validate_callback' => function( $param, $request, $key ) {
@@ -465,7 +465,7 @@ class API extends WP_REST_Controller {
             [
                 'methods'             => WP_REST_Server::DELETABLE,
                 'callback'            => [ $this, 'delete_ai_summary' ],
-                'permission_callback' => [ $this, 'ai_generate_permissions_check' ],
+                'permission_callback' => [ $this, 'edit_ai_summary_permissions_check' ],
                 'args'                => [
                     'id' => [
                         'validate_callback' => function( $param, $request, $key ) {
@@ -3031,6 +3031,58 @@ class API extends WP_REST_Controller {
     }
 
     /**
+     * Permission check for reading a stored AI summary.
+     *
+     * The summary is built from the full doc body, so it is only served when
+     * the doc itself is readable: published and unlocked, or editable by the
+     * current user. Anything else gets the same 404 as a missing doc.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param WP_REST_Request $request full data about the request
+     *
+     * @return bool|WP_Error
+     */
+    public function get_ai_summary_permissions_check( $request ) {
+        $doc = get_post( (int) $request->get_param( 'id' ) );
+
+        if ( $doc && 'docs' === $doc->post_type ) {
+            if ( current_user_can( 'edit_post', $doc->ID ) ) {
+                return true;
+            }
+
+            if ( 'publish' === $doc->post_status && ! post_password_required( $doc ) ) {
+                return true;
+            }
+        }
+
+        return new WP_Error( 'wedocs_invalid_doc', __( 'Invalid documentation post.', 'wedocs' ), [ 'status' => 404 ] );
+    }
+
+    /**
+     * Permission check for saving or deleting a stored AI summary.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param WP_REST_Request $request full data about the request
+     *
+     * @return bool|WP_Error
+     */
+    public function edit_ai_summary_permissions_check( $request ) {
+        $doc = get_post( (int) $request->get_param( 'id' ) );
+
+        if ( ! $doc || 'docs' !== $doc->post_type ) {
+            return new WP_Error( 'wedocs_invalid_doc', __( 'Invalid documentation post.', 'wedocs' ), [ 'status' => 404 ] );
+        }
+
+        if ( ! current_user_can( 'edit_post', $doc->ID ) ) {
+            return new WP_Error( 'wedocs_permission_failure', __( 'You are not allowed to change this summary.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
+        }
+
+        return true;
+    }
+
+    /**
      * Permission check for AI summary generation.
      *
      * Keeps the public "Generate AI Summary" button working for published docs
@@ -3050,13 +3102,13 @@ class API extends WP_REST_Controller {
             return new WP_Error( 'wedocs_invalid_doc', __( 'Invalid documentation post.', 'wedocs' ), [ 'status' => 404 ] );
         }
 
-        // Editors may summarise any doc.
-        if ( current_user_can( 'edit_docs' ) ) {
+        // Users who can edit this doc may summarise it in any status.
+        if ( current_user_can( 'edit_post', $doc->ID ) ) {
             return true;
         }
 
-        // Anonymous / low-privilege callers: published docs only.
-        if ( 'publish' !== $doc->post_status ) {
+        // Anonymous / low-privilege callers: published, unlocked docs only.
+        if ( 'publish' !== $doc->post_status || post_password_required( $doc ) ) {
             return new WP_Error( 'wedocs_forbidden', __( 'You are not allowed to generate this summary.', 'wedocs' ), [ 'status' => 403 ] );
         }
 
