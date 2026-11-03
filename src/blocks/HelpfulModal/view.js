@@ -242,7 +242,7 @@ function createModal(modalData) {
 					<label style="${modalData.labelStyles || ''}">${escapeHtml(modalData.messageLabel)}</label>
 					<textarea name="message" required rows="4"></textarea>
 				</div>
-				<div class="form-submit" style="justify-content: ${modalData.buttonAlignment || 'flex-start'}">
+				<div class="form-submit" style="justify-content: ${escapeHtml(modalData.buttonAlignment || 'flex-start')}">
 					<button type="submit" style="${modalData.buttonStyles || ''}">
 						${escapeHtml(modalData.submitText)}
 					</button>
