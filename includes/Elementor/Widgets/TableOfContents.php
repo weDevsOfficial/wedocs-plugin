@@ -804,7 +804,10 @@ class TableOfContents extends Widget_Base {
 
                         var $item = $('<li class="wedocs-toc__item"></li>');
                         $item.css('padding-left', (depth * 16) + 'px');
-                        $item.html('<a href="#' + id + '" class="wedocs-toc__link">' + numberHtml + text + '</a>');
+                        // Build the link with DOM APIs; heading text is decoded by .text() and must not be parsed as HTML.
+                        var $link = $('<a class="wedocs-toc__link"></a>').attr('href', '#' + id);
+                        $link.html(numberHtml).append(document.createTextNode(text));
+                        $item.append($link);
                         $list.append($item);
                     });
 
