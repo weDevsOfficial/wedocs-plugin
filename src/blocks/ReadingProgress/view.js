@@ -7,6 +7,20 @@ document.addEventListener('DOMContentLoaded', function() {
 	const progressBlocks = document.querySelectorAll('.wp-block-wedocs-reading-progress');
 
 	progressBlocks.forEach(block => {
+		// A bar pinned to the bottom would cover the end of the page; reserve its height.
+		if (block.getAttribute('data-position') === 'fixed-bottom') {
+			const reserve = () => {
+				document.body.style.paddingBottom = block.offsetHeight + 'px';
+			};
+			reserve();
+			// The bar grows once its reading time is filled in; follow its height.
+			if (window.ResizeObserver) {
+				new ResizeObserver(reserve).observe(block);
+			} else {
+				window.addEventListener('resize', reserve);
+			}
+		}
+
 		const contentSelector = block.getAttribute('data-content-selector') || '.entry-content, .post-content, article, main';
 		const wordsPerMinute = parseInt(block.getAttribute('data-words-per-minute')) || 200;
 		const animationSpeed = block.getAttribute('data-animation-speed') || 'smooth';
