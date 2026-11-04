@@ -281,7 +281,16 @@
       document.addEventListener( 'keydown', ( event ) => {
         // Bind single page search modal with (ctrl/command + k).
         if ( ( event.ctrlKey || event.metaKey ) && event.key === 'k' ) {
-          this.showSinglePageSearchModal();
+          event.preventDefault();
+
+          // Open the same search the page shows: the Quick Search block's
+          // modal when the block is on the page, the single doc modal otherwise.
+          const quickSearchTrigger = document.querySelector( '.wedocs-quick-search-block .wedocs-quick-search-trigger' );
+          if ( quickSearchTrigger ) {
+            quickSearchTrigger.click();
+          } else {
+            this.showSinglePageSearchModal();
+          }
         }
 
         // Bind single page search modal hiding option with escape button.
