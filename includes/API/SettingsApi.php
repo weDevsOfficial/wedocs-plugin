@@ -110,7 +110,7 @@ class SettingsApi extends \WP_REST_Controller {
      * Settings > Permission Management > "Who can manage weDocs Settings?",
      * which already get the Settings menu.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @return bool
      */

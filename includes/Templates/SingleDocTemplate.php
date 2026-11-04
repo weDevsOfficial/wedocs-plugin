@@ -46,7 +46,7 @@ class SingleDocTemplate extends AbstractTemplate {
 	 *
 	 * Skipped when an SEO plugin is active, since it writes its own graph.
 	 *
-	 * @since WEDOCS_SINCE
+	 * @since 2.6.2
 	 *
 	 * @return void
 	 */

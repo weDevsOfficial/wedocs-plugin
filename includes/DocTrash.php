@@ -10,7 +10,7 @@ namespace WeDevs\WeDocs;
  * Trash with it, marked with the ID of the post that took it there, so
  * restoring that post brings it back and deleting it permanently removes it.
  *
- * @since WEDOCS_SINCE
+ * @since 2.6.2
  */
 class DocTrash {
 
@@ -47,7 +47,7 @@ class DocTrash {
      * Content already in Trash keeps its own mark, so it stays with whatever
      * was trashed first.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @param int $post_id Post being trashed.
      *
@@ -71,7 +71,7 @@ class DocTrash {
     /**
      * Restore the content that went to Trash with a restored doc.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @param int $post_id Restored post.
      *
@@ -94,7 +94,7 @@ class DocTrash {
      * Content restored along with its doc gets its old status back, instead
      * of the draft WordPress gives every restored post.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @param string $new_status      Status WordPress picked.
      * @param int    $post_id         Post being restored.
@@ -119,7 +119,7 @@ class DocTrash {
      * Permanently delete the content that went to Trash with a doc when that
      * doc is permanently deleted.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @param int $post_id Post being deleted.
      *
@@ -138,7 +138,7 @@ class DocTrash {
     /**
      * IDs of trashed posts marked as trashed with the given doc.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @param int $post_id Doc ID.
      *
