@@ -63,6 +63,10 @@ $button_typography = $attributes['buttonTypography'] ?? ['fontSize' => '16px', '
 $button_width = $attributes['buttonWidth'] ?? 'auto';
 $button_padding = $attributes['buttonPadding'] ?? ['top' => '12px', 'right' => '24px', 'bottom' => '12px', 'left' => '24px'];
 $button_alignment = $attributes['buttonAlignment'] ?? 'left';
+// The value lands in an inline style built in JS, so only known keywords are allowed.
+if ( ! in_array( $button_alignment, [ 'left', 'center', 'right', 'flex-start', 'flex-end', 'space-between' ], true ) ) {
+    $button_alignment = 'left';
+}
 
 $success_text_color = $attributes['successTextColor'] ?? '';
 $success_typography = $attributes['successTypography'] ?? ['fontSize' => '16px', 'fontWeight' => 'normal'];

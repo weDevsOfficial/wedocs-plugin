@@ -523,7 +523,10 @@
 
     extractedTitle ( title, length = 190 ) {
       const extractedString = title?.substr( 0, length );
-      return extractedString?.length >= length ? `${ extractedString }...` : extractedString;
+      const result = extractedString?.length >= length ? `${ extractedString }...` : extractedString;
+
+      // Titles are rendered via innerHTML; keep stored entities but never allow markup.
+      return result?.replace( /</g, '&lt;' ).replace( />/g, '&gt;' );
     },
 
     handleDocSearchModalBackDrop ( e ) {

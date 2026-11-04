@@ -419,8 +419,9 @@ if ( ! function_exists( 'render_wedocs_quick_search' ) ) {
         modal.className = 'wedocs-quick-search-modal wedocs-document';
         modal.setAttribute('role', 'dialog');
         modal.setAttribute('aria-modal', 'true');
-        modal.setAttribute('aria-label', '<?php echo esc_attr( $modal_placeholder ); ?>');
-           modal.innerHTML = `
+        modal.setAttribute('aria-label', <?php echo wp_json_encode( $modal_placeholder, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>);
+        // Markup is built in PHP and passed as a JSON string, so block attributes can never break out into JS.
+        modal.innerHTML = <?php ob_start(); ?>
                <div class="rounded-lg w-[95%] sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%] max-w-4xl max-h-[85vh] sm:max-h-[80vh] overflow-y-auto shadow-xl" style="
                 background-color: <?php echo esc_attr( $modal_styles['backgroundColor'] ?? '#FFFFFF' ); ?>;
                 border: <?php echo esc_attr( $modal_styles['listItemBorderWidth'] ?? '1px' ); ?> solid <?php echo esc_attr( $modal_styles['listItemBorderColor'] ?? '#E5E7EB' ); ?>;
@@ -493,7 +494,7 @@ if ( ! function_exists( 'render_wedocs_quick_search' ) ) {
                     </div>
                 </div>
             </div>
-        `;
+        <?php echo wp_json_encode( ob_get_clean(), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>;
 
         // Append modal to body
         document.body.appendChild(modal);
@@ -618,7 +619,7 @@ if ( ! function_exists( 'render_wedocs_quick_search' ) ) {
 
             try {
                 // Use our new AJAX endpoint with HTML format
-                const modalStyles = <?php echo json_encode( $modal_styles ); ?>;
+                const modalStyles = <?php echo wp_json_encode( $modal_styles, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>;
 
                 const showIconInResults = trigger.getAttribute('data-show-icon-in-results') === 'true';
 

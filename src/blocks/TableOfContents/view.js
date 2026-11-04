@@ -162,16 +162,29 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 
 			html += '<li style="margin-left: ' + indent + 'px">';
-			html += '<a href="#' + id + '" class="toc-link">';
+			html += '<a href="#' + escapeHtml(id) + '" class="toc-link">';
 			if (showNumbering) {
 				html += '<span class="toc-number">' + numberText + '</span>';
 			}
-			html += text;
+			html += escapeHtml(text);
 			html += '</a></li>';
 		});
 
 		html += '</ul>';
 		return html;
+	}
+
+	/**
+	 * Escape heading text and ids before they go into the TOC markup.
+	 * textContent decodes entities, so a heading like &lt;img&gt; would become a real tag.
+	 */
+	function escapeHtml(value) {
+		return String(value)
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#039;');
 	}
 
 	/**

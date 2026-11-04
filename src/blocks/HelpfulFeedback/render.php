@@ -203,8 +203,10 @@ if (!defined('ABSPATH')) {
 
         if (!empty($attributes['dataAttributes']) && is_array($attributes['dataAttributes'])) {
             foreach ($attributes['dataAttributes'] as $key => $value) {
+                // esc_attr() does not stop spaces or "=" in an attribute name, so keys are reduced to a safe slug.
+                $key = sanitize_key($key);
                 if (!empty($key) && !empty($value)) {
-                    $data_attributes['data-' . esc_attr($key)] = esc_attr($value);
+                    $data_attributes['data-' . $key] = esc_attr($value);
                 }
             }
         }

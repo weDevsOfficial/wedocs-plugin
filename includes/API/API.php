@@ -132,6 +132,14 @@ class API extends WP_REST_Controller {
                 'callback'            => [ $this, 'search_docs' ],
                 'permission_callback' => '__return_true',
                 'args'                => [
+                    'context' => [
+                        'description'       => __( 'Scope under which the request is made; determines fields present in response.', 'wedocs' ),
+                        'type'              => 'string',
+                        'enum'              => [ 'view', 'embed', 'edit' ],
+                        'default'           => 'view',
+                        'sanitize_callback' => 'sanitize_key',
+                        'validate_callback' => 'rest_validate_request_arg',
+                    ],
                     'query' => [
                         'required'          => true,
                         'type'              => 'string',
@@ -431,7 +439,7 @@ class API extends WP_REST_Controller {
             [
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => [ $this, 'get_ai_summary' ],
-                'permission_callback' => '__return_true',
+                'permission_callback' => [ $this, 'get_ai_summary_permissions_check' ],
                 'args'                => [
                     'id' => [
                         'validate_callback' => function( $param, $request, $key ) {
@@ -443,7 +451,7 @@ class API extends WP_REST_Controller {
             [
                 'methods'             => WP_REST_Server::CREATABLE,
                 'callback'            => [ $this, 'save_ai_summary' ],
-                'permission_callback' => [ $this, 'ai_generate_permissions_check' ],
+                'permission_callback' => [ $this, 'edit_ai_summary_permissions_check' ],
                 'args'                => [
                     'id' => [
                         'validate_callback' => function( $param, $request, $key ) {
@@ -460,7 +468,7 @@ class API extends WP_REST_Controller {
             [
                 'methods'             => WP_REST_Server::DELETABLE,
                 'callback'            => [ $this, 'delete_ai_summary' ],
-                'permission_callback' => [ $this, 'ai_generate_permissions_check' ],
+                'permission_callback' => [ $this, 'edit_ai_summary_permissions_check' ],
                 'args'                => [
                     'id' => [
                         'validate_callback' => function( $param, $request, $key ) {
@@ -893,9 +901,15 @@ class API extends WP_REST_Controller {
         // Make sortable status running.
         update_option( 'wedocs_sortable_status', true );
         foreach ( $request['documentations'] as $index => $doc ) {
+            $doc_id = isset( $doc['id'] ) ? absint( $doc['id'] ) : 0;
+
+            // Only reorder docs the current user can edit; never touch other post types.
+            if ( 'docs' !== get_post_type( $doc_id ) || ! current_user_can( 'edit_post', $doc_id ) ) {
+                continue;
+            }
+
             $post_data = [
-                'ID'          => $doc['id'],
-                'post_type'   => 'docs',
+                'ID'          => $doc_id,
                 'menu_order'  => $index,
             ];
 
@@ -924,6 +938,12 @@ class API extends WP_REST_Controller {
             return new WP_Error( 'wedocs_invalid_status', __( 'Invalid documentation status.', 'wedocs' ), [ 'status' => 400 ] );
         }
 
+        // Both allowed statuses publish content, so the user needs the docs publish cap.
+        $docs_type = get_post_type_object( 'docs' );
+        if ( ! current_user_can( $docs_type->cap->publish_posts ) ) {
+            return rest_ensure_response( $status );
+        }
+
         // Collect every descendant of the given doc on the server. The admin
         // screen only holds top-level docs, so a client-built list came out
         // empty and a private doc left its sections and articles public.
@@ -933,6 +953,7 @@ class API extends WP_REST_Controller {
         }
 
         foreach ( array_unique( $doc_ids ) as $doc_id ) {
+            // Only docs the current user can edit; never touch other post types.
             if ( 'docs' !== get_post_type( $doc_id ) || ! current_user_can( 'edit_post', $doc_id ) ) {
                 continue;
             }
@@ -977,6 +998,15 @@ class API extends WP_REST_Controller {
      */
     public function handle_feedback( $request ) {
         $id = (int) $request['id'];
+
+        if ( 'docs' !== get_post_type( $id ) ) {
+            return new WP_Error( 'rest_doc_invalid_id', __( 'Invalid doc ID.', 'wedocs' ), [ 'status' => 404 ] );
+        }
+
+        // Anyone can call this and it sends mail, so throttle per IP.
+        if ( ! wedocs_rate_limit_ok( 'doc_feedback', 5, HOUR_IN_SECONDS ) ) {
+            return new WP_Error( 'wedocs_rate_limited', __( 'Too many requests. Please try again later.', 'wedocs' ), [ 'status' => 429 ] );
+        }
 
         if ( !is_user_logged_in() ) {
             $name  = $request['name'];
@@ -1256,7 +1286,9 @@ class API extends WP_REST_Controller {
             'order'  => $doc->menu_order,
         ];
 
-        if ( 'edit' == $request['context'] ) {
+        // Raw fields are edit-only data, so the caller must be able to edit the doc.
+        // Otherwise `context=edit` on public routes would leak password-protected content.
+        if ( 'edit' === $request['context'] && current_user_can( 'edit_post', $doc->ID ) ) {
             $data['title']['raw']   = $doc->post_title;
             $data['content']['raw'] = $doc->post_content;
         }
@@ -1453,7 +1485,7 @@ class API extends WP_REST_Controller {
 
         $post = get_post( (int) $id );
 
-        if ( empty( $post ) || empty( $post->ID ) || 'docs' !== $this->post_type ) {
+        if ( empty( $post ) || empty( $post->ID ) || 'docs' !== $post->post_type ) {
             return $error;
         }
 
@@ -1470,7 +1502,13 @@ class API extends WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function delete_item_permissions_check( $request ) {
-        if ( ! current_user_can( 'edit_docs' ) ) {
+        $doc = $this->get_doc( $request->get_param( 'id' ) );
+        if ( is_wp_error( $doc ) ) {
+            return $doc;
+        }
+
+        // weDocs gates doc deletion on edit caps (no delete_*_docs caps are granted), checked per doc here.
+        if ( ! current_user_can( 'edit_post', $doc->ID ) ) {
             return new WP_Error( 'wedocs_permission_failure', __( 'You cannot delete the documentation resource.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
         }
 
@@ -1510,7 +1548,14 @@ class API extends WP_REST_Controller {
      * @return WP_REST_Response|WP_Error
      */
     public function remove_child_docs( $parent_id ) {
-        $childrens = get_children( array( 'post_parent' => $parent_id ) );
+        // Only child docs; attachments and other post types parented to a doc are left alone.
+        $childrens = get_children(
+            array(
+                'post_parent' => $parent_id,
+                'post_type'   => 'docs',
+                'post_status' => 'any',
+            )
+        );
 
         if ( $childrens ) {
             foreach ( $childrens as $child_post ) {
@@ -3100,6 +3145,58 @@ class API extends WP_REST_Controller {
     }
 
     /**
+     * Permission check for reading a stored AI summary.
+     *
+     * The summary is built from the full doc body, so it is only served when
+     * the doc itself is readable: published and unlocked, or editable by the
+     * current user. Anything else gets the same 404 as a missing doc.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param WP_REST_Request $request full data about the request
+     *
+     * @return bool|WP_Error
+     */
+    public function get_ai_summary_permissions_check( $request ) {
+        $doc = get_post( (int) $request->get_param( 'id' ) );
+
+        if ( $doc && 'docs' === $doc->post_type ) {
+            if ( current_user_can( 'edit_post', $doc->ID ) ) {
+                return true;
+            }
+
+            if ( 'publish' === $doc->post_status && ! post_password_required( $doc ) ) {
+                return true;
+            }
+        }
+
+        return new WP_Error( 'wedocs_invalid_doc', __( 'Invalid documentation post.', 'wedocs' ), [ 'status' => 404 ] );
+    }
+
+    /**
+     * Permission check for saving or deleting a stored AI summary.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param WP_REST_Request $request full data about the request
+     *
+     * @return bool|WP_Error
+     */
+    public function edit_ai_summary_permissions_check( $request ) {
+        $doc = get_post( (int) $request->get_param( 'id' ) );
+
+        if ( ! $doc || 'docs' !== $doc->post_type ) {
+            return new WP_Error( 'wedocs_invalid_doc', __( 'Invalid documentation post.', 'wedocs' ), [ 'status' => 404 ] );
+        }
+
+        if ( ! current_user_can( 'edit_post', $doc->ID ) ) {
+            return new WP_Error( 'wedocs_permission_failure', __( 'You are not allowed to change this summary.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
+        }
+
+        return true;
+    }
+
+    /**
      * Permission check for AI summary generation.
      *
      * Keeps the public "Generate AI Summary" button working for published docs
@@ -3119,13 +3216,13 @@ class API extends WP_REST_Controller {
             return new WP_Error( 'wedocs_invalid_doc', __( 'Invalid documentation post.', 'wedocs' ), [ 'status' => 404 ] );
         }
 
-        // Editors may summarise any doc.
-        if ( current_user_can( 'edit_docs' ) ) {
+        // Users who can edit this doc may summarise it in any status.
+        if ( current_user_can( 'edit_post', $doc->ID ) ) {
             return true;
         }
 
-        // Anonymous / low-privilege callers: published docs only.
-        if ( 'publish' !== $doc->post_status ) {
+        // Anonymous / low-privilege callers: published, unlocked docs only.
+        if ( 'publish' !== $doc->post_status || post_password_required( $doc ) ) {
             return new WP_Error( 'wedocs_forbidden', __( 'You are not allowed to generate this summary.', 'wedocs' ), [ 'status' => 403 ] );
         }
 

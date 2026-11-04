@@ -3081,8 +3081,8 @@ class DocsGrid extends Widget_Base {
                     <?php elseif ($pagination_type === 'ajax' || $pagination_type === 'infinite'): ?>
                         <?php if ($paged < $max_pages): ?>
                             <button class="wedocs-load-more"
-                                data-page="<?php echo $paged; ?>"
-                                data-max-pages="<?php echo $max_pages; ?>"
+                                data-page="<?php echo absint( $paged ); ?>"
+                                data-max-pages="<?php echo absint( $max_pages ); ?>"
                                 data-widget-id="<?php echo $this->get_id(); ?>">
                                 <?php echo esc_html($load_more_text); ?>
                             </button>
@@ -3245,7 +3245,7 @@ class DocsGrid extends Widget_Base {
             }
 
             <?php if (($settings['listItemDivider'] ?? '') === 'yes'): ?>.wedocs-docs-grid--list .wedocs-docs-grid__item {
-                border-bottom: 1px solid <?php echo $settings['listDividerColor'] ?? '#e0e0e0'; ?>;
+                border-bottom: 1px solid <?php echo esc_html( preg_replace( '/[^a-zA-Z0-9#(),.%\s-]/', '', $settings['listDividerColor'] ?? '#e0e0e0' ) ); // Colour keywords, hex, rgb()/hsl() and var() only, so the value cannot close the style block. ?>;
                 padding-bottom: 15px;
             }
 
