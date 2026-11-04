@@ -2,6 +2,12 @@ import actions from './actions';
 
 const resolvers = {
   *getSettings() {
+    // Users who cannot manage settings got a 403 here on every docs screen;
+    // keep the store defaults for them.
+    if ( window.weDocsAdminVars && ! window.weDocsAdminVars.canManageSettings ) {
+      return actions.setLoading( false );
+    }
+
     yield actions.setLoading( true );
     const settings = yield { type: 'FETCH_SETTINGS' };
     yield actions.setSettings( settings );

@@ -89,9 +89,10 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
     []
   );
 
-  const {
-    general: { comments: isCommentsAllowed },
-  } = settings;
+  // Users who cannot manage settings don't load them; the value is localized.
+  const isCommentsAllowed = window.weDocsAdminVars?.canManageSettings
+    ? settings?.general?.comments
+    : window.weDocsAdminVars?.commentsAllowed;
 
   return (
     <div
