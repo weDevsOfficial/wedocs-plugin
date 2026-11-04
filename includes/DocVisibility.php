@@ -174,7 +174,8 @@ class DocVisibility {
             return $response;
         }
 
-        if ( ! preg_match( '#^/wp/v2/docs/(\d+)$#', $request->get_route(), $matches ) ) {
+        // The doc itself and every read route under it (parents, ai-summary, ...).
+        if ( ! preg_match( '#^/wp/v2/docs/(\d+)(?:/|$)#', $request->get_route(), $matches ) ) {
             return $response;
         }
 

@@ -1178,7 +1178,12 @@ class API extends WP_REST_Controller {
 
         $docs         = get_posts( $args );
         $contributors = array();
+        $hidden       = \WeDevs\WeDocs\DocVisibility::hidden_ids();
         foreach ( $docs as $doc ) {
+            if ( in_array( (int) $doc->ID, $hidden, true ) ) {
+                continue;
+            }
+
             $data             = array();
             $doc_contributors = (array) get_post_meta( $doc->ID, 'wedocs_contributors', true );
             foreach ( $doc_contributors as $contributor_id ) {
@@ -1211,6 +1216,8 @@ class API extends WP_REST_Controller {
             'posts_per_page' => $request['per_page'],
             'paged'          => $request['page'],
             's'              => $request['query'],
+            // Leave out sections and articles under a doc the user cannot read.
+            'post__not_in'   => \WeDevs\WeDocs\DocVisibility::hidden_ids(),
         ];
 
         if ( $request['in'] ) {
@@ -1510,6 +1517,14 @@ class API extends WP_REST_Controller {
         // weDocs gates doc deletion on edit caps (no delete_*_docs caps are granted), checked per doc here.
         if ( ! current_user_can( 'edit_post', $doc->ID ) ) {
             return new WP_Error( 'wedocs_permission_failure', __( 'You cannot delete the documentation resource.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
+        }
+
+        // DocTrash moves everything under the doc to Trash with it, so the user
+        // must be able to edit each of those too (e.g. Pro's admin-only articles).
+        foreach ( wedocs_get_doc_descendant_ids( $doc->ID ) as $child_id ) {
+            if ( (int) $child_id !== (int) $doc->ID && ! current_user_can( 'edit_post', $child_id ) ) {
+                return new WP_Error( 'wedocs_permission_failure', __( 'This documentation contains articles you cannot delete.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
+            }
         }
 
         return true;

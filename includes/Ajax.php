@@ -622,6 +622,8 @@ class Ajax {
             'posts_per_page' => $per_page,
             's'              => $query,
             'post_status'    => 'publish',
+            // Leave out sections and articles under a doc the user cannot read.
+            'post__not_in'   => DocVisibility::hidden_ids(),
         ];
 
         $query_obj = new \WP_Query( $args );
