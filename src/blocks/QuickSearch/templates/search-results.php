@@ -26,18 +26,19 @@ $result_image_type = $result_image_type ?? 'icon';
         <?php foreach ( $results as $doc ) : ?>
             <?php
             // Determine document type and styling
-            $is_parent = $doc['parent'] === 0;
-            $is_section = $doc['parent'] > 0 && ! $is_parent;
-            $is_article = $doc['parent'] > 0 && $is_section;
+            // A section sits directly under a top-level doc; anything deeper is an article.
+            $is_parent  = 0 === (int) $doc['parent'];
+            $is_section = ! $is_parent && 0 === (int) wp_get_post_parent_id( (int) $doc['parent'] );
+            $is_article = ! $is_parent && ! $is_section;
 
-            $doc_type = 'Doc';
+            $doc_type = __( 'Doc', 'wedocs' );
             $doc_type_color = $modal_styles['docLabelColor'] ?? '#3B82F6';
 
             if ( $is_section ) {
-                $doc_type = 'Section';
+                $doc_type = __( 'Section', 'wedocs' );
                 $doc_type_color = $modal_styles['sectionLabelColor'] ?? '#10B981';
             } elseif ( $is_article ) {
-                $doc_type = 'Article';
+                $doc_type = __( 'Article', 'wedocs' );
                 $doc_type_color = $modal_styles['articleLabelColor'] ?? '#8B5CF6';
             }
 

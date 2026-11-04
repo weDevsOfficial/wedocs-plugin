@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     children.style.display = 'none';
                     this.setAttribute('aria-expanded', 'false');
                     if (toggleButton) {
+                        toggleButton.setAttribute('aria-expanded', 'false');
+                    }
+                    if (toggleButton) {
                         // Change to down arrow
                         toggleButton.innerHTML = `
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 16px; height: 16px;">
@@ -32,6 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Expand
                     children.style.display = 'block';
                     this.setAttribute('aria-expanded', 'true');
+                    if (toggleButton) {
+                        toggleButton.setAttribute('aria-expanded', 'true');
+                    }
                     if (toggleButton) {
                         // Change to up arrow
                         toggleButton.innerHTML = `

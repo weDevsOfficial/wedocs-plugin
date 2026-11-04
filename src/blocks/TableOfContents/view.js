@@ -91,6 +91,13 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		}
 
+		// A doc with no content (often a section page) prints no content
+		// wrapper; its page has only template headings, so there is nothing
+		// to list. Scan the page only where the TOC sits outside a doc page.
+		if (document.body.classList.contains('single-docs')) {
+			return [];
+		}
+
 		const fallbackArea = document.querySelector('main, .content') || document.body;
 		return Array.from(fallbackArea.querySelectorAll(headingSelector)).filter(function(heading) {
 			return !heading.closest('[class*="wp-block-wedocs-"], header, footer, .wp-block-post-title');
