@@ -593,8 +593,13 @@ const GeneralSettings = ( {
                     <option value="">{__('Automatic (Detect)', 'wedocs')}</option>
                     <option value="legacy">{__('Classic (PHP Template)', 'wedocs')}</option>
                     <option value="block">{__('Block (Block Theme Template)', 'wedocs')}</option>
-                    <option value="elementor">{__('Elementor', 'wedocs')}</option>
+                    <option value="elementor">{__('Elementor (requires Elementor Pro)', 'wedocs')}</option>
                   </select>
+                  { generalSettings?.single_doc_template === 'elementor' && ! window.weDocsAdminVars?.elementorThemeBuilder && (
+                    <p className="mt-1.5 mb-0 text-xs text-amber-700">
+                      { __( "Elementor Pro's Theme Builder is not active, so doc pages use the weDocs template instead.", 'wedocs' ) }
+                    </p>
+                  ) }
                 </div>
               </div>
             </div>

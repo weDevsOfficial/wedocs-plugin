@@ -183,6 +183,7 @@ class Assets {
                     'hasManageCap'  => current_user_can( 'manage_options' ),
                     // Sorting routes need edit_docs; the app skips them otherwise.
                     'canEditDocs'   => current_user_can( 'edit_docs' ),
+                    'elementorThemeBuilder' => wedocs_elementor_can_render_single_doc(),
                     // The settings route is limited to these users; others skip the fetch
                     // and get the one setting the docs screens need here.
                     'canManageSettings' => \WeDevs\WeDocs\API\SettingsApi::current_user_can_manage_settings(),
