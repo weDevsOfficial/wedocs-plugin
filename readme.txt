@@ -5,7 +5,7 @@ Tags: docs, documentation, knowledge base, wiki, ai-powered knowledgebase
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.6.2
+Stable tag: 2.6.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -254,6 +254,22 @@ Please report security bugs found in the source code of the weDocs plugin throug
 ---
 
 ## Changelog
+
+**v2.6.3 (4 Nov, 2026)**
+- **Security:** Sections and articles under a draft or private doc could still be read by visitors through the docs REST routes (parents, AI summary), docs search, Quick Search and the contributors list. They are now hidden everywhere the doc itself is.
+- **Security:** An Editor refused on an admin-only article could still trash it by deleting its parent section. Deleting now needs edit rights on everything that would go to Trash with it.
+- **Fixed:** Doc pages showed the theme's plain post layout when Single Doc Template was set to Elementor without Elementor Pro, or to Block on a classic theme. weDocs now falls back to a template that works on the site, and the setting says Elementor needs Elementor Pro.
+- **Fixed:** Restoring a doc from Trash brought it back as a draft. It now comes back with its previous status, together with its sections and articles.
+- **Fixed:** The Table of Contents listed the page's own headings (sidebar, Contributors, "How can we help?") on sections with no content.
+- **Fixed:** The AI Summary block offered "Generate AI Summary" to visitors when no AI provider was set up, and showed on password-protected docs.
+- **Fixed:** Quick Search labelled every article as a Section, and Cmd/Ctrl + K opened a different search than the Quick Search box on the page.
+- **Fixed:** "Still stuck? Get Help" said "Thanks" even when the site could not send the email. It now tells the reader the message was not sent.
+- **Fixed:** The docs search in weDocs > Docs disappeared after a search with no results, and the doc action menu stayed open over the Quick Edit window.
+- **Fixed:** The dashboard left scheduled docs and articles out of its totals.
+- **Fixed:** The Sidebar block ignored its indentation and spacing settings, and a reading progress bar pinned to the bottom covered the end of the page.
+- **Fixed:** On phones the docs home search field was cut off.
+- **Fixed:** Editors, Authors and Contributors no longer get permission errors in the browser console on the weDocs screens.
+- **Improved:** Accessibility of the help form labels, the font size buttons and the Sidebar block toggles.
 
 **v2.6.2 (4 Nov, 2026)**
 - **Security:** Logged-out visitors could read the content and passwords of password-protected docs through the docs search. Search now returns only public fields.
