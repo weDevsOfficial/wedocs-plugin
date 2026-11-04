@@ -123,15 +123,19 @@
         align-items: center;
         gap: 16px;
 
+        // Let the title wrap and the buttons stay inside a narrow column
+        // (the single doc block template puts this block in a 45% column).
         .wedocs-feedback-title {
             margin: 0;
             padding-bottom: 0 !important;
-            flex-shrink: 0;
+            min-width: 0;
+            max-width: 100%;
         }
 
         .wedocs-feedback-buttons {
             margin-top: 0;
             flex-shrink: 0;
+            max-width: 100%;
         }
 
 

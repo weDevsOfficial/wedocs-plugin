@@ -5,11 +5,6 @@ if ( typeof window.weDocsAdminVars !== 'undefined' && window.weDocsAdminVars.res
   apiFetch.use( apiFetch.createNonceMiddleware( window.weDocsAdminVars.restNonce ) );
 }
 
-const isProLoaded = wp.hooks.applyFilters(
-  'wedocs_pro_loaded',
-  false
-);
-
 const controls = {
   FETCH_SETTINGS() {
     return apiFetch( {
@@ -44,7 +39,10 @@ const controls = {
   },
 
   FETCH_PROMO_NOTICE() {
-    if ( isProLoaded ) {
+    // The route is admin-only; skip the request (and its 403) for everyone
+    // else. Whether admins see it is decided server-side
+    // (`wedocs_show_promotional_notice`, which licensed Pro turns off).
+    if ( ! window.weDocsAdminVars?.hasManageCap ) {
       return null;
     }
 

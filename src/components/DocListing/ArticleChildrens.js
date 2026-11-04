@@ -40,7 +40,7 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                   width="16"
                   height="21"
                   fill="none"
-                  className="w-auto pr-3.5"
+                  className="w-auto pr-3.5 flex-shrink-0"
                 >
                   <path
                     strokeWidth="2"
