@@ -259,6 +259,7 @@ Please report security bugs found in the source code of the weDocs plugin throug
 - **Security:** Sections and articles under a draft or private doc could still be read by visitors through the docs REST routes (parents, AI summary), docs search, Quick Search and the contributors list. They are now hidden everywhere the doc itself is.
 - **Security:** An Editor refused on an admin-only article could still trash it by deleting its parent section. Deleting now needs edit rights on everything that would go to Trash with it.
 - **Fixed:** Doc pages showed the theme's plain post layout when Single Doc Template was set to Elementor without Elementor Pro, or to Block on a classic theme. weDocs now falls back to a template that works on the site, and the setting says Elementor needs Elementor Pro.
+- **Fixed:** Adding an article from the docs list failed when its section was picked with the keyboard (red mark, nothing created), and clearing the section field crashed the weDocs screen.
 - **Fixed:** Restoring a doc from Trash brought it back as a draft. It now comes back with its previous status, together with its sections and articles.
 - **Fixed:** The Table of Contents listed the page's own headings (sidebar, Contributors, "How can we help?") on sections with no content.
 - **Fixed:** The AI Summary block offered "Generate AI Summary" to visitors when no AI provider was set up, and showed on password-protected docs.
