@@ -30,11 +30,20 @@ const resolvers = {
   },
 
   *getSortingStatus() {
+    // Only users who can edit docs can sort; others got a 403 on every load.
+    if ( ! window.weDocsAdminVars?.canEditDocs ) {
+      return actions.setSortingStatus( false );
+    }
+
     const response = yield actions.fetchFromAPI( '/wp/v2/docs/sorting_status' );
     return actions.setSortingStatus( response );
   },
 
   *getNeedSortingStatus() {
+    if ( ! window.weDocsAdminVars?.canEditDocs ) {
+      return actions.setNeedSortingStatus( false );
+    }
+
     const response = yield actions.fetchFromAPI( '/wp/v2/docs/need_sorting_status' );
     return actions.setNeedSortingStatus( response );
   },
