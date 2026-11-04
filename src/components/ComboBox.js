@@ -62,13 +62,36 @@ const ComboBox = ( {
       .catch( ( err ) => {} );
   };
 
-  const handleOptionSet = ( sectionId ) => {
-    selectSectionId( sectionId );
+  // Runs for every way of picking an option (click, Enter, arrow keys).
+  // Option onClick handlers alone missed keyboard picks, so the section id
+  // was never set and Publish refused with a red mark (#459).
+  const handleChange = ( value ) => {
+    setSelectedSection( value || '' );
+
+    if ( ! value ) {
+      selectSectionId( '' );
+      return;
+    }
+
+    const match = docSections.find( ( section ) => section.name === value );
+    if ( match ) {
+      selectSectionId( match.id );
+      return;
+    }
+
+    if ( value && value === newSection?.title?.raw ) {
+      handleArticleSection();
+    }
   };
 
   const handleSectionTitle = ( e ) => {
     setSectionTitle( e.target.value );
     setNewSection( { ...newSection, title: { raw: e.target.value } } );
+
+    // A cleared field must not keep the previously picked section.
+    if ( e.target.value === '' ) {
+      selectSectionId( '' );
+    }
   };
 
   useEffect( () => {
@@ -79,7 +102,7 @@ const ComboBox = ( {
     <Combobox
       as="div"
       value={ selectedSection }
-      onChange={ setSelectedSection }
+      onChange={ handleChange }
     >
       <div className="relative mb-5">
         <Combobox.Input
@@ -94,7 +117,8 @@ const ComboBox = ( {
               : '!border-gray-300 focus:ring-blue-500 focus:border-blue-500'
           } h-11 bg-gray-50 text-gray-900 text-base !rounded-md block w-full !py-2 !px-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white` }
           onChange={ handleSectionTitle }
-          displayValue={ ( title ) => he.decode( title ) }
+          // Cleared field: headlessui passes null, which crashed the whole app.
+          displayValue={ ( title ) => he.decode( title || '' ) }
         />
 
         { isFormError ? (
@@ -126,7 +150,6 @@ const ComboBox = ( {
                     active ? 'bg-indigo-600 text-white' : 'text-gray-900'
                   )
                 }
-                onClick={ () => handleOptionSet( section.id ) }
               >
                 { ( { active, selected } ) => (
                   <>
@@ -158,7 +181,6 @@ const ComboBox = ( {
           <Combobox.Option
             className="flex items-center bg-gray-100 relative cursor-pointer text-base text-indigo-600 mb-0 select-none py-2 pl-3 pr-9"
             value={ newSection?.title?.raw }
-            onClick={ handleArticleSection }
           >
             { sectionTitle ? (
               <>
