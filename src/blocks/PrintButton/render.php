@@ -19,6 +19,11 @@ if (!$post || $post->post_type !== 'docs') {
     return '';
 }
 
+// Honour Settings > General > "Allow Article Printing", as the classic template does.
+if ( wedocs_get_general_settings( 'print', 'on' ) !== 'on' ) {
+    return '';
+}
+
 ob_start();
 
 // Extract attributes with defaults

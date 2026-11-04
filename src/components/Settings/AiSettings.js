@@ -18,7 +18,7 @@
  */
 
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect, useCallback, Fragment } from '@wordpress/element';
+import { useState, useEffect, useCallback, useMemo, Fragment } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon, ArrowPathIcon } from '@heroicons/react/20/solid';
@@ -385,7 +385,16 @@ const AiSettings = ({
     };
 
     // Custom AI Model Select Component
-    const AiModelSelect = ({ value, onChange, options, isLoading = false }) => {
+    const AiModelSelect = ({ value, onChange, options: listedOptions, isLoading = false }) => {
+        // A model picked from a refreshed list is saved, but the static list
+        // shown after a reload may not include it. Keep it in the list so the
+        // field shows what is saved instead of falling back to the first model.
+        const options = useMemo( () => (
+            value && ! listedOptions.some( option => option.value === value )
+                ? [ { value, label: value, vision: true }, ...listedOptions ]
+                : listedOptions
+        ), [ value, listedOptions ] );
+
         const [selectedModel, setSelectedModel] = useState(
             options.find(option => option.value === value) || options[0]
         );

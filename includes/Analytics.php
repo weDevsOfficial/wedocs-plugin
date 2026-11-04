@@ -147,23 +147,29 @@ class Analytics {
         global $wpdb;
 
         // ---- Counts -------------------------------------------------------
-        $parents = (int) $wpdb->get_var(
-            "SELECT COUNT(*) FROM {$wpdb->posts}
-             WHERE post_type = 'docs' AND post_status = 'publish' AND post_parent = 0"
+        // "Total Docs" counts top-level docs and its line splits that same
+        // number; "Articles" counts what sits below a section, as the Docs
+        // screen does. Private docs count as published.
+        $doc_counts = $wpdb->get_row(
+            "SELECT
+                SUM( post_status IN ( 'publish', 'private' ) ) AS published,
+                SUM( post_status IN ( 'draft', 'pending' ) ) AS drafts
+             FROM {$wpdb->posts}
+             WHERE post_type = 'docs' AND post_parent = 0
+               AND post_status IN ( 'publish', 'private', 'draft', 'pending' )"
         );
 
-        $published = (int) $wpdb->get_var(
-            "SELECT COUNT(*) FROM {$wpdb->posts}
-             WHERE post_type = 'docs' AND post_status = 'publish'"
-        );
+        $published = (int) ( $doc_counts->published ?? 0 );
+        $drafts    = (int) ( $doc_counts->drafts ?? 0 );
+        $parents   = $published + $drafts;
 
-        $drafts = (int) $wpdb->get_var(
-            "SELECT COUNT(*) FROM {$wpdb->posts}
-             WHERE post_type = 'docs' AND post_status IN ( 'draft', 'pending', 'private' )"
+        $articles = (int) $wpdb->get_var(
+            "SELECT COUNT(*) FROM {$wpdb->posts} a
+             INNER JOIN {$wpdb->posts} s ON s.ID = a.post_parent
+             WHERE a.post_type = 'docs'
+               AND a.post_status IN ( 'publish', 'private', 'draft', 'pending' )
+               AND s.post_type = 'docs' AND s.post_parent <> 0"
         );
-
-        // Everything published that isn't a top-level doc is a section/article.
-        $articles = max( 0, $published - $parents );
 
         // ---- Views --------------------------------------------------------
         $total_views = (int) $wpdb->get_var(

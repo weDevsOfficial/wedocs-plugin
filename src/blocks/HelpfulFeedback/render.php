@@ -15,6 +15,11 @@ if (!defined('ABSPATH')) {
             return '';
         }
 
+        // Honour Settings > General > "Helpful Feedback on Article", as the classic template does.
+        if ( wedocs_get_general_settings( 'helpful', 'on' ) !== 'on' ) {
+            return '';
+        }
+
         // Start output buffering
         ob_start();
 

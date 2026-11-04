@@ -33,7 +33,20 @@ const SettingsPage = () => {
 
   const [ saving, setSaving ] = useState( false );
 
+  // The form starts from blank defaults. Saving before the stored settings
+  // arrive would write those blanks over the real values, so wait for them.
+  const settingsLoaded = useSelect(
+    ( select ) =>
+      select( settingsStore ).hasFinishedResolution( 'getSettings' ) &&
+      ! select( settingsStore ).hasResolutionFailed( 'getSettings' ),
+    []
+  );
+
   const handleSettingsSave = () => {
+    if ( ! settingsLoaded || saving ) {
+      return;
+    }
+
     // Update wedocs settings data.
     setSaving( true );
     dispatch( settingsStore )
@@ -52,6 +65,7 @@ const SettingsPage = () => {
         } );
       } )
       .catch( ( err ) => {
+        setSaving( false );
         Swal.fire( {
           title: __( 'Error', 'wedocs' ),
           text: err.message,
@@ -190,7 +204,7 @@ const SettingsPage = () => {
                 </div>
               </main>
 
-              <SaveButton settingsSaveHandler={ handleSettingsSave } saving={ saving } />
+              <SaveButton settingsSaveHandler={ handleSettingsSave } saving={ saving } disabled={ ! settingsLoaded } />
             </div>
           </div>
           { /* Render settings footer contents. */ }

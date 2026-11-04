@@ -24,6 +24,13 @@ class Docs_List_Table {
     }
 
     public function add_meta_box() {
+        // A classic meta box turns off the block editor's revision view and
+        // sends "Restore This Revision" to the classic Compare Revisions
+        // screen, so leave it out while a revision is open.
+        if ( isset( $_GET['revision'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            return;
+        }
+
         add_meta_box('op-menu-meta-box-id', __('Helpfulness', 'wedocs'), [$this, 'helpfulness_metabox'], 'docs', 'side', 'core');
     }
 

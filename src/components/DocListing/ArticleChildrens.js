@@ -4,6 +4,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import QuickEditModal from './QuickEditModal';
 import extractedTitle from '../../utils/extractedTitle';
 import UpgradePopup from '../ProPreviews/common/UpgradePopup';
+import { docStatusLabel } from '../../utils/helper';
 
 const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllowComments } ) => {
   // Note: Level 3 articles cannot be dragged due to @dnd-kit nested context limitation
@@ -77,9 +78,9 @@ const ArticleChildrens = ( { article, section, sections, setShowArticles, isAllo
                     ></span>
                   </div>
 
-                  { article?.status === 'draft' && (
+                  { docStatusLabel( article?.status ) && (
                     <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5 mr-5` }>
-                      { __( 'Draft', 'wedocs' ) }
+                      { docStatusLabel( article?.status ) }
                     </div>
                   ) }
                 </a>

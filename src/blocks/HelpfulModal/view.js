@@ -145,7 +145,7 @@ function initializeHelpBlock(block) {
 			email: email,
 			subject: formData.get('subject') || 'Need More Help',
 			message: message,
-			doc_id: 0,
+			doc_id: (modalData && modalData.docId) || 0,
 			_ajax_nonce: needMoreHelpAjax.nonce
 		};
 
