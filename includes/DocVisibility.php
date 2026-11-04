@@ -13,7 +13,7 @@ namespace WeDevs\WeDocs;
  * above it is published, or readable by the current user. Nothing is
  * rewritten: publishing the doc again brings its content straight back.
  *
- * @since WEDOCS_SINCE
+ * @since 2.6.2
  */
 class DocVisibility {
 
@@ -38,7 +38,7 @@ class DocVisibility {
      * IDs of docs the current user may not see because a doc above them is
      * unpublished and not readable to them.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @return int[]
      */
@@ -77,7 +77,7 @@ class DocVisibility {
     /**
      * Whether a doc may be shown to the current user.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @param int|\WP_Post $doc Doc.
      *
@@ -96,7 +96,7 @@ class DocVisibility {
     /**
      * Answer 404 for a section or article under a hidden doc.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @return void
      */
@@ -115,7 +115,7 @@ class DocVisibility {
     /**
      * Leave hidden docs out of REST collections and searches.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @param array $args WP_Query args.
      *
@@ -137,7 +137,7 @@ class DocVisibility {
      * Search engines crawl as visitors, so the list is built for a logged-out
      * user whoever requests the sitemap.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @param array  $args      WP_Query args.
      * @param string $post_type Post type of the sitemap.
@@ -161,7 +161,7 @@ class DocVisibility {
     /**
      * Refuse a single hidden doc over REST, the way its unpublished parent is refused.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @param mixed            $response Result so far.
      * @param array            $handler  Route handler.

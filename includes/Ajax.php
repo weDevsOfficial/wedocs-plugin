@@ -133,7 +133,7 @@ class Ajax {
      * Only the fields the search modal needs are sent. Full WP_Post objects
      * would leak post_password and the body of password-protected docs.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @param \WP_Post[] $docs Docs to include.
      *

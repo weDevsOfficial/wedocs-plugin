@@ -1601,7 +1601,7 @@ class API extends WP_REST_Controller {
          * while its licence is active, so paying customers are not asked to
          * buy Premium.
          *
-         * @since WEDOCS_SINCE
+         * @since 2.6.2
          *
          * @param bool $show Whether to show the promo.
          */
@@ -3151,7 +3151,7 @@ class API extends WP_REST_Controller {
      * the doc itself is readable: published and unlocked, or editable by the
      * current user. Anything else gets the same 404 as a missing doc.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @param WP_REST_Request $request full data about the request
      *
@@ -3176,7 +3176,7 @@ class API extends WP_REST_Controller {
     /**
      * Permission check for saving or deleting a stored AI summary.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @param WP_REST_Request $request full data about the request
      *

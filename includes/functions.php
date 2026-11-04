@@ -1556,7 +1556,7 @@ if ( ! function_exists( 'wedocs_get_client_ip' ) ) {
 /**
  * Get the IDs of every section and article below a doc, at any depth.
  *
- * @since WEDOCS_SINCE
+ * @since 2.6.2
  *
  * @param int $doc_id Doc ID.
  *
@@ -1594,7 +1594,7 @@ function wedocs_get_doc_descendant_ids( $doc_id ) {
  * file and log a deprecation notice on every article view. Render the core
  * Comments block instead in that case.
  *
- * @since WEDOCS_SINCE
+ * @since 2.6.2
  *
  * @return void
  */

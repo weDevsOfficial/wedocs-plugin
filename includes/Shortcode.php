@@ -158,7 +158,7 @@ class Shortcode {
                  *
                  * Defaults to the shortcode's new_tab attribute ("yes").
                  *
-                 * @since WEDOCS_SINCE
+                 * @since 2.6.2
                  *
                  * @param bool $open_in_new_tab Whether links open in a new tab.
                  */

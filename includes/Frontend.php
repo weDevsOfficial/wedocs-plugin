@@ -321,7 +321,7 @@ class Frontend {
      * The docs permalinks serve no comment feed, so the link WordPress adds to
      * every singular page sent crawlers to a 404.
      *
-     * @since WEDOCS_SINCE
+     * @since 2.6.2
      *
      * @param bool $show Whether to print the link.
      *
