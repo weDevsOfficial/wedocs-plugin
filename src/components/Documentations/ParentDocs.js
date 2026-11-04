@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import he from 'he';
 import extractedTitle from '../../utils/extractedTitle';
 import DocActions from '../DocActions';
-import { userIsAdmin } from '../../utils/helper';
+import { userIsAdmin, docStatusLabel } from '../../utils/helper';
 import { Fragment } from '@wordpress/element';
 
 const ParentDocs = ( { doc } ) => {
@@ -119,9 +119,9 @@ const ParentDocs = ( { doc } ) => {
           </div>
         </div>
         <div className="flex items-center">
-          { doc?.status === 'draft' && (
+          { docStatusLabel( doc?.status ) && (
             <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5` }>
-              { __( 'Draft', 'wedocs' ) }
+              { docStatusLabel( doc?.status ) }
             </div>
           ) }
           { /* Render private documentation icon */ }

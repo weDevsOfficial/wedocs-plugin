@@ -84,9 +84,15 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
       };
 
     case 'SET_DOC':
+      // Replace an entry already held for this ID (listing and search
+      // results carry no content) instead of appending a second one, which
+      // getDoc() would never find because it returns the first match.
+      const hasDoc = state.docs.some( ( doc ) => doc?.id === action?.doc?.id );
       const setDocState = {
         ...state,
-        docs: [ ...state.docs, action.doc ],
+        docs: hasDoc
+          ? state.docs.map( ( doc ) => ( doc?.id === action?.doc?.id ? { ...doc, ...action.doc } : doc ) )
+          : [ ...state.docs, action.doc ],
       };
 
       const isNotInParent = !state.parents.some( parent => parent?.id === action?.doc?.id );

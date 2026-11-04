@@ -11,6 +11,7 @@ import docStore from '../../data/docs';
 import ArticleChildrens from './ArticleChildrens';
 import AddArticleModal from '../AddArticleModal';
 import DraggableDocs from '../DraggableDocs';
+import { docStatusLabel } from '../../utils/helper';
 
 const SectionArticles = ( { article, articles, isAdmin, section, sections, searchValue, setShowArticles, isAllowComments } ) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
@@ -124,7 +125,7 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
                     width="16"
                     height="21"
                     fill="none"
-                    className="w-auto pr-3.5"
+                    className="w-auto pr-3.5 flex-shrink-0"
                   >
                     <path
                       strokeWidth="2"
@@ -176,9 +177,9 @@ const SectionArticles = ( { article, articles, isAdmin, section, sections, searc
                     </div>
                   ) }
 
-                  { article?.status === 'draft' && (
+                  { docStatusLabel( article?.status ) && (
                     <div className={ `docs-draft-status font-medium text-sm text-gray-800 leading-5 bg-[#E3E5E7] rounded-[42px] py-0.5 px-2.5 mr-5` }>
-                      { __( 'Draft', 'wedocs' ) }
+                      { docStatusLabel( article?.status ) }
                     </div>
                   ) }
 

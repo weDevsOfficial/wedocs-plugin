@@ -819,7 +819,6 @@ class NeedHelp extends Widget_Base {
                             page_url: window.location.href,
                             page_title: document.title,
                             post_id: <?php echo (int) get_the_ID(); ?>,
-                            recipient: '<?php echo esc_js($settings['recipient_email']); ?>',
                             save_to_elementor: '<?php echo esc_js($settings['save_to_elementor'] ?? ''); ?>'
                         },
                         success: function(response) {

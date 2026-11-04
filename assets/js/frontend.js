@@ -99,7 +99,22 @@
           '" type="text/css" media="all" />'
       );
       mywindow.document.write( '</head><body >' );
-      mywindow.document.write( article.html() );
+
+      // Print a copy: drop hidden glossary tooltips, whose text otherwise runs
+      // into the sentence, and anything marked as not for print.
+      const printable = article.first().clone();
+      printable.find( '.wedocs-glossary__tooltip, [role="tooltip"], .wedocs-hide-print, script, style' ).remove();
+
+      // On a block theme the title is a separate Post Title block outside the
+      // content, so the printout did not say which article it was.
+      if ( ! printable.find( 'h1' ).length ) {
+        const pageTitle = $( '.wp-block-post-title, .entry-title' ).first().text().trim();
+        if ( pageTitle ) {
+          mywindow.document.write( $( '<h1 class="entry-title"></h1>' ).text( pageTitle ).prop( 'outerHTML' ) );
+        }
+      }
+
+      mywindow.document.write( printable.html() );
       mywindow.document.write(
         '<div class="powered-by">' + weDocs_Vars.powered + '</div>'
       );
@@ -481,7 +496,17 @@
 
         if ( this?.docs?.articles?.find( articleDoc => articleDoc.ID === doc?.ID ) ) {
           docObj.article = doc;
-          docObj.section = this?.docs?.sections?.find( sectionDoc => sectionDoc?.ID === doc?.post_parent );
+
+          // Nested articles sit under another article, so walk up to the section.
+          let ancestor = doc;
+          for ( let depth = 0; ancestor && depth < 10; depth++ ) {
+            docObj.section = this?.docs?.sections?.find( sectionDoc => sectionDoc?.ID === ancestor?.post_parent );
+            if ( docObj.section ) {
+              break;
+            }
+            ancestor = this?.docs?.all_docs?.find( allDoc => allDoc?.ID === ancestor?.post_parent );
+          }
+
           docObj.parent = this?.docs?.parents?.find( parentDoc => parentDoc?.ID === docObj.section?.post_parent );
         }
 
@@ -508,7 +533,10 @@
 
     extractedTitle ( title, length = 190 ) {
       const extractedString = title?.substr( 0, length );
-      return extractedString?.length >= length ? `${ extractedString }...` : extractedString;
+      const result = extractedString?.length >= length ? `${ extractedString }...` : extractedString;
+
+      // Titles are rendered via innerHTML; keep stored entities but never allow markup.
+      return result?.replace( /</g, '&lt;' ).replace( />/g, '&gt;' );
     },
 
     handleDocSearchModalBackDrop ( e ) {

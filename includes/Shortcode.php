@@ -48,6 +48,7 @@ class Shortcode {
             'items'    => 10,
             'more'     => __( 'View Details', 'wedocs' ),
             'paginate' => '',
+            'new_tab'  => 'yes',
         ];
 
         $args     = wp_parse_args( $args, $defaults );
@@ -146,12 +147,25 @@ class Shortcode {
             'wedocs_get_doc_listing_template_args',
             array(
                 'docs'          => $arranged,
-                'more'          => $args['more'],
+                'more'          => sanitize_text_field( $args['more'] ),
                 'col'           => (int) ( $docs_length === 1 ? $docs_length : $args['col'] ),
                 'enable_search' => wedocs_get_general_settings( 'enable_search', 'on' ),
                 'show_faq'      => wedocs_get_general_settings( 'show_faq', 'off' ),
                 'current_page'  => $current_page,
                 'total_pages'   => $total_pages,
+                /**
+                 * Filters whether docs home links open in a new tab.
+                 *
+                 * Defaults to the shortcode's new_tab attribute ("yes").
+                 *
+                 * @since 2.6.2
+                 *
+                 * @param bool $open_in_new_tab Whether links open in a new tab.
+                 */
+                'open_in_new_tab' => (bool) apply_filters(
+                    'wedocs_docs_home_open_in_new_tab',
+                    ! in_array( strtolower( (string) $args['new_tab'] ), [ 'no', 'false', '0', 'off' ], true )
+                ),
             )
         );
 

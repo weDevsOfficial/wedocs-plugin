@@ -145,7 +145,7 @@ function initializeHelpBlock(block) {
 			email: email,
 			subject: formData.get('subject') || 'Need More Help',
 			message: message,
-			doc_id: 0,
+			doc_id: (modalData && modalData.docId) || 0,
 			_ajax_nonce: needMoreHelpAjax.nonce
 		};
 
@@ -242,7 +242,7 @@ function createModal(modalData) {
 					<label style="${modalData.labelStyles || ''}">${escapeHtml(modalData.messageLabel)}</label>
 					<textarea name="message" required rows="4"></textarea>
 				</div>
-				<div class="form-submit" style="justify-content: ${modalData.buttonAlignment || 'flex-start'}">
+				<div class="form-submit" style="justify-content: ${escapeHtml(modalData.buttonAlignment || 'flex-start')}">
 					<button type="submit" style="${modalData.buttonStyles || ''}">
 						${escapeHtml(modalData.submitText)}
 					</button>

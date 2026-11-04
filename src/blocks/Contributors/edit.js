@@ -68,6 +68,11 @@ const Edit = (props) => {
 		return select(coreStore).getEntityRecord('postType', getCurrentPostType(), getCurrentPostId());
 	}, []);
 
+	// The block renders on doc pages only (render.php returns nothing
+	// elsewhere). Templates are allowed, since a docs template is edited there.
+	const editedPostType = useSelect((select) => select('core/editor')?.getCurrentPostType?.(), []);
+	const isOutsideDocs = !! editedPostType && ! [ 'docs', 'wp_template', 'wp_template_part' ].includes( editedPostType );
+
 	// Fetch users when component mounts or when manual selection mode is active
 	useEffect(() => {
 		if (attributes.contributorDisplayMode === 'manual') {
@@ -85,7 +90,7 @@ const Edit = (props) => {
 
 	// Fetch actual contributors based on current post and display mode
 	useEffect(() => {
-		if (!currentPost) return;
+		if (!currentPost || isOutsideDocs) return;
 
 		const fetchContributors = async () => {
 			setIsLoadingContributors(true);
@@ -391,6 +396,19 @@ const Edit = (props) => {
 					</div>
 				</div>
 			</>
+		);
+	}
+
+
+	if ( isOutsideDocs ) {
+		return (
+			<div { ...blockProps }>
+				<Placeholder
+					icon="groups"
+					label={ __( 'weDocs Doc Contributors', 'wedocs' ) }
+					instructions={ __( 'This block shows the contributors of a doc, so it only appears on doc pages. Add it to a doc or to the single doc template.', 'wedocs' ) }
+				/>
+			</div>
 		);
 	}
 

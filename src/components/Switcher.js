@@ -9,29 +9,43 @@ const Switcher = ( {
   setSettings,
   panelName,
   onChange = () => {},
-  isEnabled = true,
+  isEnabled,
 } ) => {
-  const [ enabled, setEnabled ] = useState( isEnabled );
+  const savedValue = settingsPanel?.[ name ];
+
+  // A saved value wins over the caller's default, so a switch that was turned
+  // off and saved still reads Disable after a reload.
+  const [ enabled, setEnabled ] = useState( () =>
+    savedValue !== undefined ? savedValue === 'on' : isEnabled !== false
+  );
 
   const classNames = ( ...classes ) => {
     return classes.filter( Boolean ).join( ' ' );
   };
 
   useEffect( () => {
-    if ( settingsPanel[ name ] === 'off' ) {
-      setEnabled( false );
+    if ( savedValue !== undefined ) {
+      setEnabled( savedValue === 'on' );
     }
-  }, [ settingsPanel[ name ] ] );
+  }, [ savedValue ] );
 
   useEffect( () => {
+    if ( isEnabled !== undefined ) {
       setEnabled( isEnabled );
+    }
   }, [ isEnabled ] );
 
   useEffect( () => {
-    setSettings( {
-      ...settingsData,
-      [ panelName ]: { ...settingsPanel, [ name ]: enabled ? 'on' : 'off' },
-    } );
+    // Several switchers mount together and each writes its value here. Merge
+    // into the latest state, otherwise every write starts from the same stale
+    // copy and only the last switcher's value survives.
+    setSettings( ( prev ) => ( {
+      ...prev,
+      [ panelName ]: {
+        ...( prev?.[ panelName ] || {} ),
+        [ name ]: enabled ? 'on' : 'off',
+      },
+    } ) );
   }, [ enabled ] );
 
   const handleChange = () => {

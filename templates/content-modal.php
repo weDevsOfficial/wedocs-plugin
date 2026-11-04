@@ -19,34 +19,34 @@ if ( is_user_logged_in() ) {
         <div id="wedocs-modal-errors"></div>
         <form id="wedocs-contact-modal-form" action="" method="post">
             <div class="wedocs-form-row">
-                <label for="name"><?php _e( 'Name', 'wedocs' ); ?></label>
+                <label for="wedocs-contact-name"><?php _e( 'Name', 'wedocs' ); ?></label>
 
                 <div class="wedocs-form-field">
-                    <input type="text" name="name" id="name" placeholder="" value="<?php echo $name; ?>" required />
+                    <input type="text" name="name" id="wedocs-contact-name" placeholder="" value="<?php echo $name; ?>" required />
                 </div>
             </div>
 
             <div class="wedocs-form-row">
-                <label for="email"><?php _e( 'Email', 'wedocs' ); ?></label>
+                <label for="wedocs-contact-email"><?php _e( 'Email', 'wedocs' ); ?></label>
 
                 <div class="wedocs-form-field">
-                    <input type="email" name="email" id="email" placeholder="you@example.com" value="<?php echo $email; ?>" <?php disabled( is_user_logged_in() ); ?> required />
+                    <input type="email" name="email" id="wedocs-contact-email" placeholder="you@example.com" value="<?php echo $email; ?>" <?php disabled( is_user_logged_in() ); ?> required />
                 </div>
             </div>
 
             <div class="wedocs-form-row">
-                <label for="subject"><?php _e( 'Subject', 'wedocs' ); ?></label>
+                <label for="wedocs-contact-subject"><?php _e( 'Subject', 'wedocs' ); ?></label>
 
                 <div class="wedocs-form-field">
-                    <input type="text" name="subject" id="subject" placeholder="" value="" required />
+                    <input type="text" name="subject" id="wedocs-contact-subject" placeholder="" value="" required />
                 </div>
             </div>
 
             <div class="wedocs-form-row">
-                <label for="message"><?php _e( 'Message', 'wedocs' ); ?></label>
+                <label for="wedocs-contact-message"><?php _e( 'Message', 'wedocs' ); ?></label>
 
                 <div class="wedocs-form-field">
-                    <textarea type="message" name="message" id="message" required></textarea>
+                    <textarea type="message" name="message" id="wedocs-contact-message" required></textarea>
                 </div>
             </div>
 

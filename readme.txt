@@ -5,7 +5,7 @@ Tags: docs, documentation, knowledge base, wiki, ai-powered knowledgebase
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.6.1
+Stable tag: 2.6.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -254,6 +254,25 @@ Please report security bugs found in the source code of the weDocs plugin throug
 ---
 
 ## Changelog
+
+**v2.6.2 (4 Nov, 2026)**
+- **Security:** Logged-out visitors could read the content and passwords of password-protected docs through the docs search. Search now returns only public fields.
+- **Security:** AI summaries of draft, private and password-protected docs could be read, and generated, without logging in. They are now served only to readers who can see the doc.
+- **Security:** Fixed stored cross-site scripting (Contributor and above) in the Quick Search, Helpful Modal, Table of Contents and Helpful Feedback blocks, the `[wedocs]` shortcode's `more` label, and the Docs Grid, Search Modal and Table of Contents Elementor widgets.
+- **Security:** The docs REST routes could trash, change the status of, or change the type of posts that are not docs. They now act only on docs the user can edit.
+- **Security:** Doc feedback emails are rate limited, the Need Help widget no longer exposes the recipient address, and Dokan vendor docs respect post passwords.
+- **Fixed:** Making a doc private or a draft left its sections and articles readable. They now follow the doc, and come back when it is published again.
+- **Fixed:** Deleting a doc or section deleted everything under it for good. It now goes to Trash with its sections and articles, and Restore brings them back.
+- **Fixed:** Pending and scheduled articles were missing from the admin docs tree, and the doc icon shrank on deep or labelled rows.
+- **Fixed:** Quick search did not take focus when opened, and showed "Section: undefined" for nested articles.
+- **Fixed:** On block themes, article pages had no H1, the "Allow Comments", "Allow Article Printing", "Enable Social Share", "Helpful Feedback on Article" and "Enable Table of Contents" settings were ignored, and the breadcrumb broke "Docs" into one letter per line.
+- **Fixed:** Print now includes the article title, and the Table of Contents no longer lists the page title twice.
+- **Fixed:** "Still stuck? Get Help" messages were sent without the article, and the "Was this article helpful?" box overflowed its card.
+- **Fixed:** Settings switches showed Enable after a reload while saved off, and saving before the settings screen loaded could erase stored settings.
+- **Fixed:** Authors and Contributors saw endless loading cards on weDocs > Docs, and the dashboard counted docs differently from the docs tree.
+- **Fixed:** AI Doc Writer failed with Google Gemini, stopped mid-sentence with Gemini 2.5 Flash, and "Accept & Insert" did nothing on an empty article.
+- **Added:** `[wedocs new_tab="no"]` keeps docs home links in the same tab.
+- **Added:** The block template marks articles with schema.org Article data (skipped when an SEO plugin is active).
 
 **v2.6.1 (19 Oct, 2026)**
 - **Fixed:** Sub-articles (articles nested under another article) disappeared from the admin Docs screen after a page refresh. Every level now loads, and an article with sub-articles shows how many it has.

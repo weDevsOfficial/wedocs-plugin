@@ -3,7 +3,7 @@
 Plugin Name: weDocs
 Plugin URI: https://wedocs.co/
 Description: A documentation plugin for WordPress
-Version: 2.6.1
+Version: 2.6.2
 Author: weDevs
 Author URI: https://wedocs.co/?utm_source=wporg&utm_medium=banner&utm_campaign=author-uri
 License: GPL2
@@ -61,7 +61,7 @@ final class WeDocs {
      *
      * @var string
      */
-    const VERSION = '2.6.1';
+    const VERSION = '2.6.2';
 
     /**
      * The plugin url.
@@ -299,6 +299,12 @@ final class WeDocs {
      */
     public function init_classes() {
         $this->container['post_type'] = new WeDevs\WeDocs\Post_Types();
+
+        // Sections and articles follow the visibility of the doc above them.
+        $this->container['doc_visibility'] = new WeDevs\WeDocs\DocVisibility();
+
+        // Sections and articles go to Trash, and come back, with their doc.
+        $this->container['doc_trash'] = new WeDevs\WeDocs\DocTrash();
 
         if ( is_admin() ) {
             $this->container['admin'] = new WeDevs\WeDocs\Admin();
