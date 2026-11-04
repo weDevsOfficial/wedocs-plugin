@@ -496,7 +496,17 @@
 
         if ( this?.docs?.articles?.find( articleDoc => articleDoc.ID === doc?.ID ) ) {
           docObj.article = doc;
-          docObj.section = this?.docs?.sections?.find( sectionDoc => sectionDoc?.ID === doc?.post_parent );
+
+          // Nested articles sit under another article, so walk up to the section.
+          let ancestor = doc;
+          for ( let depth = 0; ancestor && depth < 10; depth++ ) {
+            docObj.section = this?.docs?.sections?.find( sectionDoc => sectionDoc?.ID === ancestor?.post_parent );
+            if ( docObj.section ) {
+              break;
+            }
+            ancestor = this?.docs?.all_docs?.find( allDoc => allDoc?.ID === ancestor?.post_parent );
+          }
+
           docObj.parent = this?.docs?.parents?.find( parentDoc => parentDoc?.ID === docObj.section?.post_parent );
         }
 

@@ -127,7 +127,7 @@ const DocSections = ( { docs, section, sections, searchValue } ) => {
                   <div className="flex items-center text-sm pr-5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-auto pr-3.5"
+                      className="w-auto pr-3.5 flex-shrink-0"
                       width="20"
                       height="17"
                       fill="none"
