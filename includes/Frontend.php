@@ -39,6 +39,7 @@ class Frontend {
 
         // Loads frontend scripts and styles
         add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ], 9 );
+        add_filter( 'render_block_wedocs/ai-summary', [ $this, 'hide_ai_summary_on_protected_doc' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_single_scripts' ], 9 );
 
         // Dequeue pro messaging bubble on the Dokan vendor dashboard.
@@ -58,6 +59,26 @@ class Frontend {
     public function init_classes() {
         $this->shortcode = new Shortcode();
         $this->theme     = new Theme_Support();
+    }
+
+    /**
+     * Leave the AI Summary block out of a password-protected doc's page.
+     *
+     * The view script removes it too, but visitors without JavaScript would
+     * still see the empty block.
+     *
+     * @since 2.6.3
+     *
+     * @param string $block_content Rendered block.
+     *
+     * @return string
+     */
+    public function hide_ai_summary_on_protected_doc( $block_content ) {
+        if ( is_singular( 'docs' ) && post_password_required( get_queried_object() ) ) {
+            return '';
+        }
+
+        return $block_content;
     }
 
     /**
