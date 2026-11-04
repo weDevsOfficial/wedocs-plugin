@@ -83,11 +83,42 @@ class DocTrash {
         }
 
         delete_post_meta( $post_id, self::META_KEY );
+        $this->restore_slug( $post_id );
 
         foreach ( $this->trashed_with( $post_id ) as $child_id ) {
             wp_untrash_post( $child_id );
             delete_post_meta( $child_id, self::META_KEY );
+            $this->restore_slug( $child_id );
         }
+    }
+
+    /**
+     * Drop the "__trashed" suffix WordPress can leave on a restored post's slug
+     * (e.g. a pending doc with no saved slug).
+     *
+     * @since 2.6.3
+     *
+     * @param int $post_id Restored post.
+     *
+     * @return void
+     */
+    private function restore_slug( $post_id ) {
+        $post = get_post( $post_id );
+        if ( ! $post || false === strpos( $post->post_name, '__trashed' ) ) {
+            return;
+        }
+
+        $slug = preg_replace( '/__trashed(-\d+)?$/', '', $post->post_name );
+        if ( '' === $slug ) {
+            $slug = sanitize_title( $post->post_title );
+        }
+
+        wp_update_post(
+            [
+                'ID'        => $post->ID,
+                'post_name' => wp_unique_post_slug( $slug, $post->ID, $post->post_status, $post->post_type, $post->post_parent ),
+            ]
+        );
     }
 
     /**
@@ -108,10 +139,14 @@ class DocTrash {
         }
 
         $owner = (int) get_post_meta( $post_id, self::META_KEY, true );
-        if ( ! $owner || 'trash' === get_post_status( $owner ) ) {
+
+        // Content trashed with a doc that is still in Trash keeps WordPress's draft.
+        if ( $owner && 'trash' === get_post_status( $owner ) ) {
             return $new_status;
         }
 
+        // The restored doc itself, and everything trashed with it, gets its
+        // old status back; otherwise a published doc came back as a draft.
         return $previous_status;
     }
 

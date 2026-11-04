@@ -159,7 +159,8 @@ const Documentations = () => {
               { __( `New doc`, 'wedocs' ) }
             </AddDocModal>
           ) }
-          { parentDocs && parentDocs.length > 0 && (
+          { /* Keep the box while a search is active, even with no matches. */ }
+          { ( ( parentDocs && parentDocs.length > 0 ) || searchValue ) && (
             <SearchFilter
               handleChange={ handleChange }
               searchValue={ searchValue }
