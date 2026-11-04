@@ -1550,6 +1550,12 @@ class API extends WP_REST_Controller {
         // DocTrash moves the sections and articles below to Trash with it.
         $deleted_doc = wp_trash_post( $doc_id );
 
+        // force=true deletes for good, as the REST contract says. Going through
+        // Trash first lets DocTrash take the descendants along.
+        if ( $deleted_doc && rest_sanitize_boolean( $request->get_param( 'force' ) ) ) {
+            $deleted_doc = wp_delete_post( $doc_id, true );
+        }
+
         return rest_ensure_response( $deleted_doc );
     }
 

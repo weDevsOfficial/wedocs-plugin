@@ -114,7 +114,7 @@ class SettingsApi extends \WP_REST_Controller {
      *
      * @return bool
      */
-    private function current_user_can_manage_settings() {
+    public static function current_user_can_manage_settings() {
         $can_manage = current_user_can( 'manage_options' );
 
         if ( ! $can_manage && function_exists( 'wedocs_current_user_can_access_settings' ) ) {
@@ -134,7 +134,7 @@ class SettingsApi extends \WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function get_items_permissions_check( $request ) {
-        if ( ! $this->current_user_can_manage_settings() ) {
+        if ( ! self::current_user_can_manage_settings() ) {
             return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to do that.', 'wedocs' ), array( 'status' => rest_authorization_required_code() ) );
         }
 
@@ -151,7 +151,7 @@ class SettingsApi extends \WP_REST_Controller {
      * @return bool|WP_Error
      */
     public function create_item_permissions_check( $request ) {
-        if ( ! $this->current_user_can_manage_settings() ) {
+        if ( ! self::current_user_can_manage_settings() ) {
             return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to do that.', 'wedocs' ), array( 'status' => rest_authorization_required_code() ) );
         }
 
