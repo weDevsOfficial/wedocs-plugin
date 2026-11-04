@@ -54,6 +54,8 @@ const SettingsPage = () => {
       .then( ( result ) => {
         setSaving( false );
         setDocSettings( { ...docSettings, ...result } );
+        // Lets panels that show server state (e.g. Pro's MCP status) refresh.
+        wp.hooks.doAction( 'wedocs_settings_saved', { ...docSettings, ...result } );
         Swal.fire( {
           title: __( 'Settings Data Saved!', 'wedocs' ),
           text: __( 'Settings data has been saved successfully', 'wedocs' ),
