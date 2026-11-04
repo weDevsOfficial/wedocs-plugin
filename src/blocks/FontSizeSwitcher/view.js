@@ -230,6 +230,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			button.style.color = '#ffffff';
 			button.style.borderColor = activeColor;
 			button.classList.add('active');
+			// Tell screen readers which size is on.
+			button.setAttribute('aria-pressed', 'true');
 		}
 
 		// Reset button to default style
@@ -238,6 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			button.style.color = textColor;
 			button.style.borderColor = borderColor;
 			button.classList.remove('active');
+			button.setAttribute('aria-pressed', 'false');
 		}
 
 		// Initialize display with stored value

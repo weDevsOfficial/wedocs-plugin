@@ -1017,7 +1017,9 @@ class API extends WP_REST_Controller {
             $email = $user->user_email;
         }
 
-        wedocs_doc_feedback_email( $id, $name, $email, $request['subject'], $request['message'] );
+        if ( ! wedocs_doc_feedback_email( $id, $name, $email, $request['subject'], $request['message'] ) ) {
+            return new WP_Error( 'wedocs_mail_failed', __( 'Your message could not be sent. Please try again later.', 'wedocs' ), [ 'status' => 500 ] );
+        }
 
         return rest_ensure_response( [
             'success' => true,

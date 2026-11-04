@@ -676,7 +676,7 @@ function wedocs_get_ip_address() {
  *
  * @since 1.2
  *
- * @return void
+ * @return bool Whether the mail was sent.
  */
 function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message ) {
     $wp_email = 'wordpress@' . preg_replace( '#^www\.#', '', strtolower( $_SERVER['SERVER_NAME'] ) );
@@ -708,7 +708,8 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
     $email_body      = apply_filters( 'wedocs_email_feedback_body', $email_body, $doc_id, $document, $_POST );
     $message_headers = apply_filters( 'wedocs_email_feedback_headers', $message_headers, $doc_id, $document, $_POST );
 
-    @wp_mail( $email_to, wp_specialchars_decode( $subject ), $email_body, $message_headers );
+    // Return the result so callers can tell the reader when nothing was sent.
+    return (bool) wp_mail( $email_to, wp_specialchars_decode( $subject ), $email_body, $message_headers );
 }
 
 /**
