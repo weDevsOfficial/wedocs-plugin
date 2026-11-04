@@ -39,6 +39,7 @@ class Frontend {
 
         // Loads frontend scripts and styles
         add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ], 9 );
+        add_filter( 'render_block_wedocs/ai-summary', [ $this, 'hide_ai_summary_on_protected_doc' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_single_scripts' ], 9 );
 
         // Dequeue pro messaging bubble on the Dokan vendor dashboard.
@@ -58,6 +59,54 @@ class Frontend {
     public function init_classes() {
         $this->shortcode = new Shortcode();
         $this->theme     = new Theme_Support();
+    }
+
+    /**
+     * Leave the AI Summary block out of a password-protected doc's page.
+     *
+     * The view script removes it too, but visitors without JavaScript would
+     * still see the empty block.
+     *
+     * @since 2.6.3
+     *
+     * @param string $block_content Rendered block.
+     *
+     * @return string
+     */
+    public function hide_ai_summary_on_protected_doc( $block_content ) {
+        if ( is_singular( 'docs' ) && post_password_required( get_queried_object() ) ) {
+            return '';
+        }
+
+        return $block_content;
+    }
+
+    /**
+     * What the AI Summary block may do on this page.
+     *
+     * The block markup is saved in the post, so the view script decides:
+     * hide it on a password-protected doc, and offer "Generate" only when a
+     * provider is configured and the visitor may generate for this doc.
+     *
+     * @since 2.6.3
+     *
+     * @return array
+     */
+    private function ai_summary_script_data() {
+        $doc         = is_singular( 'docs' ) ? get_queried_object() : null;
+        $ai_settings = wedocs_get_option( 'ai', 'wedocs_settings', [] );
+        $provider    = is_array( $ai_settings ) ? ( $ai_settings['default_provider'] ?? 'openai' ) : '';
+        $configured  = ! empty( $ai_settings['providers'][ $provider ]['api_key'] );
+
+        $protected    = $doc instanceof \WP_Post && post_password_required( $doc );
+        $can_generate = $configured && $doc instanceof \WP_Post && ! $protected
+            && ( current_user_can( 'edit_post', $doc->ID ) || 'publish' === $doc->post_status );
+
+        return [
+            'restUrl'     => esc_url_raw( rest_url( 'wp/v2/docs/' ) ),
+            'protected'   => $protected,
+            'canGenerate' => $can_generate,
+        ];
     }
 
     /**
@@ -93,7 +142,8 @@ class Frontend {
         // Inject REST nonce for AISummary block view script (handle: wedocs-ai-summary-view-script)
         wp_add_inline_script(
             'wedocs-ai-summary-view-script',
-            'window.wpApiSettings = window.wpApiSettings || {}; window.wpApiSettings.nonce = ' . wp_json_encode( wp_create_nonce( 'wp_rest' ) ) . ';',
+            'window.wpApiSettings = window.wpApiSettings || {}; window.wpApiSettings.nonce = ' . wp_json_encode( wp_create_nonce( 'wp_rest' ) ) . ';'
+            . ' window.wedocsAiSummary = ' . wp_json_encode( $this->ai_summary_script_data() ) . ';',
             'before'
         );
 

@@ -1017,7 +1017,9 @@ class API extends WP_REST_Controller {
             $email = $user->user_email;
         }
 
-        wedocs_doc_feedback_email( $id, $name, $email, $request['subject'], $request['message'] );
+        if ( ! wedocs_doc_feedback_email( $id, $name, $email, $request['subject'], $request['message'] ) ) {
+            return new WP_Error( 'wedocs_mail_failed', __( 'Your message could not be sent. Please try again later.', 'wedocs' ), [ 'status' => 500 ] );
+        }
 
         return rest_ensure_response( [
             'success' => true,
@@ -1178,7 +1180,12 @@ class API extends WP_REST_Controller {
 
         $docs         = get_posts( $args );
         $contributors = array();
+        $hidden       = \WeDevs\WeDocs\DocVisibility::hidden_ids();
         foreach ( $docs as $doc ) {
+            if ( in_array( (int) $doc->ID, $hidden, true ) ) {
+                continue;
+            }
+
             $data             = array();
             $doc_contributors = (array) get_post_meta( $doc->ID, 'wedocs_contributors', true );
             foreach ( $doc_contributors as $contributor_id ) {
@@ -1211,6 +1218,8 @@ class API extends WP_REST_Controller {
             'posts_per_page' => $request['per_page'],
             'paged'          => $request['page'],
             's'              => $request['query'],
+            // Leave out sections and articles under a doc the user cannot read.
+            'post__not_in'   => \WeDevs\WeDocs\DocVisibility::hidden_ids(),
         ];
 
         if ( $request['in'] ) {
@@ -1512,6 +1521,14 @@ class API extends WP_REST_Controller {
             return new WP_Error( 'wedocs_permission_failure', __( 'You cannot delete the documentation resource.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
         }
 
+        // DocTrash moves everything under the doc to Trash with it, so the user
+        // must be able to edit each of those too (e.g. Pro's admin-only articles).
+        foreach ( wedocs_get_doc_descendant_ids( $doc->ID ) as $child_id ) {
+            if ( (int) $child_id !== (int) $doc->ID && ! current_user_can( 'edit_post', $child_id ) ) {
+                return new WP_Error( 'wedocs_permission_failure', __( 'This documentation contains articles you cannot delete.', 'wedocs' ), [ 'status' => rest_authorization_required_code() ] );
+            }
+        }
+
         return true;
     }
 
@@ -1534,6 +1551,12 @@ class API extends WP_REST_Controller {
 
         // DocTrash moves the sections and articles below to Trash with it.
         $deleted_doc = wp_trash_post( $doc_id );
+
+        // force=true deletes for good, as the REST contract says. Going through
+        // Trash first lets DocTrash take the descendants along.
+        if ( $deleted_doc && rest_sanitize_boolean( $request->get_param( 'force' ) ) ) {
+            $deleted_doc = wp_delete_post( $doc_id, true );
+        }
 
         return rest_ensure_response( $deleted_doc );
     }

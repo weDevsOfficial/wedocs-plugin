@@ -257,7 +257,10 @@ class Ajax {
             wp_send_json_error(__('Too many requests. Please try again later.', 'wedocs'));
         }
 
-        wedocs_doc_feedback_email($doc_id, $name, $email, $subject, $message);
+        // It used to answer "Thanks" even when the site could not send mail.
+        if ( ! wedocs_doc_feedback_email( $doc_id, $name, $email, $subject, $message ) ) {
+            wp_send_json_error( __( 'Your message could not be sent. Please try again later.', 'wedocs' ) );
+        }
 
         wp_send_json_success(__('Thanks for your feedback.', 'wedocs'));
     }
@@ -622,6 +625,8 @@ class Ajax {
             'posts_per_page' => $per_page,
             's'              => $query,
             'post_status'    => 'publish',
+            // Leave out sections and articles under a doc the user cannot read.
+            'post__not_in'   => DocVisibility::hidden_ids(),
         ];
 
         $query_obj = new \WP_Query( $args );

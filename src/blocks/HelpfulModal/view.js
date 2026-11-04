@@ -212,6 +212,9 @@ function createModal(modalData) {
 	modal.className = 'need-more-help-modal';
 
 	// Apply custom modal styles if provided
+	// Unique per modal so each label points at its own field.
+	const fieldId = 'wedocs-help-' + Math.random().toString(36).slice(2, 8);
+
 	if (modalData.modalStyles) {
 		modal.style.cssText += modalData.modalStyles;
 	}
@@ -225,22 +228,22 @@ function createModal(modalData) {
 			</div>
 			<form class="modal-form">
 				<div class="form-field">
-					<label style="${modalData.labelStyles || ''}">${escapeHtml(modalData.nameLabel)}</label>
-					<input type="text" name="name" required>
+					<label for="${fieldId}-name" style="${modalData.labelStyles || ''}">${escapeHtml(modalData.nameLabel)}</label>
+					<input id="${fieldId}-name" type="text" name="name" required>
 				</div>
 				<div class="form-field">
-					<label style="${modalData.labelStyles || ''}">${escapeHtml(modalData.emailLabel)}</label>
-					<input type="email" name="email" required placeholder="${escapeHtml(modalData.emailPlaceholder || '')}">
+					<label for="${fieldId}-email" style="${modalData.labelStyles || ''}">${escapeHtml(modalData.emailLabel)}</label>
+					<input id="${fieldId}-email" type="email" name="email" required placeholder="${escapeHtml(modalData.emailPlaceholder || '')}">
 				</div>
 				${modalData.showSubject ? `
 					<div class="form-field">
-						<label style="${modalData.labelStyles || ''}">${escapeHtml(modalData.subjectLabel)}</label>
-						<input type="text" name="subject">
+						<label for="${fieldId}-subject" style="${modalData.labelStyles || ''}">${escapeHtml(modalData.subjectLabel)}</label>
+						<input id="${fieldId}-subject" type="text" name="subject">
 					</div>
 				` : ''}
 				<div class="form-field">
-					<label style="${modalData.labelStyles || ''}">${escapeHtml(modalData.messageLabel)}</label>
-					<textarea name="message" required rows="4"></textarea>
+					<label for="${fieldId}-message" style="${modalData.labelStyles || ''}">${escapeHtml(modalData.messageLabel)}</label>
+					<textarea id="${fieldId}-message" name="message" required rows="4"></textarea>
 				</div>
 				<div class="form-submit" style="justify-content: ${escapeHtml(modalData.buttonAlignment || 'flex-start')}">
 					<button type="submit" style="${modalData.buttonStyles || ''}">

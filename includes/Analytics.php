@@ -149,14 +149,15 @@ class Analytics {
         // ---- Counts -------------------------------------------------------
         // "Total Docs" counts top-level docs and its line splits that same
         // number; "Articles" counts what sits below a section, as the Docs
-        // screen does. Private docs count as published.
+        // screen does. Private docs count as published; drafts, pending and
+        // scheduled docs count as not published.
         $doc_counts = $wpdb->get_row(
             "SELECT
                 SUM( post_status IN ( 'publish', 'private' ) ) AS published,
-                SUM( post_status IN ( 'draft', 'pending' ) ) AS drafts
+                SUM( post_status IN ( 'draft', 'pending', 'future' ) ) AS drafts
              FROM {$wpdb->posts}
              WHERE post_type = 'docs' AND post_parent = 0
-               AND post_status IN ( 'publish', 'private', 'draft', 'pending' )"
+               AND post_status IN ( 'publish', 'private', 'draft', 'pending', 'future' )"
         );
 
         $published = (int) ( $doc_counts->published ?? 0 );
@@ -167,7 +168,7 @@ class Analytics {
             "SELECT COUNT(*) FROM {$wpdb->posts} a
              INNER JOIN {$wpdb->posts} s ON s.ID = a.post_parent
              WHERE a.post_type = 'docs'
-               AND a.post_status IN ( 'publish', 'private', 'draft', 'pending' )
+               AND a.post_status IN ( 'publish', 'private', 'draft', 'pending', 'future' )
                AND s.post_type = 'docs' AND s.post_parent <> 0"
         );
 

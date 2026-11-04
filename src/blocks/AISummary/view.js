@@ -4,6 +4,15 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 	const summaryBlocks = document.querySelectorAll('.wp-block-wedocs-ai-summary');
+	const pageData = window.wedocsAiSummary || {};
+	const restBase = pageData.restUrl || '/wp-json/wp/v2/docs/';
+
+	// Summaries are plain text; never parse them as HTML.
+	const summaryNode = (text) => {
+		const node = document.createElement('div');
+		node.textContent = text;
+		return node;
+	};
 
 	summaryBlocks.forEach(block => {
 		const header = block.querySelector('.ai-summary-header');
@@ -59,8 +68,22 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		}
 
+		// A password-protected doc shows no summary until it is unlocked.
+		if (pageData.protected) {
+			block.remove();
+			return;
+		}
+
+		// Only offer "Generate" when AI is set up and the visitor may use it.
+		if (!hasContent && !pageData.canGenerate) {
+			const placeholder = block.querySelector('.ai-summary-generate-placeholder');
+			if (placeholder) {
+				placeholder.remove();
+			}
+		}
+
 		// Handle AI summary generation on frontend
-		if (!hasContent && postId) {
+		if (!hasContent && postId && pageData.canGenerate) {
 			const generateBtn = block.querySelector('.ai-summary-generate-btn');
 			if (generateBtn) {
 				generateBtn.addEventListener('click', async function() {
@@ -74,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					generateBtn.style.cursor = 'not-allowed';
 
 					try {
-						const response = await fetch(`/wp-json/wp/v2/docs/${postId}/ai-summary/generate`, {
+						const response = await fetch(`${restBase}${postId}/ai-summary/generate`, {
 							method: 'POST',
 							credentials: 'same-origin',
 							headers: {
@@ -94,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							// Replace the placeholder with the generated summary
 							const contentDiv = block.querySelector('.ai-summary-content');
 							if (contentDiv) {
-								contentDiv.innerHTML = `<div>${data.summary}</div>`;
+								contentDiv.replaceChildren(summaryNode(data.summary));
 								block.setAttribute('data-has-content', 'true');
 								block.classList.remove('no-summary');
 								block.classList.add('has-summary');
@@ -136,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	 */
 	async function loadSavedSummary(block, postId) {
 		try {
-			const response = await fetch(`/wp-json/wp/v2/docs/${postId}/ai-summary`, {
+			const response = await fetch(`${restBase}${postId}/ai-summary`, {
 				method: 'GET',
 				credentials: 'same-origin',
 				headers: {
@@ -144,7 +167,10 @@ document.addEventListener('DOMContentLoaded', function() {
 				}
 			});
 
-			if (!response.ok) return;
+			if (!response.ok) {
+				hideIfEmpty(block);
+				return;
+			}
 
 			const data = await response.json();
 
@@ -152,14 +178,26 @@ document.addEventListener('DOMContentLoaded', function() {
 				// Replace the placeholder with the saved summary
 				const contentDiv = block.querySelector('.ai-summary-content');
 				if (contentDiv) {
-					contentDiv.innerHTML = `<div>${data.summary}</div>`;
+					contentDiv.replaceChildren(summaryNode(data.summary));
 					block.setAttribute('data-has-content', 'true');
 					block.classList.remove('no-summary');
 					block.classList.add('has-summary');
 				}
 			}
+			else {
+				hideIfEmpty(block);
+			}
 		} catch (error) {
-			console.log('No saved summary available or error loading:', error);
+			hideIfEmpty(block);
+		}
+	}
+
+	/**
+	 * Remove a block that has no summary and cannot get one here.
+	 */
+	function hideIfEmpty(block) {
+		if (!pageData.canGenerate && block.getAttribute('data-has-content') !== 'true') {
+			block.remove();
 		}
 	}
 });

@@ -26,6 +26,12 @@ if ( ! function_exists( 'wedocs_parse_wp_preset_value' ) ) {
             return $value; // Return the class name as-is
         }
 
+        // Lengths and numbers ("20px", "1.5em", "0") are plain CSS values,
+        // not theme color slugs.
+        if ( preg_match( '/^-?[\d.]/', $value ) ) {
+            return $value;
+        }
+
         // Handle WordPress theme color presets (any custom preset name)
         // WordPress themes can define custom color presets in theme.json
         // Examples: "primary", "secondary", "accent-1", "brand-blue", "custom-color"
@@ -236,8 +242,8 @@ if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
             'post_type'   => 'docs',
             'post_status' => 'publish',
             'numberposts' => -1,
-            'orderby'     => 'menu_order',
-            'order'       => 'ASC',
+            // Same order as the classic sidebar and prev/next: equal menu_order falls back to title.
+            'orderby'     => [ 'menu_order' => 'ASC', 'title' => 'ASC' ],
         ];
 
         if ( $root_parent ) {
@@ -258,8 +264,7 @@ if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
                     'post_type'      => 'docs',
                     'post_status'    => 'publish',
                     'numberposts'    => -1,
-                    'orderby'        => 'menu_order',
-                    'order'          => 'ASC',
+                    'orderby'        => [ 'menu_order' => 'ASC', 'title' => 'ASC' ],
                     'post_parent__in' => $parent_ids,
                 ] );
 
@@ -417,7 +422,11 @@ if ( ! function_exists( 'render_wedocs_sidebar' ) ) {
                     $result = $a->ID - $b->ID;
                     break;
                 default:
+                    // Equal menu_order falls back to title, matching prev/next.
                     $result = $a->menu_order - $b->menu_order;
+                    if ( 0 === $result ) {
+                        $result = strcmp( $a->post_title, $b->post_title );
+                    }
             }
 
             return $order === 'desc' ? - $result : $result;

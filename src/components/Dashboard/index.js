@@ -154,7 +154,7 @@ const Dashboard = () => {
             icon={ DocumentTextIcon }
             label={ __( 'Total Docs', 'wedocs' ) }
             value={ numberFormat( t.docs ) }
-            helper={ `${ numberFormat( t.published ) } ${ __( 'published', 'wedocs' ) }${ t.drafts ? ` · ${ numberFormat( t.drafts ) } ${ __( 'draft', 'wedocs' ) }` : '' }` }
+            helper={ `${ numberFormat( t.published ) } ${ __( 'published', 'wedocs' ) }${ t.drafts ? ` · ${ numberFormat( t.drafts ) } ${ __( 'not published', 'wedocs' ) }` : '' }` }
           />
           <StatCard
             icon={ DocumentDuplicateIcon }

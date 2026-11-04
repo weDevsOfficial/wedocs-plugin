@@ -676,7 +676,7 @@ function wedocs_get_ip_address() {
  *
  * @since 1.2
  *
- * @return void
+ * @return bool Whether the mail was sent.
  */
 function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message ) {
     $wp_email = 'wordpress@' . preg_replace( '#^www\.#', '', strtolower( $_SERVER['SERVER_NAME'] ) );
@@ -708,7 +708,8 @@ function wedocs_doc_feedback_email( $doc_id, $author, $email, $subject, $message
     $email_body      = apply_filters( 'wedocs_email_feedback_body', $email_body, $doc_id, $document, $_POST );
     $message_headers = apply_filters( 'wedocs_email_feedback_headers', $message_headers, $doc_id, $document, $_POST );
 
-    @wp_mail( $email_to, wp_specialchars_decode( $subject ), $email_body, $message_headers );
+    // Return the result so callers can tell the reader when nothing was sent.
+    return (bool) wp_mail( $email_to, wp_specialchars_decode( $subject ), $email_body, $message_headers );
 }
 
 /**
@@ -1335,22 +1336,23 @@ function wedocs_get_single_doc_renderer() {
         && in_array( $general_settings['single_doc_template'], $valid, true ) ) {
         $renderer = $general_settings['single_doc_template'];
 
-        // 'elementor' only valid while Elementor is active; otherwise fall through.
-        if ( 'elementor' !== $renderer || did_action( 'elementor/loaded' ) ) {
-            return apply_filters( 'wedocs_single_doc_renderer', $renderer );
+        // 'elementor' only works while Elementor can render the template; otherwise fall through.
+        if ( 'elementor' !== $renderer || wedocs_elementor_can_render_single_doc() ) {
+            return apply_filters( 'wedocs_single_doc_renderer', wedocs_usable_single_doc_renderer( $renderer ) );
         }
     }
 
-    // 2. Back-compat with the old binary flag — only when no modern setting exists.
-    if ( empty( $general_settings['single_doc_template'] )
+    // 2. Back-compat with the old binary flag. Also reached when Elementor was
+    //    chosen but cannot render, since choosing it saved the flag as 'off'.
+    if ( ( empty( $general_settings['single_doc_template'] ) || 'elementor' === $general_settings['single_doc_template'] )
         && isset( $general_settings['use_legacy_template'] ) ) {
         $renderer = 'on' === $general_settings['use_legacy_template'] ? 'legacy' : 'block';
 
-        return apply_filters( 'wedocs_single_doc_renderer', $renderer );
+        return apply_filters( 'wedocs_single_doc_renderer', wedocs_usable_single_doc_renderer( $renderer ) );
     }
 
     // 3. No explicit choice yet — auto-detect a sensible default.
-    if ( did_action( 'elementor/loaded' ) && wedocs_has_elementor_single_doc_template() ) {
+    if ( wedocs_elementor_can_render_single_doc() && wedocs_has_elementor_single_doc_template() ) {
         $renderer = 'elementor';
     } elseif ( wp_is_block_theme() ) {
         $renderer = 'block';
@@ -1361,6 +1363,43 @@ function wedocs_get_single_doc_renderer() {
     }
 
     return apply_filters( 'wedocs_single_doc_renderer', $renderer );
+}
+
+/**
+ * The block template only renders on themes that use block templates.
+ *
+ * On a classic theme without block-template support it leaves the theme's
+ * plain single page with no weDocs layout, so use the classic template there.
+ *
+ * @since 2.6.3
+ *
+ * @param string $renderer Chosen renderer.
+ *
+ * @return string
+ */
+function wedocs_usable_single_doc_renderer( $renderer ) {
+    if ( 'block' === $renderer && ! wp_is_block_theme() && ! current_theme_supports( 'block-templates' ) ) {
+        return 'legacy';
+    }
+
+    return $renderer;
+}
+
+/**
+ * Whether Elementor can render the weDocs single-doc template.
+ *
+ * The template is applied through Elementor Pro's Theme Builder conditions.
+ * With only the free Elementor plugin nothing replaces the page, so choosing
+ * Elementor (or auto-detecting it) left doc pages without any weDocs layout.
+ *
+ * @since 2.6.3
+ *
+ * @return bool
+ */
+function wedocs_elementor_can_render_single_doc() {
+    $can_render = did_action( 'elementor/loaded' ) && class_exists( '\\ElementorPro\\Modules\\ThemeBuilder\\Module' );
+
+    return (bool) apply_filters( 'wedocs_elementor_can_render_single_doc', $can_render );
 }
 
 /**
