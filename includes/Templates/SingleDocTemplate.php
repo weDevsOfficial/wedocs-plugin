@@ -83,7 +83,10 @@ class SingleDocTemplate extends AbstractTemplate {
 			],
 		];
 
-		$description = wp_trim_words( wp_strip_all_tags( strip_shortcodes( $post->post_excerpt ? $post->post_excerpt : $post->post_content ) ), 30, '' );
+		// A password-protected doc must not reveal its text in the page head.
+		// Tags are spaced out first so a heading and the next paragraph do not run together.
+		$text        = $post->post_excerpt ? $post->post_excerpt : str_replace( '<', ' <', strip_shortcodes( $post->post_content ) );
+		$description = post_password_required( $post ) ? '' : wp_trim_words( wp_strip_all_tags( $text ), 30, '' );
 		if ( '' !== $description ) {
 			$data['description'] = $description;
 		}
