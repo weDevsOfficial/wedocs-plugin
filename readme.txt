@@ -9,7 +9,7 @@ Stable tag: 2.6.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Build a powerful documentation hub with an AI-powered knowledge base, docs, wiki tools, changelogs, FAQ, glossary and an AI chatbot to help users find answers instantly.
+Build a powerful documentation hub with an AI-powered knowledge base, docs, wiki tools, changelogs, FAQ, glossary and an AI chatbot.
 
 ### The Ultimate AI-Powered Knowledge Base & Documentation Solution for WordPress
 
