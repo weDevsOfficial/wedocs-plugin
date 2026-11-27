@@ -236,10 +236,8 @@ class Frontend {
      * @return void
      */
     public function exclude_vendor_docs( $query ) {
-        // Only target docs post type queries. post_type may be a string or an array.
-        $post_type = $query->get( 'post_type' );
-
-        if ( ! in_array( 'docs', (array) $post_type, true ) ) {
+        // Only target queries that can return docs.
+        if ( ! $this->query_can_return_docs( $query ) ) {
             return;
         }
 
@@ -281,6 +279,34 @@ class Frontend {
         }
 
         $query->set( 'meta_query', $meta_query );
+    }
+
+    /**
+     * Whether a query can return docs.
+     *
+     * The post_type query var is still raw in pre_get_posts. A global search
+     * (and its feed) or a doc_tag archive leaves it empty, and WP_Query only
+     * resolves it to every searchable type, docs included, later on.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param WP_Query $query
+     *
+     * @return bool
+     */
+    private function query_can_return_docs( $query ) {
+        // post_type may be a string or an array.
+        $post_type = (array) $query->get( 'post_type' );
+
+        if ( in_array( 'docs', $post_type, true ) || in_array( 'any', $post_type, true ) ) {
+            return true;
+        }
+
+        if ( ! empty( array_filter( $post_type ) ) ) {
+            return false;
+        }
+
+        return $query->is_search() || $query->is_tax( 'doc_tag' );
     }
 
     /**
