@@ -175,7 +175,8 @@ class DocVisibility {
         }
 
         // The doc itself and every read route under it (parents, ai-summary, ...).
-        if ( ! preg_match( '#^/wp/v2/docs/(\d+)(?:/|$)#', $request->get_route(), $matches ) ) {
+        // WordPress matches REST routes case-insensitively, so this must too.
+        if ( ! preg_match( '#^/wp/v2/docs/(\d+)(?:/|$)#i', $request->get_route(), $matches ) ) {
             return $response;
         }
 

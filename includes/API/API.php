@@ -1089,13 +1089,17 @@ class API extends WP_REST_Controller {
         // add the parent by-default as the first element
         $parent_doc = ( $parent == $doc->ID ) ? $doc : get_post( $parent );
 
-        if ( $parent_doc ) {
+        if ( $parent_doc && $this->can_read_doc( $parent_doc ) ) {
             $data     = $this->prepare_item_for_response( $parent_doc, $request );
             $result[] = $this->prepare_response_for_collection( $data );
         }
 
         // now, process the child
         foreach ( $docs as $key => $doc ) {
+            if ( ! $this->can_read_doc( $doc ) ) {
+                continue;
+            }
+
             $data = $this->prepare_item_for_response( $doc, $request );
             $data = $this->api->set_pagination( $data, $doc, $request );
 
@@ -1422,6 +1426,26 @@ class API extends WP_REST_Controller {
      *
      * @return bool|WP_Error True if the request has read access, WP_Error object otherwise.
      */
+    /**
+     * Whether the current user may read a doc returned by a tree route.
+     *
+     * An unpublished doc needs read_post, and nothing under a hidden doc is
+     * shown, so the route does not depend on the REST guard alone.
+     *
+     * @since WEDOCS_SINCE
+     *
+     * @param \WP_Post $doc Doc.
+     *
+     * @return bool
+     */
+    private function can_read_doc( $doc ) {
+        if ( 'publish' !== $doc->post_status && ! current_user_can( 'read_post', $doc->ID ) ) {
+            return false;
+        }
+
+        return \WeDevs\WeDocs\DocVisibility::is_visible( $doc );
+    }
+
     public function get_parents_permissions_check( $request ) {
         $doc = $this->get_doc( $request['id'] );
 
